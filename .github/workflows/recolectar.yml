@@ -20,7 +20,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 8
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5   # v5 usa Node.js 24 (la v4 usaba Node.js 20, retirado)
 
       - name: Medir las fuentes
         id: medir
