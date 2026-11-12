@@ -37,3 +37,16 @@ El repositorio de GitHub es la única fuente de verdad. Para no perder trabajo n
 3. No dejar cambios sin subir en un sitio antes de ponerse a trabajar en el otro.
 
 En la nube, el entorno se borra al terminar la sesión: lo que no se sube con `git push` se pierde.
+
+## Relevo entre sesiones y modelos
+
+Este proyecto puede continuarlo otra sesión u otro modelo. Para que el relevo funcione:
+
+- `PLAN.md` es el estado real del proyecto. Mantener al día "Estado", "Pasos siguientes" y
+  "Decisiones pendientes" al terminar cada sesión.
+- La página (`web/`) no usa librerías ni paso de compilación. Mantenerlo así.
+- Los datos de ejemplo deben seguir marcados como ejemplo (`ejemplo: true`). Nunca presentar
+  datos inventados como reales.
+- Diseño: original, inspirado en Miami. No copiar logotipos, tipografías ni arte de los juegos.
+- Para revisar cambios visuales: abrir `web/index.html` con Playwright y mirar una captura
+  de cada estilo (botón "Miami 1986" / "Miami 2026").
