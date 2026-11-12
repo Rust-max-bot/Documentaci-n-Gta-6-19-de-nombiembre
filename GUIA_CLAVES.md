@@ -40,6 +40,20 @@ Resultado: dos valores, Client ID y Client Secret.
 
 No hace falta poner tarjeta de crédito para esto. Si Google la pide, detente y avisa a Claude.
 
+**Aviso "Recuerda configurar la pantalla de consentimiento de OAuth":** ignóralo. Esa pantalla
+solo hace falta para el "ID de cliente de OAuth" (cuando una app pide entrar con tu cuenta de
+Google). Este proyecto solo lee datos públicos con una **Clave de API**. Si Google no te deja
+seguir sin configurarla, es que elegiste "ID de cliente de OAuth": vuelve atrás y elige
+**Clave de API**.
+
+**Recomendado, restringir la clave:** en la clave recién creada, pulsa **Editar clave** (o
+"Restringir clave"):
+- **Restricciones de aplicaciones:** déjalo en **Ninguna** (los servidores de GitHub cambian de
+  dirección, así que otra opción la bloquearía).
+- **Restricciones de API:** elige **Restringir clave** y marca solo **YouTube Data API v3**.
+  Así, si la clave se filtrara, solo serviría para leer YouTube.
+- Guardar.
+
 Resultado: un valor, la clave de API.
 
 ## Paso 3 — Guardar las claves en GitHub
