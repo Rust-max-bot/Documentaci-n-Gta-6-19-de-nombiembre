@@ -68,6 +68,26 @@ Esto es una propuesta. Cada punto se verificará con una prueba real antes de da
 - **YouTube**: los videos más vistos sobre GTA 6 y sus visitas.
 - **Google Trends**: interés de búsqueda de "GTA 6" hora por hora.
 
+### Fuentes adicionales (si alcanza el tiempo, después de las tres imprescindibles)
+
+- **Estado de servidores** (sección "¿se cayeron? sí/no"). Servicios que podrían fallar:
+  los de Rockstar, PlayStation Network y la red de Xbox. Las tres empresas tienen páginas
+  oficiales de estado. Por verificar: si un programa puede leerlas. Límite: las páginas
+  oficiales a veces tardan en reconocer una caída. Los reportes de usuarios (tipo
+  Downdetector) probablemente no se pueden leer gratis de forma automática; se anotarían a mano.
+- **Noticias sobre GTA 6** (sección pequeña con titulares). Hay fuentes gratuitas de
+  titulares recientes. Límite: no existe una medida fiable de "las más populares";
+  se mostrarían los titulares más recientes o destacados de cada medición.
+
+### Orden de prioridad
+
+1. Twitch, YouTube y Google Trends.
+2. Estado de servidores.
+3. Noticias.
+
+Principio de diseño: **simple pero ampliable.** Cada fuente es una pieza independiente.
+Añadir una fuente nueva no obliga a tocar las demás.
+
 ## 6. Riesgos conocidos
 
 1. **Queda poco tiempo.** El programa debe estar probado antes del 18 de noviembre.
