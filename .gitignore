@@ -11,3 +11,9 @@ venv/
 # Sistema
 .DS_Store
 Thumbs.db
+
+# Graphify: rutas y caché propias de cada máquina (el grafo sí se sube)
+graphify-out/.graphify_python
+graphify-out/.graphify_root
+graphify-out/cache/
+graphify-out/*.bak

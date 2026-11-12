@@ -25,11 +25,16 @@ El 2026-11-12 se descargó el repositorio en el PC de Bruno
 relevo entre sesiones: este archivo, el inicio de sesión de `CLAUDE.md`, el guardado
 automático y los avisos de `.claude/` (línea de estado y freno al terminar).
 
+También el 2026-11-12 se instaló Graphify en el proyecto y se generó el primer grafo
+(`graphify-out/graph.html` para verlo; 97 nodos, 11 grupos). El programa `graphify` no está
+en el PATH del PC todavía: sin eso, sus avisos automáticos no hacen nada.
+
 **Fecha límite:** el recolector tiene que estar probado y unido a `main` antes del
 18 de noviembre de 2026.
 
 ## Últimos cambios
 
+- 2026-11-12: Graphify instalado en el proyecto y primer grafo generado (`graphify-out/`).
 - 2026-11-12: sistema de relevo entre sesiones (`ESTADO_ACTUAL.md`, reglas de inicio y guardado, avisos en `.claude/`).
 - 2026-11-12: skill Impeccable 0.1.22 en `.claude/skills/impeccable/`.
 - 2026-11-12: pruebas reales de las fuentes sin clave (PR #1).
@@ -46,4 +51,5 @@ automático y los avisos de `.claude/` (línea de estado y freno al terminar).
 6. Prueba completa antes del 18 de noviembre.
 7. Unir el trabajo a `main`.
 8. Opcional: el hook de diseño de Impeccable (Bruno ejecuta `npx impeccable install` en el PC).
-9. Graphify: solo cuando haya archivos de código listos (`PLAN.md`, sección 7).
+9. Graphify: añadir `%USERPROFILE%\AppData\Local\Programs\Python\Python314\Scripts` al PATH
+   del usuario para que funcionen sus avisos automáticos. Tras cambiar código, `graphify update .`.

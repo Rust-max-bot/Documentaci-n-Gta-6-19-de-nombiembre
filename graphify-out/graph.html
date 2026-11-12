@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>graphify - graphify-out/graph.html</title>
+<script src="https://unpkg.com/vis-network@9.1.6/standalone/umd/vis-network.min.js"
+        integrity="sha384-Ux6phic9PEHJ38YtrijhkzyJ8yQlH8i/+buBR8s3mAZOJrP1gwyvAcIYl3GWtpX1"
+        crossorigin="anonymous"></script>
+<style>
+  :root {
+    --bg: #0f0f1a; --panel: #1a1a2e; --border: #2a2a4e; --input-border: #3a3a5e;
+    --text: #e0e0e0; --text-2: #aaa; --text-3: #ccc; --muted: #555; --count: #666;
+    --neighbor-border: #333; --node-label: #ffffff;
+  }
+  [data-theme="light"] {
+    --bg: #ffffff; --panel: #f8f9fa; --border: #d9dee5; --input-border: #c3cad4;
+    --text: #222222; --text-2: #666666; --text-3: #333333; --muted: #888888; --count: #777777;
+    --neighbor-border: #ccc; --node-label: #222222;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; display: flex; height: 100vh; overflow: hidden; }
+  #graph { flex: 1; }
+  #sidebar { width: 280px; background: var(--panel); border-left: 1px solid var(--border); display: flex; flex-direction: column; overflow: hidden; }
+  #search-wrap { padding: 12px; border-bottom: 1px solid var(--border); }
+  #search { width: 100%; background: var(--bg); border: 1px solid var(--input-border); color: var(--text); padding: 7px 10px; border-radius: 6px; font-size: 13px; outline: none; }
+  #search:focus { border-color: #4E79A7; }
+  #search-results { max-height: 140px; overflow-y: auto; padding: 4px 12px; border-bottom: 1px solid var(--border); display: none; }
+  .search-item { padding: 4px 6px; cursor: pointer; border-radius: 4px; font-size: 12px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .search-item:hover { background: var(--border); }
+  #info-panel { padding: 14px; border-bottom: 1px solid var(--border); min-height: 140px; }
+  #info-panel h3 { font-size: 13px; color: var(--text-2); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.05em; }
+  #info-content { font-size: 13px; color: var(--text-3); line-height: 1.6; }
+  #info-content .field { margin-bottom: 5px; }
+  #info-content .field b { color: var(--text); }
+  #info-content .empty { color: var(--muted); font-style: italic; }
+  .neighbor-link { display: block; padding: 2px 6px; margin: 2px 0; border-radius: 3px; cursor: pointer; font-size: 12px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; border-left: 3px solid var(--neighbor-border); }
+  .neighbor-link:hover { background: var(--border); }
+  #neighbors-list { max-height: 160px; overflow-y: auto; margin-top: 4px; }
+  #legend-wrap { flex: 1; overflow-y: auto; padding: 12px; }
+  #legend-wrap h3 { font-size: 13px; color: var(--text-2); margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.05em; }
+  .legend-item { display: flex; align-items: center; gap: 8px; padding: 4px 0; cursor: pointer; border-radius: 4px; font-size: 12px; }
+  .legend-item:hover { background: var(--border); padding-left: 4px; }
+  .legend-item.dimmed { opacity: 0.35; }
+  .legend-dot { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; }
+  .legend-label { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .legend-count { color: var(--count); font-size: 11px; }
+  #stats { padding: 10px 14px; border-top: 1px solid var(--border); font-size: 11px; color: var(--muted); }
+  #legend-controls { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; padding: 4px 0; }
+  #legend-controls label { display: flex; align-items: center; gap: 6px; cursor: pointer; font-size: 12px; color: var(--text-2); user-select: none; }
+  #legend-controls label:hover { color: var(--text); }
+  .legend-cb, #select-all-cb { appearance: none; -webkit-appearance: none; width: 14px; height: 14px; border: 1.5px solid var(--input-border); border-radius: 3px; background: var(--bg); cursor: pointer; position: relative; flex-shrink: 0; }
+  .legend-cb:checked, #select-all-cb:checked { background: #4E79A7; border-color: #4E79A7; }
+  .legend-cb:checked::after, #select-all-cb:checked::after { content: ''; position: absolute; left: 3.5px; top: 1px; width: 4px; height: 7px; border: solid #fff; border-width: 0 2px 2px 0; transform: rotate(45deg); }
+  #select-all-cb:indeterminate { background: #4E79A7; border-color: #4E79A7; }
+  #select-all-cb:indeterminate::after { content: ''; position: absolute; left: 2px; top: 5px; width: 8px; height: 2px; background: #fff; border: none; transform: none; }
+  #theme-wrap { display: flex; gap: 4px; padding: 8px 12px; border-bottom: 1px solid var(--border); }
+  #theme-wrap button { flex: 1; background: var(--bg); color: var(--text-2); border: 1px solid var(--input-border); border-radius: 4px; padding: 3px 0; font-size: 11px; cursor: pointer; }
+  #theme-wrap button:hover { color: var(--text); }
+  #theme-wrap button[aria-pressed="true"] { background: #4E79A7; border-color: #4E79A7; color: #fff; }
+</style>
+<script id="graphify-theme-init">
+// Apply the saved theme before first paint (#3894). No saved choice keeps the
+// historical dark look; "system" follows prefers-color-scheme.
+(function () {
+  var pref = null;
+  try { pref = localStorage.getItem('graphify-theme'); } catch (e) {}
+  var t = pref === 'light' ? 'light'
+    : pref === 'system' && window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light'
+    : 'dark';
+  document.documentElement.setAttribute('data-theme', t);
+})();
+</script>
+</head>
+<body>
+<div id="graph"></div>
+<div id="sidebar">
+  <div id="theme-wrap" role="group" aria-label="Theme">
+    <button type="button" data-theme-choice="light">Light</button>
+    <button type="button" data-theme-choice="dark">Dark</button>
+    <button type="button" data-theme-choice="system">System</button>
+  </div>
+  <div id="search-wrap">
+    <input id="search" type="text" placeholder="Search nodes..." autocomplete="off">
+    <div id="search-results"></div>
+  </div>
+  <div id="info-panel">
+    <h3>Node Info</h3>
+    <div id="info-content"><span class="empty">Click a node to inspect it</span></div>
+  </div>
+  <div id="legend-wrap">
+    <h3>Communities</h3>
+    <div id="legend-controls">
+      <label><input type="checkbox" id="select-all-cb" checked onchange="toggleAllCommunities(!this.checked)">Select All</label>
+    </div>
+    <div id="legend"></div>
+  </div>
+  <div id="stats">97 nodes &middot; 134 edges &middot; 11 communities</div>
+</div>
+<script>
+const RAW_NODES = [{"id": "web_app_compacto", "label": "compacto()", "color": {"background": "#F28E2B", "border": "#F28E2B", "highlight": {"background": "#ffffff", "border": "#F28E2B"}}, "size": 16.9, "font": {"size": 12, "color": "#ffffff"}, "title": "compacto()", "community": 1, "community_name": "C\u00f3digo de la p\u00e1gina (app.js)", "source_file": "web/app.js", "file_type": "code", "degree": 3}, {"id": "web_app_cuenta", "label": "cuenta()", "color": {"background": "#F28E2B", "border": "#F28E2B", "highlight": {"background": "#ffffff", "border": "#F28E2B"}}, "size": 12.3, "font": {"size": 0, "color": "#ffffff"}, "title": "cuenta()", "community": 1, "community_name": "C\u00f3digo de la p\u00e1gina (app.js)", "source_file": "web/app.js", "file_type": "code", "degree": 1}, {"id": "web_app_desantiago", "label": "deSantiago()", "color": {"background": "#F28E2B", "border": "#F28E2B", "highlight": {"background": "#ffffff", "border": "#F28E2B"}}, "size": 14.6, "font": {"size": 12, "color": "#ffffff"}, "title": "deSantiago()", "community": 1, "community_name": "C\u00f3digo de la p\u00e1gina (app.js)", "source_file": "web/app.js", "file_type": "code", "degree": 2}, {"id": "web_app_desfase", "label": "desfase()", "color": {"background": "#F28E2B", "border": "#F28E2B", "highlight": {"background": "#ffffff", "border": "#F28E2B"}}, "size": 19.2, "font": {"size": 12, "color": "#ffffff"}, "title": "desfase()", "community": 1, "community_name": "C\u00f3digo de la p\u00e1gina (app.js)", "source_file": "web/app.js", "file_type": "code", "degree": 4}, {"id": "web_app_dia", "label": "dia()", "color": {"background": "#F28E2B", "border": "#F28E2B", "highlight": {"background": "#ffffff", "border": "#F28E2B"}}, "size": 19.2, "font": {"size": 12, "color": "#ffffff"}, "title": "dia()", "community": 1, "community_name": "C\u00f3digo de la p\u00e1gina (app.js)", "source_file": "web/app.js", "file_type": "code", "degree": 4}, {"id": "web_app_grafico", "label": "grafico()", "color": {"background": "#F28E2B", "border": "#F28E2B", "highlight": {"background": "#ffffff", "border": "#F28E2B"}}, "size": 14.6, "font": {"size": 12, "color": "#ffffff"}, "title": "grafico()", "community": 1, "community_name": "C\u00f3digo de la p\u00e1gina (app.js)", "source_file": "web/app.js", "file_type": "code", "degree": 2}, {"id": "web_app_grafico_dibujar", "label": "dibujar()", "color": {"background": "#F28E2B", "border": "#F28E2B", "highlight": {"background": "#ffffff", "border": "#F28E2B"}}, "size": 28.5, "font": {"size": 12, "color": "#ffffff"}, "title": "dibujar()", "community": 1, "community_name": "C\u00f3digo de la p\u00e1gina (app.js)", "source_file": "web/app.js", "file_type": "code", "degree": 8}, {"id": "web_app_grafico_dibujar_mover", "label": "mover()", "color": {"background": "#F28E2B", "border": "#F28E2B", "highlight": {"background": "#ffffff", "border": "#F28E2B"}}, "size": 19.2, "font": {"size": 12, "color": "#ffffff"}, "title": "mover()", "community": 1, "community_name": "C\u00f3digo de la p\u00e1gina (app.js)", "source_file": "web/app.js", "file_type": "code", "degree": 4}, {"id": "web_app_grafico_dibujar_salir", "label": "salir()", "color": {"background": "#F28E2B", "border": "#F28E2B", "highlight": {"background": "#ffffff", "border": "#F28E2B"}}, "size": 12.3, "font": {"size": 0, "color": "#ffffff"}, "title": "salir()", "community": 1, "community_name": "C\u00f3digo de la p\u00e1gina (app.js)", "source_file": "web/app.js", "file_type": "code", "degree": 1}, {"id": "web_app_hora", "label": "hora()", "color": {"background": "#F28E2B", "border": "#F28E2B", "highlight": {"background": "#ffffff", "border": "#F28E2B"}}, "size": 19.2, "font": {"size": 12, "color": "#ffffff"}, "title": "hora()", "community": 1, "community_name": "C\u00f3digo de la p\u00e1gina (app.js)", "source_file": "web/app.js", "file_type": "code", "degree": 4}, {"id": "web_app_limpio", "label": "limpio()", "color": {"background": "#F28E2B", "border": "#F28E2B", "highlight": {"background": "#ffffff", "border": "#F28E2B"}}, "size": 14.6, "font": {"size": 12, "color": "#ffffff"}, "title": "limpio()", "community": 1, "community_name": "C\u00f3digo de la p\u00e1gina (app.js)", "source_file": "web/app.js", "file_type": "code", "degree": 2}, {"id": "web_app_maximo", "label": "maximo()", "color": {"background": "#F28E2B", "border": "#F28E2B", "highlight": {"background": "#ffffff", "border": "#F28E2B"}}, "size": 12.3, "font": {"size": 0, "color": "#ffffff"}, "title": "maximo()", "community": 1, "community_name": "C\u00f3digo de la p\u00e1gina (app.js)", "source_file": "web/app.js", "file_type": "code", "degree": 1}, {"id": "web_app_num", "label": "num()", "color": {"background": "#F28E2B", "border": "#F28E2B", "highlight": {"background": "#ffffff", "border": "#F28E2B"}}, "size": 19.2, "font": {"size": 12, "color": "#ffffff"}, "title": "num()", "community": 1, "community_name": "C\u00f3digo de la p\u00e1gina (app.js)", "source_file": "web/app.js", "file_type": "code", "degree": 4}, {"id": "web_app_partes", "label": "partes()", "color": {"background": "#F28E2B", "border": "#F28E2B", "highlight": {"background": "#ffffff", "border": "#F28E2B"}}, "size": 16.9, "font": {"size": 12, "color": "#ffffff"}, "title": "partes()", "community": 1, "community_name": "C\u00f3digo de la p\u00e1gina (app.js)", "source_file": "web/app.js", "file_type": "code", "degree": 3}, {"id": "web_app_paso", "label": "paso()", "color": {"background": "#F28E2B", "border": "#F28E2B", "highlight": {"background": "#ffffff", "border": "#F28E2B"}}, "size": 14.6, "font": {"size": 12, "color": "#ffffff"}, "title": "paso()", "community": 1, "community_name": "C\u00f3digo de la p\u00e1gina (app.js)", "source_file": "web/app.js", "file_type": "code", "degree": 2}, {"id": "web_app_pintar", "label": "pintar()", "color": {"background": "#F28E2B", "border": "#F28E2B", "highlight": {"background": "#ffffff", "border": "#F28E2B"}}, "size": 23.8, "font": {"size": 12, "color": "#ffffff"}, "title": "pintar()", "community": 1, "community_name": "C\u00f3digo de la p\u00e1gina (app.js)", "source_file": "web/app.js", "file_type": "code", "degree": 6}, {"id": "web_datos_ejemplo_azar", "label": "azar()", "color": {"background": "#BAB0AC", "border": "#BAB0AC", "highlight": {"background": "#ffffff", "border": "#BAB0AC"}}, "size": 12.3, "font": {"size": 0, "color": "#ffffff"}, "title": "azar()", "community": 9, "community_name": "Datos de ejemplo", "source_file": "web/datos-ejemplo.js", "file_type": "code", "degree": 1}, {"id": "web_app", "label": "app.js", "color": {"background": "#F28E2B", "border": "#F28E2B", "highlight": {"background": "#ffffff", "border": "#F28E2B"}}, "size": 40.0, "font": {"size": 12, "color": "#ffffff"}, "title": "app.js", "community": 1, "community_name": "C\u00f3digo de la p\u00e1gina (app.js)", "source_file": "web/app.js", "file_type": "code", "degree": 13}, {"id": "web_eventos", "label": "eventos.js", "color": {"background": "#4E79A7", "border": "#4E79A7", "highlight": {"background": "#ffffff", "border": "#4E79A7"}}, "size": 10.0, "font": {"size": 0, "color": "#ffffff"}, "title": "eventos.js", "community": 10, "community_name": "Eventos a mano", "source_file": "web/eventos.js", "file_type": "code", "degree": 0}, {"id": "claude_hooks_estado_git", "label": "estado-git.sh", "color": {"background": "#FF9DA7", "border": "#FF9DA7", "highlight": {"background": "#ffffff", "border": "#FF9DA7"}}, "size": 12.3, "font": {"size": 0, "color": "#ffffff"}, "title": "estado-git.sh", "community": 7, "community_name": "L\u00ednea de estado git", "source_file": ".claude/hooks/estado-git.sh", "file_type": "code", "degree": 1}, {"id": "claude_hooks_estado_git_sh__entry", "label": "estado-git.sh script", "color": {"background": "#FF9DA7", "border": "#FF9DA7", "highlight": {"background": "#ffffff", "border": "#FF9DA7"}}, "size": 12.3, "font": {"size": 0, "color": "#ffffff"}, "title": "estado-git.sh script", "community": 7, "community_name": "L\u00ednea de estado git", "source_file": ".claude/hooks/estado-git.sh", "file_type": "code", "degree": 1}, {"id": "claude_hooks_revisar_guardado", "label": "revisar-guardado.sh", "color": {"background": "#9C755F", "border": "#9C755F", "highlight": {"background": "#ffffff", "border": "#9C755F"}}, "size": 12.3, "font": {"size": 0, "color": "#ffffff"}, "title": "revisar-guardado.sh", "community": 8, "community_name": "Freno de guardado", "source_file": ".claude/hooks/revisar-guardado.sh", "file_type": "code", "degree": 1}, {"id": "claude_hooks_revisar_guardado_sh__entry", "label": "revisar-guardado.sh script", "color": {"background": "#9C755F", "border": "#9C755F", "highlight": {"background": "#ffffff", "border": "#9C755F"}}, "size": 12.3, "font": {"size": 0, "color": "#ffffff"}, "title": "revisar-guardado.sh script", "community": 8, "community_name": "Freno de guardado", "source_file": ".claude/hooks/revisar-guardado.sh", "file_type": "code", "degree": 1}, {"id": "web_datos_ejemplo", "label": "datos-ejemplo.js", "color": {"background": "#BAB0AC", "border": "#BAB0AC", "highlight": {"background": "#ffffff", "border": "#BAB0AC"}}, "size": 12.3, "font": {"size": 0, "color": "#ffffff"}, "title": "datos-ejemplo.js", "community": 9, "community_name": "Datos de ejemplo", "source_file": "web/datos-ejemplo.js", "file_type": "code", "degree": 1}, {"id": "web_index_grafico_trends", "label": "Gr\u00e1fico Google Trends (#g-trends)", "color": {"background": "#4E79A7", "border": "#4E79A7", "highlight": {"background": "#ffffff", "border": "#4E79A7"}}, "size": 12.3, "font": {"size": 0, "color": "#ffffff"}, "title": "Gr\u00e1fico Google Trends (#g-trends)", "community": 0, "community_name": "Fuentes, fases y claves", "source_file": "web/index.html", "file_type": "code", "degree": 1}, {"id": "web_index_grafico_twitch", "label": "Gr\u00e1fico espectadores Twitch (#g-twitch)", "color": {"background": "#4E79A7", "border": "#4E79A7", "highlight": {"background": "#ffffff", "border": "#4E79A7"}}, "size": 12.3, "font": {"size": 0, "color": "#ffffff"}, "title": "Gr\u00e1fico espectadores Twitch (#g-twitch)", "community": 0, "community_name": "Fuentes, fases y claves", "source_file": "web/index.html", "file_type": "code", "degree": 1}, {"id": "web_index_tabla_twitch", "label": "Tabla Twitch (#t-twitch)", "color": {"background": "#4E79A7", "border": "#4E79A7", "highlight": {"background": "#ffffff", "border": "#4E79A7"}}, "size": 12.3, "font": {"size": 0, "color": "#ffffff"}, "title": "Tabla Twitch (#t-twitch)", "community": 0, "community_name": "Fuentes, fases y claves", "source_file": "web/index.html", "file_type": "code", "degree": 1}, {"id": "web_index_tabla_youtube", "label": "Tabla videos YouTube (#t-youtube)", "color": {"background": "#4E79A7", "border": "#4E79A7", "highlight": {"background": "#ffffff", "border": "#4E79A7"}}, "size": 12.3, "font": {"size": 0, "color": "#ffffff"}, "title": "Tabla videos YouTube (#t-youtube)", "community": 0, "community_name": "Fuentes, fases y claves", "source_file": "web/index.html", "file_type": "code", "degree": 1}, {"id": "guia_claves_clave_twitch", "label": "Clave de Twitch (Client ID y Client Secret)", "color": {"background": "#4E79A7", "border": "#4E79A7", "highlight": {"background": "#ffffff", "border": "#4E79A7"}}, "size": 14.6, "font": {"size": 12, "color": "#ffffff"}, "title": "Clave de Twitch (Client ID y Client Secret)", "community": 0, "community_name": "Fuentes, fases y claves", "source_file": "GUIA_CLAVES.md", "file_type": "concept", "degree": 2}, {"id": "guia_claves_clave_youtube", "label": "Clave de API de YouTube Data API v3", "color": {"background": "#4E79A7", "border": "#4E79A7", "highlight": {"background": "#ffffff", "border": "#4E79A7"}}, "size": 14.6, "font": {"size": 12, "color": "#ffffff"}, "title": "Clave de API de YouTube Data API v3", "community": 0, "community_name": "Fuentes, fases y claves", "source_file": "GUIA_CLAVES.md", "file_type": "concept", "degree": 2}, {"id": "guia_claves_github_secrets", "label": "GitHub Secrets (TWITCH_CLIENT_ID, TWITCH_CLIENT_SECRET, YOUTUBE_API_KEY)", "color": {"background": "#4E79A7", "border": "#4E79A7", "highlight": {"background": "#ffffff", "border": "#4E79A7"}}, "size": 21.5, "font": {"size": 12, "color": "#ffffff"}, "title": "GitHub Secrets (TWITCH_CLIENT_ID, TWITCH_CLIENT_SECRET, YOUTUBE_API_KEY)", "community": 0, "community_name": "Fuentes, fases y claves", "source_file": "GUIA_CLAVES.md", "file_type": "concept", "degree": 5}, {"id": "plan_fase_1_tiempo_real", "label": "Fase 1: en tiempo real", "color": {"background": "#4E79A7", "border": "#4E79A7", "highlight": {"background": "#ffffff", "border": "#4E79A7"}}, "size": 14.6, "font": {"size": 12, "color": "#ffffff"}, "title": "Fase 1: en tiempo real", "community": 0, "community_name": "Fuentes, fases y claves", "source_file": "PLAN.md", "file_type": "concept", "degree": 2}, {"id": "plan_fase_2_busqueda_calmada", "label": "Fase 2: b\u00fasqueda calmada", "color": {"background": "#4E79A7", "border": "#4E79A7", "highlight": {"background": "#ffffff", "border": "#4E79A7"}}, "size": 19.2, "font": {"size": 12, "color": "#ffffff"}, "title": "Fase 2: b\u00fasqueda calmada", "community": 0, "community_name": "Fuentes, fases y claves", "source_file": "PLAN.md", "file_type": "concept", "degree": 4}, {"id": "plan_fuente_google_trends", "label": "Fuente Google Trends", "color": {"background": "#4E79A7", "border": "#4E79A7", "highlight": {"background": "#ffffff", "border": "#4E79A7"}}, "size": 19.2, "font": {"size": 12, "color": "#ffffff"}, "title": "Fuente Google Trends", "community": 0, "community_name": "Fuentes, fases y claves", "source_file": "PLAN.md", "file_type": "concept", "degree": 4}, {"id": "plan_fuente_twitch", "label": "Fuente Twitch", "color": {"background": "#4E79A7", "border": "#4E79A7", "highlight": {"background": "#ffffff", "border": "#4E79A7"}}, "size": 21.5, "font": {"size": 12, "color": "#ffffff"}, "title": "Fuente Twitch", "community": 0, "community_name": "Fuentes, fases y claves", "source_file": "PLAN.md", "file_type": "concept", "degree": 5}, {"id": "plan_fuente_youtube", "label": "Fuente YouTube", "color": {"background": "#4E79A7", "border": "#4E79A7", "highlight": {"background": "#ffffff", "border": "#4E79A7"}}, "size": 19.2, "font": {"size": 12, "color": "#ffffff"}, "title": "Fuente YouTube", "community": 0, "community_name": "Fuentes, fases y claves", "source_file": "PLAN.md", "file_type": "concept", "degree": 4}, {"id": "plan_limite_diario_youtube", "label": "L\u00edmite diario de consultas de YouTube", "color": {"background": "#4E79A7", "border": "#4E79A7", "highlight": {"background": "#ffffff", "border": "#4E79A7"}}, "size": 14.6, "font": {"size": 12, "color": "#ffffff"}, "title": "L\u00edmite diario de consultas de YouTube", "community": 0, "community_name": "Fuentes, fases y claves", "source_file": "PLAN.md", "file_type": "concept", "degree": 2}, {"id": "plan_medicion_cada_30_minutos", "label": "Medici\u00f3n cada 30 minutos (18-20 nov)", "color": {"background": "#4E79A7", "border": "#4E79A7", "highlight": {"background": "#ffffff", "border": "#4E79A7"}}, "size": 16.9, "font": {"size": 12, "color": "#ffffff"}, "title": "Medici\u00f3n cada 30 minutos (18-20 nov)", "community": 0, "community_name": "Fuentes, fases y claves", "source_file": "PLAN.md", "file_type": "concept", "degree": 3}, {"id": "plan_criterios_exito", "label": "Criterios para saber si sali\u00f3 bien", "color": {"background": "#4E79A7", "border": "#4E79A7", "highlight": {"background": "#ffffff", "border": "#4E79A7"}}, "size": 16.9, "font": {"size": 12, "color": "#ffffff"}, "title": "Criterios para saber si sali\u00f3 bien", "community": 0, "community_name": "Fuentes, fases y claves", "source_file": "PLAN.md", "file_type": "document", "degree": 3}, {"id": "plan_riesgos_conocidos", "label": "Riesgos conocidos", "color": {"background": "#4E79A7", "border": "#4E79A7", "highlight": {"background": "#ffffff", "border": "#4E79A7"}}, "size": 19.2, "font": {"size": 12, "color": "#ffffff"}, "title": "Riesgos conocidos", "community": 0, "community_name": "Fuentes, fases y claves", "source_file": "PLAN.md", "file_type": "document", "degree": 4}, {"id": "claude_regla_no_claves_en_repo", "label": "Regla: nunca escribir claves en el repositorio", "color": {"background": "#4E79A7", "border": "#4E79A7", "highlight": {"background": "#ffffff", "border": "#4E79A7"}}, "size": 12.3, "font": {"size": 0, "color": "#ffffff"}, "title": "Regla: nunca escribir claves en el repositorio", "community": 0, "community_name": "Fuentes, fases y claves", "source_file": "CLAUDE.md", "file_type": "rationale", "degree": 1}, {"id": "plan_simple_pero_ampliable", "label": "Principio: simple pero ampliable", "color": {"background": "#4E79A7", "border": "#4E79A7", "highlight": {"background": "#ffffff", "border": "#4E79A7"}}, "size": 14.6, "font": {"size": 12, "color": "#ffffff"}, "title": "Principio: simple pero ampliable", "community": 0, "community_name": "Fuentes, fases y claves", "source_file": "PLAN.md", "file_type": "rationale", "degree": 2}, {"id": "claude_gitattributes_lf", "label": ".gitattributes con finales LF para .sh", "color": {"background": "#E15759", "border": "#E15759", "highlight": {"background": "#ffffff", "border": "#E15759"}}, "size": 12.3, "font": {"size": 0, "color": "#ffffff"}, "title": ".gitattributes con finales LF para .sh", "community": 2, "community_name": "Relevo entre sesiones", "source_file": "CLAUDE.md", "file_type": "concept", "degree": 1}, {"id": "claude_hook_estado_git", "label": "L\u00ednea de estado estado-git.sh", "color": {"background": "#E15759", "border": "#E15759", "highlight": {"background": "#ffffff", "border": "#E15759"}}, "size": 12.3, "font": {"size": 0, "color": "#ffffff"}, "title": "L\u00ednea de estado estado-git.sh", "community": 2, "community_name": "Relevo entre sesiones", "source_file": "CLAUDE.md", "file_type": "concept", "degree": 1}, {"id": "claude_hook_revisar_guardado", "label": "Hook Stop revisar-guardado.sh", "color": {"background": "#E15759", "border": "#E15759", "highlight": {"background": "#ffffff", "border": "#E15759"}}, "size": 14.6, "font": {"size": 12, "color": "#ffffff"}, "title": "Hook Stop revisar-guardado.sh", "community": 2, "community_name": "Relevo entre sesiones", "source_file": "CLAUDE.md", "file_type": "concept", "degree": 2}, {"id": "claude_skill_graphify", "label": "Skill Graphify", "color": {"background": "#E15759", "border": "#E15759", "highlight": {"background": "#ffffff", "border": "#E15759"}}, "size": 16.9, "font": {"size": 12, "color": "#ffffff"}, "title": "Skill Graphify", "community": 2, "community_name": "Relevo entre sesiones", "source_file": "CLAUDE.md", "file_type": "concept", "degree": 3}, {"id": "plan_recuerdo_lanzamiento_gta6", "label": "Recuerdo del lanzamiento de GTA 6 (19 nov 2026)", "color": {"background": "#E15759", "border": "#E15759", "highlight": {"background": "#ffffff", "border": "#E15759"}}, "size": 14.6, "font": {"size": 12, "color": "#ffffff"}, "title": "Recuerdo del lanzamiento de GTA 6 (19 nov 2026)", "community": 2, "community_name": "Relevo entre sesiones", "source_file": "PLAN.md", "file_type": "concept", "degree": 2}, {"id": "_claude_claude_graphify_instruction", "label": "Instrucci\u00f3n Graphify (.claude/CLAUDE.md)", "color": {"background": "#E15759", "border": "#E15759", "highlight": {"background": "#ffffff", "border": "#E15759"}}, "size": 14.6, "font": {"size": 12, "color": "#ffffff"}, "title": "Instrucci\u00f3n Graphify (.claude/CLAUDE.md)", "community": 2, "community_name": "Relevo entre sesiones", "source_file": ".claude/CLAUDE.md", "file_type": "document", "degree": 2}, {"id": "claude_instrucciones_claude", "label": "Instrucciones para Claude (CLAUDE.md)", "color": {"background": "#E15759", "border": "#E15759", "highlight": {"background": "#ffffff", "border": "#E15759"}}, "size": 19.2, "font": {"size": 12, "color": "#ffffff"}, "title": "Instrucciones para Claude (CLAUDE.md)", "community": 2, "community_name": "Relevo entre sesiones", "source_file": "CLAUDE.md", "file_type": "document", "degree": 4}, {"id": "estado_actual_estado_actual", "label": "Estado actual del proyecto (ESTADO_ACTUAL.md)", "color": {"background": "#E15759", "border": "#E15759", "highlight": {"background": "#ffffff", "border": "#E15759"}}, "size": 21.5, "font": {"size": 12, "color": "#ffffff"}, "title": "Estado actual del proyecto (ESTADO_ACTUAL.md)", "community": 2, "community_name": "Relevo entre sesiones", "source_file": "ESTADO_ACTUAL.md", "file_type": "document", "degree": 5}, {"id": "plan_plan", "label": "Plan del proyecto (PLAN.md)", "color": {"background": "#E15759", "border": "#E15759", "highlight": {"background": "#ffffff", "border": "#E15759"}}, "size": 21.5, "font": {"size": 12, "color": "#ffffff"}, "title": "Plan del proyecto (PLAN.md)", "community": 2, "community_name": "Relevo entre sesiones", "source_file": "PLAN.md", "file_type": "document", "degree": 5}, {"id": "readme_readme", "label": "README del repositorio", "color": {"background": "#E15759", "border": "#E15759", "highlight": {"background": "#ffffff", "border": "#E15759"}}, "size": 12.3, "font": {"size": 0, "color": "#ffffff"}, "title": "README del repositorio", "community": 2, "community_name": "Relevo entre sesiones", "source_file": "README.md", "file_type": "document", "degree": 1}, {"id": "claude_github_fuente_unica_de_verdad", "label": "GitHub como \u00fanica fuente de verdad (nube y PC)", "color": {"background": "#E15759", "border": "#E15759", "highlight": {"background": "#ffffff", "border": "#E15759"}}, "size": 14.6, "font": {"size": 12, "color": "#ffffff"}, "title": "GitHub como \u00fanica fuente de verdad (nube y PC)", "community": 2, "community_name": "Relevo entre sesiones", "source_file": "CLAUDE.md", "file_type": "rationale", "degree": 2}, {"id": "claude_guardado_al_terminar_cada_paso", "label": "Guardado al terminar cada paso", "color": {"background": "#E15759", "border": "#E15759", "highlight": {"background": "#ffffff", "border": "#E15759"}}, "size": 21.5, "font": {"size": 12, "color": "#ffffff"}, "title": "Guardado al terminar cada paso", "community": 2, "community_name": "Relevo entre sesiones", "source_file": "CLAUDE.md", "file_type": "rationale", "degree": 5}, {"id": "claude_inicio_de_sesion", "label": "Protocolo al iniciar una sesi\u00f3n", "color": {"background": "#E15759", "border": "#E15759", "highlight": {"background": "#ffffff", "border": "#E15759"}}, "size": 14.6, "font": {"size": 12, "color": "#ffffff"}, "title": "Protocolo al iniciar una sesi\u00f3n", "community": 2, "community_name": "Relevo entre sesiones", "source_file": "CLAUDE.md", "file_type": "rationale", "degree": 2}, {"id": "claude_sistema_de_relevo", "label": "Sistema de relevo entre sesiones", "color": {"background": "#E15759", "border": "#E15759", "highlight": {"background": "#ffffff", "border": "#E15759"}}, "size": 19.2, "font": {"size": 12, "color": "#ffffff"}, "title": "Sistema de relevo entre sesiones", "community": 2, "community_name": "Relevo entre sesiones", "source_file": "CLAUDE.md", "file_type": "rationale", "degree": 4}, {"id": "web_index_aviso_ejemplo", "label": "Aviso de datos de ejemplo (#aviso-ejemplo)", "color": {"background": "#76B7B2", "border": "#76B7B2", "highlight": {"background": "#ffffff", "border": "#76B7B2"}}, "size": 14.6, "font": {"size": 12, "color": "#ffffff"}, "title": "Aviso de datos de ejemplo (#aviso-ejemplo)", "community": 3, "community_name": "Decisiones y reglas de datos", "source_file": "web/index.html", "file_type": "code", "degree": 2}, {"id": "web_index_linea_de_tiempo", "label": "Secci\u00f3n l\u00ednea de tiempo (#linea)", "color": {"background": "#76B7B2", "border": "#76B7B2", "highlight": {"background": "#ffffff", "border": "#76B7B2"}}, "size": 14.6, "font": {"size": 12, "color": "#ffffff"}, "title": "Secci\u00f3n l\u00ednea de tiempo (#linea)", "community": 3, "community_name": "Decisiones y reglas de datos", "source_file": "web/index.html", "file_type": "code", "degree": 2}, {"id": "web_index_seccion_servidores", "label": "Secci\u00f3n estado de servidores (#servidores)", "color": {"background": "#76B7B2", "border": "#76B7B2", "highlight": {"background": "#ffffff", "border": "#76B7B2"}}, "size": 14.6, "font": {"size": 12, "color": "#ffffff"}, "title": "Secci\u00f3n estado de servidores (#servidores)", "community": 3, "community_name": "Decisiones y reglas de datos", "source_file": "web/index.html", "file_type": "code", "degree": 2}, {"id": "estado_actual_fecha_limite_18_nov", "label": "Fecha l\u00edmite: recolector en main antes del 18 nov 2026", "color": {"background": "#76B7B2", "border": "#76B7B2", "highlight": {"background": "#ffffff", "border": "#76B7B2"}}, "size": 14.6, "font": {"size": 12, "color": "#ffffff"}, "title": "Fecha l\u00edmite: recolector en main antes del 18 nov 2026", "community": 3, "community_name": "Decisiones y reglas de datos", "source_file": "ESTADO_ACTUAL.md", "file_type": "concept", "degree": 2}, {"id": "plan_ejecuciones_programadas_github", "label": "Ejecuciones programadas de GitHub (solo desde main)", "color": {"background": "#76B7B2", "border": "#76B7B2", "highlight": {"background": "#ffffff", "border": "#76B7B2"}}, "size": 19.2, "font": {"size": 12, "color": "#ffffff"}, "title": "Ejecuciones programadas de GitHub (solo desde main)", "community": 3, "community_name": "Decisiones y reglas de datos", "source_file": "PLAN.md", "file_type": "concept", "degree": 4}, {"id": "plan_tecnologia_python_html", "label": "Tecnolog\u00eda: Python recolector + HTML/CSS/JS p\u00e1gina", "color": {"background": "#76B7B2", "border": "#76B7B2", "highlight": {"background": "#ffffff", "border": "#76B7B2"}}, "size": 12.3, "font": {"size": 0, "color": "#ffffff"}, "title": "Tecnolog\u00eda: Python recolector + HTML/CSS/JS p\u00e1gina", "community": 3, "community_name": "Decisiones y reglas de datos", "source_file": "PLAN.md", "file_type": "concept", "degree": 1}, {"id": "plan_zona_horaria_santiago", "label": "Zona horaria America/Santiago", "color": {"background": "#76B7B2", "border": "#76B7B2", "highlight": {"background": "#ffffff", "border": "#76B7B2"}}, "size": 16.9, "font": {"size": 12, "color": "#ffffff"}, "title": "Zona horaria America/Santiago", "community": 3, "community_name": "Decisiones y reglas de datos", "source_file": "PLAN.md", "file_type": "concept", "degree": 3}, {"id": "plan_decisiones_tomadas", "label": "Decisiones ya tomadas", "color": {"background": "#76B7B2", "border": "#76B7B2", "highlight": {"background": "#ffffff", "border": "#76B7B2"}}, "size": 26.2, "font": {"size": 12, "color": "#ffffff"}, "title": "Decisiones ya tomadas", "community": 3, "community_name": "Decisiones y reglas de datos", "source_file": "PLAN.md", "file_type": "document", "degree": 7}, {"id": "claude_datos_ejemplo_marcados", "label": "Datos de ejemplo marcados (ejemplo: true)", "color": {"background": "#76B7B2", "border": "#76B7B2", "highlight": {"background": "#ffffff", "border": "#76B7B2"}}, "size": 14.6, "font": {"size": 12, "color": "#ffffff"}, "title": "Datos de ejemplo marcados (ejemplo: true)", "community": 3, "community_name": "Decisiones y reglas de datos", "source_file": "CLAUDE.md", "file_type": "rationale", "degree": 2}, {"id": "claude_regla_horas_utc", "label": "Regla: horas en UTC en los datos", "color": {"background": "#76B7B2", "border": "#76B7B2", "highlight": {"background": "#ffffff", "border": "#76B7B2"}}, "size": 12.3, "font": {"size": 0, "color": "#ffffff"}, "title": "Regla: horas en UTC en los datos", "community": 3, "community_name": "Decisiones y reglas de datos", "source_file": "CLAUDE.md", "file_type": "rationale", "degree": 1}, {"id": "plan_descartados", "label": "Descartado: jugadores en vivo y tendencias de X", "color": {"background": "#76B7B2", "border": "#76B7B2", "highlight": {"background": "#ffffff", "border": "#76B7B2"}}, "size": 12.3, "font": {"size": 0, "color": "#ffffff"}, "title": "Descartado: jugadores en vivo y tendencias de X", "community": 3, "community_name": "Decisiones y reglas de datos", "source_file": "PLAN.md", "file_type": "rationale", "degree": 1}, {"id": "plan_tolerancia_a_fallos", "label": "Si una fuente falla: hueco visible, reintento, aviso", "color": {"background": "#76B7B2", "border": "#76B7B2", "highlight": {"background": "#ffffff", "border": "#76B7B2"}}, "size": 16.9, "font": {"size": 12, "color": "#ffffff"}, "title": "Si una fuente falla: hueco visible, reintento, aviso", "community": 3, "community_name": "Decisiones y reglas de datos", "source_file": "PLAN.md", "file_type": "rationale", "degree": 3}, {"id": "web_index_boton_cambio_estilo", "label": "Bot\u00f3n de cambio de estilo (data-poner)", "color": {"background": "#59A14F", "border": "#59A14F", "highlight": {"background": "#ffffff", "border": "#59A14F"}}, "size": 14.6, "font": {"size": 12, "color": "#ffffff"}, "title": "Bot\u00f3n de cambio de estilo (data-poner)", "community": 4, "community_name": "Dise\u00f1o Miami y estilos", "source_file": "web/index.html", "file_type": "code", "degree": 2}, {"id": "web_index_escena_26", "label": "Escena Miami actual", "color": {"background": "#59A14F", "border": "#59A14F", "highlight": {"background": "#ffffff", "border": "#59A14F"}}, "size": 16.9, "font": {"size": 12, "color": "#ffffff"}, "title": "Escena Miami actual", "community": 4, "community_name": "Dise\u00f1o Miami y estilos", "source_file": "web/index.html", "file_type": "code", "degree": 3}, {"id": "web_index_escena_80", "label": "Escena Miami a\u00f1os 80", "color": {"background": "#59A14F", "border": "#59A14F", "highlight": {"background": "#ffffff", "border": "#59A14F"}}, "size": 16.9, "font": {"size": 12, "color": "#ffffff"}, "title": "Escena Miami a\u00f1os 80", "community": 4, "community_name": "Dise\u00f1o Miami y estilos", "source_file": "web/index.html", "file_type": "code", "degree": 3}, {"id": "web_index_index_html", "label": "web/index.html (p\u00e1gina del recuerdo)", "color": {"background": "#59A14F", "border": "#59A14F", "highlight": {"background": "#ffffff", "border": "#59A14F"}}, "size": 21.5, "font": {"size": 12, "color": "#ffffff"}, "title": "web/index.html (p\u00e1gina del recuerdo)", "community": 4, "community_name": "Dise\u00f1o Miami y estilos", "source_file": "web/index.html", "file_type": "code", "degree": 5}, {"id": "web_index_simbolo_edificios", "label": "S\u00edmbolo SVG edificios art d\u00e9co", "color": {"background": "#59A14F", "border": "#59A14F", "highlight": {"background": "#ffffff", "border": "#59A14F"}}, "size": 14.6, "font": {"size": 12, "color": "#ffffff"}, "title": "S\u00edmbolo SVG edificios art d\u00e9co", "community": 4, "community_name": "Dise\u00f1o Miami y estilos", "source_file": "web/index.html", "file_type": "code", "degree": 2}, {"id": "web_index_simbolo_palmera", "label": "S\u00edmbolo SVG palmera", "color": {"background": "#59A14F", "border": "#59A14F", "highlight": {"background": "#ffffff", "border": "#59A14F"}}, "size": 14.6, "font": {"size": 12, "color": "#ffffff"}, "title": "S\u00edmbolo SVG palmera", "community": 4, "community_name": "Dise\u00f1o Miami y estilos", "source_file": "web/index.html", "file_type": "code", "degree": 2}, {"id": "claude_revision_visual_playwright", "label": "Revisi\u00f3n visual con Playwright de ambos estilos", "color": {"background": "#59A14F", "border": "#59A14F", "highlight": {"background": "#ffffff", "border": "#59A14F"}}, "size": 14.6, "font": {"size": 12, "color": "#ffffff"}, "title": "Revisi\u00f3n visual con Playwright de ambos estilos", "community": 4, "community_name": "Dise\u00f1o Miami y estilos", "source_file": "CLAUDE.md", "file_type": "concept", "degree": 2}, {"id": "claude_skill_impeccable", "label": "Skill Impeccable (dise\u00f1o)", "color": {"background": "#59A14F", "border": "#59A14F", "highlight": {"background": "#ffffff", "border": "#59A14F"}}, "size": 14.6, "font": {"size": 12, "color": "#ffffff"}, "title": "Skill Impeccable (dise\u00f1o)", "community": 4, "community_name": "Dise\u00f1o Miami y estilos", "source_file": "CLAUDE.md", "file_type": "concept", "degree": 2}, {"id": "plan_diseno_miami_dos_estilos", "label": "Dise\u00f1o Miami con dos estilos (1986 / 2026)", "color": {"background": "#59A14F", "border": "#59A14F", "highlight": {"background": "#ffffff", "border": "#59A14F"}}, "size": 23.8, "font": {"size": 12, "color": "#ffffff"}, "title": "Dise\u00f1o Miami con dos estilos (1986 / 2026)", "community": 4, "community_name": "Dise\u00f1o Miami y estilos", "source_file": "PLAN.md", "file_type": "concept", "degree": 6}, {"id": "plan_tipografias_google_fonts", "label": "Tipograf\u00edas Monoton, Rajdhani, Limelight, Outfit", "color": {"background": "#59A14F", "border": "#59A14F", "highlight": {"background": "#ffffff", "border": "#59A14F"}}, "size": 14.6, "font": {"size": 12, "color": "#ffffff"}, "title": "Tipograf\u00edas Monoton, Rajdhani, Limelight, Outfit", "community": 4, "community_name": "Dise\u00f1o Miami y estilos", "source_file": "PLAN.md", "file_type": "concept", "degree": 2}, {"id": "estado_actual_donde_quedamos", "label": "D\u00f3nde quedamos", "color": {"background": "#59A14F", "border": "#59A14F", "highlight": {"background": "#ffffff", "border": "#59A14F"}}, "size": 19.2, "font": {"size": 12, "color": "#ffffff"}, "title": "D\u00f3nde quedamos", "community": 4, "community_name": "Dise\u00f1o Miami y estilos", "source_file": "ESTADO_ACTUAL.md", "file_type": "document", "degree": 4}, {"id": "claude_web_sin_librerias", "label": "P\u00e1gina web sin librer\u00edas ni compilaci\u00f3n", "color": {"background": "#59A14F", "border": "#59A14F", "highlight": {"background": "#ffffff", "border": "#59A14F"}}, "size": 12.3, "font": {"size": 0, "color": "#ffffff"}, "title": "P\u00e1gina web sin librer\u00edas ni compilaci\u00f3n", "community": 4, "community_name": "Dise\u00f1o Miami y estilos", "source_file": "CLAUDE.md", "file_type": "rationale", "degree": 1}, {"id": "web_index_titulares", "label": "Secci\u00f3n titulares (#noticias)", "color": {"background": "#EDC948", "border": "#EDC948", "highlight": {"background": "#ffffff", "border": "#EDC948"}}, "size": 12.3, "font": {"size": 0, "color": "#ffffff"}, "title": "Secci\u00f3n titulares (#noticias)", "community": 5, "community_name": "Pruebas de fuentes sin clave", "source_file": "web/index.html", "file_type": "code", "degree": 1}, {"id": "claude_entorno_recuerdo_gta6", "label": "Entorno en la nube recuerdo-gta6", "color": {"background": "#EDC948", "border": "#EDC948", "highlight": {"background": "#ffffff", "border": "#EDC948"}}, "size": 12.3, "font": {"size": 0, "color": "#ffffff"}, "title": "Entorno en la nube recuerdo-gta6", "community": 5, "community_name": "Pruebas de fuentes sin clave", "source_file": "CLAUDE.md", "file_type": "concept", "degree": 1}, {"id": "plan_fuente_estado_playstation", "label": "Estado de PlayStation (SCEA.json)", "color": {"background": "#EDC948", "border": "#EDC948", "highlight": {"background": "#ffffff", "border": "#EDC948"}}, "size": 14.6, "font": {"size": 12, "color": "#ffffff"}, "title": "Estado de PlayStation (SCEA.json)", "community": 5, "community_name": "Pruebas de fuentes sin clave", "source_file": "PLAN.md", "file_type": "concept", "degree": 2}, {"id": "plan_fuente_estado_rockstar", "label": "Estado de Rockstar (no funciona)", "color": {"background": "#EDC948", "border": "#EDC948", "highlight": {"background": "#ffffff", "border": "#EDC948"}}, "size": 14.6, "font": {"size": 12, "color": "#ffffff"}, "title": "Estado de Rockstar (no funciona)", "community": 5, "community_name": "Pruebas de fuentes sin clave", "source_file": "PLAN.md", "file_type": "concept", "degree": 2}, {"id": "plan_fuente_estado_servidores", "label": "Fuente estado de servidores (Rockstar, PSN, Xbox)", "color": {"background": "#EDC948", "border": "#EDC948", "highlight": {"background": "#ffffff", "border": "#EDC948"}}, "size": 19.2, "font": {"size": 12, "color": "#ffffff"}, "title": "Fuente estado de servidores (Rockstar, PSN, Xbox)", "community": 5, "community_name": "Pruebas de fuentes sin clave", "source_file": "PLAN.md", "file_type": "concept", "degree": 4}, {"id": "plan_fuente_estado_xbox", "label": "Estado de Xbox (servicestatusv6)", "color": {"background": "#EDC948", "border": "#EDC948", "highlight": {"background": "#ffffff", "border": "#EDC948"}}, "size": 14.6, "font": {"size": 12, "color": "#ffffff"}, "title": "Estado de Xbox (servicestatusv6)", "community": 5, "community_name": "Pruebas de fuentes sin clave", "source_file": "PLAN.md", "file_type": "concept", "degree": 2}, {"id": "plan_fuente_noticias_google", "label": "Fuente titulares Google Noticias (RSS)", "color": {"background": "#EDC948", "border": "#EDC948", "highlight": {"background": "#ffffff", "border": "#EDC948"}}, "size": 14.6, "font": {"size": 12, "color": "#ffffff"}, "title": "Fuente titulares Google Noticias (RSS)", "community": 5, "community_name": "Pruebas de fuentes sin clave", "source_file": "PLAN.md", "file_type": "concept", "degree": 2}, {"id": "plan_pruebas_reales_fuentes", "label": "Resultado de las pruebas reales (12 nov 2026)", "color": {"background": "#EDC948", "border": "#EDC948", "highlight": {"background": "#ffffff", "border": "#EDC948"}}, "size": 28.5, "font": {"size": 12, "color": "#ffffff"}, "title": "Resultado de las pruebas reales (12 nov 2026)", "community": 5, "community_name": "Pruebas de fuentes sin clave", "source_file": "PLAN.md", "file_type": "document", "degree": 8}, {"id": "claude_regla_verificar_fuentes", "label": "Regla: verificar cada fuente con consulta real", "color": {"background": "#EDC948", "border": "#EDC948", "highlight": {"background": "#ffffff", "border": "#EDC948"}}, "size": 12.3, "font": {"size": 0, "color": "#ffffff"}, "title": "Regla: verificar cada fuente con consulta real", "community": 5, "community_name": "Pruebas de fuentes sin clave", "source_file": "CLAUDE.md", "file_type": "rationale", "degree": 1}, {"id": "web_index_carga_scripts", "label": "Carga de scripts (datos-ejemplo.js, datos.js, eventos.js, app.js)", "color": {"background": "#B07AA1", "border": "#B07AA1", "highlight": {"background": "#ffffff", "border": "#B07AA1"}}, "size": 12.3, "font": {"size": 0, "color": "#ffffff"}, "title": "Carga de scripts (datos-ejemplo.js, datos.js, eventos.js, app.js)", "community": 6, "community_name": "Recolector y carpeta de datos", "source_file": "web/index.html", "file_type": "code", "degree": 1}, {"id": "plan_carpeta_datos", "label": "Carpeta datos/ (mediciones)", "color": {"background": "#B07AA1", "border": "#B07AA1", "highlight": {"background": "#ffffff", "border": "#B07AA1"}}, "size": 16.9, "font": {"size": 12, "color": "#ffffff"}, "title": "Carpeta datos/ (mediciones)", "community": 6, "community_name": "Recolector y carpeta de datos", "source_file": "PLAN.md", "file_type": "concept", "degree": 3}, {"id": "plan_formato_datos_window_datos", "label": "Formato de datos: window.DATOS igual a window.DATOS_EJEMPLO", "color": {"background": "#B07AA1", "border": "#B07AA1", "highlight": {"background": "#ffffff", "border": "#B07AA1"}}, "size": 19.2, "font": {"size": 12, "color": "#ffffff"}, "title": "Formato de datos: window.DATOS igual a window.DATOS_EJEMPLO", "community": 6, "community_name": "Recolector y carpeta de datos", "source_file": "PLAN.md", "file_type": "concept", "degree": 4}, {"id": "plan_recolector", "label": "Recolector de datos en Python (recolector/)", "color": {"background": "#B07AA1", "border": "#B07AA1", "highlight": {"background": "#ffffff", "border": "#B07AA1"}}, "size": 26.2, "font": {"size": 12, "color": "#ffffff"}, "title": "Recolector de datos en Python (recolector/)", "community": 6, "community_name": "Recolector y carpeta de datos", "source_file": "PLAN.md", "file_type": "concept", "degree": 7}, {"id": "estado_actual_pendiente", "label": "Lista de pendientes", "color": {"background": "#B07AA1", "border": "#B07AA1", "highlight": {"background": "#ffffff", "border": "#B07AA1"}}, "size": 21.5, "font": {"size": 12, "color": "#ffffff"}, "title": "Lista de pendientes", "community": 6, "community_name": "Recolector y carpeta de datos", "source_file": "ESTADO_ACTUAL.md", "file_type": "document", "degree": 5}, {"id": "guia_claves_guia_claves", "label": "Gu\u00eda para crear las claves de Twitch y YouTube", "color": {"background": "#B07AA1", "border": "#B07AA1", "highlight": {"background": "#ffffff", "border": "#B07AA1"}}, "size": 12.3, "font": {"size": 0, "color": "#ffffff"}, "title": "Gu\u00eda para crear las claves de Twitch y YouTube", "community": 6, "community_name": "Recolector y carpeta de datos", "source_file": "GUIA_CLAVES.md", "file_type": "document", "degree": 1}, {"id": "plan_estructura_carpetas", "label": "Estructura de carpetas (web/, recolector/, datos/, .github/workflows/)", "color": {"background": "#B07AA1", "border": "#B07AA1", "highlight": {"background": "#ffffff", "border": "#B07AA1"}}, "size": 16.9, "font": {"size": 12, "color": "#ffffff"}, "title": "Estructura de carpetas (web/, recolector/, datos/, .github/workflows/)", "community": 6, "community_name": "Recolector y carpeta de datos", "source_file": "PLAN.md", "file_type": "document", "degree": 3}, {"id": "claude_regla_no_borrar_datos", "label": "Regla: no borrar ni reescribir datos/", "color": {"background": "#B07AA1", "border": "#B07AA1", "highlight": {"background": "#ffffff", "border": "#B07AA1"}}, "size": 12.3, "font": {"size": 0, "color": "#ffffff"}, "title": "Regla: no borrar ni reescribir datos/", "community": 6, "community_name": "Recolector y carpeta de datos", "source_file": "CLAUDE.md", "file_type": "rationale", "degree": 1}];
+const RAW_EDGES = [{"from": "web_app_grafico_dibujar", "to": "web_app_compacto", "label": "calls", "title": "calls [EXTRACTED]", "dashes": false, "width": 2, "color": {"opacity": 0.7}, "confidence": "EXTRACTED"}, {"from": "web_app_pintar", "to": "web_app_compacto", "label": "calls", "title": "calls [EXTRACTED]", "dashes": false, "width": 2, "color": {"opacity": 0.7}, "confidence": "EXTRACTED"}, {"from": "web_app", "to": "web_app_compacto", "label": "contains", "title": "contains [EXTRACTED]", "dashes": false, "width": 2, "color": {"opacity": 0.7}, "confidence": "EXTRACTED"}, {"from": "web_app", "to": "web_app_cuenta", "label": "contains", "title": "contains [EXTRACTED]", "dashes": false, "width": 2, "color": {"opacity": 0.7}, "confidence": "EXTRACTED"}, {"from": "web_app_desantiago", "to": "web_app_desfase", "label": "calls", "title": "calls [EXTRACTED]", "dashes": false, "width": 2, "color": {"opacity": 0.7}, "confidence": "EXTRACTED"}, {"from": "web_app", "to": "web_app_desantiago", "label": "contains", "title": "contains [EXTRACTED]", "dashes": false, "width": 2, "color": {"opacity": 0.7}, "confidence": "EXTRACTED"}, {"from": "web_app_desfase", "to": "web_app_partes", "label": "calls", "title": "calls [EXTRACTED]", "dashes": false, "width": 2, "color": {"opacity": 0.7}, "confidence": "EXTRACTED"}, {"from": "web_app_grafico_dibujar", "to": "web_app_desfase", "label": "calls", "title": "calls [EXTRACTED]", "dashes": false, "width": 2, "color": {"opacity": 0.7}, "confidence": "EXTRACTED"}, {"from": "web_app", "to": "web_app_desfase", "label": "contains", "title": "contains [EXTRACTED]", "dashes": false, "width": 2, "color": {"opacity": 0.7}, "confidence": "EXTRACTED"}, {"from": "web_app_grafico_dibujar", "to": "web_app_dia", "label": "calls", "title": "calls [EXTRACTED]", "dashes": false, "width": 2, "color": {"opacity": 0.7}, "confidence": "EXTRACTED"}, {"from": "web_app_grafico_dibujar_mover", "to": "web_app_dia", "label": "calls", "title": "calls [EXTRACTED]", "dashes": false, "width": 2, "color": {"opacity": 0.7}, "confidence": "EXTRACTED"}, {"from": "web_app_pintar", "to": "web_app_dia", "label": "calls", "title": "calls [EXTRACTED]", "dashes": false, "width": 2, "color": {"opacity": 0.7}, "confidence": "EXTRACTED"}, {"from": "web_app", "to": "web_app_dia", "label": "contains", "title": "contains [EXTRACTED]", "dashes": false, "width": 2, "color": {"opacity": 0.7}, "confidence": "EXTRACTED"}, {"from": "web_app", "to": "web_app_grafico", "label": "contains", "title": "contains [EXTRACTED]", "dashes": false, "width": 2, "color": {"opacity": 0.7}, "confidence": "EXTRACTED"}, {"from": "web_app_grafico", "to": "web_app_grafico_dibujar", "label": "contains", "title": "contains [EXTRACTED]", "dashes": false, "width": 2, "color": {"opacity": 0.7}, "confidence": "EXTRACTED"}, {"from": "web_app_grafico_dibujar", "to": "web_app_partes", "label": "calls", "title": "calls [EXTRACTED]", "dashes": false, "width": 2, "color": {"opacity": 0.7}, "confidence": "EXTRACTED"}, {"from": "web_app_grafico_dibujar", "to": "web_app_hora", "label": "calls", "title": "calls [EXTRACTED]", "dashes": false, "width": 2, "color": {"opacity": 0.7}, "confidence": "EXTRACTED"}, {"from": "web_app_grafico_dibujar", "to": "web_app_grafico_dibujar_mover", "label": "indirect_call", "title": "indirect_call [INFERRED]", "dashes": true, "width": 1, "color": {"opacity": 0.35}, "confidence": "INFERRED"}, {"from": "web_app_grafico_dibujar", "to": "web_app_grafico_dibujar_salir", "label": "indirect_call", "title": "indirect_call [INFERRED]", "dashes": true, "width": 1, "color": {"opacity": 0.35}, "confidence": "INFERRED"}, {"from": "web_app_grafico_dibujar_mover", "to": "web_app_hora", "label": "calls", "title": "calls [EXTRACTED]", "dashes": false, "width": 2, "color": {"opacity": 0.7}, "confidence": "EXTRACTED"}, {"from": "web_app_grafico_dibujar_mover", "to": "web_app_num", "label": "calls", "title": "calls [EXTRACTED]", "dashes": false, "width": 2, "color": {"opacity": 0.7}, "confidence": "EXTRACTED"}, {"from": "web_app_pintar", "to": "web_app_hora", "label": "calls", "title": "calls [EXTRACTED]", "dashes": false, "width": 2, "color": {"opacity": 0.7}, "confidence": "EXTRACTED"}, {"from": "web_app", "to": "web_app_hora", "label": "contains", "title": "contains [EXTRACTED]", "dashes": false, "width": 2, "color": {"opacity": 0.7}, "confidence": "EXTRACTED"}, {"from": "web_app_pintar", "to": "web_app_limpio", "label": "calls", "title": "calls [EXTRACTED]", "dashes": false, "width": 2, "color": {"opacity": 0.7}, "confidence": "EXTRACTED"}, {"from": "web_app", "to": "web_app_limpio", "label": "contains", "title": "contains [EXTRACTED]", "dashes": false, "width": 2, "color": {"opacity": 0.7}, "confidence": "EXTRACTED"}, {"from": "web_app", "to": "web_app_maximo", "label": "contains", "title": "contains [EXTRACTED]", "dashes": false, "width": 2, "color": {"opacity": 0.7}, "confidence": "EXTRACTED"}, {"from": "web_app_paso", "to": "web_app_num", "label": "calls", "title": "calls [EXTRACTED]", "dashes": false, "width": 2, "color": {"opacity": 0.7}, "confidence": "EXTRACTED"}, {"from": "web_app_pintar", "to": "web_app_num", "label": "calls", "title": "calls [EXTRACTED]", "dashes": false, "width": 2, "color": {"opacity": 0.7}, "confidence": "EXTRACTED"}, {"from": "web_app", "to": "web_app_num", "label": "contains", "title": "contains [EXTRACTED]", "dashes": false, "width": 2, "color": {"opacity": 0.7}, "confidence": "EXTRACTED"}, {"from": "web_app", "to": "web_app_partes", "label": "contains", "title": "contains [EXTRACTED]", "dashes": false, "width": 2, "color": {"opacity": 0.7}, "confidence": "EXTRACTED"}, {"from": "web_app", "to": "web_app_paso", "label": "indirect_call", "title": "indirect_call [INFERRED]", "dashes": true, "width": 1, "color": {"opacity": 0.35}, "confidence": "INFERRED"}, {"from": "web_app", "to": "web_app_pintar", "label": "contains", "title": "contains [EXTRACTED]", "dashes": false, "width": 2, "color": {"opacity": 0.7}, "confidence": "EXTRACTED"}, {"from": "web_datos_ejemplo", "to": "web_datos_ejemplo_azar", "label": "contains", "title": "contains [EXTRACTED]", "dashes": false, "width": 2, "color": {"opacity": 0.7}, "confidence": "EXTRACTED"}, {"from": "claude_hooks_estado_git", "to": "claude_hooks_estado_git_sh__entry", "label": "contains", "title": "contains [EXTRACTED]", "dashes": false, "width": 2, "color": {"opacity": 0.7}, "confidence": "EXTRACTED"}, {"from": "claude_hooks_revisar_guardado", "to": "claude_hooks_revisar_guardado_sh__entry", "label": "contains", "title": "contains [EXTRACTED]", "dashes": false, "width": 2, "color": {"opacity": 0.7}, "confidence": "EXTRACTED"}, {"from": "web_index_grafico_trends", "to": "plan_fuente_google_trends", "label": "shares_data_with", "title": "shares_data_with [INFERRED]", "dashes": true, "width": 1, "color": {"opacity": 0.35}, "confidence": "INFERRED"}, {"from": "web_index_grafico_twitch", "to": "plan_fuente_twitch", "label": "shares_data_with", "title": "shares_data_with [INFERRED]", "dashes": true, "width": 1, "color": {"opacity": 0.35}, "confidence": "INFERRED"}, {"from": "web_index_tabla_twitch", "to": "plan_fuente_twitch", "label": "shares_data_with", "title": "shares_data_with [INFERRED]", "dashes": true, "width": 1, "color": {"opacity": 0.35}, "confidence": "INFERRED"}, {"from": "web_index_tabla_youtube", "to": "plan_fuente_youtube", "label": "shares_data_with", "title": "shares_data_with [INFERRED]", "dashes": true, "width": 1, "color": {"opacity": 0.35}, "confidence": "INFERRED"}, {"from": "guia_claves_clave_twitch", "to": "guia_claves_github_secrets", "label": "references", "title": "references [EXTRACTED]", "dashes": false, "width": 2, "color": {"opacity": 0.7}, "confidence": "EXTRACTED"}, {"from": "guia_claves_clave_twitch", "to": "plan_fuente_twitch", "label": "conceptually_related_to", "title": "conceptually_related_to [INFERRED]", "dashes": true, "width": 1, "color": {"opacity": 0.35}, "confidence": "INFERRED"}, {"from": "guia_claves_clave_youtube", "to": "guia_claves_github_secrets", "label": "references", "title": "references [EXTRACTED]", "dashes": false, "width": 2, "color": {"opacity": 0.7}, "confidence": "EXTRACTED"}, {"from": "guia_claves_clave_youtube", "to": "plan_fuente_youtube", "label": "conceptually_related_to", "title": "conceptually_related_to [INFERRED]", "dashes": true, "width": 1, "color": {"opacity": 0.35}, "confidence": "INFERRED"}, {"from": "claude_regla_no_claves_en_repo", "to": "guia_claves_github_secrets", "label": "references", "title": "references [EXTRACTED]", "dashes": false, "width": 2, "color": {"opacity": 0.7}, "confidence": "EXTRACTED"}, {"from": "plan_riesgos_conocidos", "to": "guia_claves_github_secrets", "label": "references", "title": "references [EXTRACTED]", "dashes": false, "width": 2, "color": {"opacity": 0.7}, "confidence": "EXTRACTED"}, {"from": "guia_claves_github_secrets", "to": "plan_recolector", "label": "shares_data_with", "title": "shares_data_with [INFERRED]", "dashes": true, "width": 1, "color": {"opacity": 0.35}, "confidence": "INFERRED"}, {"from": "plan_fase_2_busqueda_calmada", "to": "plan_fase_1_tiempo_real", "label": "conceptually_related_to", "title": "conceptually_related_to [EXTRACTED]", "dashes": false, "width": 2, "color": {"opacity": 0.7}, "confidence": "EXTRACTED"}, {"from": "plan_fase_1_tiempo_real", "to": "plan_medicion_cada_30_minutos", "label": "references", "title": "references [EXTRACTED]", "dashes": false, "width": 2, "color": {"opacity": 0.7}, "confidence": "EXTRACTED"}, {"from": "plan_fase_2_busqueda_calmada", "to": "plan_fuente_google_trends", "label": "references", "title": "references [EXTRACTED]", "dashes": false, "width": 2, "color": {"opacity": 0.7}, "confidence": "EXTRACTED"}, {"from": "plan_fase_2_busqueda_calmada", "to": "plan_fuente_twitch", "label": "references", "title": "references [EXTRACTED]", "dashes": false, "width": 2, "color": {"opacity": 0.7}, "confidence": "EXTRACTED"}, {"from": "plan_fase_2_busqueda_calmada", "to": "plan_fuente_youtube", "label": "references", "title": "references [EXTRACTED]", "dashes": false, "width": 2, "color": {"opacity": 0.7}, "confidence": "EXTRACTED"}, {"from": "plan_pruebas_reales_fuentes", "to": "plan_fuente_google_trends", "label": "references", "title": "references [EXTRACTED]", "dashes": false, "width": 2, "color": {"opacity": 0.7}, "confidence": "EXTRACTED"}, {"from": "plan_riesgos_conocidos", "to": "plan_fuente_google_trends", "label": "references", "title": "references [EXTRACTED]", "dashes": false, "width": 2, "color": {"opacity": 0.7}, "confidence": "EXTRACTED"}, {"from": "estado_actual_pendiente", "to": "plan_fuente_twitch", "label": "references", "title": "references [EXTRACTED]", "dashes": false, "width": 2, "color": {"opacity": 0.7}, "confidence": "EXTRACTED"}, {"from": "plan_limite_diario_youtube", "to": "plan_fuente_youtube", "label": "conceptually_related_to", "title": "conceptually_related_to [EXTRACTED]", "dashes": false, "width": 2, "color": {"opacity": 0.7}, "confidence": "EXTRACTED"}, {"from": "plan_riesgos_conocidos", "to": "plan_limite_diario_youtube", "label": "references", "title": "references [EXTRACTED]", "dashes": false, "width": 2, "color": {"opacity": 0.7}, "confidence": "EXTRACTED"}, {"from": "plan_criterios_exito", "to": "plan_medicion_cada_30_minutos", "label": "references", "title": "references [EXTRACTED]", "dashes": false, "width": 2, "color": {"opacity": 0.7}, "confidence": "EXTRACTED"}, {"from": "plan_decisiones_tomadas", "to": "plan_medicion_cada_30_minutos", "label": "references", "title": "references [EXTRACTED]", "dashes": false, "width": 2, "color": {"opacity": 0.7}, "confidence": "EXTRACTED"}, {"from": "plan_criterios_exito", "to": "plan_diseno_miami_dos_estilos", "label": "references", "title": "references [EXTRACTED]", "dashes": false, "width": 2, "color": {"opacity": 0.7}, "confidence": "EXTRACTED"}, {"from": "plan_criterios_exito", "to": "plan_simple_pero_ampliable", "label": "references", "title": "references [EXTRACTED]", "dashes": false, "width": 2, "color": {"opacity": 0.7}, "confidence": "EXTRACTED"}, {"from": "plan_riesgos_conocidos", "to": "plan_ejecuciones_programadas_github", "label": "references", "title": "references [EXTRACTED]", "dashes": false, "width": 2, "color": {"opacity": 0.7}, "confidence": "EXTRACTED"}, {"from": "plan_simple_pero_ampliable", "to": "plan_recolector", "label": "rationale_for", "title": "rationale_for [INFERRED]", "dashes": true, "width": 1, "color": {"opacity": 0.35}, "confidence": "INFERRED"}, {"from": "claude_gitattributes_lf", "to": "claude_hook_revisar_guardado", "label": "conceptually_related_to", "title": "conceptually_related_to [EXTRACTED]", "dashes": false, "width": 2, "color": {"opacity": 0.7}, "confidence": "EXTRACTED"}, {"from": "claude_hook_estado_git", "to": "claude_guardado_al_terminar_cada_paso", "label": "conceptually_related_to", "title": "conceptually_related_to [EXTRACTED]", "dashes": false, "width": 2, "color": {"opacity": 0.7}, "confidence": "EXTRACTED"}, {"from": "claude_hook_revisar_guardado", "to": "claude_guardado_al_terminar_cada_paso", "label": "implements", "title": "implements [EXTRACTED]", "dashes": false, "width": 2, "color": {"opacity": 0.7}, "confidence": "EXTRACTED"}, {"from": "_claude_claude_graphify_instruction", "to": "claude_skill_graphify", "label": "references", "title": "references [EXTRACTED]", "dashes": false, "width": 2, "color": {"opacity": 0.7}, "confidence": "EXTRACTED"}, {"from": "estado_actual_pendiente", "to": "claude_skill_graphify", "label": "references", "title": "references [EXTRACTED]", "dashes": false, "width": 2, "color": {"opacity": 0.7}, "confidence": "EXTRACTED"}, {"from": "plan_plan", "to": "claude_skill_graphify", "label": "references", "title": "references [EXTRACTED]", "dashes": false, "width": 2, "color": {"opacity": 0.7}, "confidence": "EXTRACTED"}, {"from": "plan_plan", "to": "plan_recuerdo_lanzamiento_gta6", "label": "references", "title": "references [EXTRACTED]", "dashes": false, "width": 2, "color": {"opacity": 0.7}, "confidence": "EXTRACTED"}, {"from": "readme_readme", "to": "plan_recuerdo_lanzamiento_gta6", "label": "conceptually_related_to", "title": "conceptually_related_to [INFERRED]", "dashes": true, "width": 1, "color": {"opacity": 0.35}, "confidence": "INFERRED"}, {"from": "claude_instrucciones_claude", "to": "_claude_claude_graphify_instruction", "label": "semantically_similar_to", "title": "semantically_similar_to [INFERRED]", "dashes": true, "width": 1, "color": {"opacity": 0.35}, "confidence": "INFERRED"}, {"from": "claude_instrucciones_claude", "to": "claude_sistema_de_relevo", "label": "references", "title": "references [EXTRACTED]", "dashes": false, "width": 2, "color": {"opacity": 0.7}, "confidence": "EXTRACTED"}, {"from": "claude_instrucciones_claude", "to": "plan_ejecuciones_programadas_github", "label": "references", "title": "references [EXTRACTED]", "dashes": false, "width": 2, "color": {"opacity": 0.7}, "confidence": "EXTRACTED"}, {"from": "estado_actual_estado_actual", "to": "claude_instrucciones_claude", "label": "references", "title": "references [EXTRACTED]", "dashes": false, "width": 2, "color": {"opacity": 0.7}, "confidence": "EXTRACTED"}, {"from": "claude_guardado_al_terminar_cada_paso", "to": "estado_actual_estado_actual", "label": "references", "title": "references [EXTRACTED]", "dashes": false, "width": 2, "color": {"opacity": 0.7}, "confidence": "EXTRACTED"}, {"from": "claude_inicio_de_sesion", "to": "estado_actual_estado_actual", "label": "references", "title": "references [EXTRACTED]", "dashes": false, "width": 2, "color": {"opacity": 0.7}, "confidence": "EXTRACTED"}, {"from": "claude_sistema_de_relevo", "to": "estado_actual_estado_actual", "label": "references", "title": "references [EXTRACTED]", "dashes": false, "width": 2, "color": {"opacity": 0.7}, "confidence": "EXTRACTED"}, {"from": "estado_actual_estado_actual", "to": "plan_plan", "label": "references", "title": "references [EXTRACTED]", "dashes": false, "width": 2, "color": {"opacity": 0.7}, "confidence": "EXTRACTED"}, {"from": "claude_guardado_al_terminar_cada_paso", "to": "plan_plan", "label": "references", "title": "references [EXTRACTED]", "dashes": false, "width": 2, "color": {"opacity": 0.7}, "confidence": "EXTRACTED"}, {"from": "claude_inicio_de_sesion", "to": "plan_plan", "label": "references", "title": "references [EXTRACTED]", "dashes": false, "width": 2, "color": {"opacity": 0.7}, "confidence": "EXTRACTED"}, {"from": "claude_github_fuente_unica_de_verdad", "to": "claude_guardado_al_terminar_cada_paso", "label": "references", "title": "references [EXTRACTED]", "dashes": false, "width": 2, "color": {"opacity": 0.7}, "confidence": "EXTRACTED"}, {"from": "claude_github_fuente_unica_de_verdad", "to": "claude_sistema_de_relevo", "label": "conceptually_related_to", "title": "conceptually_related_to [INFERRED]", "dashes": true, "width": 1, "color": {"opacity": 0.35}, "confidence": "INFERRED"}, {"from": "estado_actual_donde_quedamos", "to": "claude_sistema_de_relevo", "label": "references", "title": "references [EXTRACTED]", "dashes": false, "width": 2, "color": {"opacity": 0.7}, "confidence": "EXTRACTED"}, {"from": "web_index_aviso_ejemplo", "to": "plan_formato_datos_window_datos", "label": "conceptually_related_to", "title": "conceptually_related_to [INFERRED]", "dashes": true, "width": 1, "color": {"opacity": 0.35}, "confidence": "INFERRED"}, {"from": "claude_datos_ejemplo_marcados", "to": "web_index_aviso_ejemplo", "label": "rationale_for", "title": "rationale_for [INFERRED]", "dashes": true, "width": 1, "color": {"opacity": 0.35}, "confidence": "INFERRED"}, {"from": "web_index_linea_de_tiempo", "to": "plan_zona_horaria_santiago", "label": "references", "title": "references [EXTRACTED]", "dashes": false, "width": 2, "color": {"opacity": 0.7}, "confidence": "EXTRACTED"}, {"from": "web_index_linea_de_tiempo", "to": "plan_decisiones_tomadas", "label": "implements", "title": "implements [INFERRED]", "dashes": true, "width": 1, "color": {"opacity": 0.35}, "confidence": "INFERRED"}, {"from": "web_index_seccion_servidores", "to": "plan_tolerancia_a_fallos", "label": "implements", "title": "implements [INFERRED]", "dashes": true, "width": 1, "color": {"opacity": 0.35}, "confidence": "INFERRED"}, {"from": "web_index_seccion_servidores", "to": "plan_fuente_estado_servidores", "label": "shares_data_with", "title": "shares_data_with [INFERRED]", "dashes": true, "width": 1, "color": {"opacity": 0.35}, "confidence": "INFERRED"}, {"from": "estado_actual_fecha_limite_18_nov", "to": "plan_recolector", "label": "references", "title": "references [EXTRACTED]", "dashes": false, "width": 2, "color": {"opacity": 0.7}, "confidence": "EXTRACTED"}, {"from": "estado_actual_fecha_limite_18_nov", "to": "plan_ejecuciones_programadas_github", "label": "conceptually_related_to", "title": "conceptually_related_to [INFERRED]", "dashes": true, "width": 1, "color": {"opacity": 0.35}, "confidence": "INFERRED"}, {"from": "plan_decisiones_tomadas", "to": "plan_ejecuciones_programadas_github", "label": "references", "title": "references [EXTRACTED]", "dashes": false, "width": 2, "color": {"opacity": 0.7}, "confidence": "EXTRACTED"}, {"from": "plan_decisiones_tomadas", "to": "plan_tecnologia_python_html", "label": "references", "title": "references [EXTRACTED]", "dashes": false, "width": 2, "color": {"opacity": 0.7}, "confidence": "EXTRACTED"}, {"from": "plan_decisiones_tomadas", "to": "plan_zona_horaria_santiago", "label": "references", "title": "references [EXTRACTED]", "dashes": false, "width": 2, "color": {"opacity": 0.7}, "confidence": "EXTRACTED"}, {"from": "claude_regla_horas_utc", "to": "plan_zona_horaria_santiago", "label": "conceptually_related_to", "title": "conceptually_related_to [INFERRED]", "dashes": true, "width": 1, "color": {"opacity": 0.35}, "confidence": "INFERRED"}, {"from": "plan_decisiones_tomadas", "to": "plan_tolerancia_a_fallos", "label": "references", "title": "references [EXTRACTED]", "dashes": false, "width": 2, "color": {"opacity": 0.7}, "confidence": "EXTRACTED"}, {"from": "plan_descartados", "to": "plan_decisiones_tomadas", "label": "conceptually_related_to", "title": "conceptually_related_to [INFERRED]", "dashes": true, "width": 1, "color": {"opacity": 0.35}, "confidence": "INFERRED"}, {"from": "plan_tolerancia_a_fallos", "to": "claude_datos_ejemplo_marcados", "label": "semantically_similar_to", "title": "semantically_similar_to [INFERRED]", "dashes": true, "width": 1, "color": {"opacity": 0.35}, "confidence": "INFERRED"}, {"from": "claude_revision_visual_playwright", "to": "web_index_boton_cambio_estilo", "label": "references", "title": "references [EXTRACTED]", "dashes": false, "width": 2, "color": {"opacity": 0.7}, "confidence": "EXTRACTED"}, {"from": "web_index_boton_cambio_estilo", "to": "plan_diseno_miami_dos_estilos", "label": "implements", "title": "implements [INFERRED]", "dashes": true, "width": 1, "color": {"opacity": 0.35}, "confidence": "INFERRED"}, {"from": "web_index_escena_26", "to": "web_index_simbolo_edificios", "label": "references", "title": "references [EXTRACTED]", "dashes": false, "width": 2, "color": {"opacity": 0.7}, "confidence": "EXTRACTED"}, {"from": "web_index_escena_26", "to": "web_index_simbolo_palmera", "label": "references", "title": "references [EXTRACTED]", "dashes": false, "width": 2, "color": {"opacity": 0.7}, "confidence": "EXTRACTED"}, {"from": "web_index_escena_26", "to": "plan_diseno_miami_dos_estilos", "label": "implements", "title": "implements [INFERRED]", "dashes": true, "width": 1, "color": {"opacity": 0.35}, "confidence": "INFERRED"}, {"from": "web_index_escena_80", "to": "web_index_simbolo_edificios", "label": "references", "title": "references [EXTRACTED]", "dashes": false, "width": 2, "color": {"opacity": 0.7}, "confidence": "EXTRACTED"}, {"from": "web_index_escena_80", "to": "web_index_simbolo_palmera", "label": "references", "title": "references [EXTRACTED]", "dashes": false, "width": 2, "color": {"opacity": 0.7}, "confidence": "EXTRACTED"}, {"from": "web_index_escena_80", "to": "plan_diseno_miami_dos_estilos", "label": "implements", "title": "implements [INFERRED]", "dashes": true, "width": 1, "color": {"opacity": 0.35}, "confidence": "INFERRED"}, {"from": "web_index_index_html", "to": "plan_tipografias_google_fonts", "label": "implements", "title": "implements [EXTRACTED]", "dashes": false, "width": 2, "color": {"opacity": 0.7}, "confidence": "EXTRACTED"}, {"from": "claude_web_sin_librerias", "to": "web_index_index_html", "label": "rationale_for", "title": "rationale_for [EXTRACTED]", "dashes": false, "width": 2, "color": {"opacity": 0.7}, "confidence": "EXTRACTED"}, {"from": "claude_revision_visual_playwright", "to": "web_index_index_html", "label": "references", "title": "references [EXTRACTED]", "dashes": false, "width": 2, "color": {"opacity": 0.7}, "confidence": "EXTRACTED"}, {"from": "estado_actual_donde_quedamos", "to": "web_index_index_html", "label": "references", "title": "references [EXTRACTED]", "dashes": false, "width": 2, "color": {"opacity": 0.7}, "confidence": "EXTRACTED"}, {"from": "plan_estructura_carpetas", "to": "web_index_index_html", "label": "references", "title": "references [EXTRACTED]", "dashes": false, "width": 2, "color": {"opacity": 0.7}, "confidence": "EXTRACTED"}, {"from": "estado_actual_donde_quedamos", "to": "claude_skill_impeccable", "label": "references", "title": "references [EXTRACTED]", "dashes": false, "width": 2, "color": {"opacity": 0.7}, "confidence": "EXTRACTED"}, {"from": "plan_diseno_miami_dos_estilos", "to": "claude_skill_impeccable", "label": "references", "title": "references [EXTRACTED]", "dashes": false, "width": 2, "color": {"opacity": 0.7}, "confidence": "EXTRACTED"}, {"from": "plan_diseno_miami_dos_estilos", "to": "plan_tipografias_google_fonts", "label": "references", "title": "references [EXTRACTED]", "dashes": false, "width": 2, "color": {"opacity": 0.7}, "confidence": "EXTRACTED"}, {"from": "estado_actual_donde_quedamos", "to": "plan_pruebas_reales_fuentes", "label": "references", "title": "references [EXTRACTED]", "dashes": false, "width": 2, "color": {"opacity": 0.7}, "confidence": "EXTRACTED"}, {"from": "web_index_titulares", "to": "plan_fuente_noticias_google", "label": "shares_data_with", "title": "shares_data_with [INFERRED]", "dashes": true, "width": 1, "color": {"opacity": 0.35}, "confidence": "INFERRED"}, {"from": "claude_entorno_recuerdo_gta6", "to": "plan_pruebas_reales_fuentes", "label": "conceptually_related_to", "title": "conceptually_related_to [INFERRED]", "dashes": true, "width": 1, "color": {"opacity": 0.35}, "confidence": "INFERRED"}, {"from": "plan_fuente_estado_servidores", "to": "plan_fuente_estado_playstation", "label": "references", "title": "references [EXTRACTED]", "dashes": false, "width": 2, "color": {"opacity": 0.7}, "confidence": "EXTRACTED"}, {"from": "plan_pruebas_reales_fuentes", "to": "plan_fuente_estado_playstation", "label": "references", "title": "references [EXTRACTED]", "dashes": false, "width": 2, "color": {"opacity": 0.7}, "confidence": "EXTRACTED"}, {"from": "plan_fuente_estado_servidores", "to": "plan_fuente_estado_rockstar", "label": "references", "title": "references [EXTRACTED]", "dashes": false, "width": 2, "color": {"opacity": 0.7}, "confidence": "EXTRACTED"}, {"from": "plan_pruebas_reales_fuentes", "to": "plan_fuente_estado_rockstar", "label": "references", "title": "references [EXTRACTED]", "dashes": false, "width": 2, "color": {"opacity": 0.7}, "confidence": "EXTRACTED"}, {"from": "plan_fuente_estado_servidores", "to": "plan_fuente_estado_xbox", "label": "references", "title": "references [EXTRACTED]", "dashes": false, "width": 2, "color": {"opacity": 0.7}, "confidence": "EXTRACTED"}, {"from": "plan_pruebas_reales_fuentes", "to": "plan_fuente_estado_xbox", "label": "references", "title": "references [EXTRACTED]", "dashes": false, "width": 2, "color": {"opacity": 0.7}, "confidence": "EXTRACTED"}, {"from": "plan_pruebas_reales_fuentes", "to": "plan_fuente_noticias_google", "label": "references", "title": "references [EXTRACTED]", "dashes": false, "width": 2, "color": {"opacity": 0.7}, "confidence": "EXTRACTED"}, {"from": "claude_regla_verificar_fuentes", "to": "plan_pruebas_reales_fuentes", "label": "rationale_for", "title": "rationale_for [INFERRED]", "dashes": true, "width": 1, "color": {"opacity": 0.35}, "confidence": "INFERRED"}, {"from": "web_index_carga_scripts", "to": "plan_formato_datos_window_datos", "label": "implements", "title": "implements [INFERRED]", "dashes": true, "width": 1, "color": {"opacity": 0.35}, "confidence": "INFERRED"}, {"from": "claude_regla_no_borrar_datos", "to": "plan_carpeta_datos", "label": "references", "title": "references [EXTRACTED]", "dashes": false, "width": 2, "color": {"opacity": 0.7}, "confidence": "EXTRACTED"}, {"from": "plan_estructura_carpetas", "to": "plan_carpeta_datos", "label": "references", "title": "references [EXTRACTED]", "dashes": false, "width": 2, "color": {"opacity": 0.7}, "confidence": "EXTRACTED"}, {"from": "plan_recolector", "to": "plan_carpeta_datos", "label": "shares_data_with", "title": "shares_data_with [INFERRED]", "dashes": true, "width": 1, "color": {"opacity": 0.35}, "confidence": "INFERRED"}, {"from": "estado_actual_pendiente", "to": "plan_formato_datos_window_datos", "label": "references", "title": "references [EXTRACTED]", "dashes": false, "width": 2, "color": {"opacity": 0.7}, "confidence": "EXTRACTED"}, {"from": "plan_recolector", "to": "plan_formato_datos_window_datos", "label": "shares_data_with", "title": "shares_data_with [EXTRACTED]", "dashes": false, "width": 2, "color": {"opacity": 0.7}, "confidence": "EXTRACTED"}, {"from": "estado_actual_pendiente", "to": "plan_recolector", "label": "references", "title": "references [EXTRACTED]", "dashes": false, "width": 2, "color": {"opacity": 0.7}, "confidence": "EXTRACTED"}, {"from": "plan_estructura_carpetas", "to": "plan_recolector", "label": "references", "title": "references [EXTRACTED]", "dashes": false, "width": 2, "color": {"opacity": 0.7}, "confidence": "EXTRACTED"}, {"from": "estado_actual_pendiente", "to": "guia_claves_guia_claves", "label": "references", "title": "references [EXTRACTED]", "dashes": false, "width": 2, "color": {"opacity": 0.7}, "confidence": "EXTRACTED"}];
+const LEGEND = [{"cid": 0, "color": "#4E79A7", "label": "Fuentes, fases y claves", "count": 18}, {"cid": 1, "color": "#F28E2B", "label": "C\u00f3digo de la p\u00e1gina (app.js)", "count": 17}, {"cid": 2, "color": "#E15759", "label": "Relevo entre sesiones", "count": 14}, {"cid": 3, "color": "#76B7B2", "label": "Decisiones y reglas de datos", "count": 12}, {"cid": 4, "color": "#59A14F", "label": "Dise\u00f1o Miami y estilos", "count": 12}, {"cid": 5, "color": "#EDC948", "label": "Pruebas de fuentes sin clave", "count": 9}, {"cid": 6, "color": "#B07AA1", "label": "Recolector y carpeta de datos", "count": 8}, {"cid": 7, "color": "#FF9DA7", "label": "L\u00ednea de estado git", "count": 2}, {"cid": 8, "color": "#9C755F", "label": "Freno de guardado", "count": 2}, {"cid": 9, "color": "#BAB0AC", "label": "Datos de ejemplo", "count": 2}, {"cid": 10, "color": "#4E79A7", "label": "Eventos a mano", "count": 1}];
+
+// HTML-escape helper — prevents XSS when injecting graph data into innerHTML
+function esc(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+}
+
+// Build vis datasets
+const nodesDS = new vis.DataSet(RAW_NODES.map((n, i) => ({
+  id: n.id, label: n.label, color: n.color, size: n.size,
+  font: n.font, title: n.title,
+  // Fermat/golden-angle spiral seed positions (#3699): spreading nodes out
+  // before physics runs keeps avoidOverlap from computing near-zero-distance
+  // repulsion that blows the BarnesHut recursion into a stack overflow on large
+  // graphs. `i` is the map index — physics still settles small graphs identically.
+  x: 30 * Math.sqrt(i) * Math.cos(i * 2.4),
+  y: 30 * Math.sqrt(i) * Math.sin(i * 2.4),
+  community: n.community, community_name: n.community_name,
+  source_file: n.source_file, file_type: n.file_type, degree: n.degree,
+  member_count: n.member_count,
+})));
+
+const edgesDS = new vis.DataSet(RAW_EDGES.map((e, i) => ({
+  id: i, from: e.from, to: e.to,
+  label: '',
+  title: e.title,
+  dashes: e.dashes,
+  width: e.width,
+  color: e.color,
+  arrows: { to: { enabled: true, scaleFactor: 0.5 } },
+})));
+
+const container = document.getElementById('graph');
+const network = new vis.Network(container, { nodes: nodesDS, edges: edgesDS }, {
+  physics: {
+    enabled: true,
+    solver: 'forceAtlas2Based',
+    forceAtlas2Based: {
+      gravitationalConstant: -60,
+      centralGravity: 0.005,
+      springLength: 120,
+      springConstant: 0.08,
+      damping: 0.4,
+      avoidOverlap: 0.8,
+    },
+    stabilization: { iterations: 200, fit: true },
+  },
+  interaction: {
+    hover: true,
+    tooltipDelay: 100,
+    hideEdgesOnDrag: true,
+    navigationButtons: false,
+    keyboard: false,
+  },
+  nodes: { shape: 'dot', borderWidth: 1.5 },
+  edges: { smooth: { type: 'continuous', roundness: 0.2 }, selectionWidth: 3 },
+});
+
+// Theme toggle (#3894): Light / Dark / System, persisted in localStorage.
+const THEME_KEY = 'graphify-theme';
+const themeMQ = window.matchMedia ? window.matchMedia('(prefers-color-scheme: light)') : null;
+let themeLabelColor = '#ffffff';  // matches the per-node font color set in Python
+function themePref() {
+  let p = null;
+  try { p = localStorage.getItem(THEME_KEY); } catch (e) {}
+  return (p === 'light' || p === 'dark' || p === 'system') ? p : null;
+}
+function applyTheme(pref) {
+  const t = pref === 'light' ? 'light' : (pref === 'system' && themeMQ && themeMQ.matches) ? 'light' : 'dark';
+  const root = document.documentElement;
+  if (!root) return;
+  root.setAttribute('data-theme', t);
+  document.querySelectorAll('[data-theme-choice]').forEach(b => {
+    b.setAttribute('aria-pressed', String(b.dataset.themeChoice === (pref || 'dark')));
+  });
+  const labelColor = getComputedStyle(root).getPropertyValue('--node-label').trim();
+  if (labelColor && labelColor !== themeLabelColor) {
+    themeLabelColor = labelColor;
+    nodesDS.update(nodesDS.get().map(n => ({ id: n.id, font: Object.assign({}, n.font, { color: labelColor }) })));
+  }
+}
+document.querySelectorAll('[data-theme-choice]').forEach(b => {
+  b.addEventListener('click', () => {
+    const pref = b.dataset.themeChoice;
+    try { localStorage.setItem(THEME_KEY, pref); } catch (e) {}
+    applyTheme(pref);
+  });
+});
+if (themeMQ) {
+  const onSchemeChange = () => { if (themePref() === 'system') applyTheme('system'); };
+  if (themeMQ.addEventListener) themeMQ.addEventListener('change', onSchemeChange);
+  else if (themeMQ.addListener) themeMQ.addListener(onSchemeChange);
+}
+applyTheme(themePref());
+
+network.once('stabilizationIterationsDone', () => {
+  network.setOptions({ physics: { enabled: false } });
+});
+
+function showInfo(nodeId) {
+  const n = nodesDS.get(nodeId);
+  if (!n) return;
+  const neighborIds = network.getConnectedNodes(nodeId);
+  const neighborItems = neighborIds.map(nid => {
+    const nb = nodesDS.get(nid);
+    const color = nb ? nb.color.background : '#555';
+    return `<span class="neighbor-link" style="border-left-color:${esc(color)}" data-nid="${esc(nid)}">${esc(nb ? nb.label : nid)}</span>`;
+  }).join('');
+  const isMetaNode = !n.file_type && !n.source_file;
+  let html = `<div class="field"><b>${esc(n.label)}</b></div>`;
+  if (!isMetaNode) {
+    html += `<div class="field">Type: ${esc(n.file_type || 'unknown')}</div>`;
+  }
+  html += `<div class="field">Community: ${esc(n.community_name || '')}</div>`;
+  if (!isMetaNode) {
+    html += `<div class="field">Source: ${esc(n.source_file || '-')}</div>`;
+  } else if (n.member_count !== undefined && n.member_count !== null) {
+    html += `<div class="field">Members: ${esc(n.member_count)}</div>`;
+  }
+  html += `<div class="field">Degree: ${n.degree}</div>`;
+  if (neighborIds.length) {
+    html += `<div class="field" style="margin-top:8px;color:var(--text-2);font-size:11px">Neighbors (${neighborIds.length})</div><div id="neighbors-list">${neighborItems}</div>`;
+  }
+  document.getElementById('info-content').innerHTML = html;
+}
+
+function focusNode(nodeId) {
+  network.focus(nodeId, { scale: 1.4, animation: true });
+  network.selectNodes([nodeId]);
+  showInfo(nodeId);
+}
+
+// Neighbor links use a data attribute + one delegated listener rather than an
+// inline onclick. A node id/label sourced from a document or a scraped URL
+// (graphify add) can contain a double-quote; dropping the stringified id
+// unescaped into a quoted onclick both broke every link and allowed a hostile
+// source to inject an event handler into the local report (stored XSS, #1838).
+// esc() on data-nid keeps the value inside the attribute; the listener reads it
+// back verbatim. Bound to document so it survives the innerHTML rebuild that
+// recreates #neighbors-list on each showInfo().
+document.addEventListener('click', e => {
+  const el = e.target.closest('.neighbor-link');
+  if (el && el.dataset.nid !== undefined) focusNode(el.dataset.nid);
+});
+
+// Sidebar tooltips reuse vis-network's .vis-tooltip style and 100ms tooltipDelay.
+// Names get one only when CSS ellipsis truncates them (the full text is still in
+// the DOM); counts always get one, to say what the number is. Text is set with
+// textContent only (labels are untrusted). Delegated on document so rows rebuilt
+// later (search results, showInfo()) are covered.
+const sidebarTip = document.createElement('div');
+sidebarTip.className = 'vis-tooltip';
+sidebarTip.style.cssText = 'white-space: normal; max-width: 360px; overflow-wrap: break-word;';
+document.body.appendChild(sidebarTip);
+let sidebarTipTimer = null;
+let sidebarTipEl = null;    // element whose text the tooltip shows
+let sidebarTipZone = null;  // element the pointer must leave to hide it
+function hideSidebarTip() {
+  clearTimeout(sidebarTipTimer);
+  sidebarTip.style.visibility = 'hidden';
+  sidebarTip.textContent = '';
+  sidebarTipEl = sidebarTipZone = null;
+}
+document.addEventListener('mouseover', e => {
+  const zone = e.target.closest && e.target.closest('.legend-count, .legend-item, .search-item, .neighbor-link');
+  // Anywhere on a legend row except its count (dot, checkbox, gaps, padding)
+  // stands for the row's name, so moving within the row never re-triggers it.
+  const el = zone && zone.classList.contains('legend-item') ? zone.querySelector('.legend-label') : zone;
+  if (!el || el === sidebarTipEl) return;
+  hideSidebarTip();
+  const isCount = el.classList.contains('legend-count');
+  if (!isCount && el.scrollWidth <= el.clientWidth) return;
+  const text = isCount ? `${el.textContent} ${el.textContent === '1' ? 'node' : 'nodes'}` : el.textContent;
+  sidebarTipEl = el;
+  sidebarTipZone = zone;
+  const x = e.clientX, y = e.clientY;
+  sidebarTipTimer = setTimeout(() => {
+    sidebarTip.textContent = text;
+    sidebarTip.style.left = sidebarTip.style.top = '0px';  // measure at full max-width
+    sidebarTip.style.visibility = 'visible';
+    const w = sidebarTip.offsetWidth, h = sidebarTip.offsetHeight;
+    sidebarTip.style.left = Math.max(4, Math.min(x + 12, window.innerWidth - w - 4)) + 'px';
+    sidebarTip.style.top = (y + 16 + h > window.innerHeight ? Math.max(4, y - h - 8) : y + 16) + 'px';
+  }, 100);
+});
+document.addEventListener('mouseout', e => {
+  if (sidebarTipZone && !sidebarTipZone.contains(e.relatedTarget)) hideSidebarTip();
+});
+// A click rebuilds or hides the row (showInfo(), search pick) without a mouseout.
+document.addEventListener('mousedown', hideSidebarTip);
+
+// Track hovered node — hover detection is more reliable than click params
+let hoveredNodeId = null;
+network.on('hoverNode', params => {
+  hoveredNodeId = params.node;
+  container.style.cursor = 'pointer';
+});
+network.on('blurNode', () => {
+  hoveredNodeId = null;
+  container.style.cursor = 'default';
+});
+container.addEventListener('click', () => {
+  if (hoveredNodeId !== null) {
+    showInfo(hoveredNodeId);
+    network.selectNodes([hoveredNodeId]);
+  }
+});
+network.on('click', params => {
+  if (params.nodes.length > 0) {
+    showInfo(params.nodes[0]);
+  } else if (hoveredNodeId === null) {
+    document.getElementById('info-content').innerHTML = '<span class="empty">Click a node to inspect it</span>';
+  }
+});
+
+const searchInput = document.getElementById('search');
+const searchResults = document.getElementById('search-results');
+searchInput.addEventListener('input', () => {
+  const q = searchInput.value.toLowerCase().trim();
+  searchResults.innerHTML = '';
+  if (!q) { searchResults.style.display = 'none'; return; }
+  const matches = RAW_NODES.filter(n => n.label.toLowerCase().includes(q)).slice(0, 20);
+  if (!matches.length) { searchResults.style.display = 'none'; return; }
+  searchResults.style.display = 'block';
+  matches.forEach(n => {
+    const el = document.createElement('div');
+    el.className = 'search-item';
+    el.textContent = n.label;
+    el.style.borderLeft = `3px solid ${n.color.background}`;
+    el.style.paddingLeft = '8px';
+    el.onclick = () => {
+      network.focus(n.id, { scale: 1.5, animation: true });
+      network.selectNodes([n.id]);
+      showInfo(n.id);
+      searchResults.style.display = 'none';
+      searchInput.value = '';
+    };
+    searchResults.appendChild(el);
+  });
+});
+document.addEventListener('click', e => {
+  if (!searchResults.contains(e.target) && e.target !== searchInput)
+    searchResults.style.display = 'none';
+});
+
+const hiddenCommunities = new Set();
+
+const selectAllCb = document.getElementById('select-all-cb');
+
+function updateSelectAllState() {
+  const total = LEGEND.length;
+  const hidden = hiddenCommunities.size;
+  selectAllCb.checked = hidden === 0;
+  selectAllCb.indeterminate = hidden > 0 && hidden < total;
+}
+
+function toggleAllCommunities(hide) {
+  document.querySelectorAll('.legend-item').forEach(item => {
+    hide ? item.classList.add('dimmed') : item.classList.remove('dimmed');
+  });
+  document.querySelectorAll('.legend-cb').forEach(cb => {
+    cb.checked = !hide;
+  });
+  LEGEND.forEach(c => {
+    if (hide) hiddenCommunities.add(c.cid); else hiddenCommunities.delete(c.cid);
+  });
+  const updates = RAW_NODES.map(n => ({ id: n.id, hidden: hide }));
+  nodesDS.update(updates);
+  updateSelectAllState();
+}
+
+const legendEl = document.getElementById('legend');
+LEGEND.forEach(c => {
+  const item = document.createElement('div');
+  item.className = 'legend-item';
+  const cb = document.createElement('input');
+  cb.type = 'checkbox';
+  cb.className = 'legend-cb';
+  cb.checked = true;
+  cb.addEventListener('change', (e) => {
+    e.stopPropagation();
+    if (cb.checked) {
+      hiddenCommunities.delete(c.cid);
+      item.classList.remove('dimmed');
+    } else {
+      hiddenCommunities.add(c.cid);
+      item.classList.add('dimmed');
+    }
+    const updates = RAW_NODES
+      .filter(n => n.community === c.cid)
+      .map(n => ({ id: n.id, hidden: !cb.checked }));
+    nodesDS.update(updates);
+    updateSelectAllState();
+  });
+  item.innerHTML = `<div class="legend-dot" style="background:${c.color}"></div>
+    <span class="legend-label">${c.label}</span>
+    <span class="legend-count">${c.count}</span>`;
+  item.prepend(cb);
+  item.onclick = (e) => {
+    if (e.target === cb) return;
+    cb.checked = !cb.checked;
+    cb.dispatchEvent(new Event('change'));
+  };
+  legendEl.appendChild(item);
+});
+</script>
+<script>
+// Render hyperedges as shaded regions
+const hyperedges = [{"id": "flujo_relevo_entre_sesiones", "label": "Flujo de relevo entre sesiones", "nodes": ["claude_sistema_de_relevo", "claude_inicio_de_sesion", "claude_guardado_al_terminar_cada_paso", "estado_actual_estado_actual", "claude_hook_revisar_guardado", "claude_hook_estado_git"], "relation": "form", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "CLAUDE.md"}, {"id": "pipeline_datos_recolector_pagina", "label": "Pipeline de datos: fuentes, recolector, datos y p\u00e1gina", "nodes": ["plan_fuente_twitch", "plan_fuente_youtube", "plan_fuente_google_trends", "plan_recolector", "plan_carpeta_datos", "plan_formato_datos_window_datos", "web_index_carga_scripts"], "relation": "participate_in", "confidence": "INFERRED", "confidence_score": 0.85, "source_file": "PLAN.md"}, {"id": "tema_miami_dos_estilos", "label": "Implementaci\u00f3n de los dos estilos de Miami", "nodes": ["plan_diseno_miami_dos_estilos", "web_index_escena_80", "web_index_escena_26", "web_index_boton_cambio_estilo", "web_index_simbolo_edificios", "web_index_simbolo_palmera"], "relation": "implement", "confidence": "INFERRED", "confidence_score": 0.95, "source_file": "web/index.html"}];
+// afterDrawing passes ctx already transformed to network coordinate space.
+// Draw node positions raw — no manual pan/zoom/DPR math needed.
+
+// Andrew's monotone chain. Returns the hull in counter-clockwise order, which
+// is what the perimeter must be traced in. Collinear and duplicate points
+// collapse to the extremes, so degenerate member sets render as a segment
+// rather than a zero-area crossed path.
+function convexHull(pts) {
+    const p = pts.slice().sort((a, b) => (a.x - b.x) || (a.y - b.y));
+    if (p.length < 3) return p;
+    const cross = (o, a, b) => (a.x - o.x) * (b.y - o.y) - (a.y - o.y) * (b.x - o.x);
+    const build = seq => {
+        const out = [];
+        for (const q of seq) {
+            while (out.length >= 2 && cross(out[out.length - 2], out[out.length - 1], q) <= 0) out.pop();
+            out.push(q);
+        }
+        out.pop();
+        return out;
+    };
+    const hull = build(p).concat(build(p.slice().reverse()));
+    return hull.length >= 3 ? hull : p;
+}
+network.on('afterDrawing', function(ctx) {
+    hyperedges.forEach(h => {
+        // Legend toggles only set `hidden` on nodes; getPositions() still
+        // returns them, so skip hidden members or their hull lingers.
+        const positions = h.nodes
+            .filter(nid => { const n = nodesDS.get(nid); return n && n.hidden !== true; })
+            .map(nid => network.getPositions([nid])[nid])
+            .filter(p => p !== undefined);
+        if (positions.length < 2) return;
+        ctx.save();
+        ctx.globalAlpha = 0.12;
+        ctx.fillStyle = '#6366f1';
+        ctx.strokeStyle = '#6366f1';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        // Centroid and expanded hull in network coordinates.
+        // The perimeter must follow hull order, not h.nodes order: tracing the
+        // raw member order self-intersects whenever the layout does not happen
+        // to place members in angular order, filling as crossed wedges.
+        const cx = positions.reduce((s, p) => s + p.x, 0) / positions.length;
+        const cy = positions.reduce((s, p) => s + p.y, 0) / positions.length;
+        const hull = convexHull(positions);
+        const expanded = hull.map(p => ({
+            x: cx + (p.x - cx) * 1.15,
+            y: cy + (p.y - cy) * 1.15
+        }));
+        ctx.moveTo(expanded[0].x, expanded[0].y);
+        expanded.slice(1).forEach(p => ctx.lineTo(p.x, p.y));
+        ctx.closePath();
+        ctx.fill();
+        ctx.globalAlpha = 0.4;
+        ctx.stroke();
+        // Label
+        ctx.globalAlpha = 0.8;
+        ctx.fillStyle = '#4f46e5';
+        ctx.font = 'bold 11px sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText(h.label, cx, cy - 5);
+        ctx.restore();
+    });
+});
+</script>
+</body>
+</html>

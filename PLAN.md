@@ -150,8 +150,8 @@ Consecuencias:
 
 ## 7. Decisiones pendientes
 
-- [ ] Instalar y usar Graphify (skill de GitHub que crea un mapa del proyecto para gastar
-      menos tokens). Solo cuando ya haya archivos de código listos. No está instalada todavía.
+- [x] Instalar y usar Graphify (mapa del proyecto para gastar menos tokens). Hecho el
+      2026-11-12: instalado en el proyecto y primer grafo en `graphify-out/`.
 
 ## 8. Pasos siguientes
 

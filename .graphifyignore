@@ -1,0 +1,5 @@
+# Archivos que Graphify no debe meter en el grafo del proyecto.
+# Las skills instaladas (Impeccable, Graphify) son documentación de terceros:
+# si entran, el grafo describe las skills y no el proyecto.
+.claude/skills/
+graphify-out/

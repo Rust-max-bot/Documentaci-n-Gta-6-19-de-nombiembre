@@ -1,0 +1,80 @@
+{
+  ".claude/hooks/estado-git.sh": {
+    "mtime": 1794500603.3369815,
+    "seen": 1794501199.4712565,
+    "ast_hash": "0b4ed6d365bae67e01c6fb78dfc942c2",
+    "semantic_hash": "0b4ed6d365bae67e01c6fb78dfc942c2"
+  },
+  ".claude/hooks/revisar-guardado.sh": {
+    "mtime": 1794500603.3369815,
+    "seen": 1794501199.4712632,
+    "ast_hash": "8f92a59f15d311ea539300bef2439d8c",
+    "semantic_hash": "8f92a59f15d311ea539300bef2439d8c"
+  },
+  ".claude/settings.json": {
+    "mtime": 1794500909.2964013,
+    "seen": 1794501199.4712663,
+    "ast_hash": "7694ef3900e9e382c688011a242e11f4",
+    "semantic_hash": "7694ef3900e9e382c688011a242e11f4"
+  },
+  "web/app.js": {
+    "mtime": 1794500113.9023564,
+    "seen": 1794501199.471268,
+    "ast_hash": "0136780a727215564323cec0174d07ac",
+    "semantic_hash": "0136780a727215564323cec0174d07ac"
+  },
+  "web/datos-ejemplo.js": {
+    "mtime": 1794500113.9023564,
+    "seen": 1794501199.4712694,
+    "ast_hash": "83288d1e9dcc04f8d53a44a6f9f6579a",
+    "semantic_hash": "83288d1e9dcc04f8d53a44a6f9f6579a"
+  },
+  "web/eventos.js": {
+    "mtime": 1794500113.9033577,
+    "seen": 1794501199.4712708,
+    "ast_hash": "4f5f52a685b28d5dc08ccdfea4d8bdee",
+    "semantic_hash": "4f5f52a685b28d5dc08ccdfea4d8bdee"
+  },
+  ".claude/CLAUDE.md": {
+    "mtime": 1794500909.2912507,
+    "seen": 1794501199.4712722,
+    "ast_hash": "9b31786b637be3c13978bec4c2330752",
+    "semantic_hash": "9b31786b637be3c13978bec4c2330752"
+  },
+  "CLAUDE.md": {
+    "mtime": 1794500909.2920225,
+    "seen": 1794501199.4712734,
+    "ast_hash": "4867dbedd547995ca2bc72402680ca3e",
+    "semantic_hash": "4867dbedd547995ca2bc72402680ca3e"
+  },
+  "ESTADO_ACTUAL.md": {
+    "mtime": 1794500603.381487,
+    "seen": 1794501199.4712746,
+    "ast_hash": "f6f25ec5f2bb72483a48cffb2848febc",
+    "semantic_hash": "f6f25ec5f2bb72483a48cffb2848febc"
+  },
+  "GUIA_CLAVES.md": {
+    "mtime": 1794500113.899914,
+    "seen": 1794501199.4712758,
+    "ast_hash": "338b740495f15cd240c595817c8a707f",
+    "semantic_hash": "338b740495f15cd240c595817c8a707f"
+  },
+  "PLAN.md": {
+    "mtime": 1794500603.381487,
+    "seen": 1794501199.4712772,
+    "ast_hash": "49c21fdfec3e5b455abe610623a48049",
+    "semantic_hash": "49c21fdfec3e5b455abe610623a48049"
+  },
+  "README.md": {
+    "mtime": 1794500113.9013484,
+    "seen": 1794501199.4712787,
+    "ast_hash": "6f9f5501580d3f0e8bab9798ff5ce470",
+    "semantic_hash": "6f9f5501580d3f0e8bab9798ff5ce470"
+  },
+  "web/index.html": {
+    "mtime": 1794500113.9033577,
+    "seen": 1794501199.4712796,
+    "ast_hash": "e8d8fa08de462e94b9352210e28251d6",
+    "semantic_hash": "e8d8fa08de462e94b9352210e28251d6"
+  }
+}

@@ -69,8 +69,14 @@ borrando lo viejo (ya está en `git log`).
   solo al mostrar la página.
 - No borrar ni reescribir archivos de `datos/`: son el recuerdo y no se pueden volver a obtener.
 - Las ejecuciones programadas de GitHub solo corren desde `main`.
-- Bruno quiere usar la skill Graphify (mapa del proyecto para gastar menos tokens), pero solo
-  cuando ya haya archivos de código listos. Antes de instalarla, verificar su repositorio oficial.
+- Graphify (mapa del proyecto para gastar menos tokens) está instalado: la skill en
+  `.claude/skills/graphify/`, el grafo en `graphify-out/` (`graph.html` para verlo,
+  `GRAPH_REPORT.md` el informe) y `.graphifyignore` deja fuera las skills de terceros.
+  El programa `graphify` (paquete `graphifyy` de PyPI, repositorio oficial
+  `Graphify-Labs/graphify`) está instalado en el PC con Python 3.14 (Python 3.15 no puede
+  compilarlo). Si `graphify` no está disponible (por ejemplo, en la nube o si no está en el
+  PATH), saltarse sus reglas y trabajar con búsqueda normal: los avisos automáticos de
+  Graphify en `.claude/settings.json` no hacen nada en ese caso.
 - La skill Impeccable (diseño) está en `.claude/skills/impeccable/` (versión en
   `scripts/VERSION`). Para actualizarla, copiar `.claude/skills/impeccable/` del repositorio
   oficial `pbakaus/impeccable` encima de la carpeta, o usar `npx impeccable update`.
@@ -102,3 +108,14 @@ Este proyecto puede continuarlo otra sesión u otro modelo. Para que el relevo f
   de cada estilo (botón "Miami 1986" / "Miami 2026").
 - En la nube, la sesión debe usar el entorno `recuerdo-gta6`, que permite los sitios de las
   fuentes. Con el entorno "Default" todas las consultas a las fuentes se bloquean.
+
+## graphify
+
+This project has a knowledge graph at graphify-out/ with god nodes, community structure, and cross-file relationships.
+
+Rules:
+- When graphify-out/graph.json exists, run `graphify query "<question>"` before your first grep, search or source-file read for a codebase question, and put this rule in every subagent prompt that explores code. Read raw files only for lines the graph or an earlier read already located. Use `graphify path "<A>" "<B>"` for relationships and `graphify explain "<concept>"` for focused concepts. These return a scoped subgraph, usually much smaller than GRAPH_REPORT.md or raw grep output.
+- If graphify-out/wiki/index.md exists, use it for broad navigation instead of raw source browsing.
+- Read graphify-out/GRAPH_REPORT.md only for broad architecture review or when query/path/explain do not surface enough context.
+- After modifying code, run `graphify update .` to keep the graph current (AST-only, no API cost).
+- A committed graphify-out/graph.json is rewritten whole on every build, so a large diff to it in a pull request is expected. Do not flag it as churn or suggest skipping the graph rebuild or its hooks.
