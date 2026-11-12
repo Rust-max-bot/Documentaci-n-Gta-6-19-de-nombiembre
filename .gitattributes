@@ -1,0 +1,2 @@
+# Los scripts de .claude/hooks los ejecuta bash: con finales de linea CRLF (Windows) fallan.
+*.sh text eol=lf

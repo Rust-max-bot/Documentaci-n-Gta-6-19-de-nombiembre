@@ -1,7 +1,8 @@
 # Plan del proyecto: recuerdo del lanzamiento de GTA 6
 
 Última actualización: 12 de noviembre de 2026.
-Estado: **página hecha con datos de ejemplo.** Falta el recolector de datos y las claves.
+Aquí van las decisiones, fases y riesgos. El estado vivo (dónde quedamos y qué falta)
+está en `ESTADO_ACTUAL.md`.
 
 ## 1. Qué es esto
 
@@ -42,9 +43,10 @@ Resultado final: **una página web** con:
   neones de noche), palmeras, mar y atardecer. Los edificios y palmeras son dibujos propios.
 - Tipografías de Google Fonts, de licencia libre: Monoton, Rajdhani, Limelight y Outfit.
 - Se aplicaron pautas de la skill de diseño Impeccable (leídas de su repositorio oficial,
-  `pbakaus/impeccable`, licencia Apache 2.0). **La skill no está instalada**: su instalador
-  (`npx impeccable install`) fue bloqueado por los permisos de la sesión en la nube.
-  Para tenerla, Bruno puede ejecutar ese comando en su PC, dentro del repositorio.
+  `pbakaus/impeccable`, licencia Apache 2.0). **Desde el 2026-11-12 la skill está en el
+  repositorio** (`.claude/skills/impeccable/`, versión 0.1.22, copia manual), así que la
+  usan también las sesiones en la nube. Falta solo el hook de diseño, que revisa cada archivo
+  de la página que se modifica: para tenerlo, Bruno ejecuta `npx impeccable install` en su PC.
 - El diseño se construye **pronto y con datos de ejemplo**, sin esperar a las claves ni a
   los datos reales. Motivo: Bruno tiene acceso al modelo actual solo esta semana.
 - Las animaciones no deben impedir leer los datos; debe funcionar fluido en el PC de Bruno.
@@ -153,14 +155,8 @@ Consecuencias:
 
 ## 8. Pasos siguientes
 
-1. ~~Terminar la entrevista.~~ Hecho.
-2. ~~Diseñar la página con datos de ejemplo (dos estilos de Miami).~~ Hecho; pendiente de la opinión de Bruno.
-3. Bruno crea las claves de Twitch y YouTube siguiendo `GUIA_CLAVES.md`.
-4. Probar cada fuente con una consulta real.
-5. Programar el recolector de datos y la ejecución programada.
-6. Conectar la página con los datos reales.
-7. Prueba completa antes del 18 de noviembre.
-8. Unir el trabajo a `main`.
+Se movieron a la sección "Pendiente" de `ESTADO_ACTUAL.md` (2026-11-12), para tener una sola
+lista al día.
 
 ## 9. Estructura de carpetas
 
