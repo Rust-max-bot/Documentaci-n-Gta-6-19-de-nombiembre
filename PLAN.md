@@ -65,7 +65,8 @@ Esto es una propuesta. Cada punto se verificará con una prueba real antes de da
 - [ ] Dónde se publica la página web y si será pública o privada.
 - [ ] Zona horaria que se muestra en la página.
 - [ ] De dónde salen los eventos de la línea de tiempo (automáticos, escritos a mano, o ambos).
-- [ ] Aclarar qué herramienta es "Graffiti" (Bruno pidió usarla cuando ya haya archivos listos).
+- [ ] Instalar y usar Graphify (skill de GitHub que crea un mapa del proyecto para gastar
+      menos tokens). Solo cuando ya haya archivos de código listos. No está instalada todavía.
 - [ ] Qué pasa si una fuente falla durante el día 19 (avisar, reintentar, seguir con las demás).
 
 ## 8. Pasos siguientes

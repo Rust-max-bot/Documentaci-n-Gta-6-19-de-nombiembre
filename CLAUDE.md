@@ -25,7 +25,8 @@ pendientes y los riesgos. Si se toma una decisión nueva, actualiza `PLAN.md` en
   solo al mostrar la página.
 - No borrar ni reescribir archivos de `datos/`: son el recuerdo y no se pueden volver a obtener.
 - Las ejecuciones programadas de GitHub solo corren desde `main`.
-- No usar la herramienta "Graffiti" hasta que Bruno aclare cuál es y haya archivos listos.
+- Bruno quiere usar la skill Graphify (mapa del proyecto para gastar menos tokens), pero solo
+  cuando ya haya archivos de código listos. Antes de instalarla, verificar su repositorio oficial.
 
 ## Trabajar en la nube y en el PC
 
