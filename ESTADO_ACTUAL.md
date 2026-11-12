@@ -26,8 +26,9 @@ relevo entre sesiones: este archivo, el inicio de sesión de `CLAUDE.md`, el gua
 automático y los avisos de `.claude/` (línea de estado y freno al terminar).
 
 También el 2026-11-12 se instaló Graphify en el proyecto y se generó el primer grafo
-(`graphify-out/graph.html` para verlo; 97 nodos, 11 grupos). El programa `graphify` no está
-en el PATH del PC todavía: sin eso, sus avisos automáticos no hacen nada.
+(`graphify-out/graph.html` para verlo; 97 nodos, 11 grupos). El programa `graphify` vive en
+Python 3.14 (no desinstalarlo) y su carpeta `Scripts` ya está en el PATH del PC; sus avisos
+automáticos funcionan tras reiniciar VS Code.
 
 **Fecha límite:** el recolector tiene que estar probado y unido a `main` antes del
 18 de noviembre de 2026.
@@ -51,5 +52,4 @@ en el PATH del PC todavía: sin eso, sus avisos automáticos no hacen nada.
 6. Prueba completa antes del 18 de noviembre.
 7. Unir el trabajo a `main`.
 8. Opcional: el hook de diseño de Impeccable (Bruno ejecuta `npx impeccable install` en el PC).
-9. Graphify: añadir `%USERPROFILE%\AppData\Local\Programs\Python\Python314\Scripts` al PATH
-   del usuario para que funcionen sus avisos automáticos. Tras cambiar código, `graphify update .`.
+9. Graphify: tras cambiar código, `graphify update .` para mantener el grafo al día.
