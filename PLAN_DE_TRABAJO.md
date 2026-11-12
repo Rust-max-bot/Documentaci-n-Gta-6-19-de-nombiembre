@@ -94,14 +94,19 @@ guardan los datos (A2), empezar cuanto antes (A4) y el periodo de un mes con int
    cambio: con 48 cambios al día el repositorio crecería muy rápido. Los archivos de texto por
    día solo añaden líneas, casi no pesan, se pueden leer a simple vista y no se corrompen. Para
    el análisis (A3) se pueden cargar en una base de datos en el PC cuando haga falta.
-2. **Peso de los datos (A3).** Estimación, por verificar en la tarea 1.5: unos 5 a 10 KB por
-   medición; con 48 al día durante un mes, entre 7 y 15 MB. GitHub admite repositorios de
-   cientos de MB, así que el guardado no debería detenerse por tamaño.
+2. **Peso de los datos (A3).** Medido el 2026-11-12 en las primeras mediciones reales: unos
+   15 KB por medición (la primera pesó 86 KB porque guardó los 100 titulares; después solo
+   se guardan los nuevos). Con 48 al día durante un mes, unos 20 a 25 MB sin comprimir; git
+   los comprime. GitHub admite repositorios de cientos de MB, así que el guardado no debería
+   detenerse por tamaño. El día del lanzamiento habrá más canales y titulares: se revisa.
 3. **Lo que sí puede quedarse corto en un mes (A6):** los minutos gratuitos de GitHub para
    repositorios privados (2.000 al mes, hasta donde sé; por verificar en la cuenta de Bruno).
-   Un mes cada 30 minutos son unas 1.440 ejecuciones de cerca de un minuto: cabe, pero justo.
-   Si no alcanza: medir cada 30 minutos la semana del lanzamiento y cada hora el resto.
-   YouTube no es problema: unas 4.800 de las 10.000 unidades diarias.
+   Un mes cada 30 minutos son unas 1.440 ejecuciones. Cada una tarda unos 15 segundos, pero
+   GitHub cobra cada ejecución como un minuto entero: unos 1.440 minutos al mes. Cabe, pero
+   justo. Si no alcanza: medir cada 30 minutos la semana del lanzamiento y cada hora el resto.
+   El gasto real solo se ve en github.com/settings/billing (con `gh` hace falta un permiso
+   extra que Bruno tendría que dar con `gh auth refresh -h github.com -s user`).
+   YouTube no es problema: 101 unidades por medición, unas 4.850 de las 10.000 diarias.
 4. **Reddit (A5).** Tiene acceso gratuito para uso personal, pero pide registrar una
    aplicación (otra clave, gratis). La lectura sin clave suele estar bloqueada desde
    servidores como los de GitHub. Nada de esto está verificado todavía.

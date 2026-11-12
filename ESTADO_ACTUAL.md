@@ -17,9 +17,12 @@
 
 *(2026-11-12.)*
 
-**Siguiente tarea: `PLAN_DE_TRABAJO.md`, tarea 1.2** — programar el recolector. La tarea
-1.1 quedó resuelta: Bruno aceptó guardar los datos en archivos de texto, uno por día, en
-`datos/` (una línea por medición).
+**En curso: tanda 1.2 a 1.5.** El recolector ya existe y está en GitHub (workflow
+"Recolectar datos", minutos 7 y 37 de cada hora; formato y uso en `recolector/LEEME.md`).
+El 2026-11-12 a las 19:23 UTC guardó las dos primeras mediciones reales en
+`datos/2026-11-12.jsonl`, con las seis fuentes respondiendo. Falta confirmar que la
+ejecución programada arranca sola y vigilar las primeras 24 horas (`python
+recolector/revisar.py --horas 24`).
 
 **Hecho:**
 
@@ -33,9 +36,8 @@
 - Sistema de trabajo: relevo entre sesiones, guardado automático, archivo del estado a los
   20.000 bytes, reglas de trabajo, Graphify e Impeccable instalados.
 
-**Falta lo principal: el recolector no existe todavía y no se está guardando ningún dato.**
-Bruno quiere empezar a registrar cuanto antes, para comparar el interés previo con el del
-lanzamiento.
+**Ya se guardan datos reales** desde el 2026-11-12 (interés previo al lanzamiento). Se
+apaga, enciende o alarga en `recolector/interruptor.json` (por defecto, hasta el 19 dic).
 
 **Bruno entregó una lista de cosas que quiere** (2026-11-12): un mes de datos con interruptor
 manual, análisis, Reddit, enlaces, miniaturas y varios cambios de diseño. Está ordenada en
