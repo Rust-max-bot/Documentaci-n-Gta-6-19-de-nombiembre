@@ -1,0 +1,57 @@
+# Mide las fuentes cada 30 minutos y guarda una línea en datos/AAAA-MM-DD.jsonl.
+# Se apaga, se enciende o se alarga en recolector/interruptor.json (no hace falta tocar este archivo).
+# Las ejecuciones programadas solo corren desde main. GitHub puede atrasarlas varios minutos.
+name: Recolectar datos
+
+on:
+  schedule:
+    - cron: "7,37 * * * *"   # minutos 7 y 37 de cada hora (en punto GitHub está más saturado)
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: recolectar
+  cancel-in-progress: false
+
+jobs:
+  recolectar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Medir las fuentes
+        id: medir
+        env:
+          TWITCH_CLIENT_ID: ${{ secrets.TWITCH_CLIENT_ID }}
+          TWITCH_CLIENT_SECRET: ${{ secrets.TWITCH_CLIENT_SECRET }}
+          YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
+        run: python3 recolector/recolectar.py
+
+      - name: Guardar la medición en el repositorio
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          mkdir -p datos   # con el interruptor apagado puede no existir todavía
+          git add datos/
+          if git diff --cached --quiet; then
+            echo "No hay medición nueva que guardar."
+            exit 0
+          fi
+          git commit -q -m "Medición automática $(date -u +%Y-%m-%dT%H:%MZ)"
+          for intento in 1 2 3 4 5; do
+            if git push -q; then exit 0; fi
+            echo "El push falló (intento $intento); se traen los cambios y se reintenta."
+            sleep $((intento * 5))
+            git pull -q --rebase
+          done
+          exit 1
+
+      # La medición ya quedó guardada con el hueco anotado; esto solo hace que GitHub avise.
+      - name: Avisar si alguna fuente falló
+        if: steps.medir.outputs.fallos != ''
+        run: |
+          echo "::error::Fuentes con hueco en esta medición: ${{ steps.medir.outputs.fallos }}"
+          exit 1

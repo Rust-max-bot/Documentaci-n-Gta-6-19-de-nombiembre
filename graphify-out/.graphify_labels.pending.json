@@ -1,5 +1,9 @@
 {
-  "6": "probar_fuentes.py",
-  "11": "probar-fuentes.yml",
-  "12": "steps"
+  "3": "steps",
+  "6": "fuentes.py",
+  "11": "steps",
+  "12": "recolectar.py",
+  "13": "validar.py",
+  "14": "Plan de trabajo",
+  "15": "Recolector"
 }

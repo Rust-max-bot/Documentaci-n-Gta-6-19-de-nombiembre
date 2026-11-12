@@ -180,9 +180,10 @@ web/                  la página (ya existe)
   datos-ejemplo.js    datos inventados para probar el diseño
   eventos.js          eventos que Bruno anota a mano (hora de Santiago)
   datos.js            datos reales; todavía no existe, lo creará el recolector
-recolector/           programa en Python que consulta las fuentes (por hacer)
-datos/                mediciones guardadas: un archivo de texto por día, una línea por medición (por hacer)
-.github/workflows/    ejecución programada cada 30 minutos (por hacer)
+recolector/           programa en Python que consulta las fuentes (formato y uso en recolector/LEEME.md)
+  interruptor.json    encender, apagar o alargar la recolección
+datos/                mediciones: un archivo de texto por día UTC (AAAA-MM-DD.jsonl), una línea por medición
+.github/workflows/    recolectar.yml (cada 30 minutos) y probar-fuentes.yml (prueba manual)
 ```
 
 **Cómo ver la página:** abrir `web/index.html` con doble clic en el PC. No necesita servidor.
