@@ -20,9 +20,10 @@
 **En curso: tanda 1.2 a 1.5.** El recolector ya existe y está en GitHub (workflow
 "Recolectar datos", minutos 7 y 37 de cada hora; formato y uso en `recolector/LEEME.md`).
 El 2026-11-12 a las 19:23 UTC guardó las dos primeras mediciones reales en
-`datos/2026-11-12.jsonl`, con las seis fuentes respondiendo. Falta confirmar que la
-ejecución programada arranca sola y vigilar las primeras 24 horas (`python
-recolector/revisar.py --horas 24`).
+`datos/2026-11-12.jsonl`, con las seis fuentes respondiendo. Falta confirmar que dos
+ejecuciones programadas arrancan solas (tarea 1.5, cambiada por Bruno: revisar la primera
+hora, no vigilar 24 horas). Opcional en la siguiente sesión: `python recolector/revisar.py
+--horas 24` (tarea 1.5b).
 
 **Hecho:**
 

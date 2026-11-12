@@ -43,8 +43,13 @@ guardan los datos (A2), empezar cuanto antes (A4) y el periodo de un mes con int
       apagarlo, encenderlo o alargarlo cambiando una línea.
 - [ ] **1.4 Ejecución programada en GitHub** cada 30 minutos, con validaciones antes de
       guardar (regla "datos por programa").
-- [ ] **1.5 Dejarlo funcionando y vigilar las primeras 24 horas (A4):** contar mediciones,
-      huecos, minutos de GitHub gastados y unidades de YouTube.
+- [ ] **1.5 Dejarlo funcionando y revisar la primera hora (A4)** (cambiado por Bruno el
+      2026-11-12: en vez de vigilar 24 horas, que exigiría el PC encendido y gastaría
+      tokens). Basta con que dos ejecuciones programadas arranquen solas y guarden bien.
+- [ ] **1.5b Opcional: revisión única de las primeras 24 horas** en la siguiente sesión, con
+      `python recolector/revisar.py --horas 24`: cambio de archivo a medianoche UTC, cupo de
+      YouTube, bloqueos de Google Trends y ejecuciones que GitHub se haya saltado. Los datos
+      quedan guardados igual; es solo mirar.
 - [ ] **1.6 Conectar la página con los datos reales** (`web/datos.js` generado por
       programa). La página deja de mostrar el aviso de "datos de ejemplo".
 - [ ] **1.7 Prueba completa antes del 18 de noviembre.**
