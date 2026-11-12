@@ -1,7 +1,7 @@
 # Plan del proyecto: recuerdo del lanzamiento de GTA 6
 
 Última actualización: 12 de noviembre de 2026.
-Estado: **en entrevista** (todavía se están tomando decisiones; no se ha programado nada).
+Estado: **entrevista terminada.** Todavía no se ha programado nada.
 
 ## 1. Qué es esto
 
@@ -27,8 +27,20 @@ Resultado final: **una página web** con:
 | Eventos de la línea de tiempo | Ambos: automáticos (deducidos de los números, como el máximo de espectadores) y escritos a mano por Bruno en un archivo simple |
 | Zona horaria de la página | Santiago de Chile (`America/Santiago`). Los datos se guardan en UTC y la página convierte al mostrar |
 | Si una fuente falla | El programa sigue con las demás, anota el fallo con su hora (hueco visible, nunca un dato inventado), reintenta en la siguiente medición y GitHub avisa por correo |
-| Lenguaje de programación | Python (elegido por Claude por ser lo habitual para este tipo de tarea) |
+| Tecnología | Dos piezas: **Python** recoge los datos (Bruno no lo ve, corre en GitHub) y **HTML, CSS y JavaScript** forman la página que Bruno abre en el navegador. No es una aplicación instalable |
 | Dónde se trabaja | En la nube (Claude Code web) y también en el PC, indistintamente |
+
+## Diseño de la página
+
+- Debe ser vistoso, con animaciones, al nivel de los diseños que la gente muestra en X.
+- Temática Miami, con **dos estilos que se cambian con un botón**:
+  1. **Miami actual (2026)**: el ambiente de GTA 6.
+  2. **Miami de los años 80**: el ambiente de GTA Vice City (neón, atardecer, estilo retro).
+- Diseño **original inspirado en Miami**. No se copian logotipos, tipografías, imágenes
+  ni arte de los juegos de Rockstar.
+- El diseño se construye **pronto y con datos de ejemplo**, sin esperar a las claves ni a
+  los datos reales. Motivo: Bruno tiene acceso al modelo actual solo esta semana.
+- Las animaciones no deben impedir leer los datos; debe funcionar fluido en el PC de Bruno.
 
 ## 3. Qué se descartó y por qué
 
@@ -112,12 +124,13 @@ Añadir una fuente nueva no obliga a tocar las demás.
 ## 8. Pasos siguientes
 
 1. Terminar la entrevista y cerrar las decisiones pendientes.
-2. Bruno crea las claves de Twitch y YouTube (con guía).
-3. Probar cada fuente con una consulta real.
-4. Programar el recolector de datos y la ejecución programada.
-5. Programar la página web.
-6. Prueba completa antes del 18 de noviembre.
-7. Unir el trabajo a `main`.
+2. Diseñar la página con datos de ejemplo (dos estilos de Miami).
+3. Bruno crea las claves de Twitch y YouTube siguiendo `GUIA_CLAVES.md`.
+4. Probar cada fuente con una consulta real.
+5. Programar el recolector de datos y la ejecución programada.
+6. Conectar la página con los datos reales.
+7. Prueba completa antes del 18 de noviembre.
+8. Unir el trabajo a `main`.
 
 ## 9. Estructura de carpetas prevista
 
@@ -129,3 +142,11 @@ datos/        mediciones guardadas (un registro por cada ejecución)
 web/          la página con la línea de tiempo y las tablas
 .github/      configuración de las ejecuciones programadas
 ```
+
+## 10. Criterios para saber si salió bien
+
+- Del 18 al 20 de noviembre hay mediciones cada 30 minutos, con pocos huecos.
+- Ningún dato es inventado: donde falló una fuente, se ve "sin dato".
+- La página se abre en el PC, muestra horas de Santiago y se entiende sin explicación.
+- El botón cambia entre los dos estilos de Miami sin romper nada.
+- Añadir una fuente nueva no obliga a rehacer lo existente.
