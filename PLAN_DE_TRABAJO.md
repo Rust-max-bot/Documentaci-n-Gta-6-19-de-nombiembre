@@ -34,15 +34,17 @@ guardan los datos (A2), empezar cuanto antes (A4) y el periodo de un mes con int
 - [x] **1.1 Confirmar con Bruno cómo se guardan los datos (A2).** Bruno aceptó el
       2026-11-12: archivos de texto, uno por día, en `datos/` (una línea por medición), en
       vez de una base de datos SQL. Motivos en "Avisos para Bruno", punto 1.
-- [ ] **1.2 Programar el recolector** (`recolector/`): Twitch, YouTube, Google Trends,
+- [x] **1.2 Programar el recolector** (`recolector/`): Twitch, YouTube, Google Trends,
       titulares, PlayStation y Xbox. Cada fuente es una pieza independiente; si una falla, se
       anota el hueco y siguen las demás. Guarda también lo necesario para A7 y A8 (enlaces y
       miniaturas), para no tener que volver a recolectar después.
-- [ ] **1.3 Interruptor y periodo (A6):** archivo de configuración con "activo: sí/no" y
+- [x] **1.3 Interruptor y periodo (A6):** archivo de configuración con "activo: sí/no" y
       fecha de fin (por defecto, un mes: hasta el 19 de diciembre de 2026). Bruno puede
       apagarlo, encenderlo o alargarlo cambiando una línea.
 - [ ] **1.4 Ejecución programada en GitHub** cada 30 minutos, con validaciones antes de
-      guardar (regla "datos por programa").
+      guardar (regla "datos por programa"). **Fallo pendiente (2026-11-12, 17:16 de
+      Santiago):** las ejecuciones manuales funcionan, pero GitHub todavía no lanzó ninguna
+      programada (ni la de 16:37 ni la de 17:07).
 - [ ] **1.5 Dejarlo funcionando y revisar la primera hora (A4)** (cambiado por Bruno el
       2026-11-12: en vez de vigilar 24 horas, que exigiría el PC encendido y gastaría
       tokens). Basta con que dos ejecuciones programadas arranquen solas y guarden bien.
@@ -50,8 +52,10 @@ guardan los datos (A2), empezar cuanto antes (A4) y el periodo de un mes con int
       `python recolector/revisar.py --horas 24`: cambio de archivo a medianoche UTC, cupo de
       YouTube, bloqueos de Google Trends y ejecuciones que GitHub se haya saltado. Los datos
       quedan guardados igual; es solo mirar.
-- [ ] **1.6 Conectar la página con los datos reales** (`web/datos.js` generado por
-      programa). La página deja de mostrar el aviso de "datos de ejemplo".
+- [x] **1.6 Conectar la página con los datos reales** (`web/datos.js` generado por
+      programa). La página deja de mostrar el aviso de "datos de ejemplo". Hecho el
+      2026-11-12: `recolector/generar_web.py` y `ver_pagina.bat`; verificado con Playwright
+      a 1280 y 384 px en los dos estilos, sin errores ni desborde.
 - [ ] **1.7 Prueba completa antes del 18 de noviembre.**
 
 ## Fase 2 — Mejoras rápidas

@@ -179,14 +179,19 @@ web/                  la página (ya existe)
   app.js              lee los datos y dibuja fichas, línea de tiempo, gráficos y tablas
   datos-ejemplo.js    datos inventados para probar el diseño
   eventos.js          eventos que Bruno anota a mano (hora de Santiago)
-  datos.js            datos reales; todavía no existe, lo creará el recolector
+  datos.js            datos reales, generados en el PC por recolector/generar_web.py (no va a git)
 recolector/           programa en Python que consulta las fuentes (formato y uso en recolector/LEEME.md)
   interruptor.json    encender, apagar o alargar la recolección
 datos/                mediciones: un archivo de texto por día UTC (AAAA-MM-DD.jsonl), una línea por medición
 .github/workflows/    recolectar.yml (cada 30 minutos) y probar-fuentes.yml (prueba manual)
 ```
 
-**Cómo ver la página:** abrir `web/index.html` con doble clic en el PC. No necesita servidor.
+**Cómo ver la página:** doble clic en `ver_pagina.bat` (en la carpeta del proyecto): trae las
+mediciones nuevas de GitHub, prepara `web/datos.js` con `recolector/generar_web.py` y abre
+`web/index.html`. No necesita servidor. Abrir `web/index.html` directamente también funciona,
+pero con los datos de la última vez que se preparó (o de ejemplo, si nunca se preparó).
+`web/datos.js` no se sube a git (decisión del 2026-11-12, tarea 1.6): se rehace entero cada
+vez y subirlo cada 30 minutos inflaría el repositorio, el mismo problema que la base SQL.
 Por eso los datos se cargan como archivos `.js` y no como `.json`: un navegador no deja leer
 archivos `.json` sueltos cuando la página se abre con doble clic.
 

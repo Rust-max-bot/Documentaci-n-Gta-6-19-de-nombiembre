@@ -14,6 +14,7 @@ de texto por día en vez de una base de datos SQL (motivos en `PLAN.md`).
 | `red.py` | Piezas comunes para pedir datos a internet |
 | `interruptor.json` | **Encender, apagar o alargar** la recolección |
 | `revisar.py` | Resumen de cómo va: mediciones, huecos, fallos, cupo de YouTube y peso |
+| `generar_web.py` | Convierte `datos/` en `web/datos.js` para la página (lo usa `ver_pagina.bat`) |
 | `probar_fuentes.py` | Prueba suelta de las fuentes (workflow "Probar fuentes"); no guarda nada |
 
 El workflow `.github/workflows/recolectar.yml` lo ejecuta en GitHub a los minutos 7 y 37 de
@@ -63,6 +64,19 @@ xbox         ok, general, estados (+ original si hay problemas)
   `https://www.youtube.com/watch?v=<id>`, noticias en `url`.
 - Miniaturas (tarea 2.2): Twitch trae `{width}x{height}` en la dirección, que hay que
   reemplazar (por ejemplo `320x180`). Google Noticias no trae imágenes.
+
+## De `datos/` a la página (`generar_web.py`)
+
+`web/datos.js` tiene el mismo formato que `web/datos-ejemplo.js`, sin la marca de ejemplo.
+Se genera en el PC y no se sube a git. Qué toma de cada medición:
+
+- Twitch: total de espectadores y los 3 canales con más público.
+- Google Trends: el interés de la **última hora completa** de esa medición (la hora en curso
+  viene a medias). Es relativo a los 7 días anteriores a cada medición, así que valores muy
+  separados en el tiempo no se comparan del todo bien.
+- Servidores: `ok`, `problemas` o sin dato. Rockstar siempre sin dato: se anota a mano.
+- YouTube: los 20 videos de la última medición, con la serie de visitas de cada uno.
+- Noticias: los 60 titulares más recientes.
 
 ## Comprobaciones
 

@@ -3,3 +3,4 @@
 
 # Los datos se guardan con finales de línea LF; en Windows se mantienen igual al descargarlos.
 datos/*.jsonl text eol=lf
+*.bat text eol=crlf

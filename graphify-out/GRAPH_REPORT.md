@@ -1,17 +1,17 @@
 # Graph Report - Documentación Gta 6  (2026-11-12)
 
 ## Corpus Check
-- 23 files · ~17,188 words
+- 24 files · ~18,443 words
 - Verdict: corpus is large enough that graph structure adds value.
-- Unclassified: 4 file(s) not represented in the graph (top: (none) 3, .css 1)
+- Unclassified: 6 file(s) not represented in the graph (top: (none) 3, .jsonl 1, .bat 1)
 
 ## Summary
-- 230 nodes · 350 edges · 16 communities (12 shown, 4 thin omitted)
-- Extraction: 87% EXTRACTED · 13% INFERRED · 0% AMBIGUOUS · INFERRED: 44 edges (avg confidence: 0.87)
+- 241 nodes · 378 edges · 16 communities (12 shown, 4 thin omitted)
+- Extraction: 88% EXTRACTED · 12% INFERRED · 0% AMBIGUOUS · INFERRED: 44 edges (avg confidence: 0.87)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `96a86d6a`
+- Built from commit: `d763b370`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -26,7 +26,7 @@
 - Línea de estado git
 - Freno de guardado
 - steps
-- recolectar.py
+- generar_web.py
 - validar.py
 - Plan de trabajo
 - Recolector
@@ -36,10 +36,10 @@
 2. `main()` - 11 edges
 3. `Plan de trabajo` - 10 edges
 4. `pedir()` - 9 edges
-5. `pedir_json()` - 8 edges
-6. `a_iso()` - 8 edges
-7. `exigir()` - 8 edges
-8. `dibujar()` - 8 edges
+5. `dibujar()` - 8 edges
+6. `exigir()` - 8 edges
+7. `a_iso()` - 8 edges
+8. `pedir_json()` - 8 edges
 9. `Resultado de las pruebas reales (12 nov 2026)` - 8 edges
 10. `steps` - 7 edges
 
@@ -48,11 +48,11 @@
   CLAUDE.md → .claude/CLAUDE.md
 - `Gráfico espectadores Twitch (#g-twitch)` --shares_data_with--> `Fuente Twitch`  [INFERRED]
   web/index.html → PLAN.md
-- `Tabla Twitch (#t-twitch)` --shares_data_with--> `Fuente Twitch`  [INFERRED]
-  web/index.html → PLAN.md
 - `Sección línea de tiempo (#linea)` --implements--> `Decisiones ya tomadas`  [INFERRED]
   web/index.html → PLAN.md
 - `Sección estado de servidores (#servidores)` --shares_data_with--> `Fuente estado de servidores (Rockstar, PSN, Xbox)`  [INFERRED]
+  web/index.html → PLAN.md
+- `Tabla Twitch (#t-twitch)` --shares_data_with--> `Fuente Twitch`  [INFERRED]
   web/index.html → PLAN.md
 
 ## Import Cycles
@@ -90,16 +90,16 @@ Cohesion: 0.28
 Nodes (8): Entorno en la nube recuerdo-gta6, Estado de PlayStation (SCEA.json), Estado de Rockstar (no funciona), Fuente estado de servidores (Rockstar, PSN, Xbox), Estado de Xbox (servicestatusv6), Fuente titulares Google Noticias (RSS), Resultado de las pruebas reales (12 nov 2026), Sección titulares (#noticias)
 
 ### Community 6 - "fuentes.py"
-Cohesion: 0.12
-Nodes (13): _mensaje_youtube(), noticias(), playstation(), trends(), twitch(), xbox(), youtube(), pedir() (+5 more)
+Cohesion: 0.10
+Nodes (19): _mensaje_youtube(), noticias(), playstation(), trends(), twitch(), xbox(), youtube(), pedir() (+11 more)
 
 ### Community 11 - "steps"
 Cohesion: 0.10
 Nodes (19): TWITCH_CLIENT_ID, TWITCH_CLIENT_SECRET, YOUTUBE_API_KEY, jobs, probar, name, on, workflow_dispatch (+11 more)
 
-### Community 12 - "recolectar.py"
+### Community 12 - "generar_web.py"
 Cohesion: 0.18
-Nodes (8): abortar(), leer_estado(), leer_interruptor(), main(), mensaje_seguro(), resumen(), fecha(), main()
+Nodes (9): abortar(), comprobar(), convertir(), estado_servidor(), leer_mediciones(), main(), ultima_hora_completa(), fecha() (+1 more)
 
 ### Community 13 - "validar.py"
 Cohesion: 0.28
@@ -110,28 +110,28 @@ Cohesion: 0.18
 Nodes (10): Avisos para Bruno (cosas donde su idea tiene un límite o un fallo), Fase 0 — Claves y fuentes, Fase 1 — Recolector funcionando (lo más importante), Fase 2 — Mejoras rápidas, Fase 3 — Mejoras medianas, Fase 4 — Mejoras largas, Fase 5 — Lo que ya estaba acordado para después del lanzamiento, Fechas que mandan (+2 more)
 
 ### Community 15 - "Recolector"
-Cohesion: 0.29
-Nodes (6): Archivos, Comprobaciones, Formato de cada línea, Interruptor (`interruptor.json`), Probar en el PC, Recolector
+Cohesion: 0.25
+Nodes (7): Archivos, Comprobaciones, De `datos/` a la página (`generar_web.py`), Formato de cada línea, Interruptor (`interruptor.json`), Probar en el PC, Recolector
 
 ## Knowledge Gaps
-- **12 isolated node(s):** `Gráfico Google Trends (#g-trends)`, `Gráfico espectadores Twitch (#g-twitch)`, `Tabla Twitch (#t-twitch)`, `Tabla videos YouTube (#t-youtube)`, `Guía para crear las claves de Twitch y YouTube` (+7 more)
-  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 91 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
+- **12 isolated node(s):** `Carga de scripts (datos-ejemplo.js, datos.js, eventos.js, app.js)`, `Gráfico Google Trends (#g-trends)`, `Gráfico espectadores Twitch (#g-twitch)`, `Tabla Twitch (#t-twitch)`, `Tabla videos YouTube (#t-youtube)` (+7 more)
+  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 94 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
 - **4 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
 - **Why does `Resultado de las pruebas reales (12 nov 2026)` connect `Pruebas de fuentes sin clave` to `Fuentes, fases y claves`, `Diseño Miami y estilos`?**
-  _High betweenness centrality (0.022) - this node is a cross-community bridge._
-- **What connects `Gráfico Google Trends (#g-trends)`, `Gráfico espectadores Twitch (#g-twitch)`, `Tabla Twitch (#t-twitch)` to the rest of the system?**
+  _High betweenness centrality (0.020) - this node is a cross-community bridge._
+- **What connects `Carga de scripts (datos-ejemplo.js, datos.js, eventos.js, app.js)`, `Gráfico Google Trends (#g-trends)`, `Gráfico espectadores Twitch (#g-twitch)` to the rest of the system?**
   _12 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Fuentes, fases y claves` be split into smaller, more focused modules?**
   _Cohesion score 0.06827880512091039 - nodes in this community are weakly interconnected._
 - **Why does `Dónde quedamos` connect `Diseño Miami y estilos` to `Relevo entre sesiones`, `Pruebas de fuentes sin clave`?**
-  _High betweenness centrality (0.020) - this node is a cross-community bridge._
+  _High betweenness centrality (0.018) - this node is a cross-community bridge._
 - **Should `steps` be split into smaller, more focused modules?**
   _Cohesion score 0.08 - nodes in this community are weakly interconnected._
 - **Should `fuentes.py` be split into smaller, more focused modules?**
-  _Cohesion score 0.11746031746031746 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.10144927536231885 - nodes in this community are weakly interconnected._
 - **Should `steps` be split into smaller, more focused modules?**
   _Cohesion score 0.1 - nodes in this community are weakly interconnected._

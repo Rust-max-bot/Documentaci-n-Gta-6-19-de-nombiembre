@@ -17,7 +17,12 @@
 
 *(2026-11-12.)*
 
-**En curso: tanda 1.2 a 1.5.** El recolector ya existe y está en GitHub (workflow
+**Tarea 1.6 hecha:** la página ya muestra los datos reales. Para verla, doble clic en
+`ver_pagina.bat` (trae las mediciones, prepara `web/datos.js`, que no va a git, y abre la
+página).
+
+**En curso: tanda 1.2 a 1.5.** 1.2 y 1.3 hechas. **1.4 con un fallo pendiente:** GitHub
+todavía no lanza las ejecuciones programadas (solo funcionan las manuales). El recolector ya existe y está en GitHub (workflow
 "Recolectar datos", minutos 7 y 37 de cada hora; formato y uso en `recolector/LEEME.md`).
 El 2026-11-12 a las 19:23 UTC guardó las dos primeras mediciones reales en
 `datos/2026-11-12.jsonl`, con las seis fuentes respondiendo. Falta confirmar que dos
@@ -54,6 +59,8 @@ tareas 1.2 a 1.5.
 
 ## Últimos cambios
 
+- 2026-11-12: página conectada a los datos reales (tarea 1.6); `ver_pagina.bat` para verla.
+- 2026-11-12: recolector en GitHub (tareas 1.2 y 1.3); primeras mediciones reales guardadas.
 - 2026-11-12: "paso a paso con permiso" vuelve, por tandas que define Bruno; D6 se ignora por ahora.
 - 2026-11-12: Bruno decidió guardar los datos en archivos de texto por día (tarea 1.1 hecha).
 - 2026-11-12: `PLAN_DE_TRABAJO.md` creado con la lista de Bruno ordenada; decisiones nuevas en `PLAN.md`.
@@ -68,7 +75,7 @@ tareas 1.2 a 1.5.
 
 La lista completa y su orden están en `PLAN_DE_TRABAJO.md`. Lo inmediato:
 
-1. Tareas 1.2 a 1.5: recolector, interruptor, ejecución cada 30 minutos y vigilancia de las
-   primeras 24 horas.
-2. Tareas 1.6 y 1.7: conectar la página con datos reales y prueba completa antes del 18.
-3. Opcional: el hook de diseño de Impeccable (Bruno ejecuta `npx impeccable install` en el PC).
+1. Tarea 1.4: lograr que GitHub lance solo las ejecuciones programadas (fallo pendiente).
+2. Tarea 1.5: confirmar dos ejecuciones programadas seguidas; 1.5b opcional (revisar 24 horas).
+3. Tarea 1.7: prueba completa antes del 18 de noviembre.
+4. Opcional: el hook de diseño de Impeccable (Bruno ejecuta `npx impeccable install` en el PC).

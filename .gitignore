@@ -17,3 +17,7 @@ graphify-out/.graphify_python
 graphify-out/.graphify_root
 graphify-out/cache/
 graphify-out/*.bak
+
+# Datos de la página: se generan en el PC con recolector/generar_web.py (o ver_pagina.bat)
+web/datos.js
+web/datos.js.tmp
