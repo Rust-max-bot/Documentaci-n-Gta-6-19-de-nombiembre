@@ -107,6 +107,29 @@ Esto es una propuesta. Cada punto se verificará con una prueba real antes de da
 Principio de diseño: **simple pero ampliable.** Cada fuente es una pieza independiente.
 Añadir una fuente nueva no obliga a tocar las demás.
 
+### Resultado de las pruebas reales (12 de noviembre de 2026)
+
+Hechas desde la sesión en la nube, sin claves. Falta repetirlas desde GitHub, cuyos
+servidores pueden recibir un trato distinto.
+
+| Fuente | Resultado | Dirección consultada |
+|---|---|---|
+| Titulares (Google Noticias) | Funciona. 100 titulares con fecha y medio | `news.google.com/rss/search?q="GTA 6"&hl=es-419&gl=CL&ceid=CL:es-419` |
+| Estado de PlayStation | Funciona. Lista de servicios por país (incluye Chile); lista vacía significa sin problemas | `status.playstation.com/data/statuses/region/SCEA.json` |
+| Estado de Xbox | Funciona. Estado general y por categoría; `None` significa sin problemas | `xnotify.xboxlive.com/servicestatusv6/US/en-US` |
+| Google Trends | Funciona con condiciones. Método no oficial en tres pasos: abrir la página para recibir una cookie, pedir `api/explore` y luego `api/widgetdata/multiline`. Sin la cookie responde "demasiadas peticiones" (429). Dio 169 puntos, uno por hora, de los últimos 7 días | `trends.google.com/trends/api/...` |
+| Estado de Rockstar | **No funciona.** La conexión se abre pero el sitio no responde a programas (se agota la espera). Probablemente protección contra robots | `support.rockstargames.com/servicestatus` |
+| Twitch y YouTube | Sin probar: faltan las claves | |
+
+Consecuencias:
+
+- Google Trends entrega datos por hora, no cada 30 minutos. Y como guarda 7 días de
+  historial, cada ejecución puede rellenar huecos de las anteriores.
+- El estado de Rockstar se anotará a mano, salvo que desde GitHub sí responda.
+- Solo se ha visto el formato "sin problemas" de PlayStation y Xbox. El formato exacto
+  de una caída no se ha visto todavía; el recolector debe guardar la respuesta original
+  cuando no sea "sin problemas", para poder interpretarla después.
+
 ## 6. Riesgos conocidos
 
 1. **Queda poco tiempo.** El programa debe estar probado antes del 18 de noviembre.

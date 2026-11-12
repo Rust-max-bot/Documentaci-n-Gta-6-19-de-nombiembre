@@ -50,3 +50,5 @@ Este proyecto puede continuarlo otra sesión u otro modelo. Para que el relevo f
 - Diseño: original, inspirado en Miami. No copiar logotipos, tipografías ni arte de los juegos.
 - Para revisar cambios visuales: abrir `web/index.html` con Playwright y mirar una captura
   de cada estilo (botón "Miami 1986" / "Miami 2026").
+- En la nube, la sesión debe usar el entorno `recuerdo-gta6`, que permite los sitios de las
+  fuentes. Con el entorno "Default" todas las consultas a las fuentes se bloquean.
