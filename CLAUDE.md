@@ -51,12 +51,29 @@ No se guarda trabajo a medias: si el paso espera una decisión de Bruno, se dice
 y se termina sin guardar. Para deshacer, `git revert`. `ESTADO_ACTUAL.md` se mantiene corto
 borrando lo viejo (ya está en `git log`).
 
+## Archivar `ESTADO_ACTUAL.md`
+
+Cuando `ESTADO_ACTUAL.md` pasa de **20.000 bytes**, se archiva en vez de seguir creciendo
+(el freno automático avisa al terminar una respuesta):
+
+1. Moverlo con `git mv` a `historial/ESTADO_AAAA-MM-DD.md` (fecha del día; si ya existe
+   uno con esa fecha, añadir `-2`, `-3`…). Los archivos de `historial/` no se editan.
+2. Crear un `ESTADO_ACTUAL.md` nuevo con la misma estructura, conservando solo lo esencial:
+   "Dónde quedamos" (reescrito corto), la fecha límite, "Pendiente" completo y las decisiones
+   o avisos que sigan vigentes. "Últimos cambios" empieza con una sola línea:
+   `- AAAA-MM-DD: estado anterior archivado en historial/ESTADO_AAAA-MM-DD.md`.
+3. Comprobar que no se perdió ningún pendiente ni aviso vigente comparando los dos archivos.
+4. Guardar y subir en un solo commit ("Archivar ESTADO_ACTUAL.md…").
+
+Al iniciar una sesión no se lee `historial/`: solo se consulta si hace falta un detalle viejo.
+
 **Avisos automáticos** (`.claude/settings.json`, en el repo):
 
 - Línea de estado `.claude/hooks/estado-git.sh`: `✓` todo guardado y subido, `●` archivos sin
   guardar, `↑` commits sin subir.
 - Hook `Stop` `.claude/hooks/revisar-guardado.sh`: frena el final de una respuesta si quedan
   cambios sin commit o sin push, y recuerda esta regla (avisa una sola vez por respuesta).
+  También avisa si `ESTADO_ACTUAL.md` pasó de 20.000 bytes (ver "Archivar `ESTADO_ACTUAL.md`").
 - `.gitattributes` fuerza finales de línea LF en los `.sh` para que funcionen en Windows y en
   la nube.
 

@@ -9,6 +9,8 @@
   "Dónde quedamos" (ver "Guardado al terminar cada paso" en `CLAUDE.md`). Nada de reglas aquí.
 - **Tiene que seguir siendo corto.** "Últimos cambios" guarda unas 8 entradas de una línea;
   las viejas se borran porque ya están en `git log`.
+- Si pasa de 20.000 bytes, se archiva en `historial/` y se empieza uno nuevo (ver
+  "Archivar `ESTADO_ACTUAL.md`" en `CLAUDE.md`).
 
 ## Dónde quedamos
 
@@ -35,6 +37,7 @@ automáticos funcionan tras reiniciar VS Code.
 
 ## Últimos cambios
 
+- 2026-11-12: regla para archivar `ESTADO_ACTUAL.md` en `historial/` al pasar de 20.000 bytes, con aviso automático.
 - 2026-11-12: Graphify instalado en el proyecto y primer grafo generado (`graphify-out/`).
 - 2026-11-12: sistema de relevo entre sesiones (`ESTADO_ACTUAL.md`, reglas de inicio y guardado, avisos en `.claude/`).
 - 2026-11-12: skill Impeccable 0.1.22 en `.claude/skills/impeccable/`.
