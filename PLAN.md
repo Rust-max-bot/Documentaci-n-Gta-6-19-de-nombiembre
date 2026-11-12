@@ -26,6 +26,8 @@ Resultado final: **una página web** con:
 | Visibilidad de la página | Privada por ahora: se abre como archivo en el PC, sin enlace público. Se puede hacer pública más adelante |
 | Eventos de la línea de tiempo | Ambos: automáticos (deducidos de los números, como el máximo de espectadores) y escritos a mano por Bruno en un archivo simple |
 | Zona horaria de la página | Santiago de Chile (`America/Santiago`). Los datos se guardan en UTC y la página convierte al mostrar |
+| Si una fuente falla | El programa sigue con las demás, anota el fallo con su hora (hueco visible, nunca un dato inventado), reintenta en la siguiente medición y GitHub avisa por correo |
+| Lenguaje de programación | Python (elegido por Claude por ser lo habitual para este tipo de tarea) |
 | Dónde se trabaja | En la nube (Claude Code web) y también en el PC, indistintamente |
 
 ## 3. Qué se descartó y por qué
@@ -84,10 +86,8 @@ Esto es una propuesta. Cada punto se verificará con una prueba real antes de da
 
 ## 7. Decisiones pendientes
 
-- [ ] Lenguaje de programación (propuesta: Python).
 - [ ] Instalar y usar Graphify (skill de GitHub que crea un mapa del proyecto para gastar
       menos tokens). Solo cuando ya haya archivos de código listos. No está instalada todavía.
-- [ ] Qué pasa si una fuente falla durante el día 19 (avisar, reintentar, seguir con las demás).
 
 ## 8. Pasos siguientes
 
