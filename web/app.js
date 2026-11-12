@@ -278,7 +278,7 @@
 
   /* ---------- Aparecer al bajar ---------- */
   (function () {
-    var bloques = document.querySelectorAll(".revelar");
+    var bloques = document.querySelectorAll(".observar");
     if (!("IntersectionObserver" in window)) { bloques.forEach(function (b) { b.classList.add("visible"); }); return; }
     var ojo = new IntersectionObserver(function (vistas) {
       vistas.forEach(function (v) { if (v.isIntersecting) { v.target.classList.add("visible"); ojo.unobserve(v.target); } });

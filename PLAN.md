@@ -38,6 +38,13 @@ Resultado final: **una página web** con:
   2. **Miami de los años 80**: el ambiente de GTA Vice City (neón, atardecer, estilo retro).
 - Diseño **original inspirado en Miami**. No se copian logotipos, tipografías, imágenes
   ni arte de los juegos de Rockstar.
+- Ambiente buscado: la avenida de hoteles art déco de Miami Beach (fachadas pastel de día,
+  neones de noche), palmeras, mar y atardecer. Los edificios y palmeras son dibujos propios.
+- Tipografías de Google Fonts, de licencia libre: Monoton, Rajdhani, Limelight y Outfit.
+- Se aplicaron pautas de la skill de diseño Impeccable (leídas de su repositorio oficial,
+  `pbakaus/impeccable`, licencia Apache 2.0). **La skill no está instalada**: su instalador
+  (`npx impeccable install`) fue bloqueado por los permisos de la sesión en la nube.
+  Para tenerla, Bruno puede ejecutar ese comando en su PC, dentro del repositorio.
 - El diseño se construye **pronto y con datos de ejemplo**, sin esperar a las claves ni a
   los datos reales. Motivo: Bruno tiene acceso al modelo actual solo esta semana.
 - Las animaciones no deben impedir leer los datos; debe funcionar fluido en el PC de Bruno.
