@@ -30,6 +30,7 @@ Resultado final: **una página web** con:
 | Si una fuente falla | El programa sigue con las demás, anota el fallo con su hora (hueco visible, nunca un dato inventado), reintenta en la siguiente medición y GitHub avisa por correo |
 | Tecnología | Dos piezas: **Python** recoge los datos (Bruno no lo ve, corre en GitHub) y **HTML, CSS y JavaScript** forman la página que Bruno abre en el navegador. No es una aplicación instalable |
 | Dónde se trabaja | En la nube (Claude Code web) y también en el PC, indistintamente |
+| Cómo se guardan los datos | **Decidido por Bruno el 2026-11-12:** archivos de texto, uno por día, en `datos/` (una línea por medición), en vez de una base de datos SQL. Motivo: en GitHub solo perduran los archivos del repositorio, y una base de datos en un archivo (SQLite) se guardaría entera en cada cambio, inflando el repositorio. Para el análisis se pueden cargar en una base de datos en el PC |
 
 ## Diseño de la página
 
@@ -180,7 +181,7 @@ web/                  la página (ya existe)
   eventos.js          eventos que Bruno anota a mano (hora de Santiago)
   datos.js            datos reales; todavía no existe, lo creará el recolector
 recolector/           programa en Python que consulta las fuentes (por hacer)
-datos/                mediciones guardadas, una por ejecución (por hacer)
+datos/                mediciones guardadas: un archivo de texto por día, una línea por medición (por hacer)
 .github/workflows/    ejecución programada cada 30 minutos (por hacer)
 ```
 

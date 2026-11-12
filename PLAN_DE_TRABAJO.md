@@ -31,9 +31,9 @@ ya estaba acordado y faltaba. **Es la lista ordenada de qué hacer y en qué ord
 Incluye tres puntos de la lista de Bruno que no se pueden separar del recolector: dónde se
 guardan los datos (A2), empezar cuanto antes (A4) y el periodo de un mes con interruptor (A6).
 
-- [ ] **1.1 Confirmar con Bruno cómo se guardan los datos (A2).** Propuesta de Claude:
-      archivos de texto, uno por día, en `datos/` (una línea por medición), en vez de una
-      base de datos SQL. Motivos en "Avisos para Bruno", punto 1.
+- [x] **1.1 Confirmar con Bruno cómo se guardan los datos (A2).** Bruno aceptó el
+      2026-11-12: archivos de texto, uno por día, en `datos/` (una línea por medición), en
+      vez de una base de datos SQL. Motivos en "Avisos para Bruno", punto 1.
 - [ ] **1.2 Programar el recolector** (`recolector/`): Twitch, YouTube, Google Trends,
       titulares, PlayStation y Xbox. Cada fuente es una pieza independiente; si una falla, se
       anota el hueco y siguen las demás. Guarda también lo necesario para A7 y A8 (enlaces y

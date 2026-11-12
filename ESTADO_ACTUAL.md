@@ -17,9 +17,9 @@
 
 *(2026-11-12.)*
 
-**Siguiente tarea: `PLAN_DE_TRABAJO.md`, tarea 1.1** — confirmar con Bruno cómo se guardan
-los datos (Claude propuso archivos de texto por día en `datos/` en vez de una base de datos
-SQL; Bruno todavía no respondió). Con su respuesta, seguir con 1.2: programar el recolector.
+**Siguiente tarea: `PLAN_DE_TRABAJO.md`, tarea 1.2** — programar el recolector. La tarea
+1.1 quedó resuelta: Bruno aceptó guardar los datos en archivos de texto, uno por día, en
+`datos/` (una línea por medición).
 
 **Hecho:**
 
@@ -49,6 +49,7 @@ de 2026. Lanzamiento: 19 de noviembre, 00:00 de Santiago.
 
 ## Últimos cambios
 
+- 2026-11-12: Bruno decidió guardar los datos en archivos de texto por día (tarea 1.1 hecha).
 - 2026-11-12: `PLAN_DE_TRABAJO.md` creado con la lista de Bruno ordenada; decisiones nuevas en `PLAN.md`.
 - 2026-11-12: Twitch y YouTube probados desde GitHub con las claves reales; funcionan.
 - 2026-11-12: reglas de trabajo traídas del proyecto de inglés; "paso a paso" en pausa hasta el 18 nov.
@@ -61,10 +62,9 @@ de 2026. Lanzamiento: 19 de noviembre, 00:00 de Santiago.
 
 La lista completa y su orden están en `PLAN_DE_TRABAJO.md`. Lo inmediato:
 
-1. Tarea 1.1: Bruno confirma cómo se guardan los datos.
-2. Tareas 1.2 a 1.5: recolector, interruptor, ejecución cada 30 minutos y vigilancia de las
+1. Tareas 1.2 a 1.5: recolector, interruptor, ejecución cada 30 minutos y vigilancia de las
    primeras 24 horas.
-3. Tareas 1.6 y 1.7: conectar la página con datos reales y prueba completa antes del 18.
-4. Bruno completa el punto D6 de su lista.
-5. Opcional: el hook de diseño de Impeccable (Bruno ejecuta `npx impeccable install` en el PC).
-6. Después del 18 de noviembre: preguntar a Bruno si se reactiva "paso a paso con permiso".
+2. Tareas 1.6 y 1.7: conectar la página con datos reales y prueba completa antes del 18.
+3. Bruno completa el punto D6 de su lista.
+4. Opcional: el hook de diseño de Impeccable (Bruno ejecuta `npx impeccable install` en el PC).
+5. Después del 18 de noviembre: preguntar a Bruno si se reactiva "paso a paso con permiso".
