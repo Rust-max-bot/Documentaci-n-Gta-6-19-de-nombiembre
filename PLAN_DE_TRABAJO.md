@@ -42,9 +42,9 @@ guardan los datos (A2), empezar cuanto antes (A4) y el periodo de un mes con int
       fecha de fin (por defecto, un mes: hasta el 19 de diciembre de 2026). Bruno puede
       apagarlo, encenderlo o alargarlo cambiando una línea.
 - [ ] **1.4 Ejecución programada en GitHub** cada 30 minutos, con validaciones antes de
-      guardar (regla "datos por programa"). **Fallo pendiente (2026-11-12, 17:16 de
-      Santiago):** las ejecuciones manuales funcionan, pero GitHub todavía no lanzó ninguna
-      programada (ni la de 16:37 ni la de 17:07).
+      guardar (regla "datos por programa"). **Fallo pendiente (2026-11-12):** las
+      ejecuciones manuales funcionan, pero hasta las 17:56 de Santiago GitHub no lanzó
+      ninguna programada (se saltó las de 16:37, 17:07 y 17:37). Revisar en la próxima sesión.
 - [ ] **1.5 Dejarlo funcionando y revisar la primera hora (A4)** (cambiado por Bruno el
       2026-11-12: en vez de vigilar 24 horas, que exigiría el PC encendido y gastaría
       tokens). Basta con que dos ejecuciones programadas arranquen solas y guarden bien.

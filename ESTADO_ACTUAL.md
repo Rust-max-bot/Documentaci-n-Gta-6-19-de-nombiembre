@@ -21,18 +21,27 @@
 `ver_pagina.bat` (trae las mediciones, prepara `web/datos.js`, que no va a git, y abre la
 página).
 
-**En curso: tanda 1.2 a 1.5.** 1.2 y 1.3 hechas. **1.4 con un fallo pendiente:** GitHub
-todavía no lanza las ejecuciones programadas (solo funcionan las manuales). El recolector ya existe y está en GitHub (workflow
-"Recolectar datos", minutos 7 y 37 de cada hora; formato y uso en `recolector/LEEME.md`).
-El 2026-11-12 a las 19:23 UTC guardó las dos primeras mediciones reales en
-`datos/2026-11-12.jsonl`, con las seis fuentes respondiendo. Falta confirmar que dos
-ejecuciones programadas arrancan solas (tarea 1.5, cambiada por Bruno: revisar la primera
-hora, no vigilar 24 horas). Opcional en la siguiente sesión: `python recolector/revisar.py
---horas 24` (tarea 1.5b).
+**LO PRIMERO EN LA PRÓXIMA SESIÓN (pedido de Bruno, 2026-11-12): revisar si GitHub ya
+lanza solo las ejecuciones programadas.** Bruno cerró VS Code y dejó esta revisión para
+después; la espera de fondo de la sesión anterior se cortó al cerrar.
+
+1. `gh run list --workflow recolectar.yml --event schedule --limit 10`.
+2. Si hay al menos dos seguidas con éxito: tarea 1.4 y 1.5 hechas (marcar `[x]`).
+   Opcional (1.5b): `python recolector/revisar.py --horas 24`.
+3. Si sigue sin haber ninguna: investigar la causa de la tarea 1.4. Dato verificado: hasta
+   las 20:56 UTC del 2026-11-12 GitHub no lanzó ninguna (se saltó 19:37, 20:07 y 20:37 UTC).
+   El workflow figura activo, está en `main` y el `cron` está bien escrito. Las manuales
+   (`gh workflow run recolectar.yml`) funcionan y guardan bien.
+
+**Tanda en curso: 1.2 a 1.5** (más la 1.6, pedida aparte y ya hecha). 1.2 y 1.3 hechas.
+El recolector está en GitHub (workflow "Recolectar datos", minutos 7 y 37 de cada hora;
+formato y uso en `recolector/LEEME.md`). Hay 3 mediciones reales en
+`datos/2026-11-12.jsonl`, todas manuales, con las seis fuentes respondiendo. La 1.5 la
+cambió Bruno: basta con dos ejecuciones programadas que arranquen solas, sin vigilar 24 horas.
 
 **Hecho:**
 
-- La página (`web/`) con dos estilos de Miami, todavía con datos de ejemplo.
+- La página (`web/`) con dos estilos de Miami, conectada a los datos reales (tarea 1.6).
 - Las tres claves están guardadas como secretos de GitHub (`TWITCH_CLIENT_ID`,
   `TWITCH_CLIENT_SECRET`, `YOUTUBE_API_KEY`).
 - **Todas las fuentes probadas desde GitHub** con el workflow "Probar fuentes"
