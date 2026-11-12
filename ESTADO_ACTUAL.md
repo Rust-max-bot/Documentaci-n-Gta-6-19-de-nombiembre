@@ -1,7 +1,8 @@
 # Estado actual del proyecto
 
 > Estado **vivo** y corto. Las reglas y la forma de trabajo están en `CLAUDE.md`; las
-> decisiones, fases y riesgos, en `PLAN.md`. Al iniciar una sesión se lee este archivo entero.
+> decisiones, fases y riesgos, en `PLAN.md`; la lista ordenada de tareas, en
+> `PLAN_DE_TRABAJO.md`. Al iniciar una sesión se lee este archivo entero.
 
 ## Cómo usar este archivo
 
@@ -16,46 +17,54 @@
 
 *(2026-11-12.)*
 
-**La página está hecha con datos de ejemplo** (`web/`, dos estilos de Miami: "Miami 1986" y
-"Miami 2026"), pendiente de la opinión de Bruno. **Falta el recolector de datos y las claves**
-de Twitch y YouTube. Las fuentes sin clave ya se probaron desde la nube (resultados en
-`PLAN.md`, sección 5): Google Noticias, PlayStation, Xbox y Google Trends funcionan; Rockstar no.
+**Siguiente tarea: `PLAN_DE_TRABAJO.md`, tarea 1.1** — confirmar con Bruno cómo se guardan
+los datos (Claude propuso archivos de texto por día en `datos/` en vez de una base de datos
+SQL; Bruno todavía no respondió). Con su respuesta, seguir con 1.2: programar el recolector.
 
-El 2026-11-12 se descargó el repositorio en el PC de Bruno
-(`%USERPROFILE%\Proyectos\Documentación Gta 6`), se instaló la skill Impeccable 0.1.22 en
-`.claude/skills/impeccable/` (copia manual, sin el hook de diseño) y se armó este sistema de
-relevo entre sesiones: este archivo, el inicio de sesión de `CLAUDE.md`, el guardado
-automático y los avisos de `.claude/` (línea de estado y freno al terminar).
+**Hecho:**
 
-También el 2026-11-12 se instaló Graphify en el proyecto y se generó el primer grafo
-(`graphify-out/graph.html` para verlo; 97 nodos, 11 grupos). El programa `graphify` vive en
-Python 3.14 (no desinstalarlo) y su carpeta `Scripts` ya está en el PATH del PC; sus avisos
-automáticos funcionan tras reiniciar VS Code.
+- La página (`web/`) con dos estilos de Miami, todavía con datos de ejemplo.
+- Las tres claves están guardadas como secretos de GitHub (`TWITCH_CLIENT_ID`,
+  `TWITCH_CLIENT_SECRET`, `YOUTUBE_API_KEY`).
+- **Todas las fuentes probadas desde GitHub** con el workflow "Probar fuentes"
+  (`recolector/probar_fuentes.py`, se lanza con `gh workflow run probar-fuentes.yml`):
+  Twitch, YouTube, Google Trends, titulares, PlayStation y Xbox funcionan; Rockstar no.
+  Ese archivo ya tiene escritas las consultas que el recolector debe reutilizar.
+- Sistema de trabajo: relevo entre sesiones, guardado automático, archivo del estado a los
+  20.000 bytes, reglas de trabajo, Graphify e Impeccable instalados.
 
-**Fecha límite:** el recolector tiene que estar probado y unido a `main` antes del
-18 de noviembre de 2026.
+**Falta lo principal: el recolector no existe todavía y no se está guardando ningún dato.**
+Bruno quiere empezar a registrar cuanto antes, para comparar el interés previo con el del
+lanzamiento.
+
+**Bruno entregó una lista de cosas que quiere** (2026-11-12): un mes de datos con interruptor
+manual, análisis, Reddit, enlaces, miniaturas y varios cambios de diseño. Está ordenada en
+`PLAN_DE_TRABAJO.md`, con avisos sobre los límites de algunas ideas. El punto D6 de su lista
+quedó cortado y falta que lo complete.
+
+**Fecha límite:** el recolector tiene que llevar días funcionando antes del 18 de noviembre
+de 2026. Lanzamiento: 19 de noviembre, 00:00 de Santiago.
+
+**Reglas en pausa:** "paso a paso con permiso", hasta el 18 de noviembre.
 
 ## Últimos cambios
 
-- 2026-11-12: reglas de trabajo traídas del proyecto de inglés (sección "Forma de trabajo" y "Máquina y herramientas" de `CLAUDE.md`); "paso a paso con permiso" en pausa hasta el 18 nov.
-- 2026-11-12: regla para archivar `ESTADO_ACTUAL.md` en `historial/` al pasar de 20.000 bytes, con aviso automático.
+- 2026-11-12: `PLAN_DE_TRABAJO.md` creado con la lista de Bruno ordenada; decisiones nuevas en `PLAN.md`.
+- 2026-11-12: Twitch y YouTube probados desde GitHub con las claves reales; funcionan.
+- 2026-11-12: reglas de trabajo traídas del proyecto de inglés; "paso a paso" en pausa hasta el 18 nov.
+- 2026-11-12: regla para archivar `ESTADO_ACTUAL.md` en `historial/` al pasar de 20.000 bytes.
 - 2026-11-12: Graphify instalado en el proyecto y primer grafo generado (`graphify-out/`).
-- 2026-11-12: sistema de relevo entre sesiones (`ESTADO_ACTUAL.md`, reglas de inicio y guardado, avisos en `.claude/`).
-- 2026-11-12: skill Impeccable 0.1.22 en `.claude/skills/impeccable/`.
-- 2026-11-12: pruebas reales de las fuentes sin clave (PR #1).
-- 2026-11-12: página rediseñada con hoteles art déco de Miami.
-- 2026-11-12: entrevista cerrada; `PLAN.md` y `GUIA_CLAVES.md` escritos.
+- 2026-11-12: sistema de relevo entre sesiones y skill Impeccable 0.1.22.
+- 2026-11-12: página rediseñada con hoteles art déco de Miami; pruebas de fuentes sin clave.
 
 ## Pendiente
 
-1. Bruno da su opinión sobre el diseño de la página.
-2. Bruno crea las claves de Twitch y YouTube siguiendo `GUIA_CLAVES.md`.
-3. Probar Twitch y YouTube con una consulta real (y repetir las otras fuentes desde GitHub).
-4. Programar el recolector de datos (`recolector/`) y la ejecución programada cada 30 minutos.
-5. Conectar la página con los datos reales (`web/datos.js`).
-6. Prueba completa antes del 18 de noviembre.
-7. Unir el trabajo a `main`.
-8. Opcional: el hook de diseño de Impeccable (Bruno ejecuta `npx impeccable install` en el PC).
-9. Graphify: tras cambiar código, `graphify update .` para mantener el grafo al día.
-10. Después del 18 de noviembre: preguntar a Bruno si se reactiva la regla "paso a paso con
-    permiso" (`CLAUDE.md`, "Forma de trabajo").
+La lista completa y su orden están en `PLAN_DE_TRABAJO.md`. Lo inmediato:
+
+1. Tarea 1.1: Bruno confirma cómo se guardan los datos.
+2. Tareas 1.2 a 1.5: recolector, interruptor, ejecución cada 30 minutos y vigilancia de las
+   primeras 24 horas.
+3. Tareas 1.6 y 1.7: conectar la página con datos reales y prueba completa antes del 18.
+4. Bruno completa el punto D6 de su lista.
+5. Opcional: el hook de diseño de Impeccable (Bruno ejecuta `npx impeccable install` en el PC).
+6. Después del 18 de noviembre: preguntar a Bruno si se reactiva "paso a paso con permiso".

@@ -19,14 +19,16 @@ tiempo y tablas de números de Twitch, YouTube y Google Trends. Es un proyecto p
 ## Al iniciar una sesión
 
 1. Trae los últimos cambios con `git pull`.
-2. Lee `ESTADO_ACTUAL.md` entero (es corto). Lee `PLAN.md` cuando la tarea toque una decisión,
-   una fuente de datos, un riesgo o la estructura de carpetas.
+2. Lee `ESTADO_ACTUAL.md` entero (es corto) y la fase en curso de `PLAN_DE_TRABAJO.md`. Lee
+   `PLAN.md` cuando la tarea toque una decisión, una fuente de datos, un riesgo o la
+   estructura de carpetas.
 3. Si algo no te queda claro, pregúntalo antes de resumir: no rellenes huecos.
 4. Resume a Bruno qué está hecho, qué está pendiente, qué reglas están en pausa y dónde quedó
    el trabajo (no como si se empezara de cero) y espera su confirmación antes de trabajar.
 
-**Fuentes de verdad:** las reglas, aquí; el estado vivo, en `ESTADO_ACTUAL.md`; las decisiones,
-fases y riesgos, en `PLAN.md`; qué se hizo y por qué, en `git log`. Si un chat viejo contradice
+**Fuentes de verdad:** las reglas, aquí; el estado vivo, en `ESTADO_ACTUAL.md`; la lista
+ordenada de tareas, en `PLAN_DE_TRABAJO.md`; las decisiones, fases y riesgos, en `PLAN.md`;
+qué se hizo y por qué, en `git log`. Si un chat viejo contradice
 a estos archivos, ganan los archivos.
 
 ## Cómo comunicarse con Bruno
@@ -56,6 +58,12 @@ a estos archivos, ganan los archivos.
 - **Verificar de verdad:** Playwright a 1280 y 384 px de ancho, en los dos estilos ("Miami
   1986" y "Miami 2026"), sin errores en la consola ni desborde horizontal, y capturas de lo
   nuevo. Los fallos se reportan tal cual.
+- **Seguir `PLAN_DE_TRABAJO.md` en orden.** Una tarea se marca `[x]` solo cuando está hecha y
+  verificada sin errores; si queda a medias, sigue en `[ ]` con el fallo anotado al lado.
+- **Usar Graphify siempre que se pueda, para ahorrar tokens y tiempo** (pedido de Bruno,
+  2026-11-12): antes de abrir o buscar en archivos del proyecto, preguntar al grafo
+  (`graphify query "<pregunta>"`, `graphify explain "<cosa>"`) y abrir después solo los
+  archivos o líneas que señale. No hace falta si la tarea ya dice qué archivo tocar.
 - **Datos por programa, no a mano:** lo que se escriba en `datos/` lo hace un programa con
   validaciones que abortan si algo no cuadra, y antes de cualquier cambio masivo se hace una
   copia fuera del proyecto.

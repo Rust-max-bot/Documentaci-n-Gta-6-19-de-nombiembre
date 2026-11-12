@@ -22,7 +22,7 @@ Resultado final: **una página web** con:
 | Fuentes imprescindibles | Twitch, YouTube y Google Trends |
 | Dónde se ejecuta el programa | En GitHub, dentro de este repositorio (ejecuciones programadas) |
 | Cada cuánto se guardan datos | Cada 30 minutos |
-| Qué días | Del 18 al 20 de noviembre de 2026 (tres días completos) |
+| Qué días | **Cambiado el 2026-11-12:** un mes, empezando cuanto antes (para registrar el interés previo) y hasta el 19 de diciembre de 2026 por defecto. Con interruptor manual para apagar, encender o alargar. Antes eran solo del 18 al 20 de noviembre |
 | Claves de Twitch y YouTube | Las crea Bruno con una guía paso a paso. Aún no existen |
 | Visibilidad de la página | Privada por ahora: se abre como archivo en el PC, sin enlace público. Se puede hacer pública más adelante |
 | Eventos de la línea de tiempo | Ambos: automáticos (deducidos de los números, como el máximo de espectadores) y escritos a mano por Bruno en un archivo simple |
@@ -121,7 +121,11 @@ servidores pueden recibir un trato distinto.
 | Estado de Xbox | Funciona. Estado general y por categoría; `None` significa sin problemas | `xnotify.xboxlive.com/servicestatusv6/US/en-US` |
 | Google Trends | Funciona con condiciones. Método no oficial en tres pasos: abrir la página para recibir una cookie, pedir `api/explore` y luego `api/widgetdata/multiline`. Sin la cookie responde "demasiadas peticiones" (429). Dio 169 puntos, uno por hora, de los últimos 7 días | `trends.google.com/trends/api/...` |
 | Estado de Rockstar | **No funciona.** La conexión se abre pero el sitio no responde a programas (se agota la espera). Probablemente protección contra robots | `support.rockstargames.com/servicestatus` |
-| Twitch y YouTube | Sin probar: faltan las claves | |
+| Twitch | **Funciona** (probado desde GitHub el 2026-11-12). Categoría "Grand Theft Auto VI", id `1867279146`. Entrega espectadores por transmisión; el total se obtiene sumando páginas de 100 | `api.twitch.tv/helix/streams?game_id=1867279146` |
+| YouTube | **Funciona** (probado desde GitHub el 2026-11-12). Una búsqueda cuesta 100 unidades de las 10.000 diarias; las estadísticas, 1 | `googleapis.com/youtube/v3/search` y `/videos` |
+
+El 2026-11-12 se repitieron todas desde los servidores de GitHub (workflow "Probar fuentes"):
+mismo resultado que desde la nube. Google Trends también responde desde GitHub.
 
 Consecuencias:
 
@@ -131,6 +135,13 @@ Consecuencias:
 - Solo se ha visto el formato "sin problemas" de PlayStation y Xbox. El formato exacto
   de una caída no se ha visto todavía; el recolector debe guardar la respuesta original
   cuando no sea "sin problemas", para poder interpretarla después.
+
+### Lista de Bruno del 2026-11-12
+
+Bruno pidió más cosas: guardado que no pierda datos, análisis, Reddit, enlaces, miniaturas y
+cambios de diseño. Están ordenadas en `PLAN_DE_TRABAJO.md`, con los avisos sobre sus límites.
+Decisiones que salen de esa lista: el periodo pasa a un mes con interruptor manual; Reddit se
+descarta si es de pago; el diseño de 2026 debe ser más vivo, sin copiar arte del juego.
 
 ## 6. Riesgos conocidos
 
