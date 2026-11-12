@@ -23,6 +23,7 @@ Resultado final: **una página web** con:
 | Cada cuánto se guardan datos | Cada 30 minutos |
 | Qué días | Del 18 al 20 de noviembre de 2026 (tres días completos) |
 | Claves de Twitch y YouTube | Las crea Bruno con una guía paso a paso. Aún no existen |
+| Visibilidad de la página | Privada por ahora: se abre como archivo en el PC, sin enlace público. Se puede hacer pública más adelante |
 | Dónde se trabaja | En la nube (Claude Code web) y también en el PC, indistintamente |
 
 ## 3. Qué se descartó y por qué
@@ -32,10 +33,28 @@ Resultado final: **una página web** con:
   cifras de ventas, se pueden añadir a mano después.
 - **Tendencias de X (Twitter)**: fuera del plan. Leerlas de forma automática es de pago.
 
-## 4. Segunda fase (después del lanzamiento)
+## 4. Fases del proyecto
+
+**Fase 1 — En tiempo real (18 al 20 de noviembre).**
+El programa guarda los números cada 30 minutos. Al terminar el día 20, se detiene.
+
+**Fase 2 — Búsqueda calmada (después de la semana del lanzamiento).**
+Sin prisa y sin mediciones hora a hora. Se buscan datos del mismo rango de fechas usando
+herramientas y fuentes que guardan historial, para completar y contrastar lo recogido.
+También entran aquí:
 
 - Memes y capturas de pantalla.
-- Documentar lo que pase en la semana posterior a la salida.
+- Lo que pase en la semana posterior a la salida.
+- Cifras oficiales que se anuncien después (por ejemplo, ventas).
+
+Límite importante de la Fase 2: no todo se puede recuperar después.
+
+- Google Trends: sí guarda historial. Recuperable.
+- Twitch: el acceso oficial solo da el número del momento. El historial depende de
+  páginas de terceros, que pueden o no tener el detalle. Por verificar.
+- YouTube: solo da las visitas actuales de un video, no las que tenía a cada hora del día 19.
+
+Por eso la Fase 2 complementa a la Fase 1, pero no la reemplaza.
 
 ## 5. Qué se mide en cada fuente
 
@@ -56,13 +75,14 @@ Esto es una propuesta. Cada punto se verificará con una prueba real antes de da
    El trabajo tiene que estar unido a `main` antes del 18 de noviembre.
 5. **Límite diario de YouTube.** El acceso gratuito tiene un tope de consultas por día.
    Hay que confirmar que 48 mediciones diarias caben.
-6. **Las claves nunca se escriben en los archivos del repositorio.** Se guardan en los
+6. **Si el repositorio es privado, GitHub da un tope mensual gratuito de minutos de ejecución.**
+   Unas 144 ejecuciones cortas deberían caber, pero hay que confirmarlo.
+7. **Las claves nunca se escriben en los archivos del repositorio.** Se guardan en los
    "Secrets" de GitHub.
 
 ## 7. Decisiones pendientes
 
 - [ ] Lenguaje de programación (propuesta: Python).
-- [ ] Dónde se publica la página web y si será pública o privada.
 - [ ] Zona horaria que se muestra en la página.
 - [ ] De dónde salen los eventos de la línea de tiempo (automáticos, escritos a mano, o ambos).
 - [ ] Instalar y usar Graphify (skill de GitHub que crea un mapa del proyecto para gastar
