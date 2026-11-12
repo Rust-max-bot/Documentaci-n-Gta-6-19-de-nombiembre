@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="es" data-tema="ochenta">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>19·NOV·2026 — El día de GTA 6</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700&family=Monoton&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+
+<!-- Dibujos reutilizables: palmera y edificios (originales, hechos para este proyecto) -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="palmera" viewBox="-60 0 260 420">
+    <path d="M62 420 C64 330 66 230 84 120 L96 122 C82 232 82 330 84 420Z"/>
+    <path d="M90 122 Q40 60 -50 96 Q30 84 90 122Z"/>
+    <path d="M90 122 Q30 100 -30 170 Q30 124 90 122Z"/>
+    <path d="M90 122 Q60 30 -10 14 Q56 50 90 122Z"/>
+    <path d="M90 122 Q100 30 60 -4 Q108 40 90 122Z" transform="translate(0 8)"/>
+    <path d="M90 122 Q130 30 190 22 Q126 54 90 122Z"/>
+    <path d="M90 122 Q150 66 196 100 Q140 86 90 122Z"/>
+    <path d="M90 122 Q150 104 186 180 Q140 126 90 122Z"/>
+    <path d="M90 122 Q70 150 40 214 Q84 160 90 122Z"/>
+    <circle cx="90" cy="124" r="10"/>
+  </symbol>
+  <symbol id="edificios" viewBox="0 0 1200 220" preserveAspectRatio="none">
+    <path d="M0 220V150h40v-30h30v-20h10v20h30v60h30V90h20V70h10V50h10v20h10v20h20v100h40v-70h50v-25h20v25h20v90h30V60h15V40h30v20h15v170h40v-90h60v-20h30v110h30V100h20V80h40v20h20v120h40v-60h50v-40h10v-15h10v15h10v100h30V70h60v150h40v-80h30v-30h40v110h30V110h50v110h30v-70h40v70Z"/>
+  </symbol>
+</svg>
+
+<div class="barrido" aria-hidden="true"></div>
+<div class="aviso-ejemplo" id="aviso-ejemplo" hidden>
+  <strong>Datos de ejemplo.</strong> Todos los números, canales, videos y titulares de esta página son inventados para probar el diseño.
+</div>
+
+<header class="portada">
+  <!-- Escena de los años 80 -->
+  <div class="escena escena-80" aria-hidden="true">
+    <div class="estrellas"></div>
+    <div class="sol80"></div>
+    <svg class="perfil"><use href="#edificios"/></svg>
+    <div class="suelo"><div class="rejilla"></div></div>
+    <svg class="palma p1"><use href="#palmera"/></svg>
+    <svg class="palma p2"><use href="#palmera"/></svg>
+    <svg class="palma p3"><use href="#palmera"/></svg>
+  </div>
+  <!-- Escena de Miami actual -->
+  <div class="escena escena-26" aria-hidden="true">
+    <div class="sol26"></div>
+    <div class="nube n1"></div><div class="nube n2"></div><div class="nube n3"></div>
+    <svg class="perfil"><use href="#edificios"/></svg>
+    <div class="mar"></div>
+    <svg class="palma p1"><use href="#palmera"/></svg>
+    <svg class="palma p2"><use href="#palmera"/></svg>
+    <svg class="palma p3"><use href="#palmera"/></svg>
+  </div>
+
+  <nav class="barra">
+    <span class="marca">Recuerdo · Lanzamiento</span>
+    <div class="cambio" role="group" aria-label="Estilo de la página">
+      <button type="button" data-poner="ochenta">Miami 1986</button>
+      <button type="button" data-poner="actual">Miami 2026</button>
+      <span class="cambio-fondo" aria-hidden="true"></span>
+    </div>
+  </nav>
+
+  <div class="titular">
+    <p class="antetitulo">El día que salió GTA 6</p>
+    <h1><span>19</span><i>·</i><span>NOV</span><i>·</i><span>2026</span></h1>
+    <p class="bajada">Lo que pasó en internet, medido cada 30 minutos · hora de Santiago de Chile</p>
+    <div class="cuenta" id="cuenta"></div>
+  </div>
+</header>
+
+<main>
+  <section class="fichas" id="fichas"></section>
+
+  <section class="bloque revelar">
+    <h2><span class="num">01</span> Línea de tiempo</h2>
+    <p class="nota">Eventos detectados por el programa y eventos anotados a mano.</p>
+    <ol class="linea" id="linea"></ol>
+  </section>
+
+  <section class="bloque revelar">
+    <h2><span class="num">02</span> Espectadores en Twitch</h2>
+    <p class="nota">Personas viendo transmisiones del juego en cada medición.</p>
+    <div class="grafico" id="g-twitch"></div>
+  </section>
+
+  <section class="bloque revelar">
+    <h2><span class="num">03</span> Interés en Google Trends</h2>
+    <p class="nota">Escala de 0 a 100. El 100 es el momento de más búsquedas del periodo.</p>
+    <div class="grafico" id="g-trends"></div>
+  </section>
+
+  <section class="bloque revelar">
+    <h2><span class="num">04</span> ¿Se cayeron los servidores?</h2>
+    <p class="nota">Según las páginas oficiales de estado. Cada cuadro es una medición.</p>
+    <div id="servidores"></div>
+    <p class="leyenda"><i class="c ok"></i> Funcionando <i class="c mal"></i> Con problemas <i class="c nd"></i> Sin dato</p>
+  </section>
+
+  <section class="bloque revelar">
+    <h2><span class="num">05</span> Twitch, medición por medición</h2>
+    <div class="filtros" id="filtros-dia"></div>
+    <div class="tabla-caja"><table id="t-twitch"></table></div>
+  </section>
+
+  <section class="bloque revelar">
+    <h2><span class="num">06</span> Videos más vistos en YouTube</h2>
+    <p class="nota">Visitas al inicio y al final del periodo medido.</p>
+    <div class="tabla-caja baja"><table id="t-youtube"></table></div>
+  </section>
+
+  <section class="bloque revelar">
+    <h2><span class="num">07</span> Titulares</h2>
+    <ul class="noticias" id="noticias"></ul>
+  </section>
+</main>
+
+<footer class="pie">
+  <p id="pie-info"></p>
+  <p>Proyecto personal de recuerdo. No afiliado a Rockstar Games ni a Take-Two Interactive.</p>
+</footer>
+
+<div class="globo" id="globo" hidden></div>
+
+<script src="datos-ejemplo.js"></script>
+<script src="datos.js" onerror="void 0"></script>
+<script src="eventos.js" onerror="void 0"></script>
+<script src="app.js"></script>
+</body>
+</html>

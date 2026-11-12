@@ -1,7 +1,7 @@
 # Plan del proyecto: recuerdo del lanzamiento de GTA 6
 
 Última actualización: 12 de noviembre de 2026.
-Estado: **entrevista terminada.** Todavía no se ha programado nada.
+Estado: **página hecha con datos de ejemplo.** Falta el recolector de datos y las claves.
 
 ## 1. Qué es esto
 
@@ -123,8 +123,8 @@ Añadir una fuente nueva no obliga a tocar las demás.
 
 ## 8. Pasos siguientes
 
-1. Terminar la entrevista y cerrar las decisiones pendientes.
-2. Diseñar la página con datos de ejemplo (dos estilos de Miami).
+1. ~~Terminar la entrevista.~~ Hecho.
+2. ~~Diseñar la página con datos de ejemplo (dos estilos de Miami).~~ Hecho; pendiente de la opinión de Bruno.
 3. Bruno crea las claves de Twitch y YouTube siguiendo `GUIA_CLAVES.md`.
 4. Probar cada fuente con una consulta real.
 5. Programar el recolector de datos y la ejecución programada.
@@ -132,16 +132,29 @@ Añadir una fuente nueva no obliga a tocar las demás.
 7. Prueba completa antes del 18 de noviembre.
 8. Unir el trabajo a `main`.
 
-## 9. Estructura de carpetas prevista
-
-Todavía no existe; se creará al empezar a programar.
+## 9. Estructura de carpetas
 
 ```
-recolector/   programa que consulta Twitch, YouTube y Google Trends
-datos/        mediciones guardadas (un registro por cada ejecución)
-web/          la página con la línea de tiempo y las tablas
-.github/      configuración de las ejecuciones programadas
+web/                  la página (ya existe)
+  index.html          estructura de la página
+  estilos.css         los dos estilos (variables de color al inicio del archivo)
+  app.js              lee los datos y dibuja fichas, línea de tiempo, gráficos y tablas
+  datos-ejemplo.js    datos inventados para probar el diseño
+  eventos.js          eventos que Bruno anota a mano (hora de Santiago)
+  datos.js            datos reales; todavía no existe, lo creará el recolector
+recolector/           programa en Python que consulta las fuentes (por hacer)
+datos/                mediciones guardadas, una por ejecución (por hacer)
+.github/workflows/    ejecución programada cada 30 minutos (por hacer)
 ```
+
+**Cómo ver la página:** abrir `web/index.html` con doble clic en el PC. No necesita servidor.
+Por eso los datos se cargan como archivos `.js` y no como `.json`: un navegador no deja leer
+archivos `.json` sueltos cuando la página se abre con doble clic.
+
+**Formato de los datos:** `web/datos.js` debe definir `window.DATOS` con la misma forma que
+`window.DATOS_EJEMPLO` en `web/datos-ejemplo.js`. Si `datos.js` existe, la página lo usa y
+deja de mostrar el aviso de "datos de ejemplo". Estado de servidores: `"ok"`, `"problemas"`
+o `null` (sin dato).
 
 ## 10. Criterios para saber si salió bien
 
