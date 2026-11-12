@@ -24,6 +24,7 @@ Resultado final: **una página web** con:
 | Qué días | Del 18 al 20 de noviembre de 2026 (tres días completos) |
 | Claves de Twitch y YouTube | Las crea Bruno con una guía paso a paso. Aún no existen |
 | Visibilidad de la página | Privada por ahora: se abre como archivo en el PC, sin enlace público. Se puede hacer pública más adelante |
+| Eventos de la línea de tiempo | Ambos: automáticos (deducidos de los números, como el máximo de espectadores) y escritos a mano por Bruno en un archivo simple |
 | Dónde se trabaja | En la nube (Claude Code web) y también en el PC, indistintamente |
 
 ## 3. Qué se descartó y por qué
@@ -84,7 +85,6 @@ Esto es una propuesta. Cada punto se verificará con una prueba real antes de da
 
 - [ ] Lenguaje de programación (propuesta: Python).
 - [ ] Zona horaria que se muestra en la página.
-- [ ] De dónde salen los eventos de la línea de tiempo (automáticos, escritos a mano, o ambos).
 - [ ] Instalar y usar Graphify (skill de GitHub que crea un mapa del proyecto para gastar
       menos tokens). Solo cuando ya haya archivos de código listos. No está instalada todavía.
 - [ ] Qué pasa si una fuente falla durante el día 19 (avisar, reintentar, seguir con las demás).
