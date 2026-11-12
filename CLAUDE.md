@@ -22,8 +22,8 @@ tiempo y tablas de números de Twitch, YouTube y Google Trends. Es un proyecto p
 2. Lee `ESTADO_ACTUAL.md` entero (es corto). Lee `PLAN.md` cuando la tarea toque una decisión,
    una fuente de datos, un riesgo o la estructura de carpetas.
 3. Si algo no te queda claro, pregúntalo antes de resumir: no rellenes huecos.
-4. Resume a Bruno qué está hecho, qué está pendiente y dónde quedó el trabajo (no como si se
-   empezara de cero) y espera su confirmación antes de trabajar.
+4. Resume a Bruno qué está hecho, qué está pendiente, qué reglas están en pausa y dónde quedó
+   el trabajo (no como si se empezara de cero) y espera su confirmación antes de trabajar.
 
 **Fuentes de verdad:** las reglas, aquí; el estado vivo, en `ESTADO_ACTUAL.md`; las decisiones,
 fases y riesgos, en `PLAN.md`; qué se hizo y por qué, en `git log`. Si un chat viejo contradice
@@ -36,6 +36,29 @@ a estos archivos, ganan los archivos.
 - Ser honesto: distinguir lo verificado de lo que es una suposición. No inventar datos.
 - Si una idea de Bruno tiene un fallo, decirlo antes de ejecutarla.
 - Hacer una sola pregunta a la vez cuando haya que decidir algo.
+
+## Forma de trabajo
+
+*(Reglas traídas del proyecto "Ayuda para el inglés" y adaptadas, decisión de Bruno, 2026-11-12.)*
+
+- **Paso a paso con permiso explícito: EN PAUSA hasta el 18 de noviembre de 2026** (decisión
+  de Bruno, 2026-11-12). Mientras esté en pausa, Claude encadena los pasos de una tarea sin
+  detenerse a pedir permiso entre uno y otro, para llegar a tiempo al lanzamiento; cada paso
+  terminado se sigue guardando (ver "Guardado al terminar cada paso") y las decisiones de verdad
+  se le siguen preguntando a Bruno. **Después del 18 de noviembre, preguntarle a Bruno si se
+  reactiva.** Activa, la regla dice: nada por iniciativa propia; cada extra, cuando Bruno lo
+  pide; al terminar un paso, detenerse y esperar, aunque haya salido bien.
+- **Sin decisiones de diseño nuevas sin permiso:** si un cambio altera cómo se ve la página, se
+  le presentan a Bruno opciones con capturas antes de aplicarlo.
+- **No inventar contenido:** todo lo que genera Claude (datos de ejemplo, textos, eventos,
+  agrupaciones) se marca como tal, en el propio dato (`ejemplo: true`) o en la cabecera del
+  archivo. Nunca se presenta como real.
+- **Verificar de verdad:** Playwright a 1280 y 384 px de ancho, en los dos estilos ("Miami
+  1986" y "Miami 2026"), sin errores en la consola ni desborde horizontal, y capturas de lo
+  nuevo. Los fallos se reportan tal cual.
+- **Datos por programa, no a mano:** lo que se escriba en `datos/` lo hace un programa con
+  validaciones que abortan si algo no cuadra, y antes de cualquier cambio masivo se hace una
+  copia fuera del proyecto.
 
 ## Guardado al terminar cada paso
 
@@ -57,7 +80,8 @@ Cuando `ESTADO_ACTUAL.md` pasa de **20.000 bytes**, se archiva en vez de seguir 
 (el freno automático avisa al terminar una respuesta):
 
 1. Moverlo con `git mv` a `historial/ESTADO_AAAA-MM-DD.md` (fecha del día; si ya existe
-   uno con esa fecha, añadir `-2`, `-3`…). Los archivos de `historial/` no se editan.
+   uno con esa fecha, añadir `-2`, `-3`…). Los archivos de `historial/` no se editan, salvo
+   para corregir un error factual, y anotándolo en el propio archivo.
 2. Crear un `ESTADO_ACTUAL.md` nuevo con la misma estructura, conservando solo lo esencial:
    "Dónde quedamos" (reescrito corto), la fecha límite, "Pendiente" completo y las decisiones
    o avisos que sigan vigentes. "Últimos cambios" empieza con una sola línea:
@@ -65,7 +89,9 @@ Cuando `ESTADO_ACTUAL.md` pasa de **20.000 bytes**, se archiva en vez de seguir 
 3. Comprobar que no se perdió ningún pendiente ni aviso vigente comparando los dos archivos.
 4. Guardar y subir en un solo commit ("Archivar ESTADO_ACTUAL.md…").
 
-Al iniciar una sesión no se lee `historial/`: solo se consulta si hace falta un detalle viejo.
+Al iniciar una sesión no se lee `historial/`: solo se consulta si hace falta un detalle viejo
+(con búsquedas o `git log`, no entero). Si algo de `historial/` contradice a los archivos
+vivos, ganan los vivos.
 
 **Avisos automáticos** (`.claude/settings.json`, en el repo):
 
@@ -86,17 +112,36 @@ Al iniciar una sesión no se lee `historial/`: solo se consulta si hace falta un
   solo al mostrar la página.
 - No borrar ni reescribir archivos de `datos/`: son el recuerdo y no se pueden volver a obtener.
 - Las ejecuciones programadas de GitHub solo corren desde `main`.
-- Graphify (mapa del proyecto para gastar menos tokens) está instalado: la skill en
+- **Graphify** (mapa del proyecto para gastar menos tokens): la skill en
   `.claude/skills/graphify/`, el grafo en `graphify-out/` (`graph.html` para verlo,
   `GRAPH_REPORT.md` el informe) y `.graphifyignore` deja fuera las skills de terceros.
-  El programa `graphify` (paquete `graphifyy` de PyPI, repositorio oficial
-  `Graphify-Labs/graphify`) está instalado en el PC con Python 3.14 (Python 3.15 no puede
-  compilarlo). Si `graphify` no está disponible (por ejemplo, en la nube o si no está en el
-  PATH), saltarse sus reglas y trabajar con búsqueda normal: los avisos automáticos de
-  Graphify en `.claude/settings.json` no hacen nada en ese caso.
+  Programa: paquete `graphifyy` 0.9.107 de PyPI (repositorio oficial `Graphify-Labs/graphify`).
+  - **El grafo se sube a git** para que las sesiones en la nube lo usen: `graph.json`,
+    `graph.html`, `GRAPH_REPORT.md`, `manifest.json` y las etiquetas. La caché y las rutas
+    propias de cada máquina quedan fuera (`.gitignore`).
+  - **Si el trabajo cambia código** (`.js`, `.py`, `.sh`), antes del último commit correr
+    `graphify update .` y subir `graphify-out/` en el mismo commit. No gasta tokens. En la nube,
+    instalarlo antes si falta: `pip install graphifyy==0.9.107`.
+  - **Con cambios solo en documentos** no hace falta: `graphify update` no los vuelve a leer.
+    Volver a leerlos (`/graphify --update`) **sí gasta tokens: avisar a Bruno antes.**
+  - **Si `graphify update` falla o se niega a achicar el grafo:** no usar `--force`; dejarlo
+    como está y decirlo. **Si `graphify-out/` choca al unir cambios:** no resolverlo a mano;
+    tomar la versión de `main` y volver a correr `graphify update .`.
+  - **Si `graphify` no se puede usar:** trabajar con búsqueda normal. Los avisos automáticos de
+    Graphify en `.claude/settings.json` no hacen nada si el programa no existe.
 - La skill Impeccable (diseño) está en `.claude/skills/impeccable/` (versión en
   `scripts/VERSION`). Para actualizarla, copiar `.claude/skills/impeccable/` del repositorio
   oficial `pbakaus/impeccable` encima de la carpeta, o usar `npx impeccable update`.
+
+## Máquina y herramientas (PC de Bruno)
+
+- **El proyecto no va en OneDrive** (en el proyecto de inglés no terminaba de sincronizar
+  `.git`). Está en `%USERPROFILE%\Proyectos\` y el respaldo es GitHub.
+- **Python:** `python` abre Python 3.15. **Graphify vive en Python 3.14**
+  (`%USERPROFILE%\AppData\Local\Programs\Python\Python314\`), porque con 3.15 no se puede
+  compilar: **no desinstalar Python 3.14.** Su carpeta `Scripts` está en el PATH del usuario,
+  por eso `graphify` funciona por su nombre.
+- **`gh`** (GitHub CLI) está en el PATH (`C:\Program Files\GitHub CLI\gh.exe`).
 
 ## Trabajar en la nube y en el PC
 

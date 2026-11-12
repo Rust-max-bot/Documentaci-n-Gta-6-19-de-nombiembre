@@ -37,6 +37,7 @@ automáticos funcionan tras reiniciar VS Code.
 
 ## Últimos cambios
 
+- 2026-11-12: reglas de trabajo traídas del proyecto de inglés (sección "Forma de trabajo" y "Máquina y herramientas" de `CLAUDE.md`); "paso a paso con permiso" en pausa hasta el 18 nov.
 - 2026-11-12: regla para archivar `ESTADO_ACTUAL.md` en `historial/` al pasar de 20.000 bytes, con aviso automático.
 - 2026-11-12: Graphify instalado en el proyecto y primer grafo generado (`graphify-out/`).
 - 2026-11-12: sistema de relevo entre sesiones (`ESTADO_ACTUAL.md`, reglas de inicio y guardado, avisos en `.claude/`).
@@ -56,3 +57,5 @@ automáticos funcionan tras reiniciar VS Code.
 7. Unir el trabajo a `main`.
 8. Opcional: el hook de diseño de Impeccable (Bruno ejecuta `npx impeccable install` en el PC).
 9. Graphify: tras cambiar código, `graphify update .` para mantener el grafo al día.
+10. Después del 18 de noviembre: preguntar a Bruno si se reactiva la regla "paso a paso con
+    permiso" (`CLAUDE.md`, "Forma de trabajo").
