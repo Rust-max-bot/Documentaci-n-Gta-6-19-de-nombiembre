@@ -20,11 +20,12 @@ Resultado final: **una página web** con:
 |---|---|
 | Formato del recuerdo | Página web con línea de tiempo y tablas de números |
 | Fuentes imprescindibles | Twitch, YouTube y Google Trends |
-| Dónde se ejecuta el programa | En GitHub, dentro de este repositorio (ejecuciones programadas) |
-| Cada cuánto se guardan datos | Cada 30 minutos |
+| Dónde se ejecuta el programa | En GitHub, dentro de este repositorio (ejecuciones programadas). **2026-11-12:** con el repositorio privado GitHub no lanzó ninguna programada; Bruno decidió hacerlo público (ver "Visibilidad del repositorio"). Plan B preparado y sin montar: un despertador en Cloudflare (`despertador/`). Se descartó pasar el recolector entero a Cloudflare gratis: admite solo 50 consultas y 10 ms de cálculo por ejecución, y el día del lanzamiento Twitch puede pasarse; el plan de pago (5 USD/mes) queda como opción |
+| Cada cuánto se guardan datos | **Cambiado el 2026-11-12 (Bruno):** cada hora (minuto 7), y también al minuto 37 del 17 al 21 de noviembre (UTC), la semana del lanzamiento. Motivo: gastar menos sin perder los picos cortos del lanzamiento. Antes era cada 30 minutos siempre |
 | Qué días | **Cambiado el 2026-11-12:** un mes, empezando cuanto antes (para registrar el interés previo) y hasta el 19 de diciembre de 2026 por defecto. Con interruptor manual para apagar, encender o alargar. Antes eran solo del 18 al 20 de noviembre |
 | Claves de Twitch y YouTube | Las crea Bruno con una guía paso a paso. Aún no existen |
 | Visibilidad de la página | Privada por ahora: se abre como archivo en el PC, sin enlace público. Se puede hacer pública más adelante |
+| Visibilidad del repositorio | **Decidido por Bruno el 2026-11-12: público.** Motivos: con el repositorio privado GitHub no lanzaba las ejecuciones programadas, y en los públicos los minutos son gratis. Antes se limpió el historial (con `--force`, autorizado por Bruno solo para esto): sus correos pasaron al correo anónimo de GitHub y las rutas de su PC a `%USERPROFILE%`. Respaldo del historial original solo en el PC: `%USERPROFILE%\Proyectos\respaldo-historial-gta6-2026-11-12.git`. Pendiente: pedir a soporte de GitHub que borre la referencia del PR #1, que deja alcanzable el primer commit con el correo de Outlook |
 | Eventos de la línea de tiempo | Ambos: automáticos (deducidos de los números, como el máximo de espectadores) y escritos a mano por Bruno en un archivo simple |
 | Zona horaria de la página | Santiago de Chile (`America/Santiago`). Los datos se guardan en UTC y la página convierte al mostrar |
 | Si una fuente falla | El programa sigue con las demás, anota el fallo con su hora (hueco visible, nunca un dato inventado), reintenta en la siguiente medición y GitHub avisa por correo |
@@ -151,11 +152,14 @@ descarta si es de pago; el diseño de 2026 debe ser más vivo, sin copiar arte d
    Respaldo: descargar los datos a mano desde su web; siguen disponibles días después.
 3. **GitHub no es puntual.** Las ejecuciones programadas se atrasan a menudo varios
    minutos y alguna puede no ejecutarse. Cada medición guardará su hora real.
+   **Pasó de verdad (2026-11-12):** con el repositorio privado no lanzó ninguna. Se hizo
+   público; si aun así no las lanza, se monta el despertador de Cloudflare (`despertador/`).
 4. **Las ejecuciones programadas de GitHub solo funcionan desde la rama principal (`main`).**
    El trabajo tiene que estar unido a `main` antes del 18 de noviembre.
 5. **Límite diario de YouTube.** El acceso gratuito tiene un tope de consultas por día.
    Hay que confirmar que 48 mediciones diarias caben.
-6. **Si el repositorio es privado, GitHub da un tope mensual gratuito de minutos de ejecución.**
+6. **(Resuelto el 2026-11-12: el repositorio es público y los minutos son gratis.)**
+   **Si el repositorio es privado, GitHub da un tope mensual gratuito de minutos de ejecución.**
    Unas 144 ejecuciones cortas deberían caber, pero hay que confirmarlo.
 7. **Las claves nunca se escriben en los archivos del repositorio.** Se guardan en los
    "Secrets" de GitHub.
@@ -183,7 +187,8 @@ web/                  la página (ya existe)
 recolector/           programa en Python que consulta las fuentes (formato y uso en recolector/LEEME.md)
   interruptor.json    encender, apagar o alargar la recolección
 datos/                mediciones: un archivo de texto por día UTC (AAAA-MM-DD.jsonl), una línea por medición
-.github/workflows/    recolectar.yml (cada 30 minutos) y probar-fuentes.yml (prueba manual)
+.github/workflows/    recolectar.yml (cada hora; cada 30 min la semana del lanzamiento) y probar-fuentes.yml (prueba manual)
+despertador/          plan B sin montar: Worker de Cloudflare que lanzaría el recolector (montaje en LEEME.md)
 ```
 
 **Cómo ver la página:** doble clic en `ver_pagina.bat` (en la carpeta del proyecto): trae las

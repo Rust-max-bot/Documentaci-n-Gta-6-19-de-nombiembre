@@ -21,25 +21,26 @@
 `ver_pagina.bat` (trae las mediciones, prepara `web/datos.js`, que no va a git, y abre la
 página).
 
-**Tarea 1.4 en prueba: "arreglo barato" aplicado el 2026-11-12 a las ~22:40 UTC** (pedido
-de Bruno). Hasta las 22:28 UTC GitHub no había lanzado ninguna ejecución programada (6 turnos
-saltados desde las 19:37). Se descartó, comprobándolo: rama, `cron`, estado activo, permisos
-de Actions, autor de los commits ligado a la cuenta, minutos agotados y regla de 60 días.
-Coincide con un fallo de GitHub reportado en 2026 en repositorios privados nuevos, sin causa
-oficial. El arreglo: se reescribió el `cron` con el mismo horario (`7-59/30` en vez de
-`7,37`) para que GitHub lo vuelva a registrar.
+**Tarea 1.4: repositorio hecho público el 2026-11-12 (~23:10 UTC), decisión de Bruno.** Con
+el repositorio privado GitHub no lanzó ninguna programada (de 19:37 a 22:37 UTC), aunque todo
+lo propio estaba bien. Coincide con un fallo de GitHub en repositorios privados nuevos, sin
+causa oficial. Reescribir el `cron` no bastó. Antes de hacerlo público se limpió el historial
+(con `--force`, autorizado por Bruno): correos al anónimo de GitHub y rutas del PC a
+`%USERPROFILE%`. Se borraron las ejecuciones viejas. Detalle en `PLAN.md` ("Visibilidad del
+repositorio"). Horario nuevo: cada hora (minuto 7) y además al minuto 37 del 17 al 21 nov.
 
 **Siguiente paso:** `gh run list --workflow recolectar.yml --event schedule --limit 10`.
 
 - Si hay dos seguidas con éxito: 1.4 y 1.5 hechas (marcar `[x]`).
-- Si a las ~00:40 UTC del 13 nov sigue sin haber ninguna: "arreglo seguro", acordado como
-  plan B. Un servicio externo (Worker de Cloudflare o cron-job.org) lanza la ejecución manual
-  cada 30 minutos, con una clave de GitHub limitada a lanzar workflows de este repositorio.
-  Bruno elige el servicio antes de montarlo. Se puede abrir además un reclamo a soporte de GitHub.
+- Si en unas 3 horas sigue sin haber ninguna: plan B, el despertador de Cloudflare, ya escrito
+  y probado (`despertador/`, montaje en su `LEEME.md`; lo monta Bruno en el navegador).
+- **Pendiente de Bruno:** pedir a soporte de GitHub que borre la referencia del PR #1 (deja
+  alcanzable el primer commit, con su correo de Outlook); activar en GitHub "Keep my email
+  addresses private" y "Block command line pushes that expose my email".
 
 **Tanda en curso: 1.2 a 1.5** (más la 1.6, pedida aparte y ya hecha). 1.2 y 1.3 hechas.
-El recolector está en GitHub (workflow "Recolectar datos", minutos 7 y 37 de cada hora;
-formato y uso en `recolector/LEEME.md`). Las mediciones reales de
+El recolector está en GitHub (workflow "Recolectar datos"; formato y uso en
+`recolector/LEEME.md`). Las mediciones reales de
 `datos/2026-11-12.jsonl` son todas manuales, con las seis fuentes respondiendo. La 1.5 la
 cambió Bruno: basta con dos ejecuciones programadas que arranquen solas, sin vigilar 24 horas.
 
@@ -72,7 +73,8 @@ tareas 1.2 a 1.5.
 
 ## Últimos cambios
 
-- 2026-11-12: `cron` reescrito (mismo horario) para que GitHub lance las programadas (tarea 1.4).
+- 2026-11-12: historial limpio de datos personales y repositorio público (tarea 1.4); cada hora.
+- 2026-11-12: `cron` reescrito (mismo horario) para que GitHub lance las programadas (no bastó).
 - 2026-11-12: página conectada a los datos reales (tarea 1.6); `ver_pagina.bat` para verla.
 - 2026-11-12: recolector en GitHub (tareas 1.2 y 1.3); primeras mediciones reales guardadas.
 - 2026-11-12: "paso a paso con permiso" vuelve, por tandas que define Bruno; D6 se ignora por ahora.
@@ -85,7 +87,8 @@ tareas 1.2 a 1.5.
 
 La lista completa y su orden están en `PLAN_DE_TRABAJO.md`. Lo inmediato:
 
-1. Tarea 1.4: lograr que GitHub lance solo las ejecuciones programadas (fallo pendiente).
-2. Tarea 1.5: confirmar dos ejecuciones programadas seguidas; 1.5b opcional (revisar 24 horas).
-3. Tarea 1.7: prueba completa antes del 18 de noviembre.
-4. Opcional: el hook de diseño de Impeccable (Bruno ejecuta `npx impeccable install` en el PC).
+1. Tarea 1.4: confirmar que, ya público, GitHub lanza solo las programadas; si no, plan B.
+2. Bruno: pedir a soporte de GitHub que borre la referencia del PR #1 y activar el correo privado.
+3. Tarea 1.5: confirmar dos ejecuciones programadas seguidas; 1.5b opcional (revisar 24 horas).
+4. Tarea 1.7: prueba completa antes del 18 de noviembre.
+5. Opcional: el hook de diseño de Impeccable (Bruno ejecuta `npx impeccable install` en el PC).

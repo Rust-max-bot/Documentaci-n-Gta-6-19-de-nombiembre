@@ -5,5 +5,7 @@
   "12": "generar_web.py",
   "13": "validar.py",
   "14": "Plan de trabajo",
-  "15": "Recolector"
+  "15": "Recolector",
+  "16": "worker.js",
+  "17": "Despertador del recolector (Cloudflare)"
 }

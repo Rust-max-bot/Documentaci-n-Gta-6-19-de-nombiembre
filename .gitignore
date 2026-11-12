@@ -21,3 +21,6 @@ graphify-out/*.bak
 # Datos de la página: se generan en el PC con recolector/generar_web.py (o ver_pagina.bat)
 web/datos.js
 web/datos.js.tmp
+
+# Graphify: guarda la ruta de la carpeta del PC (scan_root); el repositorio es público
+graphify-out/.graphify_build_state.json

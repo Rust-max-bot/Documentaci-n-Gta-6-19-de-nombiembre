@@ -46,8 +46,9 @@ guardan los datos (A2), empezar cuanto antes (A4) y el periodo de un mes con int
       ejecuciones manuales funcionan, pero hasta las 17:56 de Santiago GitHub no lanzó
       ninguna programada (se saltó las de 16:37, 17:07 y 17:37). Investigado el 2026-11-12:
       sin causa propia, coincide con un fallo de GitHub en repositorios privados nuevos. Se
-      reescribió el `cron` (mismo horario); si no basta, plan B con un disparador externo
-      (detalle en `ESTADO_ACTUAL.md`).
+      reescribió el `cron` (no bastó) y Bruno decidió hacer público el repositorio, con el
+      historial limpio de sus datos personales. Horario nuevo: cada hora, y cada 30 minutos
+      del 17 al 21 nov. Si aun así no arranca: despertador de Cloudflare (`despertador/`).
 - [ ] **1.5 Dejarlo funcionando y revisar la primera hora (A4)** (cambiado por Bruno el
       2026-11-12: en vez de vigilar 24 horas, que exigiría el PC encendido y gastaría
       tokens). Basta con que dos ejecuciones programadas arranquen solas y guarden bien.

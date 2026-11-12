@@ -1,14 +1,14 @@
-# Mide las fuentes cada 30 minutos y guarda una línea en datos/AAAA-MM-DD.jsonl.
+# Mide las fuentes y guarda una línea en datos/AAAA-MM-DD.jsonl: cada hora, y cada 30 minutos
+# la semana del lanzamiento (decisión de Bruno, 2026-11-12).
 # Se apaga, se enciende o se alarga en recolector/interruptor.json (no hace falta tocar este archivo).
 # Las ejecuciones programadas solo corren desde main. GitHub puede atrasarlas varios minutos.
 name: Recolectar datos
 
 on:
   schedule:
-    # Minutos 7 y 37 de cada hora (en punto GitHub está más saturado).
-    # Antes decía "7,37 * * * *" (lo mismo); se reescribió el 2026-11-12 para que GitHub
-    # volviera a registrar el horario, porque no lanzaba ninguna ejecución programada.
-    - cron: "7-59/30 * * * *"
+    # Horas en UTC. Minutos 7 y 37: en punto GitHub está más saturado.
+    - cron: "7 * * * *"          # cada hora, todo el periodo
+    - cron: "37 * 17-21 11 *"    # además al minuto 37 del 17 al 21 de noviembre (lanzamiento)
   workflow_dispatch:
 
 permissions:

@@ -1,17 +1,17 @@
 # Graph Report - Documentación Gta 6  (2026-11-12)
 
 ## Corpus Check
-- 24 files · ~18,443 words
+- 26 files · ~19,908 words
 - Verdict: corpus is large enough that graph structure adds value.
 - Unclassified: 6 file(s) not represented in the graph (top: (none) 3, .jsonl 1, .bat 1)
 
 ## Summary
-- 241 nodes · 378 edges · 16 communities (12 shown, 4 thin omitted)
-- Extraction: 88% EXTRACTED · 12% INFERRED · 0% AMBIGUOUS · INFERRED: 44 edges (avg confidence: 0.87)
+- 253 nodes · 391 edges · 18 communities (14 shown, 4 thin omitted)
+- Extraction: 89% EXTRACTED · 11% INFERRED · 0% AMBIGUOUS · INFERRED: 44 edges (avg confidence: 0.87)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `d763b370`
+- Built from commit: `b45688af`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -30,6 +30,8 @@
 - validar.py
 - Plan de trabajo
 - Recolector
+- worker.js
+- Despertador del recolector (Cloudflare)
 
 ## God Nodes (most connected - your core abstractions)
 1. `Falla` - 15 edges
@@ -63,7 +65,7 @@
 - **Pipeline de datos: fuentes, recolector, datos y página** — plan_fuente_twitch, plan_fuente_youtube, plan_fuente_google_trends, plan_recolector, plan_carpeta_datos, plan_formato_datos_window_datos, web_index_carga_scripts [INFERRED 0.85]
 - **Implementación de los dos estilos de Miami** — plan_diseno_miami_dos_estilos, web_index_escena_80, web_index_escena_26, web_index_boton_cambio_estilo, web_index_simbolo_edificios, web_index_simbolo_palmera [INFERRED 0.95]
 
-## Communities (16 total, 4 thin omitted)
+## Communities (18 total, 4 thin omitted)
 
 ### Community 0 - "Fuentes, fases y claves"
 Cohesion: 0.07
@@ -113,22 +115,30 @@ Nodes (10): Avisos para Bruno (cosas donde su idea tiene un límite o un fallo),
 Cohesion: 0.25
 Nodes (7): Archivos, Comprobaciones, De `datos/` a la página (`generar_web.py`), Formato de cada línea, Interruptor (`interruptor.json`), Probar en el PC, Recolector
 
+### Community 16 - "worker.js"
+Cohesion: 0.43
+Nodes (6): despertar(), fetch(), scheduled(), SEMANA_FIN, SEMANA_INICIO, tocaMedir()
+
+### Community 17 - "Despertador del recolector (Cloudflare)"
+Cohesion: 0.40
+Nodes (4): Apagarlo, Comprobar que funciona, Despertador del recolector (Cloudflare), Montarlo (lo hace Bruno en el navegador; no hace falta instalar nada)
+
 ## Knowledge Gaps
 - **12 isolated node(s):** `Carga de scripts (datos-ejemplo.js, datos.js, eventos.js, app.js)`, `Gráfico Google Trends (#g-trends)`, `Gráfico espectadores Twitch (#g-twitch)`, `Tabla Twitch (#t-twitch)`, `Tabla videos YouTube (#t-youtube)` (+7 more)
-  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 94 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
+  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 100 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
 - **4 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
 - **Why does `Resultado de las pruebas reales (12 nov 2026)` connect `Pruebas de fuentes sin clave` to `Fuentes, fases y claves`, `Diseño Miami y estilos`?**
-  _High betweenness centrality (0.020) - this node is a cross-community bridge._
+  _High betweenness centrality (0.018) - this node is a cross-community bridge._
 - **What connects `Carga de scripts (datos-ejemplo.js, datos.js, eventos.js, app.js)`, `Gráfico Google Trends (#g-trends)`, `Gráfico espectadores Twitch (#g-twitch)` to the rest of the system?**
   _12 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Fuentes, fases y claves` be split into smaller, more focused modules?**
   _Cohesion score 0.06827880512091039 - nodes in this community are weakly interconnected._
 - **Why does `Dónde quedamos` connect `Diseño Miami y estilos` to `Relevo entre sesiones`, `Pruebas de fuentes sin clave`?**
-  _High betweenness centrality (0.018) - this node is a cross-community bridge._
+  _High betweenness centrality (0.017) - this node is a cross-community bridge._
 - **Should `steps` be split into smaller, more focused modules?**
   _Cohesion score 0.08 - nodes in this community are weakly interconnected._
 - **Should `fuentes.py` be split into smaller, more focused modules?**

@@ -11,7 +11,7 @@ Claude Code, en el PC y en la nube.
 Recuerdo del lanzamiento de GTA 6 (19 de noviembre de 2026): una página web con línea de
 tiempo y tablas de números de Twitch, YouTube y Google Trends. Es un proyecto por diversión.
 
-- **Repo:** GitHub privado `Rust-max-bot/Documentaci-n-Gta-6-19-de-nombiembre`, rama `main`.
+- **Repo:** GitHub **público** (desde el 2026-11-12) `Rust-max-bot/Documentaci-n-Gta-6-19-de-nombiembre`, rama `main`.
   En el PC: `%USERPROFILE%\Proyectos\Documentación Gta 6`.
 - **Propósito del sistema de relevo:** si una conversación se pierde o se degrada, cualquier
   sesión nueva sigue desde donde quedó sin que Bruno tenga que volver a explicar nada.
@@ -75,7 +75,8 @@ Cada paso terminado y verificado se guarda solo, sin que Bruno lo pida:
 1. Actualizar `ESTADO_ACTUAL.md` si cambió el estado, un pendiente o "Dónde quedamos";
    `PLAN.md` si se tomó una decisión; y este archivo si cambió una regla.
 2. Commit en español que diga **qué y por qué**, con el detalle en el cuerpo.
-3. `git fetch` y push. Nunca `--force`. Si hay cambios remotos, `git pull --rebase` y avisar
+3. `git fetch` y push. Nunca `--force` (Bruno lo autorizó una sola vez, el 2026-11-12, para
+   limpiar su información personal del historial). Si hay cambios remotos, `git pull --rebase` y avisar
    si hay conflicto. Si el push falla, avisar.
 
 No se guarda trabajo a medias: si el paso espera una decisión de Bruno, se dice en la respuesta
@@ -113,6 +114,10 @@ vivos, ganan los vivos.
 
 ## Reglas del proyecto
 
+- **El repositorio es público: nada personal de Bruno en él.** Ni correos, ni rutas de su PC
+  (escribir `%USERPROFILE%` en vez de la carpeta de usuario), ni datos de sus cuentas. Los
+  commits se firman con el correo anónimo de GitHub
+  (`188891192+Rust-max-bot@users.noreply.github.com`, ya configurado en el repo del PC).
 - **Nunca escribir claves ni contraseñas en archivos del repositorio.** Las claves de Twitch
   y YouTube van en los "Secrets" de GitHub. En el PC, en un archivo `.env` (ya ignorado por git).
 - Verificar cada fuente de datos con una consulta real antes de afirmar que funciona.

@@ -48,9 +48,9 @@
     "semantic_hash": ""
   },
   "ESTADO_ACTUAL.md": {
-    "mtime": 1794510982.2558155,
-    "seen": 1794511367.333709,
-    "ast_hash": "a21d037bbc1a0ef44f951c03c3a2304f",
+    "mtime": 1794514663.9821682,
+    "seen": 1794514666.7093997,
+    "ast_hash": "3eead2c9fed7a205ae2d18363c56ba48",
     "semantic_hash": ""
   },
   "GUIA_CLAVES.md": {
@@ -60,9 +60,9 @@
     "semantic_hash": ""
   },
   "PLAN.md": {
-    "mtime": 1794511354.1046302,
-    "seen": 1794511367.333713,
-    "ast_hash": "7004a86e286ae5819ae403f4e90bab9c",
+    "mtime": 1794514629.4351301,
+    "seen": 1794514666.7094026,
+    "ast_hash": "e744d2815d161bd1f51b8caac3a42ac5",
     "semantic_hash": ""
   },
   "README.md": {
@@ -90,9 +90,9 @@
     "semantic_hash": ""
   },
   ".github/workflows/recolectar.yml": {
-    "mtime": 1794511363.9145014,
-    "seen": 1794511367.3336828,
-    "ast_hash": "115acdaa70bb1cb5d6eed6e855c40515",
+    "mtime": 1794513789.9858088,
+    "seen": 1794514666.7093766,
+    "ast_hash": "21eb181b1042eb41806864f81e572c4e",
     "semantic_hash": ""
   },
   "recolector/fuentes.py": {
@@ -132,15 +132,21 @@
     "semantic_hash": ""
   },
   "PLAN_DE_TRABAJO.md": {
-    "mtime": 1794510959.7156072,
-    "seen": 1794511367.333715,
-    "ast_hash": "1deca69a2f316117b48c06e032bebbfb",
+    "mtime": 1794514646.3171709,
+    "seen": 1794514666.709404,
+    "ast_hash": "5a13b08b7922497e9c19c57e386f11d7",
     "semantic_hash": ""
   },
   "recolector/LEEME.md": {
-    "mtime": 1794511353.2354372,
-    "seen": 1794511367.3337188,
-    "ast_hash": "d1eced6dd5b193cefc060a0d56a60cff",
+    "mtime": 1794514631.19359,
+    "seen": 1794514666.7094064,
+    "ast_hash": "ec9832d4407fbc0d03f8e1a39c2ff603",
+    "semantic_hash": ""
+  },
+  "recolector/generar_web.py": {
+    "mtime": 1794514557.4204693,
+    "seen": 1794514666.7093804,
+    "ast_hash": "4ce6fdf5e40f7b696e7f5f4fe84c117c",
     "semantic_hash": ""
   }
 }

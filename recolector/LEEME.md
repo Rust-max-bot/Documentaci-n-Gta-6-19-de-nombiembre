@@ -17,8 +17,9 @@ de texto por día en vez de una base de datos SQL (motivos en `PLAN.md`).
 | `generar_web.py` | Convierte `datos/` en `web/datos.js` para la página (lo usa `ver_pagina.bat`) |
 | `probar_fuentes.py` | Prueba suelta de las fuentes (workflow "Probar fuentes"); no guarda nada |
 
-El workflow `.github/workflows/recolectar.yml` lo ejecuta en GitHub a los minutos 7 y 37 de
-cada hora (GitHub suele atrasarse unos minutos) y sube la línea nueva con un commit
+El workflow `.github/workflows/recolectar.yml` lo ejecuta en GitHub al minuto 7 de cada hora,
+y también al 37 del 17 al 21 de noviembre (UTC), la semana del lanzamiento (GitHub suele
+atrasarse unos minutos), y sube la línea nueva con un commit
 "Medición automática …".
 
 ## Interruptor (`interruptor.json`)
