@@ -21,22 +21,26 @@
 `ver_pagina.bat` (trae las mediciones, prepara `web/datos.js`, que no va a git, y abre la
 página).
 
-**LO PRIMERO EN LA PRÓXIMA SESIÓN (pedido de Bruno, 2026-11-12): revisar si GitHub ya
-lanza solo las ejecuciones programadas.** Bruno cerró VS Code y dejó esta revisión para
-después; la espera de fondo de la sesión anterior se cortó al cerrar.
+**Tarea 1.4 en prueba: "arreglo barato" aplicado el 2026-11-12 a las ~22:40 UTC** (pedido
+de Bruno). Hasta las 22:28 UTC GitHub no había lanzado ninguna ejecución programada (6 turnos
+saltados desde las 19:37). Se descartó, comprobándolo: rama, `cron`, estado activo, permisos
+de Actions, autor de los commits ligado a la cuenta, minutos agotados y regla de 60 días.
+Coincide con un fallo de GitHub reportado en 2026 en repositorios privados nuevos, sin causa
+oficial. El arreglo: se reescribió el `cron` con el mismo horario (`7-59/30` en vez de
+`7,37`) para que GitHub lo vuelva a registrar.
 
-1. `gh run list --workflow recolectar.yml --event schedule --limit 10`.
-2. Si hay al menos dos seguidas con éxito: tarea 1.4 y 1.5 hechas (marcar `[x]`).
-   Opcional (1.5b): `python recolector/revisar.py --horas 24`.
-3. Si sigue sin haber ninguna: investigar la causa de la tarea 1.4. Dato verificado: hasta
-   las 20:56 UTC del 2026-11-12 GitHub no lanzó ninguna (se saltó 19:37, 20:07 y 20:37 UTC).
-   El workflow figura activo, está en `main` y el `cron` está bien escrito. Las manuales
-   (`gh workflow run recolectar.yml`) funcionan y guardan bien.
+**Siguiente paso:** `gh run list --workflow recolectar.yml --event schedule --limit 10`.
+
+- Si hay dos seguidas con éxito: 1.4 y 1.5 hechas (marcar `[x]`).
+- Si a las ~00:40 UTC del 13 nov sigue sin haber ninguna: "arreglo seguro", acordado como
+  plan B. Un servicio externo (Worker de Cloudflare o cron-job.org) lanza la ejecución manual
+  cada 30 minutos, con una clave de GitHub limitada a lanzar workflows de este repositorio.
+  Bruno elige el servicio antes de montarlo. Se puede abrir además un reclamo a soporte de GitHub.
 
 **Tanda en curso: 1.2 a 1.5** (más la 1.6, pedida aparte y ya hecha). 1.2 y 1.3 hechas.
 El recolector está en GitHub (workflow "Recolectar datos", minutos 7 y 37 de cada hora;
-formato y uso en `recolector/LEEME.md`). Hay 3 mediciones reales en
-`datos/2026-11-12.jsonl`, todas manuales, con las seis fuentes respondiendo. La 1.5 la
+formato y uso en `recolector/LEEME.md`). Las mediciones reales de
+`datos/2026-11-12.jsonl` son todas manuales, con las seis fuentes respondiendo. La 1.5 la
 cambió Bruno: basta con dos ejecuciones programadas que arranquen solas, sin vigilar 24 horas.
 
 **Hecho:**
@@ -68,6 +72,7 @@ tareas 1.2 a 1.5.
 
 ## Últimos cambios
 
+- 2026-11-12: `cron` reescrito (mismo horario) para que GitHub lance las programadas (tarea 1.4).
 - 2026-11-12: página conectada a los datos reales (tarea 1.6); `ver_pagina.bat` para verla.
 - 2026-11-12: recolector en GitHub (tareas 1.2 y 1.3); primeras mediciones reales guardadas.
 - 2026-11-12: "paso a paso con permiso" vuelve, por tandas que define Bruno; D6 se ignora por ahora.
@@ -75,10 +80,6 @@ tareas 1.2 a 1.5.
 - 2026-11-12: `PLAN_DE_TRABAJO.md` creado con la lista de Bruno ordenada; decisiones nuevas en `PLAN.md`.
 - 2026-11-12: Twitch y YouTube probados desde GitHub con las claves reales; funcionan.
 - 2026-11-12: reglas de trabajo traídas del proyecto de inglés; "paso a paso" en pausa hasta el 18 nov.
-- 2026-11-12: regla para archivar `ESTADO_ACTUAL.md` en `historial/` al pasar de 20.000 bytes.
-- 2026-11-12: Graphify instalado en el proyecto y primer grafo generado (`graphify-out/`).
-- 2026-11-12: sistema de relevo entre sesiones y skill Impeccable 0.1.22.
-- 2026-11-12: página rediseñada con hoteles art déco de Miami; pruebas de fuentes sin clave.
 
 ## Pendiente
 

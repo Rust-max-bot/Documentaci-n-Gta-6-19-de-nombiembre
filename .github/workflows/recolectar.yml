@@ -5,7 +5,10 @@ name: Recolectar datos
 
 on:
   schedule:
-    - cron: "7,37 * * * *"   # minutos 7 y 37 de cada hora (en punto GitHub está más saturado)
+    # Minutos 7 y 37 de cada hora (en punto GitHub está más saturado).
+    # Antes decía "7,37 * * * *" (lo mismo); se reescribió el 2026-11-12 para que GitHub
+    # volviera a registrar el horario, porque no lanzaba ninguna ejecución programada.
+    - cron: "7-59/30 * * * *"
   workflow_dispatch:
 
 permissions:
