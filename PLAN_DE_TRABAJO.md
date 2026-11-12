@@ -80,11 +80,11 @@ guardan los datos (A2), empezar cuanto antes (A4) y el periodo de un mes con int
 ## Fase 5 — Lo que ya estaba acordado para después del lanzamiento
 
 - [ ] Búsqueda calmada: completar y contrastar datos, memes, cifras oficiales (`PLAN.md`, sección 4).
-- [ ] Después del 18 de noviembre: preguntar a Bruno si se reactiva "paso a paso con permiso".
 
 ## Sin definir
 
-- [ ] **D6:** en la lista de Bruno quedó cortado ("El miami actual de…"). Falta que Bruno lo complete.
+- [ ] **D6:** en la lista de Bruno quedó cortado ("El miami actual de…"). **Bruno pidió
+      ignorarlo por ahora** (2026-11-12); no se pregunta hasta que él lo retome.
 
 ## Avisos para Bruno (cosas donde su idea tiene un límite o un fallo)
 

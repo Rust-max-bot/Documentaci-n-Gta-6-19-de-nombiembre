@@ -23,7 +23,7 @@ tiempo y tablas de números de Twitch, YouTube y Google Trends. Es un proyecto p
    `PLAN.md` cuando la tarea toque una decisión, una fuente de datos, un riesgo o la
    estructura de carpetas.
 3. Si algo no te queda claro, pregúntalo antes de resumir: no rellenes huecos.
-4. Resume a Bruno qué está hecho, qué está pendiente, qué reglas están en pausa y dónde quedó
+4. Resume a Bruno qué está hecho, qué está pendiente, qué reglas están en pausa (si hay) y dónde quedó
    el trabajo (no como si se empezara de cero) y espera su confirmación antes de trabajar.
 
 **Fuentes de verdad:** las reglas, aquí; el estado vivo, en `ESTADO_ACTUAL.md`; la lista
@@ -43,13 +43,13 @@ a estos archivos, ganan los archivos.
 
 *(Reglas traídas del proyecto "Ayuda para el inglés" y adaptadas, decisión de Bruno, 2026-11-12.)*
 
-- **Paso a paso con permiso explícito: EN PAUSA hasta el 18 de noviembre de 2026** (decisión
-  de Bruno, 2026-11-12). Mientras esté en pausa, Claude encadena los pasos de una tarea sin
-  detenerse a pedir permiso entre uno y otro, para llegar a tiempo al lanzamiento; cada paso
+- **Paso a paso con permiso explícito: ACTIVA, por tandas** (decisión de Bruno, 2026-11-12;
+  reemplaza la pausa que se había acordado ese mismo día). Bruno dice qué pasos hay que hacer
+  (por ejemplo, "de la 1.2 a la 1.5") y Claude los encadena sin detenerse entre uno y otro
+  hasta completarlos todos; al terminar la tanda, se detiene y espera, aunque haya salido bien.
+  Fuera de lo pedido, nada por iniciativa propia; cada extra, cuando Bruno lo pide. Cada paso
   terminado se sigue guardando (ver "Guardado al terminar cada paso") y las decisiones de verdad
-  se le siguen preguntando a Bruno. **Después del 18 de noviembre, preguntarle a Bruno si se
-  reactiva.** Activa, la regla dice: nada por iniciativa propia; cada extra, cuando Bruno lo
-  pide; al terminar un paso, detenerse y esperar, aunque haya salido bien.
+  se le siguen preguntando a Bruno, aunque sea en mitad de la tanda.
 - **Sin decisiones de diseño nuevas sin permiso:** si un cambio altera cómo se ve la página, se
   le presentan a Bruno opciones con capturas antes de aplicarlo.
 - **No inventar contenido:** todo lo que genera Claude (datos de ejemplo, textos, eventos,

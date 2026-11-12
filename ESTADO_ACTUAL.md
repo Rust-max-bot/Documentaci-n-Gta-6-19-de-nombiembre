@@ -39,16 +39,19 @@ lanzamiento.
 
 **Bruno entregó una lista de cosas que quiere** (2026-11-12): un mes de datos con interruptor
 manual, análisis, Reddit, enlaces, miniaturas y varios cambios de diseño. Está ordenada en
-`PLAN_DE_TRABAJO.md`, con avisos sobre los límites de algunas ideas. El punto D6 de su lista
-quedó cortado y falta que lo complete.
+`PLAN_DE_TRABAJO.md`, con avisos sobre los límites de algunas ideas. El punto D6 quedó
+cortado: Bruno pidió ignorarlo por ahora.
 
 **Fecha límite:** el recolector tiene que llevar días funcionando antes del 18 de noviembre
 de 2026. Lanzamiento: 19 de noviembre, 00:00 de Santiago.
 
-**Reglas en pausa:** "paso a paso con permiso", hasta el 18 de noviembre.
+**Reglas en pausa:** ninguna. "Paso a paso con permiso" está activa **por tandas**: Bruno
+dice qué pasos hacer y Claude no para hasta completarlos (ver `CLAUDE.md`). Tanda actual:
+tareas 1.2 a 1.5.
 
 ## Últimos cambios
 
+- 2026-11-12: "paso a paso con permiso" vuelve, por tandas que define Bruno; D6 se ignora por ahora.
 - 2026-11-12: Bruno decidió guardar los datos en archivos de texto por día (tarea 1.1 hecha).
 - 2026-11-12: `PLAN_DE_TRABAJO.md` creado con la lista de Bruno ordenada; decisiones nuevas en `PLAN.md`.
 - 2026-11-12: Twitch y YouTube probados desde GitHub con las claves reales; funcionan.
@@ -65,6 +68,4 @@ La lista completa y su orden están en `PLAN_DE_TRABAJO.md`. Lo inmediato:
 1. Tareas 1.2 a 1.5: recolector, interruptor, ejecución cada 30 minutos y vigilancia de las
    primeras 24 horas.
 2. Tareas 1.6 y 1.7: conectar la página con datos reales y prueba completa antes del 18.
-3. Bruno completa el punto D6 de su lista.
-4. Opcional: el hook de diseño de Impeccable (Bruno ejecuta `npx impeccable install` en el PC).
-5. Después del 18 de noviembre: preguntar a Bruno si se reactiva "paso a paso con permiso".
+3. Opcional: el hook de diseño de Impeccable (Bruno ejecuta `npx impeccable install` en el PC).
