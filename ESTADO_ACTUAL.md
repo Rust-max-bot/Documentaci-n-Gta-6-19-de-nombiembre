@@ -15,15 +15,14 @@
 
 ## Dónde quedamos
 
-*(2026-11-13, ~14:30 UTC.)*
+*(2026-11-13, ~15:00 UTC.)*
 
-**Tanda 1.5b, 1.6 y 1.7 terminada** (2026-11-13). 1.5b: 24 horas sin fallos de fuentes.
-1.6 ya estaba hecha. 1.7 hecha con la lista que aprobó Bruno (detalle en
-`PLAN_DE_TRABAJO.md`): despertador, horario de la semana del lanzamiento, interruptor,
-cadena completa y límites, todo bien; `revisar.py` corregido para el horario nuevo.
-**Queda abierta por un fallo de la página:** el eje del gráfico de Twitch redondea a miles
-enteros ("1, 2, 3, 5 mil" en vez de 1.125, 2.250, 3.375, 4.500). Espera que Bruno elija cómo
-corregirlo (cambia lo que se ve).
+**Fase 1 terminada** (tareas 1.1 a 1.7, 2026-11-13). La 1.7 (prueba completa, detalle en
+`PLAN_DE_TRABAJO.md`) salió bien salvo el eje del gráfico de Twitch, que redondeaba a miles
+enteros; Bruno pidió corregirlo y ya está (números redondos: 0, 1, 2, 3, 4, 5 mil). Además,
+a pedido de Bruno, las listas de la página muestran **lo más nuevo arriba** (línea de tiempo,
+tabla de Twitch y titulares; decisión en `PLAN.md`). Esperando la siguiente tanda: lo que
+sigue en orden es la fase 2 de `PLAN_DE_TRABAJO.md`.
 
 **El recolector funciona solo.** Lo lanza el despertador de Cloudflare (Worker
 `despertador-recolector`, horario `7,37 * * * *`, clave de GitHub en su secreto
@@ -70,10 +69,11 @@ de 2026. Lanzamiento: 19 de noviembre, 00:00 de Santiago.
 
 **Reglas en pausa:** ninguna. "Paso a paso con permiso" está activa **por tandas**: Bruno
 dice qué pasos hacer y Claude no para hasta completarlos (ver `CLAUDE.md`). Tanda actual:
-ninguna (la 1.5b, 1.6 y 1.7 terminó el 2026-11-13; la 1.7 queda abierta por el eje).
+ninguna (la 1.5b, 1.6 y 1.7 terminó el 2026-11-13).
 
 ## Últimos cambios
 
+- 2026-11-13: página: eje de Twitch con números redondos y lo más nuevo arriba (tarea 1.7 cerrada).
 - 2026-11-13: prueba completa (tarea 1.7): todo bien salvo el eje del gráfico de Twitch.
 - 2026-11-13: `revisar.py` sigue el horario del despertador.
 - 2026-11-13: revisión de las primeras 24 horas (tarea 1.5b): sin fallos; `revisar.py` desfasado.
@@ -89,7 +89,6 @@ ninguna (la 1.5b, 1.6 y 1.7 terminó el 2026-11-13; la 1.7 queda abierta por el 
 La lista completa y su orden están en `PLAN_DE_TRABAJO.md`. Lo inmediato:
 
 1. Bruno: pedir a soporte de GitHub que borre la referencia del PR #1 y activar el correo privado.
-2. Tarea 1.7: corregir el eje del gráfico de Twitch (Bruno elige cómo); el resto de la
-   prueba está hecho y bien.
+2. Fase 2 de `PLAN_DE_TRABAJO.md` (mejoras rápidas), cuando Bruno diga la tanda.
 3. Opcional: comprobar en Cloudflare que el código del Worker es igual a `despertador/worker.js`.
 4. Opcional: el hook de diseño de Impeccable (Bruno ejecuta `npx impeccable install` en el PC).

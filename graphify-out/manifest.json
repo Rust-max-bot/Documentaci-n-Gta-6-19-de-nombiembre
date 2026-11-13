@@ -18,10 +18,10 @@
     "semantic_hash": ""
   },
   "web/app.js": {
-    "mtime": 1794500113.9023564,
-    "seen": 1794501199.471268,
-    "ast_hash": "0136780a727215564323cec0174d07ac",
-    "semantic_hash": "0136780a727215564323cec0174d07ac"
+    "mtime": 1794580580.3733232,
+    "seen": 1794580645.8879833,
+    "ast_hash": "caeab66431a2327bcbaac7f5d94afa03",
+    "semantic_hash": ""
   },
   "web/datos-ejemplo.js": {
     "mtime": 1794500113.9023564,
@@ -48,9 +48,9 @@
     "semantic_hash": ""
   },
   "ESTADO_ACTUAL.md": {
-    "mtime": 1794578215.593377,
-    "seen": 1794578561.281058,
-    "ast_hash": "19a324beb2227017e293931f504505f2",
+    "mtime": 1794580631.4917316,
+    "seen": 1794580645.8879957,
+    "ast_hash": "9a9294d9381fa055e3e3d94ca0267cf1",
     "semantic_hash": ""
   },
   "GUIA_CLAVES.md": {
@@ -60,9 +60,9 @@
     "semantic_hash": ""
   },
   "PLAN.md": {
-    "mtime": 1794578040.8658938,
-    "seen": 1794578561.2810647,
-    "ast_hash": "cf4e5f95e2e3490e9d18191fd1dfa6ed",
+    "mtime": 1794580615.327965,
+    "seen": 1794580645.8879998,
+    "ast_hash": "69be9a030467bfb4bdb12e23eff714bd",
     "semantic_hash": ""
   },
   "README.md": {
@@ -132,9 +132,9 @@
     "semantic_hash": ""
   },
   "PLAN_DE_TRABAJO.md": {
-    "mtime": 1794578548.048774,
-    "seen": 1794578561.281068,
-    "ast_hash": "4d133307a0e8ceb01131b6ecbe4911e9",
+    "mtime": 1794580633.2223668,
+    "seen": 1794580645.8880017,
+    "ast_hash": "816268b880cfbb684d87025cf18b2d99",
     "semantic_hash": ""
   },
   "recolector/LEEME.md": {

@@ -1,17 +1,17 @@
 # Graph Report - Documentación Gta 6  (2026-11-13)
 
 ## Corpus Check
-- 26 files · ~21,166 words
+- 26 files · ~21,847 words
 - Verdict: corpus is large enough that graph structure adds value.
 - Unclassified: 7 file(s) not represented in the graph (top: (none) 3, .jsonl 2, .bat 1)
 
 ## Summary
-- 255 nodes · 394 edges · 18 communities (14 shown, 4 thin omitted)
-- Extraction: 89% EXTRACTED · 11% INFERRED · 0% AMBIGUOUS · INFERRED: 43 edges (avg confidence: 0.86)
+- 256 nodes · 397 edges · 18 communities (14 shown, 4 thin omitted)
+- Extraction: 89% EXTRACTED · 11% INFERRED · 0% AMBIGUOUS · INFERRED: 44 edges (avg confidence: 0.87)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `5e970cc1`
+- Built from commit: `e2e0b74b`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -37,15 +37,17 @@
 1. `Falla` - 14 edges
 2. `main()` - 11 edges
 3. `Plan de trabajo` - 10 edges
-4. `pedir()` - 9 edges
-5. `dibujar()` - 8 edges
+4. `dibujar()` - 9 edges
+5. `pedir()` - 9 edges
 6. `exigir()` - 8 edges
 7. `a_iso()` - 8 edges
 8. `pedir_json()` - 8 edges
 9. `Resultado de las pruebas reales (12 nov 2026)` - 8 edges
-10. `steps` - 7 edges
+10. `main()` - 7 edges
 
 ## Surprising Connections (you probably didn't know these)
+- `Fase 1 — Recolector funcionando (lo más importante)` --references--> `compacto()`  [INFERRED]
+  PLAN_DE_TRABAJO.md → web/app.js
 - `Instrucciones para Claude (CLAUDE.md)` --semantically_similar_to--> `Instrucción Graphify (.claude/CLAUDE.md)`  [INFERRED] [semantically similar]
   CLAUDE.md → .claude/CLAUDE.md
 - `Gráfico espectadores Twitch (#g-twitch)` --shares_data_with--> `Fuente Twitch`  [INFERRED]
@@ -53,8 +55,6 @@
 - `Sección línea de tiempo (#linea)` --implements--> `Decisiones ya tomadas`  [INFERRED]
   web/index.html → PLAN.md
 - `Sección estado de servidores (#servidores)` --shares_data_with--> `Fuente estado de servidores (Rockstar, PSN, Xbox)`  [INFERRED]
-  web/index.html → PLAN.md
-- `Tabla Twitch (#t-twitch)` --shares_data_with--> `Fuente Twitch`  [INFERRED]
   web/index.html → PLAN.md
 
 ## Import Cycles
@@ -72,8 +72,8 @@ Cohesion: 0.07
 Nodes (31): Fecha límite: recolector en main antes del 18 nov 2026, Lista de pendientes, Clave de Twitch (Client ID y Client Secret), Clave de API de YouTube Data API v3, GitHub Secrets (TWITCH_CLIENT_ID, TWITCH_CLIENT_SECRET, YOUTUBE_API_KEY), Guía para crear las claves de Twitch y YouTube, Carpeta datos/ (mediciones), Criterios para saber si salió bien (+23 more)
 
 ### Community 1 - "Código de la página (app.js)"
-Cohesion: 0.24
-Nodes (13): compacto(), deSantiago(), desfase(), dia(), grafico(), dibujar(), mover(), hora() (+5 more)
+Cohesion: 0.22
+Nodes (14): compacto(), deSantiago(), desfase(), dia(), grafico(), dibujar(), mover(), hora() (+6 more)
 
 ### Community 2 - "Relevo entre sesiones"
 Cohesion: 0.20
@@ -125,7 +125,7 @@ Nodes (4): Apagarlo, Comprobar que funciona, Despertador del recolector (Cloudfl
 
 ## Knowledge Gaps
 - **12 isolated node(s):** `Carga de scripts (datos-ejemplo.js, datos.js, eventos.js, app.js)`, `Gráfico Google Trends (#g-trends)`, `Gráfico espectadores Twitch (#g-twitch)`, `Tabla Twitch (#t-twitch)`, `Tabla videos YouTube (#t-youtube)` (+7 more)
-  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 101 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
+  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 100 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
 - **4 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
@@ -133,6 +133,8 @@ _Questions this graph is uniquely positioned to answer:_
 
 - **Why does `Resultado de las pruebas reales (12 nov 2026)` connect `Diseño Miami y estilos` to `Fuentes, fases y claves`?**
   _High betweenness centrality (0.018) - this node is a cross-community bridge._
+- **Are the 2 inferred relationships involving `dibujar()` (e.g. with `mover()` and `salir()`) actually correct?**
+  _`dibujar()` has 2 INFERRED edges - model-reasoned connections that need verification._
 - **What connects `Carga de scripts (datos-ejemplo.js, datos.js, eventos.js, app.js)`, `Gráfico Google Trends (#g-trends)`, `Gráfico espectadores Twitch (#g-twitch)` to the rest of the system?**
   _12 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Fuentes, fases y claves` be split into smaller, more focused modules?**
@@ -143,5 +145,3 @@ _Questions this graph is uniquely positioned to answer:_
   _Cohesion score 0.08695652173913043 - nodes in this community are weakly interconnected._
 - **Should `Diseño Miami y estilos` be split into smaller, more focused modules?**
   _Cohesion score 0.12380952380952381 - nodes in this community are weakly interconnected._
-- **Should `fuentes.py` be split into smaller, more focused modules?**
-  _Cohesion score 0.10048309178743961 - nodes in this community are weakly interconnected._

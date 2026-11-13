@@ -24,10 +24,19 @@
     return g - desfase(g);
   }
   function num(n) { return Math.round(n).toLocaleString("es-CL"); }
+  /* 2.500 -> "2,5 mil"; 12.500 -> "12,5 mil"; 245.600 -> "246 mil": un decimal bajo los
+     100 mil, para no redondear a miles enteros (antes 2.500 salía "3 mil"). */
   function compacto(n) {
     if (n >= 1e6) return (n / 1e6).toLocaleString("es-CL", { maximumFractionDigits: 1 }) + " M";
-    if (n >= 1e3) return Math.round(n / 1e3).toLocaleString("es-CL") + " mil";
+    if (n >= 1e3) return (n / 1e3).toLocaleString("es-CL", { maximumFractionDigits: n < 1e5 ? 1 : 0 }) + " mil";
     return String(Math.round(n));
+  }
+  /* Separación "redonda" entre las líneas del eje (1, 2, 2,5 o 5 por una potencia de 10),
+     para unas 5 líneas: con un máximo de 4.047, las líneas van de 1.000 en 1.000 hasta 5.000. */
+  function pasoRedondo(maximo) {
+    var crudo = (maximo || 1) / 5, mag = Math.pow(10, Math.floor(Math.log10(crudo)));
+    var f = [1, 2, 2.5, 5, 10].filter(function (x) { return x * mag >= crudo; })[0];
+    return f * mag;
   }
   function limpio(s) { var d = document.createElement("div"); d.textContent = s == null ? "" : s; return d.innerHTML; }
 
@@ -115,7 +124,7 @@
       var ts = deSantiago(e.hora);
       if (!isNaN(ts) && e.texto) ev.push({ ts: ts, texto: e.texto, auto: false });
     });
-    ev.sort(function (a, b) { return a.ts - b.ts; });
+    ev.sort(function (a, b) { return b.ts - a.ts; });   // lo más nuevo arriba (pedido de Bruno)
     $("linea").innerHTML = ev.length ? ev.map(function (e) {
       return '<li class="' + (e.auto ? "auto" : "mano") + '"><time>' + dia(e.ts) + " · " + hora(e.ts) + '</time><span class="que">' + limpio(e.texto) +
         '</span><span class="etiqueta">' + (e.auto ? "automático" : "a mano") + "</span></li>";
@@ -131,15 +140,16 @@
       var mi = 54, md = 14, ma = 26, mb = 34;
       if (!puntos.length) { caja.innerHTML = '<p class="nota">Todavía no hay datos.</p>'; return; }
       var t0 = puntos[0].ts, t1 = puntos[puntos.length - 1].ts;
-      var tope = opciones.tope || 0;
+      var tope = opciones.tope || 0, paso;
       puntos.forEach(function (p) { if (p.v > tope) tope = p.v; });
-      if (!opciones.tope) { var esc = Math.pow(10, Math.floor(Math.log10(tope || 1))); tope = Math.ceil(tope / esc * 2) / 2 * esc; }
+      if (opciones.tope) paso = tope / 4;
+      else { paso = pasoRedondo(tope); tope = Math.max(1, Math.ceil(tope / paso)) * paso; }
       var X = function (ts) { return mi + (ts - t0) / (t1 - t0 || 1) * (ancho - mi - md); };
       var Y = function (v) { return ma + (1 - v / tope) * (alto - ma - mb); };
       var s = '<svg viewBox="0 0 ' + ancho + " " + alto + '" role="img" aria-label="' + opciones.nombre + '" style="--color:var(' + opciones.color + ')">';
 
-      for (var k = 0; k <= 4; k++) {              // líneas horizontales
-        var v = tope * k / 4, y = Y(v);
+      for (var k = 0; k * paso <= tope + paso / 1000; k++) {   // líneas horizontales
+        var v = k * paso, y = Y(v);
         s += '<line class="guia" x1="' + mi + '" x2="' + (ancho - md) + '" y1="' + y + '" y2="' + y + '"/>';
         s += '<g class="eje"><text x="' + (mi - 8) + '" y="' + (y + 4) + '" text-anchor="end">' + compacto(v) + "</text></g>";
       }
@@ -217,12 +227,14 @@
 
   /* ---------- Tabla de Twitch con filtro por día ---------- */
   (function () {
-    var dias = []; M.forEach(function (m) { var d = dia(m.ts); if (dias.indexOf(d) < 0) dias.push(d); });
+    // Lo más nuevo primero (pedido de Bruno): días y filas de la más reciente a la más vieja.
+    var nuevas = M.slice().reverse();
+    var dias = []; nuevas.forEach(function (m) { var d = dia(m.ts); if (dias.indexOf(d) < 0) dias.push(d); });
     var elegido = dias.indexOf(dia(SALIDA)) >= 0 ? dia(SALIDA) : (dias[0] || "");
     var tope = picoTwitch ? picoTwitch.espectadores : 1;
     function pintar() {
       $("filtros-dia").innerHTML = dias.map(function (d) { return '<button type="button" class="' + (d === elegido ? "activo" : "") + '" data-dia="' + d + '">' + d + "</button>"; }).join("");
-      var filas = M.filter(function (m) { return dia(m.ts) === elegido; }).map(function (m) {
+      var filas = nuevas.filter(function (m) { return dia(m.ts) === elegido; }).map(function (m) {
         if (m.espectadores == null) return '<tr class="sin-dato"><td>' + hora(m.ts) + '</td><td colspan="3">Sin dato' + (m.errorTwitch ? " (" + limpio(m.errorTwitch) + ")" : "") + "</td></tr>";
         return "<tr><td>" + hora(m.ts) + '</td><td class="n">' + num(m.espectadores) + '</td><td class="barra-celda"><i style="--w:' + (m.espectadores / tope * 100).toFixed(1) + '%"></i></td><td>' +
           (m.canal ? limpio(m.canal.nombre) + " (" + compacto(m.canal.espectadores) + ")" : "—") + "</td></tr>";
@@ -252,7 +264,8 @@
   })();
 
   /* ---------- Noticias ---------- */
-  $("noticias").innerHTML = (D.noticias || []).slice().sort(function (a, b) { return Date.parse(a.t) - Date.parse(b.t); }).map(function (n) {
+  // Lo más nuevo arriba (pedido de Bruno).
+  $("noticias").innerHTML = (D.noticias || []).slice().sort(function (a, b) { return Date.parse(b.t) - Date.parse(a.t); }).map(function (n) {
     var ts = Date.parse(n.t), seguro = /^https?:\/\//.test(n.url || "");
     return "<li>" + (seguro ? '<a href="' + limpio(n.url) + '" target="_blank" rel="noopener noreferrer">' : '<a>') + limpio(n.titulo) + "</a><small>" +
       limpio(n.medio) + (isNaN(ts) ? "" : " · " + dia(ts) + " " + hora(ts)) + "</small></li>";

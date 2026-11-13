@@ -77,8 +77,10 @@ guardan los datos (A2), empezar cuanto antes (A4) y el periodo de un mes con int
       programa). La página deja de mostrar el aviso de "datos de ejemplo". Hecho el
       2026-11-12: `recolector/generar_web.py` y `ver_pagina.bat`; verificado con Playwright
       a 1280 y 384 px en los dos estilos, sin errores ni desborde.
-- [ ] **1.7 Prueba completa antes del 18 de noviembre.** Lista aprobada por Bruno el
-      2026-11-13; hecha ese día (~14:30 UTC). **Queda un fallo en la página (abajo).**
+- [x] **1.7 Prueba completa antes del 18 de noviembre.** Lista aprobada por Bruno el
+      2026-11-13; hecha ese día (~14:30 UTC). El fallo del eje (punto 3) se corrigió el
+      mismo día, a pedido de Bruno: líneas en números redondos (0, 1, 2, 3, 4, 5 mil) y un
+      decimal bajo los 100 mil; verificado a 1280 y 384 px en los dos estilos.
       1. Despertador en la semana del lanzamiento: el código real de `despertador/worker.js`
          probado en Edge (Playwright) con 13 horas simuladas y un GitHub falso: el minuto 37
          mide solo del 17 nov 00:00 al 22 nov 00:00 UTC, el 7 siempre; la orden a GitHub va
@@ -93,8 +95,8 @@ guardan los datos (A2), empezar cuanto antes (A4) y el periodo de un mes con int
          de consola, sin desborde, sin aviso de ejemplo, y sale la medición de las 14:07.
          **Fallo encontrado:** el eje del gráfico de Twitch redondea a miles enteros: con un
          tope de 4.500 las marcas (1.125, 2.250, 3.375, 4.500) salen como "1 mil, 2 mil,
-         3 mil, 5 mil" (`compacto()` en `web/app.js`). Engaña al leer el gráfico. Sin
-         corregir: cambia lo que se ve, espera la decisión de Bruno.
+         3 mil, 5 mil" (`compacto()` en `web/app.js`). Engaña al leer el gráfico.
+         Corregido (ver arriba).
       4. Interruptor, en una copia fuera del repositorio: apagado y periodo terminado no
          miden ni crean nada (código 0); `activo` o fecha mal escritos y archivo roto abortan
          sin guardar (código 2, la ejecución sale en rojo en GitHub).
