@@ -1,7 +1,7 @@
 # Graph Report - Documentaci-n-Gta-6-19-de-nombiembre  (2026-11-13)
 
 ## Corpus Check
-- 33 files · ~27,345 words
+- 33 files · ~28,101 words
 - Verdict: corpus is large enough that graph structure adds value.
 - Unclassified: 7 file(s) not represented in the graph (top: (none) 3, .jsonl 2, .bat 1)
 
@@ -11,7 +11,7 @@
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `2ade31d7`
+- Built from commit: `3f4669c6`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -49,7 +49,7 @@
 7. `Despertador del recolector (Cloudflare)` - 12 edges
 8. `main()` - 11 edges
 9. `pedir()` - 10 edges
-10. `exigir()` - 9 edges
+10. `dibujar()` - 9 edges
 
 ## Surprising Connections (you probably didn't know these)
 - `Fase 1 — Recolector funcionando (lo más importante)` --references--> `compacto()`  [INFERRED]
@@ -58,9 +58,9 @@
   README.md → despertador/LEEME.md
 - `Aviso: base de datos SQL frente a archivos de texto` --rationale_for--> `Formato de cada línea (datos/AAAA-MM-DD.jsonl, horas UTC)`  [INFERRED]
   PLAN_DE_TRABAJO.md → recolector/LEEME.md
-- `Botón de cambio de estilo (data-poner)` --implements--> `Diseño Miami con dos estilos (Miami 2026 y Miami años 80)`  [INFERRED]
-  web/index.html → PLAN.md
 - `Sección línea de tiempo (#linea)` --implements--> `Decisiones ya tomadas`  [INFERRED]
+  web/index.html → PLAN.md
+- `Gráfico espectadores Twitch (#g-twitch)` --shares_data_with--> `Fuente Twitch (categoría Grand Theft Auto VI, id 1867279146, helix/streams)`  [INFERRED]
   web/index.html → PLAN.md
 
 ## Import Cycles

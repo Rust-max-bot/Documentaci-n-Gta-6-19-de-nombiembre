@@ -18,15 +18,15 @@
     "semantic_hash": ""
   },
   "web/app.js": {
-    "mtime": 1794590061.680671,
-    "seen": 1794591535.409537,
-    "ast_hash": "29155f379749d360436a058ce8034de0",
+    "mtime": 1794592100.5390027,
+    "seen": 1794592364.5977998,
+    "ast_hash": "c0ae80e73ad5966fa4215811245d4f51",
     "semantic_hash": ""
   },
   "web/datos-ejemplo.js": {
-    "mtime": 1794590061.6812875,
-    "seen": 1794591535.4095383,
-    "ast_hash": "5416076b431fe8594cdbe54d4c0b7c09",
+    "mtime": 1794592267.7138941,
+    "seen": 1794592364.5978014,
+    "ast_hash": "adda2830cd22c616c80188fcb2d70224",
     "semantic_hash": ""
   },
   "web/eventos.js": {
@@ -48,9 +48,9 @@
     "semantic_hash": ""
   },
   "ESTADO_ACTUAL.md": {
-    "mtime": 1794591534.6450565,
-    "seen": 1794591535.4095435,
-    "ast_hash": "017edd38d8456aec9e50058cae4310ac",
+    "mtime": 1794592356.041327,
+    "seen": 1794592364.5978067,
+    "ast_hash": "b2a612b3fe9a107222ea3907fca534ee",
     "semantic_hash": ""
   },
   "GUIA_CLAVES.md": {
@@ -60,9 +60,9 @@
     "semantic_hash": ""
   },
   "PLAN.md": {
-    "mtime": 1794591227.2550907,
-    "seen": 1794591535.409547,
-    "ast_hash": "b14dd1abc7d080460a1dd723955e181d",
+    "mtime": 1794592356.0415466,
+    "seen": 1794592364.5978105,
+    "ast_hash": "084b9d93655a2efbba4faae22378cfc3",
     "semantic_hash": ""
   },
   "README.md": {
@@ -72,9 +72,9 @@
     "semantic_hash": ""
   },
   "web/index.html": {
-    "mtime": 1794590061.6812875,
-    "seen": 1794591535.4095552,
-    "ast_hash": "02c9c5618f8e7b27eb50938383ad2c53",
+    "mtime": 1794591995.8419201,
+    "seen": 1794592364.5978198,
+    "ast_hash": "8442fd3963d09725927878b0d9ce0818",
     "semantic_hash": ""
   },
   ".github/workflows/probar-fuentes.yml": {
@@ -132,9 +132,9 @@
     "semantic_hash": ""
   },
   "PLAN_DE_TRABAJO.md": {
-    "mtime": 1794591534.644603,
-    "seen": 1794591535.409548,
-    "ast_hash": "e59802ea57c908ac5174fe10e4940317",
+    "mtime": 1794592356.0410228,
+    "seen": 1794592364.5978115,
+    "ast_hash": "8cabaf89585b6dfbbb8daeb81f6437cb",
     "semantic_hash": ""
   },
   "recolector/LEEME.md": {
@@ -144,9 +144,9 @@
     "semantic_hash": ""
   },
   "recolector/generar_web.py": {
-    "mtime": 1794590061.680671,
-    "seen": 1794591535.409528,
-    "ast_hash": "6824413be526f5faf357fc62c4c59c80",
+    "mtime": 1794591767.130937,
+    "seen": 1794592364.5977898,
+    "ast_hash": "5230ad814ed587d39beeedd79123e958",
     "semantic_hash": ""
   },
   "despertador/worker.js": {

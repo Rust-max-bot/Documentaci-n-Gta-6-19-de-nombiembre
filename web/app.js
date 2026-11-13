@@ -5,7 +5,7 @@
 
   var ZONA = "America/Santiago";
   var SALIDA = Date.UTC(2026, 10, 19, 3, 0);   // 19 nov 2026, 00:00 en Santiago
-  var D = window.DATOS || window.DATOS_EJEMPLO || { mediciones: [], youtube: [], noticias: [], eventos: [] };
+  var D = window.DATOS || window.DATOS_EJEMPLO || { mediciones: [], youtube: [], noticias: [], reddit: {}, eventos: [] };
   var $ = function (id) { return document.getElementById(id); };
 
   /* ---------- Fechas y números ---------- */
@@ -327,6 +327,44 @@
       var sec = $("seccion-noticias"); if (sec.getBoundingClientRect().top < 0) sec.scrollIntoView({ block: "start" });
     });
     pintar();
+  })();
+
+  /* ---------- Reddit (opción C elegida por Bruno, 2026-11-13) ----------
+     Barras: publicaciones nuevas de r/GTA6 por hora, según la hora en que se publicaron.
+     El RSS no trae votos ni comentarios, así que contar publicaciones es la forma de ver si la
+     comunidad se agita. El recolector lee como máximo 100 por medición: si en una hora hay
+     más, la barra se queda corta. Las horas anteriores a la primera publicación guardada
+     salen como "sin dato". */
+  (function () {
+    var R = D.reddit || {}, pubs = (R.publicaciones || []).filter(function (p) { return !isNaN(Date.parse(p.t)); });
+    var todas = pubs.slice().sort(function (a, b) { return Date.parse(b.t) - Date.parse(a.t); });
+    var HORA = 3600e3, HORAS = 48;
+    var ref = Date.parse(D.generado) || (todas.length ? Date.parse(todas[0].t) : Date.now());
+    var fin = Math.ceil(ref / HORA) * HORA, ini = fin - HORAS * HORA;
+    var desde = todas.length ? Date.parse(todas[todas.length - 1].t) : fin;
+    var cajas = [];
+    for (var t = ini; t < fin; t += HORA) cajas.push({ t: t, n: 0, nd: t + HORA <= desde });
+    todas.forEach(function (p) {
+      var i = Math.floor((Date.parse(p.t) - ini) / HORA);
+      if (i >= 0 && i < cajas.length) cajas[i].n++;
+    });
+    var max = Math.max.apply(null, cajas.map(function (c) { return c.nd ? 0 : c.n; }));
+    $("reddit-barras").setAttribute("aria-label", "Publicaciones por hora en r/GTA6, máximo " + max + " en una hora");
+    $("reddit-barras").innerHTML = cajas.map(function (c) {
+      var alto = c.nd ? 3 : (max ? Math.max(1.5, c.n / max * 100) : 1.5);
+      var texto = dia(c.t) + " " + hora(c.t) + ": " + (c.nd ? "sin dato" : c.n + (c.n === 1 ? " publicación" : " publicaciones"));
+      return '<div class="b' + (c.nd ? " nd" : "") + '" title="' + texto + '"><i style="height:' + alto + '%"></i></div>';
+    }).join("");
+    $("reddit-eje").innerHTML = "<span>" + dia(ini) + " " + hora(ini) + "</span><span>" + dia(ini + HORAS / 2 * HORA) + " " +
+      hora(ini + HORAS / 2 * HORA) + "</span><span>" + dia(fin) + " " + hora(fin) + "</span>";
+    $("reddit-leyenda").innerHTML = todas.length
+      ? '<i class="c nd"></i> Sin dato (antes de la primera publicación guardada) · máximo: ' + max + " en una hora · " + todas.length + " publicaciones guardadas"
+      : "Todavía no hay publicaciones guardadas.";
+    $("reddit-ultimas").innerHTML = todas.slice(0, 8).map(function (p) {
+      var autor = (p.autor || "").replace(/^\/u\//, "u/");
+      return "<li>" + (/^https:\/\/www\.reddit\.com\//.test(p.url || "") ? enlace(p.url, limpio(p.titulo)) : "<a>" + limpio(p.titulo) + "</a>") +
+        "<small>" + limpio(autor) + " · " + dia(Date.parse(p.t)) + " " + hora(Date.parse(p.t)) + "</small></li>";
+    }).join("");
   })();
 
   /* ---------- Pie ---------- */

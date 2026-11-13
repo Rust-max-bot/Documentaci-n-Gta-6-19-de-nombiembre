@@ -69,12 +69,26 @@
     });
   }
 
+  // Publicaciones de Reddit inventadas: muchas al salir el juego y cada vez menos después.
+  var publicaciones = [];
+  for (var r = 0; r < 140; r++) {
+    var tr = salida - 6 * HORA + azar() * azar() * 54 * HORA;
+    publicaciones.push({
+      t: new Date(tr).toISOString(),
+      titulo: "Publicación de ejemplo número " + (r + 1) + " en el foro",
+      autor: "/u/usuario_de_ejemplo",
+      url: ""
+    });
+  }
+  publicaciones.sort(function (a, b) { return Date.parse(a.t) - Date.parse(b.t); });
+
   window.DATOS_EJEMPLO = {
     ejemplo: true,
     generado: new Date(inicio + 72 * HORA).toISOString(),
     mediciones: mediciones,
     youtube: videos,
     noticias: noticias,
+    reddit: { comunidad: "r/GTA6", publicaciones: publicaciones, mediciones: [] },
     eventos: [
       { hora: "2026-11-18 08:00", texto: "Evento de ejemplo: el juego sale en los primeros países" },
       { hora: "2026-11-19 00:00", texto: "Evento de ejemplo: lanzamiento en Chile" },
