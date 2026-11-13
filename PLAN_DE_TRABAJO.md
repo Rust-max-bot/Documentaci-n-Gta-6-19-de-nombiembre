@@ -59,10 +59,18 @@ guardan los datos (A2), empezar cuanto antes (A4) y el periodo de un mes con int
       2026-11-12: en vez de vigilar 24 horas, que exigiría el PC encendido y gastaría
       tokens). Basta con que dos ejecuciones programadas arranquen solas y guarden bien.
       Hecho el 2026-11-13: 12 seguidas lanzadas por el despertador (ver 1.4).
-- [ ] **1.5b Opcional: revisión única de las primeras 24 horas** en la siguiente sesión, con
+- [x] **1.5b Opcional: revisión única de las primeras 24 horas** en la siguiente sesión, con
       `python recolector/revisar.py --horas 24`: cambio de archivo a medianoche UTC, cupo de
       YouTube, bloqueos de Google Trends y ejecuciones que GitHub se haya saltado. Los datos
-      quedan guardados igual; es solo mirar.
+      quedan guardados igual; es solo mirar. **Hecha el 2026-11-13 (~13:30 UTC):** 21
+      mediciones, las seis fuentes respondieron en todas (0 huecos, 0 bloqueos de Trends,
+      0 errores de servidor). Cada archivo del día tiene solo horas de su fecha UTC. YouTube
+      gasta ~59 unidades por medición (707 el 13 nov hasta las 13:07): 48 al día serían
+      ~2.830 de 10.000. Peso ~25 KB por medición (~35 MB en 30 días). Faltan 00:07 y 01:07
+      UTC del 13 nov (antes del despertador). **Fallo de `revisar.py`:** sigue suponiendo una
+      medición cada 30 minutos, así que marca como "hueco" cada hora normal y espera el
+      doble de mediciones; no sabe del horario nuevo (cada hora, y cada 30 min del 17 al 21
+      nov).
 - [x] **1.6 Conectar la página con los datos reales** (`web/datos.js` generado por
       programa). La página deja de mostrar el aviso de "datos de ejemplo". Hecho el
       2026-11-12: `recolector/generar_web.py` y `ver_pagina.bat`; verificado con Playwright

@@ -17,8 +17,11 @@
 
 *(2026-11-13, ~13:20 UTC.)*
 
-**Tanda 1.2 a 1.5 terminada** (más la 1.6, pedida aparte). Esperando que Bruno diga la
-siguiente tanda; lo que sigue en orden es la 1.5b (opcional) y la 1.7.
+**Tanda en curso: 1.5b, 1.6 y 1.7** (pedida el 2026-11-13). 1.5b hecha: 24 horas sin
+fallos de fuentes (detalle en `PLAN_DE_TRABAJO.md`); `revisar.py` sigue suponiendo una
+medición cada 30 minutos y marca huecos falsos. 1.6 ya estaba hecha desde el 2026-11-12.
+**1.7 esperando a Bruno:** la tarea no dice qué incluye la "prueba completa"; Claude
+propuso una lista y espera su visto bueno.
 
 **El recolector funciona solo.** Lo lanza el despertador de Cloudflare (Worker
 `despertador-recolector`, horario `7,37 * * * *`, clave de GitHub en su secreto
@@ -64,10 +67,11 @@ de 2026. Lanzamiento: 19 de noviembre, 00:00 de Santiago.
 
 **Reglas en pausa:** ninguna. "Paso a paso con permiso" está activa **por tandas**: Bruno
 dice qué pasos hacer y Claude no para hasta completarlos (ver `CLAUDE.md`). Tanda actual:
-ninguna (la 1.2 a 1.5 terminó el 2026-11-13).
+1.5b, 1.6 y 1.7.
 
 ## Últimos cambios
 
+- 2026-11-13: revisión de las primeras 24 horas (tarea 1.5b): sin fallos; `revisar.py` desfasado.
 - 2026-11-13: despertador verificado (12 turnos bien); `schedule` quitado; tareas 1.4 y 1.5 hechas.
 - 2026-11-13: despertador de Cloudflare montado (tarea 1.4).
 - 2026-11-12: historial limpio de datos personales y repositorio público (tarea 1.4); cada hora.
@@ -76,13 +80,12 @@ ninguna (la 1.2 a 1.5 terminó el 2026-11-13).
 - 2026-11-12: recolector en GitHub (tareas 1.2 y 1.3); primeras mediciones reales guardadas.
 - 2026-11-12: "paso a paso con permiso" vuelve, por tandas que define Bruno; D6 se ignora por ahora.
 - 2026-11-12: Bruno decidió guardar los datos en archivos de texto por día (tarea 1.1 hecha).
-- 2026-11-12: `PLAN_DE_TRABAJO.md` creado con la lista de Bruno ordenada; decisiones nuevas en `PLAN.md`.
 
 ## Pendiente
 
 La lista completa y su orden están en `PLAN_DE_TRABAJO.md`. Lo inmediato:
 
 1. Bruno: pedir a soporte de GitHub que borre la referencia del PR #1 y activar el correo privado.
-2. Tarea 1.5b (opcional): revisar las primeras 24 horas con `python recolector/revisar.py --horas 24`.
-3. Tarea 1.7: prueba completa antes del 18 de noviembre.
+2. Tarea 1.7: prueba completa antes del 18 de noviembre (falta que Bruno diga qué incluye).
+3. `revisar.py`: enseñarle el horario nuevo (si Bruno lo pide).
 4. Opcional: el hook de diseño de Impeccable (Bruno ejecuta `npx impeccable install` en el PC).
