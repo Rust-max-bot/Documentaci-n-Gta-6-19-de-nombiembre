@@ -15,17 +15,20 @@
 
 ## Dónde quedamos
 
-*(2026-11-13, ~13:20 UTC.)*
+*(2026-11-13, ~14:30 UTC.)*
 
-**Tanda en curso: 1.5b, 1.6 y 1.7** (pedida el 2026-11-13). 1.5b hecha: 24 horas sin
-fallos de fuentes (detalle en `PLAN_DE_TRABAJO.md`); `revisar.py` sigue suponiendo una
-medición cada 30 minutos y marca huecos falsos. 1.6 ya estaba hecha desde el 2026-11-12.
-**1.7 esperando a Bruno:** la tarea no dice qué incluye la "prueba completa"; Claude
-propuso una lista y espera su visto bueno.
+**Tanda 1.5b, 1.6 y 1.7 terminada** (2026-11-13). 1.5b: 24 horas sin fallos de fuentes.
+1.6 ya estaba hecha. 1.7 hecha con la lista que aprobó Bruno (detalle en
+`PLAN_DE_TRABAJO.md`): despertador, horario de la semana del lanzamiento, interruptor,
+cadena completa y límites, todo bien; `revisar.py` corregido para el horario nuevo.
+**Queda abierta por un fallo de la página:** el eje del gráfico de Twitch redondea a miles
+enteros ("1, 2, 3, 5 mil" en vez de 1.125, 2.250, 3.375, 4.500). Espera que Bruno elija cómo
+corregirlo (cambia lo que se ve).
 
 **El recolector funciona solo.** Lo lanza el despertador de Cloudflare (Worker
 `despertador-recolector`, horario `7,37 * * * *`, clave de GitHub en su secreto
-`GITHUB_TOKEN`, caduca el 31 ene 2027). Verificado el 2026-11-13: 12 ejecuciones seguidas,
+`GITHUB_TOKEN`; caduca el 31 ene 2027, o ~1 mar 2027 según recuerda Bruno: por verificar,
+pero ambas fechas pasan del 19 dic). Verificado el 2026-11-13: 12 ejecuciones seguidas,
 cada hora de 02:07 a 13:07 UTC, todas bien y con su commit "Medición automática". GitHub
 también lanzó dos programadas, tarde (03:23 y 12:05 UTC), que midieron dos veces esos turnos
 (quedan en los datos; no se borran). Por eso se quitó el `schedule` de `recolectar.yml`: ahora
@@ -67,10 +70,12 @@ de 2026. Lanzamiento: 19 de noviembre, 00:00 de Santiago.
 
 **Reglas en pausa:** ninguna. "Paso a paso con permiso" está activa **por tandas**: Bruno
 dice qué pasos hacer y Claude no para hasta completarlos (ver `CLAUDE.md`). Tanda actual:
-1.5b, 1.6 y 1.7.
+ninguna (la 1.5b, 1.6 y 1.7 terminó el 2026-11-13; la 1.7 queda abierta por el eje).
 
 ## Últimos cambios
 
+- 2026-11-13: prueba completa (tarea 1.7): todo bien salvo el eje del gráfico de Twitch.
+- 2026-11-13: `revisar.py` sigue el horario del despertador.
 - 2026-11-13: revisión de las primeras 24 horas (tarea 1.5b): sin fallos; `revisar.py` desfasado.
 - 2026-11-13: despertador verificado (12 turnos bien); `schedule` quitado; tareas 1.4 y 1.5 hechas.
 - 2026-11-13: despertador de Cloudflare montado (tarea 1.4).
@@ -78,14 +83,13 @@ dice qué pasos hacer y Claude no para hasta completarlos (ver `CLAUDE.md`). Tan
 - 2026-11-12: `cron` reescrito (mismo horario) para que GitHub lance las programadas (no bastó).
 - 2026-11-12: página conectada a los datos reales (tarea 1.6); `ver_pagina.bat` para verla.
 - 2026-11-12: recolector en GitHub (tareas 1.2 y 1.3); primeras mediciones reales guardadas.
-- 2026-11-12: "paso a paso con permiso" vuelve, por tandas que define Bruno; D6 se ignora por ahora.
-- 2026-11-12: Bruno decidió guardar los datos en archivos de texto por día (tarea 1.1 hecha).
 
 ## Pendiente
 
 La lista completa y su orden están en `PLAN_DE_TRABAJO.md`. Lo inmediato:
 
 1. Bruno: pedir a soporte de GitHub que borre la referencia del PR #1 y activar el correo privado.
-2. Tarea 1.7: prueba completa antes del 18 de noviembre (falta que Bruno diga qué incluye).
-3. `revisar.py`: enseñarle el horario nuevo (si Bruno lo pide).
+2. Tarea 1.7: corregir el eje del gráfico de Twitch (Bruno elige cómo); el resto de la
+   prueba está hecho y bien.
+3. Opcional: comprobar en Cloudflare que el código del Worker es igual a `despertador/worker.js`.
 4. Opcional: el hook de diseño de Impeccable (Bruno ejecuta `npx impeccable install` en el PC).
