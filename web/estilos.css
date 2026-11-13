@@ -313,6 +313,16 @@ td a:hover, td a:focus-visible { color: var(--a1); text-decoration-color: var(--
 .noticias li:hover { transform: translateY(-3px); border-color: var(--a1); }
 .noticias a { color: inherit; text-decoration: none; font-weight: 700; display: block; }
 .noticias small { color: var(--tenue); font-weight: 600; }
+/* Páginas de titulares (como en una tienda o un buscador); mismos botones que los filtros de día */
+.paginas { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 8px; margin-top: 18px; }
+.paginas:empty { display: none; }
+.paginas button { cursor: pointer; min-width: 42px; padding: 7px 14px; border-radius: 999px; border: 1px solid var(--tenue); background: none; color: var(--texto); font: 700 14px var(--f-texto); letter-spacing: .04em; transition: all .25s; }
+.paginas button:hover:not(:disabled) { border-color: var(--a1); color: var(--a1); }
+.paginas button.activo { background: var(--a1); border-color: var(--a1); color: #fff; }
+:root[data-tema="ochenta"] .paginas button.activo { box-shadow: 0 0 16px var(--a1); }
+.paginas button:disabled { opacity: .35; cursor: default; }
+.paginas .salto { color: var(--tenue); padding: 0 2px; }
+@media (max-width: 640px) { .paginas { gap: 6px; } .paginas button { min-width: 36px; padding: 6px 10px; font-size: 13px; } }
 
 .pie { text-align: center; padding: 10px 16px 50px; color: var(--tenue); font-size: 14px; font-weight: 500; }
 .pie p { margin: 4px 0; }

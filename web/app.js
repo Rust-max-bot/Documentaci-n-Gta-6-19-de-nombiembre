@@ -285,12 +285,49 @@
   })();
 
   /* ---------- Noticias ---------- */
-  // Lo más nuevo arriba (pedido de Bruno).
-  $("noticias").innerHTML = (D.noticias || []).slice().sort(function (a, b) { return Date.parse(b.t) - Date.parse(a.t); }).map(function (n) {
-    var ts = Date.parse(n.t), seguro = /^https?:\/\//.test(n.url || "");
-    return "<li>" + (seguro ? enlace(n.url, limpio(n.titulo)) : "<a>" + limpio(n.titulo) + "</a>") + "<small>" +
-      limpio(n.medio) + (isNaN(ts) ? "" : " · " + dia(ts) + " " + hora(ts)) + "</small></li>";
-  }).join("") || '<li>Todavía no hay titulares.</li>';
+  // Lo más nuevo arriba, y por páginas como en una tienda o un buscador, para que la sección
+  // no crezca sin fin (pedidos de Bruno, 2026-11-13).
+  (function () {
+    var POR_PAGINA = 12;
+    var todas = (D.noticias || []).slice().sort(function (a, b) { return Date.parse(b.t) - Date.parse(a.t); });
+    var total = Math.max(1, Math.ceil(todas.length / POR_PAGINA)), actual = 1;
+    function tarjeta(n) {
+      var ts = Date.parse(n.t), seguro = /^https?:\/\//.test(n.url || "");
+      return "<li>" + (seguro ? enlace(n.url, limpio(n.titulo)) : "<a>" + limpio(n.titulo) + "</a>") + "<small>" +
+        limpio(n.medio) + (isNaN(ts) ? "" : " · " + dia(ts) + " " + hora(ts)) + "</small></li>";
+    }
+    // Números a mostrar: la primera, la última y las vecinas de la actual; "…" en los saltos.
+    function numeros() {
+      var lista = [];
+      for (var i = 1; i <= total; i++) {
+        if (i === 1 || i === total || Math.abs(i - actual) <= 1) lista.push(i);
+        else if (lista[lista.length - 1] !== "…") lista.push("…");
+      }
+      return lista;
+    }
+    function boton(texto, pagina, extra) {
+      var activo = pagina === actual && typeof texto === "number";
+      return '<button type="button" data-pagina="' + pagina + '"' + (activo ? ' class="activo" aria-current="page"' : "") +
+        (extra || "") + ">" + texto + "</button>";
+    }
+    function pintar() {
+      var desde = (actual - 1) * POR_PAGINA, hasta = Math.min(todas.length, desde + POR_PAGINA);
+      $("noticias").innerHTML = todas.slice(desde, hasta).map(tarjeta).join("") || "<li>Todavía no hay titulares.</li>";
+      $("noticias-cuenta").textContent = todas.length
+        ? todas.length + " titulares, del más nuevo al más viejo · mostrando " + (desde + 1) + " a " + hasta : "";
+      $("noticias-paginas").innerHTML = total < 2 ? "" :
+        boton("‹ Más nuevos", actual - 1, actual === 1 ? " disabled" : "") +
+        numeros().map(function (x) { return x === "…" ? '<span class="salto">…</span>' : boton(x, x); }).join("") +
+        boton("Más viejos ›", actual + 1, actual === total ? " disabled" : "");
+    }
+    $("noticias-paginas").addEventListener("click", function (e) {
+      var b = e.target.closest("button"); if (!b || b.disabled) return;
+      actual = Math.min(total, Math.max(1, +b.dataset.pagina)); pintar();
+      // Si el principio de la sección quedó arriba, fuera de la vista, se vuelve a él.
+      var sec = $("seccion-noticias"); if (sec.getBoundingClientRect().top < 0) sec.scrollIntoView({ block: "start" });
+    });
+    pintar();
+  })();
 
   /* ---------- Pie ---------- */
   $("pie-info").textContent = (D.ejemplo ? "Mostrando datos de ejemplo. " : "") +

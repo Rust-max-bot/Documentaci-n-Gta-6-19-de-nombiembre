@@ -130,7 +130,8 @@ guardan los datos (A2), empezar cuanto antes (A4) y el periodo de un mes con int
       0,9. **Bruno lo miró: las líneas seguían titilando.** Segundo arreglo (mismo día): la
       rejilla se dibuja en un lienzo (`<canvas>`) con la misma geometría, y cada línea con su
       grosor real, así que ya no se vuelve puntos que se encienden y apagan. Salto máximo:
-      0,25 (1280 px) y 0,18 (384 px). Se ve igual, más limpio. Falta que Bruno lo confirme.
+      0,25 (1280 px) y 0,18 (384 px). Se ve igual, más limpio. Bruno: "mucho mejor" (apenas
+      titila un poco).
 - [ ] **2.4 Que las rayas del sol de 1986 no se confundan con las líneas de neón de los
       edificios (D2).** Cambia cómo se ve: presentar opciones con capturas.
 
