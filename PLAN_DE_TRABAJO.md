@@ -112,9 +112,10 @@ guardan los datos (A2), empezar cuanto antes (A4) y el periodo de un mes con int
       Twitch a su canal (los titulares ya enlazaban); se abren en otra pestaña. Verificado
       a 1280 y 384 px en los dos estilos.
 - [ ] **2.2 Miniaturas (A8):** de videos y transmisiones. Las de noticias, solo si la fuente
-      las entrega (por verificar). **Esperando a Bruno (2026-11-13):** elegir entre dos
-      formas para los videos (miniatura pequeña en la fila de la tabla, o tarjetas como los
-      titulares). Verificado: Google Noticias no entrega imágenes (la 2.2 no puede tenerlas
+      las entrega (por verificar). **Videos hechos (2026-11-13):** Bruno eligió tarjetas como
+      las de los titulares (opción B): miniatura arriba, título con enlace, canal, visitas,
+      cuánto subieron y la curva; las cifras exactas, al pasar el ratón. **Falta Twitch:**
+      Bruno decide qué hacer (ver abajo). Verificado: Google Noticias no entrega imágenes (la 2.2 no puede tenerlas
       para titulares); las miniaturas de YouTube funcionan; las de Twitch son una foto del
       directo en ese momento y, cuando el canal deja de transmitir, Twitch muestra una imagen
       genérica (ya pasa con el canal del máximo del 12 nov). Alternativa para Twitch: la foto

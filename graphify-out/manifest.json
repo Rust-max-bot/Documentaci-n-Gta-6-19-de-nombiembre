@@ -18,9 +18,9 @@
     "semantic_hash": "35e4166f00ee997a827d28037cf24e9d"
   },
   "web/app.js": {
-    "mtime": 1794582094.3565247,
-    "seen": 1794582273.3997085,
-    "ast_hash": "69bfe88adb69868863c9fc92d6132ff5",
+    "mtime": 1794582532.9654734,
+    "seen": 1794582630.9960985,
+    "ast_hash": "27d6c82deb5e9837edf98d763cefaaa5",
     "semantic_hash": ""
   },
   "web/datos-ejemplo.js": {
@@ -48,9 +48,9 @@
     "semantic_hash": ""
   },
   "ESTADO_ACTUAL.md": {
-    "mtime": 1794582272.06751,
-    "seen": 1794582273.399721,
-    "ast_hash": "f4528b2a74c6f1a5c516adf978c82b07",
+    "mtime": 1794582629.6170743,
+    "seen": 1794582630.9961119,
+    "ast_hash": "48fdb22bed3d47a465525b974907aac4",
     "semantic_hash": ""
   },
   "GUIA_CLAVES.md": {
@@ -60,10 +60,10 @@
     "semantic_hash": "2a2c4cde2661dd996dd88b87727fea0d"
   },
   "PLAN.md": {
-    "mtime": 1794580615.327965,
-    "seen": 1794581185.8127475,
-    "ast_hash": "69be9a030467bfb4bdb12e23eff714bd",
-    "semantic_hash": "69be9a030467bfb4bdb12e23eff714bd"
+    "mtime": 1794582629.6170743,
+    "seen": 1794582630.9961166,
+    "ast_hash": "9189716a202ef94b72fbec8384a4b1d1",
+    "semantic_hash": ""
   },
   "README.md": {
     "mtime": 1794578039.130153,
@@ -72,10 +72,10 @@
     "semantic_hash": "9f9b409041a1d103f9ef1d24963e8410"
   },
   "web/index.html": {
-    "mtime": 1794500113.9033577,
-    "seen": 1794501199.4712796,
-    "ast_hash": "e8d8fa08de462e94b9352210e28251d6",
-    "semantic_hash": "e8d8fa08de462e94b9352210e28251d6"
+    "mtime": 1794582531.3495212,
+    "seen": 1794582630.9961278,
+    "ast_hash": "03a7b53f9d0730bfd5aa4253a16f9f6c",
+    "semantic_hash": ""
   },
   ".github/workflows/probar-fuentes.yml": {
     "mtime": 1794503355.6929417,
@@ -132,9 +132,9 @@
     "semantic_hash": "f0fad01aa25102597eeabccff4450a26"
   },
   "PLAN_DE_TRABAJO.md": {
-    "mtime": 1794582256.7217188,
-    "seen": 1794582273.3997269,
-    "ast_hash": "8171c2410a92bff47d2b2807ac77b832",
+    "mtime": 1794582629.616076,
+    "seen": 1794582630.996119,
+    "ast_hash": "3bb398dd61b76121e3e757dc577976db",
     "semantic_hash": ""
   },
   "recolector/LEEME.md": {

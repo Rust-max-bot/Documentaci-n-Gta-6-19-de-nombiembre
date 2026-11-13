@@ -22,8 +22,9 @@ Twitch con números redondos (decisiones en `PLAN.md`).
 
 **Tanda en curso: 2.1, 2.2 y 2.3** (pedida el 2026-11-13). 2.1 hecha (enlaces a YouTube y
 Twitch). 2.3 hecha (parpadeo del suelo de 1986), falta que Bruno lo confirme a la vista.
-**2.2 esperando a Bruno:** elegir entre dos formas de mostrar las miniaturas de los videos
-(capturas hechas); y Twitch no guarda miniaturas útiles (detalle en `PLAN_DE_TRABAJO.md`).
+2.2: videos hechos (tarjetas con miniatura, opción B de Bruno). **Falta Twitch, esperando a
+Bruno:** sus miniaturas son fotos del directo y se pierden al terminar (detalle en
+`PLAN_DE_TRABAJO.md`).
 
 **El recolector funciona solo.** Lo lanza el despertador de Cloudflare (Worker
 `despertador-recolector`, horario `7,37 * * * *`, clave de GitHub en su secreto
@@ -75,6 +76,7 @@ dice qué pasos hacer y Claude no para hasta completarlos (ver `CLAUDE.md`). Tan
 ## Últimos cambios
 
 - 2026-11-13: grafo de Graphify al día también con los documentos (forzado con permiso de Bruno).
+- 2026-11-13: videos de YouTube en tarjetas con miniatura (2.2, opción B).
 - 2026-11-13: enlaces a videos y canales (2.1) y suelo de 1986 sin parpadeo (2.3).
 - 2026-11-13: página: eje de Twitch con números redondos y lo más nuevo arriba (tarea 1.7 cerrada).
 - 2026-11-13: prueba completa (tarea 1.7): todo bien salvo el eje del gráfico de Twitch.
@@ -91,6 +93,6 @@ dice qué pasos hacer y Claude no para hasta completarlos (ver `CLAUDE.md`). Tan
 La lista completa y su orden están en `PLAN_DE_TRABAJO.md`. Lo inmediato:
 
 1. Bruno: pedir a soporte de GitHub que borre la referencia del PR #1 y activar el correo privado.
-2. Tarea 2.2: Bruno elige cómo mostrar las miniaturas (y qué hacer con las de Twitch).
+2. Tarea 2.2: Bruno decide qué hacer con las miniaturas de Twitch.
 3. Opcional: comprobar en Cloudflare que el código del Worker es igual a `despertador/worker.js`.
 4. Opcional: el hook de diseño de Impeccable (Bruno ejecuta `npx impeccable install` en el PC).

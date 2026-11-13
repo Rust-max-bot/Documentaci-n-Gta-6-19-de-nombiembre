@@ -253,7 +253,7 @@
     pintar();
   })();
 
-  /* ---------- Tabla de YouTube ---------- */
+  /* ---------- Videos de YouTube (tarjetas con miniatura; opción B elegida por Bruno, 2026-11-13) ---------- */
   (function () {
     var filas = (D.youtube || []).map(function (v) {
       var serie = (v.serie || []).filter(function (p) { return typeof p.visitas === "number"; });
@@ -263,11 +263,18 @@
       var camino = serie.map(function (p, i) { return (i ? "L" : "M") + (i / (serie.length - 1 || 1) * 120).toFixed(1) + " " + (28 - (p.visitas - min) / (max - min || 1) * 26).toFixed(1); }).join("");
       return { v: v, a: a, b: b, camino: camino };
     }).filter(Boolean).sort(function (x, y) { return y.b - x.b; });
-    $("t-youtube").innerHTML = '<thead><tr><th>Video</th><th>Canal</th><th class="n">Al inicio</th><th class="n">Al final</th><th class="n">Ganó</th><th>Evolución</th></tr></thead><tbody>' +
-      (filas.map(function (f) {
-        return "<tr><td>" + enlace(urlVideo(f.v.id), limpio(f.v.titulo)) + "</td><td>" + limpio(f.v.canal) + '</td><td class="n">' + num(f.a) + '</td><td class="n">' + num(f.b) +
-          '</td><td class="n crece">+' + compacto(f.b - f.a) + '</td><td><svg class="mini" viewBox="0 0 120 30"><path d="' + f.camino + '"/></svg></td></tr>';
-      }).join("") || '<tr class="sin-dato"><td colspan="6">Todavía no hay datos.</td></tr>') + "</tbody>";
+    $("videos").innerHTML = filas.map(function (f) {
+      var url = urlVideo(f.v.id);
+      // Solo miniaturas de YouTube; la imagen repite el enlace del título, así que no recibe foco.
+      var foto = /^https:\/\/i\.ytimg\.com\//.test(f.v.miniatura || "")
+        ? (url ? '<a class="foto" href="' + limpio(url) + '" target="_blank" rel="noopener noreferrer" tabindex="-1" aria-hidden="true">' : '<div class="foto">') +
+          '<img src="' + limpio(f.v.miniatura) + '" alt="" loading="lazy" width="320" height="180">' + (url ? "</a>" : "</div>")
+        : "";
+      return "<li>" + foto + '<div class="v-texto">' + enlace(url, limpio(f.v.titulo)) +
+        '<small title="Al inicio: ' + num(f.a) + " · Al final: " + num(f.b) + '">' + limpio(f.v.canal) + " · " + compacto(f.b) +
+        ' visitas · <span class="crece">+' + compacto(f.b - f.a) + "</span></small>" +
+        '<svg class="mini" viewBox="0 0 120 30" preserveAspectRatio="none" aria-hidden="true"><path d="' + f.camino + '"/></svg></div></li>';
+    }).join("") || '<li class="vacio">Todavía no hay datos.</li>';
   })();
 
   /* ---------- Noticias ---------- */
