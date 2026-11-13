@@ -108,24 +108,12 @@ body {
 @keyframes latir { 50% { filter: drop-shadow(0 0 95px rgba(255, 120, 80, .9)); } }
 .perfil { position: absolute; left: 0; bottom: 24%; width: 100%; height: 26%; }
 .escena-80 .perfil { filter: drop-shadow(0 0 7px rgba(255, 46, 151, .8)); }
-.suelo { position: absolute; left: 0; right: 0; bottom: 0; height: 24%; perspective: 260px; perspective-origin: 50% 0; overflow: hidden; background: #0d0221; border-top: 2px solid var(--a2, #22e6ff); box-shadow: 0 -4px 30px #22e6ff; }
-.rejilla {
-  position: absolute; left: -220%; right: -220%; bottom: 0; height: 500%;
-  transform: rotateX(80deg); transform-origin: bottom center;
-  background:
-    linear-gradient(rgba(255,46,151,.9) 2px, transparent 2px) 0 0 / 100% 60px,
-    linear-gradient(90deg, rgba(34,230,255,.8) 2px, transparent 2px) 0 0 / 60px 100%;
-  /* El suelo avanza moviendo la capa entera una casilla (60px), no el dibujo de las líneas:
-     así no se repinta en cada cuadro (repintar esa capa enorme hacía parpadear el suelo). */
-  animation: avanzar 1.6s linear infinite;
-  will-change: transform;
-}
-@keyframes avanzar {
-  from { transform: rotateX(80deg) translateY(0); }
-  to { transform: rotateX(80deg) translateY(60px); }
-}
-/* Cerca del horizonte las líneas quedan tan juntas que se mezclan y titilan (puntitos que
-   parpadean): ahí el suelo se funde con el fondo. */
+.suelo { position: absolute; left: 0; right: 0; bottom: 0; height: 24%; overflow: hidden; background: #0d0221; border-top: 2px solid var(--a2, #22e6ff); box-shadow: 0 -4px 30px #22e6ff; }
+/* La rejilla del suelo la dibuja app.js en este lienzo ("Suelo de Miami 1986"). Antes era una
+   capa CSS inclinada en 3D y sus líneas finas titilaban al avanzar (tarea 2.3). */
+.rejilla { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+/* Cerca del horizonte las líneas quedan tan juntas que se mezclan: ahí el suelo se funde con
+   el fondo. */
 .suelo::after { content: ""; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(#0d0221 0%, rgba(13, 2, 33, .85) 14%, transparent 42%); }
 
 /* Escena 2026 */

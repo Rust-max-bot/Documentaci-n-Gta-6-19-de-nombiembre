@@ -127,7 +127,10 @@ guardan los datos (A2), empezar cuanto antes (A4) y el periodo de un mes con int
       en cada cuadro y, cerca del horizonte, las líneas quedaban tan juntas que titilaban.
       Ahora se mueve la capa entera (sin repintar) y el suelo se funde con el fondo junto al
       horizonte. Medido con 40 capturas seguidas: el salto máximo de brillo bajó de 1,8 a
-      0,9. Falta que Bruno lo confirme a la vista en su PC.
+      0,9. **Bruno lo miró: las líneas seguían titilando.** Segundo arreglo (mismo día): la
+      rejilla se dibuja en un lienzo (`<canvas>`) con la misma geometría, y cada línea con su
+      grosor real, así que ya no se vuelve puntos que se encienden y apagan. Salto máximo:
+      0,25 (1280 px) y 0,18 (384 px). Se ve igual, más limpio. Falta que Bruno lo confirme.
 - [ ] **2.4 Que las rayas del sol de 1986 no se confundan con las líneas de neón de los
       edificios (D2).** Cambia cómo se ve: presentar opciones con capturas.
 

@@ -310,6 +310,61 @@
     });
   })();
 
+  /* ---------- Suelo de Miami 1986 (rejilla dibujada en un lienzo) ----------
+     Misma geometría que tenía la versión en CSS (perspectiva de 260 px desde el centro del
+     horizonte, plano inclinado 80°, casillas de 60 px, cinco veces más hondo que el suelo y
+     5,4 veces más ancho). Dibujar cada línea con su grosor real evita que titilen: la capa
+     CSS, al encogerse tanto, convertía las líneas en puntos que se encendían y apagaban. */
+  (function () {
+    var lienzo = document.querySelector(".escena-80 .rejilla");
+    if (!lienzo || !lienzo.getContext) return;
+    var ctx = lienzo.getContext("2d"), raiz = document.documentElement;
+    var P = 260, SEN = Math.sin(80 * Math.PI / 180), COS = Math.cos(80 * Math.PI / 180);
+    var CASILLA = 60, GROSOR = 2, VUELTA = 1600;   // una casilla cada 1,6 s, como antes
+    var quieto = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    var W = 0, H = 0, dpr = 1, enPantalla = true, pendiente = true;
+    function medir() {
+      var r = lienzo.getBoundingClientRect();
+      dpr = Math.min(2, window.devicePixelRatio || 1); W = r.width; H = r.height;
+      lienzo.width = Math.max(1, Math.round(W * dpr)); lienzo.height = Math.max(1, Math.round(H * dpr));
+      pendiente = true;
+    }
+    // u: distancia al centro, a lo ancho del plano; v: distancia desde el borde cercano, hacia el fondo.
+    function aPantalla(u, v) { var e = P / (P + v * SEN); return [W / 2 + u * e, (H - v * COS) * e]; }
+    function dibujar(t) {
+      var hondo = 5 * H, ancho = 5.4 * W, avance = quieto ? 0 : (t % VUELTA) / VUELTA * CASILLA, u, v, a, b, c, d;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      ctx.clearRect(0, 0, W, H);
+      ctx.beginPath();                             // líneas que van hacia el horizonte (cian)
+      for (var x = 0; x <= ancho; x += CASILLA) {
+        u = x - ancho / 2;
+        a = aPantalla(u, 0); b = aPantalla(u + GROSOR, 0); c = aPantalla(u + GROSOR, hondo); d = aPantalla(u, hondo);
+        ctx.moveTo(a[0], a[1]); ctx.lineTo(b[0], b[1]); ctx.lineTo(c[0], c[1]); ctx.lineTo(d[0], d[1]); ctx.closePath();
+      }
+      ctx.fillStyle = "rgba(34, 230, 255, .8)";
+      ctx.fill();
+      ctx.fillStyle = "rgba(255, 46, 151, .9)";    // líneas de lado a lado (rosa), encima
+      for (var k = -1; k * CASILLA <= hondo; k++) {
+        v = hondo - (k * CASILLA + avance);          // borde de la línea más cercano al horizonte
+        if (v - GROSOR > hondo || v < 0) continue;
+        a = aPantalla(0, Math.max(0, v - GROSOR)); b = aPantalla(0, Math.min(hondo, v));
+        ctx.fillRect(0, b[1], W, a[1] - b[1]);       // con decimales: el lienzo reparte el brillo entre píxeles
+      }
+    }
+    function cuadro(t) {
+      // Solo se dibuja con el estilo 1986 puesto y la portada a la vista.
+      if (raiz.dataset.tema === "ochenta" && enPantalla && (!quieto || pendiente)) { dibujar(t); pendiente = false; }
+      window.requestAnimationFrame(cuadro);
+    }
+    medir();
+    window.addEventListener("resize", medir);
+    document.querySelector(".cambio").addEventListener("click", function () { pendiente = true; });
+    if ("IntersectionObserver" in window) {
+      new IntersectionObserver(function (v) { enPantalla = v[0].isIntersecting; }).observe(lienzo);
+    }
+    window.requestAnimationFrame(cuadro);
+  })();
+
   /* ---------- Aparecer al bajar ---------- */
   (function () {
     var bloques = document.querySelectorAll(".observar");
