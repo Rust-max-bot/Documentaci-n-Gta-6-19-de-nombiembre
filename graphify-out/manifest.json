@@ -48,9 +48,9 @@
     "semantic_hash": ""
   },
   "ESTADO_ACTUAL.md": {
-    "mtime": 1794607551.729358,
-    "seen": 1794608210.5890021,
-    "ast_hash": "5a5c95be1bc519e3de0ece878b74502b",
+    "mtime": 1794608975.9229445,
+    "seen": 1794609123.413995,
+    "ast_hash": "49a272ba942172c2205537115fe37cbd",
     "semantic_hash": ""
   },
   "GUIA_CLAVES.md": {
@@ -60,9 +60,9 @@
     "semantic_hash": ""
   },
   "PLAN.md": {
-    "mtime": 1794607551.729358,
-    "seen": 1794608210.5890064,
-    "ast_hash": "084818e0d0524a77b1f2c6e49d025c64",
+    "mtime": 1794608409.450339,
+    "seen": 1794609123.413999,
+    "ast_hash": "d4754461e9fc81a608a4754d9955b111",
     "semantic_hash": ""
   },
   "README.md": {
@@ -78,8 +78,8 @@
     "semantic_hash": ""
   },
   ".github/workflows/probar-fuentes.yml": {
-    "mtime": 1794608174.2277763,
-    "seen": 1794608210.5889604,
+    "mtime": 1794608402.0383387,
+    "seen": 1794609123.413959,
     "ast_hash": "1aa875b0d711aa5009402de4c7f1e6de",
     "semantic_hash": ""
   },
@@ -132,15 +132,15 @@
     "semantic_hash": ""
   },
   "PLAN_DE_TRABAJO.md": {
-    "mtime": 1794607551.729358,
-    "seen": 1794608210.5890079,
-    "ast_hash": "00cfdac447ad06fdf5868907204db01c",
+    "mtime": 1794608975.9223022,
+    "seen": 1794609123.4140003,
+    "ast_hash": "7c3165be52825635e15e5fa7a28f949f",
     "semantic_hash": ""
   },
   "recolector/LEEME.md": {
-    "mtime": 1794607551.7476974,
-    "seen": 1794608210.5890186,
-    "ast_hash": "4998523d04e93414e77c7e98557a3d52",
+    "mtime": 1794609122.3305254,
+    "seen": 1794609123.4140108,
+    "ast_hash": "2770fa46163415168d7e9223522cdc6b",
     "semantic_hash": ""
   },
   "recolector/generar_web.py": {
@@ -228,9 +228,15 @@
     "semantic_hash": ""
   },
   "recolector/trends_extra.py": {
-    "mtime": 1794608156.4410815,
-    "seen": 1794608210.5889902,
-    "ast_hash": "3d44f2e3e35b19e9a2e058afbf20c531",
+    "mtime": 1794608954.1529014,
+    "seen": 1794609123.4139833,
+    "ast_hash": "b9b7d30891258c0f2cad003b4c756789",
+    "semantic_hash": ""
+  },
+  ".github/workflows/trends-extra.yml": {
+    "mtime": 1794608409.450339,
+    "seen": 1794609123.4139633,
+    "ast_hash": "7cc75be95ca505a5a4099884b3670b69",
     "semantic_hash": ""
   }
 }

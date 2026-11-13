@@ -84,9 +84,12 @@ una consulta real antes de usarla. Ver el aviso 7, sobre la fecha del lanzamient
     (ejecución 43517928828): 7 consultas, sin bloqueo; salieron las 4 respuestas (25+ países,
     25 búsquedas más buscadas y 20 en aumento, 169 horas, 167 meses). Detalle en
     `recolector/LEEME.md`.
-  - Falta: (1) que Bruno elija las palabras de la comparación (hoy, provisional: GTA 6 y
-    GTA 5; Trends acepta hasta 5); (2) ejecutarlo de verdad entre el 20 y el 25 nov, cuando
-    Bruno diga; (3) mostrarlo en la página, con opciones y capturas. Queda en `[ ]`.
+  - **Palabras elegidas por Bruno (2026-11-13):** hora por hora, GTA 6, GTA 5, Minecraft,
+    Fortnite y Marvel Rivals; mes a mes desde 2013, GTA 6, GTA 5, Ocarina of Time (remake,
+    5 nov 2026) y Avengers Doomsday (18 dic 2026).
+  - Falta: (1) ejecutarlo de verdad entre el 20 y el 25 nov, cuando Bruno diga; (2) mostrarlo
+    en la página, con opciones y capturas; (3) idea: repetir la pregunta mes a mes en enero,
+    para que salga el estreno de Doomsday (sin decidir). Queda en `[ ]`.
 - [x] **6.2 Sección de logros y récords (que se actualiza sola).** **En la página desde el
       2026-11-13** (opción A de Bruno, "vitrina"; ver `PLAN.md`). El recolector mide los 4
       videos oficiales de GTA VI desde el PR #11. Quedaron fuera, a propósito: "la hora con

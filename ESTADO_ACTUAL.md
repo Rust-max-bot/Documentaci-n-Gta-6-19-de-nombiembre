@@ -62,11 +62,11 @@ esos sitios): no es un fallo de la página.
 dice qué pasos hacer y Claude no para hasta completarlos (ver `CLAUDE.md`). Tanda actual:
 ninguna (la de la 6.3 y 6.2 terminó el 2026-11-13). La 6.1 se ejecuta una vez entre el 20 y el 25 nov: el programa
 (`recolector/trends_extra.py`, workflow "Trends extra (6.1)") quedó listo y probado el 13 nov;
-falta que Bruno elija las palabras de la comparación.
+Bruno ya eligió las palabras de la comparación.
 
 ## Últimos cambios
 
-- 2026-11-13: programa aparte para las preguntas extra a Google Trends (6.1), probado desde GitHub sin guardar; falta elegir las palabras y ejecutarlo del 20 al 25 nov.
+- 2026-11-13: programa aparte para las preguntas extra a Google Trends (6.1), probado desde GitHub sin guardar, con las palabras que eligió Bruno; falta ejecutarlo del 20 al 25 nov.
 - 2026-11-13: el recolector busca también videos en español una vez por hora (6.4, pedido de Bruno); la página, después.
 - 2026-11-13: sección "Logros y récords" en la página, con los tráilers oficiales (6.2, opción A de Bruno).
 - 2026-11-13: la página muestra "GTA frente a lo más visto" (6.3, opción A de Bruno) y el recolector mide los 4 videos oficiales de GTA VI (6.2).
@@ -84,7 +84,7 @@ La lista completa y su orden están en `PLAN_DE_TRABAJO.md`. Resumen (2026-11-13
 2. **Fase 4:** 4.3 análisis de datos (necesita varios días de datos).
 3. **Fase 6** (ideas de Bruno): 6.1 más Google Trends, **una sola vez entre el 20 y el 25 nov**,
    fuera del recolector de cada hora (decisión de Bruno, 2026-11-13; ver `PLAN.md`). Programa
-   listo y probado; falta que Bruno elija las palabras de la comparación. 6.2 y 6.3, hechas. 6.4 videos en español: recolector funcionando (PR #12); falta mostrarlo en la página.
+   listo y probado, con las palabras que eligió Bruno; falta ejecutarlo y mostrarlo. 6.2 y 6.3, hechas. 6.4 videos en español: recolector funcionando (PR #12); falta mostrarlo en la página.
 4. **Fase 7:** 7.1 rebobinar; 7.3 viaje en el tiempo; 7.5 resumen del día.
 5. **Fase 5** (después del lanzamiento): búsqueda calmada; clave de Reddit.
 6. **Ideas sueltas:** 2.5 TikTok (sin acceso fácil); un filtro por día en los titulares

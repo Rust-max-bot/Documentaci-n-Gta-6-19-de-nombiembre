@@ -110,12 +110,13 @@ Google pide esperar, reintenta a los 60 y a los 180 segundos):
 Cada pregunta tiene su propia escala de 0 a 100 (100 = su punto más alto): los números de
 dos preguntas distintas no se comparan. Guarda **un archivo nuevo**,
 `datos/trends_extra/AAAA-MM-DDTHHMMZ.json`, y nunca sobrescribe. Si algo no cuadra, no
-guarda nada. Las palabras de la comparación están en `COMPARAR`.
+guarda nada. Las palabras están en `COMPARAR` y `HISTORICA` (elegidas por Bruno el 2026-11-13).
 
 - **De verdad:** workflow "Trends extra (6.1)", botón *Run workflow* en GitHub.
 - **Para probar sin guardar:** workflow "Probar fuentes" con la casilla de Trends extra
   marcada, o en el PC `python recolector/trends_extra.py --carpeta <carpeta temporal>`.
-  Probado desde GitHub el 2026-11-13 (ejecución 43517928828): 7 consultas, sin bloqueo.
+  Probado desde GitHub el 2026-11-13 (ejecuciones 43517928828 y 43519671457, la segunda con
+  las palabras de Bruno): 7 consultas cada una, sin bloqueo.
 
 ## De `datos/` a la página (`generar_web.py`)
 
