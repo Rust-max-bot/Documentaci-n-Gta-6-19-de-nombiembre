@@ -28,6 +28,10 @@ en orden es la 2.4 (rayas del sol de 1986: pide opciones con capturas). Bruno vi
 página muestra todos los guardados (antes, solo los 60 más nuevos). Idea para después: un
 filtro por día en los titulares.
 
+**Tanda 3.2 y 2.4 en curso** (2026-11-13, pedida por Bruno): Reddit probado desde GitHub
+(el JSON está bloqueado; el RSS funciona, pero sin votos ni comentarios) y opciones A, B y C
+para las rayas del sol en la rama `revision/rayas-sol`. **Las dos esperan que Bruno elija.**
+
 **Repositorio listo para sesiones en la nube** (2026-11-13, pedido de Bruno, que tiene
 créditos para la nube): guía para Bruno en `NUBE.md`; al arrancar en la nube,
 `.claude/hooks/preparar-nube.sh` instala las pruebas, Chromium y Graphify; las pruebas
@@ -89,6 +93,7 @@ ninguna (la 2.1 a 2.3 terminó el 2026-11-13).
 
 ## Últimos cambios
 
+- 2026-11-13: Reddit probado desde GitHub (3.2): JSON bloqueado, RSS funciona sin números; opciones de la 2.4 con capturas.
 - 2026-11-13: recolector revisado desde la nube: 16 turnos seguidos bien (02:07 a 17:07 UTC); nada que arreglar.
 - 2026-11-13: grafo de Graphify al día también con los documentos (forzado con permiso de Bruno).
 - 2026-11-13: repositorio preparado para sesiones en la nube (`NUBE.md`, `pruebas/`, hook de preparación).
@@ -112,6 +117,6 @@ ninguna (la 2.1 a 2.3 terminó el 2026-11-13).
 La lista completa y su orden están en `PLAN_DE_TRABAJO.md`. Lo inmediato:
 
 1. Bruno: pedir a soporte de GitHub que borre la referencia del PR #1 y activar el correo privado.
-2. Bruno: mirar si el suelo de 1986 todavía parpadea (2.3). Siguiente tarea en orden: 2.4.
+2. Bruno: elegir cómo seguir con Reddit (3.2) y una opción para las rayas del sol (2.4).
 3. Opcional: comprobar en Cloudflare que el código del Worker es igual a `despertador/worker.js`.
 4. Opcional: el hook de diseño de Impeccable (Bruno ejecuta `npx impeccable install` en el PC).

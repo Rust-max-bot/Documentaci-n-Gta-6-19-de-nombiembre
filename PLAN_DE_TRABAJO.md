@@ -134,6 +134,9 @@ guardan los datos (A2), empezar cuanto antes (A4) y el periodo de un mes con int
       titila un poco).
 - [ ] **2.4 Que las rayas del sol de 1986 no se confundan con las líneas de neón de los
       edificios (D2).** Cambia cómo se ve: presentar opciones con capturas.
+      Opciones presentadas el 2026-11-13 (capturas en la rama `revision/rayas-sol`): A) rayas
+      más arriba y cada vez más anchas; B) sol sin rosa abajo (rayas naranjas); C) sol sin
+      rayas. Falta que Bruno elija.
 
 - [ ] **2.5 (idea para después, pedida por Bruno el 2026-11-13) TikTok.** No hay acceso
       oficial para un proyecto personal: la API de investigación es solo para instituciones
@@ -148,6 +151,12 @@ guardan los datos (A2), empezar cuanto antes (A4) y el periodo de un mes con int
       capturas. La paleta se inspira en un Miami soleado y saturado; no se copia arte del juego.
 - [ ] **3.2 Reddit (A5).** Primero verificar con una consulta real si se puede leer gratis
       desde GitHub. Si exige pago, se descarta (decisión de Bruno). Ver "Avisos", punto 3.
+      **Probado desde GitHub el 2026-11-13** (`probar_fuentes.py`, ejecución 43471957389):
+      el JSON sin clave (www, old y api.reddit.com) da 403, bloqueado. El RSS de
+      `r/GTA6/new/.rss` sí responde (25 publicaciones), pero solo trae título, autor, fecha y
+      enlace: ni votos, ni comentarios, ni suscriptores. Desde la nube de Claude Reddit está
+      bloqueado del todo. Falta que Bruno elija: RSS (gratis, sin números) o registrar una
+      aplicación de Reddit (clave gratis, con números; sin verificar si Reddit la aprueba).
 - [ ] **3.3 Edificios que reflejan el paso del tiempo (D4):** en 2026 siguen los hoteles de
       1986 y aparecen torres nuevas detrás. Presentar opciones con capturas.
 
