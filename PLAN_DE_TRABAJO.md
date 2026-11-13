@@ -17,6 +17,11 @@ ya estaba acordado y faltaba. **Es la lista ordenada de qué hacer y en qué ord
 - **19 de noviembre de 2026, 00:00 de Santiago:** lanzamiento.
 - Cada día sin recolector es un día de "interés previo" que no se registra (A4), sobre todo
   en Twitch y YouTube, que no guardan historial. Por eso la Fase 1 va antes que todo.
+- **Antes del 19 nov** (anotado el 2026-11-13). Esto deja de servir si se hace después:
+  - 7.2, Hora cero: la animación tiene que estar en la página antes de que la cuenta llegue a 0.
+  - 7.4, Cápsula del tiempo: Bruno escribe lo que espera del juego antes del lanzamiento.
+  - Si Bruno lo decide (aviso 7): que el recolector empiece a guardar lo de la 6.3 antes del
+    19 nov. Sirve para que el día del lanzamiento quede guardado.
 
 ## Fase 0 — Claves y fuentes
 
@@ -235,6 +240,27 @@ Ver el aviso 7, sobre la fecha del lanzamiento.)*
     - cuántos videos de GTA hay entre los videos en tendencia de Chile y de EE. UU., y en qué
       puesto (1 unidad de cuota por país);
     - los suscriptores del canal de Rockstar (1 unidad).
+
+## Fase 7 — Ideas para que la página sea memorable
+
+*(Sugerencias de Claude que Bruno aprobó el 2026-11-13: "las 5 me gustan". Cambian cómo se ve
+la página, así que cada una se presenta con opciones y capturas antes de aplicarla. Dos tienen
+fecha límite: ver "Antes del 19 nov".)*
+
+- [ ] **7.1 Rebobinar el lanzamiento.** Una barra para mover la página hora por hora (con cada
+      medición guardada) y revivir el 19 nov: los números, el gráfico y los titulares cambian
+      a esa hora. Se puede hacer después del lanzamiento: los datos ya quedan guardados.
+- [ ] **7.2 Hora cero.** Una animación cuando la cuenta regresiva llegue a 0. Después, la cuenta
+      se cambia por "días desde el lanzamiento". **Tiene que estar en la página antes del
+      19 nov**, porque es para ese momento.
+- [ ] **7.3 Viaje en el tiempo.** Al cambiar de Miami 1986 a 2026, las torres nuevas (tarea
+      3.3) suben detrás de los hoteles, y al volver a 1986 bajan. Sin fecha límite.
+- [ ] **7.4 Cápsula del tiempo.** Un texto de Bruno con lo que espera del juego, escrito
+      **antes del 19 nov**, y otro después con lo que le pareció. Los escribe Bruno: Claude
+      no inventa ese contenido. La página los muestra uno al lado del otro.
+- [ ] **7.5 Resumen del día.** Una tarjeta automática por día con lo más importante: máximo de
+      espectadores, video más visto, interés en Trends, cantidad de titulares y de
+      publicaciones. Sale de los datos ya guardados. Sin fecha límite.
 
 ## Sin definir
 

@@ -218,6 +218,10 @@ la pide, serviría para el resto del periodo (hasta el 19 dic).
 
 ## 7. Decisiones pendientes
 
+- [ ] ¿El recolector empieza a guardar lo de la 6.3 antes del 19 nov? Es el puesto de GTA VI
+      en Twitch y los videos de GTA en las tendencias de YouTube. Ver el aviso 7 de
+      `PLAN_DE_TRABAJO.md`. Claude lo recomienda, porque ese día no se puede volver a medir;
+      Bruno decide.
 - [x] Instalar y usar Graphify (mapa del proyecto para gastar menos tokens). Hecho el
       2026-11-12: instalado en el proyecto y primer grafo en `graphify-out/`.
 

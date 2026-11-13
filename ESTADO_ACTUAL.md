@@ -104,6 +104,7 @@ ninguna (la 3.2 y 2.4 terminó el 2026-11-13).
 
 ## Últimos cambios
 
+- 2026-11-13: Fase 7 (5 ideas aprobadas por Bruno), fechas "antes del 19 nov" y lista de pendientes ordenada.
 - 2026-11-13: anotada la Fase 6 (más Trends, logros y comparaciones; pedido de Bruno) con avisos 7 y 8.
 - 2026-11-13: Miami 2026 con la paleta B "Atardecer encendido" y torres en lila (3.1, elegida por Bruno).
 - 2026-11-13: torres detrás de los hoteles con referencias reales de Miami (3.3, opción 2 de Bruno).
@@ -116,15 +117,37 @@ ninguna (la 3.2 y 2.4 terminó el 2026-11-13).
 - 2026-11-13: recolector revisado desde la nube: 16 turnos seguidos bien (02:07 a 17:07 UTC); nada que arreglar.
 - 2026-11-13: grafo de Graphify al día también con los documentos (forzado con permiso de Bruno).
 - 2026-11-13: repositorio preparado para sesiones en la nube (`NUBE.md`, `pruebas/`, hook de preparación).
-- 2026-11-13: suelo de 1986 dibujado en un lienzo: las líneas ya no titilan (2.3, segundo arreglo).
 
 ## Pendiente
 
-La lista completa y su orden están en `PLAN_DE_TRABAJO.md`. Lo inmediato:
+La lista completa y su orden están en `PLAN_DE_TRABAJO.md`. Resumen de lo que falta
+(2026-11-13):
 
-1. Bruno: pedir a soporte de GitHub que borre la referencia del PR #1 y activar el correo privado.
-2. Siguiente en orden: 4.1 (modo día y noche en los dos Miami).
-   - Después de la Fase 4 viene la Fase 6 (ideas nuevas de Bruno): más Trends, logros y comparaciones.
-   - Ojo con el aviso 7 del plan: lo que no se guarde antes del 19 nov no se recupera.
-3. Opcional: comprobar en Cloudflare que el código del Worker es igual a `despertador/worker.js`.
-4. Opcional: el hook de diseño de Impeccable (Bruno ejecuta `npx impeccable install` en el PC).
+1. **Antes del 19 nov** (después ya no sirve):
+   - 7.2 Hora cero (animación cuando la cuenta llegue a 0).
+   - 7.4 Cápsula del tiempo: Bruno escribe sus expectativas.
+   - Decidir con Bruno si el recolector empieza a guardar la 6.3 (puesto en Twitch y tendencias
+     de YouTube) antes del 19 nov; aviso 7 del plan.
+2. **Fase 4:**
+   - 4.1 modo día y noche;
+   - 4.2 cielo según la hora real;
+   - 4.3 análisis de datos, que necesita varios días de datos.
+3. **Fase 6** (ideas de Bruno):
+   - 6.1 más Google Trends;
+   - 6.2 logros y récords;
+   - 6.3 comparaciones con Twitch y YouTube.
+4. **Fase 7** (ideas aprobadas):
+   - 7.1 rebobinar;
+   - 7.3 viaje en el tiempo;
+   - 7.5 resumen del día.
+   La 7.2 y la 7.4 están en el punto 1.
+5. **Fase 5** (después del lanzamiento):
+   - búsqueda calmada;
+   - clave de Reddit.
+6. **Ideas sueltas:** 2.5 TikTok (sin acceso fácil); D6 (Bruno pidió ignorarla por ahora).
+7. **Bruno:**
+   - pedir a soporte de GitHub que borre la referencia del PR #1 y activar el correo privado;
+   - borrar las ramas `revision/colores-2026` y `revision/edificios-2026`.
+8. **Opcional:**
+   - comprobar en Cloudflare que el Worker es igual a `despertador/worker.js`;
+   - el hook de Impeccable (`npx impeccable install` en el PC).
