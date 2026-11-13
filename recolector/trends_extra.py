@@ -42,10 +42,14 @@ DATOS = RAIZ / "datos" / "trends_extra"
 VERSION = 1
 
 PALABRA = "GTA 6"
-# PROVISIONAL: Bruno todavía no eligió las palabras (Trends acepta hasta 5 juntas).
-# "GTA 6" va siempre primera. Cambiar esta lista cuando Bruno decida.
-COMPARAR = ("GTA 6", "GTA 5")
-HISTORICA = ("GTA 5", "GTA 6")
+# Palabras elegidas por Bruno (2026-11-13). Trends acepta hasta 5 juntas; "GTA 6" va primera.
+# Semana del lanzamiento: GTA 6 al lado de juegos que siempre se buscan (salen del ranking de
+# Twitch del 13 nov: GTA V 3.º, Marvel Rivals 4.º, Fortnite 6.º, Minecraft 10.º).
+COMPARAR = ("GTA 6", "GTA 5", "Minecraft", "Fortnite", "Marvel Rivals")
+# Mes a mes desde 2013: los otros grandes estrenos cercanos. El remake de Ocarina of Time salió
+# el 5 nov 2026; Avengers: Doomsday se estrena el 18 dic 2026 (para ver su estreno hay que
+# repetir esta pregunta después, por ejemplo en enero).
+HISTORICA = ("GTA 6", "GTA 5", "Ocarina of Time", "Avengers Doomsday")
 HISTORICA_DESDE = "2013-01-01"
 RANGO_SEMANA = "now 7-d"
 PAUSA = 20                       # segundos entre una pregunta y la siguiente
