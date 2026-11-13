@@ -1,6 +1,7 @@
 """Recolector: mide cada fuente y añade UNA línea al archivo de texto del día en datos/.
 
-- En GitHub lo ejecuta el workflow "Recolectar datos" cada 30 minutos.
+- En GitHub lo ejecuta el workflow "Recolectar datos" cada hora (cada 30 minutos del 17 al
+  21 nov), lanzado por el despertador de Cloudflare (despertador/).
 - En el PC, solo para probar: python recolector/recolectar.py --carpeta <carpeta temporal>
   (en el PC nunca escribe en datos/: esa carpeta es el recuerdo y solo la escribe GitHub).
 

@@ -2,7 +2,7 @@
   "activo": true,
   "ultimo_dia": "2026-12-19",
   "ayuda": [
-    "activo: true = mide cada 30 minutos; false = apagado (no borra nada, solo deja de medir).",
+    "activo: true = mide (cada hora; cada 30 minutos del 17 al 21 nov); false = apagado (no borra nada, solo deja de medir).",
     "ultimo_dia: último día que se mide, en fecha de Santiago (AAAA-MM-DD). Para alargar, poner una fecha posterior.",
     "Se puede cambiar desde la web de GitHub (editar este archivo en main) o en el PC (git pull antes, commit y push después)."
   ]

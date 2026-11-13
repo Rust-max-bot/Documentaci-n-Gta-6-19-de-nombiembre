@@ -17,10 +17,10 @@ de texto por día en vez de una base de datos SQL (motivos en `PLAN.md`).
 | `generar_web.py` | Convierte `datos/` en `web/datos.js` para la página (lo usa `ver_pagina.bat`) |
 | `probar_fuentes.py` | Prueba suelta de las fuentes (workflow "Probar fuentes"); no guarda nada |
 
-El workflow `.github/workflows/recolectar.yml` lo ejecuta en GitHub al minuto 7 de cada hora,
-y también al 37 del 17 al 21 de noviembre (UTC), la semana del lanzamiento (GitHub suele
-atrasarse unos minutos), y sube la línea nueva con un commit
-"Medición automática …".
+El workflow `.github/workflows/recolectar.yml` corre en GitHub al minuto 7 de cada hora,
+y también al 37 del 17 al 21 de noviembre (UTC), la semana del lanzamiento. Lo lanza el
+despertador de Cloudflare (`despertador/`), porque GitHub no lanzaba a tiempo sus
+ejecuciones programadas. Sube la línea nueva con un commit "Medición automática …".
 
 ## Interruptor (`interruptor.json`)
 
@@ -28,7 +28,8 @@ atrasarse unos minutos), y sube la línea nueva con un commit
 - `"ultimo_dia": "2026-12-19"`: último día que se mide, en fecha de Santiago. Para alargar,
   poner una fecha posterior.
 - Se puede editar en la web de GitHub (en `main`) o en el PC: **`git pull` antes**, porque
-  GitHub sube una medición cada 30 minutos, y commit y push después.
+  GitHub sube una medición cada hora (cada 30 minutos del 17 al 21 nov), y commit y push
+  después.
 
 ## Formato de cada línea
 

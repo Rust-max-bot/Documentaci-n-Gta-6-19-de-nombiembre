@@ -65,8 +65,10 @@ guardan los datos (A2), empezar cuanto antes (A4) y el periodo de un mes con int
       quedan guardados igual; es solo mirar. **Hecha el 2026-11-13 (~13:30 UTC):** 21
       mediciones, las seis fuentes respondieron en todas (0 huecos, 0 bloqueos de Trends,
       0 errores de servidor). Cada archivo del día tiene solo horas de su fecha UTC. YouTube
-      gasta ~59 unidades por medición (707 el 13 nov hasta las 13:07): 48 al día serían
-      ~2.830 de 10.000. Peso ~25 KB por medición (~35 MB en 30 días). Faltan 00:07 y 01:07
+      gasta 101 unidades por medición, siempre las mismas (100 la búsqueda y 1 la consulta
+      de videos; `recolector/fuentes.py`): 48 al día serían 4.848 de 10.000. *(Corregido en
+      la 1.7: al principio se anotó ~59, mal calculado; el cupo se cuenta por día de
+      California, no por día UTC.)* Peso ~25 KB por medición (~35 MB en 30 días). Faltan 00:07 y 01:07
       UTC del 13 nov (antes del despertador). **Fallo de `revisar.py`:** sigue suponiendo una
       medición cada 30 minutos, así que marca como "hueco" cada hora normal y espera el
       doble de mediciones; no sabe del horario nuevo (cada hora, y cada 30 min del 17 al 21
