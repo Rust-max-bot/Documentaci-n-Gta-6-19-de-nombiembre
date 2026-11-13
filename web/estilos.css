@@ -114,6 +114,25 @@ body {
 @keyframes latir { 50% { filter: drop-shadow(0 0 95px rgba(255, 120, 80, .9)); } }
 .perfil { position: absolute; left: 0; bottom: 24%; width: 100%; height: 26%; }
 .escena-80 .perfil { filter: drop-shadow(0 0 7px rgba(255, 46, 151, .8)); }
+/* Torres detrás de los hoteles (tarea 3.3). Misma escala que .perfil: el doble de alto porque
+   su dibujo mide 480 de alto en vez de 240, y así la base de las dos capas coincide. */
+.torres { position: absolute; left: 0; bottom: 24%; width: 100%; height: 52%; }
+.escena-80 .torres { filter: drop-shadow(0 0 6px rgba(34, 230, 255, .6)); }
+/* 1986, de noche: torres oscuras con bordes de neón y la torre de niveles iluminada. */
+.escena-80 {
+  --t80-cuerpo: #150533; --t80-linea: rgba(34, 230, 255, .45); --t80-borde: #22e6ff;
+  --t80-ventana: #ffd98a; --t80-palma: #0a0118;
+  --t80-luz1: #169fc4; --t80-luz2: #22c4e6; --t80-luz3: #7ff2ff; --t80-franja: rgba(13, 2, 33, .55);
+}
+/* 2026, de día: lo nuevo en azul suave, como a lo lejos, para que los hoteles sigan al frente. */
+.escena-26 {
+  --torre: #8cb8d0; --torre-sombra: #6f9db9; --torre-linea: rgba(255, 255, 255, .3);
+  --torre-blanco: rgba(255, 255, 255, .9); --torre-exo: #f4f8fb; --grua: #4f7a96;
+  --verde1: #4fae78; --verde2: #2f8a5b;
+  --t80-cuerpo: #5f8fb3; --t80-linea: rgba(255, 255, 255, .35); --t80-borde: #ffffff;
+  --t80-ventana: #9fd0e8; --t80-palma: #1d5a4a;
+  --t80-luz1: #e9eef2; --t80-luz2: #dde5eb; --t80-luz3: #d0dae2; --t80-franja: rgba(70, 100, 125, .35);
+}
 .suelo { position: absolute; left: 0; right: 0; bottom: 0; height: 24%; overflow: hidden; background: #0d0221; border-top: 2px solid var(--a2, #22e6ff); box-shadow: 0 -4px 30px #22e6ff; }
 /* La rejilla del suelo la dibuja app.js en este lienzo ("Suelo de Miami 1986"). Antes era una
    capa CSS inclinada en 3D y sus líneas finas titilaban al avanzar (tarea 2.3). */

@@ -168,8 +168,13 @@ guardan los datos (A2), empezar cuanto antes (A4) y el periodo de un mes con int
       Clave de Reddit (votos y comentarios): revisado el 2026-11-13. Hay que pedir permiso a
       Reddit y tarda ~7 días sin garantía (detalle en `PLAN.md`). **Bruno lo deja para
       después**; anotado en la Fase 5.
-- [ ] **3.3 Edificios que reflejan el paso del tiempo (D4):** en 2026 siguen los hoteles de
-      1986 y aparecen torres nuevas detrás. Presentar opciones con capturas.
+- [x] **3.3 Edificios que reflejan el paso del tiempo (D4):** en 2026 siguen los hoteles de
+      1986 y aparecen torres nuevas detrás. Presentar opciones con capturas. **Hecha el
+      2026-11-13:** primera ronda de 3 opciones descartada por Bruno ("todas son de vidrio");
+      segunda ronda con referencias reales de Miami (detalle y fuentes en `PLAN.md`). Bruno
+      eligió la opción 2: 2 torres de los 80 en las dos escenas y 6 torres nuevas solo en 2026.
+      Verificado a 1280 y 384 px en los dos estilos. En celular (384 px) las torres de los 80
+      quedan fuera de la pantalla, a los lados.
 
 ## Fase 4 — Mejoras largas
 
