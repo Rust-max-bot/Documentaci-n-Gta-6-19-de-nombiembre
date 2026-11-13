@@ -105,8 +105,11 @@ def main():
 
     print("\nFuentes (respondió / hueco):")
     for fuente in [k for k in medidas[-1][0] if isinstance(medidas[-1][0][k], dict)]:
-        errores = [m[fuente]["error"] for m, _ in medidas if "error" in m.get(fuente, {"error": "falta"})]
-        print(f"  {fuente:12} {len(medidas) - len(errores):4} / {len(errores):<4}"
+        # Una fuente añadida después (Reddit, 2026-11-13) solo cuenta desde su primera medición.
+        primera = next(i for i, (m, _) in enumerate(medidas) if fuente in m)
+        desde_ella = medidas[primera:]
+        errores = [m[fuente]["error"] for m, _ in desde_ella if "error" in m.get(fuente, {"error": "falta"})]
+        print(f"  {fuente:12} {len(desde_ella) - len(errores):4} / {len(errores):<4}"
               + (f"  último error: {errores[-1]}" if errores else ""))
 
     unidades = defaultdict(int)

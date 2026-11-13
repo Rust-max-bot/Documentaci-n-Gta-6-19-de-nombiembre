@@ -52,7 +52,7 @@ def leer_interruptor():
 
 def leer_estado(carpeta):
     """Lee los archivos más recientes. Si alguno está dañado, aborta: no se añade nada encima."""
-    estado = {"ultima_t": None, "youtube_previos": [], "noticias_vistas": set()}
+    estado = {"ultima_t": None, "youtube_previos": [], "noticias_vistas": set(), "reddit_vistas": set()}
     archivos = sorted(p for p in carpeta.glob("*.jsonl"))
     for p in archivos:
         if not NOMBRE_ARCHIVO.match(p.name):
@@ -70,6 +70,8 @@ def leer_estado(carpeta):
             ultima = m
             for nota in m.get("noticias", {}).get("nuevas", []):
                 estado["noticias_vistas"].add(nota["url"])
+            for pub in m.get("reddit", {}).get("nuevas", []):
+                estado["reddit_vistas"].add(pub["id"])
             # videos de la última medición en que YouTube respondió (si la última fue hueco)
             videos = m.get("youtube", {}).get("videos") or videos
     if ultima:
@@ -99,6 +101,8 @@ def resumen(nombre, r):
         return f"{len(r['puntos'])} puntos; último {p['t']} = {p['interes']}"
     if nombre == "noticias":
         return f"{len(r['nuevas'])} titulares nuevos de {r['en_fuente']}"
+    if nombre == "reddit":
+        return f"{len(r['nuevas'])} publicaciones nuevas de {r['en_fuente']}"
     return "sin problemas" if r["ok"] else "CON PROBLEMAS"
 
 

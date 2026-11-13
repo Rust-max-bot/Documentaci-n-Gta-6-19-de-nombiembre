@@ -86,6 +86,19 @@ def _noticias(r):
         exigir(n.get("t") is None or es_iso(n["t"]), "Noticias: fecha inválida")
 
 
+def _reddit(r):
+    exigir(es_entero(r.get("en_fuente"), 1), "Reddit: 'en_fuente' inválido")
+    nuevas = r.get("nuevas")
+    exigir(isinstance(nuevas, list) and len(nuevas) <= r["en_fuente"], "Reddit: lista inválida")
+    ids = [n.get("id") for n in nuevas]
+    exigir(all(isinstance(i, str) and i.startswith("t3_") for i in ids), "Reddit: id de publicación inválido")
+    exigir(len(set(ids)) == len(ids), "Reddit: publicaciones repetidas")
+    for n in nuevas:
+        exigir(isinstance(n.get("titulo"), str) and n["titulo"], "Reddit: publicación sin título")
+        exigir(isinstance(n.get("url"), str) and n["url"].startswith("https://www.reddit.com/"), "Reddit: enlace inválido")
+        exigir(n.get("t") is None or es_iso(n["t"]), "Reddit: fecha inválida")
+
+
 def _servidor(r):
     exigir(isinstance(r.get("ok"), bool), "Servidores: falta 'ok'")
 
@@ -95,6 +108,7 @@ CHEQUEOS = {
     "youtube": _youtube,
     "trends": _trends,
     "noticias": _noticias,
+    "reddit": _reddit,
     "playstation": _servidor,
     "xbox": _servidor,
 }
