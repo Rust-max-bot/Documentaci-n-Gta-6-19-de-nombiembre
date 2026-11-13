@@ -159,53 +159,10 @@ def _():
     return cod == 200
 
 
-# Reddit (tarea 3.2): solo lectura sin clave. Se prueban varias puertas porque Reddit
-# suele bloquear las consultas sin clave desde servidores como los de GitHub.
-def _reddit(url, es_json=True):
-    cod, txt = pedir(url, {"User-Agent": "linux:recuerdo-gta6:v0.1 (proyecto personal, solo lectura)"}, espera=20)
-    print("Codigo", cod, "|", url.split("?")[0])
-    if cod != 200:
-        print("   respuesta:", re.sub(r"\s+", " ", txt)[:160])
-        return False
-    if es_json:
-        d = json.loads(txt).get("data", {})
-        if "children" in d:
-            hijos = d["children"]
-            print("   publicaciones:", len(hijos), "| ej.:", [(h["data"]["score"], h["data"]["num_comments"], h["data"]["title"][:50]) for h in hijos[:2]])
-        else:
-            print("   suscriptores:", d.get("subscribers"), "| conectados:", d.get("active_user_count") or d.get("accounts_active"))
-    else:
-        print("   entradas en el RSS:", txt.count("<entry>"))
-    return True
-
-
-# Primero el RSS, que es lo que usa el recolector: Reddit responde 429 ("demasiadas
-# consultas") tras unas pocas seguidas desde la misma máquina.
-@prueba("Reddit RSS (100 publicaciones)")
-def _():
-    return _reddit("https://www.reddit.com/r/GTA6/new/.rss?limit=100", es_json=False)
-
-
-@prueba("Reddit RSS")
-def _():
-    return _reddit("https://www.reddit.com/r/GTA6/new/.rss", es_json=False)
-
-
-@prueba("Reddit JSON (www)")
-def _():
-    return _reddit("https://www.reddit.com/r/GTA6/new.json?limit=5&raw_json=1")
-
-
-@prueba("Reddit JSON (old)")
-def _():
-    return _reddit("https://old.reddit.com/r/GTA6/about.json")
-
-
-@prueba("Reddit API sin clave")
-def _():
-    return _reddit("https://api.reddit.com/r/GTA6/hot?limit=5")
-
-
+# Reddit (tarea 3.2) no se prueba aquí: Reddit responde 429 ("demasiadas consultas") a la
+# segunda consulta seguida desde la misma máquina, y entonces fallaría la prueba del
+# recolector, que viene después en el mismo workflow. Resultados del 2026-11-13 (PLAN.md,
+# "Reddit"): el JSON sin clave da 403; el RSS con ?limit=100 da 200 con 100 publicaciones.
 
 print("\n=== RESUMEN ===")
 for n, ok in resultados.items():
