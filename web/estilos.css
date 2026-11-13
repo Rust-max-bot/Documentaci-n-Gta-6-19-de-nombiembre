@@ -28,14 +28,15 @@
   --fondo: #fff3e8;
   --fondo2: #ffe1dc;
   --panel: #fffaf4;
-  --h1: #a8e6cf; --h2: #ffc2d1; --h3: #fff0a8; --h4: #9ad8ef; --h5: #ffd0a6;
-  --trim: #ffffff; --trim2: #ffffff; --acento: #ff8fa8; --vent: #4b86a6; --luz: #6fa9c4;
+  /* Paleta B "Atardecer encendido" (tarea 3.1, elegida por Bruno el 2026-11-13). */
+  --h1: #00d6a4; --h2: #ff4f8b; --h3: #ffc93c; --h4: #3fb6ff; --h5: #ff7e4f;
+  --trim: #ffffff; --trim2: #ffffff; --acento: #ff2e63; --vent: #25205e; --luz: #ffe08a;
   --borde: rgba(255, 255, 255, .95);
   --texto: #1b1440;
   --tenue: #5f5884;
-  --a1: #f43f6e;
-  --a2: #0a9bb0;
-  --a3: #f97316;
+  --a1: #ff2e63;
+  --a2: #0aa5c9;
+  --a3: #ff6a00;
   --ok: #0f9d6b;
   --mal: #e11d48;
   --nd: #d5cee3;
@@ -61,7 +62,7 @@ body {
 }
 :root[data-tema="ochenta"] body { background: linear-gradient(var(--fondo), var(--fondo2)) fixed; }
 :root[data-tema="actual"] body {
-  background: linear-gradient(180deg, #ffe9d6 0%, #ffd9df 45%, #d9f1f5 100%) fixed;
+  background: linear-gradient(180deg, #ffe3cc 0%, #ffc8d8 45%, #d4ecff 100%) fixed;
 }
 /* Líneas de televisor antiguo, solo en el estilo de los 80 */
 :root[data-tema="ochenta"] body::after {
@@ -124,14 +125,14 @@ body {
   --t80-ventana: #ffd98a; --t80-palma: #0a0118;
   --t80-luz1: #169fc4; --t80-luz2: #22c4e6; --t80-luz3: #7ff2ff; --t80-franja: rgba(13, 2, 33, .55);
 }
-/* 2026, de día: lo nuevo en azul suave, como a lo lejos, para que los hoteles sigan al frente. */
+/* 2026, al atardecer: lo nuevo en lila suave, como a lo lejos, para que los hoteles sigan al frente. */
 .escena-26 {
-  --torre: #8cb8d0; --torre-sombra: #6f9db9; --torre-linea: rgba(255, 255, 255, .3);
-  --torre-blanco: rgba(255, 255, 255, .9); --torre-exo: #f4f8fb; --grua: #4f7a96;
+  --torre: #9a86d6; --torre-sombra: #7d6abd; --torre-linea: rgba(255, 255, 255, .28);
+  --torre-blanco: rgba(255, 255, 255, .88); --torre-exo: #fbf2ff; --grua: #4a3a86;
   --verde1: #4fae78; --verde2: #2f8a5b;
-  --t80-cuerpo: #5f8fb3; --t80-linea: rgba(255, 255, 255, .35); --t80-borde: #ffffff;
-  --t80-ventana: #9fd0e8; --t80-palma: #1d5a4a;
-  --t80-luz1: #e9eef2; --t80-luz2: #dde5eb; --t80-luz3: #d0dae2; --t80-franja: rgba(70, 100, 125, .35);
+  --t80-cuerpo: #5a55b4; --t80-linea: rgba(255, 255, 255, .35); --t80-borde: #ffffff;
+  --t80-ventana: #ffd9a0; --t80-palma: #2a1446;
+  --t80-luz1: #f6eefb; --t80-luz2: #ecdff5; --t80-luz3: #e0d0ee; --t80-franja: rgba(80, 50, 120, .35);
 }
 .suelo { position: absolute; left: 0; right: 0; bottom: 0; height: 24%; overflow: hidden; background: #0d0221; border-top: 2px solid var(--a2, #22e6ff); box-shadow: 0 -4px 30px #22e6ff; }
 /* La rejilla del suelo la dibuja app.js en este lienzo ("Suelo de Miami 1986"). Antes era una
@@ -142,10 +143,10 @@ body {
 .suelo::after { content: ""; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(#0d0221 0%, rgba(13, 2, 33, .85) 14%, transparent 42%); }
 
 /* Escena 2026 */
-.escena-26 { background: linear-gradient(#4aa8dc 0%, #9fd6ea 30%, #ffd9b8 58%, #ffac9a 72%, #ff8f96 76%, #16a5b8 76.2%, #0c6f8f 100%); }
+.escena-26 { background: linear-gradient(#2a5bff 0%, #7a4dff 22%, #ff4fa0 48%, #ff8a3d 66%, #ffc24a 75%, #00a9c7 76.2%, #003f73 100%); }
 .sol26 {
   position: absolute; left: 68%; top: 34%; width: min(40vw, 340px); aspect-ratio: 1; border-radius: 50%;
-  background: radial-gradient(circle, #fffbe6 0 22%, rgba(255, 236, 170, .75) 38%, rgba(255, 190, 140, 0) 70%);
+  background: radial-gradient(circle, #fff7d1 0 22%, rgba(255, 214, 120, .85) 38%, rgba(255, 120, 80, 0) 70%);
   animation: flotar 12s ease-in-out infinite alternate;
 }
 @keyframes flotar { to { transform: translate(-30px, 18px) scale(1.08); } }
@@ -157,9 +158,9 @@ body {
 .mar {
   position: absolute; left: 0; right: 0; bottom: 0; height: 24%;
   background:
-    radial-gradient(ellipse 26% 90% at 72% 0, rgba(255, 244, 200, .6), transparent 70%),
-    repeating-linear-gradient(180deg, rgba(255,255,255,.2) 0 2px, transparent 2px 16px),
-    linear-gradient(#29bfd0, #0c6f8f);
+    radial-gradient(ellipse 26% 90% at 72% 0, rgba(255, 190, 110, .8), transparent 70%),
+    repeating-linear-gradient(180deg, rgba(255,255,255,.22) 0 2px, transparent 2px 16px),
+    linear-gradient(#0db3cf, #04365f);
   background-size: 100% 100%, 100% 16px, 100% 100%;
   animation: brillar 2.4s linear infinite;
 }
@@ -168,7 +169,7 @@ body {
 /* Palmeras (en ambas escenas) */
 .palma { position: absolute; bottom: 4%; transform-origin: 50% 100%; animation: mecer 7s ease-in-out infinite alternate; }
 .escena-80 .palma { fill: #0a0118; }
-.escena-26 .palma { fill: #123a52; }
+.escena-26 .palma { fill: #2a1446; }
 .p1 { left: -1%; height: 72%; width: 30vh; }
 .p2 { right: 1%; height: 82%; width: 34vh; animation-delay: -3s; transform: scaleX(-1); }
 .p3 { left: 13%; height: 46%; width: 20vh; animation-delay: -5s; opacity: .92; }

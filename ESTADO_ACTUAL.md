@@ -33,12 +33,11 @@ comentarios; la clave de Reddit queda para después) y la página lo muestra con
 que eligió Bruno: barras de publicaciones por hora y las 8 más nuevas en tarjetas chicas.
 Rayas del sol de 1986: opción A.
 
-**Tanda 3.1 y 3.3 en curso** (2026-11-13): la 3.3 está hecha. Hay torres detrás de los hoteles,
-inspiradas en edificios reales de Miami: 2 de los 80 en las dos escenas y 6 nuevas solo en 2026
-(opción 2 de Bruno). La 3.1 espera la decisión de Bruno entre 3 paletas: A "Mediodía
-tropical", B "Atardecer encendido" y C "Art déco eléctrico". Cuando elija, también hay que
-ajustar el tono de las torres de 2026 (variables `--torre*` en `.escena-26`). Las capturas
-de las opciones están en la rama `revision/edificios-2026`, que se borra cuando Bruno termine.
+**Tanda 3.1 y 3.3 terminada** (2026-11-13):
+- 3.3: hay torres detrás de los hoteles, inspiradas en edificios reales de Miami. Son 2 de los años 80, que salen en las dos escenas, y 6 nuevas solo en 2026 (opción 2 de Bruno).
+- 3.1: Miami 2026 tiene la paleta B "Atardecer encendido". Las torres de 2026 pasaron a lila para combinar.
+- Siguiente en orden: la Fase 4 (4.1, modo día y noche).
+- Quedan 2 ramas de capturas para borrar cuando Bruno quiera: `revision/edificios-2026` y `revision/colores-2026`.
 
 **Repositorio listo para sesiones en la nube** (2026-11-13, pedido de Bruno, que tiene
 créditos para la nube): guía para Bruno en `NUBE.md`; al arrancar en la nube,
@@ -105,6 +104,7 @@ ninguna (la 3.2 y 2.4 terminó el 2026-11-13).
 
 ## Últimos cambios
 
+- 2026-11-13: Miami 2026 con la paleta B "Atardecer encendido" y torres en lila (3.1, elegida por Bruno).
 - 2026-11-13: torres detrás de los hoteles con referencias reales de Miami (3.3, opción 2 de Bruno).
 - 2026-11-13: revisada la clave de Reddit (hay que pedir permiso, ~7 días); Bruno la deja para después.
 - 2026-11-13: `probar-fuentes.yml` sin Node.js 20 (checkout@v5, setup-python@v6) y regla nueva en `CLAUDE.md`.
@@ -116,7 +116,6 @@ ninguna (la 3.2 y 2.4 terminó el 2026-11-13).
 - 2026-11-13: grafo de Graphify al día también con los documentos (forzado con permiso de Bruno).
 - 2026-11-13: repositorio preparado para sesiones en la nube (`NUBE.md`, `pruebas/`, hook de preparación).
 - 2026-11-13: la página muestra todos los titulares guardados, no solo 60 (decisión de Bruno).
-- 2026-11-13: titulares por páginas (12 por página, del más nuevo al más viejo).
 - 2026-11-13: suelo de 1986 dibujado en un lienzo: las líneas ya no titilan (2.3, segundo arreglo).
 
 ## Pendiente
@@ -124,6 +123,6 @@ ninguna (la 3.2 y 2.4 terminó el 2026-11-13).
 La lista completa y su orden están en `PLAN_DE_TRABAJO.md`. Lo inmediato:
 
 1. Bruno: pedir a soporte de GitHub que borre la referencia del PR #1 y activar el correo privado.
-2. 3.1 (Miami 2026 más vivo): esperando que Bruno elija A, B o C.
+2. Siguiente en orden: 4.1 (modo día y noche en los dos Miami).
 3. Opcional: comprobar en Cloudflare que el código del Worker es igual a `despertador/worker.js`.
 4. Opcional: el hook de diseño de Impeccable (Bruno ejecuta `npx impeccable install` en el PC).
