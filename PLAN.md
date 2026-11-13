@@ -95,6 +95,20 @@ Resultado final: **una página web** con:
   - De día, los fuegos y los reflectores usan colores fuertes para que se vean sobre el cielo claro.
   - Para verla antes: agregar `?probar-hora-cero` a la dirección (la cuenta empieza 5 s antes de 0).
   - Se descartó B (destello y vuelta de las cajas).
+- **Logros y récords (tarea 6.2, opción A de Bruno, 2026-11-13): vitrina.**
+  - Sección justo después de las fichas de arriba. Una tarjeta por récord: número grande,
+    quién o qué, cuándo, y "Récords anteriores" (los 5 más recientes) al tocar.
+  - Récords: más espectadores en Twitch, directo con más público, más transmisiones a la
+    vez, video más visto (cuenta como récord nuevo solo cuando cambia el video que va
+    primero), video que más creció en una hora (solo entre mediciones seguidas, hasta 1,6 h),
+    día con más titulares y hora con más publicaciones en r/GTA6.
+  - "¡Nuevo récord!" marca los que se batieron en las 6 horas anteriores a la última medición.
+  - Sin "hora con más interés en Trends": siempre vale 100 (aviso 8 de `PLAN_DE_TRABAJO.md`).
+  - Abajo, los 4 videos oficiales de GTA VI con sus visitas y cuánto subieron desde la
+    primera medición (fuente `youtube_trailers` del recolector, 1 unidad por medición).
+  - Titulares y Reddit cuentan lo que entrega cada fuente por medición (hasta 100): en horas
+    muy movidas pueden quedarse cortos. La página lo dice.
+  - Se descartaron B (tabla) y C (escalera con línea).
 - **GTA frente a lo más visto (tarea 6.3, opción A de Bruno, 2026-11-13): dos columnas.**
   - Sección antes de "Titulares". Usa la última medición del ranking de Twitch y de las
     tendencias de YouTube.

@@ -75,7 +75,11 @@ una consulta real antes de usarla. Ver el aviso 7, sobre la fecha del lanzamient
     una sola consulta de 2013 a 2026 (puntos por mes).
   - Límites: Trends no dice cuántas búsquedas hubo, solo de 0 a 100. Además, cada consulta de
     más aumenta el riesgo de bloqueo (429), que ya pasó en pruebas el 13 nov.
-- [ ] **6.2 Sección de logros y récords (que se actualiza sola).**
+- [x] **6.2 Sección de logros y récords (que se actualiza sola).** **En la página desde el
+      2026-11-13** (opción A de Bruno, "vitrina"; ver `PLAN.md`). El recolector mide los 4
+      videos oficiales de GTA VI desde el PR #11. Quedaron fuera, a propósito: "la hora con
+      más interés en Trends" (siempre vale 100, aviso 8) y los récords históricos de los
+      tráilers (no se buscó una fuente verificada; idea para después si Bruno la quiere).
   - Con los datos que ya se guardan, sin fuentes nuevas:
     - el máximo de espectadores en Twitch y cuándo fue;
     - el canal con más espectadores en un solo directo;

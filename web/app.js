@@ -547,6 +547,98 @@
     window.requestAnimationFrame(cuadro);
   })();
 
+  /* ---------- Logros y récords (tarea 6.2; opción A "vitrina", elegida por Bruno, 2026-11-13) ----------
+     Todo sale de los datos guardados. Cada récord guarda su historia: la lista de las veces en
+     que se superó, en orden de tiempo. "¡Nuevo récord!" marca los que se batieron en las 6 horas
+     anteriores a la última medición. Sin "hora con más interés en Trends": siempre vale 100
+     (aviso 8 del plan). */
+  (function () {
+    var caja = $("records-vitrina");
+    if (!caja) return;
+    var filas = (D.mediciones || []).map(function (m) { return { ts: Date.parse(m.t), tw: m.twitch || {} }; })
+      .filter(function (f) { return !isNaN(f.ts); }).sort(function (a, b) { return a.ts - b.ts; });
+    var ultima = filas.length ? filas[filas.length - 1].ts : 0;
+    var NUEVO = 6 * 3600000;
+    // Recorre eventos {ts, valor, que, url} en orden de tiempo y anota cada vez que se supera el máximo.
+    function historia(eventos) {
+      var h = [], max = -Infinity;
+      eventos.sort(function (a, b) { return a.ts - b.ts; }).forEach(function (e) { if (e.valor > max) { max = e.valor; h.push(e); } });
+      return h;
+    }
+    // Lo mismo, pero contando elementos por grupo (día, hora): el récord sube cuando un grupo pasa al anterior máximo.
+    function historiaConteo(lista, grupo, etiqueta) {
+      var cuenta = {}, h = [], max = 0;
+      lista.map(function (x) { return Date.parse(x.t); }).filter(function (ts) { return !isNaN(ts); }).sort(function (a, b) { return a - b; })
+        .forEach(function (ts) {
+          var g = grupo(ts);
+          cuenta[g] = (cuenta[g] || 0) + 1;
+          if (cuenta[g] > max) {
+            max = cuenta[g];
+            if (h.length && h[h.length - 1].g === g) { h[h.length - 1].valor = max; h[h.length - 1].ts = ts; }   // el mismo grupo sigue subiendo
+            else h.push({ ts: ts, valor: max, g: g, que: etiqueta(ts) });
+          }
+        });
+      return h;
+    }
+    var esp = [], canal = [], trans = [];
+    filas.forEach(function (f) {
+      if (f.tw.error) return;
+      if (typeof f.tw.espectadores === "number") esp.push({ ts: f.ts, valor: f.tw.espectadores });
+      if (typeof f.tw.transmisiones === "number") trans.push({ ts: f.ts, valor: f.tw.transmisiones });
+      (f.tw.canales || []).forEach(function (c) { canal.push({ ts: f.ts, valor: c.espectadores, que: c.nombre, url: urlCanal(c.login) }); });
+    });
+    // Video más visto: el que va primero en cada medición. Cuenta como récord nuevo solo cuando cambia de video.
+    var porT = {}, crece = [];
+    (D.youtube || []).forEach(function (v) {
+      v.serie.forEach(function (p, i) {
+        var ts = Date.parse(p.t), l = porT[ts];
+        if (!l || p.visitas > l.valor) porT[ts] = { ts: ts, valor: p.visitas, que: v.titulo, url: urlVideo(v.id), id: v.id };
+        if (i) {
+          var horas = (ts - Date.parse(v.serie[i - 1].t)) / 3600000;
+          // Solo entre mediciones seguidas (hasta 1,6 h), para no promediar huecos largos.
+          if (horas > 0 && horas <= 1.6) crece.push({ ts: ts, valor: (p.visitas - v.serie[i - 1].visitas) / horas, que: v.titulo, url: urlVideo(v.id) });
+        }
+      });
+    });
+    var lideres = [];
+    Object.keys(porT).map(Number).sort(function (a, b) { return a - b; }).forEach(function (ts) {
+      var l = porT[ts], ant = lideres[lideres.length - 1];
+      if (!ant || ant.id !== l.id) lideres.push(l); else ant.valor = l.valor;   // el mismo video: solo se actualizan sus visitas
+    });
+    var fClave = function (ts) { var o = partes(ts); return o.year + "-" + o.month + "-" + o.day; };
+    var fClaveHora = function (ts) { return fClave(ts) + " " + partes(ts).hour; };
+    var R = [
+      { nombre: "Más espectadores en Twitch", h: historia(esp), fmt: num, uni: "espectadores a la vez" },
+      { nombre: "Directo con más público", h: historia(canal), fmt: num, uni: "espectadores en un solo directo" },
+      { nombre: "Más transmisiones a la vez", h: historia(trans), fmt: num, uni: "transmisiones de GTA VI" },
+      { nombre: "Video más visto", h: lideres, fmt: compacto, uni: "visitas", prev: "Antes iba primero" },
+      { nombre: "Video que más creció en una hora", h: historia(crece), fmt: num, uni: "visitas en una hora" },
+      { nombre: "Día con más titulares", h: historiaConteo(D.noticias || [], fClave, dia), fmt: num, uni: "titulares", solo: "dia" },
+      { nombre: "Hora con más publicaciones en r/GTA6", h: historiaConteo((D.reddit || {}).publicaciones || [], fClaveHora, function (ts) { return dia(ts) + " · " + hora(ts).slice(0, 2) + ":00"; }), fmt: num, uni: "publicaciones", solo: "hora" }
+    ];
+    function cuando(r, e) { return r.solo ? e.que : dia(e.ts) + " · " + hora(e.ts); }
+    function quien(r, e) { return r.solo || !e.que ? "" : enlace(e.url, limpio(e.que)); }
+    var html = R.filter(function (r) { return r.h.length; }).map(function (r) {
+      var e = r.h[r.h.length - 1], nuevo = r.h.length > 1 && ultima - e.ts < NUEVO;
+      var prev = r.h.slice(0, -1).reverse().slice(0, 5);
+      return '<li class="' + (nuevo ? "nuevo" : "") + '"><small>' + r.nombre + "</small>" + (nuevo ? '<span class="rc-nuevo">¡Nuevo récord!</span>' : "") +
+        "<b>" + r.fmt(e.valor) + '</b><span class="rc-uni">' + r.uni + "</span>" +
+        (quien(r, e) ? '<p class="rc-que">' + quien(r, e) + "</p>" : "") + '<p class="rc-cuando">' + cuando(r, e) + "</p>" +
+        (prev.length ? '<details class="rc-prev"><summary>' + (r.prev || "Récords anteriores") + " (" + (r.h.length - 1) + ")</summary><ul>" + prev.map(function (p) {
+          return "<li><b>" + r.fmt(p.valor) + "</b> " + (quien(r, p) ? quien(r, p) + " · " : "") + cuando(r, p) + "</li>";
+        }).join("") + "</ul></details>" : "") + "</li>";
+    }).join("");
+    caja.innerHTML = html || '<li class="vacio">Sin datos todavía.</li>';
+
+    // Tráilers oficiales de GTA VI (se miden desde el 13 nov).
+    var tr = D.trailers || [];
+    $("records-trailers").innerHTML = tr.length ? tr.map(function (t) {
+      var s = t.serie, u = s[s.length - 1], sube = s.length > 1 ? u.visitas - s[0].visitas : null;
+      return "<li>" + enlace(urlVideo(t.id), limpio(t.titulo.replace(/^Grand Theft Auto VI[:\s]*/, "") || t.titulo)) + "<b>" + compacto(u.visitas) + "</b><small>visitas</small>" +
+        (sube != null ? '<span class="rc-sube">+' + num(sube) + " desde el " + dia(Date.parse(s[0].t)) + "</span>" : "") + "</li>";
+    }).join("") : '<li class="vacio">Todavía sin mediciones.</li>';
+  })();
+
   /* ---------- GTA frente a lo más visto (tarea 6.3; opción A "dos columnas", elegida por Bruno, 2026-11-13) ----------
      Usa la última medición del ranking de Twitch y de las tendencias de YouTube (se guardan
      desde el 13 nov). */
