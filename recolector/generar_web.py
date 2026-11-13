@@ -65,6 +65,7 @@ def estado_servidor(r):
 
 def convertir(medidas):
     mediciones, series, ultimo_video, vistas, noticias = [], {}, {}, set(), []
+    reddit, reddit_vistas, reddit_medidas = [], set(), []
     for m in medidas:
         tw, tr = m.get("twitch", {}), m.get("trends", {})
         fila = {"t": m["t"]}
@@ -92,6 +93,18 @@ def convertir(medidas):
             if n["url"] not in vistas:
                 vistas.add(n["url"])
                 noticias.append({"t": n.get("t") or m["t"], "titulo": n["titulo"], "medio": n.get("medio") or "", "url": n["url"]})
+        rd = m.get("reddit")
+        if rd is not None:
+            # Cada medición dice si Reddit respondió y cuántas publicaciones nuevas trajo: si
+            # trae todas las del RSS (100), puede que se hayan escapado otras entre medición
+            # y medición.
+            reddit_medidas.append({"t": m["t"], "ok": "error" not in rd,
+                                   "nuevas": len(rd.get("nuevas", [])), "en_fuente": rd.get("en_fuente")})
+            for p in rd.get("nuevas", []):
+                if p["id"] not in reddit_vistas:
+                    reddit_vistas.add(p["id"])
+                    reddit.append({"t": p.get("t") or m["t"], "titulo": p["titulo"], "autor": p.get("autor") or "",
+                                   "url": p["url"]})
 
     # Los videos que aparecen en la última medición en que YouTube respondió, de más a menos visto.
     ultima_yt = next((m["youtube"]["videos"] for m in reversed(medidas) if m.get("youtube", {}).get("videos")), [])
@@ -104,7 +117,9 @@ def convertir(medidas):
     } for v in ultima_yt if v["id"] in series][:VIDEOS]
 
     noticias.sort(key=lambda n: n["t"])
-    return {"mediciones": mediciones, "youtube": youtube, "noticias": noticias}   # todos: la página los muestra por páginas (Bruno, 2026-11-13)
+    reddit.sort(key=lambda p: p["t"])
+    return {"mediciones": mediciones, "youtube": youtube, "noticias": noticias,
+            "reddit": {"comunidad": "r/GTA6", "publicaciones": reddit, "mediciones": reddit_medidas}}   # todos: la página los muestra por páginas (Bruno, 2026-11-13)
 
 
 def comprobar(d, medidas):
@@ -140,7 +155,8 @@ def main():
     temporal.write_text(texto, encoding="utf-8", newline="\n")
     os.replace(temporal, SALIDA)   # se cambia de golpe: nunca queda un archivo a medias
     print(f"web/datos.js listo: {len(d['mediciones'])} mediciones (de {medidas[0]['t']} a {medidas[-1]['t']} UTC), "
-          f"{len(d['youtube'])} videos, {len(d['noticias'])} titulares, {len(texto.encode('utf-8')) // 1024} KB.")
+          f"{len(d['youtube'])} videos, {len(d['noticias'])} titulares, "
+          f"{len(d['reddit']['publicaciones'])} publicaciones de Reddit, {len(texto.encode('utf-8')) // 1024} KB.")
 
 
 if __name__ == "__main__":

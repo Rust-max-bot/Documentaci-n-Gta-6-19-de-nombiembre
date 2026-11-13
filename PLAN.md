@@ -161,6 +161,9 @@ medición, como con los titulares. Probado con el recolector completo desde GitH
 consultas") a la segunda consulta seguida desde la misma máquina; el recolector consulta una
 sola vez (y reintenta una vez a los 20 s), así que lo normal es que funcione. Si alguna hora
 sale 429, queda como hueco de Reddit y las demás fuentes siguen igual.
+En la página, Bruno eligió (2026-11-13) barras de publicaciones nuevas por hora en las
+últimas 48 horas y las 8 más nuevas en tarjetas chicas. Las barras cuentan por la hora de
+publicación; como el RSS trae 100 como mucho, una hora con más de 100 se queda corta.
 
 ## 6. Riesgos conocidos
 

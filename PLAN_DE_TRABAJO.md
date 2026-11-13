@@ -151,7 +151,7 @@ guardan los datos (A2), empezar cuanto antes (A4) y el periodo de un mes con int
 
 - [ ] **3.1 Miami 2026 con colores más vivos e intensos (D3).** Presentar 2 o 3 opciones con
       capturas. La paleta se inspira en un Miami soleado y saturado; no se copia arte del juego.
-- [ ] **3.2 Reddit (A5).** Primero verificar con una consulta real si se puede leer gratis
+- [x] **3.2 Reddit (A5).** Primero verificar con una consulta real si se puede leer gratis
       desde GitHub. Si exige pago, se descarta (decisión de Bruno). Ver "Avisos", punto 3.
       **Probado desde GitHub el 2026-11-13** (`probar_fuentes.py`, ejecución 43471957389):
       el JSON sin clave (www, old y api.reddit.com) da 403, bloqueado. El RSS de
@@ -160,7 +160,11 @@ guardan los datos (A2), empezar cuanto antes (A4) y el periodo de un mes con int
       bloqueado del todo. **Bruno eligió el RSS** (2026-11-13); la clave de Reddit, para
       tener votos y comentarios, queda para después. **El recolector ya guarda Reddit** (las
       publicaciones nuevas de cada medición), probado desde GitHub sin tocar `datos/`.
-      Falta: mostrarlo en la página (cambia cómo se ve: pide opciones).
+      **En la página (2026-11-13):** Bruno eligió la opción C entre tres con capturas: barras
+      con las publicaciones nuevas por hora (últimas 48 horas) y debajo las 8 más nuevas en
+      tarjetas chicas (las pidió más chicas que las de los titulares). Verificado a 1280 y
+      384 px en los dos estilos, con datos de prueba y con los de ejemplo.
+      Falta: la clave de Reddit (votos y comentarios), cuando Bruno quiera.
 - [ ] **3.3 Edificios que reflejan el paso del tiempo (D4):** en 2026 siguen los hoteles de
       1986 y aparecen torres nuevas detrás. Presentar opciones con capturas.
 
