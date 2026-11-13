@@ -189,6 +189,43 @@ def _():
     return cod == 200
 
 
+@prueba("Videos en español: comparar formas de buscar (tarea 6.4)")
+def _():
+    # El 13 nov, relevanceLanguage=es con order=viewCount trajo casi solo videos en inglés.
+    # Se comparan otras formas, contando cuántos videos declaran idioma español. ~400 unidades.
+    clave = os.environ.get("YOUTUBE_API_KEY", "")
+    if not clave:
+        print("Falta la clave de YouTube")
+        return False
+    desde = (datetime.now(timezone.utc) - timedelta(days=7)).strftime("%Y-%m-%dT%H:%M:%SZ")
+    formas = {
+        "A idioma es, por visitas": {"relevanceLanguage": "es", "order": "viewCount"},
+        "B idioma es, por relevancia": {"relevanceLanguage": "es", "order": "relevance"},
+        "C idioma es + region CL, por visitas": {"relevanceLanguage": "es", "regionCode": "CL", "order": "viewCount"},
+        "D idioma es + region ES, por relevancia": {"relevanceLanguage": "es", "regionCode": "ES", "order": "relevance"},
+    }
+    for nombre, extra in formas.items():
+        cod, txt = pedir("https://www.googleapis.com/youtube/v3/search?" + urllib.parse.urlencode(
+            {"part": "snippet", "q": "GTA 6", "type": "video", "publishedAfter": desde, "maxResults": 25, "key": clave, **extra}))
+        ids = [i["id"]["videoId"] for i in json.loads(txt).get("items", [])] if cod == 200 else []
+        if not ids:
+            print(f"\n{nombre}: codigo {cod}, sin videos")
+            continue
+        cod, txt = pedir("https://www.googleapis.com/youtube/v3/videos?" + urllib.parse.urlencode(
+            {"part": "snippet,statistics", "id": ",".join(ids), "key": clave}))
+        vs = []
+        for v in json.loads(txt).get("items", []):
+            sn = v["snippet"]
+            vs.append((int(v.get("statistics", {}).get("viewCount", 0)), sn.get("defaultAudioLanguage") or sn.get("defaultLanguage") or "-",
+                       sn.get("channelTitle", "")[:25], sn.get("title", "")[:60]))
+        vs.sort(reverse=True)
+        es = sum(1 for v in vs if v[1].startswith("es"))
+        print(f"\n{nombre}: {len(vs)} videos, {es} declaran español")
+        for v in vs[:12]:
+            print(f"  {v[0]:>10} | {v[1]:6} | {v[2]} | {v[3]}")
+    return True
+
+
 # Reddit (tarea 3.2) no se prueba aquí: Reddit responde 429 ("demasiadas consultas") a la
 # segunda consulta seguida desde la misma máquina, y entonces fallaría la prueba del
 # recolector, que viene después en el mismo workflow. Resultados del 2026-11-13 (PLAN.md,
