@@ -16,6 +16,7 @@ de texto por día en vez de una base de datos SQL (motivos en `PLAN.md`).
 | `revisar.py` | Resumen de cómo va: mediciones, huecos, fallos, cupo de YouTube y peso |
 | `generar_web.py` | Convierte `datos/` en `web/datos.js` para la página (lo usa `ver_pagina.bat`) |
 | `probar_fuentes.py` | Prueba suelta de las fuentes (workflow "Probar fuentes"); no guarda nada |
+| `trends_extra.py` | Tarea 6.1: 4 preguntas extra a Google Trends, **una sola vez** (ver abajo) |
 
 El workflow `.github/workflows/recolectar.yml` corre en GitHub al minuto 7 de cada hora,
 y también al 37 del 17 al 21 de noviembre (UTC), la semana del lanzamiento. Lo lanza el
@@ -93,6 +94,29 @@ youtube_trailers     (desde el 13 nov, tarea 6.2) unidades (1), pedidos (cuánto
   reemplazar) es una foto del directo y, al terminar la transmisión, Twitch muestra una
   imagen genérica: por eso la página usa la foto de perfil (`foto`), que no cambia. Las de
   YouTube funcionan. Google Noticias no trae imágenes.
+
+## Trends extra (`trends_extra.py`, tarea 6.1)
+
+Se ejecuta **una sola vez**, a mano, entre el 20 y el 25 nov (decisión de Bruno, 2026-11-13),
+fuera del recolector de cada hora: si Google bloquea por exceso de consultas (429), la
+medición normal no se pierde. Hace 4 preguntas con 20 segundos de pausa entre cada una (si
+Google pide esperar, reintenta a los 60 y a los 180 segundos):
+
+1. `paises`: en qué países se busca más "GTA 6" (últimos 7 días).
+2. `relacionadas`: qué más se busca junto con "GTA 6": `mas_buscadas` y `en_aumento`.
+3. `comparacion`: "GTA 6" junto a otras palabras, hora por hora, últimos 7 días.
+4. `historica`: GTA V frente a GTA 6, mes a mes, desde enero de 2013.
+
+Cada pregunta tiene su propia escala de 0 a 100 (100 = su punto más alto): los números de
+dos preguntas distintas no se comparan. Guarda **un archivo nuevo**,
+`datos/trends_extra/AAAA-MM-DDTHHMMZ.json`, y nunca sobrescribe. Si algo no cuadra, no
+guarda nada. Las palabras están en `COMPARAR` y `HISTORICA` (elegidas por Bruno el 2026-11-13).
+
+- **De verdad:** workflow "Trends extra (6.1)", botón *Run workflow* en GitHub.
+- **Para probar sin guardar:** workflow "Probar fuentes" con la casilla de Trends extra
+  marcada, o en el PC `python recolector/trends_extra.py --carpeta <carpeta temporal>`.
+  Probado desde GitHub el 2026-11-13 (ejecuciones 43517928828 y 43519671457, la segunda con
+  las palabras de Bruno): 7 consultas cada una, sin bloqueo.
 
 ## De `datos/` a la página (`generar_web.py`)
 

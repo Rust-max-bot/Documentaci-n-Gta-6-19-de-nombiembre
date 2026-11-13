@@ -79,6 +79,17 @@ una consulta real antes de usarla. Ver el aviso 7, sobre la fecha del lanzamient
     sueltas y pausas, **fuera del recolector de cada hora**, para no arriesgar la medición
     del 19. Antes del 26 nov, porque Trends solo da el detalle hora por hora de los últimos
     7 días. No se empieza sin que Bruno diga cuándo.
+  - **Programa listo y probado el 2026-11-13** (Bruno pidió avanzarlo): `recolector/trends_extra.py`
+    y el workflow "Trends extra (6.1)", que se lanza a mano. Prueba sin guardar desde GitHub
+    (ejecución 43517928828): 7 consultas, sin bloqueo; salieron las 4 respuestas (25+ países,
+    25 búsquedas más buscadas y 20 en aumento, 169 horas, 167 meses). Detalle en
+    `recolector/LEEME.md`.
+  - **Palabras elegidas por Bruno (2026-11-13):** hora por hora, GTA 6, GTA 5, Minecraft,
+    Fortnite y Marvel Rivals; mes a mes desde 2013, GTA 6, GTA 5, Ocarina of Time (remake,
+    5 nov 2026) y Avengers Doomsday (18 dic 2026).
+  - Falta: (1) ejecutarlo de verdad entre el 20 y el 25 nov, cuando Bruno diga; (2) mostrarlo
+    en la página, con opciones y capturas; (3) idea: repetir la pregunta mes a mes en enero,
+    para que salga el estreno de Doomsday (sin decidir). Queda en `[ ]`.
 - [x] **6.2 Sección de logros y récords (que se actualiza sola).** **En la página desde el
       2026-11-13** (opción A de Bruno, "vitrina"; ver `PLAN.md`). El recolector mide los 4
       videos oficiales de GTA VI desde el PR #11. Quedaron fuera, a propósito: "la hora con

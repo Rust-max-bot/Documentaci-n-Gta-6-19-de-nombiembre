@@ -112,6 +112,9 @@ Resultado final: **una página web** con:
     no se pierde la medición normal de "GTA 6", sobre todo el 19.
   - Antes del 26 nov, porque Trends solo da el detalle hora por hora de los últimos 7 días.
   - Se descartaron agregarla ya al recolector (riesgo de bloqueo el 19) y no hacerla.
+  - Cómo (2026-11-13): programa aparte, `recolector/trends_extra.py`, lanzado a mano con el
+    workflow "Trends extra (6.1)". Guarda en `datos/trends_extra/` porque, como el
+    recolector, en `datos/` solo escribe GitHub.
 - **Logros y récords (tarea 6.2, opción A de Bruno, 2026-11-13): vitrina.**
   - Sección justo después de las fichas de arriba. Una tarjeta por récord: número grande,
     quién o qué, cuándo, y "Récords anteriores" (los 5 más recientes) al tocar.
