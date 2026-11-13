@@ -58,8 +58,7 @@ esos sitios): no es un fallo de la página.
 
 **Reglas en pausa:** ninguna. "Paso a paso con permiso" está activa **por tandas**: Bruno
 dice qué pasos hacer y Claude no para hasta completarlos (ver `CLAUDE.md`). Tanda actual:
-ninguna (la de la 6.3 y 6.2 terminó el 2026-11-13). Lo siguiente: explicarle a Bruno los
-problemas de la 6.1 y sus soluciones, y esperar si sigue.
+ninguna (la de la 6.3 y 6.2 terminó el 2026-11-13). La 6.1 queda para el 20 al 25 nov.
 
 ## Últimos cambios
 
@@ -78,8 +77,9 @@ La lista completa y su orden están en `PLAN_DE_TRABAJO.md`. Resumen (2026-11-13
 
 1. **Antes del 19 nov:** 7.4, Bruno escribe sus expectativas en `web/capsula.js`.
 2. **Fase 4:** 4.3 análisis de datos (necesita varios días de datos).
-3. **Fase 6** (ideas de Bruno): 6.1 más Google Trends (**Bruno pidió parar antes y que se le
-   expliquen los problemas y soluciones**). 6.2 y 6.3, hechas.
+3. **Fase 6** (ideas de Bruno): 6.1 más Google Trends, **una sola vez entre el 20 y el 25 nov**,
+   fuera del recolector de cada hora (decisión de Bruno, 2026-11-13; ver `PLAN.md`). 6.2 y 6.3,
+   hechas.
 4. **Fase 7:** 7.1 rebobinar; 7.3 viaje en el tiempo; 7.5 resumen del día.
 5. **Fase 5** (después del lanzamiento): búsqueda calmada; clave de Reddit.
 6. **Ideas sueltas:** 2.5 TikTok (sin acceso fácil); un filtro por día en los titulares

@@ -74,7 +74,11 @@ una consulta real antes de usarla. Ver el aviso 7, sobre la fecha del lanzamient
   - Comparación histórica: el lanzamiento de GTA V (septiembre de 2013) frente al de GTA 6, en
     una sola consulta de 2013 a 2026 (puntos por mes).
   - Límites: Trends no dice cuántas búsquedas hubo, solo de 0 a 100. Además, cada consulta de
-    más aumenta el riesgo de bloqueo (429), que ya pasó en pruebas el 13 nov.
+    más aumenta el riesgo de bloqueo (429), que ya pasó en pruebas el 13 nov (dos veces).
+  - **Decisión de Bruno (2026-11-13): una sola vez, entre el 20 y el 25 nov,** con consultas
+    sueltas y pausas, **fuera del recolector de cada hora**, para no arriesgar la medición
+    del 19. Antes del 26 nov, porque Trends solo da el detalle hora por hora de los últimos
+    7 días. No se empieza sin que Bruno diga cuándo.
 - [x] **6.2 Sección de logros y récords (que se actualiza sola).** **En la página desde el
       2026-11-13** (opción A de Bruno, "vitrina"; ver `PLAN.md`). El recolector mide los 4
       videos oficiales de GTA VI desde el PR #11. Quedaron fuera, a propósito: "la hora con

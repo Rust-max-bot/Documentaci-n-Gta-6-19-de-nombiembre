@@ -95,6 +95,11 @@ Resultado final: **una página web** con:
   - De día, los fuegos y los reflectores usan colores fuertes para que se vean sobre el cielo claro.
   - Para verla antes: agregar `?probar-hora-cero` a la dirección (la cuenta empieza 5 s antes de 0).
   - Se descartó B (destello y vuelta de las cajas).
+- **Más Google Trends (tarea 6.1): una sola vez, entre el 20 y el 25 nov (Bruno, 2026-11-13).**
+  - Consultas sueltas con pausas, fuera del recolector de cada hora: si Google bloquea (429),
+    no se pierde la medición normal de "GTA 6", sobre todo el 19.
+  - Antes del 26 nov, porque Trends solo da el detalle hora por hora de los últimos 7 días.
+  - Se descartaron agregarla ya al recolector (riesgo de bloqueo el 19) y no hacerla.
 - **Logros y récords (tarea 6.2, opción A de Bruno, 2026-11-13): vitrina.**
   - Sección justo después de las fichas de arriba. Una tarjeta por récord: número grande,
     quién o qué, cuándo, y "Récords anteriores" (los 5 más recientes) al tocar.
