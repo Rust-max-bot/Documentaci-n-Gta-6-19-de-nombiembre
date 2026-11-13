@@ -114,6 +114,23 @@ una consulta real antes de usarla. Ver el aviso 7, sobre la fecha del lanzamient
       puesto (1 unidad de cuota por país);
     - los suscriptores del canal de Rockstar (1 unidad).
 
+- [ ] **6.4 Videos de YouTube en español (pedido de Bruno, 2026-11-13).** Hoy la búsqueda es
+      "GTA 6" en todo el mundo, de más a menos visto: salen sobre todo videos en inglés. En la
+      medición del 13 nov, 21:07 UTC, solo 5 de 50 parecían en español (casi todos shorts).
+      Bruno quiere seguir viendo lo global y, además, a los creadores hispanohablantes (Chile,
+      España, etc.; por ejemplo, si el Rubius sube un video muy visto).
+  - Propuesta: una segunda búsqueda con idioma preferido español (`relevanceLanguage=es`).
+    Es una preferencia de YouTube, no un filtro: puede traer algunos en inglés.
+  - Cuota: cada búsqueda cuesta 100 unidades. La semana del lanzamiento se mide 2 veces por
+    hora (48 × 105 = 5.040 al día); con la búsqueda en español en cada turno (101 unidades con
+    sus estadísticas) serían ~9.900,
+    demasiado cerca del límite de 10.000 (si se pasa, YouTube no responde nada más ese día).
+    Por eso, la búsqueda en español solo en el turno del minuto 7 (24 al día): ~7.500.
+  - Orden: el recolector, antes del 19 nov (el crecimiento hora por hora de esos videos el
+    día del lanzamiento no se puede medir después). Cómo mostrarlo en la página (por
+    ejemplo, pestañas "Global" y "En español"), con opciones y capturas, sin apuro.
+  - Se verifica con una consulta real desde GitHub antes de usarla.
+
 ## Fase 7 — Ideas para que la página sea memorable
 
 *(Sugerencias de Claude que Bruno aprobó el 2026-11-13: "las 5 me gustan". Cambian cómo se ve
