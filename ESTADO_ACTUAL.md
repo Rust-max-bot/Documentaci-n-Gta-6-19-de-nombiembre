@@ -95,7 +95,7 @@ de 2026. Lanzamiento: 19 de noviembre, 00:00 de Santiago.
 
 **Reglas en pausa:** ninguna. "Paso a paso con permiso" está activa **por tandas**: Bruno
 dice qué pasos hacer y Claude no para hasta completarlos (ver `CLAUDE.md`). Tanda actual:
-ninguna (la 2.1 a 2.3 terminó el 2026-11-13).
+ninguna (la 3.2 y 2.4 terminó el 2026-11-13; falta borrar la rama `revision/rayas-sol`).
 
 ## Últimos cambios
 
