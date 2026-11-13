@@ -159,6 +159,46 @@ def _():
     return cod == 200
 
 
+# Reddit (tarea 3.2): solo lectura sin clave. Se prueban varias puertas porque Reddit
+# suele bloquear las consultas sin clave desde servidores como los de GitHub.
+def _reddit(url, es_json=True):
+    cod, txt = pedir(url, {"User-Agent": "linux:recuerdo-gta6:v0.1 (proyecto personal, solo lectura)"}, espera=20)
+    print("Codigo", cod, "|", url.split("?")[0])
+    if cod != 200:
+        print("   respuesta:", re.sub(r"\s+", " ", txt)[:160])
+        return False
+    if es_json:
+        d = json.loads(txt).get("data", {})
+        if "children" in d:
+            hijos = d["children"]
+            print("   publicaciones:", len(hijos), "| ej.:", [(h["data"]["score"], h["data"]["num_comments"], h["data"]["title"][:50]) for h in hijos[:2]])
+        else:
+            print("   suscriptores:", d.get("subscribers"), "| conectados:", d.get("active_user_count") or d.get("accounts_active"))
+    else:
+        print("   entradas en el RSS:", txt.count("<entry>"))
+    return True
+
+
+@prueba("Reddit JSON (www)")
+def _():
+    return _reddit("https://www.reddit.com/r/GTA6/new.json?limit=5&raw_json=1")
+
+
+@prueba("Reddit JSON (old)")
+def _():
+    return _reddit("https://old.reddit.com/r/GTA6/about.json")
+
+
+@prueba("Reddit API sin clave")
+def _():
+    return _reddit("https://api.reddit.com/r/GTA6/hot?limit=5")
+
+
+@prueba("Reddit RSS")
+def _():
+    return _reddit("https://www.reddit.com/r/GTA6/new/.rss", es_json=False)
+
+
 print("\n=== RESUMEN ===")
 for n, ok in resultados.items():
     print(("SI  " if ok else "NO  ") + n)
