@@ -18,9 +18,9 @@
     "semantic_hash": ""
   },
   "web/app.js": {
-    "mtime": 1794607551.7476974,
-    "seen": 1794608210.5889933,
-    "ast_hash": "b5269a438b1f215e41c56b47039eb497",
+    "mtime": 1794609547.1307838,
+    "seen": 1794609787.3826346,
+    "ast_hash": "591f808ee95a752f6ed550e995d73e0e",
     "semantic_hash": ""
   },
   "web/datos-ejemplo.js": {
@@ -48,9 +48,9 @@
     "semantic_hash": ""
   },
   "ESTADO_ACTUAL.md": {
-    "mtime": 1794608975.9229445,
-    "seen": 1794609123.413995,
-    "ast_hash": "49a272ba942172c2205537115fe37cbd",
+    "mtime": 1794609775.538978,
+    "seen": 1794609787.3826482,
+    "ast_hash": "d44cf99c1f5e62299d6d47eef6e89cb4",
     "semantic_hash": ""
   },
   "GUIA_CLAVES.md": {
@@ -60,9 +60,9 @@
     "semantic_hash": ""
   },
   "PLAN.md": {
-    "mtime": 1794608409.450339,
-    "seen": 1794609123.413999,
-    "ast_hash": "d4754461e9fc81a608a4754d9955b111",
+    "mtime": 1794609775.538185,
+    "seen": 1794609787.3826547,
+    "ast_hash": "ae337f35d984607ff673a128ca883a6e",
     "semantic_hash": ""
   },
   "README.md": {
@@ -72,14 +72,14 @@
     "semantic_hash": ""
   },
   "web/index.html": {
-    "mtime": 1794607551.7476974,
-    "seen": 1794608210.58902,
-    "ast_hash": "1674e0b679c32be9bd5d517cf0dc734b",
+    "mtime": 1794609547.1318796,
+    "seen": 1794609787.3826747,
+    "ast_hash": "1227fd2b61e0fc3402925db7e2bb49ef",
     "semantic_hash": ""
   },
   ".github/workflows/probar-fuentes.yml": {
-    "mtime": 1794608402.0383387,
-    "seen": 1794609123.413959,
+    "mtime": 1794609298.566392,
+    "seen": 1794609787.382566,
     "ast_hash": "1aa875b0d711aa5009402de4c7f1e6de",
     "semantic_hash": ""
   },
@@ -132,14 +132,14 @@
     "semantic_hash": ""
   },
   "PLAN_DE_TRABAJO.md": {
-    "mtime": 1794608975.9223022,
-    "seen": 1794609123.4140003,
-    "ast_hash": "7c3165be52825635e15e5fa7a28f949f",
+    "mtime": 1794609775.5392063,
+    "seen": 1794609787.3826568,
+    "ast_hash": "7e85017f3681fbf969a6391c86bc8f9d",
     "semantic_hash": ""
   },
   "recolector/LEEME.md": {
-    "mtime": 1794609122.3305254,
-    "seen": 1794609123.4140108,
+    "mtime": 1794609298.574392,
+    "seen": 1794609787.3826728,
     "ast_hash": "2770fa46163415168d7e9223522cdc6b",
     "semantic_hash": ""
   },
@@ -228,14 +228,14 @@
     "semantic_hash": ""
   },
   "recolector/trends_extra.py": {
-    "mtime": 1794608954.1529014,
-    "seen": 1794609123.4139833,
+    "mtime": 1794609298.574392,
+    "seen": 1794609787.3826299,
     "ast_hash": "b9b7d30891258c0f2cad003b4c756789",
     "semantic_hash": ""
   },
   ".github/workflows/trends-extra.yml": {
-    "mtime": 1794608409.450339,
-    "seen": 1794609123.4139633,
+    "mtime": 1794609298.566392,
+    "seen": 1794609787.3825958,
     "ast_hash": "7cc75be95ca505a5a4099884b3670b69",
     "semantic_hash": ""
   }

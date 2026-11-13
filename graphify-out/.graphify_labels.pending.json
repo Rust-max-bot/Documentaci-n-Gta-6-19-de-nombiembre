@@ -1,10 +1,18 @@
 {
+  "2": "Decisiones ya tomadas",
+  "3": "Resultado de las pruebas reales de fuentes (12 nov 2026)",
   "4": "steps",
   "10": "Trabajar con Claude en la nube",
   "21": "preparar-nube.sh",
   "22": "pruebas/LEEME.md",
   "23": "Exception",
+  "24": "Estado actual del proyecto (ESTADO_ACTUAL.md)",
+  "25": "Worker de Cloudflare despertador-recolector (horario 7,37 * * * *)",
   "26": "capsula.js",
   "27": "Plan de trabajo",
-  "28": "Estado actual del proyecto"
+  "28": "Estado actual del proyecto",
+  "29": "Diseño Miami con dos estilos (Miami 2026 y Miami años 80)",
+  "30": "Estructura de carpetas (web/, recolector/, datos/, .github/workflows/, despertador/)",
+  "31": "Plan del proyecto (PLAN.md)",
+  "32": "Dónde quedamos (2026-11-13)"
 }

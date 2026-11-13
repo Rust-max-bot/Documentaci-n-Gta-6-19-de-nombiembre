@@ -106,7 +106,11 @@ Resultado final: **una página web** con:
   - La búsqueda (100 unidades) se hace como mucho una vez por hora, para no acercarse al
     límite de 10.000 diarias la semana del lanzamiento (~7.500). En el otro turno solo se
     vuelven a medir sus videos (1 unidad), para tener la serie cada media hora.
-  - Cómo se muestra en la página se decide después, con opciones y capturas.
+  - **En la página (opción A de Bruno, 2026-11-13): pestañas.** Dos botones, "Global" y "En
+    español", sobre la misma lista de videos de "Videos más vistos en YouTube". Se descartaron
+    dos columnas (B) y una sección aparte (C, quedaba muy abajo en el celular). En español solo
+    se muestran los que YouTube marca en español (idioma `es…`), porque la búsqueda también
+    trae algunos en inglés (5 de 20 en la primera medición).
 - **Más Google Trends (tarea 6.1): una sola vez, entre el 20 y el 25 nov (Bruno, 2026-11-13).**
   - Consultas sueltas con pausas, fuera del recolector de cada hora: si Google bloquea (429),
     no se pierde la medición normal de "GTA 6", sobre todo el 19.

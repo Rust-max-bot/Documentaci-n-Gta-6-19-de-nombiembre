@@ -125,7 +125,7 @@ una consulta real antes de usarla. Ver el aviso 7, sobre la fecha del lanzamient
       puesto (1 unidad de cuota por país);
     - los suscriptores del canal de Rockstar (1 unidad).
 
-- [ ] **6.4 Videos de YouTube en español (pedido de Bruno, 2026-11-13).** Hoy la búsqueda es
+- [x] **6.4 Videos de YouTube en español (pedido de Bruno, 2026-11-13).** Hoy la búsqueda es
       "GTA 6" en todo el mundo, de más a menos visto: salen sobre todo videos en inglés. En la
       medición del 13 nov, 21:07 UTC, solo 5 de 50 parecían en español (casi todos shorts).
       Bruno quiere seguir viendo lo global y, además, a los creadores hispanohablantes (Chile,
@@ -145,6 +145,8 @@ una consulta real antes de usarla. Ver el aviso 7, sobre la fecha del lanzamient
   - **Decisión de Bruno (2026-11-13): el recolector ahora, la página después.** Recolector
     hecho el 2026-11-13 (fuente `youtube_es`). Falta mostrarlo en la página, con opciones y
     capturas; queda en `[ ]` hasta entonces.
+  - **En la página desde el 2026-11-13** (opción A de Bruno, pestañas "Global" y "En español";
+    ver `PLAN.md`). Probada a 1280 y 384 px en los dos estilos, sin errores ni desborde.
 
 ## Fase 7 — Ideas para que la página sea memorable
 
