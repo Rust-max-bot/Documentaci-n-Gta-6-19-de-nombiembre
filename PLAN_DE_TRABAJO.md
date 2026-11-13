@@ -19,6 +19,7 @@ ya estaba acordado y faltaba. **Es la lista ordenada de qué hacer y en qué ord
   en Twitch y YouTube, que no guardan historial. Por eso la Fase 1 va antes que todo.
 - **Antes del 19 nov** (anotado el 2026-11-13). Esto deja de servir si se hace después:
   - 7.2, Hora cero: la animación tiene que estar en la página antes de que la cuenta llegue a 0.
+    Hecha el 2026-11-13; falta que esté unida a `main`.
   - 7.4, Cápsula del tiempo: Bruno escribe lo que espera del juego antes del lanzamiento.
   - Si Bruno lo decide (aviso 7): que el recolector empiece a guardar lo de la 6.3 antes del
     19 nov. Sirve para que el día del lanzamiento quede guardado.
@@ -187,9 +188,10 @@ guardan los datos (A2), empezar cuanto antes (A4) y el periodo de un mes con int
 
 ## Fase 4 — Mejoras largas
 
-- [ ] **4.1 Modo día y noche en los dos Miami (D5),** elegible por el usuario.
-- [ ] **4.2 Modo dinámico (D5):** el cielo cambia con la hora real, según la hora de Miami o
-      la de Santiago, a elección.
+- [x] **4.1 Modo día y noche en los dos Miami (D5),** elegible por el usuario. Hecho el
+      2026-11-13: día, atardecer y noche en los dos estilos, con botones. Verificado a 1280 y 384 px.
+- [x] **4.2 Modo dinámico (D5):** el cielo cambia con la hora real. Hecho junto con la 4.1
+      (2026-11-13). Bruno eligió solo la hora de Miami, no la de quien visita.
 - [ ] **4.3 Análisis de datos (A3):** estadísticas e "datos interesantes" (popularidad,
       visitas, cuánto dura el interés después del lanzamiento, comparación antes y después).
       Va al final porque necesita varios días de datos reales para tener algo que mostrar.
@@ -256,9 +258,10 @@ fecha límite: ver "Antes del 19 nov".)*
 - [ ] **7.1 Rebobinar el lanzamiento.** Una barra para mover la página hora por hora (con cada
       medición guardada) y revivir el 19 nov: los números, el gráfico y los titulares cambian
       a esa hora. Se puede hacer después del lanzamiento: los datos ya quedan guardados.
-- [ ] **7.2 Hora cero.** Una animación cuando la cuenta regresiva llegue a 0. Después, la cuenta
+- [x] **7.2 Hora cero.** Una animación cuando la cuenta regresiva llegue a 0. Después, la cuenta
       se cambia por "días desde el lanzamiento". **Tiene que estar en la página antes del
-      19 nov**, porque es para ese momento.
+      19 nov**, porque es para ese momento. Hecho el 2026-11-13 (opciones A y C de Bruno),
+      ajustado a día, atardecer y noche. Se prueba con `?probar-hora-cero`. **Falta unir el PR a `main` antes del 19 nov.**
 - [ ] **7.3 Viaje en el tiempo.** Al cambiar de Miami 1986 a 2026, las torres nuevas (tarea
       3.3) suben detrás de los hoteles, y al volver a 1986 bajan. Sin fecha límite.
 - [ ] **7.4 Cápsula del tiempo.** Un texto de Bruno con lo que espera del juego, escrito

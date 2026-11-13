@@ -55,6 +55,7 @@
   </div>
   <!-- Escena de Miami actual -->
   <div class="escena escena-26" aria-hidden="true">
+    <div class="estrellas"></div>
     <div class="sol26"></div>
     <div class="nube n1"></div><div class="nube n2"></div><div class="nube n3"></div>
     <svg class="torres" preserveAspectRatio="xMidYMax slice" viewBox="0 0 1200 480"><use href="#torres26"/><use href="#torres80"/></svg>
@@ -67,10 +68,17 @@
 
   <nav class="barra">
     <span class="marca">Recuerdo · Lanzamiento</span>
-    <div class="cambio" role="group" aria-label="Estilo de la página">
-      <button type="button" data-poner="ochenta">Miami 1986</button>
-      <button type="button" data-poner="actual">Miami 2026</button>
-      <span class="cambio-fondo" aria-hidden="true"></span>
+    <div class="ajustes">
+      <div class="horas" role="group" aria-label="Hora del día en la escena">
+        <button type="button" data-hora-poner="dia" aria-pressed="false"><span aria-hidden="true">☀ </span>Día</button>
+        <button type="button" data-hora-poner="atardecer" aria-pressed="false">Atardecer</button>
+        <button type="button" data-hora-poner="noche" aria-pressed="false"><span aria-hidden="true">☾ </span>Noche</button>
+      </div>
+      <div class="cambio" role="group" aria-label="Estilo de la página">
+        <button type="button" data-poner="ochenta">Miami 1986</button>
+        <button type="button" data-poner="actual">Miami 2026</button>
+        <span class="cambio-fondo" aria-hidden="true"></span>
+      </div>
     </div>
   </nav>
 

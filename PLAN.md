@@ -78,6 +78,23 @@ Resultado final: **una página web** con:
   - **Ojo:** según Wikipedia, GTA Vice City tiene un edificio basado en el Atlantis. Por eso la torre con hueco es genérica y no debe parecerse más a ese edificio.
   - **Fuentes:** en.wikipedia.org/wiki/Atlantis_Condominium, en.wikipedia.org/wiki/Miami_Tower, floridayimby.com/?p=41764, dezeen.com/?p=2066379, architizer.com/blog/inspiration/collections/luxury-towers-miami/.
   - **Ideas sin usar todavía:** MiMo (huecos redondos, celosías) y los murales de Wynwood.
+- **Día, atardecer y noche (tareas 4.1 y 4.2, elegido por Bruno el 2026-11-13).**
+  - La escena cambia sola según la **hora real de Miami**, en los dos estilos. Bruno eligió
+    "Hora de Miami, con botones" frente a "sin botones" y "hora de quien visita".
+  - Botones "Día / Atardecer / Noche" junto al cambio de estilo: fijan otra hora hasta recargar.
+  - La salida y la puesta del sol se calculan cada día (fórmula aproximada, error de minutos).
+    Atardecer: de 1 h antes de la puesta a 30 min después, y la media hora alrededor de la salida.
+  - El atardecer es la escena de antes. De día: cielo azul y sol alto (en 2026, los colores de
+    la paleta A). De noche: luna, estrellas, ventanas encendidas y neón en los hoteles.
+  - La hora cero (22:00 en Miami) cae siempre de noche.
+- **Hora cero (tarea 7.2, opciones A y C de Bruno, 2026-11-13).**
+  - Al llegar a 0, el lema pasa a "¡Ya salió GTA 6!".
+  - Hay fuegos artificiales y reflectores durante unos 20 s, y las ventanas se encienden.
+  - La cuenta sigue en cajas: "desde que salió GTA 6".
+  - Si alguien abre la página dentro de las primeras 24 h, también ve la fiesta.
+  - De día, los fuegos y los reflectores usan colores fuertes para que se vean sobre el cielo claro.
+  - Para verla antes: agregar `?probar-hora-cero` a la dirección (la cuenta empieza 5 s antes de 0).
+  - Se descartó B (destello y vuelta de las cajas).
 
 ## 3. Qué se descartó y por qué
 
