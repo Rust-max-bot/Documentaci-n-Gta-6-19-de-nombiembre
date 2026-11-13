@@ -165,7 +165,9 @@ guardan los datos (A2), empezar cuanto antes (A4) y el periodo de un mes con int
       tarjetas chicas (las pidió más chicas que las de los titulares). Verificado a 1280 y
       384 px en los dos estilos, con datos de ejemplo y con los reales (100 publicaciones de la
       medición de las 18:07 UTC del 13 nov).
-      Falta: la clave de Reddit (votos y comentarios), cuando Bruno quiera.
+      Clave de Reddit (votos y comentarios): revisado el 2026-11-13. Hay que pedir permiso a
+      Reddit y tarda ~7 días sin garantía (detalle en `PLAN.md`). **Bruno lo deja para
+      después**; anotado en la Fase 5.
 - [ ] **3.3 Edificios que reflejan el paso del tiempo (D4):** en 2026 siguen los hoteles de
       1986 y aparecen torres nuevas detrás. Presentar opciones con capturas.
 
@@ -181,6 +183,9 @@ guardan los datos (A2), empezar cuanto antes (A4) y el periodo de un mes con int
 ## Fase 5 — Lo que ya estaba acordado para después del lanzamiento
 
 - [ ] Búsqueda calmada: completar y contrastar datos, memes, cifras oficiales (`PLAN.md`, sección 4).
+- [ ] **Clave de Reddit (idea para después, Bruno, 2026-11-13).** Pedir permiso a Reddit
+      (formulario de soporte para desarrolladores) para guardar votos y comentarios. Tarda
+      ~7 días y no está garantizado: ver `PLAN.md`, "Clave de Reddit".
 
 ## Sin definir
 

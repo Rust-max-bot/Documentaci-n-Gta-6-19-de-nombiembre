@@ -165,6 +165,15 @@ En la página, Bruno eligió (2026-11-13) barras de publicaciones nuevas por hor
 últimas 48 horas y las 8 más nuevas en tarjetas chicas. Las barras cuentan por la hora de
 publicación; como el RSS trae 100 como mucho, una hora con más de 100 se queda corta.
 
+**Clave de Reddit (revisado el 2026-11-13; Bruno lo deja para después).** Desde el 11 nov
+2025 Reddit ya no da claves nuevas al momento: hay que pedirlas con su formulario de soporte
+para desarrolladores y Reddit decide según su "Responsible Builder Policy" (anuncio en
+r/redditdev). Su objetivo es responder en unos 7 días; no garantiza la aprobación y, según la
+comunidad, rechaza muchas. El anuncio no habla de precio (las guías de terceros dicen que el
+uso personal sigue gratis: sin confirmar). Pedida el 13 nov, la respuesta llegaría cerca del
+lanzamiento o después: para la semana del 17 al 21 nov se cuenta solo con el RSS. Si Bruno
+la pide, serviría para el resto del periodo (hasta el 19 dic).
+
 ## 6. Riesgos conocidos
 
 1. **Queda poco tiempo.** El programa debe estar probado antes del 18 de noviembre.
