@@ -40,7 +40,7 @@ en Twitch y tendencias de YouTube), que la página ya muestra en "GTA frente a l
 desde el PR #11 (unido el 2026-11-13), las visitas de los 4 videos oficiales de GTA VI
 (fuente `youtube_trailers`, tarea 6.2), que se ven en "Logros y récords". Desde el PR #12 (unido el
 2026-11-13), también una búsqueda de videos en español (fuente `youtube_es`, tarea 6.4), una
-vez por hora: la primera, a las 22:07 UTC, trajo 25 videos. La página todavía no la muestra. Se apaga, enciende o
+vez por hora: la primera, a las 22:07 UTC, trajo 25 videos. La página la muestra con la pestaña "En español" de los videos. Se apaga, enciende o
 alarga en `recolector/interruptor.json` (por defecto, hasta el 19 dic).
 
 **Si un día faltan mediciones:** mirar el registro del Worker en Cloudflare
@@ -66,6 +66,7 @@ Bruno ya eligió las palabras de la comparación.
 
 ## Últimos cambios
 
+- 2026-11-13: pestañas "Global" y "En español" en los videos de YouTube (6.4, opción A de Bruno).
 - 2026-11-13: programa aparte para las preguntas extra a Google Trends (6.1), probado desde GitHub sin guardar, con las palabras que eligió Bruno; falta ejecutarlo del 20 al 25 nov.
 - 2026-11-13: el recolector busca también videos en español una vez por hora (6.4, pedido de Bruno); la página, después.
 - 2026-11-13: sección "Logros y récords" en la página, con los tráilers oficiales (6.2, opción A de Bruno).
@@ -74,7 +75,6 @@ Bruno ya eligió las palabras de la comparación.
 - 2026-11-13: revisado el despertador: sin claves ni datos de Bruno en el repositorio; el Worker de Cloudflare es igual a la copia. Hallado: el correo de Outlook en las uniones de PR hechas desde la web.
 - 2026-11-13: `PLAN_DE_TRABAJO.md` archivado en `historial/PLAN_DE_TRABAJO_2026-11-13.md` y reescrito con lo pendiente; regla nueva: también se archiva al pasar de 20.000 bytes (decisión de Bruno).
 - 2026-11-13: cápsula del tiempo en la página, como dos postales de Miami (7.4, opción B de Bruno); falta su texto.
-- 2026-11-13: hora cero con fuegos y reflectores (7.2) y escena de día, atardecer y noche (4.1 y 4.2).
 
 ## Pendiente
 
@@ -84,7 +84,7 @@ La lista completa y su orden están en `PLAN_DE_TRABAJO.md`. Resumen (2026-11-13
 2. **Fase 4:** 4.3 análisis de datos (necesita varios días de datos).
 3. **Fase 6** (ideas de Bruno): 6.1 más Google Trends, **una sola vez entre el 20 y el 25 nov**,
    fuera del recolector de cada hora (decisión de Bruno, 2026-11-13; ver `PLAN.md`). Programa
-   listo y probado, con las palabras que eligió Bruno; falta ejecutarlo y mostrarlo. 6.2 y 6.3, hechas. 6.4 videos en español: recolector funcionando (PR #12); falta mostrarlo en la página.
+   listo y probado, con las palabras que eligió Bruno; falta ejecutarlo y mostrarlo. 6.2 y 6.3, hechas. 6.4 videos en español, hecha (pestañas en la página).
 4. **Fase 7:** 7.1 rebobinar; 7.3 viaje en el tiempo; 7.5 resumen del día.
 5. **Fase 5** (después del lanzamiento): búsqueda calmada; clave de Reddit.
 6. **Ideas sueltas:** 2.5 TikTok (sin acceso fácil); un filtro por día en los titulares

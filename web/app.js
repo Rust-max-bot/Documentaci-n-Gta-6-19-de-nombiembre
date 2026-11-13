@@ -327,27 +327,48 @@
   })();
 
   /* ---------- Videos de YouTube (tarjetas con miniatura; opción B elegida por Bruno, 2026-11-13) ---------- */
+  // Tarea 6.4: además de los más vistos en todo el mundo, los videos en español. Solo los que
+  // YouTube marca en español (idioma "es", "es-MX", "es-419"…): la búsqueda prefiere el
+  // español pero también trae algunos en inglés. Pestañas "Global" y "En español" sobre la
+  // misma lista (opción A de Bruno, 2026-11-13).
   (function () {
-    var filas = (D.youtube || []).map(function (v) {
-      var serie = (v.serie || []).filter(function (p) { return typeof p.visitas === "number"; });
-      if (!serie.length) return null;
-      var a = serie[0].visitas, b = serie[serie.length - 1].visitas, min = a, max = b;
-      serie.forEach(function (p) { if (p.visitas < min) min = p.visitas; if (p.visitas > max) max = p.visitas; });
-      var camino = serie.map(function (p, i) { return (i ? "L" : "M") + (i / (serie.length - 1 || 1) * 120).toFixed(1) + " " + (28 - (p.visitas - min) / (max - min || 1) * 26).toFixed(1); }).join("");
-      return { v: v, a: a, b: b, camino: camino };
-    }).filter(Boolean).sort(function (x, y) { return y.b - x.b; });
-    $("videos").innerHTML = filas.map(function (f) {
-      var url = urlVideo(f.v.id);
-      // Solo miniaturas de YouTube; la imagen repite el enlace del título, así que no recibe foco.
-      var foto = /^https:\/\/i\.ytimg\.com\//.test(f.v.miniatura || "")
-        ? (url ? '<a class="foto" href="' + limpio(url) + '" target="_blank" rel="noopener noreferrer" tabindex="-1" aria-hidden="true">' : '<div class="foto">') +
-          '<img src="' + limpio(f.v.miniatura) + '" alt="" loading="lazy" width="320" height="180">' + (url ? "</a>" : "</div>")
-        : "";
-      return "<li>" + foto + '<div class="v-texto">' + enlace(url, limpio(f.v.titulo)) +
-        '<small title="Al inicio: ' + num(f.a) + " · Al final: " + num(f.b) + '">' + limpio(f.v.canal) + " · " + compacto(f.b) +
-        ' visitas · <span class="crece">+' + compacto(f.b - f.a) + "</span></small>" +
-        '<svg class="mini" viewBox="0 0 120 30" preserveAspectRatio="none" aria-hidden="true"><path d="' + f.camino + '"/></svg></div></li>';
-    }).join("") || '<li class="vacio">Todavía no hay datos.</li>';
+    function tarjetas(lista) {
+      var filas = (lista || []).map(function (v) {
+        var serie = (v.serie || []).filter(function (p) { return typeof p.visitas === "number"; });
+        if (!serie.length) return null;
+        var a = serie[0].visitas, b = serie[serie.length - 1].visitas, min = a, max = b;
+        serie.forEach(function (p) { if (p.visitas < min) min = p.visitas; if (p.visitas > max) max = p.visitas; });
+        var camino = serie.map(function (p, i) { return (i ? "L" : "M") + (i / (serie.length - 1 || 1) * 120).toFixed(1) + " " + (28 - (p.visitas - min) / (max - min || 1) * 26).toFixed(1); }).join("");
+        return { v: v, a: a, b: b, camino: camino };
+      }).filter(Boolean).sort(function (x, y) { return y.b - x.b; });
+      return filas.map(function (f) {
+        var url = urlVideo(f.v.id);
+        // Solo miniaturas de YouTube; la imagen repite el enlace del título, así que no recibe foco.
+        var foto = /^https:\/\/i\.ytimg\.com\//.test(f.v.miniatura || "")
+          ? (url ? '<a class="foto" href="' + limpio(url) + '" target="_blank" rel="noopener noreferrer" tabindex="-1" aria-hidden="true">' : '<div class="foto">') +
+            '<img src="' + limpio(f.v.miniatura) + '" alt="" loading="lazy" width="320" height="180">' + (url ? "</a>" : "</div>")
+          : "";
+        return "<li>" + foto + '<div class="v-texto">' + enlace(url, limpio(f.v.titulo)) +
+          '<small title="Al inicio: ' + num(f.a) + " · Al final: " + num(f.b) + '">' + limpio(f.v.canal) + " · " + compacto(f.b) +
+          ' visitas · <span class="crece">+' + compacto(f.b - f.a) + "</span></small>" +
+          '<svg class="mini" viewBox="0 0 120 30" preserveAspectRatio="none" aria-hidden="true"><path d="' + f.camino + '"/></svg></div></li>';
+      }).join("") || '<li class="vacio">Todavía no hay datos.</li>';
+    }
+    var global = D.youtube || [];
+    var espanol = (D.youtube_es || []).filter(function (v) { return /^es\b/i.test(v.idioma || ""); });
+    var lista = $("videos"), nota = $("videos-nota"), tabs = $("videos-tabs");
+    var NOTAS = { global: nota.textContent,
+                  es: "Videos que YouTube marca en español, de creadores de Chile, España, México y otros países. La búsqueda se hace una vez por hora." };
+    var elegida = "global";
+    function pintar() {
+      tabs.innerHTML = [["global", "Global"], ["es", "En español"]].map(function (t) {
+        return '<button type="button" data-lista="' + t[0] + '" aria-pressed="' + (t[0] === elegida) + '"' + (t[0] === elegida ? ' class="activo"' : "") + ">" + t[1] + "</button>";
+      }).join("");
+      nota.textContent = NOTAS[elegida];
+      lista.innerHTML = tarjetas(elegida === "es" ? espanol : global);
+    }
+    tabs.addEventListener("click", function (e) { var l = e.target.dataset.lista; if (l) { elegida = l; pintar(); } });
+    pintar();
   })();
 
   /* ---------- Noticias ---------- */

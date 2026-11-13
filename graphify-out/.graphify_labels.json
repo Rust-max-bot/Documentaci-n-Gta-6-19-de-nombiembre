@@ -1,8 +1,6 @@
 {
   "0": "Despertador y plan de trabajo",
   "1": "Fuentes de datos (fuentes.py)",
-  "2": "Reglas de datos y estado actual",
-  "3": "Claves y fases del plan",
   "5": "Generar la página (generar_web.py)",
   "6": "Workflow Recolectar datos",
   "7": "Workflow Probar fuentes",
