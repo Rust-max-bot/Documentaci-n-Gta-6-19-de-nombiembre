@@ -179,6 +179,18 @@ def _reddit(url, es_json=True):
     return True
 
 
+# Primero el RSS, que es lo que usa el recolector: Reddit responde 429 ("demasiadas
+# consultas") tras unas pocas seguidas desde la misma máquina.
+@prueba("Reddit RSS (100 publicaciones)")
+def _():
+    return _reddit("https://www.reddit.com/r/GTA6/new/.rss?limit=100", es_json=False)
+
+
+@prueba("Reddit RSS")
+def _():
+    return _reddit("https://www.reddit.com/r/GTA6/new/.rss", es_json=False)
+
+
 @prueba("Reddit JSON (www)")
 def _():
     return _reddit("https://www.reddit.com/r/GTA6/new.json?limit=5&raw_json=1")
@@ -193,10 +205,6 @@ def _():
 def _():
     return _reddit("https://api.reddit.com/r/GTA6/hot?limit=5")
 
-
-@prueba("Reddit RSS")
-def _():
-    return _reddit("https://www.reddit.com/r/GTA6/new/.rss", es_json=False)
 
 
 print("\n=== RESUMEN ===")
