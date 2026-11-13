@@ -132,11 +132,13 @@ guardan los datos (A2), empezar cuanto antes (A4) y el periodo de un mes con int
       grosor real, así que ya no se vuelve puntos que se encienden y apagan. Salto máximo:
       0,25 (1280 px) y 0,18 (384 px). Se ve igual, más limpio. Bruno: "mucho mejor" (apenas
       titila un poco).
-- [ ] **2.4 Que las rayas del sol de 1986 no se confundan con las líneas de neón de los
+- [x] **2.4 Que las rayas del sol de 1986 no se confundan con las líneas de neón de los
       edificios (D2).** Cambia cómo se ve: presentar opciones con capturas.
-      Opciones presentadas el 2026-11-13 (capturas en la rama `revision/rayas-sol`): A) rayas
-      más arriba y cada vez más anchas; B) sol sin rosa abajo (rayas naranjas); C) sol sin
-      rayas. Falta que Bruno elija.
+      Opciones presentadas el 2026-11-13: A) rayas más arriba y cada vez más anchas; B) sol
+      sin rosa abajo (rayas naranjas); C) sol sin rayas. **Bruno eligió la A** y se aplicó
+      el mismo día (`.sol80` en `web/estilos.css`): las rayas empiezan al 30 % del sol y se
+      ven por encima de los edificios. Verificado a 1280 y 384 px en los dos estilos, sin
+      errores ni desborde.
 
 - [ ] **2.5 (idea para después, pedida por Bruno el 2026-11-13) TikTok.** No hay acceso
       oficial para un proyecto personal: la API de investigación es solo para instituciones

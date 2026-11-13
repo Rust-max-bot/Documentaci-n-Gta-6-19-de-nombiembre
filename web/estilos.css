@@ -100,8 +100,14 @@ body {
   transform: translate(-50%, -72%);
   border-radius: 50%;
   background: linear-gradient(#ffe45c 0%, #ffb02e 38%, #ff2e97 78%, #b3127f 100%);
-  -webkit-mask-image: linear-gradient(#000 0 46%, transparent 46%), repeating-linear-gradient(#000 0 14px, transparent 14px 24px);
-          mask-image: linear-gradient(#000 0 46%, transparent 46%), repeating-linear-gradient(#000 0 14px, transparent 14px 24px);
+  /* Rayas desde el 30 % de la altura, cada vez más anchas hacia abajo, para que se vean por
+     encima de los edificios y no se confundan con su neón (tarea 2.4, opción A elegida por
+     Bruno el 2026-11-13). */
+  --rayas-sol: linear-gradient(#000 0 30%, transparent 30% 32%, #000 32% 40%, transparent 40% 43%, #000 43% 50%,
+    transparent 50% 54%, #000 54% 60%, transparent 60% 65%, #000 65% 70%, transparent 70% 76%, #000 76% 80%,
+    transparent 80% 87%, #000 87% 90%, transparent 90%);
+  -webkit-mask-image: var(--rayas-sol);
+          mask-image: var(--rayas-sol);
   filter: drop-shadow(0 0 60px rgba(255, 46, 151, .7));
   animation: latir 6s ease-in-out infinite;
 }
