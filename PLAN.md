@@ -57,6 +57,22 @@ Resultado final: **una página web** con:
 - El diseño se construye **pronto y con datos de ejemplo**, sin esperar a las claves ni a
   los datos reales. Motivo: Bruno tiene acceso al modelo actual solo esta semana.
 - Las animaciones no deben impedir leer los datos; debe funcionar fluido en el PC de Bruno.
+- **Torres que muestran el paso del tiempo (tarea 3.3, opción 2 de Bruno, 2026-11-13).**
+  Bruno pidió edificios con carácter y basados en referencias reales, no torres de vidrio
+  genéricas. Las formas son propias, inspiradas en edificios reales, sin copiarlos:
+  - **Ya estaban en 1986 y siguen en 2026:**
+    - Una torre con un hueco en la fachada, con palmera y escalera roja (idea del Atlantis, 1982, que salía en Miami Vice).
+    - Una torre de tres niveles con curvas que se ilumina de colores de noche (idea de la CenTrust, hoy Miami Tower, encendida desde dic. 1985).
+    - En 1986 se ven de noche con neón; en 2026, de día.
+  - **Solo en 2026:**
+    - Torre en forma de vela, con piscina en voladizo.
+    - Estructura curva por fuera (idea del One Thousand Museum).
+    - Cubos apilados y corridos, aún en obra, con grúa (idea del Waldorf Astoria Miami, en obra en ago. 2026 y que termina en 2028).
+    - Una torre que gira, balcones ondulados y terrazas con plantas.
+    - Van en azul suave para que los hoteles sigan al frente.
+  - **Ojo:** según Wikipedia, GTA Vice City tiene un edificio basado en el Atlantis. Por eso la torre con hueco es genérica y no debe parecerse más a ese edificio.
+  - **Fuentes:** en.wikipedia.org/wiki/Atlantis_Condominium, en.wikipedia.org/wiki/Miami_Tower, floridayimby.com/?p=41764, dezeen.com/?p=2066379, architizer.com/blog/inspiration/collections/luxury-towers-miami/.
+  - **Ideas sin usar todavía:** MiMo (huecos redondos, celosías) y los murales de Wynwood.
 
 ## 3. Qué se descartó y por qué
 
@@ -164,6 +180,15 @@ sale 429, queda como hueco de Reddit y las demás fuentes siguen igual.
 En la página, Bruno eligió (2026-11-13) barras de publicaciones nuevas por hora en las
 últimas 48 horas y las 8 más nuevas en tarjetas chicas. Las barras cuentan por la hora de
 publicación; como el RSS trae 100 como mucho, una hora con más de 100 se queda corta.
+
+**Clave de Reddit (revisado el 2026-11-13; Bruno lo deja para después).** Desde el 11 nov
+2025 Reddit ya no da claves nuevas al momento: hay que pedirlas con su formulario de soporte
+para desarrolladores y Reddit decide según su "Responsible Builder Policy" (anuncio en
+r/redditdev). Su objetivo es responder en unos 7 días; no garantiza la aprobación y, según la
+comunidad, rechaza muchas. El anuncio no habla de precio (las guías de terceros dicen que el
+uso personal sigue gratis: sin confirmar). Pedida el 13 nov, la respuesta llegaría cerca del
+lanzamiento o después: para la semana del 17 al 21 nov se cuenta solo con el RSS. Si Bruno
+la pide, serviría para el resto del periodo (hasta el 19 dic).
 
 ## 6. Riesgos conocidos
 

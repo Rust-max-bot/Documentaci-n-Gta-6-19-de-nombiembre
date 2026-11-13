@@ -33,6 +33,13 @@ comentarios; la clave de Reddit queda para después) y la página lo muestra con
 que eligió Bruno: barras de publicaciones por hora y las 8 más nuevas en tarjetas chicas.
 Rayas del sol de 1986: opción A.
 
+**Tanda 3.1 y 3.3 en curso** (2026-11-13): la 3.3 está hecha. Hay torres detrás de los hoteles,
+inspiradas en edificios reales de Miami: 2 de los 80 en las dos escenas y 6 nuevas solo en 2026
+(opción 2 de Bruno). La 3.1 espera la decisión de Bruno entre 3 paletas: A "Mediodía
+tropical", B "Atardecer encendido" y C "Art déco eléctrico". Cuando elija, también hay que
+ajustar el tono de las torres de 2026 (variables `--torre*` en `.escena-26`). Las capturas
+de las opciones están en la rama `revision/edificios-2026`, que se borra cuando Bruno termine.
+
 **Repositorio listo para sesiones en la nube** (2026-11-13, pedido de Bruno, que tiene
 créditos para la nube): guía para Bruno en `NUBE.md`; al arrancar en la nube,
 `.claude/hooks/preparar-nube.sh` instala las pruebas, Chromium y Graphify; las pruebas
@@ -98,6 +105,8 @@ ninguna (la 3.2 y 2.4 terminó el 2026-11-13).
 
 ## Últimos cambios
 
+- 2026-11-13: torres detrás de los hoteles con referencias reales de Miami (3.3, opción 2 de Bruno).
+- 2026-11-13: revisada la clave de Reddit (hay que pedir permiso, ~7 días); Bruno la deja para después.
 - 2026-11-13: `probar-fuentes.yml` sin Node.js 20 (checkout@v5, setup-python@v6) y regla nueva en `CLAUDE.md`.
 - 2026-11-13: la página muestra Reddit: publicaciones por hora y las más nuevas (opción C de Bruno).
 - 2026-11-13: rayas del sol de 1986 más arriba y cada vez más anchas (2.4, opción A de Bruno).
@@ -109,13 +118,12 @@ ninguna (la 3.2 y 2.4 terminó el 2026-11-13).
 - 2026-11-13: la página muestra todos los titulares guardados, no solo 60 (decisión de Bruno).
 - 2026-11-13: titulares por páginas (12 por página, del más nuevo al más viejo).
 - 2026-11-13: suelo de 1986 dibujado en un lienzo: las líneas ya no titilan (2.3, segundo arreglo).
-- 2026-11-13: el recolector guarda la foto de perfil de los canales de Twitch; la tabla la muestra (2.2).
 
 ## Pendiente
 
 La lista completa y su orden están en `PLAN_DE_TRABAJO.md`. Lo inmediato:
 
 1. Bruno: pedir a soporte de GitHub que borre la referencia del PR #1 y activar el correo privado.
-2. Siguiente en orden: 3.1 (Miami 2026 más vivo).
+2. 3.1 (Miami 2026 más vivo): esperando que Bruno elija A, B o C.
 3. Opcional: comprobar en Cloudflare que el código del Worker es igual a `despertador/worker.js`.
 4. Opcional: el hook de diseño de Impeccable (Bruno ejecuta `npx impeccable install` en el PC).
