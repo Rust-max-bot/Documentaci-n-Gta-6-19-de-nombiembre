@@ -95,6 +95,15 @@ Resultado final: **una página web** con:
   - De día, los fuegos y los reflectores usan colores fuertes para que se vean sobre el cielo claro.
   - Para verla antes: agregar `?probar-hora-cero` a la dirección (la cuenta empieza 5 s antes de 0).
   - Se descartó B (destello y vuelta de las cajas).
+- **GTA frente a lo más visto (tarea 6.3, opción A de Bruno, 2026-11-13): dos columnas.**
+  - Sección antes de "Titulares". Usa la última medición del ranking de Twitch y de las
+    tendencias de YouTube.
+  - Izquierda, Twitch: puesto de GTA VI y GTA V, y barras con el público de las 100
+    transmisiones más vistas de las 5 primeras categorías, GTA VI y GTA V. Una nota explica
+    por qué una barra puede ser más larga que la de un puesto anterior.
+  - Derecha, YouTube: los videos de GTA en tendencias de Chile y EE. UU., con su puesto y
+    enlace, y los suscriptores de Rockstar (YouTube los redondea).
+  - Se descartaron B (tabla de posiciones y 50 cuadritos por país) y C (fichas grandes).
 - **Cápsula del tiempo (tarea 7.4, opción B de Bruno, 2026-11-13): postales de Miami.**
   - Dos postales al final de la página, una al lado de la otra (una debajo de otra en el celular):
     "Lo que espero" y "Lo que me pareció".

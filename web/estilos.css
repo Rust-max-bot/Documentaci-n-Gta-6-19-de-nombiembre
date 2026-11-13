@@ -372,6 +372,43 @@ td a:hover, td a:focus-visible { color: var(--a1); text-decoration-color: var(--
 .paginas .salto { color: var(--tenue); padding: 0 2px; }
 @media (max-width: 640px) { .paginas { gap: 6px; } .paginas button { min-width: 36px; padding: 6px 10px; font-size: 13px; } }
 
+/* GTA frente a lo más visto (tarea 6.3): opción A "dos columnas", elegida por Bruno el
+   2026-11-13. Izquierda, Twitch (puestos y barras de público); derecha, YouTube (videos de GTA
+   en tendencias de Chile y EE. UU.). */
+.cp-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 34px; }
+.cp-cols .vacio { color: var(--tenue); }
+.cp-puestos { display: flex; flex-wrap: wrap; gap: 8px 26px; margin-bottom: 16px; }
+.cp-puestos small, .cp-tit { display: block; margin: 0 0 6px; font-size: 12px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--tenue); }
+.cp-puestos b { font: 700 clamp(24px, 3vw, 34px)/1.1 var(--f-texto); color: var(--a1); }
+:root[data-tema="ochenta"] .cp-puestos b { color: var(--a2); text-shadow: 0 0 14px rgba(34, 230, 255, .6); }
+.cp-tit b { color: var(--texto); letter-spacing: .04em; }
+.cp-barras { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.cp-barras li { display: grid; grid-template-columns: 150px 1fr 64px; gap: 10px; align-items: center; font-size: 14px; font-weight: 600; }
+.cp-nom { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.cp-nom i { font-style: normal; font-size: 12px; color: var(--tenue); }
+.cp-b { height: 14px; border-radius: 3px; background: color-mix(in srgb, var(--tenue) 16%, transparent); overflow: hidden; }
+.cp-b i { display: block; height: 100%; border-radius: 3px; background: color-mix(in srgb, var(--tenue) 70%, transparent); }
+.cp-barras li.gta { color: var(--a1); }
+.cp-barras li.gta .cp-b i { background: var(--a1); }
+:root[data-tema="ochenta"] .cp-barras li.gta .cp-b i { box-shadow: 0 0 10px var(--a1); }
+.cp-num { text-align: right; font-variant-numeric: tabular-nums; }
+.cp-nota { margin: 10px 0 0; font-size: 13px; color: var(--tenue); }
+.cp-paises { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.cp-videos { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.cp-videos li { display: grid; grid-template-columns: 38px 1fr; gap: 8px; font-size: 13px; font-weight: 600; line-height: 1.3; }
+.cp-videos li.vacio { display: block; color: var(--tenue); }
+.cp-videos li b { font-size: 15px; color: var(--a1); }
+.cp-videos a { color: inherit; text-decoration: none; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+.cp-videos a:hover, .cp-videos a:focus-visible { color: var(--a1); }
+.cp-videos small { display: block; font-size: 12px; color: var(--tenue); }
+.cp-subs { margin: 16px 0 0; font-weight: 600; color: var(--tenue); }
+.cp-subs b { color: var(--texto); }
+.cp-subs small { font-size: 12px; }
+@media (max-width: 640px) {
+  .cp-cols, .cp-paises { grid-template-columns: 1fr; gap: 18px; }
+  .cp-barras li { grid-template-columns: 100px 1fr 56px; font-size: 13px; }
+}
+
 /* Cápsula del tiempo (tarea 7.4): dos postales de Miami, opción B elegida por Bruno el
    2026-11-13. Sello con la palmera de la página y matasellos con el día en que se escribió. */
 .cap-postales { display: grid; grid-template-columns: 1fr 1fr; gap: 26px; margin-top: 22px; padding: 6px; }
