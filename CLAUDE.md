@@ -127,6 +127,13 @@ vivos, ganan los vivos.
   solo al mostrar la página.
 - No borrar ni reescribir archivos de `datos/`: son el recuerdo y no se pueden volver a obtener.
 - Las ejecuciones programadas de GitHub solo corren desde `main`.
+- **Acciones de GitHub sin Node.js 20** (pedido de Bruno, 2026-11-13; ya pasó dos veces y
+  GitHub lo avisa en cada ejecución). Node.js 20 está retirado en GitHub: toda acción de un
+  workflow (`uses:`) debe ir en una versión que use Node.js 24 o más nuevo. Hoy:
+  `actions/checkout@v5` y `actions/setup-python@v6`. Antes de añadir o cambiar una acción,
+  comprobar en su `action.yml` (línea `using:`) que no diga `node20`, y anotar al lado la
+  versión de Node que usa. Al revisar una ejecución, mirar también sus avisos
+  ("Annotations"), no solo si salió en verde.
 - **Graphify** (mapa del proyecto para gastar menos tokens): la skill en
   `.claude/skills/graphify/`, el grafo en `graphify-out/` (`graph.html` para verlo,
   `GRAPH_REPORT.md` el informe) y `.graphifyignore` deja fuera las skills de terceros.

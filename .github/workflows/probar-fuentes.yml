@@ -13,8 +13,8 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@v5       # v5 usa Node.js 24 (la v4 usaba Node.js 20, retirado)
+      - uses: actions/setup-python@v6   # v6 usa Node.js 24 (la v5 usaba Node.js 20, retirado)
         with:
           python-version: "3.12"
       - name: Probar cada fuente

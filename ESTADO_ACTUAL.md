@@ -98,6 +98,7 @@ ninguna (la 3.2 y 2.4 terminó el 2026-11-13).
 
 ## Últimos cambios
 
+- 2026-11-13: `probar-fuentes.yml` sin Node.js 20 (checkout@v5, setup-python@v6) y regla nueva en `CLAUDE.md`.
 - 2026-11-13: la página muestra Reddit: publicaciones por hora y las más nuevas (opción C de Bruno).
 - 2026-11-13: rayas del sol de 1986 más arriba y cada vez más anchas (2.4, opción A de Bruno).
 - 2026-11-13: Reddit por RSS en el recolector (3.2, elegido por Bruno).
