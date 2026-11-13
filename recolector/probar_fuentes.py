@@ -159,6 +159,36 @@ def _():
     return cod == 200
 
 
+@prueba("Tráilers oficiales de GTA VI (tarea 6.2)")
+def _():
+    # Busca en el canal de Rockstar los tráilers de GTA VI para anotar sus enlaces fijos. La
+    # búsqueda cuesta 100 unidades: se hace solo aquí, a mano. El recolector mide después esos
+    # videos por su enlace (1 unidad por medición).
+    clave = os.environ.get("YOUTUBE_API_KEY", "")
+    if not clave:
+        print("Falta la clave de YouTube")
+        return False
+    cod, txt = pedir("https://www.googleapis.com/youtube/v3/channels?" + urllib.parse.urlencode(
+        {"part": "id", "forHandle": "@RockstarGames", "key": clave}))
+    canal = (json.loads(txt).get("items") or [{}])[0].get("id") if cod == 200 else None
+    print("Canal de Rockstar:", canal, "| codigo", cod)
+    if not canal:
+        return False
+    cod, txt = pedir("https://www.googleapis.com/youtube/v3/search?" + urllib.parse.urlencode(
+        {"part": "snippet", "channelId": canal, "q": "Grand Theft Auto VI Trailer", "type": "video",
+         "order": "viewCount", "maxResults": 15, "key": clave}))
+    ids = [i["id"]["videoId"] for i in json.loads(txt).get("items", [])] if cod == 200 else []
+    print("Busqueda: codigo", cod, "| videos:", len(ids))
+    if not ids:
+        return False
+    cod, txt = pedir("https://www.googleapis.com/youtube/v3/videos?" + urllib.parse.urlencode(
+        {"part": "snippet,statistics", "id": ",".join(ids), "key": clave}))
+    for v in json.loads(txt).get("items", []):
+        sn, st = v["snippet"], v.get("statistics", {})
+        print(f"  {v['id']} | {sn.get('publishedAt')} | {st.get('viewCount')} visitas | {sn.get('channelTitle')} | {sn.get('title')}")
+    return cod == 200
+
+
 # Reddit (tarea 3.2) no se prueba aquí: Reddit responde 429 ("demasiadas consultas") a la
 # segunda consulta seguida desde la misma máquina, y entonces fallaría la prueba del
 # recolector, que viene después en el mismo workflow. Resultados del 2026-11-13 (PLAN.md,
