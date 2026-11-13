@@ -15,7 +15,7 @@
 
 ## Dónde quedamos
 
-*(2026-11-13, ~21:30 UTC.)*
+*(2026-11-13, ~22:30 UTC.)*
 
 **La página está lista para el lanzamiento.** Hechas las fases 0, 1, 2 (menos la 2.5, para
 después), 3 y las tareas 4.1, 4.2 y 7.2. Lo que tiene:
@@ -38,9 +38,9 @@ secreto `GITHUB_TOKEN` existe (su valor no se ve ni está en el repositorio). La
 ~1 mar 2027 según recuerda Bruno). Desde el 13 nov también guarda lo de la 6.3 (puesto de GTA
 en Twitch y tendencias de YouTube), que la página ya muestra en "GTA frente a lo más visto"; y,
 desde el PR #11 (unido el 2026-11-13), las visitas de los 4 videos oficiales de GTA VI
-(fuente `youtube_trailers`, tarea 6.2), que se ven en "Logros y récords". Cuando se una el
-PR #12, también una búsqueda de videos en español (fuente `youtube_es`, tarea 6.4), una vez
-por hora; la página todavía no la muestra. Se apaga, enciende o
+(fuente `youtube_trailers`, tarea 6.2), que se ven en "Logros y récords". Desde el PR #12 (unido el
+2026-11-13), también una búsqueda de videos en español (fuente `youtube_es`, tarea 6.4), una
+vez por hora: la primera, a las 22:07 UTC, trajo 25 videos. La página todavía no la muestra. Se apaga, enciende o
 alarga en `recolector/interruptor.json` (por defecto, hasta el 19 dic).
 
 **Si un día faltan mediciones:** mirar el registro del Worker en Cloudflare
@@ -60,10 +60,13 @@ esos sitios): no es un fallo de la página.
 
 **Reglas en pausa:** ninguna. "Paso a paso con permiso" está activa **por tandas**: Bruno
 dice qué pasos hacer y Claude no para hasta completarlos (ver `CLAUDE.md`). Tanda actual:
-ninguna (la de la 6.3 y 6.2 terminó el 2026-11-13). La 6.1 queda para el 20 al 25 nov.
+ninguna (la de la 6.3 y 6.2 terminó el 2026-11-13). La 6.1 se ejecuta una vez entre el 20 y el 25 nov: el programa
+(`recolector/trends_extra.py`, workflow "Trends extra (6.1)") quedó listo y probado el 13 nov;
+falta que Bruno elija las palabras de la comparación.
 
 ## Últimos cambios
 
+- 2026-11-13: programa aparte para las preguntas extra a Google Trends (6.1), probado desde GitHub sin guardar; falta elegir las palabras y ejecutarlo del 20 al 25 nov.
 - 2026-11-13: el recolector busca también videos en español una vez por hora (6.4, pedido de Bruno); la página, después.
 - 2026-11-13: sección "Logros y récords" en la página, con los tráilers oficiales (6.2, opción A de Bruno).
 - 2026-11-13: la página muestra "GTA frente a lo más visto" (6.3, opción A de Bruno) y el recolector mide los 4 videos oficiales de GTA VI (6.2).
@@ -72,7 +75,6 @@ ninguna (la de la 6.3 y 6.2 terminó el 2026-11-13). La 6.1 queda para el 20 al 
 - 2026-11-13: `PLAN_DE_TRABAJO.md` archivado en `historial/PLAN_DE_TRABAJO_2026-11-13.md` y reescrito con lo pendiente; regla nueva: también se archiva al pasar de 20.000 bytes (decisión de Bruno).
 - 2026-11-13: cápsula del tiempo en la página, como dos postales de Miami (7.4, opción B de Bruno); falta su texto.
 - 2026-11-13: hora cero con fuegos y reflectores (7.2) y escena de día, atardecer y noche (4.1 y 4.2).
-- 2026-11-13: el recolector guarda el puesto de GTA en Twitch y las tendencias de YouTube (6.3).
 
 ## Pendiente
 
@@ -81,8 +83,8 @@ La lista completa y su orden están en `PLAN_DE_TRABAJO.md`. Resumen (2026-11-13
 1. **Antes del 19 nov:** 7.4, Bruno escribe sus expectativas en `web/capsula.js`.
 2. **Fase 4:** 4.3 análisis de datos (necesita varios días de datos).
 3. **Fase 6** (ideas de Bruno): 6.1 más Google Trends, **una sola vez entre el 20 y el 25 nov**,
-   fuera del recolector de cada hora (decisión de Bruno, 2026-11-13; ver `PLAN.md`). 6.2 y 6.3,
-   hechas. 6.4 videos en español: recolector hecho (PR #12); falta mostrarlo en la página.
+   fuera del recolector de cada hora (decisión de Bruno, 2026-11-13; ver `PLAN.md`). Programa
+   listo y probado; falta que Bruno elija las palabras de la comparación. 6.2 y 6.3, hechas. 6.4 videos en español: recolector funcionando (PR #12); falta mostrarlo en la página.
 4. **Fase 7:** 7.1 rebobinar; 7.3 viaje en el tiempo; 7.5 resumen del día.
 5. **Fase 5** (después del lanzamiento): búsqueda calmada; clave de Reddit.
 6. **Ideas sueltas:** 2.5 TikTok (sin acceso fácil); un filtro por día en los titulares
@@ -97,9 +99,6 @@ La lista completa y su orden están en `PLAN_DE_TRABAJO.md`. Resumen (2026-11-13
      después** (2026-11-13: lo peor sería recibir correos no deseados). No volver a
      proponerlo hasta que él lo retome. Quitar el correo de esos commits exige reescribir
      `main` con `--force`: solo si Bruno lo autoriza;
-   - borrar en GitHub las ramas ya unidas o de capturas: `claude/project-thread-dpdy9p`,
-     `claude/project-thread-en9qib`, `claude/project-thread-mi5ckb`,
-     `claude/project-thread-odgsms`, `revision/hora-cero` y `revision/dia-noche` (revisado
-     el 2026-11-13: no tienen nada que falte en `main`; las de `revision/` solo tienen
-     capturas).
+   - borrar en GitHub las ramas ya unidas: `claude/project-thread-en9qib` y
+     `claude/project-thread-odgsms` (revisado el 2026-11-13: las otras 4 ya no existen).
 8. **Opcional:** el hook de Impeccable (`npx impeccable install` en el PC).

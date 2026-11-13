@@ -1,0 +1,42 @@
+# Tarea 6.1: las 4 preguntas extra a Google Trends, UNA sola vez (decisión de Bruno, 2026-11-13:
+# entre el 20 y el 25 nov, fuera del recolector de cada hora). Solo se lanza a mano, con el
+# botón "Run workflow" de GitHub. Guarda un archivo nuevo en datos/trends_extra/.
+# Para probar sin guardar: "Probar fuentes" con la casilla de Trends extra marcada.
+name: Trends extra (6.1)
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  trends_extra:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v5       # v5 usa Node.js 24 (la v4 usaba Node.js 20, retirado)
+      - uses: actions/setup-python@v6   # v6 usa Node.js 24 (la v5 usaba Node.js 20, retirado)
+        with:
+          python-version: "3.12"
+
+      - name: Hacer las 4 preguntas a Google Trends
+        run: python3 recolector/trends_extra.py
+
+      - name: Guardar el resultado en el repositorio
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add datos/trends_extra/
+          if git diff --cached --quiet; then
+            echo "::error::No hay archivo nuevo que guardar."
+            exit 1
+          fi
+          git commit -q -m "Trends extra (6.1) $(date -u +%Y-%m-%dT%H:%MZ)"
+          for intento in 1 2 3 4 5; do
+            if git push -q; then exit 0; fi
+            echo "El push falló (intento $intento); se traen los cambios y se reintenta."
+            sleep $((intento * 5))
+            git pull -q --rebase
+          done
+          exit 1
