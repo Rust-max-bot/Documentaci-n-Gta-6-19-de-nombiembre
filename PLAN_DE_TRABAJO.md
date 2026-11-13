@@ -163,7 +163,8 @@ guardan los datos (A2), empezar cuanto antes (A4) y el periodo de un mes con int
       **En la página (2026-11-13):** Bruno eligió la opción C entre tres con capturas: barras
       con las publicaciones nuevas por hora (últimas 48 horas) y debajo las 8 más nuevas en
       tarjetas chicas (las pidió más chicas que las de los titulares). Verificado a 1280 y
-      384 px en los dos estilos, con datos de prueba y con los de ejemplo.
+      384 px en los dos estilos, con datos de ejemplo y con los reales (100 publicaciones de la
+      medición de las 18:07 UTC del 13 nov).
       Falta: la clave de Reddit (votos y comentarios), cuando Bruno quiera.
 - [ ] **3.3 Edificios que reflejan el paso del tiempo (D4):** en 2026 siguen los hoteles de
       1986 y aparecen torres nuevas detrás. Presentar opciones con capturas.
