@@ -66,6 +66,7 @@ def estado_servidor(r):
 def convertir(medidas):
     mediciones, series, ultimo_video, vistas, noticias = [], {}, {}, set(), []
     reddit, reddit_vistas, reddit_medidas = [], set(), []
+    trailers = {}   # tarea 6.2: serie de visitas de cada video oficial, desde el 13 nov
     for m in medidas:
         tw, tr = m.get("twitch", {}), m.get("trends", {})
         fila = {"t": m["t"]}
@@ -83,12 +84,27 @@ def convertir(medidas):
             "playstation": estado_servidor(m.get("playstation")),
             "xbox": estado_servidor(m.get("xbox")),
         }
+        # Tarea 6.3: puesto de GTA en Twitch y videos de GTA en tendencias de YouTube. Solo
+        # existen desde el 13 nov: las mediciones de antes no traen estas claves.
+        rk = m.get("twitch_ranking")
+        if rk is not None:
+            fila["ranking"] = {"error": rk["error"]} if "error" in rk else {
+                "gta6": rk["puesto_gta6"], "gta5": rk["puesto_gta5"], "leidas": rk["leidas"]}
+        yt = m.get("youtube_tendencias")
+        if yt is not None:
+            fila["tendencias"] = {"error": yt["error"]} if "error" in yt else {
+                r: len(d["gta"]) for r, d in yt["regiones"].items()}
         mediciones.append(fila)
 
         for v in m.get("youtube", {}).get("videos", []):
             if isinstance(v.get("visitas"), int):
                 series.setdefault(v["id"], []).append({"t": m["t"], "visitas": v["visitas"]})
                 ultimo_video[v["id"]] = v
+        for v in m.get("youtube_trailers", {}).get("videos", []):
+            if isinstance(v.get("visitas"), int):
+                tr_v = trailers.setdefault(v["id"], {"id": v["id"], "titulo": v["titulo"], "publicado": v.get("publicado"), "serie": []})
+                tr_v["titulo"] = v["titulo"]
+                tr_v["serie"].append({"t": m["t"], "visitas": v["visitas"]})
         for n in m.get("noticias", {}).get("nuevas", []):
             if n["url"] not in vistas:
                 vistas.add(n["url"])
@@ -116,10 +132,26 @@ def convertir(medidas):
         "serie": series[v["id"]],
     } for v in ultima_yt if v["id"] in series][:VIDEOS]
 
+    # Lo último de la 6.3, para las tarjetas de comparación (la medición más nueva sin hueco).
+    ult_rk = next((m for m in reversed(medidas) if "error" not in m.get("twitch_ranking", {"error": 1})), None)
+    ult_yt = next((m for m in reversed(medidas) if "error" not in m.get("youtube_tendencias", {"error": 1})), None)
+    comparacion = None
+    if ult_rk or ult_yt:
+        comparacion = {}
+        if ult_rk:
+            rk = ult_rk["twitch_ranking"]
+            comparacion["twitch"] = {"t": ult_rk["t"], "top": rk["top"], "comparadas": rk["comparadas"],
+                                     "gta6": rk["puesto_gta6"], "gta5": rk["puesto_gta5"], "leidas": rk["leidas"]}
+        if ult_yt:
+            yt = ult_yt["youtube_tendencias"]
+            comparacion["youtube"] = {"t": ult_yt["t"], "regiones": yt["regiones"], "rockstar": yt["rockstar"]}
+
     noticias.sort(key=lambda n: n["t"])
     reddit.sort(key=lambda p: p["t"])
     return {"mediciones": mediciones, "youtube": youtube, "noticias": noticias,
-            "reddit": {"comunidad": "r/GTA6", "publicaciones": reddit, "mediciones": reddit_medidas}}   # todos: la página los muestra por páginas (Bruno, 2026-11-13)
+            "reddit": {"comunidad": "r/GTA6", "publicaciones": reddit, "mediciones": reddit_medidas},
+            "comparacion": comparacion,
+            "trailers": sorted(trailers.values(), key=lambda v: v.get("publicado") or "")}   # todos: la página los muestra por páginas (Bruno, 2026-11-13)
 
 
 def comprobar(d, medidas):
@@ -132,7 +164,7 @@ def comprobar(d, medidas):
         i = f["trends"].get("interes")
         if i is not None and not (0 <= i <= 100):
             abortar(f"interés de Trends fuera de 0-100 en {f['t']}")
-    for v in d["youtube"]:
+    for v in d["youtube"] + d["trailers"]:
         if [p["t"] for p in v["serie"]] != sorted(p["t"] for p in v["serie"]):
             abortar(f"la serie del video {v['id']} está desordenada")
 

@@ -36,7 +36,9 @@ ninguna fuente. GitHub ya no lo lanza por su cuenta (se quitó el `schedule` de
 es igual, línea por línea, a `despertador/worker.js`; el horario es `7,37 * * * *` y el
 secreto `GITHUB_TOKEN` existe (su valor no se ve ni está en el repositorio). La clave de GitHub del Worker caduca después del 19 dic (31 ene 2027, o
 ~1 mar 2027 según recuerda Bruno). Desde el 13 nov también guarda lo de la 6.3 (puesto de GTA
-en Twitch y tendencias de YouTube); falta mostrarlo en la página. Se apaga, enciende o
+en Twitch y tendencias de YouTube), que la página ya muestra en "GTA frente a lo más visto"; y,
+cuando se una el PR de la rama `claude/project-thread-en9qib`, las visitas de los 4 videos
+oficiales de GTA VI (fuente `youtube_trailers`, tarea 6.2). Se apaga, enciende o
 alarga en `recolector/interruptor.json` (por defecto, hasta el 19 dic).
 
 **Si un día faltan mediciones:** mirar el registro del Worker en Cloudflare
@@ -56,10 +58,11 @@ esos sitios): no es un fallo de la página.
 
 **Reglas en pausa:** ninguna. "Paso a paso con permiso" está activa **por tandas**: Bruno
 dice qué pasos hacer y Claude no para hasta completarlos (ver `CLAUDE.md`). Tanda actual:
-ninguna.
+6.3 y 6.2 (pedida el 2026-11-13); antes de la 6.1, parar y explicarle a Bruno.
 
 ## Últimos cambios
 
+- 2026-11-13: la página muestra "GTA frente a lo más visto" (6.3, opción A de Bruno) y el recolector mide los 4 videos oficiales de GTA VI (6.2).
 - 2026-11-13: estado anterior archivado en historial/ESTADO_2026-11-13.md
 - 2026-11-13: revisado el despertador: sin claves ni datos de Bruno en el repositorio; el Worker de Cloudflare es igual a la copia. Hallado: el correo de Outlook en las uniones de PR hechas desde la web.
 - 2026-11-13: `PLAN_DE_TRABAJO.md` archivado en `historial/PLAN_DE_TRABAJO_2026-11-13.md` y reescrito con lo pendiente; regla nueva: también se archiva al pasar de 20.000 bytes (decisión de Bruno).
@@ -73,8 +76,8 @@ La lista completa y su orden están en `PLAN_DE_TRABAJO.md`. Resumen (2026-11-13
 
 1. **Antes del 19 nov:** 7.4, Bruno escribe sus expectativas en `web/capsula.js`.
 2. **Fase 4:** 4.3 análisis de datos (necesita varios días de datos).
-3. **Fase 6** (ideas de Bruno): 6.1 más Google Trends; 6.2 logros y récords; 6.3 mostrar en
-   la página las comparaciones con Twitch y YouTube (los datos ya se guardan).
+3. **Fase 6** (ideas de Bruno): 6.2 logros y récords (en curso); 6.1 más Google Trends
+   (**Bruno pidió parar antes y que se le expliquen los problemas y soluciones**). 6.3, hecha.
 4. **Fase 7:** 7.1 rebobinar; 7.3 viaje en el tiempo; 7.5 resumen del día.
 5. **Fase 5** (después del lanzamiento): búsqueda calmada; clave de Reddit.
 6. **Ideas sueltas:** 2.5 TikTok (sin acceso fácil); un filtro por día en los titulares

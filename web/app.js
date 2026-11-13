@@ -547,6 +547,45 @@
     window.requestAnimationFrame(cuadro);
   })();
 
+  /* ---------- GTA frente a lo más visto (tarea 6.3; opción A "dos columnas", elegida por Bruno, 2026-11-13) ----------
+     Usa la última medición del ranking de Twitch y de las tendencias de YouTube (se guardan
+     desde el 13 nov). */
+  (function () {
+    var caja = $("comparacion-cols");
+    if (!caja) return;
+    var C = D.comparacion || {}, tw = C.twitch, yt = C.youtube;
+    if (!tw && !yt) { caja.innerHTML = '<p class="vacio">Sin datos todavía.</p>'; return; }
+    var t = Math.max(tw ? Date.parse(tw.t) : 0, yt ? Date.parse(yt.t) : 0);
+    $("comparacion-nota").textContent = "Cómo le va a GTA comparado con todo lo demás en Twitch y YouTube. Última medición: " + dia(t) + ", " + hora(t) + ".";
+    var GTA = { "1867279146": "GTA VI", "32982": "GTA V" };
+    var html = "";
+    if (tw) {
+      var puesto = function (p) { return p ? "#" + p : "Fuera del top " + tw.leidas; };
+      var tope = Math.max.apply(null, tw.comparadas.map(function (c) { return c.espectadores_top100; })) || 1;
+      html += '<div class="cp-col"><h3 class="sub">Twitch</h3>' +
+        '<div class="cp-puestos"><div><small>GTA VI</small><b>' + puesto(tw.gta6) + '</b></div><div><small>GTA V</small><b>' + puesto(tw.gta5) + "</b></div></div>" +
+        '<ul class="cp-barras">' + tw.comparadas.map(function (c) {
+          return '<li class="' + (GTA[c.id] ? "gta" : "") + '"><span class="cp-nom">' + limpio(GTA[c.id] || c.nombre) + (c.puesto ? " <i>#" + c.puesto + "</i>" : "") + "</span>" +
+            '<span class="cp-b"><i style="width:' + Math.max(1, c.espectadores_top100 / tope * 100).toFixed(1) + '%"></i></span><span class="cp-num">' + compacto(c.espectadores_top100) + "</span></li>";
+        }).join("") + "</ul>" +
+        '<p class="cp-nota">Twitch da el orden de las categorías, no el total de espectadores. Cada barra suma el público de las 100 transmisiones más vistas de esa categoría; por eso una barra puede ser más larga que la de un puesto anterior.</p></div>';
+    }
+    if (yt) {
+      var nombres = { CL: "Chile", US: "EE. UU." };
+      html += '<div class="cp-col"><h3 class="sub">YouTube · videos en tendencia</h3><div class="cp-paises">' +
+        Object.keys(yt.regiones).map(function (r) {
+          var d = yt.regiones[r];
+          return '<div><p class="cp-tit">' + (nombres[r] || r) + " <b>" + d.gta.length + " de " + d.en_lista + "</b></p>" +
+            '<ol class="cp-videos">' + (d.gta.length ? d.gta.map(function (x) {
+              return "<li><b>#" + x.puesto + "</b><span>" + enlace(urlVideo(x.id), limpio(x.titulo)) + "<small>" + limpio(x.canal) + "</small></span></li>";
+            }).join("") : '<li class="vacio">Ningún video de GTA en la lista.</li>') + "</ol></div>";
+        }).join("") + "</div>" +
+        (yt.rockstar && yt.rockstar.suscriptores ? '<p class="cp-subs">Canal de Rockstar en YouTube: <b>' + compacto(yt.rockstar.suscriptores) + "</b> suscriptores <small>(YouTube redondea esta cifra)</small></p>" : "") +
+        "</div>";
+    }
+    caja.innerHTML = html;
+  })();
+
   /* ---------- Cápsula del tiempo (tarea 7.4; diseño B "postales de Miami", elegido por Bruno, 2026-11-13) ----------
      Los dos textos los escribe Bruno en web/capsula.js. Mientras uno esté vacío, su postal sale
      cerrada: la página nunca pone texto en su nombre. */

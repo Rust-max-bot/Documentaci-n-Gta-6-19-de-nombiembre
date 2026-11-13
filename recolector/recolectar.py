@@ -108,6 +108,8 @@ def resumen(nombre, r):
     if nombre == "youtube_tendencias":
         gta = ", ".join(f"{reg}: {len(d['gta'])}" for reg, d in r["regiones"].items())
         return f"videos de GTA en tendencias ({gta}); Rockstar: {r['rockstar']['suscriptores']} suscriptores"
+    if nombre == "youtube_trailers":
+        return f"{len(r['videos'])} de {r['pedidos']} tráilers; " + ", ".join(f"{v['id']}: {v['visitas']}" for v in r["videos"])
     return "sin problemas" if r["ok"] else "CON PROBLEMAS"
 
 

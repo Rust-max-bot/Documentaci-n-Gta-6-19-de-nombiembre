@@ -65,6 +65,10 @@ youtube_tendencias   (desde el 13 nov, tarea 6.3) unidades (3), regiones: {CL, U
              en_lista, primero {puesto, id, titulo, canal, visitas} y gta (los de la lista
              cuyo título dice GTA, Grand Theft Auto o Rockstar Games), rockstar: id, nombre,
              suscriptores (YouTube los redondea), visitas, videos del canal
+youtube_trailers     (desde el 13 nov, tarea 6.2) unidades (1), pedidos (cuántos videos se
+             pidieron, 4), videos: los videos oficiales de GTA VI del canal de Rockstar,
+             medidos por su enlace fijo (lista en fuentes.py, YOUTUBE_TRAILERS) {id, titulo,
+             canal, publicado, visitas, me_gusta, comentarios}
 ```
 
 - **Hueco:** si una fuente falla, en su lugar va `{"error": "mensaje"}`. Nunca se inventa un
@@ -73,7 +77,8 @@ youtube_tendencias   (desde el 13 nov, tarea 6.3) unidades (3), regiones: {CL, U
   punto puede valer distinto en mediciones distintas.
 - **YouTube:** cada medición busca los 25 videos más vistos de "GTA 6" publicados en los
   últimos 7 días y vuelve a medir los de la medición anterior, para tener series continuas.
-  Gasta 101 unidades de las 10.000 diarias (104 con las tendencias de la tarea 6.3).
+  Gasta 101 unidades de las 10.000 diarias (105 con las tendencias de la tarea 6.3 y los
+  tráilers de la 6.2).
 - Enlaces (tarea 2.1): Twitch `https://www.twitch.tv/<login>`, YouTube
   `https://www.youtube.com/watch?v=<id>`, noticias en `url`.
 - Miniaturas (tarea 2.2): la de Twitch (`miniatura`, con `{width}x{height}` que hay que
