@@ -37,8 +37,12 @@ todavía no lo muestra. Opciones A, B y C para las rayas del sol en la rama
 **Repositorio listo para sesiones en la nube** (2026-11-13, pedido de Bruno, que tiene
 créditos para la nube): guía para Bruno en `NUBE.md`; al arrancar en la nube,
 `.claude/hooks/preparar-nube.sh` instala las pruebas, Chromium y Graphify; las pruebas
-visuales están en `pruebas/` (antes solo en el PC de Claude). **Sin probar todavía en la
-nube:** la primera sesión debe decir si se instaló todo (sobre todo Chromium). TikTok: Bruno
+visuales están en `pruebas/` (antes solo en el PC de Claude). **Probado en la nube el
+2026-11-13:** el hook no llegó a correr (la sesión empezó fuera del repo) y el Playwright de
+`requisitos.txt` no encuentra el Chromium de la máquina; `pruebas/navegador.py` ahora usa
+`/opt/pw-browsers/chromium` si hace falta (PR desde la rama `claude/project-thread-qotwvh`). Revisión de la página antes del
+lanzamiento: todo bien a 1280 y 384 px en los dos estilos; las fotos de YouTube y Twitch no
+cargan en la nube porque su red bloquea esos sitios (no es fallo de la página). TikTok: Bruno
 lo deja para después (anotado como 2.5).
 
 **El recolector funciona solo.** Lo lanza el despertador de Cloudflare (Worker
@@ -96,6 +100,7 @@ ninguna (la 2.1 a 2.3 terminó el 2026-11-13).
 ## Últimos cambios
 
 - 2026-11-13: Reddit por RSS en el recolector (3.2, elegido por Bruno); opciones de la 2.4 con capturas.
+- 2026-11-13: pruebas en la nube: usan el Chromium de la máquina y bajan por la página antes de la captura.
 - 2026-11-13: recolector revisado desde la nube: 16 turnos seguidos bien (02:07 a 17:07 UTC); nada que arreglar.
 - 2026-11-13: grafo de Graphify al día también con los documentos (forzado con permiso de Bruno).
 - 2026-11-13: repositorio preparado para sesiones en la nube (`NUBE.md`, `pruebas/`, hook de preparación).
@@ -103,16 +108,6 @@ ninguna (la 2.1 a 2.3 terminó el 2026-11-13).
 - 2026-11-13: titulares por páginas (12 por página, del más nuevo al más viejo).
 - 2026-11-13: suelo de 1986 dibujado en un lienzo: las líneas ya no titilan (2.3, segundo arreglo).
 - 2026-11-13: el recolector guarda la foto de perfil de los canales de Twitch; la tabla la muestra (2.2).
-- 2026-11-13: videos de YouTube en tarjetas con miniatura (2.2, opción B).
-- 2026-11-13: enlaces a videos y canales (2.1) y suelo de 1986 sin parpadeo (2.3).
-- 2026-11-13: página: eje de Twitch con números redondos y lo más nuevo arriba (tarea 1.7 cerrada).
-- 2026-11-13: prueba completa (tarea 1.7): todo bien salvo el eje del gráfico de Twitch.
-- 2026-11-13: `revisar.py` sigue el horario del despertador.
-- 2026-11-13: revisión de las primeras 24 horas (tarea 1.5b): sin fallos; `revisar.py` desfasado.
-- 2026-11-13: despertador verificado (12 turnos bien); `schedule` quitado; tareas 1.4 y 1.5 hechas.
-- 2026-11-13: despertador de Cloudflare montado (tarea 1.4).
-- 2026-11-12: historial limpio de datos personales y repositorio público (tarea 1.4); cada hora.
-- 2026-11-12: `cron` reescrito (mismo horario) para que GitHub lance las programadas (no bastó).
 
 ## Pendiente
 
