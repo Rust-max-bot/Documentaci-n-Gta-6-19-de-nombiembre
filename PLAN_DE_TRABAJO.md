@@ -120,7 +120,8 @@ una consulta real antes de usarla. Ver el aviso 7, sobre la fecha del lanzamient
       Bruno quiere seguir viendo lo global y, además, a los creadores hispanohablantes (Chile,
       España, etc.; por ejemplo, si el Rubius sube un video muy visto).
   - Propuesta: una segunda búsqueda con idioma preferido español (`relevanceLanguage=es`).
-    Es una preferencia de YouTube, no un filtro: puede traer algunos en inglés.
+    Es una preferencia de YouTube, no un filtro: puede traer algunos en inglés. Probado:
+    solo funciona en el orden de relevancia (19 de 25 en español), no por visitas (3 de 25).
   - Cuota: cada búsqueda cuesta 100 unidades. La semana del lanzamiento se mide 2 veces por
     hora (48 × 105 = 5.040 al día); con la búsqueda en español en cada turno (101 unidades con
     sus estadísticas) serían ~9.900,

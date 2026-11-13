@@ -1,7 +1,7 @@
 # Graph Report - Documentaci-n-Gta-6-19-de-nombiembre  (2026-11-13)
 
 ## Corpus Check
-- 36 files · ~42,839 words
+- 36 files · ~43,223 words
 - Verdict: corpus is large enough that graph structure adds value.
 - Unclassified: 7 file(s) not represented in the graph (top: (none) 3, .jsonl 2, .bat 1)
 
@@ -11,7 +11,7 @@
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `580112bd`
+- Built from commit: `516b81b2`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -43,9 +43,9 @@
 ## God Nodes (most connected - your core abstractions)
 1. `Falla` - 19 edges
 2. `Decisiones ya tomadas` - 14 edges
-3. `exigir()` - 13 edges
-4. `pedir()` - 13 edges
-5. `pintar()` - 13 edges
+3. `pedir()` - 13 edges
+4. `pintar()` - 13 edges
+5. `exigir()` - 13 edges
 6. `Plan de trabajo` - 13 edges
 7. `Recolector` - 13 edges
 8. `Plan del proyecto (PLAN.md)` - 13 edges

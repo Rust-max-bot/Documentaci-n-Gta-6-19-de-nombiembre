@@ -66,7 +66,9 @@ youtube_tendencias   (desde el 13 nov, tarea 6.3) unidades (3), regiones: {CL, U
              cuyo título dice GTA, Grand Theft Auto o Rockstar Games), rockstar: id, nombre,
              suscriptores (YouTube los redondea), visitas, videos del canal
 youtube_es   (desde el 13 nov, tarea 6.4) como youtube, pero con idioma preferido español
-             (relevanceLanguage=es: preferencia, no filtro). Además: idioma "es", busco (true si
+             (relevanceLanguage=es: preferencia, no filtro) y en el orden de relevancia de
+             YouTube (por visitas, YouTube ignoraba el idioma: 3 de 25 en español; por
+             relevancia, 19 de 25, prueba del 13 nov). "puesto" es el de esa búsqueda. Además: idioma "es", busco (true si
              esa medición hizo la búsqueda; se busca como mucho una vez por hora, y en los otros
              turnos solo se vuelven a medir los videos anteriores) e idioma de cada video (el que
              declara el video; null si no lo declara)

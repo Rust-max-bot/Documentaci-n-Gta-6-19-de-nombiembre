@@ -97,7 +97,12 @@ Resultado final: **una página web** con:
   - Se descartó B (destello y vuelta de las cajas).
 - **Videos de YouTube en español (tarea 6.4, Bruno, 2026-11-13): el recolector ahora, la página después.**
   - Segunda búsqueda de "GTA 6" con idioma preferido español (fuente `youtube_es`), además
-    de la global, que sigue igual.
+    de la global, que sigue igual. En el orden de **relevancia** de YouTube, no por visitas:
+    probado el 13 nov con 4 formas (ejecución 43515144506 de "Probar fuentes"). Por visitas,
+    YouTube ignora el idioma (3 de 25 en español); por relevancia, 19 de 25; con región España,
+    21 de 25, pero más centrado en España. Se eligió la de relevancia sin región, porque Bruno
+    quiere a los hispanohablantes en general. No garantiza que salga cada video grande (por
+    ejemplo, uno del Rubius), pero es probable que salgan los más relevantes.
   - La búsqueda (100 unidades) se hace como mucho una vez por hora, para no acercarse al
     límite de 10.000 diarias la semana del lanzamiento (~7.500). En el otro turno solo se
     vuelven a medir sus videos (1 unidad), para tener la serie cada media hora.
