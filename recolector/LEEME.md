@@ -82,7 +82,7 @@ Se genera en el PC y no se sube a git. Qué toma de cada medición:
   separados en el tiempo no se comparan del todo bien.
 - Servidores: `ok`, `problemas` o sin dato. Rockstar siempre sin dato: se anota a mano.
 - YouTube: los 20 videos de la última medición, con la serie de visitas de cada uno.
-- Noticias: los 60 titulares más recientes.
+- Noticias: todos los titulares guardados (la página los muestra por páginas de 12).
 
 ## Comprobaciones
 

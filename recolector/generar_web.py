@@ -19,7 +19,6 @@ DATOS = RAIZ / "datos"
 SALIDA = RAIZ / "web" / "datos.js"
 NOMBRE_ARCHIVO = re.compile(r"^\d{4}-\d{2}-\d{2}\.jsonl$")
 VIDEOS = 20         # videos de YouTube que se muestran (los más vistos en la última medición)
-NOTICIAS = 60       # titulares que se muestran (los más recientes)
 CANALES = 3         # canales de Twitch por medición
 
 
@@ -105,7 +104,7 @@ def convertir(medidas):
     } for v in ultima_yt if v["id"] in series][:VIDEOS]
 
     noticias.sort(key=lambda n: n["t"])
-    return {"mediciones": mediciones, "youtube": youtube, "noticias": noticias[-NOTICIAS:]}
+    return {"mediciones": mediciones, "youtube": youtube, "noticias": noticias}   # todos: la página los muestra por páginas (Bruno, 2026-11-13)
 
 
 def comprobar(d, medidas):

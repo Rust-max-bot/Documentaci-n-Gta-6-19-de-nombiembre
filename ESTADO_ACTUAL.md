@@ -24,9 +24,9 @@ Twitch con números redondos (decisiones en `PLAN.md`).
 tarjetas con miniatura; foto de perfil de los canales de Twitch (el recolector la guarda desde
 el 13 nov); suelo de 1986 sin parpadeo (segundo arreglo: dibujado en un lienzo; falta que Bruno lo confirme). Lo siguiente
 en orden es la 2.4 (rayas del sol de 1986: pide opciones con capturas). Bruno vio el suelo:
-"mucho mejor", apenas titila. Aparte, los titulares van por páginas (12 por página).
-**Pregunta abierta a Bruno:** si la página debe mostrar todos los titulares guardados (por
-páginas) en vez de solo los 60 más nuevos (límite de `generar_web.py`).
+"mucho mejor", apenas titila. Aparte, los titulares van por páginas (12 por página) y, por decisión de Bruno, la
+página muestra todos los guardados (antes, solo los 60 más nuevos). Idea para después: un
+filtro por día en los titulares.
 
 **El recolector funciona solo.** Lo lanza el despertador de Cloudflare (Worker
 `despertador-recolector`, horario `7,37 * * * *`, clave de GitHub en su secreto
@@ -78,6 +78,7 @@ ninguna (la 2.1 a 2.3 terminó el 2026-11-13).
 ## Últimos cambios
 
 - 2026-11-13: grafo de Graphify al día también con los documentos (forzado con permiso de Bruno).
+- 2026-11-13: la página muestra todos los titulares guardados, no solo 60 (decisión de Bruno).
 - 2026-11-13: titulares por páginas (12 por página, del más nuevo al más viejo).
 - 2026-11-13: suelo de 1986 dibujado en un lienzo: las líneas ya no titilan (2.3, segundo arreglo).
 - 2026-11-13: el recolector guarda la foto de perfil de los canales de Twitch; la tabla la muestra (2.2).

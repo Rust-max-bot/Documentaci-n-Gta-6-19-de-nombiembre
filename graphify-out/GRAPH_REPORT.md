@@ -1,7 +1,7 @@
 # Graph Report - Documentación Gta 6  (2026-11-13)
 
 ## Corpus Check
-- 26 files · ~23,859 words
+- 26 files · ~23,904 words
 - Verdict: corpus is large enough that graph structure adds value.
 - Unclassified: 7 file(s) not represented in the graph (top: (none) 3, .jsonl 2, .bat 1)
 
@@ -11,7 +11,7 @@
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `0730bc0e`
+- Built from commit: `ba49edc2`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -37,14 +37,14 @@
 ## God Nodes (most connected - your core abstractions)
 1. `Falla` - 15 edges
 2. `Decisiones ya tomadas` - 14 edges
-3. `Recolector` - 13 edges
-4. `Plan de trabajo` - 13 edges
+3. `Plan de trabajo` - 13 edges
+4. `Recolector` - 13 edges
 5. `Plan del proyecto (PLAN.md)` - 13 edges
 6. `pintar()` - 12 edges
 7. `Despertador del recolector (Cloudflare)` - 12 edges
 8. `main()` - 11 edges
-9. `dibujar()` - 9 edges
-10. `pedir()` - 9 edges
+9. `pedir()` - 9 edges
+10. `pedir_json()` - 9 edges
 
 ## Surprising Connections (you probably didn't know these)
 - `Fase 1 — Recolector funcionando (lo más importante)` --references--> `compacto()`  [INFERRED]
@@ -113,7 +113,7 @@ Cohesion: 0.43
 Nodes (6): despertar(), fetch(), scheduled(), SEMANA_FIN, SEMANA_INICIO, tocaMedir()
 
 ## Knowledge Gaps
-- **32 isolated node(s):** `Estado de Rockstar (anotado a mano en web/eventos.js)`, `Fallo del eje de Twitch (compacto() en web/app.js)`, `Aviso legal (proyecto de fans, no afiliado a Rockstar/Take-Two)`, `Botón de cambio de estilo (data-poner)`, `web/index.html (página del recuerdo)` (+27 more)
+- **32 isolated node(s):** `Estado de Rockstar (anotado a mano en web/eventos.js)`, `Fallo del eje de Twitch (compacto() en web/app.js)`, `Reddit (A5)`, `Fase 5 — Búsqueda calmada tras el lanzamiento`, `Aviso legal (proyecto de fans, no afiliado a Rockstar/Take-Two)` (+27 more)
   These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 126 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
 - **10 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
@@ -122,7 +122,7 @@ _Questions this graph is uniquely positioned to answer:_
 
 - **Why does `Plan del proyecto (PLAN.md)` connect `Claves y fases del plan` to `Reglas de datos y estado actual`?**
   _High betweenness centrality (0.056) - this node is a cross-community bridge._
-- **What connects `Estado de Rockstar (anotado a mano en web/eventos.js)`, `Fallo del eje de Twitch (compacto() en web/app.js)`, `Aviso legal (proyecto de fans, no afiliado a Rockstar/Take-Two)` to the rest of the system?**
+- **What connects `Estado de Rockstar (anotado a mano en web/eventos.js)`, `Fallo del eje de Twitch (compacto() en web/app.js)`, `Reddit (A5)` to the rest of the system?**
   _32 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Despertador y plan de trabajo` be split into smaller, more focused modules?**
   _Cohesion score 0.05 - nodes in this community are weakly interconnected._
