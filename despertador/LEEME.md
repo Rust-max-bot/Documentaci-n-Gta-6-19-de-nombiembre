@@ -1,9 +1,14 @@
 # Despertador del recolector (Cloudflare)
 
-> **Plan B, sin montar (2026-11-12).** Se preparó cuando GitHub no lanzaba las ejecuciones
-> programadas con el repositorio privado. Bruno decidió hacerlo público primero; esto solo
-> se monta si aun así GitHub no las lanza. Si se monta, hay que quitar el `schedule` de
-> `.github/workflows/recolectar.yml` para que no se mida dos veces en el mismo turno.
+> **Montado el 2026-11-13 (~01:30 UTC).** Ya público el repositorio, GitHub seguía sin
+> lanzar las ejecuciones programadas (ninguna en 2 horas), así que Bruno pidió montarlo.
+> Claude creó el Worker, pegó el código y puso el horario desde el navegador de Bruno; Bruno
+> creó la clave de GitHub y la guardó como secreto (antes de las 01:33 UTC). El primer turno
+> (01:37 UTC) se ejecutó bien y, como debe, no midió: era un minuto 37 fuera de la semana del
+> lanzamiento. **Falta verificar** el primer turno que sí mide (02:07 UTC del 13 nov):
+> `gh run list --workflow recolectar.yml --limit 5`. Cuando funcione, hay que quitar el
+> `schedule` de `.github/workflows/recolectar.yml` para que no se mida dos veces en el
+> mismo turno.
 
 GitHub no lanzaba solas las ejecuciones programadas del recolector (tarea 1.4, 2026-11-12).
 Un Worker gratuito de Cloudflare hace de despertador: le pide a GitHub que ejecute el

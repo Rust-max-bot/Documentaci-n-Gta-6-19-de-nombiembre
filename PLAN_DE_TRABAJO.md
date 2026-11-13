@@ -48,7 +48,10 @@ guardan los datos (A2), empezar cuanto antes (A4) y el periodo de un mes con int
       sin causa propia, coincide con un fallo de GitHub en repositorios privados nuevos. Se
       reescribió el `cron` (no bastó) y Bruno decidió hacer público el repositorio, con el
       historial limpio de sus datos personales. Horario nuevo: cada hora, y cada 30 minutos
-      del 17 al 21 nov. Si aun así no arranca: despertador de Cloudflare (`despertador/`).
+      del 17 al 21 nov. Ya público, tampoco lanzó ninguna (00:07 y 01:07 UTC del 13 nov):
+      el 2026-11-13 se montó el despertador de Cloudflare (`despertador/`). El turno de las
+      01:37 UTC corrió bien (y no midió, como debe fuera de la semana del lanzamiento).
+      **Falta verificar** que el de las 02:07 UTC lance el recolector en GitHub.
 - [ ] **1.5 Dejarlo funcionando y revisar la primera hora (A4)** (cambiado por Bruno el
       2026-11-12: en vez de vigilar 24 horas, que exigiría el PC encendido y gastaría
       tokens). Basta con que dos ejecuciones programadas arranquen solas y guarden bien.

@@ -29,11 +29,22 @@ causa oficial. Reescribir el `cron` no bastó. Antes de hacerlo público se limp
 `%USERPROFILE%`. Se borraron las ejecuciones viejas. Detalle en `PLAN.md` ("Visibilidad del
 repositorio"). Horario nuevo: cada hora (minuto 7) y además al minuto 37 del 17 al 21 nov.
 
-**Siguiente paso:** `gh run list --workflow recolectar.yml --event schedule --limit 10`.
+**2026-11-13 (~01:30 UTC): despertador de Cloudflare montado** (plan B), porque ya público
+GitHub tampoco lanzó ninguna programada (00:07 y 01:07 UTC). Claude creó el Worker
+`despertador-recolector`, pegó `despertador/worker.js` y puso el horario `7,37 * * * *` desde el
+Chrome de Bruno; Bruno creó la clave de GitHub (solo Actions, este repo, caduca 31 ene 2027) y
+la guardó como secreto `GITHUB_TOKEN`. El turno de 01:37 UTC corrió bien en Cloudflare y no
+midió, como debe (minuto 37 fuera de la semana del lanzamiento). El plugin de Cloudflare para
+Claude Code ya estaba instalado; su MCP pide iniciar sesión con `/mcp` (no hace falta aquí).
 
-- Si hay dos seguidas con éxito: 1.4 y 1.5 hechas (marcar `[x]`).
-- Si en unas 3 horas sigue sin haber ninguna: plan B, el despertador de Cloudflare, ya escrito
-  y probado (`despertador/`, montaje en su `LEEME.md`; lo monta Bruno en el navegador).
+**Siguiente paso:** `gh run list --workflow recolectar.yml --limit 10`.
+
+- Si desde las 02:07 UTC del 13 nov hay ejecuciones `workflow_dispatch` cada hora (minuto 7)
+  con su commit "Medición automática": el despertador funciona. Entonces quitar el
+  `schedule` de `.github/workflows/recolectar.yml` (para no medir dos veces) y marcar 1.4 y
+  1.5 `[x]`.
+- Si no hay ninguna: mirar el registro del Worker en Cloudflare (*Observability*); lo más
+  probable sería la clave (permiso o repositorio mal elegido).
 - **Pendiente de Bruno:** pedir a soporte de GitHub que borre la referencia del PR #1 (deja
   alcanzable el primer commit, con su correo de Outlook); activar en GitHub "Keep my email
   addresses private" y "Block command line pushes that expose my email".
@@ -73,6 +84,7 @@ tareas 1.2 a 1.5.
 
 ## Últimos cambios
 
+- 2026-11-13: despertador de Cloudflare montado (tarea 1.4); falta ver la primera medición.
 - 2026-11-12: historial limpio de datos personales y repositorio público (tarea 1.4); cada hora.
 - 2026-11-12: `cron` reescrito (mismo horario) para que GitHub lance las programadas (no bastó).
 - 2026-11-12: página conectada a los datos reales (tarea 1.6); `ver_pagina.bat` para verla.
@@ -81,13 +93,13 @@ tareas 1.2 a 1.5.
 - 2026-11-12: Bruno decidió guardar los datos en archivos de texto por día (tarea 1.1 hecha).
 - 2026-11-12: `PLAN_DE_TRABAJO.md` creado con la lista de Bruno ordenada; decisiones nuevas en `PLAN.md`.
 - 2026-11-12: Twitch y YouTube probados desde GitHub con las claves reales; funcionan.
-- 2026-11-12: reglas de trabajo traídas del proyecto de inglés; "paso a paso" en pausa hasta el 18 nov.
 
 ## Pendiente
 
 La lista completa y su orden están en `PLAN_DE_TRABAJO.md`. Lo inmediato:
 
-1. Tarea 1.4: confirmar que, ya público, GitHub lanza solo las programadas; si no, plan B.
+1. Tarea 1.4: confirmar que el despertador lanza el recolector (desde 02:07 UTC del 13 nov);
+   si sí, quitar el `schedule` de `recolectar.yml`.
 2. Bruno: pedir a soporte de GitHub que borre la referencia del PR #1 y activar el correo privado.
 3. Tarea 1.5: confirmar dos ejecuciones programadas seguidas; 1.5b opcional (revisar 24 horas).
 4. Tarea 1.7: prueba completa antes del 18 de noviembre.

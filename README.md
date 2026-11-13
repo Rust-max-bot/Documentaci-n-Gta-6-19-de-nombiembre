@@ -38,8 +38,8 @@ de Rockstar Games). Esas se anotan a mano.
 - **`datos/`**: las mediciones, un archivo de texto por día (en UTC), con una línea por
   medición en formato JSON. El formato está explicado en `recolector/LEEME.md`.
 - **`web/`**: la página, hecha solo con HTML, CSS y JavaScript, sin librerías ni compilación.
-- **`despertador/`**: plan de respaldo (un Worker de Cloudflare) por si GitHub no lanza a su
-  hora las ejecuciones programadas.
+- **`despertador/`**: un Worker de Cloudflare que lanza el recolector a su hora, porque
+  GitHub no lanzaba solas las ejecuciones programadas (montado, en prueba).
 
 Las claves de acceso a Twitch y YouTube no están en el repositorio: se guardan como
 secretos de GitHub.
