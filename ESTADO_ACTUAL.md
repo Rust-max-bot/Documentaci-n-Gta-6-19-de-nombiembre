@@ -39,7 +39,12 @@ lo deja para después (anotado como 2.5).
 `despertador-recolector`, horario `7,37 * * * *`, clave de GitHub en su secreto
 `GITHUB_TOKEN`; caduca el 31 ene 2027, o ~1 mar 2027 según recuerda Bruno: por verificar,
 pero ambas fechas pasan del 19 dic). Verificado el 2026-11-13: 12 ejecuciones seguidas,
-cada hora de 02:07 a 13:07 UTC, todas bien y con su commit "Medición automática". GitHub
+cada hora de 02:07 a 13:07 UTC, todas bien y con su commit "Medición automática". **Revisado otra vez el 2026-11-13 a las 17:14 UTC (sesión en la nube):**
+16 ejecuciones del despertador seguidas, cada hora de 02:07 a 17:07 UTC, todas bien, sin
+huecos en ninguna fuente; `revisar.py` solo marca como faltantes 3 turnos del 12 nov, de antes
+del despertador. El turno extra del minuto 37 (17 al 21 nov) no se puede ver hasta el 17 nov:
+probada la regla de `worker.js` con horas simuladas (empieza el 17 nov 00:07 UTC y termina
+el 22 nov 00:07 UTC, como se decidió). Nada que arreglar. GitHub
 también lanzó dos programadas, tarde (03:23 y 12:05 UTC), que midieron dos veces esos turnos
 (quedan en los datos; no se borran). Por eso se quitó el `schedule` de `recolectar.yml`: ahora
 solo lo lanza el despertador (o una ejecución manual). El repositorio es público desde el
@@ -84,6 +89,7 @@ ninguna (la 2.1 a 2.3 terminó el 2026-11-13).
 
 ## Últimos cambios
 
+- 2026-11-13: recolector revisado desde la nube: 16 turnos seguidos bien (02:07 a 17:07 UTC); nada que arreglar.
 - 2026-11-13: grafo de Graphify al día también con los documentos (forzado con permiso de Bruno).
 - 2026-11-13: repositorio preparado para sesiones en la nube (`NUBE.md`, `pruebas/`, hook de preparación).
 - 2026-11-13: la página muestra todos los titulares guardados, no solo 60 (decisión de Bruno).
@@ -100,7 +106,6 @@ ninguna (la 2.1 a 2.3 terminó el 2026-11-13).
 - 2026-11-13: despertador de Cloudflare montado (tarea 1.4).
 - 2026-11-12: historial limpio de datos personales y repositorio público (tarea 1.4); cada hora.
 - 2026-11-12: `cron` reescrito (mismo horario) para que GitHub lance las programadas (no bastó).
-- 2026-11-12: página conectada a los datos reales (tarea 1.6); `ver_pagina.bat` para verla.
 
 ## Pendiente
 
