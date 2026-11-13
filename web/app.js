@@ -547,6 +547,36 @@
     window.requestAnimationFrame(cuadro);
   })();
 
+  /* ---------- Cápsula del tiempo (tarea 7.4; diseño B "postales de Miami", elegido por Bruno, 2026-11-13) ----------
+     Los dos textos los escribe Bruno en web/capsula.js. Mientras uno esté vacío, su postal sale
+     cerrada: la página nunca pone texto en su nombre. */
+  (function () {
+    var caja = document.getElementById("capsula-postales");
+    if (!caja) return;
+    var C = window.CAPSULA || {};
+    var MESES = ["ENE", "FEB", "MAR", "ABR", "MAY", "JUN", "JUL", "AGO", "SEP", "OCT", "NOV", "DIC"];
+    var candado = '<svg class="cap-candado" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10V7a5 5 0 0 1 10 0v3" fill="none" stroke="currentColor" stroke-width="2"/><rect x="4" y="10" width="16" height="11" rx="2.5" fill="currentColor"/></svg>';
+    function postal(t, titulo, cerradaTitulo, cerradaTexto) {
+      t = t || {};
+      var texto = typeof t.texto === "string" ? t.texto.trim() : "";
+      if (!texto) {
+        return '<article class="cap-postal cerrada"><div class="cap-texto">' + candado + "<strong>" + cerradaTitulo + "</strong><span>" + cerradaTexto + "</span></div>" +
+          '<div class="cap-lado"><div class="cap-estampa vacia"></div></div></article>';
+      }
+      // La fecha va como "AAAA-MM-DD" y se muestra tal cual (es un día, no una hora: no se convierte).
+      var f = /^(\d{4})-(\d{2})-(\d{2})$/.exec(t.fecha || "");
+      if (t.fecha && !(f && +f[2] >= 1 && +f[2] <= 12 && +f[3] >= 1 && +f[3] <= 31)) { console.warn("capsula.js: la fecha \"" + t.fecha + "\" no tiene el formato AAAA-MM-DD"); f = null; }
+      var parrafos = texto.split(/\n\s*\n/).map(function (p) { return "<p>" + limpio(p.trim()).replace(/\n/g, "<br>") + "</p>"; }).join("");
+      return '<article class="cap-postal"><div class="cap-texto"><h3>' + titulo + "</h3>" + parrafos + "</div>" +
+        '<div class="cap-lado"><div class="cap-estampa"><svg viewBox="-60 0 260 420" aria-hidden="true"><use href="#palmera"/></svg></div>' +
+        (f ? '<p class="cap-matasellos" title="Escrito el ' + (+f[3]) + " " + MESES[+f[2] - 1].toLowerCase() + " " + f[1] + '"><span>Miami</span><b>' + (+f[3]) + " " + MESES[+f[2] - 1] + "</b><span>" + f[1] + "</span></p>" : "") +
+        "</div></article>";
+    }
+    caja.innerHTML =
+      postal(C.antes, "Lo que espero", "Todavía sin escribir", "Aquí irá lo que Bruno espera de GTA 6.") +
+      postal(C.despues, "Lo que me pareció", ahora() < SALIDA ? "Se abre después del lanzamiento" : "Todavía sin escribir", "Aquí irá lo que le pareció el juego a Bruno.");
+  })();
+
   /* ---------- Aparecer al bajar ---------- */
   (function () {
     var bloques = document.querySelectorAll(".observar");

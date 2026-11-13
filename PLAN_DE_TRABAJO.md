@@ -261,12 +261,14 @@ fecha límite: ver "Antes del 19 nov".)*
 - [x] **7.2 Hora cero.** Una animación cuando la cuenta regresiva llegue a 0. Después, la cuenta
       se cambia por "días desde el lanzamiento". **Tiene que estar en la página antes del
       19 nov**, porque es para ese momento. Hecho el 2026-11-13 (opciones A y C de Bruno),
-      ajustado a día, atardecer y noche. Se prueba con `?probar-hora-cero`. **Falta unir el PR a `main` antes del 19 nov.**
+      ajustado a día, atardecer y noche. Se prueba con `?probar-hora-cero`. Ya está en `main` (PR #9).
 - [ ] **7.3 Viaje en el tiempo.** Al cambiar de Miami 1986 a 2026, las torres nuevas (tarea
       3.3) suben detrás de los hoteles, y al volver a 1986 bajan. Sin fecha límite.
 - [ ] **7.4 Cápsula del tiempo.** Un texto de Bruno con lo que espera del juego, escrito
       **antes del 19 nov**, y otro después con lo que le pareció. Los escribe Bruno: Claude
       no inventa ese contenido. La página los muestra uno al lado del otro.
+      **Página lista el 2026-11-13** (opción B, postales de Miami; ver `PLAN.md`). **Falta el
+      texto de Bruno** en `web/capsula.js`, antes del 19 nov; queda en `[ ]` hasta entonces.
 - [ ] **7.5 Resumen del día.** Una tarjeta automática por día con lo más importante: máximo de
       espectadores, video más visto, interés en Trends, cantidad de titulares y de
       publicaciones. Sale de los datos ya guardados. Sin fecha límite.

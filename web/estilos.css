@@ -372,6 +372,34 @@ td a:hover, td a:focus-visible { color: var(--a1); text-decoration-color: var(--
 .paginas .salto { color: var(--tenue); padding: 0 2px; }
 @media (max-width: 640px) { .paginas { gap: 6px; } .paginas button { min-width: 36px; padding: 6px 10px; font-size: 13px; } }
 
+/* Cápsula del tiempo (tarea 7.4): dos postales de Miami, opción B elegida por Bruno el
+   2026-11-13. Sello con la palmera de la página y matasellos con el día en que se escribió. */
+.cap-postales { display: grid; grid-template-columns: 1fr 1fr; gap: 26px; margin-top: 22px; padding: 6px; }
+.cap-postal { display: grid; grid-template-columns: 1fr 96px; gap: 16px; padding: 20px; border-radius: 4px; background: color-mix(in srgb, var(--a3) 8%, var(--panel)); border: 1px solid color-mix(in srgb, var(--a3) 45%, transparent); transform: rotate(-1deg); box-shadow: 0 12px 26px -14px rgba(0, 0, 0, .5); }
+.cap-postal + .cap-postal { transform: rotate(1deg); }
+.cap-texto { min-width: 0; padding-right: 16px; border-right: 1px solid color-mix(in srgb, var(--tenue) 45%, transparent); overflow-wrap: anywhere; }
+.cap-texto h3 { margin: 0 0 10px; font-family: var(--f-sub); font-size: clamp(20px, 2.4vw, 26px); font-weight: 700; line-height: 1.2; }
+:root[data-tema="actual"] .cap-texto h3 { font-weight: 400; }
+.cap-texto p { margin: 0 0 10px; }
+.cap-texto p:last-child { margin-bottom: 0; }
+.cap-postal.cerrada .cap-texto { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; min-height: 170px; text-align: center; color: var(--tenue); }
+.cap-postal.cerrada strong { color: var(--texto); font-size: 1.05em; }
+.cap-candado { width: 34px; height: 34px; color: var(--tenue); }
+.cap-lado { display: flex; flex-direction: column; align-items: center; gap: 12px; }
+.cap-estampa { width: 76px; height: 92px; padding: 8px; background: var(--a1); border: 3px solid var(--a1); outline: 3px dotted var(--panel); outline-offset: -3px; }
+.cap-estampa svg { display: block; width: 100%; height: 100%; fill: var(--a3); }
+.cap-estampa.vacia { background: none; border: 2px dashed color-mix(in srgb, var(--tenue) 60%, transparent); outline: none; }
+.cap-matasellos { width: 84px; height: 84px; margin: 0; border-radius: 50%; border: 2px solid var(--a2); color: var(--a2); display: flex; flex-direction: column; align-items: center; justify-content: center; font: 700 11px var(--f-texto); letter-spacing: .12em; line-height: 1.2; text-transform: uppercase; transform: rotate(-12deg); }
+.cap-matasellos b { font-size: 15px; white-space: nowrap; }
+@media (max-width: 640px) {
+  .cap-postales { grid-template-columns: 1fr; }
+  .cap-postal { grid-template-columns: 1fr 70px; gap: 12px; padding: 16px; }
+  .cap-texto { padding-right: 12px; }
+  .cap-estampa { width: 58px; height: 70px; padding: 6px; }
+  .cap-matasellos { width: 66px; height: 66px; font-size: 9px; }
+  .cap-matasellos b { font-size: 12px; }
+}
+
 .pie { text-align: center; padding: 10px 16px 50px; color: var(--tenue); font-size: 14px; font-weight: 500; }
 .pie p { margin: 4px 0; }
 
