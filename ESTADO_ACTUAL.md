@@ -104,6 +104,7 @@ ninguna (la 3.2 y 2.4 terminó el 2026-11-13).
 
 ## Últimos cambios
 
+- 2026-11-13: el recolector guarda el puesto de GTA en Twitch y las tendencias de YouTube (6.3, elegido por Bruno).
 - 2026-11-13: Fase 7 (5 ideas aprobadas por Bruno), fechas "antes del 19 nov" y lista de pendientes ordenada.
 - 2026-11-13: anotada la Fase 6 (más Trends, logros y comparaciones; pedido de Bruno) con avisos 7 y 8.
 - 2026-11-13: Miami 2026 con la paleta B "Atardecer encendido" y torres en lila (3.1, elegida por Bruno).
@@ -126,8 +127,6 @@ La lista completa y su orden están en `PLAN_DE_TRABAJO.md`. Resumen de lo que f
 1. **Antes del 19 nov** (después ya no sirve):
    - 7.2 Hora cero (animación cuando la cuenta llegue a 0).
    - 7.4 Cápsula del tiempo: Bruno escribe sus expectativas.
-   - Decidir con Bruno si el recolector empieza a guardar la 6.3 (puesto en Twitch y tendencias
-     de YouTube) antes del 19 nov; aviso 7 del plan.
 2. **Fase 4:**
    - 4.1 modo día y noche;
    - 4.2 cielo según la hora real;

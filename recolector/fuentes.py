@@ -330,7 +330,8 @@ def youtube_tendencias(estado):
         gta = []
         for n, v in enumerate(items):
             sn = v.get("snippet", {})
-            if ES_GTA.search(sn.get("title", "") + " " + " ".join(sn.get("tags", [])[:30])):
+            # Solo el título: con las etiquetas entraban videos de otros juegos (probado el 13 nov).
+            if ES_GTA.search(sn.get("title", "")):
                 gta.append(ver(v, n + 1))
         regiones[region] = {"en_lista": len(items), "primero": ver(items[0], 1), "gta": gta}
     cod, txt = pedir("https://www.googleapis.com/youtube/v3/channels?" + urllib.parse.urlencode(

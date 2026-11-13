@@ -1,17 +1,17 @@
 # Graph Report - Documentaci-n-Gta-6-19-de-nombiembre  (2026-11-13)
 
 ## Corpus Check
-- 33 files · ~28,101 words
+- 33 files · ~33,813 words
 - Verdict: corpus is large enough that graph structure adds value.
 - Unclassified: 7 file(s) not represented in the graph (top: (none) 3, .jsonl 2, .bat 1)
 
 ## Summary
-- 369 nodes · 595 edges · 25 communities (13 shown, 12 thin omitted)
-- Extraction: 87% EXTRACTED · 13% INFERRED · 0% AMBIGUOUS · INFERRED: 80 edges (avg confidence: 0.87)
+- 378 nodes · 617 edges · 25 communities (13 shown, 12 thin omitted)
+- Extraction: 86% EXTRACTED · 14% INFERRED · 0% AMBIGUOUS · INFERRED: 84 edges (avg confidence: 0.87)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `3f4669c6`
+- Built from commit: `b0cd073e`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -40,7 +40,7 @@
 - generar_web.py
 
 ## God Nodes (most connected - your core abstractions)
-1. `Falla` - 15 edges
+1. `Falla` - 17 edges
 2. `Decisiones ya tomadas` - 14 edges
 3. `Plan de trabajo` - 13 edges
 4. `Recolector` - 13 edges
@@ -48,8 +48,8 @@
 6. `pintar()` - 12 edges
 7. `Despertador del recolector (Cloudflare)` - 12 edges
 8. `main()` - 11 edges
-9. `pedir()` - 10 edges
-10. `dibujar()` - 9 edges
+9. `exigir()` - 11 edges
+10. `pedir()` - 11 edges
 
 ## Surprising Connections (you probably didn't know these)
 - `Fase 1 — Recolector funcionando (lo más importante)` --references--> `compacto()`  [INFERRED]
@@ -82,8 +82,8 @@ Cohesion: 0.05
 Nodes (51): Apagarlo, Comprobar que funciona, Cron Trigger 7,37 * * * * (UTC), Despertador del recolector (Cloudflare), Secreto GITHUB_TOKEN (solo Actions: Read and write, caduca 31 ene 2027), Montar el despertador (pasos en el navegador), Montarlo (lo hace Bruno en el navegador; no hace falta instalar nada), Semana del lanzamiento (SEMANA_INICIO / SEMANA_FIN) (+43 more)
 
 ### Community 1 - "Fuentes de datos (fuentes.py)"
-Cohesion: 0.09
-Nodes (21): _fotos_de_perfil(), _mensaje_youtube(), noticias(), playstation(), reddit(), trends(), twitch(), xbox() (+13 more)
+Cohesion: 0.08
+Nodes (24): _cabeceras_twitch(), _fotos_de_perfil(), _mensaje_youtube(), noticias(), playstation(), reddit(), trends(), twitch() (+16 more)
 
 ### Community 2 - "Reglas de datos y estado actual"
 Cohesion: 0.06
@@ -114,8 +114,8 @@ Cohesion: 0.15
 Nodes (23): aPantalla(), boton(), compacto(), cuadro(), deSantiago(), desfase(), dia(), dibujar() (+15 more)
 
 ### Community 9 - "Validaciones (validar.py)"
-Cohesion: 0.28
-Nodes (12): a_fecha(), es_entero(), es_iso(), exigir(), Invalida, medicion(), _noticias(), _reddit() (+4 more)
+Cohesion: 0.25
+Nodes (14): a_fecha(), es_entero(), es_iso(), exigir(), Invalida, medicion(), _noticias(), _reddit() (+6 more)
 
 ### Community 10 - "Trabajar con Claude en la nube"
 Cohesion: 0.40
@@ -126,27 +126,27 @@ Cohesion: 0.43
 Nodes (6): despertar(), fetch(), scheduled(), SEMANA_FIN, SEMANA_INICIO, tocaMedir()
 
 ### Community 24 - "generar_web.py"
-Cohesion: 0.30
+Cohesion: 0.35
 Nodes (7): abortar(), comprobar(), convertir(), estado_servidor(), leer_mediciones(), main(), ultima_hora_completa()
 
 ## Knowledge Gaps
 - **32 isolated node(s):** `Estado de Rockstar (anotado a mano en web/eventos.js)`, `Fallo del eje de Twitch (compacto() en web/app.js)`, `Reddit (A5)`, `Fase 5 — Búsqueda calmada tras el lanzamiento`, `Aviso legal (proyecto de fans, no afiliado a Rockstar/Take-Two)` (+27 more)
-  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 139 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
+  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 143 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
 - **12 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
 - **Why does `Plan del proyecto (PLAN.md)` connect `Claves y fases del plan` to `Reglas de datos y estado actual`, `Diseño Miami con dos estilos (Miami 2026 y Miami años 80)`?**
-  _High betweenness centrality (0.047) - this node is a cross-community bridge._
+  _High betweenness centrality (0.044) - this node is a cross-community bridge._
 - **What connects `Estado de Rockstar (anotado a mano en web/eventos.js)`, `Fallo del eje de Twitch (compacto() en web/app.js)`, `Reddit (A5)` to the rest of the system?**
   _32 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Despertador y plan de trabajo` be split into smaller, more focused modules?**
   _Cohesion score 0.05 - nodes in this community are weakly interconnected._
 - **Why does `Fase 1 — Recolector funcionando (lo más importante)` connect `Despertador y plan de trabajo` to `Código de la página (app.js)`?**
-  _High betweenness centrality (0.024) - this node is a cross-community bridge._
+  _High betweenness centrality (0.023) - this node is a cross-community bridge._
 - **Should `Fuentes de datos (fuentes.py)` be split into smaller, more focused modules?**
-  _Cohesion score 0.0946938775510204 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.08270676691729323 - nodes in this community are weakly interconnected._
 - **Should `Reglas de datos y estado actual` be split into smaller, more focused modules?**
   _Cohesion score 0.0627177700348432 - nodes in this community are weakly interconnected._
 - **Should `Claves y fases del plan` be split into smaller, more focused modules?**

@@ -232,6 +232,12 @@ Ver el aviso 7, sobre la fecha del lanzamiento.)*
     búsqueda, casi sin gastar cuota de YouTube. Los récords históricos de esos tráilers se
     anotan solo con fuente verificada.
 - [ ] **6.3 GTA comparado con lo más visto en Twitch y YouTube.**
+  - **Guardado desde el 2026-11-13** (Bruno eligió empezar antes del 19 nov). Hay dos fuentes
+    nuevas en el recolector, `twitch_ranking` y `youtube_tendencias` (formato en
+    `recolector/LEEME.md`). Se probaron con una consulta real desde GitHub (ejecución
+    43499158586): GTA V iba en el puesto 4, GTA VI aún fuera de las 100 primeras, 5 videos de
+    GTA en tendencias de Chile y 4 en las de EE. UU., y Rockstar con 14 millones de
+    suscriptores. **Falta mostrarlo en la página**; queda en `[ ]` hasta entonces.
   - Twitch:
     - en qué puesto está GTA VI entre todas las categorías (Twitch da el orden, no el número);
     - los espectadores de las 5 primeras, contados aparte;
@@ -287,7 +293,7 @@ fecha límite: ver "Antes del 19 nov".)*
    justo. Si no alcanza: medir cada 30 minutos la semana del lanzamiento y cada hora el resto.
    El gasto real solo se ve en github.com/settings/billing (con `gh` hace falta un permiso
    extra que Bruno tendría que dar con `gh auth refresh -h github.com -s user`).
-   YouTube no es problema: 101 unidades por medición, unas 4.850 de las 10.000 diarias.
+   YouTube no es problema: 104 unidades por medición desde la 6.3, unas 5.000 de las 10.000 diarias.
 4. **Reddit (A5).** Tiene acceso gratuito para uso personal, pero pide registrar una
    aplicación (otra clave, gratis). La lectura sin clave suele estar bloqueada desde
    servidores como los de GitHub. Nada de esto está verificado todavía.
