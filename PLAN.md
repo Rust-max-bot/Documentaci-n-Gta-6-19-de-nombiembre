@@ -57,6 +57,11 @@ Resultado final: **una página web** con:
 - El diseño se construye **pronto y con datos de ejemplo**, sin esperar a las claves ni a
   los datos reales. Motivo: Bruno tiene acceso al modelo actual solo esta semana.
 - Las animaciones no deben impedir leer los datos; debe funcionar fluido en el PC de Bruno.
+- **Miami 2026: paleta B, "Atardecer encendido" (tarea 3.1, elegida por Bruno el 2026-11-13).**
+  - Cielo de atardecer: azul arriba, después morado, rosa y naranja.
+  - Edificios saturados: turquesa, rosa, amarillo, celeste y naranja, con ventanas oscuras.
+  - Palmeras moradas oscuras y mar más intenso.
+  - Se descartaron A ("Mediodía tropical", cielo azul de día) y C ("Art déco eléctrico", aún más saturada).
 - **Torres que muestran el paso del tiempo (tarea 3.3, opción 2 de Bruno, 2026-11-13).**
   Bruno pidió edificios con carácter y basados en referencias reales, no torres de vidrio
   genéricas. Las formas son propias, inspiradas en edificios reales, sin copiarlos:

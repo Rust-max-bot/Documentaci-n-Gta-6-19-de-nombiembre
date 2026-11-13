@@ -149,8 +149,12 @@ guardan los datos (A2), empezar cuanto antes (A4) y el periodo de un mes con int
 
 ## Fase 3 — Mejoras medianas
 
-- [ ] **3.1 Miami 2026 con colores más vivos e intensos (D3).** Presentar 2 o 3 opciones con
-      capturas. La paleta se inspira en un Miami soleado y saturado; no se copia arte del juego.
+- [x] **3.1 Miami 2026 con colores más vivos e intensos (D3).** Presentar 2 o 3 opciones con
+      capturas. La paleta se inspira en un Miami soleado y saturado; no se copia arte del juego. **Hecha el
+      2026-11-13:** 3 opciones (A "Mediodía tropical", B "Atardecer encendido", C "Art déco
+      eléctrico"); Bruno eligió la B: cielo de atardecer de azul a morado, rosa y naranja,
+      edificios saturados, palmeras moradas oscuras y mar más intenso. Las torres de la 3.3
+      pasaron a lila para combinar. Verificado a 1280 y 384 px en los dos estilos.
 - [x] **3.2 Reddit (A5).** Primero verificar con una consulta real si se puede leer gratis
       desde GitHub. Si exige pago, se descarta (decisión de Bruno). Ver "Avisos", punto 3.
       **Probado desde GitHub el 2026-11-13** (`probar_fuentes.py`, ejecución 43471957389):
