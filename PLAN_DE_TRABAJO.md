@@ -41,7 +41,7 @@ guardan los datos (A2), empezar cuanto antes (A4) y el periodo de un mes con int
 - [x] **1.3 Interruptor y periodo (A6):** archivo de configuración con "activo: sí/no" y
       fecha de fin (por defecto, un mes: hasta el 19 de diciembre de 2026). Bruno puede
       apagarlo, encenderlo o alargarlo cambiando una línea.
-- [ ] **1.4 Ejecución programada en GitHub** cada 30 minutos, con validaciones antes de
+- [x] **1.4 Ejecución programada en GitHub** cada 30 minutos, con validaciones antes de
       guardar (regla "datos por programa"). **Fallo pendiente (2026-11-12):** las
       ejecuciones manuales funcionan, pero hasta las 17:56 de Santiago GitHub no lanzó
       ninguna programada (se saltó las de 16:37, 17:07 y 17:37). Investigado el 2026-11-12:
@@ -51,10 +51,14 @@ guardan los datos (A2), empezar cuanto antes (A4) y el periodo de un mes con int
       del 17 al 21 nov. Ya público, tampoco lanzó ninguna (00:07 y 01:07 UTC del 13 nov):
       el 2026-11-13 se montó el despertador de Cloudflare (`despertador/`). El turno de las
       01:37 UTC corrió bien (y no midió, como debe fuera de la semana del lanzamiento).
-      **Falta verificar** que el de las 02:07 UTC lance el recolector en GitHub.
-- [ ] **1.5 Dejarlo funcionando y revisar la primera hora (A4)** (cambiado por Bruno el
+      **Verificado el 2026-11-13:** el despertador lanzó el recolector cada hora (minuto 7)
+      de 02:07 a 13:07 UTC, 12 seguidas, todas bien y con su medición guardada. GitHub sí
+      lanzó dos programadas, tarde (03:23 y 12:05), que midieron dos veces esos turnos; se
+      quitó el `schedule` de `recolectar.yml`.
+- [x] **1.5 Dejarlo funcionando y revisar la primera hora (A4)** (cambiado por Bruno el
       2026-11-12: en vez de vigilar 24 horas, que exigiría el PC encendido y gastaría
       tokens). Basta con que dos ejecuciones programadas arranquen solas y guarden bien.
+      Hecho el 2026-11-13: 12 seguidas lanzadas por el despertador (ver 1.4).
 - [ ] **1.5b Opcional: revisión única de las primeras 24 horas** en la siguiente sesión, con
       `python recolector/revisar.py --horas 24`: cambio de archivo a medianoche UTC, cupo de
       YouTube, bloqueos de Google Trends y ejecuciones que GitHub se haya saltado. Los datos

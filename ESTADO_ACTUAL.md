@@ -15,45 +15,29 @@
 
 ## Dónde quedamos
 
-*(2026-11-12.)*
+*(2026-11-13, ~13:20 UTC.)*
 
-**Tarea 1.6 hecha:** la página ya muestra los datos reales. Para verla, doble clic en
-`ver_pagina.bat` (trae las mediciones, prepara `web/datos.js`, que no va a git, y abre la
-página).
+**Tanda 1.2 a 1.5 terminada** (más la 1.6, pedida aparte). Esperando que Bruno diga la
+siguiente tanda; lo que sigue en orden es la 1.5b (opcional) y la 1.7.
 
-**Tarea 1.4: repositorio hecho público el 2026-11-12 (~23:10 UTC), decisión de Bruno.** Con
-el repositorio privado GitHub no lanzó ninguna programada (de 19:37 a 22:37 UTC), aunque todo
-lo propio estaba bien. Coincide con un fallo de GitHub en repositorios privados nuevos, sin
-causa oficial. Reescribir el `cron` no bastó. Antes de hacerlo público se limpió el historial
-(con `--force`, autorizado por Bruno): correos al anónimo de GitHub y rutas del PC a
-`%USERPROFILE%`. Se borraron las ejecuciones viejas. Detalle en `PLAN.md` ("Visibilidad del
-repositorio"). Horario nuevo: cada hora (minuto 7) y además al minuto 37 del 17 al 21 nov.
+**El recolector funciona solo.** Lo lanza el despertador de Cloudflare (Worker
+`despertador-recolector`, horario `7,37 * * * *`, clave de GitHub en su secreto
+`GITHUB_TOKEN`, caduca el 31 ene 2027). Verificado el 2026-11-13: 12 ejecuciones seguidas,
+cada hora de 02:07 a 13:07 UTC, todas bien y con su commit "Medición automática". GitHub
+también lanzó dos programadas, tarde (03:23 y 12:05 UTC), que midieron dos veces esos turnos
+(quedan en los datos; no se borran). Por eso se quitó el `schedule` de `recolectar.yml`: ahora
+solo lo lanza el despertador (o una ejecución manual). El repositorio es público desde el
+2026-11-12 (detalle en `PLAN.md`, "Visibilidad del repositorio").
 
-**2026-11-13 (~01:30 UTC): despertador de Cloudflare montado** (plan B), porque ya público
-GitHub tampoco lanzó ninguna programada (00:07 y 01:07 UTC). Claude creó el Worker
-`despertador-recolector`, pegó `despertador/worker.js` y puso el horario `7,37 * * * *` desde el
-Chrome de Bruno; Bruno creó la clave de GitHub (solo Actions, este repo, caduca 31 ene 2027) y
-la guardó como secreto `GITHUB_TOKEN`. El turno de 01:37 UTC corrió bien en Cloudflare y no
-midió, como debe (minuto 37 fuera de la semana del lanzamiento). El plugin de Cloudflare para
-Claude Code ya estaba instalado; su MCP pide iniciar sesión con `/mcp` (no hace falta aquí).
+**Para ver la página:** doble clic en `ver_pagina.bat` (trae las mediciones, prepara
+`web/datos.js`, que no va a git, y abre la página).
 
-**Siguiente paso:** `gh run list --workflow recolectar.yml --limit 10`.
+**Si un día faltan mediciones:** mirar el registro del Worker en Cloudflare
+(*Observability*); lo más probable sería la clave (caducada o sin permiso).
 
-- Si desde las 02:07 UTC del 13 nov hay ejecuciones `workflow_dispatch` cada hora (minuto 7)
-  con su commit "Medición automática": el despertador funciona. Entonces quitar el
-  `schedule` de `.github/workflows/recolectar.yml` (para no medir dos veces) y marcar 1.4 y
-  1.5 `[x]`.
-- Si no hay ninguna: mirar el registro del Worker en Cloudflare (*Observability*); lo más
-  probable sería la clave (permiso o repositorio mal elegido).
-- **Pendiente de Bruno:** pedir a soporte de GitHub que borre la referencia del PR #1 (deja
-  alcanzable el primer commit, con su correo de Outlook); activar en GitHub "Keep my email
-  addresses private" y "Block command line pushes that expose my email".
-
-**Tanda en curso: 1.2 a 1.5** (más la 1.6, pedida aparte y ya hecha). 1.2 y 1.3 hechas.
-El recolector está en GitHub (workflow "Recolectar datos"; formato y uso en
-`recolector/LEEME.md`). Las mediciones reales de
-`datos/2026-11-12.jsonl` son todas manuales, con las seis fuentes respondiendo. La 1.5 la
-cambió Bruno: basta con dos ejecuciones programadas que arranquen solas, sin vigilar 24 horas.
+**Pendiente de Bruno:** pedir a soporte de GitHub que borre la referencia del PR #1 (deja
+alcanzable el primer commit, con su correo de Outlook); activar en GitHub "Keep my email
+addresses private" y "Block command line pushes that expose my email".
 
 **Hecho:**
 
@@ -80,11 +64,12 @@ de 2026. Lanzamiento: 19 de noviembre, 00:00 de Santiago.
 
 **Reglas en pausa:** ninguna. "Paso a paso con permiso" está activa **por tandas**: Bruno
 dice qué pasos hacer y Claude no para hasta completarlos (ver `CLAUDE.md`). Tanda actual:
-tareas 1.2 a 1.5.
+ninguna (la 1.2 a 1.5 terminó el 2026-11-13).
 
 ## Últimos cambios
 
-- 2026-11-13: despertador de Cloudflare montado (tarea 1.4); falta ver la primera medición.
+- 2026-11-13: despertador verificado (12 turnos bien); `schedule` quitado; tareas 1.4 y 1.5 hechas.
+- 2026-11-13: despertador de Cloudflare montado (tarea 1.4).
 - 2026-11-12: historial limpio de datos personales y repositorio público (tarea 1.4); cada hora.
 - 2026-11-12: `cron` reescrito (mismo horario) para que GitHub lance las programadas (no bastó).
 - 2026-11-12: página conectada a los datos reales (tarea 1.6); `ver_pagina.bat` para verla.
@@ -92,15 +77,12 @@ tareas 1.2 a 1.5.
 - 2026-11-12: "paso a paso con permiso" vuelve, por tandas que define Bruno; D6 se ignora por ahora.
 - 2026-11-12: Bruno decidió guardar los datos en archivos de texto por día (tarea 1.1 hecha).
 - 2026-11-12: `PLAN_DE_TRABAJO.md` creado con la lista de Bruno ordenada; decisiones nuevas en `PLAN.md`.
-- 2026-11-12: Twitch y YouTube probados desde GitHub con las claves reales; funcionan.
 
 ## Pendiente
 
 La lista completa y su orden están en `PLAN_DE_TRABAJO.md`. Lo inmediato:
 
-1. Tarea 1.4: confirmar que el despertador lanza el recolector (desde 02:07 UTC del 13 nov);
-   si sí, quitar el `schedule` de `recolectar.yml`.
-2. Bruno: pedir a soporte de GitHub que borre la referencia del PR #1 y activar el correo privado.
-3. Tarea 1.5: confirmar dos ejecuciones programadas seguidas; 1.5b opcional (revisar 24 horas).
-4. Tarea 1.7: prueba completa antes del 18 de noviembre.
-5. Opcional: el hook de diseño de Impeccable (Bruno ejecuta `npx impeccable install` en el PC).
+1. Bruno: pedir a soporte de GitHub que borre la referencia del PR #1 y activar el correo privado.
+2. Tarea 1.5b (opcional): revisar las primeras 24 horas con `python recolector/revisar.py --horas 24`.
+3. Tarea 1.7: prueba completa antes del 18 de noviembre.
+4. Opcional: el hook de diseño de Impeccable (Bruno ejecuta `npx impeccable install` en el PC).

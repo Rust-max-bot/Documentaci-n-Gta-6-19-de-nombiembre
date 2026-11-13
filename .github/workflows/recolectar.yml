@@ -1,15 +1,13 @@
 # Mide las fuentes y guarda una línea en datos/AAAA-MM-DD.jsonl: cada hora, y cada 30 minutos
 # la semana del lanzamiento (decisión de Bruno, 2026-11-12).
 # Se apaga, se enciende o se alarga en recolector/interruptor.json (no hace falta tocar este archivo).
-# Las ejecuciones programadas solo corren desde main. GitHub puede atrasarlas varios minutos.
+# Lo lanza el despertador de Cloudflare (despertador/worker.js) a los minutos 7 y 37 (UTC),
+# porque GitHub no lanzaba a tiempo sus ejecuciones programadas. Por eso aquí no hay
+# "schedule": si lo hubiera, algunos turnos se medirían dos veces (tarea 1.4, 2026-11-13).
 name: Recolectar datos
 
 on:
-  schedule:
-    # Horas en UTC. Minutos 7 y 37: en punto GitHub está más saturado.
-    - cron: "7 * * * *"          # cada hora, todo el periodo
-    - cron: "37 * 17-21 11 *"    # además al minuto 37 del 17 al 21 de noviembre (lanzamiento)
-  workflow_dispatch:
+  workflow_dispatch:   # lo usa el despertador; también sirve para lanzarlo a mano
 
 permissions:
   contents: write

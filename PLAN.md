@@ -20,7 +20,7 @@ Resultado final: **una página web** con:
 |---|---|
 | Formato del recuerdo | Página web con línea de tiempo y tablas de números |
 | Fuentes imprescindibles | Twitch, YouTube y Google Trends |
-| Dónde se ejecuta el programa | En GitHub, dentro de este repositorio (ejecuciones programadas). **2026-11-12:** con el repositorio privado GitHub no lanzó ninguna programada; Bruno decidió hacerlo público (ver "Visibilidad del repositorio"). **2026-11-13:** ya público, siguió sin lanzar ninguna en 2 horas; Bruno pidió montar el plan B, un despertador en Cloudflare (`despertador/`), que lanza el workflow por la API de GitHub. Montado, pendiente de verificar. Se descartó pasar el recolector entero a Cloudflare gratis: admite solo 50 consultas y 10 ms de cálculo por ejecución, y el día del lanzamiento Twitch puede pasarse; el plan de pago (5 USD/mes) queda como opción |
+| Dónde se ejecuta el programa | En GitHub, dentro de este repositorio (ejecuciones programadas). **2026-11-12:** con el repositorio privado GitHub no lanzó ninguna programada; Bruno decidió hacerlo público (ver "Visibilidad del repositorio"). **2026-11-13:** ya público, siguió sin lanzar ninguna en 2 horas; Bruno pidió montar el plan B, un despertador en Cloudflare (`despertador/`), que lanza el workflow por la API de GitHub. Verificado el 2026-11-13 (12 turnos seguidos bien); el `schedule` de GitHub se quitó para no medir dos veces. Se descartó pasar el recolector entero a Cloudflare gratis: admite solo 50 consultas y 10 ms de cálculo por ejecución, y el día del lanzamiento Twitch puede pasarse; el plan de pago (5 USD/mes) queda como opción |
 | Cada cuánto se guardan datos | **Cambiado el 2026-11-12 (Bruno):** cada hora (minuto 7), y también al minuto 37 del 17 al 21 de noviembre (UTC), la semana del lanzamiento. Motivo: gastar menos sin perder los picos cortos del lanzamiento. Antes era cada 30 minutos siempre |
 | Qué días | **Cambiado el 2026-11-12:** un mes, empezando cuanto antes (para registrar el interés previo) y hasta el 19 de diciembre de 2026 por defecto. Con interruptor manual para apagar, encender o alargar. Antes eran solo del 18 al 20 de noviembre |
 | Claves de Twitch y YouTube | Las crea Bruno con una guía paso a paso. Aún no existen |
@@ -154,7 +154,8 @@ descarta si es de pago; el diseño de 2026 debe ser más vivo, sin copiar arte d
    minutos y alguna puede no ejecutarse. Cada medición guardará su hora real.
    **Pasó de verdad (2026-11-12):** con el repositorio privado no lanzó ninguna. Se hizo
    público y tampoco las lanzó en 2 horas: el 2026-11-13 se montó el despertador de
-   Cloudflare (`despertador/`).
+   Cloudflare (`despertador/`), que funciona; GitHub después lanzó alguna programada,
+   con 15-20 minutos de atraso.
 4. **Las ejecuciones programadas de GitHub solo funcionan desde la rama principal (`main`).**
    El trabajo tiene que estar unido a `main` antes del 18 de noviembre.
 5. **Límite diario de YouTube.** El acceso gratuito tiene un tope de consultas por día.
