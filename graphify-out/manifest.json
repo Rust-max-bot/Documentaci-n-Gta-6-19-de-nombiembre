@@ -48,9 +48,9 @@
     "semantic_hash": ""
   },
   "ESTADO_ACTUAL.md": {
-    "mtime": 1794590598.7107472,
-    "seen": 1794590600.5464706,
-    "ast_hash": "050474c6fd0ab7324195b33129d28850",
+    "mtime": 1794590787.1622386,
+    "seen": 1794590793.8383274,
+    "ast_hash": "35c4c9b5aaae6869615db8d8765dfa09",
     "semantic_hash": ""
   },
   "GUIA_CLAVES.md": {
@@ -60,9 +60,9 @@
     "semantic_hash": ""
   },
   "PLAN.md": {
-    "mtime": 1794590385.841606,
-    "seen": 1794590600.5464737,
-    "ast_hash": "5342fc3f723b9b538c1d72e6a6d96a15",
+    "mtime": 1794591227.2550907,
+    "seen": 1794591228.0425863,
+    "ast_hash": "b14dd1abc7d080460a1dd723955e181d",
     "semantic_hash": ""
   },
   "README.md": {
@@ -84,9 +84,9 @@
     "semantic_hash": ""
   },
   "recolector/probar_fuentes.py": {
-    "mtime": 1794590463.4428513,
-    "seen": 1794590600.5464594,
-    "ast_hash": "89f367d55ff9e186fe78f6c4f1dda155",
+    "mtime": 1794591112.904152,
+    "seen": 1794591228.0425591,
+    "ast_hash": "7f0a5bf108ab6b2c8656e7224bf3826b",
     "semantic_hash": ""
   },
   ".github/workflows/recolectar.yml": {
@@ -96,9 +96,9 @@
     "semantic_hash": "d8fdbbccb78ef63a922c9d685881f86e"
   },
   "recolector/fuentes.py": {
-    "mtime": 1794590061.680671,
-    "seen": 1794590600.5464563,
-    "ast_hash": "51bde086d96b7d3aff908235903e5c61",
+    "mtime": 1794590870.0847766,
+    "seen": 1794591228.0425522,
+    "ast_hash": "4fa4917a8a31dc4b33a9fb12d12aa21e",
     "semantic_hash": ""
   },
   "recolector/interruptor.json": {
@@ -108,10 +108,10 @@
     "semantic_hash": "b8c4851586f3fbbdd7b1ac30238e6af6"
   },
   "recolector/recolectar.py": {
-    "mtime": 1794590061.680671,
-    "seen": 1794590600.5464604,
-    "ast_hash": "bdd0eeb02253bb010cc6f59a31b0ca58",
-    "semantic_hash": "bdd0eeb02253bb010cc6f59a31b0ca58"
+    "mtime": 1794590747.844247,
+    "seen": 1794590793.8383164,
+    "ast_hash": "be28baf429b548cb55b2920bef6108be",
+    "semantic_hash": ""
   },
   "recolector/red.py": {
     "mtime": 1794590061.680671,
@@ -120,21 +120,21 @@
     "semantic_hash": "c561192cfc8bdd739a07ffb2fd5e3e84"
   },
   "recolector/revisar.py": {
-    "mtime": 1794590061.680671,
-    "seen": 1794590600.5464628,
-    "ast_hash": "60d50a3c6d56149e1a3dee74995c3927",
-    "semantic_hash": "60d50a3c6d56149e1a3dee74995c3927"
+    "mtime": 1794590747.844427,
+    "seen": 1794590793.838319,
+    "ast_hash": "c38498c5df597eaaae67f934ebb056e0",
+    "semantic_hash": ""
   },
   "recolector/validar.py": {
-    "mtime": 1794590061.680671,
-    "seen": 1794590600.5464637,
-    "ast_hash": "a1e72afa4b660a178b794fc4e2fe5b1f",
+    "mtime": 1794590747.8439083,
+    "seen": 1794590793.83832,
+    "ast_hash": "b77d5813052a30f3b9061a4ae1517ebb",
     "semantic_hash": ""
   },
   "PLAN_DE_TRABAJO.md": {
-    "mtime": 1794590598.7101777,
-    "seen": 1794590600.5464747,
-    "ast_hash": "d69f988201dc311dc48206463b084db1",
+    "mtime": 1794590787.1618733,
+    "seen": 1794590793.8383317,
+    "ast_hash": "c3de2ac4f6ad5b83a7670c915aa2715a",
     "semantic_hash": ""
   },
   "recolector/LEEME.md": {

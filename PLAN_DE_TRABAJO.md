@@ -155,8 +155,10 @@ guardan los datos (A2), empezar cuanto antes (A4) y el periodo de un mes con int
       el JSON sin clave (www, old y api.reddit.com) da 403, bloqueado. El RSS de
       `r/GTA6/new/.rss` sí responde (25 publicaciones), pero solo trae título, autor, fecha y
       enlace: ni votos, ni comentarios, ni suscriptores. Desde la nube de Claude Reddit está
-      bloqueado del todo. Falta que Bruno elija: RSS (gratis, sin números) o registrar una
-      aplicación de Reddit (clave gratis, con números; sin verificar si Reddit la aprueba).
+      bloqueado del todo. **Bruno eligió el RSS** (2026-11-13); la clave de Reddit, para
+      tener votos y comentarios, queda para después. **El recolector ya guarda Reddit** (las
+      publicaciones nuevas de cada medición), probado desde GitHub sin tocar `datos/`.
+      Falta: mostrarlo en la página (cambia cómo se ve: pide opciones).
 - [ ] **3.3 Edificios que reflejan el paso del tiempo (D4):** en 2026 siguen los hoteles de
       1986 y aparecen torres nuevas detrás. Presentar opciones con capturas.
 
