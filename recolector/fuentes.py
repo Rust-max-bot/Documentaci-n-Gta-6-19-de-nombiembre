@@ -14,6 +14,7 @@ import http.cookiejar
 import json
 import os
 import re
+import time
 import urllib.parse
 import urllib.request
 import xml.etree.ElementTree as ET
@@ -31,6 +32,11 @@ YOUTUBE_SEGUIMIENTO = 50          # máximo de videos cuyas visitas se miden (1 
 TRENDS_PALABRA = "GTA 6"
 TRENDS_PUNTOS = 24                # últimas 24 horas de la serie de 7 días
 NOTICIAS_RSS = "https://news.google.com/rss/search?q=%22GTA+6%22&hl=es-419&gl=CL&ceid=CL:es-419"
+REDDIT_RSS = "https://www.reddit.com/r/GTA6/new/.rss?limit=100"
+# Reddit bloquea su JSON sin clave desde GitHub (403, probado el 2026-11-13); el RSS sí
+# responde, pero sin votos ni comentarios. Bruno eligió el RSS (2026-11-13).
+REDDIT_ESPERA_429 = 20           # segundos antes del segundo intento si Reddit responde 429
+REDDIT_UA = "linux:recuerdo-gta6:v0.1 (proyecto personal, solo lectura)"
 RECORTE_ORIGINAL = 30000          # caracteres de la respuesta original que se guardan si hay problemas
 
 
@@ -219,6 +225,43 @@ def noticias(estado):
     return {"en_fuente": len(items), "nuevas": nuevas}
 
 
+def reddit(estado):
+    """Publicaciones nuevas de r/GTA6 (RSS en formato Atom): título, autor, fecha y enlace."""
+    cod, txt = pedir(REDDIT_RSS, {"User-Agent": REDDIT_UA})
+    if cod == 429:
+        # "Demasiadas consultas": los servidores de GitHub se comparten y Reddit cuenta las
+        # consultas por dirección. Se espera un poco y se intenta una sola vez más.
+        time.sleep(REDDIT_ESPERA_429)
+        cod, txt = pedir(REDDIT_RSS, {"User-Agent": REDDIT_UA})
+    if cod != 200:
+        raise Falla(f"Reddit: código {cod}")
+    atom = "{http://www.w3.org/2005/Atom}"
+    try:
+        entradas = ET.fromstring(txt).findall(atom + "entry")
+    except ET.ParseError:
+        raise Falla("Reddit: la respuesta no es un RSS válido") from None
+    if not entradas:
+        raise Falla("Reddit no devolvió publicaciones")
+    nuevas = []
+    for e in entradas:
+        pid = (e.findtext(atom + "id") or "").strip()
+        if not pid or pid in estado["reddit_vistas"]:
+            continue   # solo se guardan las publicaciones que no estaban en mediciones anteriores
+        enlace = e.find(atom + "link")
+        try:
+            fecha = a_iso(datetime.fromisoformat(e.findtext(atom + "published") or ""))
+        except ValueError:
+            fecha = None
+        nuevas.append({
+            "id": pid,
+            "titulo": (e.findtext(atom + "title") or "").strip(),
+            "autor": (e.findtext(f"{atom}author/{atom}name") or "").strip() or None,
+            "url": enlace.get("href") if enlace is not None else None,
+            "t": fecha,
+        })
+    return {"comunidad": "r/GTA6", "en_fuente": len(entradas), "nuevas": nuevas}
+
+
 def playstation(estado):
     d = pedir_json("https://status.playstation.com/data/statuses/region/SCEA.json", "estado de PlayStation")
     chile = next((c for c in d.get("countries", []) if c.get("countryCode") == "CL"), None)
@@ -261,6 +304,7 @@ FUENTES = {
     "youtube": youtube,
     "trends": trends,
     "noticias": noticias,
+    "reddit": reddit,
     "playstation": playstation,
     "xbox": xbox,
 }

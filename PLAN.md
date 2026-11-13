@@ -150,6 +150,18 @@ cambios de diseño. Están ordenadas en `PLAN_DE_TRABAJO.md`, con los avisos sob
 Decisiones que salen de esa lista: el periodo pasa a un mes con interruptor manual; Reddit se
 descarta si es de pago; el diseño de 2026 debe ser más vivo, sin copiar arte del juego.
 
+### Reddit (decisión de Bruno, 2026-11-13)
+
+Probado desde GitHub el 2026-11-13: el JSON sin clave (`www`, `old` y `api.reddit.com`) da
+403. El RSS de `r/GTA6/new/.rss` responde, pero solo con título, autor, fecha y enlace.
+**Bruno eligió el RSS** (sin votos ni comentarios); la clave de Reddit, que daría esos
+números, queda para después. El recolector guarda solo las publicaciones nuevas de cada
+medición, como con los titulares. Probado con el recolector completo desde GitHub (ejecución
+43473711427): 100 publicaciones, todas validadas. **Ojo:** Reddit responde 429 ("demasiadas
+consultas") a la segunda consulta seguida desde la misma máquina; el recolector consulta una
+sola vez (y reintenta una vez a los 20 s), así que lo normal es que funcione. Si alguna hora
+sale 429, queda como hueco de Reddit y las demás fuentes siguen igual.
+
 ## 6. Riesgos conocidos
 
 1. **Queda poco tiempo.** El programa debe estar probado antes del 18 de noviembre.
