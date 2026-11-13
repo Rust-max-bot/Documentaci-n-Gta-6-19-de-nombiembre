@@ -28,6 +28,13 @@ en orden es la 2.4 (rayas del sol de 1986: pide opciones con capturas). Bruno vi
 página muestra todos los guardados (antes, solo los 60 más nuevos). Idea para después: un
 filtro por día en los titulares.
 
+**Repositorio listo para sesiones en la nube** (2026-11-13, pedido de Bruno, que tiene
+créditos para la nube): guía para Bruno en `NUBE.md`; al arrancar en la nube,
+`.claude/hooks/preparar-nube.sh` instala las pruebas, Chromium y Graphify; las pruebas
+visuales están en `pruebas/` (antes solo en el PC de Claude). **Sin probar todavía en la
+nube:** la primera sesión debe decir si se instaló todo (sobre todo Chromium). TikTok: Bruno
+lo deja para después (anotado como 2.5).
+
 **El recolector funciona solo.** Lo lanza el despertador de Cloudflare (Worker
 `despertador-recolector`, horario `7,37 * * * *`, clave de GitHub en su secreto
 `GITHUB_TOKEN`; caduca el 31 ene 2027, o ~1 mar 2027 según recuerda Bruno: por verificar,
@@ -78,6 +85,7 @@ ninguna (la 2.1 a 2.3 terminó el 2026-11-13).
 ## Últimos cambios
 
 - 2026-11-13: grafo de Graphify al día también con los documentos (forzado con permiso de Bruno).
+- 2026-11-13: repositorio preparado para sesiones en la nube (`NUBE.md`, `pruebas/`, hook de preparación).
 - 2026-11-13: la página muestra todos los titulares guardados, no solo 60 (decisión de Bruno).
 - 2026-11-13: titulares por páginas (12 por página, del más nuevo al más viejo).
 - 2026-11-13: suelo de 1986 dibujado en un lienzo: las líneas ya no titilan (2.3, segundo arreglo).

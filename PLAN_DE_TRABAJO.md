@@ -135,6 +135,13 @@ guardan los datos (A2), empezar cuanto antes (A4) y el periodo de un mes con int
 - [ ] **2.4 Que las rayas del sol de 1986 no se confundan con las líneas de neón de los
       edificios (D2).** Cambia cómo se ve: presentar opciones con capturas.
 
+- [ ] **2.5 (idea para después, pedida por Bruno el 2026-11-13) TikTok.** No hay acceso
+      oficial para un proyecto personal: la API de investigación es solo para instituciones
+      académicas sin fines de lucro, y TikTok Creative Center (hashtags con visitas) no tiene
+      API y bloquea consultas desde servidores. Caminos: probarlo con una consulta real desde
+      el PC y desde GitHub, o anotar a mano lo llamativo como evento. Bruno lo dejó para
+      después.
+
 ## Fase 3 — Mejoras medianas
 
 - [ ] **3.1 Miami 2026 con colores más vivos e intensos (D3).** Presentar 2 o 3 opciones con

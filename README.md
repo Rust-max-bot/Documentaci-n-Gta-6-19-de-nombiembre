@@ -40,6 +40,7 @@ de Rockstar Games). Esas se anotan a mano.
 - **`web/`**: la página, hecha solo con HTML, CSS y JavaScript, sin librerías ni compilación.
 - **`despertador/`**: un Worker de Cloudflare que lanza el recolector a su hora, porque
   GitHub no lanzaba solas las ejecuciones programadas (funciona desde el 13 de noviembre).
+- **`pruebas/`**: pruebas automáticas de la página y del despertador con Playwright.
 
 Las claves de acceso a Twitch y YouTube no están en el repositorio: se guardan como
 secretos de GitHub.

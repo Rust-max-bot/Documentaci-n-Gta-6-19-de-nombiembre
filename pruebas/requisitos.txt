@@ -1,0 +1,4 @@
+# Programas para las pruebas de pruebas/ (no los usa el recolector, que solo usa la biblioteca estándar).
+# En la nube los instala .claude/hooks/preparar-nube.sh; en el PC: pip install -r pruebas/requisitos.txt
+playwright==1.65.1
+pillow==13.0.0

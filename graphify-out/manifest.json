@@ -12,10 +12,10 @@
     "semantic_hash": "fc01e697f716b738fe7de87538b959d9"
   },
   ".claude/settings.json": {
-    "mtime": 1794501223.362804,
-    "seen": 1794581185.81272,
-    "ast_hash": "35e4166f00ee997a827d28037cf24e9d",
-    "semantic_hash": "35e4166f00ee997a827d28037cf24e9d"
+    "mtime": 1794589091.0609193,
+    "seen": 1794589206.0485709,
+    "ast_hash": "17e2309d344530ab0dbe873cce237b02",
+    "semantic_hash": ""
   },
   "web/app.js": {
     "mtime": 1794585670.0194547,
@@ -42,15 +42,15 @@
     "semantic_hash": "9b31786b637be3c13978bec4c2330752"
   },
   "CLAUDE.md": {
-    "mtime": 1794581199.1888585,
-    "seen": 1794582273.399719,
-    "ast_hash": "6934d1360bdd4bd5ba4e919d74fcc410",
+    "mtime": 1794589188.3574333,
+    "seen": 1794589206.0486028,
+    "ast_hash": "b98c87390e98d7f395010f7584727d15",
     "semantic_hash": ""
   },
   "ESTADO_ACTUAL.md": {
-    "mtime": 1794585918.8507297,
-    "seen": 1794585920.2956586,
-    "ast_hash": "4ce3416adf67bc7cc35dd5d8e3a858e9",
+    "mtime": 1794589188.3594522,
+    "seen": 1794589206.0486045,
+    "ast_hash": "5acf95cae846292dbe25138ba85e8d12",
     "semantic_hash": ""
   },
   "GUIA_CLAVES.md": {
@@ -66,10 +66,10 @@
     "semantic_hash": ""
   },
   "README.md": {
-    "mtime": 1794578039.130153,
-    "seen": 1794581185.81275,
-    "ast_hash": "9f9b409041a1d103f9ef1d24963e8410",
-    "semantic_hash": "9f9b409041a1d103f9ef1d24963e8410"
+    "mtime": 1794589202.9859967,
+    "seen": 1794589206.0486102,
+    "ast_hash": "e8d6834a8f90d3e44512b308820bea27",
+    "semantic_hash": ""
   },
   "web/index.html": {
     "mtime": 1794585669.1845458,
@@ -132,9 +132,9 @@
     "semantic_hash": ""
   },
   "PLAN_DE_TRABAJO.md": {
-    "mtime": 1794585756.001063,
-    "seen": 1794585757.532879,
-    "ast_hash": "e3fab8c558f00c478b56debd6ba9081e",
+    "mtime": 1794589188.358439,
+    "seen": 1794589206.048609,
+    "ast_hash": "d5f4340c0bb30bc4769d19ea6f2bcd47",
     "semantic_hash": ""
   },
   "recolector/LEEME.md": {
@@ -160,5 +160,53 @@
     "seen": 1794581185.8127513,
     "ast_hash": "ca0d6dcc11f2af686caae8a18375a5e2",
     "semantic_hash": "ca0d6dcc11f2af686caae8a18375a5e2"
+  },
+  ".claude/hooks/preparar-nube.sh": {
+    "mtime": 1794589090.2227538,
+    "seen": 1794589206.0485637,
+    "ast_hash": "bdd97079cecd81f926da760e6c948261",
+    "semantic_hash": ""
+  },
+  "pruebas/medir_parpadeo.py": {
+    "mtime": 1794589070.3743787,
+    "seen": 1794589206.0485787,
+    "ast_hash": "57cc60c947d684dceeba90fb2678401d",
+    "semantic_hash": ""
+  },
+  "pruebas/navegador.py": {
+    "mtime": 1794589067.9581609,
+    "seen": 1794589206.0485804,
+    "ast_hash": "63354a5ebb22e4d77c452ced97ae91c8",
+    "semantic_hash": ""
+  },
+  "pruebas/probar_despertador.py": {
+    "mtime": 1794589069.5689666,
+    "seen": 1794589206.0485818,
+    "ast_hash": "2040a1dee24307a889fac887c5275aa3",
+    "semantic_hash": ""
+  },
+  "pruebas/probar_pagina.py": {
+    "mtime": 1794589068.7628455,
+    "seen": 1794589206.048583,
+    "ast_hash": "6533611ddbc419d73f01ad1daae4e736",
+    "semantic_hash": ""
+  },
+  "NUBE.md": {
+    "mtime": 1794589167.1533117,
+    "seen": 1794589206.0486064,
+    "ast_hash": "c958d1aa8e93f089ff1eac44d0cff411",
+    "semantic_hash": ""
+  },
+  "pruebas/LEEME.md": {
+    "mtime": 1794589166.3406448,
+    "seen": 1794589206.0486126,
+    "ast_hash": "b4fc9e610ffefd91f27f63a167d6a3d3",
+    "semantic_hash": ""
+  },
+  "pruebas/requisitos.txt": {
+    "mtime": 1794589071.1827276,
+    "seen": 1794589206.0486135,
+    "ast_hash": "0ac655812324e4ba1229427b2085fa74",
+    "semantic_hash": ""
   }
 }

@@ -24,5 +24,8 @@ graphify-out/cost.json
 web/datos.js
 web/datos.js.tmp
 
+# Capturas de las pruebas (pruebas/): se rehacen cada vez
+pruebas/capturas/
+
 # Graphify: guarda la ruta de la carpeta del PC (scan_root); el repositorio es público
 graphify-out/.graphify_build_state.json

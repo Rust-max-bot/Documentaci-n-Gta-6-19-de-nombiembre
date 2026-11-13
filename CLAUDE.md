@@ -57,7 +57,9 @@ a estos archivos, ganan los archivos.
   archivo. Nunca se presenta como real.
 - **Verificar de verdad:** Playwright a 1280 y 384 px de ancho, en los dos estilos ("Miami
   1986" y "Miami 2026"), sin errores en la consola ni desborde horizontal, y capturas de lo
-  nuevo. Los fallos se reportan tal cual.
+  nuevo. Los fallos se reportan tal cual. Con `python pruebas/probar_pagina.py` (hace todo
+  eso; `--seccion "#id"` captura una parte de cerca) y, si se toca el despertador,
+  `python pruebas/probar_despertador.py`. Detalle en `pruebas/LEEME.md`.
 - **Seguir `PLAN_DE_TRABAJO.md` en orden.** Una tarea se marca `[x]` solo cuando está hecha y
   verificada sin errores; si queda a medias, sigue en `[ ]` con el fallo anotado al lado.
 - **Usar Graphify siempre que se pueda, para ahorrar tokens y tiempo** (pedido de Bruno,
@@ -171,6 +173,22 @@ El repositorio de GitHub es la única fuente de verdad. Para no perder trabajo n
 
 En la nube, el entorno se borra al terminar la sesión: lo que no se sube con `git push` se pierde.
 
+**Sesiones en la nube** (Bruno las lanza con la guía de `NUBE.md`):
+
+- Al arrancar, el hook `SessionStart` corre `.claude/hooks/preparar-nube.sh` (solo con
+  `CLAUDE_CODE_REMOTE=true`): instala `pruebas/requisitos.txt`, Chromium para Playwright y
+  Graphify, y genera `web/datos.js`. Su mensaje dice qué quedó listo y qué falta; incluirlo
+  en el resumen inicial a Bruno. Si falta Chromium, nada visual se da por verificado.
+- Ramas: trabajar en `main` como en el PC. Si la nube no deja subir a `main`, trabajar en su
+  rama, abrir un *pull request* y decírselo a Bruno (él lo une desde GitHub).
+- Capturas para que Bruno decida un diseño: él no ve los archivos de la nube. Subirlas a una
+  rama `revision/<tema>` (carpeta `revision/`), darle los enlaces de GitHub y borrar la rama
+  cuando decida. Nunca a `main`.
+- Tandas largas: si una tarea espera una decisión de Bruno, preguntarle y, mientras tanto,
+  seguir con las tareas de la tanda que no dependan de esa decisión.
+- `datos/` recibe un commit cada hora desde GitHub: hacer `git pull --rebase` antes de cada
+  push (ya está en "Guardado al terminar cada paso").
+
 ## Relevo entre sesiones y modelos
 
 Este proyecto puede continuarlo otra sesión u otro modelo. Para que el relevo funcione:
@@ -183,8 +201,9 @@ Este proyecto puede continuarlo otra sesión u otro modelo. Para que el relevo f
 - Los datos de ejemplo deben seguir marcados como ejemplo (`ejemplo: true`). Nunca presentar
   datos inventados como reales.
 - Diseño: original, inspirado en Miami. No copiar logotipos, tipografías ni arte de los juegos.
-- Para revisar cambios visuales: abrir `web/index.html` con Playwright y mirar una captura
-  de cada estilo (botón "Miami 1986" / "Miami 2026").
+- Para revisar cambios visuales: `python pruebas/probar_pagina.py` (antes,
+  `python recolector/generar_web.py` para tener los datos reales) y mirar las capturas de
+  `pruebas/capturas/`.
 - En la nube, la sesión debe usar el entorno `recuerdo-gta6`, que permite los sitios de las
   fuentes. Con el entorno "Default" todas las consultas a las fuentes se bloquean.
 
