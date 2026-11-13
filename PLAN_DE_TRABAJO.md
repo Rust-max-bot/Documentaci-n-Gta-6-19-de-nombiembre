@@ -139,7 +139,7 @@ completo en el historial).
    35 MB sin comprimir (git los comprime). GitHub lo admite. El día del lanzamiento habrá
    más canales y titulares: se revisa.
 3. *(Resuelto: el repositorio es público, así que los minutos de GitHub son gratis.)* YouTube
-   no es problema: 104 unidades por medición desde la 6.3, unas 5.000 de las 10.000 diarias.
+   no es problema: 105 unidades por medición desde la 6.3 y los tráilers de la 6.2, unas 5.000 de las 10.000 diarias.
 4. *(Resuelto: Reddit se lee por RSS; la clave queda en la Fase 5.)*
 5. **Estado de Rockstar.** No se puede leer con programas, ni desde la nube ni desde GitHub.
    Las caídas de Rockstar se anotan a mano en `web/eventos.js`.

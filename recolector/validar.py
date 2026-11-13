@@ -143,6 +143,20 @@ def _youtube_tendencias(r):
         exigir(ro.get(campo) is None or es_entero(ro[campo]), f"Tendencias de YouTube: '{campo}' de Rockstar inválido")
 
 
+def _youtube_trailers(r):
+    exigir(r.get("unidades") == 1, "Tráilers de YouTube: unidades inesperadas")
+    videos = r.get("videos")
+    exigir(isinstance(videos, list) and 0 < len(videos) <= r.get("pedidos", 0), "Tráilers de YouTube: lista inválida")
+    ids = [v.get("id") for v in videos]
+    exigir(len(set(ids)) == len(ids), "Tráilers de YouTube: videos repetidos")
+    for v in videos:
+        exigir(isinstance(v.get("id"), str) and len(v["id"]) == 11, "Tráilers de YouTube: id inválido")
+        exigir(isinstance(v.get("titulo"), str) and v["titulo"], "Tráilers de YouTube: video sin título")
+        exigir(v.get("publicado") is None or es_iso(v["publicado"]), "Tráilers de YouTube: fecha inválida")
+        for campo in ("visitas", "me_gusta", "comentarios"):
+            exigir(v.get(campo) is None or es_entero(v[campo]), f"Tráilers de YouTube: '{campo}' inválido")
+
+
 def _servidor(r):
     exigir(isinstance(r.get("ok"), bool), "Servidores: falta 'ok'")
 
@@ -155,6 +169,7 @@ CHEQUEOS = {
     "reddit": _reddit,
     "twitch_ranking": _twitch_ranking,
     "youtube_tendencias": _youtube_tendencias,
+    "youtube_trailers": _youtube_trailers,
     "playstation": _servidor,
     "xbox": _servidor,
 }

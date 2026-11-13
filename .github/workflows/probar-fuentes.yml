@@ -44,7 +44,7 @@ jobs:
                 + (f"; error de fotos: {tw['error_fotos']}" if "error_fotos" in tw else ""))
           for c in canales[:3]:
               print(" ", c["login"], c.get("foto", "(sin foto)"))
-          # Tarea 6.3: ranking de Twitch y tendencias de YouTube (comprobar nombres y puestos).
-          for nombre in ("twitch_ranking", "youtube_tendencias"):
+          # Tareas 6.3 y 6.2: ranking de Twitch, tendencias y tráilers de YouTube (comprobar nombres y números).
+          for nombre in ("twitch_ranking", "youtube_tendencias", "youtube_trailers"):
               print(nombre + ":", json.dumps(m.get(nombre), ensure_ascii=False)[:3000])
           FIN

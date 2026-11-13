@@ -41,6 +41,15 @@ TWITCH_GUARDAR_RANKING = 10       # las primeras que se guardan con su nombre
 TWITCH_COMPARAR = 5               # las primeras cuyas transmisiones se miden para comparar
 YOUTUBE_REGIONES = ("CL", "US")   # tendencias de YouTube de Chile y de EE. UU. (1 unidad cada una)
 YOUTUBE_ROCKSTAR = "@RockstarGames"
+# Tarea 6.2: videos oficiales de GTA VI en el canal de Rockstar, medidos por su enlace fijo
+# (1 unidad por medición). Encontrados y verificados con una consulta real desde GitHub el
+# 2026-11-13 (ejecución 43511560652 de "Probar fuentes"): título, canal y fecha.
+YOUTUBE_TRAILERS = (
+    "QdBZY2fkU-0",   # Grand Theft Auto VI Trailer 1 (4 dic 2023)
+    "VQRLujxTm3c",   # Grand Theft Auto VI Trailer 2 (6 may 2025)
+    "tJbzMqJGH4k",   # Grand Theft Auto VI: An Extended Look (28 ago 2026)
+    "rz1B4B2yBZY",   # Grand Theft Auto VI Launch Trailer (15 oct 2026)
+)
 ES_GTA = re.compile(r"\bGTA|grand theft auto|rockstar games", re.I)   # "GTA 6", "GTA6", "GTAV"
 # Reddit bloquea su JSON sin clave desde GitHub (403, probado el 2026-11-13); el RSS sí
 # responde, pero sin votos ni comentarios. Bruno eligió el RSS (2026-11-13).
@@ -391,6 +400,29 @@ def xbox(estado):
     return r
 
 
+def youtube_trailers(estado):
+    """Tarea 6.2: visitas, me gusta y comentarios de los videos oficiales de GTA VI, por su
+    enlace fijo (sin búsqueda). 1 unidad. Un video borrado u oculto simplemente no aparece."""
+    clave = os.environ.get("YOUTUBE_API_KEY", "")
+    if not clave:
+        raise Falla("falta la clave de YouTube")
+    cod, txt = pedir("https://www.googleapis.com/youtube/v3/videos?" + urllib.parse.urlencode(
+        {"part": "snippet,statistics", "id": ",".join(YOUTUBE_TRAILERS), "key": clave}))
+    if cod != 200:
+        raise Falla(f"tráilers de YouTube: código {cod}. {_mensaje_youtube(txt)}")
+    videos = []
+    for v in json.loads(txt).get("items", []):
+        sn, st = v.get("snippet", {}), v.get("statistics", {})
+        videos.append({"id": v["id"], "titulo": sn.get("title", ""), "canal": sn.get("channelTitle", ""),
+                       "publicado": sn.get("publishedAt"),
+                       "visitas": int(st["viewCount"]) if "viewCount" in st else None,
+                       "me_gusta": int(st["likeCount"]) if "likeCount" in st else None,
+                       "comentarios": int(st["commentCount"]) if "commentCount" in st else None})
+    if not videos:
+        raise Falla("YouTube no devolvió ninguno de los tráilers")
+    return {"unidades": 1, "pedidos": len(YOUTUBE_TRAILERS), "videos": videos}
+
+
 FUENTES = {
     "twitch": twitch,
     "youtube": youtube,
@@ -399,6 +431,7 @@ FUENTES = {
     "reddit": reddit,
     "twitch_ranking": twitch_ranking,
     "youtube_tendencias": youtube_tendencias,
+    "youtube_trailers": youtube_trailers,
     "playstation": playstation,
     "xbox": xbox,
 }

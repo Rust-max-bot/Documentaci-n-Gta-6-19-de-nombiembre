@@ -83,6 +83,16 @@ def convertir(medidas):
             "playstation": estado_servidor(m.get("playstation")),
             "xbox": estado_servidor(m.get("xbox")),
         }
+        # Tarea 6.3: puesto de GTA en Twitch y videos de GTA en tendencias de YouTube. Solo
+        # existen desde el 13 nov: las mediciones de antes no traen estas claves.
+        rk = m.get("twitch_ranking")
+        if rk is not None:
+            fila["ranking"] = {"error": rk["error"]} if "error" in rk else {
+                "gta6": rk["puesto_gta6"], "gta5": rk["puesto_gta5"], "leidas": rk["leidas"]}
+        yt = m.get("youtube_tendencias")
+        if yt is not None:
+            fila["tendencias"] = {"error": yt["error"]} if "error" in yt else {
+                r: len(d["gta"]) for r, d in yt["regiones"].items()}
         mediciones.append(fila)
 
         for v in m.get("youtube", {}).get("videos", []):
@@ -116,10 +126,25 @@ def convertir(medidas):
         "serie": series[v["id"]],
     } for v in ultima_yt if v["id"] in series][:VIDEOS]
 
+    # Lo último de la 6.3, para las tarjetas de comparación (la medición más nueva sin hueco).
+    ult_rk = next((m for m in reversed(medidas) if "error" not in m.get("twitch_ranking", {"error": 1})), None)
+    ult_yt = next((m for m in reversed(medidas) if "error" not in m.get("youtube_tendencias", {"error": 1})), None)
+    comparacion = None
+    if ult_rk or ult_yt:
+        comparacion = {}
+        if ult_rk:
+            rk = ult_rk["twitch_ranking"]
+            comparacion["twitch"] = {"t": ult_rk["t"], "top": rk["top"], "comparadas": rk["comparadas"],
+                                     "gta6": rk["puesto_gta6"], "gta5": rk["puesto_gta5"], "leidas": rk["leidas"]}
+        if ult_yt:
+            yt = ult_yt["youtube_tendencias"]
+            comparacion["youtube"] = {"t": ult_yt["t"], "regiones": yt["regiones"], "rockstar": yt["rockstar"]}
+
     noticias.sort(key=lambda n: n["t"])
     reddit.sort(key=lambda p: p["t"])
     return {"mediciones": mediciones, "youtube": youtube, "noticias": noticias,
-            "reddit": {"comunidad": "r/GTA6", "publicaciones": reddit, "mediciones": reddit_medidas}}   # todos: la página los muestra por páginas (Bruno, 2026-11-13)
+            "reddit": {"comunidad": "r/GTA6", "publicaciones": reddit, "mediciones": reddit_medidas},
+            "comparacion": comparacion}   # todos: la página los muestra por páginas (Bruno, 2026-11-13)
 
 
 def comprobar(d, medidas):
