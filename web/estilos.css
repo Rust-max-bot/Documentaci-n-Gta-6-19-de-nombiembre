@@ -372,6 +372,35 @@ td a:hover, td a:focus-visible { color: var(--a1); text-decoration-color: var(--
 .paginas .salto { color: var(--tenue); padding: 0 2px; }
 @media (max-width: 640px) { .paginas { gap: 6px; } .paginas button { min-width: 36px; padding: 6px 10px; font-size: 13px; } }
 
+/* Logros y récords (tarea 6.2): opción A "vitrina", elegida por Bruno el 2026-11-13. Una
+   tarjeta por récord y, abajo, los tráilers oficiales con sus visitas. */
+.rc-vitrina { list-style: none; margin: 18px 0 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 14px; }
+.rc-vitrina > li { min-width: 0; padding: 16px 18px; border-radius: calc(var(--radio) / 1.4); border: 1px solid color-mix(in srgb, var(--tenue) 35%, transparent); }
+.rc-vitrina > li.nuevo { border-color: var(--a3); }
+.rc-vitrina > li.vacio { color: var(--tenue); }
+.rc-vitrina small { display: block; margin-bottom: 4px; font-size: 12px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--tenue); }
+.rc-vitrina > li > b { display: block; margin-top: 6px; font: 700 clamp(26px, 3vw, 34px)/1.1 var(--f-texto); font-variant-numeric: tabular-nums; color: var(--a1); }
+:root[data-tema="ochenta"] .rc-vitrina > li > b { color: var(--a2); text-shadow: 0 0 14px rgba(34, 230, 255, .6); }
+.rc-nuevo { display: inline-block; padding: 2px 9px; border-radius: 999px; background: var(--a3); color: #1b1440; font: 700 11px var(--f-texto); letter-spacing: .1em; text-transform: uppercase; }
+:root[data-tema="ochenta"] .rc-nuevo { box-shadow: 0 0 12px var(--a3); }
+.rc-uni { font-size: 13px; font-weight: 600; color: var(--tenue); }
+.rc-que { margin: 6px 0 0; font-size: 14px; font-weight: 700; line-height: 1.3; overflow-wrap: anywhere; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.rc-que a, .rc-prev a, .rc-trailers a { color: inherit; text-decoration: none; }
+.rc-que a:hover, .rc-prev a:hover, .rc-trailers a:hover, .rc-que a:focus-visible, .rc-prev a:focus-visible, .rc-trailers a:focus-visible { color: var(--a1); }
+.rc-cuando { margin: 4px 0 0; font-size: 13px; font-weight: 600; color: var(--tenue); }
+.rc-prev { margin-top: 8px; font-size: 13px; }
+.rc-prev summary { cursor: pointer; font-weight: 700; color: var(--a2); }
+.rc-prev ul { margin: 6px 0 0; padding-left: 16px; color: var(--tenue); overflow-wrap: anywhere; }
+.rc-prev li b { color: var(--texto); }
+.rc-trailers { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px; }
+.rc-trailers li { padding: 12px 14px; border-radius: calc(var(--radio) / 1.6); background: color-mix(in srgb, var(--a1) 10%, transparent); }
+.rc-trailers li.vacio { background: none; padding: 0; color: var(--tenue); }
+.rc-trailers a { display: block; font-size: 14px; font-weight: 700; }
+.rc-trailers b { font: 700 24px var(--f-texto); color: var(--a1); }
+.rc-trailers small { margin-left: 4px; font-weight: 600; color: var(--tenue); }
+.rc-sube { display: block; font-size: 12px; font-weight: 600; color: var(--tenue); }
+@media (max-width: 640px) { .rc-trailers { grid-template-columns: 1fr 1fr; } }
+
 /* GTA frente a lo más visto (tarea 6.3): opción A "dos columnas", elegida por Bruno el
    2026-11-13. Izquierda, Twitch (puestos y barras de público); derecha, YouTube (videos de GTA
    en tendencias de Chile y EE. UU.). */

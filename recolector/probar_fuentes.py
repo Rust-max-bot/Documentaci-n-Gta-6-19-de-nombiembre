@@ -189,6 +189,11 @@ def _():
     return cod == 200
 
 
+# Tarea 6.4: la comparación de cuatro formas de buscar videos en español (unas 400 unidades)
+# se hizo una vez el 13 nov (ejecución 43515144506) y se quitó para no gastar cuota en cada
+# prueba. Resultado en PLAN.md, "Videos de YouTube en español".
+
+
 # Reddit (tarea 3.2) no se prueba aquí: Reddit responde 429 ("demasiadas consultas") a la
 # segunda consulta seguida desde la misma máquina, y entonces fallaría la prueba del
 # recolector, que viene después en el mismo workflow. Resultados del 2026-11-13 (PLAN.md,

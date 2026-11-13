@@ -37,8 +37,10 @@ es igual, línea por línea, a `despertador/worker.js`; el horario es `7,37 * * 
 secreto `GITHUB_TOKEN` existe (su valor no se ve ni está en el repositorio). La clave de GitHub del Worker caduca después del 19 dic (31 ene 2027, o
 ~1 mar 2027 según recuerda Bruno). Desde el 13 nov también guarda lo de la 6.3 (puesto de GTA
 en Twitch y tendencias de YouTube), que la página ya muestra en "GTA frente a lo más visto"; y,
-cuando se una el PR de la rama `claude/project-thread-en9qib`, las visitas de los 4 videos
-oficiales de GTA VI (fuente `youtube_trailers`, tarea 6.2). Se apaga, enciende o
+desde el PR #11 (unido el 2026-11-13), las visitas de los 4 videos oficiales de GTA VI
+(fuente `youtube_trailers`, tarea 6.2), que se ven en "Logros y récords". Cuando se una el
+PR #12, también una búsqueda de videos en español (fuente `youtube_es`, tarea 6.4), una vez
+por hora; la página todavía no la muestra. Se apaga, enciende o
 alarga en `recolector/interruptor.json` (por defecto, hasta el 19 dic).
 
 **Si un día faltan mediciones:** mirar el registro del Worker en Cloudflare
@@ -58,10 +60,12 @@ esos sitios): no es un fallo de la página.
 
 **Reglas en pausa:** ninguna. "Paso a paso con permiso" está activa **por tandas**: Bruno
 dice qué pasos hacer y Claude no para hasta completarlos (ver `CLAUDE.md`). Tanda actual:
-6.3 y 6.2 (pedida el 2026-11-13); antes de la 6.1, parar y explicarle a Bruno.
+ninguna (la de la 6.3 y 6.2 terminó el 2026-11-13). La 6.1 queda para el 20 al 25 nov.
 
 ## Últimos cambios
 
+- 2026-11-13: el recolector busca también videos en español una vez por hora (6.4, pedido de Bruno); la página, después.
+- 2026-11-13: sección "Logros y récords" en la página, con los tráilers oficiales (6.2, opción A de Bruno).
 - 2026-11-13: la página muestra "GTA frente a lo más visto" (6.3, opción A de Bruno) y el recolector mide los 4 videos oficiales de GTA VI (6.2).
 - 2026-11-13: estado anterior archivado en historial/ESTADO_2026-11-13.md
 - 2026-11-13: revisado el despertador: sin claves ni datos de Bruno en el repositorio; el Worker de Cloudflare es igual a la copia. Hallado: el correo de Outlook en las uniones de PR hechas desde la web.
@@ -76,8 +80,9 @@ La lista completa y su orden están en `PLAN_DE_TRABAJO.md`. Resumen (2026-11-13
 
 1. **Antes del 19 nov:** 7.4, Bruno escribe sus expectativas en `web/capsula.js`.
 2. **Fase 4:** 4.3 análisis de datos (necesita varios días de datos).
-3. **Fase 6** (ideas de Bruno): 6.2 logros y récords (en curso); 6.1 más Google Trends
-   (**Bruno pidió parar antes y que se le expliquen los problemas y soluciones**). 6.3, hecha.
+3. **Fase 6** (ideas de Bruno): 6.1 más Google Trends, **una sola vez entre el 20 y el 25 nov**,
+   fuera del recolector de cada hora (decisión de Bruno, 2026-11-13; ver `PLAN.md`). 6.2 y 6.3,
+   hechas. 6.4 videos en español: recolector hecho (PR #12); falta mostrarlo en la página.
 4. **Fase 7:** 7.1 rebobinar; 7.3 viaje en el tiempo; 7.5 resumen del día.
 5. **Fase 5** (después del lanzamiento): búsqueda calmada; clave de Reddit.
 6. **Ideas sueltas:** 2.5 TikTok (sin acceso fácil); un filtro por día en los titulares

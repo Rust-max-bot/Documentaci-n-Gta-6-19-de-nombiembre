@@ -95,6 +95,37 @@ Resultado final: **una página web** con:
   - De día, los fuegos y los reflectores usan colores fuertes para que se vean sobre el cielo claro.
   - Para verla antes: agregar `?probar-hora-cero` a la dirección (la cuenta empieza 5 s antes de 0).
   - Se descartó B (destello y vuelta de las cajas).
+- **Videos de YouTube en español (tarea 6.4, Bruno, 2026-11-13): el recolector ahora, la página después.**
+  - Segunda búsqueda de "GTA 6" con idioma preferido español (fuente `youtube_es`), además
+    de la global, que sigue igual. En el orden de **relevancia** de YouTube, no por visitas:
+    probado el 13 nov con 4 formas (ejecución 43515144506 de "Probar fuentes"). Por visitas,
+    YouTube ignora el idioma (3 de 25 en español); por relevancia, 19 de 25; con región España,
+    21 de 25, pero más centrado en España. Se eligió la de relevancia sin región, porque Bruno
+    quiere a los hispanohablantes en general. No garantiza que salga cada video grande (por
+    ejemplo, uno del Rubius), pero es probable que salgan los más relevantes.
+  - La búsqueda (100 unidades) se hace como mucho una vez por hora, para no acercarse al
+    límite de 10.000 diarias la semana del lanzamiento (~7.500). En el otro turno solo se
+    vuelven a medir sus videos (1 unidad), para tener la serie cada media hora.
+  - Cómo se muestra en la página se decide después, con opciones y capturas.
+- **Más Google Trends (tarea 6.1): una sola vez, entre el 20 y el 25 nov (Bruno, 2026-11-13).**
+  - Consultas sueltas con pausas, fuera del recolector de cada hora: si Google bloquea (429),
+    no se pierde la medición normal de "GTA 6", sobre todo el 19.
+  - Antes del 26 nov, porque Trends solo da el detalle hora por hora de los últimos 7 días.
+  - Se descartaron agregarla ya al recolector (riesgo de bloqueo el 19) y no hacerla.
+- **Logros y récords (tarea 6.2, opción A de Bruno, 2026-11-13): vitrina.**
+  - Sección justo después de las fichas de arriba. Una tarjeta por récord: número grande,
+    quién o qué, cuándo, y "Récords anteriores" (los 5 más recientes) al tocar.
+  - Récords: más espectadores en Twitch, directo con más público, más transmisiones a la
+    vez, video más visto (cuenta como récord nuevo solo cuando cambia el video que va
+    primero), video que más creció en una hora (solo entre mediciones seguidas, hasta 1,6 h),
+    día con más titulares y hora con más publicaciones en r/GTA6.
+  - "¡Nuevo récord!" marca los que se batieron en las 6 horas anteriores a la última medición.
+  - Sin "hora con más interés en Trends": siempre vale 100 (aviso 8 de `PLAN_DE_TRABAJO.md`).
+  - Abajo, los 4 videos oficiales de GTA VI con sus visitas y cuánto subieron desde la
+    primera medición (fuente `youtube_trailers` del recolector, 1 unidad por medición).
+  - Titulares y Reddit cuentan lo que entrega cada fuente por medición (hasta 100): en horas
+    muy movidas pueden quedarse cortos. La página lo dice.
+  - Se descartaron B (tabla) y C (escalera con línea).
 - **GTA frente a lo más visto (tarea 6.3, opción A de Bruno, 2026-11-13): dos columnas.**
   - Sección antes de "Titulares". Usa la última medición del ranking de Twitch y de las
     tendencias de YouTube.

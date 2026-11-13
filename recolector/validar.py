@@ -66,6 +66,15 @@ def _youtube(r):
         exigir(isinstance(v.get("titulo"), str), "YouTube: video sin título")
 
 
+def _youtube_es(r):
+    _youtube(r)
+    exigir(r.get("idioma") == "es", "YouTube en español: idioma inesperado")
+    exigir(isinstance(r.get("busco"), bool), "YouTube en español: falta 'busco'")
+    exigir(r["unidades"] == (101 if r["busco"] else 1), "YouTube en español: unidades inesperadas")
+    for v in r["videos"]:
+        exigir(v.get("idioma") is None or isinstance(v["idioma"], str), "YouTube en español: idioma de video inválido")
+
+
 def _trends(r):
     puntos = r.get("puntos")
     exigir(isinstance(puntos, list) and 0 < len(puntos) <= 24, "Trends: lista de puntos inválida")
@@ -164,6 +173,7 @@ def _servidor(r):
 CHEQUEOS = {
     "twitch": _twitch,
     "youtube": _youtube,
+    "youtube_es": _youtube_es,
     "trends": _trends,
     "noticias": _noticias,
     "reddit": _reddit,

@@ -114,7 +114,9 @@ def main():
 
     unidades = defaultdict(int)
     for m, _ in medidas:
-        unidades[fecha(m["t"]).astimezone(CALIFORNIA).date()] += m.get("youtube", {}).get("unidades", 0)
+        # Todas las fuentes de YouTube gastan del mismo cupo (búsqueda, español, tendencias, tráilers).
+        unidades[fecha(m["t"]).astimezone(CALIFORNIA).date()] += sum(
+            m.get(f, {}).get("unidades", 0) for f in ("youtube", "youtube_es", "youtube_tendencias", "youtube_trailers"))
     print("\nUnidades de YouTube por día (cupo: 10.000):", {str(d): u for d, u in unidades.items()})
 
     tw = [(m["twitch"]["espectadores"], m["t"]) for m, _ in medidas if "espectadores" in m.get("twitch", {})]

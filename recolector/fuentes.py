@@ -29,6 +29,11 @@ TWITCH_PAGINAS_MAX = 60           # 100 transmisiones por página: hasta 6.000 t
 YOUTUBE_BUSQUEDA = "GTA 6"
 YOUTUBE_RESULTADOS = 25           # videos nuevos que entrega cada búsqueda
 YOUTUBE_SEGUIMIENTO = 50          # máximo de videos cuyas visitas se miden (1 unidad cada 50)
+# Tarea 6.4 (Bruno, 2026-11-13): una segunda búsqueda con idioma preferido español, para ver a
+# los creadores hispanohablantes. La búsqueda (100 unidades) se hace como mucho una vez por hora;
+# en los otros turnos solo se vuelven a medir sus videos (1 unidad). Ver PLAN_DE_TRABAJO.md, 6.4.
+YOUTUBE_ES_IDIOMA = "es"
+YOUTUBE_ES_CADA_MIN = 50          # minutos mínimos entre dos búsquedas en español
 TRENDS_PALABRA = "GTA 6"
 TRENDS_PUNTOS = 24                # últimas 24 horas de la serie de 7 días
 NOTICIAS_RSS = "https://news.google.com/rss/search?q=%22GTA+6%22&hl=es-419&gl=CL&ceid=CL:es-419"
@@ -185,6 +190,59 @@ def youtube(estado):
         raise Falla("YouTube no devolvió las estadísticas de ningún video")
     videos.sort(key=lambda v: v["visitas"] or 0, reverse=True)
     return {"busqueda": YOUTUBE_BUSQUEDA, "unidades": unidades, "videos": videos}
+
+
+def youtube_es(estado):
+    """Tarea 6.4: videos de "GTA 6" de los últimos 7 días con idioma preferido español, en el
+    orden de relevancia de YouTube (después se ordenan por visitas). Comparado con una consulta
+    real el 13 nov (ejecución 43515144506): ordenando por visitas, YouTube ignora casi del todo
+    el idioma (3 de 25 en español); por relevancia, 19 de 25. relevanceLanguage es una
+    preferencia, no un filtro: por eso se guarda el idioma que declara cada video, si lo declara.
+    Busca como mucho una vez por hora; en los demás turnos vuelve a medir los videos anteriores."""
+    clave = os.environ.get("YOUTUBE_API_KEY", "")
+    if not clave:
+        raise Falla("falta la clave de YouTube")
+    ahora = datetime.now(timezone.utc)
+    previos = estado.get("youtube_es_previos", [])
+    ultima = estado.get("youtube_es_busqueda")
+    buscar = not previos or not ultima or ahora - datetime.fromisoformat(ultima.replace("Z", "+00:00")) >= timedelta(minutes=YOUTUBE_ES_CADA_MIN)
+    unidades, nuevos = 0, []
+    if buscar:
+        q = {"part": "snippet", "q": YOUTUBE_BUSQUEDA, "type": "video", "order": "relevance",
+             "relevanceLanguage": YOUTUBE_ES_IDIOMA, "publishedAfter": a_iso(ahora - timedelta(days=7)),
+             "maxResults": YOUTUBE_RESULTADOS, "key": clave}
+        cod, txt = pedir("https://www.googleapis.com/youtube/v3/search?" + urllib.parse.urlencode(q))
+        if cod != 200:
+            raise Falla(f"búsqueda de YouTube en español: código {cod}. {_mensaje_youtube(txt)}")
+        unidades += 100
+        nuevos = [i["id"]["videoId"] for i in json.loads(txt).get("items", []) if i.get("id", {}).get("videoId")]
+    puesto = {vid: n + 1 for n, vid in enumerate(nuevos)}
+    ids = nuevos + [vid for vid in previos if vid not in puesto][:YOUTUBE_SEGUIMIENTO - len(nuevos)]
+    if not ids:
+        raise Falla("la búsqueda de YouTube en español no devolvió videos")
+    cod, txt = pedir("https://www.googleapis.com/youtube/v3/videos?" + urllib.parse.urlencode(
+        {"part": "snippet,statistics", "id": ",".join(ids), "key": clave}))
+    unidades += 1
+    if cod != 200:
+        raise Falla(f"estadísticas de YouTube en español: código {cod}. {_mensaje_youtube(txt)}")
+    videos = []
+    for v in json.loads(txt).get("items", []):
+        sn, st = v.get("snippet", {}), v.get("statistics", {})
+        miniaturas = sn.get("thumbnails", {})
+        mini = (miniaturas.get("medium") or miniaturas.get("high") or miniaturas.get("default") or {}).get("url", "")
+        videos.append({
+            "id": v["id"], "titulo": sn.get("title", ""), "canal": sn.get("channelTitle", ""),
+            "canal_id": sn.get("channelId", ""), "publicado": sn.get("publishedAt"),
+            "visitas": int(st["viewCount"]) if "viewCount" in st else None,
+            "me_gusta": int(st["likeCount"]) if "likeCount" in st else None,
+            "comentarios": int(st["commentCount"]) if "commentCount" in st else None,
+            "idioma": sn.get("defaultAudioLanguage") or sn.get("defaultLanguage"),   # None si el video no lo declara
+            "miniatura": mini, "puesto": puesto.get(v["id"]),
+        })
+    if not videos:
+        raise Falla("YouTube no devolvió las estadísticas de ningún video en español")
+    videos.sort(key=lambda v: v["visitas"] or 0, reverse=True)
+    return {"busqueda": YOUTUBE_BUSQUEDA, "idioma": YOUTUBE_ES_IDIOMA, "busco": buscar, "unidades": unidades, "videos": videos}
 
 
 def trends(estado):
@@ -426,6 +484,7 @@ def youtube_trailers(estado):
 FUENTES = {
     "twitch": twitch,
     "youtube": youtube,
+    "youtube_es": youtube_es,
     "trends": trends,
     "noticias": noticias,
     "reddit": reddit,
