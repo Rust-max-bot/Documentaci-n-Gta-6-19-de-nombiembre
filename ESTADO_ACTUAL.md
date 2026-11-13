@@ -82,12 +82,13 @@ La lista completa y su orden están en `PLAN_DE_TRABAJO.md`. Resumen (2026-11-13
 7. **Bruno:**
    - pedir a soporte de GitHub que borre la referencia del PR #1 (deja alcanzable el primer
      commit, con su correo de Outlook);
-   - **activar ya** en GitHub "Keep my email addresses private" y "Block command line pushes
-     that expose my email". Revisado el 2026-11-13: los 9 commits "Merge pull request #2…#10"
+   - activar en GitHub "Keep my email addresses private" y "Block command line pushes that
+     expose my email". Revisado el 2026-11-13: los 9 commits "Merge pull request #2…#10"
      que crea GitHub al unir desde la web llevan el correo de Outlook de Bruno y están en
-     `main`, que es público. Con esa opción activa, las uniones siguientes usan el correo
-     anónimo. Quitar el correo de esos 9 exige reescribir `main` con `--force`: solo si Bruno
-     lo autoriza (choca con las mediciones de cada hora y con las ramas de la nube);
+     `main`, que es público; cada unión nueva desde la web suma otro. **Bruno lo deja para
+     después** (2026-11-13: lo peor sería recibir correos no deseados). No volver a
+     proponerlo hasta que él lo retome. Quitar el correo de esos commits exige reescribir
+     `main` con `--force`: solo si Bruno lo autoriza;
    - borrar en GitHub las ramas ya unidas o de capturas: `claude/project-thread-dpdy9p`,
      `claude/project-thread-en9qib`, `claude/project-thread-mi5ckb`,
      `claude/project-thread-odgsms`, `revision/hora-cero` y `revision/dia-noche` (revisado
