@@ -95,6 +95,13 @@ Resultado final: **una página web** con:
   - De día, los fuegos y los reflectores usan colores fuertes para que se vean sobre el cielo claro.
   - Para verla antes: agregar `?probar-hora-cero` a la dirección (la cuenta empieza 5 s antes de 0).
   - Se descartó B (destello y vuelta de las cajas).
+- **Videos de YouTube en español (tarea 6.4, Bruno, 2026-11-13): el recolector ahora, la página después.**
+  - Segunda búsqueda de "GTA 6" con idioma preferido español (fuente `youtube_es`), además
+    de la global, que sigue igual.
+  - La búsqueda (100 unidades) se hace como mucho una vez por hora, para no acercarse al
+    límite de 10.000 diarias la semana del lanzamiento (~7.500). En el otro turno solo se
+    vuelven a medir sus videos (1 unidad), para tener la serie cada media hora.
+  - Cómo se muestra en la página se decide después, con opciones y capturas.
 - **Más Google Trends (tarea 6.1): una sola vez, entre el 20 y el 25 nov (Bruno, 2026-11-13).**
   - Consultas sueltas con pausas, fuera del recolector de cada hora: si Google bloquea (429),
     no se pierde la medición normal de "GTA 6", sobre todo el 19.

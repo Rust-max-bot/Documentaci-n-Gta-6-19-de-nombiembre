@@ -38,7 +38,9 @@ secreto `GITHUB_TOKEN` existe (su valor no se ve ni está en el repositorio). La
 ~1 mar 2027 según recuerda Bruno). Desde el 13 nov también guarda lo de la 6.3 (puesto de GTA
 en Twitch y tendencias de YouTube), que la página ya muestra en "GTA frente a lo más visto"; y,
 desde el PR #11 (unido el 2026-11-13), las visitas de los 4 videos oficiales de GTA VI
-(fuente `youtube_trailers`, tarea 6.2), que se ven en "Logros y récords". Se apaga, enciende o
+(fuente `youtube_trailers`, tarea 6.2), que se ven en "Logros y récords". Cuando se una el
+PR #12, también una búsqueda de videos en español (fuente `youtube_es`, tarea 6.4), una vez
+por hora; la página todavía no la muestra. Se apaga, enciende o
 alarga en `recolector/interruptor.json` (por defecto, hasta el 19 dic).
 
 **Si un día faltan mediciones:** mirar el registro del Worker en Cloudflare
@@ -62,6 +64,7 @@ ninguna (la de la 6.3 y 6.2 terminó el 2026-11-13). La 6.1 queda para el 20 al 
 
 ## Últimos cambios
 
+- 2026-11-13: el recolector busca también videos en español una vez por hora (6.4, pedido de Bruno); la página, después.
 - 2026-11-13: sección "Logros y récords" en la página, con los tráilers oficiales (6.2, opción A de Bruno).
 - 2026-11-13: la página muestra "GTA frente a lo más visto" (6.3, opción A de Bruno) y el recolector mide los 4 videos oficiales de GTA VI (6.2).
 - 2026-11-13: estado anterior archivado en historial/ESTADO_2026-11-13.md
@@ -79,7 +82,7 @@ La lista completa y su orden están en `PLAN_DE_TRABAJO.md`. Resumen (2026-11-13
 2. **Fase 4:** 4.3 análisis de datos (necesita varios días de datos).
 3. **Fase 6** (ideas de Bruno): 6.1 más Google Trends, **una sola vez entre el 20 y el 25 nov**,
    fuera del recolector de cada hora (decisión de Bruno, 2026-11-13; ver `PLAN.md`). 6.2 y 6.3,
-   hechas.
+   hechas. 6.4 videos en español: recolector hecho (PR #12); falta mostrarlo en la página.
 4. **Fase 7:** 7.1 rebobinar; 7.3 viaje en el tiempo; 7.5 resumen del día.
 5. **Fase 5** (después del lanzamiento): búsqueda calmada; clave de Reddit.
 6. **Ideas sueltas:** 2.5 TikTok (sin acceso fácil); un filtro por día en los titulares

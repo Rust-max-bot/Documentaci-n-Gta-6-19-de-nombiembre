@@ -52,7 +52,9 @@ def leer_interruptor():
 
 def leer_estado(carpeta):
     """Lee los archivos más recientes. Si alguno está dañado, aborta: no se añade nada encima."""
-    estado = {"ultima_t": None, "youtube_previos": [], "noticias_vistas": set(), "reddit_vistas": set()}
+    estado = {"ultima_t": None, "youtube_previos": [], "noticias_vistas": set(), "reddit_vistas": set(),
+              "youtube_es_previos": [], "youtube_es_busqueda": None}
+    videos_es = []
     archivos = sorted(p for p in carpeta.glob("*.jsonl"))
     for p in archivos:
         if not NOMBRE_ARCHIVO.match(p.name):
@@ -74,9 +76,15 @@ def leer_estado(carpeta):
                 estado["reddit_vistas"].add(pub["id"])
             # videos de la última medición en que YouTube respondió (si la última fue hueco)
             videos = m.get("youtube", {}).get("videos") or videos
+            # Tarea 6.4: videos en español de la última vez que respondió, y hora de la última búsqueda.
+            es = m.get("youtube_es", {})
+            videos_es = es.get("videos") or videos_es
+            if es.get("busco"):
+                estado["youtube_es_busqueda"] = m["t"]
     if ultima:
         estado["ultima_t"] = ultima["t"]
         estado["youtube_previos"] = [v["id"] for v in sorted(videos, key=lambda v: v.get("visitas") or 0, reverse=True)]
+        estado["youtube_es_previos"] = [v["id"] for v in sorted(videos_es, key=lambda v: v.get("visitas") or 0, reverse=True)]
     return estado
 
 
@@ -108,6 +116,10 @@ def resumen(nombre, r):
     if nombre == "youtube_tendencias":
         gta = ", ".join(f"{reg}: {len(d['gta'])}" for reg, d in r["regiones"].items())
         return f"videos de GTA en tendencias ({gta}); Rockstar: {r['rockstar']['suscriptores']} suscriptores"
+    if nombre == "youtube_es":
+        v = r["videos"][0]
+        return (f"{len(r['videos'])} videos ({r['unidades']} unidades; {'buscó' if r['busco'] else 'sin búsqueda'}); "
+                f"el más visto: {v['visitas']} visitas, {v['canal']}")
     if nombre == "youtube_trailers":
         return f"{len(r['videos'])} de {r['pedidos']} tráilers; " + ", ".join(f"{v['id']}: {v['visitas']}" for v in r["videos"])
     return "sin problemas" if r["ok"] else "CON PROBLEMAS"
