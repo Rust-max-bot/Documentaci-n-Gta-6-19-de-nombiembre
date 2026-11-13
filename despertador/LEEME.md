@@ -18,8 +18,12 @@ Worker solo lo lanza.
 minutos** (minutos 7 y 37) del 17 al 21 de noviembre de 2026 en UTC, la semana del
 lanzamiento. Cloudflare despierta al Worker en los dos turnos; fuera de esa semana el del
 minuto 37 no hace nada. Las fechas están en `SEMANA_INICIO` y `SEMANA_FIN` de `worker.js`.
-Gasto en GitHub: unos 550 minutos en noviembre y unos 460 en diciembre (hasta el 19), de
-los ~2.000 gratuitos al mes.
+Gasto en GitHub: nada, porque el repositorio es público desde el 2026-11-12 y GitHub no
+cobra minutos a los repositorios públicos.
+
+**Revisado el 2026-11-13 (~21:30 UTC) en Cloudflare:** el código activo es igual, línea por
+línea, a `worker.js`; el horario es `7,37 * * * *`; el secreto `GITHUB_TOKEN` existe (su
+valor no se puede ver y no está en el repositorio).
 
 - `worker.js`: el código del Worker. Es la copia de referencia de lo que está en Cloudflare.
 - Nombre del Worker en Cloudflare: `despertador-recolector`.

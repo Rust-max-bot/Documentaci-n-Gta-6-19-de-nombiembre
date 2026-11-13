@@ -32,7 +32,9 @@ después), 3 y las tareas 4.1, 4.2 y 7.2. Lo que tiene:
 `despertador-recolector`, horario `7,37 * * * *`; el minuto 37 solo mide del 17 nov 00:07 al
 22 nov 00:07 UTC). Revisado el 2026-11-13: cada hora desde las 02:07 UTC, sin huecos en
 ninguna fuente. GitHub ya no lo lanza por su cuenta (se quitó el `schedule` de
-`recolectar.yml`). La clave de GitHub del Worker caduca después del 19 dic (31 ene 2027, o
+`recolectar.yml`). **Revisado en Cloudflare el 2026-11-13 (~21:30 UTC):** el código activo
+es igual, línea por línea, a `despertador/worker.js`; el horario es `7,37 * * * *` y el
+secreto `GITHUB_TOKEN` existe (su valor no se ve ni está en el repositorio). La clave de GitHub del Worker caduca después del 19 dic (31 ene 2027, o
 ~1 mar 2027 según recuerda Bruno). Desde el 13 nov también guarda lo de la 6.3 (puesto de GTA
 en Twitch y tendencias de YouTube); falta mostrarlo en la página. Se apaga, enciende o
 alarga en `recolector/interruptor.json` (por defecto, hasta el 19 dic).
@@ -59,6 +61,7 @@ ninguna.
 ## Últimos cambios
 
 - 2026-11-13: estado anterior archivado en historial/ESTADO_2026-11-13.md
+- 2026-11-13: revisado el despertador: sin claves ni datos de Bruno en el repositorio; el Worker de Cloudflare es igual a la copia. Hallado: el correo de Outlook en las uniones de PR hechas desde la web.
 - 2026-11-13: `PLAN_DE_TRABAJO.md` archivado en `historial/PLAN_DE_TRABAJO_2026-11-13.md` y reescrito con lo pendiente; regla nueva: también se archiva al pasar de 20.000 bytes (decisión de Bruno).
 - 2026-11-13: cápsula del tiempo en la página, como dos postales de Miami (7.4, opción B de Bruno); falta su texto.
 - 2026-11-13: hora cero con fuegos y reflectores (7.2) y escena de día, atardecer y noche (4.1 y 4.2).
@@ -79,13 +82,15 @@ La lista completa y su orden están en `PLAN_DE_TRABAJO.md`. Resumen (2026-11-13
 7. **Bruno:**
    - pedir a soporte de GitHub que borre la referencia del PR #1 (deja alcanzable el primer
      commit, con su correo de Outlook);
-   - activar en GitHub "Keep my email addresses private" y "Block command line pushes that
-     expose my email";
+   - **activar ya** en GitHub "Keep my email addresses private" y "Block command line pushes
+     that expose my email". Revisado el 2026-11-13: los 9 commits "Merge pull request #2…#10"
+     que crea GitHub al unir desde la web llevan el correo de Outlook de Bruno y están en
+     `main`, que es público. Con esa opción activa, las uniones siguientes usan el correo
+     anónimo. Quitar el correo de esos 9 exige reescribir `main` con `--force`: solo si Bruno
+     lo autoriza (choca con las mediciones de cada hora y con las ramas de la nube);
    - borrar en GitHub las ramas ya unidas o de capturas: `claude/project-thread-dpdy9p`,
      `claude/project-thread-en9qib`, `claude/project-thread-mi5ckb`,
      `claude/project-thread-odgsms`, `revision/hora-cero` y `revision/dia-noche` (revisado
      el 2026-11-13: no tienen nada que falte en `main`; las de `revision/` solo tienen
      capturas).
-8. **Opcional:**
-   - comprobar en Cloudflare que el Worker es igual a `despertador/worker.js`;
-   - el hook de Impeccable (`npx impeccable install` en el PC).
+8. **Opcional:** el hook de Impeccable (`npx impeccable install` en el PC).
