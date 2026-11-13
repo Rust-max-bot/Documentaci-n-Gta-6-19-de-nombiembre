@@ -1,0 +1,319 @@
+# Plan de trabajo
+
+Creado el 2026-11-12 a partir de la lista "Cosas que quiero para mi app" de Bruno y de lo que
+ya estaba acordado y faltaba. **Es la lista ordenada de qué hacer y en qué orden.**
+
+- Las decisiones y sus motivos siguen en `PLAN.md`; el estado vivo, en `ESTADO_ACTUAL.md`.
+- Una tarea se marca `[x]` solo cuando está hecha **y verificada** sin errores. Si queda a
+  medias o con un fallo conocido, sigue en `[ ]` y se anota el fallo al lado.
+- Orden pedido por Bruno: primero lo más importante que ya estaba acordado; después su
+  lista, de lo más sencillo y rápido a lo más largo y complicado.
+- Códigos entre paréntesis: `A1`…`A8` son los puntos de la lista "para mi app" y `D1`…`D6`
+  los de "diseño", con la numeración original de Bruno.
+
+## Fechas que mandan
+
+- **18 de noviembre de 2026:** el recolector tiene que llevar días funcionando solo.
+- **19 de noviembre de 2026, 00:00 de Santiago:** lanzamiento.
+- Cada día sin recolector es un día de "interés previo" que no se registra (A4), sobre todo
+  en Twitch y YouTube, que no guardan historial. Por eso la Fase 1 va antes que todo.
+- **Antes del 19 nov** (anotado el 2026-11-13). Esto deja de servir si se hace después:
+  - 7.2, Hora cero: la animación tiene que estar en la página antes de que la cuenta llegue a 0.
+    Hecha el 2026-11-13; falta que esté unida a `main`.
+  - 7.4, Cápsula del tiempo: Bruno escribe lo que espera del juego antes del lanzamiento.
+  - Si Bruno lo decide (aviso 7): que el recolector empiece a guardar lo de la 6.3 antes del
+    19 nov. Sirve para que el día del lanzamiento quede guardado.
+
+## Fase 0 — Claves y fuentes
+
+- [x] Bruno crea las tres claves y las guarda como secretos de GitHub.
+- [x] Probar Twitch y YouTube con consultas reales desde GitHub (A1). Hecho el 2026-11-12:
+      las dos funcionan. Resultados en `PLAN.md`, sección 5.
+- [x] Repetir desde GitHub las fuentes sin clave. Google Trends, titulares, PlayStation y
+      Xbox funcionan; Rockstar no responde a programas.
+
+## Fase 1 — Recolector funcionando (lo más importante)
+
+Incluye tres puntos de la lista de Bruno que no se pueden separar del recolector: dónde se
+guardan los datos (A2), empezar cuanto antes (A4) y el periodo de un mes con interruptor (A6).
+
+- [x] **1.1 Confirmar con Bruno cómo se guardan los datos (A2).** Bruno aceptó el
+      2026-11-12: archivos de texto, uno por día, en `datos/` (una línea por medición), en
+      vez de una base de datos SQL. Motivos en "Avisos para Bruno", punto 1.
+- [x] **1.2 Programar el recolector** (`recolector/`): Twitch, YouTube, Google Trends,
+      titulares, PlayStation y Xbox. Cada fuente es una pieza independiente; si una falla, se
+      anota el hueco y siguen las demás. Guarda también lo necesario para A7 y A8 (enlaces y
+      miniaturas), para no tener que volver a recolectar después.
+- [x] **1.3 Interruptor y periodo (A6):** archivo de configuración con "activo: sí/no" y
+      fecha de fin (por defecto, un mes: hasta el 19 de diciembre de 2026). Bruno puede
+      apagarlo, encenderlo o alargarlo cambiando una línea.
+- [x] **1.4 Ejecución programada en GitHub** cada 30 minutos, con validaciones antes de
+      guardar (regla "datos por programa"). **Fallo pendiente (2026-11-12):** las
+      ejecuciones manuales funcionan, pero hasta las 17:56 de Santiago GitHub no lanzó
+      ninguna programada (se saltó las de 16:37, 17:07 y 17:37). Investigado el 2026-11-12:
+      sin causa propia, coincide con un fallo de GitHub en repositorios privados nuevos. Se
+      reescribió el `cron` (no bastó) y Bruno decidió hacer público el repositorio, con el
+      historial limpio de sus datos personales. Horario nuevo: cada hora, y cada 30 minutos
+      del 17 al 21 nov. Ya público, tampoco lanzó ninguna (00:07 y 01:07 UTC del 13 nov):
+      el 2026-11-13 se montó el despertador de Cloudflare (`despertador/`). El turno de las
+      01:37 UTC corrió bien (y no midió, como debe fuera de la semana del lanzamiento).
+      **Verificado el 2026-11-13:** el despertador lanzó el recolector cada hora (minuto 7)
+      de 02:07 a 13:07 UTC, 12 seguidas, todas bien y con su medición guardada. GitHub sí
+      lanzó dos programadas, tarde (03:23 y 12:05), que midieron dos veces esos turnos; se
+      quitó el `schedule` de `recolectar.yml`.
+- [x] **1.5 Dejarlo funcionando y revisar la primera hora (A4)** (cambiado por Bruno el
+      2026-11-12: en vez de vigilar 24 horas, que exigiría el PC encendido y gastaría
+      tokens). Basta con que dos ejecuciones programadas arranquen solas y guarden bien.
+      Hecho el 2026-11-13: 12 seguidas lanzadas por el despertador (ver 1.4).
+- [x] **1.5b Opcional: revisión única de las primeras 24 horas** en la siguiente sesión, con
+      `python recolector/revisar.py --horas 24`: cambio de archivo a medianoche UTC, cupo de
+      YouTube, bloqueos de Google Trends y ejecuciones que GitHub se haya saltado. Los datos
+      quedan guardados igual; es solo mirar. **Hecha el 2026-11-13 (~13:30 UTC):** 21
+      mediciones, las seis fuentes respondieron en todas (0 huecos, 0 bloqueos de Trends,
+      0 errores de servidor). Cada archivo del día tiene solo horas de su fecha UTC. YouTube
+      gasta 101 unidades por medición, siempre las mismas (100 la búsqueda y 1 la consulta
+      de videos; `recolector/fuentes.py`): 48 al día serían 4.848 de 10.000. *(Corregido en
+      la 1.7: al principio se anotó ~59, mal calculado; el cupo se cuenta por día de
+      California, no por día UTC.)* Peso ~25 KB por medición (~35 MB en 30 días). Faltan 00:07 y 01:07
+      UTC del 13 nov (antes del despertador). **Fallo de `revisar.py`:** sigue suponiendo una
+      medición cada 30 minutos, así que marca como "hueco" cada hora normal y espera el
+      doble de mediciones; no sabe del horario nuevo (cada hora, y cada 30 min del 17 al 21
+      nov).
+- [x] **1.6 Conectar la página con los datos reales** (`web/datos.js` generado por
+      programa). La página deja de mostrar el aviso de "datos de ejemplo". Hecho el
+      2026-11-12: `recolector/generar_web.py` y `ver_pagina.bat`; verificado con Playwright
+      a 1280 y 384 px en los dos estilos, sin errores ni desborde.
+- [x] **1.7 Prueba completa antes del 18 de noviembre.** Lista aprobada por Bruno el
+      2026-11-13; hecha ese día (~14:30 UTC). El fallo del eje (punto 3) se corrigió el
+      mismo día, a pedido de Bruno: líneas en números redondos (0, 1, 2, 3, 4, 5 mil) y un
+      decimal bajo los 100 mil; verificado a 1280 y 384 px en los dos estilos.
+      1. Despertador en la semana del lanzamiento: el código real de `despertador/worker.js`
+         probado en Edge (Playwright) con 13 horas simuladas y un GitHub falso: el minuto 37
+         mide solo del 17 nov 00:00 al 22 nov 00:00 UTC, el 7 siempre; la orden a GitHub va
+         bien formada; sin clave o con respuesta 401 da error. Todo bien. *No verificado:* que
+         el código pegado en Cloudflare sea idéntico a esta copia (hace falta entrar en
+         Cloudflare).
+      2. `revisar.py` sigue ahora el horario del despertador (turnos que faltan, dobles y a
+         mano); probado con los datos reales y con datos inventados de la semana.
+      3. Cadena completa con la medición automática de las 14:07 UTC (en vez de una a mano,
+         para no medir dos veces ese turno): despertador → GitHub → `datos/` →
+         `generar_web.py` → página. Página a 1280 y 384 px en los dos estilos: sin errores
+         de consola, sin desborde, sin aviso de ejemplo, y sale la medición de las 14:07.
+         **Fallo encontrado:** el eje del gráfico de Twitch redondea a miles enteros: con un
+         tope de 4.500 las marcas (1.125, 2.250, 3.375, 4.500) salen como "1 mil, 2 mil,
+         3 mil, 5 mil" (`compacto()` en `web/app.js`). Engaña al leer el gráfico.
+         Corregido (ver arriba).
+      4. Interruptor, en una copia fuera del repositorio: apagado y periodo terminado no
+         miden ni crean nada (código 0); `activo` o fecha mal escritos y archivo roto abortan
+         sin guardar (código 2, la ejecución sale en rojo en GitHub).
+      5. Límites: YouTube, 101 unidades por medición → 4.848 de 10.000 al día en la semana
+         del lanzamiento. Clave del despertador: caduca después del 19 dic (31 ene 2027 según
+         la sesión que la creó; Bruno cree que puso ~1 mar 2027; da igual para el periodo).
+         Minutos de GitHub: gratis (repositorio público). Peso: ~20 MB en el mes.
+
+## Fase 2 — Mejoras rápidas
+
+- [x] **2.1 Enlaces que se abren en el navegador (A7):** videos, transmisiones y noticias.
+      Hecho el 2026-11-13: el título de cada video lleva a YouTube y el canal de la tabla de
+      Twitch a su canal (los titulares ya enlazaban); se abren en otra pestaña. Verificado
+      a 1280 y 384 px en los dos estilos.
+- [x] **2.2 Miniaturas (A8):** de videos y transmisiones. Las de noticias, solo si la fuente
+      las entrega (por verificar). **Videos hechos (2026-11-13):** Bruno eligió tarjetas como
+      las de los titulares (opción B): miniatura arriba, título con enlace, canal, visitas,
+      cuánto subieron y la curva; las cifras exactas, al pasar el ratón. **Twitch hecho
+      (2026-11-13):** Bruno eligió la foto de perfil del canal; el recolector la guarda
+      desde ese día (probado en GitHub con las claves reales: 20 de 20 canales con foto) y
+      la tabla la muestra junto al nombre (las mediciones de antes, con un círculo vacío). Verificado: Google Noticias no entrega imágenes (la 2.2 no puede tenerlas
+      para titulares); las miniaturas de YouTube funcionan; las de Twitch son una foto del
+      directo en ese momento y, cuando el canal deja de transmitir, Twitch muestra una imagen
+      genérica (ya pasa con el canal del máximo del 12 nov). Alternativa para Twitch: la foto
+      de perfil del canal, que no cambia, pero pide tocar el recolector.
+- [x] **2.3 Arreglar el parpadeo del suelo de Miami 1986 (D1).** Es un error, no una
+      decisión de diseño. Hecho el 2026-11-13: el suelo avanzaba repintando una capa enorme
+      en cada cuadro y, cerca del horizonte, las líneas quedaban tan juntas que titilaban.
+      Ahora se mueve la capa entera (sin repintar) y el suelo se funde con el fondo junto al
+      horizonte. Medido con 40 capturas seguidas: el salto máximo de brillo bajó de 1,8 a
+      0,9. **Bruno lo miró: las líneas seguían titilando.** Segundo arreglo (mismo día): la
+      rejilla se dibuja en un lienzo (`<canvas>`) con la misma geometría, y cada línea con su
+      grosor real, así que ya no se vuelve puntos que se encienden y apagan. Salto máximo:
+      0,25 (1280 px) y 0,18 (384 px). Se ve igual, más limpio. Bruno: "mucho mejor" (apenas
+      titila un poco).
+- [x] **2.4 Que las rayas del sol de 1986 no se confundan con las líneas de neón de los
+      edificios (D2).** Cambia cómo se ve: presentar opciones con capturas.
+      Opciones presentadas el 2026-11-13: A) rayas más arriba y cada vez más anchas; B) sol
+      sin rosa abajo (rayas naranjas); C) sol sin rayas. **Bruno eligió la A** y se aplicó
+      el mismo día (`.sol80` en `web/estilos.css`): las rayas empiezan al 30 % del sol y se
+      ven por encima de los edificios. Verificado a 1280 y 384 px en los dos estilos, sin
+      errores ni desborde.
+
+- [ ] **2.5 (idea para después, pedida por Bruno el 2026-11-13) TikTok.** No hay acceso
+      oficial para un proyecto personal: la API de investigación es solo para instituciones
+      académicas sin fines de lucro, y TikTok Creative Center (hashtags con visitas) no tiene
+      API y bloquea consultas desde servidores. Caminos: probarlo con una consulta real desde
+      el PC y desde GitHub, o anotar a mano lo llamativo como evento. Bruno lo dejó para
+      después.
+
+## Fase 3 — Mejoras medianas
+
+- [x] **3.1 Miami 2026 con colores más vivos e intensos (D3).** Presentar 2 o 3 opciones con
+      capturas. La paleta se inspira en un Miami soleado y saturado; no se copia arte del juego. **Hecha el
+      2026-11-13:** 3 opciones (A "Mediodía tropical", B "Atardecer encendido", C "Art déco
+      eléctrico"); Bruno eligió la B: cielo de atardecer de azul a morado, rosa y naranja,
+      edificios saturados, palmeras moradas oscuras y mar más intenso. Las torres de la 3.3
+      pasaron a lila para combinar. Verificado a 1280 y 384 px en los dos estilos.
+- [x] **3.2 Reddit (A5).** Primero verificar con una consulta real si se puede leer gratis
+      desde GitHub. Si exige pago, se descarta (decisión de Bruno). Ver "Avisos", punto 3.
+      **Probado desde GitHub el 2026-11-13** (`probar_fuentes.py`, ejecución 43471957389):
+      el JSON sin clave (www, old y api.reddit.com) da 403, bloqueado. El RSS de
+      `r/GTA6/new/.rss` sí responde (25 publicaciones), pero solo trae título, autor, fecha y
+      enlace: ni votos, ni comentarios, ni suscriptores. Desde la nube de Claude Reddit está
+      bloqueado del todo. **Bruno eligió el RSS** (2026-11-13); la clave de Reddit, para
+      tener votos y comentarios, queda para después. **El recolector ya guarda Reddit** (las
+      publicaciones nuevas de cada medición), probado desde GitHub sin tocar `datos/`.
+      **En la página (2026-11-13):** Bruno eligió la opción C entre tres con capturas: barras
+      con las publicaciones nuevas por hora (últimas 48 horas) y debajo las 8 más nuevas en
+      tarjetas chicas (las pidió más chicas que las de los titulares). Verificado a 1280 y
+      384 px en los dos estilos, con datos de ejemplo y con los reales (100 publicaciones de la
+      medición de las 18:07 UTC del 13 nov).
+      Clave de Reddit (votos y comentarios): revisado el 2026-11-13. Hay que pedir permiso a
+      Reddit y tarda ~7 días sin garantía (detalle en `PLAN.md`). **Bruno lo deja para
+      después**; anotado en la Fase 5.
+- [x] **3.3 Edificios que reflejan el paso del tiempo (D4):** en 2026 siguen los hoteles de
+      1986 y aparecen torres nuevas detrás. Presentar opciones con capturas. **Hecha el
+      2026-11-13:** primera ronda de 3 opciones descartada por Bruno ("todas son de vidrio");
+      segunda ronda con referencias reales de Miami (detalle y fuentes en `PLAN.md`). Bruno
+      eligió la opción 2: 2 torres de los 80 en las dos escenas y 6 torres nuevas solo en 2026.
+      Verificado a 1280 y 384 px en los dos estilos. En celular (384 px) las torres de los 80
+      quedan fuera de la pantalla, a los lados.
+
+## Fase 4 — Mejoras largas
+
+- [x] **4.1 Modo día y noche en los dos Miami (D5),** elegible por el usuario. Hecho el
+      2026-11-13: día, atardecer y noche en los dos estilos, con botones. Verificado a 1280 y 384 px.
+- [x] **4.2 Modo dinámico (D5):** el cielo cambia con la hora real. Hecho junto con la 4.1
+      (2026-11-13). Bruno eligió solo la hora de Miami, no la de quien visita.
+- [ ] **4.3 Análisis de datos (A3):** estadísticas e "datos interesantes" (popularidad,
+      visitas, cuánto dura el interés después del lanzamiento, comparación antes y después).
+      Va al final porque necesita varios días de datos reales para tener algo que mostrar.
+
+## Fase 5 — Lo que ya estaba acordado para después del lanzamiento
+
+- [ ] Búsqueda calmada: completar y contrastar datos, memes, cifras oficiales (`PLAN.md`, sección 4).
+- [ ] **Clave de Reddit (idea para después, Bruno, 2026-11-13).** Pedir permiso a Reddit
+      (formulario de soporte para desarrolladores) para guardar votos y comentarios. Tarda
+      ~7 días y no está garantizado: ver `PLAN.md`, "Clave de Reddit".
+
+## Fase 6 — Ideas nuevas de Bruno: más estadísticas, logros y comparaciones
+
+*(Pedido de Bruno, 2026-11-13. Se hace poco a poco, **después de terminar la Fase 4**. Nada de
+esto está probado todavía: cada fuente nueva se verifica con una consulta real antes de usarla.
+Ver el aviso 7, sobre la fecha del lanzamiento.)*
+
+- [ ] **6.1 Más estadísticas de Google Trends.** Hoy se guarda solo "GTA 6" en todo el mundo,
+      hora por hora, últimos 7 días. Lo que se podría agregar, cada cosa con su consulta aparte:
+  - Interés por país (lista o mapa: en qué países se busca más).
+  - Búsquedas relacionadas "en aumento" (qué más busca la gente junto con GTA 6).
+  - GTA 6 junto a otras palabras en la misma escala (por ejemplo, GTA 5 u otros juegos), para
+    que el 0 a 100 tenga con qué compararse.
+  - Comparación histórica: el lanzamiento de GTA V (septiembre de 2013) frente al de GTA 6, en
+    una sola consulta de 2013 a 2026 (puntos por mes).
+  - Límites: Trends no dice cuántas búsquedas hubo, solo de 0 a 100. Además, cada consulta de
+    más aumenta el riesgo de bloqueo (429), que ya pasó en pruebas el 13 nov.
+- [ ] **6.2 Sección de logros y récords (que se actualiza sola).**
+  - Con los datos que ya se guardan, sin fuentes nuevas:
+    - el máximo de espectadores en Twitch y cuándo fue;
+    - el canal con más espectadores en un solo directo;
+    - el máximo de transmisiones a la vez;
+    - el video más visto de los medidos (título y enlace) y el que más creció en una hora;
+    - la hora con más interés en Trends;
+    - el día con más titulares;
+    - la hora con más publicaciones en r/GTA6.
+  - Cada récord muestra su fecha y un aviso de "nuevo récord" cuando se supera, con la lista
+    de récords anteriores.
+  - Dato nuevo, barato: las visitas de los tráilers oficiales, medidas por su enlace fijo, sin
+    búsqueda, casi sin gastar cuota de YouTube. Los récords históricos de esos tráilers se
+    anotan solo con fuente verificada.
+- [ ] **6.3 GTA comparado con lo más visto en Twitch y YouTube.**
+  - **Guardado desde el 2026-11-13** (Bruno eligió empezar antes del 19 nov). Hay dos fuentes
+    nuevas en el recolector, `twitch_ranking` y `youtube_tendencias` (formato en
+    `recolector/LEEME.md`). Se probaron con una consulta real desde GitHub (ejecución
+    43499158586): GTA V iba en el puesto 4, GTA VI aún fuera de las 100 primeras, 5 videos de
+    GTA en tendencias de Chile y 4 en las de EE. UU., y Rockstar con 14 millones de
+    suscriptores. **Falta mostrarlo en la página**; queda en `[ ]` hasta entonces.
+  - Twitch:
+    - en qué puesto está GTA VI entre todas las categorías (Twitch da el orden, no el número);
+    - los espectadores de las 5 primeras, contados aparte;
+    - GTA VI frente a GTA V.
+  - YouTube:
+    - cuántos videos de GTA hay entre los videos en tendencia de Chile y de EE. UU., y en qué
+      puesto (1 unidad de cuota por país);
+    - los suscriptores del canal de Rockstar (1 unidad).
+
+## Fase 7 — Ideas para que la página sea memorable
+
+*(Sugerencias de Claude que Bruno aprobó el 2026-11-13: "las 5 me gustan". Cambian cómo se ve
+la página, así que cada una se presenta con opciones y capturas antes de aplicarla. Dos tienen
+fecha límite: ver "Antes del 19 nov".)*
+
+- [ ] **7.1 Rebobinar el lanzamiento.** Una barra para mover la página hora por hora (con cada
+      medición guardada) y revivir el 19 nov: los números, el gráfico y los titulares cambian
+      a esa hora. Se puede hacer después del lanzamiento: los datos ya quedan guardados.
+- [x] **7.2 Hora cero.** Una animación cuando la cuenta regresiva llegue a 0. Después, la cuenta
+      se cambia por "días desde el lanzamiento". **Tiene que estar en la página antes del
+      19 nov**, porque es para ese momento. Hecho el 2026-11-13 (opciones A y C de Bruno),
+      ajustado a día, atardecer y noche. Se prueba con `?probar-hora-cero`. Ya está en `main` (PR #9).
+- [ ] **7.3 Viaje en el tiempo.** Al cambiar de Miami 1986 a 2026, las torres nuevas (tarea
+      3.3) suben detrás de los hoteles, y al volver a 1986 bajan. Sin fecha límite.
+- [ ] **7.4 Cápsula del tiempo.** Un texto de Bruno con lo que espera del juego, escrito
+      **antes del 19 nov**, y otro después con lo que le pareció. Los escribe Bruno: Claude
+      no inventa ese contenido. La página los muestra uno al lado del otro.
+      **Página lista el 2026-11-13** (opción B, postales de Miami; ver `PLAN.md`). **Falta el
+      texto de Bruno** en `web/capsula.js`, antes del 19 nov; queda en `[ ]` hasta entonces.
+- [ ] **7.5 Resumen del día.** Una tarjeta automática por día con lo más importante: máximo de
+      espectadores, video más visto, interés en Trends, cantidad de titulares y de
+      publicaciones. Sale de los datos ya guardados. Sin fecha límite.
+
+## Sin definir
+
+- [ ] **D6:** en la lista de Bruno quedó cortado ("El miami actual de…"). **Bruno pidió
+      ignorarlo por ahora** (2026-11-12); no se pregunta hasta que él lo retome.
+
+## Avisos para Bruno (cosas donde su idea tiene un límite o un fallo)
+
+1. **Base de datos SQL (A2).** En GitHub no hay un servidor de base de datos encendido; lo
+   único que perdura entre ejecuciones son los archivos del repositorio. Una base de datos en
+   un solo archivo (SQLite) se puede guardar ahí, pero git la vuelve a guardar entera en cada
+   cambio: con 48 cambios al día el repositorio crecería muy rápido. Los archivos de texto por
+   día solo añaden líneas, casi no pesan, se pueden leer a simple vista y no se corrompen. Para
+   el análisis (A3) se pueden cargar en una base de datos en el PC cuando haga falta.
+2. **Peso de los datos (A3).** Medido el 2026-11-12 en las primeras mediciones reales: unos
+   15 KB por medición (la primera pesó 86 KB porque guardó los 100 titulares; después solo
+   se guardan los nuevos). Con 48 al día durante un mes, unos 20 a 25 MB sin comprimir; git
+   los comprime. GitHub admite repositorios de cientos de MB, así que el guardado no debería
+   detenerse por tamaño. El día del lanzamiento habrá más canales y titulares: se revisa.
+3. **Lo que sí puede quedarse corto en un mes (A6):** los minutos gratuitos de GitHub para
+   repositorios privados (2.000 al mes, hasta donde sé; por verificar en la cuenta de Bruno).
+   Un mes cada 30 minutos son unas 1.440 ejecuciones. Cada una tarda unos 15 segundos, pero
+   GitHub cobra cada ejecución como un minuto entero: unos 1.440 minutos al mes. Cabe, pero
+   justo. Si no alcanza: medir cada 30 minutos la semana del lanzamiento y cada hora el resto.
+   El gasto real solo se ve en github.com/settings/billing (con `gh` hace falta un permiso
+   extra que Bruno tendría que dar con `gh auth refresh -h github.com -s user`).
+   YouTube no es problema: 104 unidades por medición desde la 6.3, unas 5.000 de las 10.000 diarias.
+4. **Reddit (A5).** Tiene acceso gratuito para uso personal, pero pide registrar una
+   aplicación (otra clave, gratis). La lectura sin clave suele estar bloqueada desde
+   servidores como los de GitHub. Nada de esto está verificado todavía.
+5. **Estado de Rockstar.** No se puede leer con programas, ni desde la nube ni desde GitHub.
+   Las caídas de Rockstar se anotan a mano en `web/eventos.js`.
+6. **Diseño más vivo (D3).** Se puede y se debe ser más atrevido, pero sin copiar el arte
+   oficial del juego: se toma la idea (colores saturados de Florida), no las imágenes.
+7. **Fase 6 y la fecha del lanzamiento.** La página se puede construir cuando sea, pero un
+   dato que no se guardó el 19 nov no se puede recuperar después. Por ejemplo, el puesto de
+   GTA VI en Twitch el día del lanzamiento o los tráilers en tendencia ese día. Por eso, si
+   Bruno quiere esas comparaciones, conviene que el recolector empiece a guardarlas antes del
+   19 nov, aunque la sección de la página se haga después.
+   - Sí se puede pedir a Trends más tarde: el interés por país, la comparación con otras
+     palabras y la histórica.
+   - Los récords de la 6.2 salen de lo que ya se guarda.
+8. **"Máximo en Google Trends" siempre vale 100.** Es el punto más alto del periodo, por
+   definición, así que no sirve como logro. Para que diga algo hay que compararlo con otra
+   cosa (otras palabras, otros países u otros lanzamientos): eso es la 6.1.

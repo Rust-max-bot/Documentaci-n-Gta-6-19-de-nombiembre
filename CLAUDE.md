@@ -85,20 +85,30 @@ No se guarda trabajo a medias: si el paso espera una decisión de Bruno, se dice
 y se termina sin guardar. Para deshacer, `git revert`. `ESTADO_ACTUAL.md` se mantiene corto
 borrando lo viejo (ya está en `git log`).
 
-## Archivar `ESTADO_ACTUAL.md`
+## Archivar `ESTADO_ACTUAL.md` y `PLAN_DE_TRABAJO.md`
 
-Cuando `ESTADO_ACTUAL.md` pasa de **20.000 bytes**, se archiva en vez de seguir creciendo
-(el freno automático avisa al terminar una respuesta):
+Cuando uno de los dos pasa de **20.000 bytes**, se archiva en vez de seguir creciendo
+(el freno automático avisa al terminar una respuesta; límite de los dos decidido por Bruno,
+2026-11-13):
 
-1. Moverlo con `git mv` a `historial/ESTADO_AAAA-MM-DD.md` (fecha del día; si ya existe
-   uno con esa fecha, añadir `-2`, `-3`…). Los archivos de `historial/` no se editan, salvo
-   para corregir un error factual, y anotándolo en el propio archivo.
-2. Crear un `ESTADO_ACTUAL.md` nuevo con la misma estructura, conservando solo lo esencial:
-   "Dónde quedamos" (reescrito corto), la fecha límite, "Pendiente" completo y las decisiones
-   o avisos que sigan vigentes. "Últimos cambios" empieza con una sola línea:
-   `- AAAA-MM-DD: estado anterior archivado en historial/ESTADO_AAAA-MM-DD.md`.
-3. Comprobar que no se perdió ningún pendiente ni aviso vigente comparando los dos archivos.
-4. Guardar y subir en un solo commit ("Archivar ESTADO_ACTUAL.md…").
+1. Moverlo con `git mv` a `historial/ESTADO_AAAA-MM-DD.md` o
+   `historial/PLAN_DE_TRABAJO_AAAA-MM-DD.md` (fecha del día; si ya existe uno con esa fecha,
+   añadir `-2`, `-3`…). Los archivos de `historial/` no se editan, salvo para corregir un
+   error factual, y anotándolo en el propio archivo.
+2. Crear uno nuevo con la misma estructura, conservando solo lo necesario para seguir:
+   - **`ESTADO_ACTUAL.md`:** "Dónde quedamos" (reescrito corto), la fecha límite,
+     "Pendiente" completo y las decisiones o avisos que sigan vigentes. "Últimos cambios"
+     empieza con una sola línea:
+     `- AAAA-MM-DD: estado anterior archivado en historial/ESTADO_AAAA-MM-DD.md`.
+   - **`PLAN_DE_TRABAJO.md`:** las reglas de la cabecera, las fechas que mandan, **todas las
+     tareas `[ ]` con su texto completo** (lo que falta, los fallos anotados y lo que ya
+     existe para ellas), una línea por fase con lo ya hecho (por ejemplo, "Fase 1: hecha,
+     1.1 a 1.7") y los avisos que sigan vigentes. Arriba, una línea que diga dónde quedó el
+     plan anterior.
+3. Comprobar que no se perdió ninguna tarea pendiente ni aviso vigente comparando los dos
+   archivos.
+4. Guardar y subir en un solo commit ("Archivar ESTADO_ACTUAL.md…" o
+   "Archivar PLAN_DE_TRABAJO.md…").
 
 Al iniciar una sesión no se lee `historial/`: solo se consulta si hace falta un detalle viejo
 (con búsquedas o `git log`, no entero). Si algo de `historial/` contradice a los archivos
@@ -110,7 +120,8 @@ vivos, ganan los vivos.
   guardar, `↑` commits sin subir.
 - Hook `Stop` `.claude/hooks/revisar-guardado.sh`: frena el final de una respuesta si quedan
   cambios sin commit o sin push, y recuerda esta regla (avisa una sola vez por respuesta).
-  También avisa si `ESTADO_ACTUAL.md` pasó de 20.000 bytes (ver "Archivar `ESTADO_ACTUAL.md`").
+  También avisa si `ESTADO_ACTUAL.md` o `PLAN_DE_TRABAJO.md` pasó de 20.000 bytes (ver
+  "Archivar `ESTADO_ACTUAL.md` y `PLAN_DE_TRABAJO.md`").
 - `.gitattributes` fuerza finales de línea LF en los `.sh` para que funcionen en Windows y en
   la nube.
 
