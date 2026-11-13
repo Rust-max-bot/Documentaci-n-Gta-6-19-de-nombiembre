@@ -78,17 +78,83 @@
   /* ---------- Aviso de datos de ejemplo ---------- */
   if (D.ejemplo) $("aviso-ejemplo").hidden = false;
 
-  /* ---------- Cuenta regresiva ---------- */
+  /* ---------- Cuenta regresiva y hora cero (tarea 7.2) ---------- */
+  // Con "?probar-hora-cero" en la dirección, el reloj de la página se adelanta hasta 5 segundos
+  // antes del lanzamiento: sirve para ver la animación sin esperar al 19 nov.
+  var adelanto = /[?&]probar-hora-cero\b/.test(location.search) ? SALIDA - 5000 - Date.now() : 0;
+  function ahora() { return Date.now() + adelanto; }
+  var FIESTA = 24 * 3600000;     // la animación se ve al llegar a 0 o al abrir la página ese primer día
+  var celebrado = false;
+  // Escribe los cuatro números. Si las cajas ya existen, solo cambia los números: así una
+  // animación de las cajas no vuelve a empezar cada segundo.
+  function pintar(caja, s, modo) {
+    var v = [[Math.floor(s / 86400), "días"], [Math.floor(s % 86400 / 3600), "horas"], [Math.floor(s % 3600 / 60), "min"], [s % 60, "seg"]];
+    if (caja.dataset.modo !== modo) {
+      caja.dataset.modo = modo;
+      caja.classList.toggle("desde", modo === "desde");
+      caja.innerHTML = v.map(function (x) { return '<div class="caja"><b></b><small>' + x[1] + "</small></div>"; }).join("")
+        + (modo === "desde" ? '<p class="cuenta-nota"><span>desde que salió GTA 6</span></p>' : "");
+    }
+    caja.querySelectorAll("b").forEach(function (b, i) { b.textContent = String(v[i][0]).padStart(2, "0"); });
+  }
   function cuenta() {
-    var falta = SALIDA - Date.now(), caja = $("cuenta");
+    var falta = SALIDA - ahora(), caja = $("cuenta");
     if (falta <= 0) {
-      var dias = Math.floor(-falta / 86400000);
-      caja.innerHTML = '<span class="texto">' + (dias === 0 ? "Hoy es el día" : "Hace " + dias + (dias === 1 ? " día" : " días") + " que salió") + "</span>";
+      pintar(caja, Math.floor(-falta / 1000), "desde");
+      if (!celebrado && -falta < FIESTA) { celebrado = true; horaCero(); }
       return;
     }
-    var s = Math.floor(falta / 1000);
-    var v = [[Math.floor(s / 86400), "días"], [Math.floor(s % 86400 / 3600), "horas"], [Math.floor(s % 3600 / 60), "min"], [s % 60, "seg"]];
-    caja.innerHTML = v.map(function (x) { return '<div class="caja"><b>' + String(x[0]).padStart(2, "0") + "</b><small>" + x[1] + "</small></div>"; }).join("");
+    pintar(caja, Math.floor(falta / 1000), "falta");
+  }
+  function horaCero() {
+    var lema = document.querySelector(".lema"), portada = document.querySelector(".portada");
+    lema.textContent = "¡Ya salió GTA 6!";
+    lema.classList.add("ya-salio");
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    // Fuegos artificiales y reflectores a la vez (elección de Bruno, 2026-11-13: opciones A y C).
+    portada.classList.add("fiesta");
+    fuegos(portada);
+    reflectores(portada);
+    setTimeout(function () { portada.classList.remove("fiesta"); }, 22000);
+  }
+  // Fuegos artificiales dibujados en un lienzo encima del cielo, con los colores del estilo.
+  function fuegos(portada) {
+    var lienzo = document.createElement("canvas"), cx = lienzo.getContext("2d");
+    lienzo.className = "fuegos"; portada.appendChild(lienzo);
+    // De noche y al atardecer, los colores del estilo sumados como luz. De día, con el cielo claro,
+    // esa suma casi no se ve: se usan colores fuertes pintados encima y chispas más gruesas.
+    var dia = document.documentElement.dataset.hora === "dia";
+    var css = getComputedStyle(document.documentElement), colores = dia ? ["#ff2e97", "#6a2bd9", "#ff6a00", "#e0006e"]
+      : ["--a1", "--a2", "--a3"].map(function (n) { return css.getPropertyValue(n).trim(); }).concat("#ffffff");
+    var w, h, chispas = [], inicio = performance.now();
+    function medir() { w = lienzo.width = portada.clientWidth; h = lienzo.height = portada.clientHeight; }
+    medir();
+    function estallar() {
+      var x = w * (.15 + Math.random() * .7), y = h * (.12 + Math.random() * .35), c = colores[Math.floor(Math.random() * colores.length)];
+      for (var k = 0; k < 70; k++) { var a = Math.random() * 6.283, v = 1.5 + Math.random() * 4.5; chispas.push({ x: x, y: y, vx: Math.cos(a) * v, vy: Math.sin(a) * v, vida: 1, c: c }); }
+    }
+    var proxima = 0;
+    (function cuadro(t) {
+      var pasado = t - inicio;
+      if (pasado < 16000 && t > proxima) { estallar(); proxima = t + 350 + Math.random() * 700; }
+      cx.globalCompositeOperation = "destination-out"; cx.fillStyle = "rgba(0,0,0,.22)"; cx.fillRect(0, 0, w, h);
+      cx.globalCompositeOperation = dia ? "source-over" : "lighter";
+      chispas = chispas.filter(function (p) { return p.vida > 0; });
+      chispas.forEach(function (p) { p.x += p.vx; p.y += p.vy; p.vy += .045; p.vx *= .985; p.vy *= .985; p.vida -= .011;
+        cx.globalAlpha = Math.max(0, p.vida); cx.fillStyle = p.c; cx.beginPath(); cx.arc(p.x, p.y, dia ? 2.8 : 2.2, 0, 6.283); cx.fill(); });
+      cx.globalAlpha = 1;
+      if (pasado < 20000 || chispas.length) requestAnimationFrame(cuadro); else lienzo.remove();
+    })(inicio);
+  }
+  // Reflectores de estreno que barren el cielo desde detrás de los edificios.
+  function reflectores(portada) {
+    // Van dentro de cada escena, delante del cielo y detrás de las torres y los hoteles.
+    portada.querySelectorAll(".escena").forEach(function (esc) {
+      var capa = document.createElement("div"); capa.className = "reflectores";
+      capa.innerHTML = "<i></i><i></i><i></i><i></i>";
+      esc.insertBefore(capa, esc.querySelector(".torres"));
+      setTimeout(function () { capa.remove(); }, 22000);
+    });
   }
   cuenta(); setInterval(cuenta, 1000);
 
@@ -382,6 +448,47 @@
       document.body.classList.add("cambiando");
       setTimeout(function () { raiz.dataset.tema = tema; try { localStorage.setItem("tema", tema); } catch (e) {} }, quieto ? 0 : 380);
       setTimeout(function () { document.body.classList.remove("cambiando"); }, quieto ? 0 : 820);
+    });
+  })();
+
+  /* ---------- Día, atardecer y noche según la hora real de Miami (tarea 4.1) ----------
+     La salida y la puesta del sol se calculan para cada día con la fórmula aproximada del
+     almanaque náutico (error de un par de minutos), así sirve todo el año y no depende del
+     horario de verano. Atardecer: desde 1 h antes de la puesta hasta 30 min después, y la media
+     hora alrededor de la salida. Los botones fijan otra hora hasta recargar la página. */
+  (function () {
+    var raiz = document.documentElement, LAT = 25.7617, LON = -80.1918, fijada = null;
+    var RAD = Math.PI / 180;
+    // Hora UTC (en horas, 0-24) a la que sale (sale=true) o se pone el sol en Miami ese día.
+    function sol(fecha, sale) {
+      var n = Math.floor((fecha - Date.UTC(fecha.getUTCFullYear(), 0, 0)) / 86400000);
+      var t = n + ((sale ? 6 : 18) - LON / 15) / 24, M = 0.9856 * t - 3.289;
+      var L = (M + 1.916 * Math.sin(M * RAD) + 0.020 * Math.sin(2 * M * RAD) + 282.634 + 360) % 360;
+      var RA = (Math.atan(0.91764 * Math.tan(L * RAD)) / RAD + 360) % 360;
+      RA = (RA + Math.floor(L / 90) * 90 - Math.floor(RA / 90) * 90) / 15;
+      var sd = 0.39782 * Math.sin(L * RAD), cd = Math.cos(Math.asin(sd));
+      var ch = (Math.cos(90.833 * RAD) - sd * Math.sin(LAT * RAD)) / (cd * Math.cos(LAT * RAD));
+      var H = (sale ? 360 - Math.acos(ch) / RAD : Math.acos(ch) / RAD) / 15;
+      return ((H + RA - 0.06571 * t - 6.622 - LON / 15) % 24 + 24) % 24;
+    }
+    function horaDeMiami(ms) {
+      // El día de Miami empieza 5 h después que el de UTC: se mira la fecha que hay allí.
+      var dia = new Date(ms - 5 * 3600000), base = Date.UTC(dia.getUTCFullYear(), dia.getUTCMonth(), dia.getUTCDate());
+      var sale = base + sol(dia, true) * 3600000, pone = base + sol(dia, false) * 3600000;
+      if (pone < sale) pone += 86400000;   // en verano la puesta cae después de medianoche UTC
+      if (Math.abs(ms - sale) <= 30 * 60000 || (ms >= pone - 3600000 && ms <= pone + 30 * 60000)) return "atardecer";
+      return ms > sale && ms < pone ? "dia" : "noche";
+    }
+    var botones = document.querySelectorAll(".horas button");
+    function poner(h) {
+      raiz.dataset.hora = h;
+      botones.forEach(function (b) { b.setAttribute("aria-pressed", String(b.dataset.horaPoner === h)); });
+    }
+    function revisar() { if (!fijada) poner(horaDeMiami(ahora())); }
+    revisar(); setInterval(revisar, 60000);
+    document.querySelector(".horas").addEventListener("click", function (e) {
+      var b = e.target.closest("button");
+      if (b) { fijada = b.dataset.horaPoner; poner(fijada); }
     });
   })();
 

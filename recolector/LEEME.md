@@ -55,6 +55,16 @@ noticias     en_fuente, nuevas: solo titulares que no estaban en los 3 días ant
              {titulo, medio, medio_url, url, t}
 playstation  ok, servicios_chile, region, problemas (+ original si hay problemas)
 xbox         ok, general, estados (+ original si hay problemas)
+twitch_ranking   (desde el 13 nov, tarea 6.3) leidas (categorías leídas, 100), puesto_gta6 y
+             puesto_gta5 (null si no están entre las 100), top: las 10 primeras {id, nombre,
+             puesto}, comparadas: las 5 primeras + GTA VI + GTA V {id, nombre, puesto,
+             espectadores_top100, transmisiones_top100}. Twitch da el orden del ranking, no
+             el número: los espectadores son la suma de las 100 transmisiones con más público
+             de cada categoría (la misma aproximación para todas)
+youtube_tendencias   (desde el 13 nov, tarea 6.3) unidades (3), regiones: {CL, US} con
+             en_lista, primero {puesto, id, titulo, canal, visitas} y gta (los de la lista
+             cuyo título dice GTA, Grand Theft Auto o Rockstar Games), rockstar: id, nombre,
+             suscriptores (YouTube los redondea), visitas, videos del canal
 ```
 
 - **Hueco:** si una fuente falla, en su lugar va `{"error": "mensaje"}`. Nunca se inventa un
@@ -63,7 +73,7 @@ xbox         ok, general, estados (+ original si hay problemas)
   punto puede valer distinto en mediciones distintas.
 - **YouTube:** cada medición busca los 25 videos más vistos de "GTA 6" publicados en los
   últimos 7 días y vuelve a medir los de la medición anterior, para tener series continuas.
-  Gasta 101 unidades de las 10.000 diarias.
+  Gasta 101 unidades de las 10.000 diarias (104 con las tendencias de la tarea 6.3).
 - Enlaces (tarea 2.1): Twitch `https://www.twitch.tv/<login>`, YouTube
   `https://www.youtube.com/watch?v=<id>`, noticias en `url`.
 - Miniaturas (tarea 2.2): la de Twitch (`miniatura`, con `{width}x{height}` que hay que

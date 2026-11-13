@@ -17,6 +17,12 @@ ya estaba acordado y faltaba. **Es la lista ordenada de qué hacer y en qué ord
 - **19 de noviembre de 2026, 00:00 de Santiago:** lanzamiento.
 - Cada día sin recolector es un día de "interés previo" que no se registra (A4), sobre todo
   en Twitch y YouTube, que no guardan historial. Por eso la Fase 1 va antes que todo.
+- **Antes del 19 nov** (anotado el 2026-11-13). Esto deja de servir si se hace después:
+  - 7.2, Hora cero: la animación tiene que estar en la página antes de que la cuenta llegue a 0.
+    Hecha el 2026-11-13; falta que esté unida a `main`.
+  - 7.4, Cápsula del tiempo: Bruno escribe lo que espera del juego antes del lanzamiento.
+  - Si Bruno lo decide (aviso 7): que el recolector empiece a guardar lo de la 6.3 antes del
+    19 nov. Sirve para que el día del lanzamiento quede guardado.
 
 ## Fase 0 — Claves y fuentes
 
@@ -182,9 +188,10 @@ guardan los datos (A2), empezar cuanto antes (A4) y el periodo de un mes con int
 
 ## Fase 4 — Mejoras largas
 
-- [ ] **4.1 Modo día y noche en los dos Miami (D5),** elegible por el usuario.
-- [ ] **4.2 Modo dinámico (D5):** el cielo cambia con la hora real, según la hora de Miami o
-      la de Santiago, a elección.
+- [x] **4.1 Modo día y noche en los dos Miami (D5),** elegible por el usuario. Hecho el
+      2026-11-13: día, atardecer y noche en los dos estilos, con botones. Verificado a 1280 y 384 px.
+- [x] **4.2 Modo dinámico (D5):** el cielo cambia con la hora real. Hecho junto con la 4.1
+      (2026-11-13). Bruno eligió solo la hora de Miami, no la de quien visita.
 - [ ] **4.3 Análisis de datos (A3):** estadísticas e "datos interesantes" (popularidad,
       visitas, cuánto dura el interés después del lanzamiento, comparación antes y después).
       Va al final porque necesita varios días de datos reales para tener algo que mostrar.
@@ -195,6 +202,74 @@ guardan los datos (A2), empezar cuanto antes (A4) y el periodo de un mes con int
 - [ ] **Clave de Reddit (idea para después, Bruno, 2026-11-13).** Pedir permiso a Reddit
       (formulario de soporte para desarrolladores) para guardar votos y comentarios. Tarda
       ~7 días y no está garantizado: ver `PLAN.md`, "Clave de Reddit".
+
+## Fase 6 — Ideas nuevas de Bruno: más estadísticas, logros y comparaciones
+
+*(Pedido de Bruno, 2026-11-13. Se hace poco a poco, **después de terminar la Fase 4**. Nada de
+esto está probado todavía: cada fuente nueva se verifica con una consulta real antes de usarla.
+Ver el aviso 7, sobre la fecha del lanzamiento.)*
+
+- [ ] **6.1 Más estadísticas de Google Trends.** Hoy se guarda solo "GTA 6" en todo el mundo,
+      hora por hora, últimos 7 días. Lo que se podría agregar, cada cosa con su consulta aparte:
+  - Interés por país (lista o mapa: en qué países se busca más).
+  - Búsquedas relacionadas "en aumento" (qué más busca la gente junto con GTA 6).
+  - GTA 6 junto a otras palabras en la misma escala (por ejemplo, GTA 5 u otros juegos), para
+    que el 0 a 100 tenga con qué compararse.
+  - Comparación histórica: el lanzamiento de GTA V (septiembre de 2013) frente al de GTA 6, en
+    una sola consulta de 2013 a 2026 (puntos por mes).
+  - Límites: Trends no dice cuántas búsquedas hubo, solo de 0 a 100. Además, cada consulta de
+    más aumenta el riesgo de bloqueo (429), que ya pasó en pruebas el 13 nov.
+- [ ] **6.2 Sección de logros y récords (que se actualiza sola).**
+  - Con los datos que ya se guardan, sin fuentes nuevas:
+    - el máximo de espectadores en Twitch y cuándo fue;
+    - el canal con más espectadores en un solo directo;
+    - el máximo de transmisiones a la vez;
+    - el video más visto de los medidos (título y enlace) y el que más creció en una hora;
+    - la hora con más interés en Trends;
+    - el día con más titulares;
+    - la hora con más publicaciones en r/GTA6.
+  - Cada récord muestra su fecha y un aviso de "nuevo récord" cuando se supera, con la lista
+    de récords anteriores.
+  - Dato nuevo, barato: las visitas de los tráilers oficiales, medidas por su enlace fijo, sin
+    búsqueda, casi sin gastar cuota de YouTube. Los récords históricos de esos tráilers se
+    anotan solo con fuente verificada.
+- [ ] **6.3 GTA comparado con lo más visto en Twitch y YouTube.**
+  - **Guardado desde el 2026-11-13** (Bruno eligió empezar antes del 19 nov). Hay dos fuentes
+    nuevas en el recolector, `twitch_ranking` y `youtube_tendencias` (formato en
+    `recolector/LEEME.md`). Se probaron con una consulta real desde GitHub (ejecución
+    43499158586): GTA V iba en el puesto 4, GTA VI aún fuera de las 100 primeras, 5 videos de
+    GTA en tendencias de Chile y 4 en las de EE. UU., y Rockstar con 14 millones de
+    suscriptores. **Falta mostrarlo en la página**; queda en `[ ]` hasta entonces.
+  - Twitch:
+    - en qué puesto está GTA VI entre todas las categorías (Twitch da el orden, no el número);
+    - los espectadores de las 5 primeras, contados aparte;
+    - GTA VI frente a GTA V.
+  - YouTube:
+    - cuántos videos de GTA hay entre los videos en tendencia de Chile y de EE. UU., y en qué
+      puesto (1 unidad de cuota por país);
+    - los suscriptores del canal de Rockstar (1 unidad).
+
+## Fase 7 — Ideas para que la página sea memorable
+
+*(Sugerencias de Claude que Bruno aprobó el 2026-11-13: "las 5 me gustan". Cambian cómo se ve
+la página, así que cada una se presenta con opciones y capturas antes de aplicarla. Dos tienen
+fecha límite: ver "Antes del 19 nov".)*
+
+- [ ] **7.1 Rebobinar el lanzamiento.** Una barra para mover la página hora por hora (con cada
+      medición guardada) y revivir el 19 nov: los números, el gráfico y los titulares cambian
+      a esa hora. Se puede hacer después del lanzamiento: los datos ya quedan guardados.
+- [x] **7.2 Hora cero.** Una animación cuando la cuenta regresiva llegue a 0. Después, la cuenta
+      se cambia por "días desde el lanzamiento". **Tiene que estar en la página antes del
+      19 nov**, porque es para ese momento. Hecho el 2026-11-13 (opciones A y C de Bruno),
+      ajustado a día, atardecer y noche. Se prueba con `?probar-hora-cero`. **Falta unir el PR a `main` antes del 19 nov.**
+- [ ] **7.3 Viaje en el tiempo.** Al cambiar de Miami 1986 a 2026, las torres nuevas (tarea
+      3.3) suben detrás de los hoteles, y al volver a 1986 bajan. Sin fecha límite.
+- [ ] **7.4 Cápsula del tiempo.** Un texto de Bruno con lo que espera del juego, escrito
+      **antes del 19 nov**, y otro después con lo que le pareció. Los escribe Bruno: Claude
+      no inventa ese contenido. La página los muestra uno al lado del otro.
+- [ ] **7.5 Resumen del día.** Una tarjeta automática por día con lo más importante: máximo de
+      espectadores, video más visto, interés en Trends, cantidad de titulares y de
+      publicaciones. Sale de los datos ya guardados. Sin fecha límite.
 
 ## Sin definir
 
@@ -221,7 +296,7 @@ guardan los datos (A2), empezar cuanto antes (A4) y el periodo de un mes con int
    justo. Si no alcanza: medir cada 30 minutos la semana del lanzamiento y cada hora el resto.
    El gasto real solo se ve en github.com/settings/billing (con `gh` hace falta un permiso
    extra que Bruno tendría que dar con `gh auth refresh -h github.com -s user`).
-   YouTube no es problema: 101 unidades por medición, unas 4.850 de las 10.000 diarias.
+   YouTube no es problema: 104 unidades por medición desde la 6.3, unas 5.000 de las 10.000 diarias.
 4. **Reddit (A5).** Tiene acceso gratuito para uso personal, pero pide registrar una
    aplicación (otra clave, gratis). La lectura sin clave suele estar bloqueada desde
    servidores como los de GitHub. Nada de esto está verificado todavía.
@@ -229,3 +304,14 @@ guardan los datos (A2), empezar cuanto antes (A4) y el periodo de un mes con int
    Las caídas de Rockstar se anotan a mano en `web/eventos.js`.
 6. **Diseño más vivo (D3).** Se puede y se debe ser más atrevido, pero sin copiar el arte
    oficial del juego: se toma la idea (colores saturados de Florida), no las imágenes.
+7. **Fase 6 y la fecha del lanzamiento.** La página se puede construir cuando sea, pero un
+   dato que no se guardó el 19 nov no se puede recuperar después. Por ejemplo, el puesto de
+   GTA VI en Twitch el día del lanzamiento o los tráilers en tendencia ese día. Por eso, si
+   Bruno quiere esas comparaciones, conviene que el recolector empiece a guardarlas antes del
+   19 nov, aunque la sección de la página se haga después.
+   - Sí se puede pedir a Trends más tarde: el interés por país, la comparación con otras
+     palabras y la histórica.
+   - Los récords de la 6.2 salen de lo que ya se guarda.
+8. **"Máximo en Google Trends" siempre vale 100.** Es el punto más alto del periodo, por
+   definición, así que no sirve como logro. Para que diga algo hay que compararlo con otra
+   cosa (otras palabras, otros países u otros lanzamientos): eso es la 6.1.

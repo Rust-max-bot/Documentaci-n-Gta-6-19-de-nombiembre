@@ -33,6 +33,15 @@ TRENDS_PALABRA = "GTA 6"
 TRENDS_PUNTOS = 24                # últimas 24 horas de la serie de 7 días
 NOTICIAS_RSS = "https://news.google.com/rss/search?q=%22GTA+6%22&hl=es-419&gl=CL&ceid=CL:es-419"
 REDDIT_RSS = "https://www.reddit.com/r/GTA6/new/.rss?limit=100"
+# Tarea 6.3 (Bruno, 2026-11-13): GTA comparado con lo más visto. Se guarda desde antes del
+# lanzamiento porque el ranking de un momento no se puede pedir después.
+TWITCH_GTA5 = "32982"             # "Grand Theft Auto V"; el nombre se comprueba en la prueba real
+TWITCH_RANKING = 100              # categorías del ranking que se leen (una consulta)
+TWITCH_GUARDAR_RANKING = 10       # las primeras que se guardan con su nombre
+TWITCH_COMPARAR = 5               # las primeras cuyas transmisiones se miden para comparar
+YOUTUBE_REGIONES = ("CL", "US")   # tendencias de YouTube de Chile y de EE. UU. (1 unidad cada una)
+YOUTUBE_ROCKSTAR = "@RockstarGames"
+ES_GTA = re.compile(r"\bGTA|grand theft auto|rockstar games", re.I)   # "GTA 6", "GTA6", "GTAV"
 # Reddit bloquea su JSON sin clave desde GitHub (403, probado el 2026-11-13); el RSS sí
 # responde, pero sin votos ni comentarios. Bruno eligió el RSS (2026-11-13).
 REDDIT_ESPERA_429 = 20           # segundos antes del segundo intento si Reddit responde 429
@@ -40,15 +49,18 @@ REDDIT_UA = "linux:recuerdo-gta6:v0.1 (proyecto personal, solo lectura)"
 RECORTE_ORIGINAL = 30000          # caracteres de la respuesta original que se guardan si hay problemas
 
 
+def _cabeceras_twitch(cid, sec):
+    cuerpo = urllib.parse.urlencode({"client_id": cid, "client_secret": sec, "grant_type": "client_credentials"}).encode()
+    token = pedir_json("https://id.twitch.tv/oauth2/token", "token de Twitch", datos=cuerpo)
+    return {"Client-Id": cid, "Authorization": "Bearer " + token["access_token"]}
+
+
 def twitch(estado):
     cid = os.environ.get("TWITCH_CLIENT_ID", "")
     sec = os.environ.get("TWITCH_CLIENT_SECRET", "")
     if not cid or not sec:
         raise Falla("faltan las claves de Twitch")
-    cuerpo = urllib.parse.urlencode({"client_id": cid, "client_secret": sec, "grant_type": "client_credentials"}).encode()
-    token = pedir_json("https://id.twitch.tv/oauth2/token", "token de Twitch", datos=cuerpo)
-    cab = {"Client-Id": cid, "Authorization": "Bearer " + token["access_token"]}
-
+    cab = _cabeceras_twitch(cid, sec)
     vistas, cursor, paginas = {}, None, 0
     while paginas < TWITCH_PAGINAS_MAX:
         q = {"game_id": TWITCH_CATEGORIA, "first": 100}
@@ -262,6 +274,86 @@ def reddit(estado):
     return {"comunidad": "r/GTA6", "en_fuente": len(entradas), "nuevas": nuevas}
 
 
+def twitch_ranking(estado):
+    """Tarea 6.3: en qué puesto está GTA VI entre todas las categorías de Twitch (Twitch da el
+    orden, no el número) y, para comparar, los espectadores de las 100 transmisiones con más
+    público de las primeras categorías, de GTA VI y de GTA V. Es una aproximación igual para
+    todas: la cifra total de GTA VI está en la fuente "twitch"."""
+    cid = os.environ.get("TWITCH_CLIENT_ID", "")
+    sec = os.environ.get("TWITCH_CLIENT_SECRET", "")
+    if not cid or not sec:
+        raise Falla("faltan las claves de Twitch")
+    cab = _cabeceras_twitch(cid, sec)
+    d = pedir_json("https://api.twitch.tv/helix/games/top?" + urllib.parse.urlencode({"first": TWITCH_RANKING}),
+                   "ranking de categorías de Twitch", cab)
+    top = [{"id": g["id"], "nombre": g.get("name", ""), "puesto": n + 1} for n, g in enumerate(d.get("data", []))]
+    if not top:
+        raise Falla("Twitch no devolvió el ranking de categorías")
+    puesto = {g["id"]: g["puesto"] for g in top}
+    ids = [g["id"] for g in top[:TWITCH_COMPARAR]]
+    for extra in (TWITCH_CATEGORIA, TWITCH_GTA5):
+        if extra not in ids:
+            ids.append(extra)
+    comparadas = []
+    for gid in ids:
+        s = pedir_json("https://api.twitch.tv/helix/streams?" + urllib.parse.urlencode({"game_id": gid, "first": 100}),
+                       "transmisiones para comparar en Twitch", cab).get("data", [])
+        nombre = next((g["nombre"] for g in top if g["id"] == gid), s[0].get("game_name", "") if s else "")
+        comparadas.append({"id": gid, "nombre": nombre, "puesto": puesto.get(gid),
+                           "espectadores_top100": sum(x["viewer_count"] for x in s), "transmisiones_top100": len(s)})
+    return {"leidas": len(top), "puesto_gta6": puesto.get(TWITCH_CATEGORIA), "puesto_gta5": puesto.get(TWITCH_GTA5),
+            "top": top[:TWITCH_GUARDAR_RANKING], "comparadas": comparadas}
+
+
+def youtube_tendencias(estado):
+    """Tarea 6.3: videos en tendencia de YouTube (Chile y EE. UU.): el primero de cada lista y
+    los que son de GTA, con su puesto. Y los números del canal de Rockstar. 3 unidades."""
+    clave = os.environ.get("YOUTUBE_API_KEY", "")
+    if not clave:
+        raise Falla("falta la clave de YouTube")
+
+    def ver(v, n):
+        sn, st = v.get("snippet", {}), v.get("statistics", {})
+        return {"puesto": n, "id": v["id"], "titulo": sn.get("title", ""), "canal": sn.get("channelTitle", ""),
+                "visitas": int(st["viewCount"]) if "viewCount" in st else None}
+
+    regiones, unidades = {}, 0
+    for region in YOUTUBE_REGIONES:
+        cod, txt = pedir("https://www.googleapis.com/youtube/v3/videos?" + urllib.parse.urlencode(
+            {"part": "snippet,statistics", "chart": "mostPopular", "regionCode": region, "maxResults": 50, "key": clave}))
+        unidades += 1
+        if cod != 200:
+            raise Falla(f"tendencias de YouTube ({region}): código {cod}. {_mensaje_youtube(txt)}")
+        items = json.loads(txt).get("items", [])
+        if not items:
+            raise Falla(f"YouTube no devolvió tendencias de {region}")
+        gta = []
+        for n, v in enumerate(items):
+            sn = v.get("snippet", {})
+            # Solo el título: con las etiquetas entraban videos de otros juegos (probado el 13 nov).
+            if ES_GTA.search(sn.get("title", "")):
+                gta.append(ver(v, n + 1))
+        regiones[region] = {"en_lista": len(items), "primero": ver(items[0], 1), "gta": gta}
+    cod, txt = pedir("https://www.googleapis.com/youtube/v3/channels?" + urllib.parse.urlencode(
+        {"part": "snippet,statistics", "forHandle": YOUTUBE_ROCKSTAR, "key": clave}))
+    unidades += 1
+    if cod != 200:
+        raise Falla(f"canal de Rockstar en YouTube: código {cod}. {_mensaje_youtube(txt)}")
+    canales = json.loads(txt).get("items", [])
+    if not canales:
+        raise Falla("YouTube no encontró el canal de Rockstar")
+    st = canales[0].get("statistics", {})
+
+    def numero(campo):
+        if campo not in st or (campo == "subscriberCount" and st.get("hiddenSubscriberCount")):
+            return None
+        return int(st[campo])
+
+    rockstar = {"id": canales[0]["id"], "nombre": canales[0].get("snippet", {}).get("title", ""),
+                "suscriptores": numero("subscriberCount"), "visitas": numero("viewCount"), "videos": numero("videoCount")}
+    return {"unidades": unidades, "regiones": regiones, "rockstar": rockstar}
+
+
 def playstation(estado):
     d = pedir_json("https://status.playstation.com/data/statuses/region/SCEA.json", "estado de PlayStation")
     chile = next((c for c in d.get("countries", []) if c.get("countryCode") == "CL"), None)
@@ -305,6 +397,8 @@ FUENTES = {
     "trends": trends,
     "noticias": noticias,
     "reddit": reddit,
+    "twitch_ranking": twitch_ranking,
+    "youtube_tendencias": youtube_tendencias,
     "playstation": playstation,
     "xbox": xbox,
 }

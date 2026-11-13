@@ -36,8 +36,16 @@ Rayas del sol de 1986: opción A.
 **Tanda 3.1 y 3.3 terminada** (2026-11-13):
 - 3.3: hay torres detrás de los hoteles, inspiradas en edificios reales de Miami. Son 2 de los años 80, que salen en las dos escenas, y 6 nuevas solo en 2026 (opción 2 de Bruno).
 - 3.1: Miami 2026 tiene la paleta B "Atardecer encendido". Las torres de 2026 pasaron a lila para combinar.
-- Siguiente en orden: la Fase 4 (4.1, modo día y noche).
+- Siguiente en orden: la Fase 4 (4.1, modo día y noche). Hecha después, ver abajo.
 - Quedan 2 ramas de capturas para borrar cuando Bruno quiera: `revision/edificios-2026` y `revision/colores-2026`.
+
+**Tanda "7.2 Hora cero" terminada** (2026-11-13). Bruno pidió que la hora cero se viera bien
+de día y de noche, así que antes se hizo la 4.1:
+- **4.1 y 4.2:** día, atardecer y noche según la hora real de Miami, con botones para cambiarla.
+- **7.2:** al llegar a 0 hay fuegos artificiales y reflectores, y la cuenta sigue "desde que salió GTA 6".
+- Para verlo antes del 19 nov, agregar `?probar-hora-cero` a la dirección.
+- **Tiene que estar en `main` antes del 19 nov.**
+- Las capturas están en la rama `revision/dia-noche`.
 
 **Repositorio listo para sesiones en la nube** (2026-11-13, pedido de Bruno, que tiene
 créditos para la nube): guía para Bruno en `NUBE.md`; al arrancar en la nube,
@@ -100,29 +108,45 @@ de 2026. Lanzamiento: 19 de noviembre, 00:00 de Santiago.
 
 **Reglas en pausa:** ninguna. "Paso a paso con permiso" está activa **por tandas**: Bruno
 dice qué pasos hacer y Claude no para hasta completarlos (ver `CLAUDE.md`). Tanda actual:
-ninguna (la 3.2 y 2.4 terminó el 2026-11-13).
+ninguna (la de la 7.2 terminó el 2026-11-13).
 
 ## Últimos cambios
 
+- 2026-11-13: hora cero con fuegos y reflectores (7.2) y escena de día, atardecer y noche según la hora de Miami (4.1 y 4.2).
+- 2026-11-13: el recolector guarda el puesto de GTA en Twitch y las tendencias de YouTube (6.3, elegido por Bruno).
+- 2026-11-13: Fase 7 (5 ideas aprobadas por Bruno), fechas "antes del 19 nov" y lista de pendientes ordenada.
+- 2026-11-13: anotada la Fase 6 (más Trends, logros y comparaciones; pedido de Bruno) con avisos 7 y 8.
 - 2026-11-13: Miami 2026 con la paleta B "Atardecer encendido" y torres en lila (3.1, elegida por Bruno).
 - 2026-11-13: torres detrás de los hoteles con referencias reales de Miami (3.3, opción 2 de Bruno).
 - 2026-11-13: revisada la clave de Reddit (hay que pedir permiso, ~7 días); Bruno la deja para después.
 - 2026-11-13: `probar-fuentes.yml` sin Node.js 20 (checkout@v5, setup-python@v6) y regla nueva en `CLAUDE.md`.
 - 2026-11-13: la página muestra Reddit: publicaciones por hora y las más nuevas (opción C de Bruno).
-- 2026-11-13: rayas del sol de 1986 más arriba y cada vez más anchas (2.4, opción A de Bruno).
-- 2026-11-13: Reddit por RSS en el recolector (3.2, elegido por Bruno).
-- 2026-11-13: pruebas en la nube: usan el Chromium de la máquina y bajan por la página antes de la captura.
-- 2026-11-13: recolector revisado desde la nube: 16 turnos seguidos bien (02:07 a 17:07 UTC); nada que arreglar.
-- 2026-11-13: grafo de Graphify al día también con los documentos (forzado con permiso de Bruno).
-- 2026-11-13: repositorio preparado para sesiones en la nube (`NUBE.md`, `pruebas/`, hook de preparación).
-- 2026-11-13: la página muestra todos los titulares guardados, no solo 60 (decisión de Bruno).
-- 2026-11-13: suelo de 1986 dibujado en un lienzo: las líneas ya no titilan (2.3, segundo arreglo).
 
 ## Pendiente
 
-La lista completa y su orden están en `PLAN_DE_TRABAJO.md`. Lo inmediato:
+La lista completa y su orden están en `PLAN_DE_TRABAJO.md`. Resumen de lo que falta
+(2026-11-13):
 
-1. Bruno: pedir a soporte de GitHub que borre la referencia del PR #1 y activar el correo privado.
-2. Siguiente en orden: 4.1 (modo día y noche en los dos Miami).
-3. Opcional: comprobar en Cloudflare que el código del Worker es igual a `despertador/worker.js`.
-4. Opcional: el hook de diseño de Impeccable (Bruno ejecuta `npx impeccable install` en el PC).
+1. **Antes del 19 nov** (después ya no sirve):
+   - 7.2 Hora cero: hecha; **Bruno tiene que unir su PR a `main`**.
+   - 7.4 Cápsula del tiempo: Bruno escribe sus expectativas.
+2. **Fase 4:** 4.3 análisis de datos, que necesita varios días de datos (4.1 y 4.2, hechas).
+3. **Fase 6** (ideas de Bruno):
+   - 6.1 más Google Trends;
+   - 6.2 logros y récords;
+   - 6.3 comparaciones con Twitch y YouTube.
+4. **Fase 7** (ideas aprobadas):
+   - 7.1 rebobinar;
+   - 7.3 viaje en el tiempo;
+   - 7.5 resumen del día.
+   La 7.2 y la 7.4 están en el punto 1.
+5. **Fase 5** (después del lanzamiento):
+   - búsqueda calmada;
+   - clave de Reddit.
+6. **Ideas sueltas:** 2.5 TikTok (sin acceso fácil); D6 (Bruno pidió ignorarla por ahora).
+7. **Bruno:**
+   - pedir a soporte de GitHub que borre la referencia del PR #1 y activar el correo privado;
+   - borrar las ramas `revision/colores-2026`, `revision/edificios-2026`, `revision/hora-cero` y `revision/dia-noche`.
+8. **Opcional:**
+   - comprobar en Cloudflare que el Worker es igual a `despertador/worker.js`;
+   - el hook de Impeccable (`npx impeccable install` en el PC).
