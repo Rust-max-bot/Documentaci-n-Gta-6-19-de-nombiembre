@@ -103,6 +103,11 @@ def resumen(nombre, r):
         return f"{len(r['nuevas'])} titulares nuevos de {r['en_fuente']}"
     if nombre == "reddit":
         return f"{len(r['nuevas'])} publicaciones nuevas de {r['en_fuente']}"
+    if nombre == "twitch_ranking":
+        return f"GTA VI en el puesto {r['puesto_gta6']} de {r['leidas']} categorías; GTA V en el {r['puesto_gta5']}"
+    if nombre == "youtube_tendencias":
+        gta = ", ".join(f"{reg}: {len(d['gta'])}" for reg, d in r["regiones"].items())
+        return f"videos de GTA en tendencias ({gta}); Rockstar: {r['rockstar']['suscriptores']} suscriptores"
     return "sin problemas" if r["ok"] else "CON PROBLEMAS"
 
 

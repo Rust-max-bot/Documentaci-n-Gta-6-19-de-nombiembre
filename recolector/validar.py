@@ -99,6 +99,50 @@ def _reddit(r):
         exigir(n.get("t") is None or es_iso(n["t"]), "Reddit: fecha inválida")
 
 
+def _twitch_ranking(r):
+    exigir(es_entero(r.get("leidas"), 1), "Ranking de Twitch: 'leidas' inválido")
+    for campo in ("puesto_gta6", "puesto_gta5"):
+        exigir(r.get(campo) is None or (es_entero(r[campo], 1) and r[campo] <= r["leidas"]),
+               f"Ranking de Twitch: '{campo}' inválido")
+    top = r.get("top")
+    exigir(isinstance(top, list) and 0 < len(top) <= 10, "Ranking de Twitch: lista 'top' inválida")
+    exigir([g.get("puesto") for g in top] == list(range(1, len(top) + 1)), "Ranking de Twitch: puestos desordenados")
+    for g in top:
+        exigir(isinstance(g.get("id"), str) and g["id"].isdigit(), "Ranking de Twitch: id de categoría inválido")
+        exigir(isinstance(g.get("nombre"), str), "Ranking de Twitch: categoría sin nombre")
+    comparadas = r.get("comparadas")
+    exigir(isinstance(comparadas, list) and 0 < len(comparadas) <= 7, "Ranking de Twitch: lista 'comparadas' inválida")
+    ids = [c.get("id") for c in comparadas]
+    exigir(len(set(ids)) == len(ids), "Ranking de Twitch: categorías repetidas")
+    for c in comparadas:
+        exigir(isinstance(c.get("id"), str) and c["id"].isdigit(), "Ranking de Twitch: id inválido en 'comparadas'")
+        exigir(c.get("puesto") is None or es_entero(c["puesto"], 1), "Ranking de Twitch: puesto inválido en 'comparadas'")
+        exigir(es_entero(c.get("espectadores_top100")), "Ranking de Twitch: espectadores inválidos")
+        exigir(es_entero(c.get("transmisiones_top100")) and c["transmisiones_top100"] <= 100,
+               "Ranking de Twitch: transmisiones inválidas")
+
+
+def _youtube_tendencias(r):
+    exigir(es_entero(r.get("unidades"), 1), "Tendencias de YouTube: faltan las unidades gastadas")
+    regiones = r.get("regiones")
+    exigir(isinstance(regiones, dict) and regiones, "Tendencias de YouTube: faltan las regiones")
+    for region, d in regiones.items():
+        exigir(isinstance(region, str) and len(region) == 2, "Tendencias de YouTube: región inválida")
+        exigir(es_entero(d.get("en_lista"), 1) and d["en_lista"] <= 50, f"Tendencias de YouTube ({region}): 'en_lista' inválido")
+        exigir(isinstance(d.get("gta"), list), f"Tendencias de YouTube ({region}): 'gta' no es una lista")
+        for v in [d.get("primero")] + d["gta"]:
+            exigir(isinstance(v, dict) and isinstance(v.get("id"), str) and len(v["id"]) == 11,
+                   f"Tendencias de YouTube ({region}): id inválido")
+            exigir(es_entero(v.get("puesto"), 1) and v["puesto"] <= d["en_lista"], f"Tendencias de YouTube ({region}): puesto inválido")
+            exigir(isinstance(v.get("titulo"), str), f"Tendencias de YouTube ({region}): video sin título")
+            exigir(v.get("visitas") is None or es_entero(v["visitas"]), f"Tendencias de YouTube ({region}): visitas inválidas")
+    ro = r.get("rockstar")
+    exigir(isinstance(ro, dict) and isinstance(ro.get("id"), str) and ro["id"].startswith("UC"),
+           "Tendencias de YouTube: canal de Rockstar inválido")
+    for campo in ("suscriptores", "visitas", "videos"):
+        exigir(ro.get(campo) is None or es_entero(ro[campo]), f"Tendencias de YouTube: '{campo}' de Rockstar inválido")
+
+
 def _servidor(r):
     exigir(isinstance(r.get("ok"), bool), "Servidores: falta 'ok'")
 
@@ -109,6 +153,8 @@ CHEQUEOS = {
     "trends": _trends,
     "noticias": _noticias,
     "reddit": _reddit,
+    "twitch_ranking": _twitch_ranking,
+    "youtube_tendencias": _youtube_tendencias,
     "playstation": _servidor,
     "xbox": _servidor,
 }
