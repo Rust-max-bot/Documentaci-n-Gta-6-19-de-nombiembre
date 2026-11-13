@@ -14,6 +14,7 @@ import http.cookiejar
 import json
 import os
 import re
+import time
 import urllib.parse
 import urllib.request
 import xml.etree.ElementTree as ET
@@ -34,6 +35,7 @@ NOTICIAS_RSS = "https://news.google.com/rss/search?q=%22GTA+6%22&hl=es-419&gl=CL
 REDDIT_RSS = "https://www.reddit.com/r/GTA6/new/.rss?limit=100"
 # Reddit bloquea su JSON sin clave desde GitHub (403, probado el 2026-11-13); el RSS sí
 # responde, pero sin votos ni comentarios. Bruno eligió el RSS (2026-11-13).
+REDDIT_ESPERA_429 = 20           # segundos antes del segundo intento si Reddit responde 429
 REDDIT_UA = "linux:recuerdo-gta6:v0.1 (proyecto personal, solo lectura)"
 RECORTE_ORIGINAL = 30000          # caracteres de la respuesta original que se guardan si hay problemas
 
@@ -226,6 +228,11 @@ def noticias(estado):
 def reddit(estado):
     """Publicaciones nuevas de r/GTA6 (RSS en formato Atom): título, autor, fecha y enlace."""
     cod, txt = pedir(REDDIT_RSS, {"User-Agent": REDDIT_UA})
+    if cod == 429:
+        # "Demasiadas consultas": los servidores de GitHub se comparten y Reddit cuenta las
+        # consultas por dirección. Se espera un poco y se intenta una sola vez más.
+        time.sleep(REDDIT_ESPERA_429)
+        cod, txt = pedir(REDDIT_RSS, {"User-Agent": REDDIT_UA})
     if cod != 200:
         raise Falla(f"Reddit: código {cod}")
     atom = "{http://www.w3.org/2005/Atom}"
