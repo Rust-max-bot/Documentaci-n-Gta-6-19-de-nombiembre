@@ -138,7 +138,11 @@ vivos, ganan los vivos.
   - **Con cambios solo en documentos** no hace falta: `graphify update` no los vuelve a leer.
     Volver a leerlos (`/graphify --update`) **sí gasta tokens: avisar a Bruno antes.**
   - **Si `graphify update` falla o se niega a achicar el grafo:** no usar `--force`; dejarlo
-    como está y decirlo. **Si `graphify-out/` choca al unir cambios:** no resolverlo a mano;
+    como está y decirlo. Al volver a leer documentos (`/graphify --update`) el freno suele
+    saltar porque los conceptos salen con otros nombres internos, aunque el grafo crezca:
+    entonces pedir permiso a Bruno para forzar solo el grafo (lo autorizó una vez, el
+    2026-11-13). Lo leído queda en la caché de `graphify-out/cache/`: repetirlo no gasta
+    tokens otra vez. **Si `graphify-out/` choca al unir cambios:** no resolverlo a mano;
     tomar la versión de `main` y volver a correr `graphify update .`.
   - **Si `graphify` no se puede usar:** trabajar con búsqueda normal. Los avisos automáticos de
     Graphify en `.claude/settings.json` no hacen nada si el programa no existe.

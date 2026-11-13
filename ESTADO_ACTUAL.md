@@ -73,6 +73,7 @@ ninguna (la 1.5b, 1.6 y 1.7 terminó el 2026-11-13).
 
 ## Últimos cambios
 
+- 2026-11-13: grafo de Graphify al día también con los documentos (forzado con permiso de Bruno).
 - 2026-11-13: página: eje de Twitch con números redondos y lo más nuevo arriba (tarea 1.7 cerrada).
 - 2026-11-13: prueba completa (tarea 1.7): todo bien salvo el eje del gráfico de Twitch.
 - 2026-11-13: `revisar.py` sigue el horario del despertador.
@@ -82,7 +83,6 @@ ninguna (la 1.5b, 1.6 y 1.7 terminó el 2026-11-13).
 - 2026-11-12: historial limpio de datos personales y repositorio público (tarea 1.4); cada hora.
 - 2026-11-12: `cron` reescrito (mismo horario) para que GitHub lance las programadas (no bastó).
 - 2026-11-12: página conectada a los datos reales (tarea 1.6); `ver_pagina.bat` para verla.
-- 2026-11-12: recolector en GitHub (tareas 1.2 y 1.3); primeras mediciones reales guardadas.
 
 ## Pendiente
 

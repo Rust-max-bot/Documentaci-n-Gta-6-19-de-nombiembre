@@ -1,10 +1,1 @@
-{
-  "0": "Fuentes, fases y claves",
-  "1": "Código de la página (app.js)",
-  "2": "Relevo entre sesiones",
-  "4": "Diseño Miami y estilos",
-  "7": "Línea de estado git",
-  "8": "Freno de guardado",
-  "9": "Datos de ejemplo",
-  "10": "Eventos a mano"
-}
+{"0": "Despertador y plan de trabajo", "1": "Fuentes de datos (fuentes.py)", "2": "Reglas de datos y estado actual", "3": "Claves y fases del plan", "4": "Relevo y forma de trabajo", "5": "Generar la página (generar_web.py)", "6": "Workflow Recolectar datos", "7": "Workflow Probar fuentes", "8": "Código de la página (app.js)", "9": "Validaciones (validar.py)", "10": "Diseño Miami y estilos", "11": "Worker del despertador", "12": "Graphify", "13": "Línea de estado git", "14": "Freno de guardado", "15": "Datos de ejemplo", "16": "Instrucción Graphify", "17": "Eventos a mano", "18": "Aviso de ejemplo", "19": "Carga de scripts", "20": "Sección titulares"}
