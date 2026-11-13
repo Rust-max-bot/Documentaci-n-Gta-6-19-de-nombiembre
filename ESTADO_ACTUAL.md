@@ -15,7 +15,7 @@
 
 ## Dónde quedamos
 
-*(2026-11-13, ~16:00 UTC.)*
+*(2026-11-13, ~21:00 UTC.)*
 
 **Fase 1 terminada** (tareas 1.1 a 1.7). La página ya muestra lo más nuevo arriba y el eje de
 Twitch con números redondos (decisiones en `PLAN.md`).
@@ -44,8 +44,12 @@ de día y de noche, así que antes se hizo la 4.1:
 - **4.1 y 4.2:** día, atardecer y noche según la hora real de Miami, con botones para cambiarla.
 - **7.2:** al llegar a 0 hay fuegos artificiales y reflectores, y la cuenta sigue "desde que salió GTA 6".
 - Para verlo antes del 19 nov, agregar `?probar-hora-cero` a la dirección.
-- **Tiene que estar en `main` antes del 19 nov.**
-- Las capturas están en la rama `revision/dia-noche`.
+- Ya está en `main` (PR #9, unido por Bruno).
+
+**7.4 Cápsula del tiempo: página lista** (2026-11-13, opción B de Bruno, "postales de Miami").
+Dos postales al final de la página. **Falta que Bruno escriba "Lo que espero" antes del 19 nov**,
+en `web/capsula.js` (o que se lo pase a Claude para ponerlo). Capturas de las opciones en la
+carpeta del proyecto `capsula/`.
 
 **Repositorio listo para sesiones en la nube** (2026-11-13, pedido de Bruno, que tiene
 créditos para la nube): guía para Bruno en `NUBE.md`; al arrancar en la nube,
@@ -108,10 +112,11 @@ de 2026. Lanzamiento: 19 de noviembre, 00:00 de Santiago.
 
 **Reglas en pausa:** ninguna. "Paso a paso con permiso" está activa **por tandas**: Bruno
 dice qué pasos hacer y Claude no para hasta completarlos (ver `CLAUDE.md`). Tanda actual:
-ninguna (la de la 7.2 terminó el 2026-11-13).
+ninguna (la de la 7.4 terminó el 2026-11-13; solo falta el texto de Bruno).
 
 ## Últimos cambios
 
+- 2026-11-13: cápsula del tiempo en la página, como dos postales de Miami (7.4, opción B de Bruno); falta su texto.
 - 2026-11-13: hora cero con fuegos y reflectores (7.2) y escena de día, atardecer y noche según la hora de Miami (4.1 y 4.2).
 - 2026-11-13: el recolector guarda el puesto de GTA en Twitch y las tendencias de YouTube (6.3, elegido por Bruno).
 - 2026-11-13: Fase 7 (5 ideas aprobadas por Bruno), fechas "antes del 19 nov" y lista de pendientes ordenada.
@@ -120,7 +125,6 @@ ninguna (la de la 7.2 terminó el 2026-11-13).
 - 2026-11-13: torres detrás de los hoteles con referencias reales de Miami (3.3, opción 2 de Bruno).
 - 2026-11-13: revisada la clave de Reddit (hay que pedir permiso, ~7 días); Bruno la deja para después.
 - 2026-11-13: `probar-fuentes.yml` sin Node.js 20 (checkout@v5, setup-python@v6) y regla nueva en `CLAUDE.md`.
-- 2026-11-13: la página muestra Reddit: publicaciones por hora y las más nuevas (opción C de Bruno).
 
 ## Pendiente
 
@@ -128,8 +132,7 @@ La lista completa y su orden están en `PLAN_DE_TRABAJO.md`. Resumen de lo que f
 (2026-11-13):
 
 1. **Antes del 19 nov** (después ya no sirve):
-   - 7.2 Hora cero: hecha; **Bruno tiene que unir su PR a `main`**.
-   - 7.4 Cápsula del tiempo: Bruno escribe sus expectativas.
+   - 7.4 Cápsula del tiempo: la página está lista; **Bruno escribe sus expectativas** en `web/capsula.js`.
 2. **Fase 4:** 4.3 análisis de datos, que necesita varios días de datos (4.1 y 4.2, hechas).
 3. **Fase 6** (ideas de Bruno):
    - 6.1 más Google Trends;
@@ -146,7 +149,9 @@ La lista completa y su orden están en `PLAN_DE_TRABAJO.md`. Resumen de lo que f
 6. **Ideas sueltas:** 2.5 TikTok (sin acceso fácil); D6 (Bruno pidió ignorarla por ahora).
 7. **Bruno:**
    - pedir a soporte de GitHub que borre la referencia del PR #1 y activar el correo privado;
-   - borrar las ramas `revision/colores-2026`, `revision/edificios-2026`, `revision/hora-cero` y `revision/dia-noche`.
+   - borrar las ramas ya unidas o de capturas: `revision/hora-cero`, `revision/dia-noche`,
+     `claude/project-thread-dpdy9p`, `claude/project-thread-mi5ckb` y `claude/project-thread-odgsms`
+     (revisado el 2026-11-13: no tienen nada que falte en `main`).
 8. **Opcional:**
    - comprobar en Cloudflare que el Worker es igual a `despertador/worker.js`;
    - el hook de Impeccable (`npx impeccable install` en el PC).

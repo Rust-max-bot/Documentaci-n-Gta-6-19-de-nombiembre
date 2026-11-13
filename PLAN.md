@@ -95,6 +95,15 @@ Resultado final: **una página web** con:
   - De día, los fuegos y los reflectores usan colores fuertes para que se vean sobre el cielo claro.
   - Para verla antes: agregar `?probar-hora-cero` a la dirección (la cuenta empieza 5 s antes de 0).
   - Se descartó B (destello y vuelta de las cajas).
+- **Cápsula del tiempo (tarea 7.4, opción B de Bruno, 2026-11-13): postales de Miami.**
+  - Dos postales al final de la página, una al lado de la otra (una debajo de otra en el celular):
+    "Lo que espero" y "Lo que me pareció".
+  - Cada una tiene un sello con la palmera de la página y un matasellos con el día en que Bruno
+    la escribió.
+  - Los textos los escribe Bruno en `web/capsula.js`. Claude no los escribe.
+  - Mientras un texto esté vacío, su postal sale cerrada con un candado. La de "después" dice
+    "Se abre después del lanzamiento" hasta el 19 nov.
+  - Se descartaron A (dos tarjetas simples) y C (medalla del 19 nov entre los dos textos).
 
 ## 3. Qué se descartó y por qué
 
@@ -254,6 +263,7 @@ web/                  la página (ya existe)
   app.js              lee los datos y dibuja fichas, línea de tiempo, gráficos y tablas
   datos-ejemplo.js    datos inventados para probar el diseño
   eventos.js          eventos que Bruno anota a mano (hora de Santiago)
+  capsula.js          los dos textos de la cápsula del tiempo, escritos por Bruno (tarea 7.4)
   datos.js            datos reales, generados en el PC por recolector/generar_web.py (no va a git)
 recolector/           programa en Python que consulta las fuentes (formato y uso en recolector/LEEME.md)
   interruptor.json    encender, apagar o alargar la recolección
