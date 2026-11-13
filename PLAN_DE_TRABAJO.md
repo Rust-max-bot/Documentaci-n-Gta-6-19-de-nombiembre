@@ -196,6 +196,46 @@ guardan los datos (A2), empezar cuanto antes (A4) y el periodo de un mes con int
       (formulario de soporte para desarrolladores) para guardar votos y comentarios. Tarda
       ~7 días y no está garantizado: ver `PLAN.md`, "Clave de Reddit".
 
+## Fase 6 — Ideas nuevas de Bruno: más estadísticas, logros y comparaciones
+
+*(Pedido de Bruno, 2026-11-13. Se hace poco a poco, **después de terminar la Fase 4**. Nada de
+esto está probado todavía: cada fuente nueva se verifica con una consulta real antes de usarla.
+Ver el aviso 7, sobre la fecha del lanzamiento.)*
+
+- [ ] **6.1 Más estadísticas de Google Trends.** Hoy se guarda solo "GTA 6" en todo el mundo,
+      hora por hora, últimos 7 días. Lo que se podría agregar, cada cosa con su consulta aparte:
+  - Interés por país (lista o mapa: en qué países se busca más).
+  - Búsquedas relacionadas "en aumento" (qué más busca la gente junto con GTA 6).
+  - GTA 6 junto a otras palabras en la misma escala (por ejemplo, GTA 5 u otros juegos), para
+    que el 0 a 100 tenga con qué compararse.
+  - Comparación histórica: el lanzamiento de GTA V (septiembre de 2013) frente al de GTA 6, en
+    una sola consulta de 2013 a 2026 (puntos por mes).
+  - Límites: Trends no dice cuántas búsquedas hubo, solo de 0 a 100. Además, cada consulta de
+    más aumenta el riesgo de bloqueo (429), que ya pasó en pruebas el 13 nov.
+- [ ] **6.2 Sección de logros y récords (que se actualiza sola).**
+  - Con los datos que ya se guardan, sin fuentes nuevas:
+    - el máximo de espectadores en Twitch y cuándo fue;
+    - el canal con más espectadores en un solo directo;
+    - el máximo de transmisiones a la vez;
+    - el video más visto de los medidos (título y enlace) y el que más creció en una hora;
+    - la hora con más interés en Trends;
+    - el día con más titulares;
+    - la hora con más publicaciones en r/GTA6.
+  - Cada récord muestra su fecha y un aviso de "nuevo récord" cuando se supera, con la lista
+    de récords anteriores.
+  - Dato nuevo, barato: las visitas de los tráilers oficiales, medidas por su enlace fijo, sin
+    búsqueda, casi sin gastar cuota de YouTube. Los récords históricos de esos tráilers se
+    anotan solo con fuente verificada.
+- [ ] **6.3 GTA comparado con lo más visto en Twitch y YouTube.**
+  - Twitch:
+    - en qué puesto está GTA VI entre todas las categorías (Twitch da el orden, no el número);
+    - los espectadores de las 5 primeras, contados aparte;
+    - GTA VI frente a GTA V.
+  - YouTube:
+    - cuántos videos de GTA hay entre los videos en tendencia de Chile y de EE. UU., y en qué
+      puesto (1 unidad de cuota por país);
+    - los suscriptores del canal de Rockstar (1 unidad).
+
 ## Sin definir
 
 - [ ] **D6:** en la lista de Bruno quedó cortado ("El miami actual de…"). **Bruno pidió
@@ -229,3 +269,14 @@ guardan los datos (A2), empezar cuanto antes (A4) y el periodo de un mes con int
    Las caídas de Rockstar se anotan a mano en `web/eventos.js`.
 6. **Diseño más vivo (D3).** Se puede y se debe ser más atrevido, pero sin copiar el arte
    oficial del juego: se toma la idea (colores saturados de Florida), no las imágenes.
+7. **Fase 6 y la fecha del lanzamiento.** La página se puede construir cuando sea, pero un
+   dato que no se guardó el 19 nov no se puede recuperar después. Por ejemplo, el puesto de
+   GTA VI en Twitch el día del lanzamiento o los tráilers en tendencia ese día. Por eso, si
+   Bruno quiere esas comparaciones, conviene que el recolector empiece a guardarlas antes del
+   19 nov, aunque la sección de la página se haga después.
+   - Sí se puede pedir a Trends más tarde: el interés por país, la comparación con otras
+     palabras y la histórica.
+   - Los récords de la 6.2 salen de lo que ya se guarda.
+8. **"Máximo en Google Trends" siempre vale 100.** Es el punto más alto del periodo, por
+   definición, así que no sirve como logro. Para que diga algo hay que compararlo con otra
+   cosa (otras palabras, otros países u otros lanzamientos): eso es la 6.1.

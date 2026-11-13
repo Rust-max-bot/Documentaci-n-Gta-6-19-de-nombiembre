@@ -104,6 +104,7 @@ ninguna (la 3.2 y 2.4 terminó el 2026-11-13).
 
 ## Últimos cambios
 
+- 2026-11-13: anotada la Fase 6 (más Trends, logros y comparaciones; pedido de Bruno) con avisos 7 y 8.
 - 2026-11-13: Miami 2026 con la paleta B "Atardecer encendido" y torres en lila (3.1, elegida por Bruno).
 - 2026-11-13: torres detrás de los hoteles con referencias reales de Miami (3.3, opción 2 de Bruno).
 - 2026-11-13: revisada la clave de Reddit (hay que pedir permiso, ~7 días); Bruno la deja para después.
@@ -115,7 +116,6 @@ ninguna (la 3.2 y 2.4 terminó el 2026-11-13).
 - 2026-11-13: recolector revisado desde la nube: 16 turnos seguidos bien (02:07 a 17:07 UTC); nada que arreglar.
 - 2026-11-13: grafo de Graphify al día también con los documentos (forzado con permiso de Bruno).
 - 2026-11-13: repositorio preparado para sesiones en la nube (`NUBE.md`, `pruebas/`, hook de preparación).
-- 2026-11-13: la página muestra todos los titulares guardados, no solo 60 (decisión de Bruno).
 - 2026-11-13: suelo de 1986 dibujado en un lienzo: las líneas ya no titilan (2.3, segundo arreglo).
 
 ## Pendiente
@@ -124,5 +124,7 @@ La lista completa y su orden están en `PLAN_DE_TRABAJO.md`. Lo inmediato:
 
 1. Bruno: pedir a soporte de GitHub que borre la referencia del PR #1 y activar el correo privado.
 2. Siguiente en orden: 4.1 (modo día y noche en los dos Miami).
+   - Después de la Fase 4 viene la Fase 6 (ideas nuevas de Bruno): más Trends, logros y comparaciones.
+   - Ojo con el aviso 7 del plan: lo que no se guarde antes del 19 nov no se recupera.
 3. Opcional: comprobar en Cloudflare que el código del Worker es igual a `despertador/worker.js`.
 4. Opcional: el hook de diseño de Impeccable (Bruno ejecuta `npx impeccable install` en el PC).
