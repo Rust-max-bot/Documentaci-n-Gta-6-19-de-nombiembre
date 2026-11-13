@@ -58,7 +58,8 @@ def twitch(estado):
             break
 
     lista = sorted(vistas.values(), key=lambda s: s["viewer_count"], reverse=True)
-    return {
+    fotos, error_fotos = _fotos_de_perfil([s["user_login"] for s in lista[:TWITCH_CANALES]], cab)
+    r = {
         "categoria": TWITCH_CATEGORIA,
         "espectadores": sum(s["viewer_count"] for s in lista),
         "transmisiones": len(lista),
@@ -71,8 +72,31 @@ def twitch(estado):
             "idioma": s.get("language", ""),
             "inicio": s.get("started_at"),
             "miniatura": s.get("thumbnail_url", ""),
+            **({"foto": fotos[s["user_login"]]} if s["user_login"] in fotos else {}),
         } for s in lista[:TWITCH_CANALES]],
     }
+    if error_fotos:
+        r["error_fotos"] = error_fotos
+    return r
+
+
+def _fotos_de_perfil(logins, cab):
+    """Foto de perfil de cada canal (no cambia como la miniatura del directo, que se pierde al
+    terminar la transmisión; decisión de Bruno, 2026-11-13). Una consulta para los 20 canales.
+    Si falla, no se pierde la medición de Twitch: se guardan sin foto y se anota el motivo."""
+    if not logins:
+        return {}, None
+    try:
+        q = urllib.parse.urlencode([("login", l) for l in logins])
+        d = pedir_json("https://api.twitch.tv/helix/users?" + q, "fotos de perfil de Twitch", cab)
+        fotos = {}
+        for u in d.get("data", []):
+            url = u.get("profile_image_url") or ""
+            if u.get("login") in logins and url.startswith("https://static-cdn.jtvnw.net/"):
+                fotos[u["login"]] = url
+        return fotos, None
+    except Falla as e:
+        return {}, str(e)[:200]
 
 
 def _mensaje_youtube(txt):

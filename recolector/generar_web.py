@@ -73,7 +73,8 @@ def convertir(medidas):
             fila["twitch"] = {"error": tw["error"]}
         else:
             fila["twitch"] = {"espectadores": tw["espectadores"], "transmisiones": tw["transmisiones"],
-                              "canales": [{"nombre": c["nombre"], "login": c["login"], "espectadores": c["espectadores"]}
+                              "canales": [{"nombre": c["nombre"], "login": c["login"], "espectadores": c["espectadores"],
+                                           **({"foto": c["foto"]} if c.get("foto") else {})}
                                           for c in tw["canales"][:CANALES]]}
         interes = None if "error" in tr else ultima_hora_completa(tr)
         fila["trends"] = {"interes": interes} if interes is not None else {"error": tr.get("error", "sin hora completa")}

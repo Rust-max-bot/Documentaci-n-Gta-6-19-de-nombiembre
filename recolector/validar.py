@@ -48,6 +48,8 @@ def _twitch(r):
     for c in canales:
         exigir(isinstance(c.get("login"), str) and c["login"], "Twitch: canal sin nombre")
         exigir(es_entero(c.get("espectadores")), "Twitch: espectadores de un canal inválidos")
+        exigir("foto" not in c or (isinstance(c["foto"], str) and c["foto"].startswith("https://static-cdn.jtvnw.net/")),
+               "Twitch: foto de perfil con dirección inesperada")
     exigir(sum(c["espectadores"] for c in canales) <= r["espectadores"], "Twitch: los canales suman más que el total")
 
 

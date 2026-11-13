@@ -23,3 +23,25 @@ jobs:
           TWITCH_CLIENT_SECRET: ${{ secrets.TWITCH_CLIENT_SECRET }}
           YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
         run: python recolector/probar_fuentes.py
+
+      # El recolector de verdad, pero guardando en una carpeta temporal (nunca en datos/):
+      # sirve para probar cambios del recolector, incluso desde otra rama, antes de usarlos.
+      - name: Probar el recolector completo sin guardar
+        env:
+          TWITCH_CLIENT_ID: ${{ secrets.TWITCH_CLIENT_ID }}
+          TWITCH_CLIENT_SECRET: ${{ secrets.TWITCH_CLIENT_SECRET }}
+          YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
+        run: |
+          python3 recolector/recolectar.py --carpeta "$RUNNER_TEMP/prueba"
+          python3 - "$RUNNER_TEMP/prueba" <<'FIN'
+          import json, sys, pathlib
+          m = json.loads(next(pathlib.Path(sys.argv[1]).glob("*.jsonl")).read_text().splitlines()[-1])
+          tw = m["twitch"]
+          if "error" in tw:
+              sys.exit("Twitch quedó como hueco: " + tw["error"])
+          canales = tw["canales"]
+          print(f"Twitch: {len(canales)} canales, {sum('foto' in c for c in canales)} con foto de perfil"
+                + (f"; error de fotos: {tw['error_fotos']}" if "error_fotos" in tw else ""))
+          for c in canales[:3]:
+              print(" ", c["login"], c.get("foto", "(sin foto)"))
+          FIN
