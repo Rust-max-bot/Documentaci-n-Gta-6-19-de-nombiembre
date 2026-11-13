@@ -111,11 +111,13 @@ guardan los datos (A2), empezar cuanto antes (A4) y el periodo de un mes con int
       Hecho el 2026-11-13: el título de cada video lleva a YouTube y el canal de la tabla de
       Twitch a su canal (los titulares ya enlazaban); se abren en otra pestaña. Verificado
       a 1280 y 384 px en los dos estilos.
-- [ ] **2.2 Miniaturas (A8):** de videos y transmisiones. Las de noticias, solo si la fuente
+- [x] **2.2 Miniaturas (A8):** de videos y transmisiones. Las de noticias, solo si la fuente
       las entrega (por verificar). **Videos hechos (2026-11-13):** Bruno eligió tarjetas como
       las de los titulares (opción B): miniatura arriba, título con enlace, canal, visitas,
-      cuánto subieron y la curva; las cifras exactas, al pasar el ratón. **Falta Twitch:**
-      Bruno decide qué hacer (ver abajo). Verificado: Google Noticias no entrega imágenes (la 2.2 no puede tenerlas
+      cuánto subieron y la curva; las cifras exactas, al pasar el ratón. **Twitch hecho
+      (2026-11-13):** Bruno eligió la foto de perfil del canal; el recolector la guarda
+      desde ese día (probado en GitHub con las claves reales: 20 de 20 canales con foto) y
+      la tabla la muestra junto al nombre (las mediciones de antes, con un círculo vacío). Verificado: Google Noticias no entrega imágenes (la 2.2 no puede tenerlas
       para titulares); las miniaturas de YouTube funcionan; las de Twitch son una foto del
       directo en ese momento y, cuando el canal deja de transmitir, Twitch muestra una imagen
       genérica (ya pasa con el canal del máximo del 12 nov). Alternativa para Twitch: la foto

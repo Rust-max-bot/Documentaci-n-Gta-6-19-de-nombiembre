@@ -44,7 +44,9 @@ ejecucion    número de la ejecución de GitHub
 duracion_s   segundos que tardó
 twitch       espectadores (suma de todas las transmisiones de la categoría), transmisiones,
              completo (false si había más páginas de las leídas), canales: los 20 con más
-             público (login, nombre, espectadores, titulo, idioma, inicio, miniatura)
+             público (login, nombre, espectadores, titulo, idioma, inicio, miniatura y,
+             desde el 2026-11-13, foto: la foto de perfil). Si la consulta de fotos falla,
+             los canales van sin foto y se anota error_fotos (la medición no se pierde)
 youtube      busqueda, unidades gastadas, videos (hasta 50): id, titulo, canal, canal_id,
              publicado, visitas, me_gusta, comentarios, en_vivo, miniatura, puesto (en la
              búsqueda de esa medición; null si ya no sale pero se sigue midiendo)
@@ -64,15 +66,17 @@ xbox         ok, general, estados (+ original si hay problemas)
   Gasta 101 unidades de las 10.000 diarias.
 - Enlaces (tarea 2.1): Twitch `https://www.twitch.tv/<login>`, YouTube
   `https://www.youtube.com/watch?v=<id>`, noticias en `url`.
-- Miniaturas (tarea 2.2): Twitch trae `{width}x{height}` en la dirección, que hay que
-  reemplazar (por ejemplo `320x180`). Google Noticias no trae imágenes.
+- Miniaturas (tarea 2.2): la de Twitch (`miniatura`, con `{width}x{height}` que hay que
+  reemplazar) es una foto del directo y, al terminar la transmisión, Twitch muestra una
+  imagen genérica: por eso la página usa la foto de perfil (`foto`), que no cambia. Las de
+  YouTube funcionan. Google Noticias no trae imágenes.
 
 ## De `datos/` a la página (`generar_web.py`)
 
 `web/datos.js` tiene el mismo formato que `web/datos-ejemplo.js`, sin la marca de ejemplo.
 Se genera en el PC y no se sube a git. Qué toma de cada medición:
 
-- Twitch: total de espectadores y los 3 canales con más público.
+- Twitch: total de espectadores y los 3 canales con más público (con su foto, si la hay).
 - Google Trends: el interés de la **última hora completa** de esa medición (la hora en curso
   viene a medias). Es relativo a los 7 días anteriores a cada medición, así que valores muy
   separados en el tiempo no se comparan del todo bien.

@@ -299,6 +299,9 @@ tr:hover td { background: color-mix(in srgb, var(--a2) 10%, transparent); }
 /* Enlaces de las tablas (videos y canales): subrayado suave que se enciende al pasar. */
 td a { color: inherit; text-decoration: underline; text-decoration-color: color-mix(in srgb, var(--a1) 45%, transparent); text-underline-offset: 3px; transition: color .2s, text-decoration-color .2s; }
 td a:hover, td a:focus-visible { color: var(--a1); text-decoration-color: var(--a1); }
+/* Canal de Twitch con su foto de perfil */
+.canal { display: inline-flex; align-items: center; gap: 10px; }
+.avatar { flex: none; display: block; width: 28px; height: 28px; border-radius: 50%; object-fit: cover; background: color-mix(in srgb, var(--tenue) 25%, transparent); box-shadow: 0 0 0 2px color-mix(in srgb, var(--a1) 55%, transparent); }
 .mini { width: 120px; height: 30px; }
 .mini path { fill: none; stroke: var(--a1); stroke-width: 2; }
 

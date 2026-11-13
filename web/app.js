@@ -45,6 +45,13 @@
     return /^https?:\/\//.test(url || "") ? '<a href="' + limpio(url) + '" target="_blank" rel="noopener noreferrer">' + texto + "</a>" : texto;
   }
   function urlVideo(id) { return /^[\w-]{6,20}$/.test(id || "") ? "https://www.youtube.com/watch?v=" + id : ""; }
+  /* Foto de perfil del canal de Twitch (se guarda desde el 13 nov; las mediciones de antes no
+     la tienen y muestran un círculo vacío para que los nombres queden alineados). */
+  function foto(url) {
+    return /^https:\/\/static-cdn\.jtvnw\.net\//.test(url || "")
+      ? '<img class="avatar" src="' + limpio(url) + '" alt="" loading="lazy" width="28" height="28">'
+      : '<i class="avatar" aria-hidden="true"></i>';
+  }
   function urlCanal(login) { return /^\w{1,40}$/.test(login || "") ? "https://www.twitch.tv/" + login : ""; }
 
   /* ---------- Preparar las mediciones ---------- */
@@ -53,7 +60,7 @@
     return {
       ts: Date.parse(m.t),
       espectadores: typeof tw.espectadores === "number" ? tw.espectadores : null,
-      canal: tw.canales && tw.canales[0] ? tw.canales[0] : null,
+      canal: tw.canales && tw.canales[0] ? tw.canales[0] : null,   // nombre, login, espectadores y, si hay, foto
       errorTwitch: tw.error || null,
       interes: typeof tr.interes === "number" ? tr.interes : null,
       servidores: m.servidores || {}
@@ -244,7 +251,7 @@
       var filas = nuevas.filter(function (m) { return dia(m.ts) === elegido; }).map(function (m) {
         if (m.espectadores == null) return '<tr class="sin-dato"><td>' + hora(m.ts) + '</td><td colspan="3">Sin dato' + (m.errorTwitch ? " (" + limpio(m.errorTwitch) + ")" : "") + "</td></tr>";
         return "<tr><td>" + hora(m.ts) + '</td><td class="n">' + num(m.espectadores) + '</td><td class="barra-celda"><i style="--w:' + (m.espectadores / tope * 100).toFixed(1) + '%"></i></td><td>' +
-          (m.canal ? enlace(urlCanal(m.canal.login), limpio(m.canal.nombre)) + " (" + compacto(m.canal.espectadores) + ")" : "—") + "</td></tr>";
+          (m.canal ? '<span class="canal">' + foto(m.canal.foto) + "<span>" + enlace(urlCanal(m.canal.login), limpio(m.canal.nombre)) + " (" + compacto(m.canal.espectadores) + ")</span></span>" : "—") + "</td></tr>";
       }).join("");
       $("t-twitch").innerHTML = '<thead><tr><th>Hora</th><th class="n">Espectadores</th><th></th><th>Canal con más público</th></tr></thead><tbody>' +
         (filas || '<tr class="sin-dato"><td colspan="4">Todavía no hay datos.</td></tr>') + "</tbody>";
