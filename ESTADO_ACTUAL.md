@@ -15,14 +15,15 @@
 
 ## Dónde quedamos
 
-*(2026-11-13, ~15:00 UTC.)*
+*(2026-11-13, ~16:00 UTC.)*
 
-**Fase 1 terminada** (tareas 1.1 a 1.7, 2026-11-13). La 1.7 (prueba completa, detalle en
-`PLAN_DE_TRABAJO.md`) salió bien salvo el eje del gráfico de Twitch, que redondeaba a miles
-enteros; Bruno pidió corregirlo y ya está (números redondos: 0, 1, 2, 3, 4, 5 mil). Además,
-a pedido de Bruno, las listas de la página muestran **lo más nuevo arriba** (línea de tiempo,
-tabla de Twitch y titulares; decisión en `PLAN.md`). Esperando la siguiente tanda: lo que
-sigue en orden es la fase 2 de `PLAN_DE_TRABAJO.md`.
+**Fase 1 terminada** (tareas 1.1 a 1.7). La página ya muestra lo más nuevo arriba y el eje de
+Twitch con números redondos (decisiones en `PLAN.md`).
+
+**Tanda en curso: 2.1, 2.2 y 2.3** (pedida el 2026-11-13). 2.1 hecha (enlaces a YouTube y
+Twitch). 2.3 hecha (parpadeo del suelo de 1986), falta que Bruno lo confirme a la vista.
+**2.2 esperando a Bruno:** elegir entre dos formas de mostrar las miniaturas de los videos
+(capturas hechas); y Twitch no guarda miniaturas útiles (detalle en `PLAN_DE_TRABAJO.md`).
 
 **El recolector funciona solo.** Lo lanza el despertador de Cloudflare (Worker
 `despertador-recolector`, horario `7,37 * * * *`, clave de GitHub en su secreto
@@ -69,11 +70,12 @@ de 2026. Lanzamiento: 19 de noviembre, 00:00 de Santiago.
 
 **Reglas en pausa:** ninguna. "Paso a paso con permiso" está activa **por tandas**: Bruno
 dice qué pasos hacer y Claude no para hasta completarlos (ver `CLAUDE.md`). Tanda actual:
-ninguna (la 1.5b, 1.6 y 1.7 terminó el 2026-11-13).
+2.1, 2.2 y 2.3.
 
 ## Últimos cambios
 
 - 2026-11-13: grafo de Graphify al día también con los documentos (forzado con permiso de Bruno).
+- 2026-11-13: enlaces a videos y canales (2.1) y suelo de 1986 sin parpadeo (2.3).
 - 2026-11-13: página: eje de Twitch con números redondos y lo más nuevo arriba (tarea 1.7 cerrada).
 - 2026-11-13: prueba completa (tarea 1.7): todo bien salvo el eje del gráfico de Twitch.
 - 2026-11-13: `revisar.py` sigue el horario del despertador.
@@ -89,6 +91,6 @@ ninguna (la 1.5b, 1.6 y 1.7 terminó el 2026-11-13).
 La lista completa y su orden están en `PLAN_DE_TRABAJO.md`. Lo inmediato:
 
 1. Bruno: pedir a soporte de GitHub que borre la referencia del PR #1 y activar el correo privado.
-2. Fase 2 de `PLAN_DE_TRABAJO.md` (mejoras rápidas), cuando Bruno diga la tanda.
+2. Tarea 2.2: Bruno elige cómo mostrar las miniaturas (y qué hacer con las de Twitch).
 3. Opcional: comprobar en Cloudflare que el código del Worker es igual a `despertador/worker.js`.
 4. Opcional: el hook de diseño de Impeccable (Bruno ejecuta `npx impeccable install` en el PC).

@@ -18,10 +18,10 @@
     "semantic_hash": "35e4166f00ee997a827d28037cf24e9d"
   },
   "web/app.js": {
-    "mtime": 1794580580.3733232,
-    "seen": 1794581185.812739,
-    "ast_hash": "caeab66431a2327bcbaac7f5d94afa03",
-    "semantic_hash": "caeab66431a2327bcbaac7f5d94afa03"
+    "mtime": 1794582094.3565247,
+    "seen": 1794582273.3997085,
+    "ast_hash": "69bfe88adb69868863c9fc92d6132ff5",
+    "semantic_hash": ""
   },
   "web/datos-ejemplo.js": {
     "mtime": 1794500113.9023564,
@@ -42,16 +42,16 @@
     "semantic_hash": "9b31786b637be3c13978bec4c2330752"
   },
   "CLAUDE.md": {
-    "mtime": 1794524617.0621853,
-    "seen": 1794581185.8127441,
-    "ast_hash": "39111bc551f1c793f580aa767644dc30",
-    "semantic_hash": "39111bc551f1c793f580aa767644dc30"
+    "mtime": 1794581199.1888585,
+    "seen": 1794582273.399719,
+    "ast_hash": "6934d1360bdd4bd5ba4e919d74fcc410",
+    "semantic_hash": ""
   },
   "ESTADO_ACTUAL.md": {
-    "mtime": 1794580631.4917316,
-    "seen": 1794581185.8127456,
-    "ast_hash": "9a9294d9381fa055e3e3d94ca0267cf1",
-    "semantic_hash": "9a9294d9381fa055e3e3d94ca0267cf1"
+    "mtime": 1794582272.06751,
+    "seen": 1794582273.399721,
+    "ast_hash": "f4528b2a74c6f1a5c516adf978c82b07",
+    "semantic_hash": ""
   },
   "GUIA_CLAVES.md": {
     "mtime": 1794502795.611712,
@@ -132,10 +132,10 @@
     "semantic_hash": "f0fad01aa25102597eeabccff4450a26"
   },
   "PLAN_DE_TRABAJO.md": {
-    "mtime": 1794580633.2223668,
-    "seen": 1794581185.8127491,
-    "ast_hash": "816268b880cfbb684d87025cf18b2d99",
-    "semantic_hash": "816268b880cfbb684d87025cf18b2d99"
+    "mtime": 1794582256.7217188,
+    "seen": 1794582273.3997269,
+    "ast_hash": "8171c2410a92bff47d2b2807ac77b832",
+    "semantic_hash": ""
   },
   "recolector/LEEME.md": {
     "mtime": 1794578393.3744032,

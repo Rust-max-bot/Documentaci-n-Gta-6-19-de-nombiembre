@@ -115,9 +115,18 @@ body {
   background:
     linear-gradient(rgba(255,46,151,.9) 2px, transparent 2px) 0 0 / 100% 60px,
     linear-gradient(90deg, rgba(34,230,255,.8) 2px, transparent 2px) 0 0 / 60px 100%;
+  /* El suelo avanza moviendo la capa entera una casilla (60px), no el dibujo de las líneas:
+     así no se repinta en cada cuadro (repintar esa capa enorme hacía parpadear el suelo). */
   animation: avanzar 1.6s linear infinite;
+  will-change: transform;
 }
-@keyframes avanzar { to { background-position: 0 60px, 0 0; } }
+@keyframes avanzar {
+  from { transform: rotateX(80deg) translateY(0); }
+  to { transform: rotateX(80deg) translateY(60px); }
+}
+/* Cerca del horizonte las líneas quedan tan juntas que se mezclan y titilan (puntitos que
+   parpadean): ahí el suelo se funde con el fondo. */
+.suelo::after { content: ""; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(#0d0221 0%, rgba(13, 2, 33, .85) 14%, transparent 42%); }
 
 /* Escena 2026 */
 .escena-26 { background: linear-gradient(#4aa8dc 0%, #9fd6ea 30%, #ffd9b8 58%, #ffac9a 72%, #ff8f96 76%, #16a5b8 76.2%, #0c6f8f 100%); }
@@ -288,6 +297,9 @@ tr:hover td { background: color-mix(in srgb, var(--a2) 10%, transparent); }
 .barra-celda { min-width: 120px; }
 .barra-celda i { display: block; height: 8px; border-radius: 8px; background: linear-gradient(90deg, var(--a2), var(--a1)); width: var(--w); }
 .crece { color: var(--ok); }
+/* Enlaces de las tablas (videos y canales): subrayado suave que se enciende al pasar. */
+td a { color: inherit; text-decoration: underline; text-decoration-color: color-mix(in srgb, var(--a1) 45%, transparent); text-underline-offset: 3px; transition: color .2s, text-decoration-color .2s; }
+td a:hover, td a:focus-visible { color: var(--a1); text-decoration-color: var(--a1); }
 .mini { width: 120px; height: 30px; }
 .mini path { fill: none; stroke: var(--a1); stroke-width: 2; }
 

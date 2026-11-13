@@ -107,11 +107,24 @@ guardan los datos (A2), empezar cuanto antes (A4) y el periodo de un mes con int
 
 ## Fase 2 — Mejoras rápidas
 
-- [ ] **2.1 Enlaces que se abren en el navegador (A7):** videos, transmisiones y noticias.
+- [x] **2.1 Enlaces que se abren en el navegador (A7):** videos, transmisiones y noticias.
+      Hecho el 2026-11-13: el título de cada video lleva a YouTube y el canal de la tabla de
+      Twitch a su canal (los titulares ya enlazaban); se abren en otra pestaña. Verificado
+      a 1280 y 384 px en los dos estilos.
 - [ ] **2.2 Miniaturas (A8):** de videos y transmisiones. Las de noticias, solo si la fuente
-      las entrega (por verificar).
-- [ ] **2.3 Arreglar el parpadeo del suelo de Miami 1986 (D1).** Es un error, no una
-      decisión de diseño.
+      las entrega (por verificar). **Esperando a Bruno (2026-11-13):** elegir entre dos
+      formas para los videos (miniatura pequeña en la fila de la tabla, o tarjetas como los
+      titulares). Verificado: Google Noticias no entrega imágenes (la 2.2 no puede tenerlas
+      para titulares); las miniaturas de YouTube funcionan; las de Twitch son una foto del
+      directo en ese momento y, cuando el canal deja de transmitir, Twitch muestra una imagen
+      genérica (ya pasa con el canal del máximo del 12 nov). Alternativa para Twitch: la foto
+      de perfil del canal, que no cambia, pero pide tocar el recolector.
+- [x] **2.3 Arreglar el parpadeo del suelo de Miami 1986 (D1).** Es un error, no una
+      decisión de diseño. Hecho el 2026-11-13: el suelo avanzaba repintando una capa enorme
+      en cada cuadro y, cerca del horizonte, las líneas quedaban tan juntas que titilaban.
+      Ahora se mueve la capa entera (sin repintar) y el suelo se funde con el fondo junto al
+      horizonte. Medido con 40 capturas seguidas: el salto máximo de brillo bajó de 1,8 a
+      0,9. Falta que Bruno lo confirme a la vista en su PC.
 - [ ] **2.4 Que las rayas del sol de 1986 no se confundan con las líneas de neón de los
       edificios (D2).** Cambia cómo se ve: presentar opciones con capturas.
 

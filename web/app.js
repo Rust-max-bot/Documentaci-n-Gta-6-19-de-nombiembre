@@ -39,6 +39,13 @@
     return f * mag;
   }
   function limpio(s) { var d = document.createElement("div"); d.textContent = s == null ? "" : s; return d.innerHTML; }
+  /* Enlace que se abre en otra pestaña del navegador. Solo se arma con direcciones construidas
+     aquí (YouTube, Twitch) o que empiezan por http(s); si no, queda el texto sin enlace. */
+  function enlace(url, texto) {
+    return /^https?:\/\//.test(url || "") ? '<a href="' + limpio(url) + '" target="_blank" rel="noopener noreferrer">' + texto + "</a>" : texto;
+  }
+  function urlVideo(id) { return /^[\w-]{6,20}$/.test(id || "") ? "https://www.youtube.com/watch?v=" + id : ""; }
+  function urlCanal(login) { return /^\w{1,40}$/.test(login || "") ? "https://www.twitch.tv/" + login : ""; }
 
   /* ---------- Preparar las mediciones ---------- */
   var M = (D.mediciones || []).map(function (m) {
@@ -237,7 +244,7 @@
       var filas = nuevas.filter(function (m) { return dia(m.ts) === elegido; }).map(function (m) {
         if (m.espectadores == null) return '<tr class="sin-dato"><td>' + hora(m.ts) + '</td><td colspan="3">Sin dato' + (m.errorTwitch ? " (" + limpio(m.errorTwitch) + ")" : "") + "</td></tr>";
         return "<tr><td>" + hora(m.ts) + '</td><td class="n">' + num(m.espectadores) + '</td><td class="barra-celda"><i style="--w:' + (m.espectadores / tope * 100).toFixed(1) + '%"></i></td><td>' +
-          (m.canal ? limpio(m.canal.nombre) + " (" + compacto(m.canal.espectadores) + ")" : "—") + "</td></tr>";
+          (m.canal ? enlace(urlCanal(m.canal.login), limpio(m.canal.nombre)) + " (" + compacto(m.canal.espectadores) + ")" : "—") + "</td></tr>";
       }).join("");
       $("t-twitch").innerHTML = '<thead><tr><th>Hora</th><th class="n">Espectadores</th><th></th><th>Canal con más público</th></tr></thead><tbody>' +
         (filas || '<tr class="sin-dato"><td colspan="4">Todavía no hay datos.</td></tr>') + "</tbody>";
@@ -258,7 +265,7 @@
     }).filter(Boolean).sort(function (x, y) { return y.b - x.b; });
     $("t-youtube").innerHTML = '<thead><tr><th>Video</th><th>Canal</th><th class="n">Al inicio</th><th class="n">Al final</th><th class="n">Ganó</th><th>Evolución</th></tr></thead><tbody>' +
       (filas.map(function (f) {
-        return "<tr><td>" + limpio(f.v.titulo) + "</td><td>" + limpio(f.v.canal) + '</td><td class="n">' + num(f.a) + '</td><td class="n">' + num(f.b) +
+        return "<tr><td>" + enlace(urlVideo(f.v.id), limpio(f.v.titulo)) + "</td><td>" + limpio(f.v.canal) + '</td><td class="n">' + num(f.a) + '</td><td class="n">' + num(f.b) +
           '</td><td class="n crece">+' + compacto(f.b - f.a) + '</td><td><svg class="mini" viewBox="0 0 120 30"><path d="' + f.camino + '"/></svg></td></tr>';
       }).join("") || '<tr class="sin-dato"><td colspan="6">Todavía no hay datos.</td></tr>') + "</tbody>";
   })();
@@ -267,7 +274,7 @@
   // Lo más nuevo arriba (pedido de Bruno).
   $("noticias").innerHTML = (D.noticias || []).slice().sort(function (a, b) { return Date.parse(b.t) - Date.parse(a.t); }).map(function (n) {
     var ts = Date.parse(n.t), seguro = /^https?:\/\//.test(n.url || "");
-    return "<li>" + (seguro ? '<a href="' + limpio(n.url) + '" target="_blank" rel="noopener noreferrer">' : '<a>') + limpio(n.titulo) + "</a><small>" +
+    return "<li>" + (seguro ? enlace(n.url, limpio(n.titulo)) : "<a>" + limpio(n.titulo) + "</a>") + "<small>" +
       limpio(n.medio) + (isNaN(ts) ? "" : " · " + dia(ts) + " " + hora(ts)) + "</small></li>";
   }).join("") || '<li>Todavía no hay titulares.</li>';
 
