@@ -84,9 +84,9 @@
     "semantic_hash": ""
   },
   "recolector/probar_fuentes.py": {
-    "mtime": 1794607013.968795,
-    "seen": 1794607087.4801598,
-    "ast_hash": "58172e1b13e9851131c91d90b3c83139",
+    "mtime": 1794607100.2443953,
+    "seen": 1794607100.8026168,
+    "ast_hash": "fc07e37f3543e8c5ce98f4544ee3f255",
     "semantic_hash": ""
   },
   ".github/workflows/recolectar.yml": {
