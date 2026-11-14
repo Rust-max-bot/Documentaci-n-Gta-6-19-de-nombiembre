@@ -898,8 +898,8 @@
         "</div></article>";
     }
     caja.innerHTML =
-      postal(C.antes, "Lo que espero", "Todavía sin escribir", "Aquí irá lo que Bruno espera de GTA 6.") +
-      postal(C.despues, "Lo que me pareció", ahora() < SALIDA ? "Se abre después del lanzamiento" : "Todavía sin escribir", "Aquí irá lo que le pareció el juego a Bruno.");
+      postal(C.antes, "Lo que espero", "Todavía sin escribir", "Aquí irá lo que Rust espera de GTA 6.") +
+      postal(C.despues, "Lo que me pareció", ahora() < SALIDA ? "Se abre después del lanzamiento" : "Todavía sin escribir", "Aquí irá lo que le pareció el juego a Rust.");
   })();
 
   /* ---------- Aparecer al bajar ---------- */
