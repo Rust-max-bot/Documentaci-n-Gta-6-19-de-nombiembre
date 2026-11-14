@@ -1,17 +1,17 @@
 # Graph Report - Documentaci-n-Gta-6-19-de-nombiembre  (2026-11-14)
 
 ## Corpus Check
-- 38 files · ~48,285 words
+- 39 files · ~49,674 words
 - Verdict: corpus is large enough that graph structure adds value.
 - Unclassified: 8 file(s) not represented in the graph (top: (none) 3, .jsonl 3, .bat 1)
 
 ## Summary
-- 474 nodes · 821 edges · 33 communities (19 shown, 14 thin omitted)
-- Extraction: 88% EXTRACTED · 12% INFERRED · 0% AMBIGUOUS · INFERRED: 95 edges (avg confidence: 0.87)
+- 512 nodes · 860 edges · 35 communities (21 shown, 14 thin omitted)
+- Extraction: 89% EXTRACTED · 11% INFERRED · 0% AMBIGUOUS · INFERRED: 95 edges (avg confidence: 0.87)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `b27f9519`
+- Built from commit: `7d90d1da`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -45,6 +45,8 @@
 - Estructura de carpetas (web/, recolector/, datos/, .github/workflows/, despertador/)
 - Criterios para saber si salió bien
 - Dónde quedamos (2026-11-13)
+- publicar
+- generar_web.py
 
 ## God Nodes (most connected - your core abstractions)
 1. `Falla` - 22 edges
@@ -82,15 +84,15 @@
 - **Garantías de no inventar datos al guardar mediciones** — recolector_leeme_hueco, recolector_leeme_comprobaciones, recolector_leeme_formato_linea_jsonl, recolector_leeme_interruptor [INFERRED 0.85]
 - **Implementación de los dos estilos de Miami** — plan_diseno_miami_dos_estilos, web_index_escena_80, web_index_escena_26, web_index_boton_cambio_estilo, web_index_simbolo_edificios, web_index_simbolo_palmera [INFERRED 0.95]
 
-## Communities (33 total, 14 thin omitted)
+## Communities (35 total, 14 thin omitted)
 
 ### Community 0 - "Despertador y plan de trabajo"
 Cohesion: 0.05
-Nodes (51): Apagarlo, Comprobar que funciona, Cron Trigger 7,37 * * * * (UTC), Despertador del recolector (Cloudflare), Secreto GITHUB_TOKEN (solo Actions: Read and write, caduca 31 ene 2027), Montar el despertador (pasos en el navegador), Montarlo (lo hace Bruno en el navegador; no hace falta instalar nada), Semana del lanzamiento (SEMANA_INICIO / SEMANA_FIN) (+43 more)
+Nodes (50): Apagarlo, Comprobar que funciona, Cron Trigger 7,37 * * * * (UTC), Despertador del recolector (Cloudflare), Secreto GITHUB_TOKEN (solo Actions: Read and write, caduca 31 ene 2027), Montar el despertador (pasos en el navegador), Montarlo (lo hace Bruno en el navegador; no hace falta instalar nada), Semana del lanzamiento (SEMANA_INICIO / SEMANA_FIN) (+42 more)
 
 ### Community 1 - "Fuentes de datos (fuentes.py)"
-Cohesion: 0.08
-Nodes (27): Fase 6 — Ideas nuevas de Bruno: más estadísticas, logros y comparaciones, _cabeceras_twitch(), _fotos_de_perfil(), _mensaje_youtube(), noticias(), playstation(), reddit(), trends() (+19 more)
+Cohesion: 0.06
+Nodes (35): Fase 6 — Ideas nuevas de Bruno: más estadísticas, logros y comparaciones, _cabeceras_twitch(), _fotos_de_perfil(), _mensaje_youtube(), noticias(), playstation(), reddit(), trends() (+27 more)
 
 ### Community 2 - "Decisiones ya tomadas"
 Cohesion: 0.22
@@ -105,8 +107,8 @@ Cohesion: 0.12
 Nodes (15): jobs, trends_extra, name, on, workflow_dispatch, permissions, contents, name (+7 more)
 
 ### Community 5 - "Generar la página (generar_web.py)"
-Cohesion: 0.10
-Nodes (17): main(), abrir(), preparar_salida(), main(), main(), recorrer(), abortar(), comprobar() (+9 more)
+Cohesion: 0.12
+Nodes (10): main(), abrir(), preparar_salida(), main(), main(), recorrer(), fecha(), main() (+2 more)
 
 ### Community 6 - "Workflow Recolectar datos"
 Cohesion: 0.09
@@ -118,11 +120,11 @@ Nodes (30): TWITCH_CLIENT_ID, TWITCH_CLIENT_SECRET, YOUTUBE_API_KEY, solo_trends
 
 ### Community 8 - "Código de la página (app.js)"
 Cohesion: 0.09
-Nodes (46): ahora(), aPantalla(), aplicar(), boton(), clave(), claveDia(), compacto(), cuadro() (+38 more)
+Nodes (48): Fase 1 — Recolector funcionando (lo más importante), Fase 1 — Recolector funcionando (lo más importante), ahora(), aPantalla(), aplicar(), boton(), clave(), claveDia() (+40 more)
 
 ### Community 9 - "Validaciones (validar.py)"
-Cohesion: 0.12
-Nodes (26): abortar(), comprobar(), comprobar_serie(), main(), paises(), preguntar(), relacionadas(), serie() (+18 more)
+Cohesion: 0.23
+Nodes (18): comprobar(), comprobar_serie(), a_fecha(), es_entero(), es_iso(), exigir(), Invalida, medicion() (+10 more)
 
 ### Community 10 - "Trabajar con Claude en la nube"
 Cohesion: 0.40
@@ -141,8 +143,8 @@ Cohesion: 0.29
 Nodes (7): Secreto GITHUB_TOKEN del Worker (caduca 31 ene 2027 o ~1 mar 2027, por verificar), recolectar.yml sin schedule (solo despertador o manual), Worker de Cloudflare despertador-recolector (horario 7,37 * * * *), Plan B: despertador en Cloudflare (despertador/) que lanza el workflow por la API de GitHub, El recolector se ejecuta en GitHub Actions, Medición cada hora (minuto 7) y también al minuto 37 del 17 al 21 nov, Riesgo: GitHub no es puntual con las programadas
 
 ### Community 27 - "Plan de trabajo"
-Cohesion: 0.17
-Nodes (11): Avisos para Bruno (cosas donde su idea tiene un límite o un fallo), Fase 0 — Claves y fuentes, Fase 1 — Recolector funcionando (lo más importante), Fase 2 — Mejoras rápidas, Fase 3 — Mejoras medianas, Fase 4 — Mejoras largas, Fase 5 — Lo que ya estaba acordado para después del lanzamiento, Fase 7 — Ideas para que la página sea memorable (+3 more)
+Cohesion: 0.18
+Nodes (10): Avisos para Bruno (cosas donde su idea tiene un límite o un fallo), Fase 0 — Claves y fuentes, Fase 2 — Mejoras rápidas, Fase 3 — Mejoras medianas, Fase 4 — Mejoras largas, Fase 5 — Lo que ya estaba acordado para después del lanzamiento, Fase 7 — Ideas para que la página sea memorable, Fechas que mandan (+2 more)
 
 ### Community 28 - "Estado actual del proyecto"
 Cohesion: 0.33
@@ -160,25 +162,33 @@ Nodes (5): recolector/interruptor.json (apagar, encender o alargar; hasta 19 dic
 Cohesion: 0.40
 Nodes (5): Dónde quedamos (2026-11-13), Eje del gráfico de Twitch con números redondos, Fase 1 terminada (tareas 1.1 a 1.7), Tarea 1.7: prueba completa (todo bien salvo eje de Twitch), Números del eje de los gráficos: redondos (1, 2, 2,5, 5 × 10^n)
 
+### Community 33 - "publicar"
+Cohesion: 0.06
+Nodes (37): concurrency, cancel-in-progress, group, name, url, jobs, preparar, publicar (+29 more)
+
+### Community 34 - "generar_web.py"
+Cohesion: 0.38
+Nodes (7): abortar(), comprobar(), convertir(), estado_servidor(), leer_mediciones(), main(), ultima_hora_completa()
+
 ## Knowledge Gaps
 - **32 isolated node(s):** `Estado de Rockstar (anotado a mano en web/eventos.js)`, `Fallo del eje de Twitch (compacto() en web/app.js)`, `Reddit (A5)`, `Fase 5 — Búsqueda calmada tras el lanzamiento`, `Aviso legal (proyecto de fans, no afiliado a Rockstar/Take-Two)` (+27 more)
-  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 178 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
+  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 201 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
 - **14 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `compacto()` connect `Código de la página (app.js)` to `Despertador y plan de trabajo`, `Plan de trabajo`?**
-  _High betweenness centrality (0.176) - this node is a cross-community bridge._
+- **Why does `Plan de trabajo` connect `Plan de trabajo` to `Código de la página (app.js)`, `Fuentes de datos (fuentes.py)`?**
+  _High betweenness centrality (0.140) - this node is a cross-community bridge._
 - **What connects `Estado de Rockstar (anotado a mano en web/eventos.js)`, `Fallo del eje de Twitch (compacto() en web/app.js)`, `Reddit (A5)` to the rest of the system?**
   _32 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Despertador y plan de trabajo` be split into smaller, more focused modules?**
-  _Cohesion score 0.05 - nodes in this community are weakly interconnected._
-- **Why does `Plan de trabajo` connect `Plan de trabajo` to `Fuentes de datos (fuentes.py)`?**
-  _High betweenness centrality (0.163) - this node is a cross-community bridge._
-- **Should `Fuentes de datos (fuentes.py)` be split into smaller, more focused modules?**
-  _Cohesion score 0.07814207650273224 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.05117845117845118 - nodes in this community are weakly interconnected._
 - **Why does `Fase 6 — Ideas nuevas de Bruno: más estadísticas, logros y comparaciones` connect `Fuentes de datos (fuentes.py)` to `Plan de trabajo`?**
-  _High betweenness centrality (0.153) - this node is a cross-community bridge._
+  _High betweenness centrality (0.131) - this node is a cross-community bridge._
+- **Should `Fuentes de datos (fuentes.py)` be split into smaller, more focused modules?**
+  _Cohesion score 0.06361570918532944 - nodes in this community are weakly interconnected._
 - **Should `Resultado de las pruebas reales de fuentes (12 nov 2026)` be split into smaller, more focused modules?**
   _Cohesion score 0.061979648473635525 - nodes in this community are weakly interconnected._
+- **Should `steps` be split into smaller, more focused modules?**
+  _Cohesion score 0.125 - nodes in this community are weakly interconnected._

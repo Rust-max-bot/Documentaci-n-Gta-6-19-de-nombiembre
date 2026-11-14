@@ -9,7 +9,7 @@ repositorio es para documentarlo. No busco hacer algo productivo, solo divertirm
 ## Cómo se hizo
 
 **Este proyecto está hecho con Claude**, una inteligencia artificial de Anthropic (con
-Claude Code). Yo, Bruno, tuve la idea, planeé el proyecto, decidí qué medir y cómo debía
+Claude Code). Yo, Rust, tuve la idea, planeé el proyecto, decidí qué medir y cómo debía
 verse la página, y elegí entre las opciones que me presentaba. **El código, los textos y las
 pruebas no los escribí yo:** los escribió Claude, siguiendo lo que yo le pedía. Las reglas con
 las que trabaja están en `CLAUDE.md`.

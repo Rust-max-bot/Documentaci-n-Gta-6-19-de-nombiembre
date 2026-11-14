@@ -81,7 +81,7 @@ Bruno ya eligió las palabras de la comparación.
 
 ## Últimos cambios
 
-- 2026-11-14: nota "hecho con Claude" en el README y en el pie de la página (2.9, pedido de Bruno).
+- 2026-11-14: nota "hecho con Claude" en el README y en el pie de la página (2.9, pedido de Bruno); en lo público, Bruno aparece como "Rust" (regla nueva en `CLAUDE.md`).
 - 2026-11-14: README al día (2.7) y página publicada en GitHub Pages para verla desde el celular (2.8, pedido de Bruno).
 - 2026-11-14: filtro por día en los titulares con barras por día (2.6, opción C de Bruno).
 - 2026-11-14: cuenta regresiva con botones Nueva Zelanda, Chile y Miami (7.6), "Resumen del día" (7.5) y más eventos automáticos en la línea de tiempo (pedido de Bruno); diseño de Claude porque Bruno pidió no preguntarle.

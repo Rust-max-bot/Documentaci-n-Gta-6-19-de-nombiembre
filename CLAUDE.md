@@ -131,6 +131,9 @@ vivos, ganan los vivos.
   (escribir `%USERPROFILE%` en vez de la carpeta de usuario), ni datos de sus cuentas. Los
   commits se firman con el correo anónimo de GitHub
   (`188891192+Rust-max-bot@users.noreply.github.com`, ya configurado en el repo del PC).
+- **En lo que se ve en público (la página y el README), Bruno aparece como "Rust"**, no con su
+  nombre (pedido de Bruno, 2026-11-14). Los comentarios del código y los documentos de trabajo
+  pueden seguir diciendo "Bruno".
 - **Nunca escribir claves ni contraseñas en archivos del repositorio.** Las claves de Twitch
   y YouTube van en los "Secrets" de GitHub. En el PC, en un archivo `.env` (ya ignorado por git).
 - Verificar cada fuente de datos con una consulta real antes de afirmar que funciona.
