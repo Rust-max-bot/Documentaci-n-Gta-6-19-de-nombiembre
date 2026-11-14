@@ -176,7 +176,8 @@ Se conserva la numeración de los planes anteriores. Los avisos 1, 3 y 4 ya est�
    del lanzamiento.
 4. *(Resuelto: Reddit se lee por RSS; la clave queda en la Fase 5.)*
 5. **Estado de Rockstar.** No se puede leer con programas, ni desde la nube ni desde GitHub.
-   Las caídas de Rockstar se anotan a mano en `web/eventos.js`.
+   Las caídas de Rockstar se anotan a mano en `web/eventos.js`. Vuelto a probar desde GitHub el
+   2026-11-14: sigue sin responder, aunque en el navegador de Bruno carga sin "no soy un robot".
 6. **Diseño más vivo (D3).** Se puede y se debe ser más atrevido, pero sin copiar el arte
    oficial del juego: se toma la idea (colores saturados de Florida), no las imágenes.
 7. **Fase 6 y la fecha del lanzamiento.** Un dato que no se guardó el 19 nov no se puede
