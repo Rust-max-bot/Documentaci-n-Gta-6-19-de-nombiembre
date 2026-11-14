@@ -85,6 +85,12 @@
   <div class="titular">
     <h1><span>19</span><i>·</i><span>NOV</span><i>·</i><span>2026</span></h1>
     <p class="lema">El día que salió GTA 6</p>
+    <!-- Hora cero en cada lugar (tarea 7.6): el juego se abre a medianoche de cada país -->
+    <div class="lugares" id="lugares" role="group" aria-label="Cuenta regresiva de qué lugar">
+      <button type="button" data-lugar="nz" aria-pressed="false">Nueva Zelanda</button>
+      <button type="button" data-lugar="cl" aria-pressed="true">Chile</button>
+      <button type="button" data-lugar="mia" aria-pressed="false">Miami</button>
+    </div>
     <div class="cuenta" id="cuenta"></div>
   </div>
 </header>
@@ -105,6 +111,14 @@
     <h2>Línea de tiempo</h2>
     <p class="nota">Eventos detectados por el programa y eventos anotados a mano. Todas las horas de la página están en hora de Santiago de Chile.</p>
     <ol class="linea" id="linea"></ol>
+  </section>
+
+  <!-- Resumen del día (tarea 7.5): una tarjeta por día, hecha con las mediciones guardadas -->
+  <section class="bloque observar" id="resumen">
+    <h2>Resumen del día</h2>
+    <p class="nota">Lo más importante de cada día, sacado solo de las mediciones guardadas. Los días van en hora de Santiago de Chile.</p>
+    <div class="filtros" id="resumen-dias" role="group" aria-label="Qué día ver"></div>
+    <div class="rd-tarjeta" id="resumen-tarjeta"></div>
   </section>
 
   <section class="bloque observar">

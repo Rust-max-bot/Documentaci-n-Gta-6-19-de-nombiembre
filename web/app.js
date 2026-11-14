@@ -81,30 +81,64 @@
   /* ---------- Cuenta regresiva y hora cero (tarea 7.2) ---------- */
   // Con "?probar-hora-cero" en la dirección, el reloj de la página se adelanta hasta 5 segundos
   // antes del lanzamiento: sirve para ver la animación sin esperar al 19 nov.
+  // Con "?probar-fecha=2026-11-18T12:00Z" la página hace como si fuera esa hora (UTC): sirve
+  // para revisar cómo se ve la cuenta de cada lugar antes y después de su hora cero.
   var adelanto = /[?&]probar-hora-cero\b/.test(location.search) ? SALIDA - 5000 - Date.now() : 0;
+  var fechaPrueba = /[?&]probar-fecha=([\dT:Z-]+)/.exec(location.search);
+  if (fechaPrueba && !isNaN(Date.parse(fechaPrueba[1]))) adelanto = Date.parse(fechaPrueba[1]) - Date.now();
   function ahora() { return Date.now() + adelanto; }
   var FIESTA = 24 * 3600000;     // la animación se ve al llegar a 0 o al abrir la página ese primer día
   var celebrado = false;
+  /* Hora cero en cada lugar (tarea 7.6, idea de Bruno). Rockstar confirmó que el juego se abre a
+     medianoche del 19 nov en la hora de cada país. Horas de noviembre: Nueva Zelanda UTC+13,
+     Chile UTC-3, Miami UTC-5. Que Nueva Zelanda sea la primera es una deducción por su huso. */
+  var LUGARES = {
+    nz: { nombre: "Nueva Zelanda", ts: Date.UTC(2026, 10, 18, 11, 0) },
+    cl: { nombre: "Chile", ts: SALIDA },
+    mia: { nombre: "Miami", ts: Date.UTC(2026, 10, 19, 5, 0) }
+  };
+  var lugar = "cl";
+  try { var guardado = localStorage.getItem("gta6-lugar"); if (LUGARES[guardado]) lugar = guardado; } catch (e) { /* sin almacenamiento: queda Chile */ }
+  function notaLugar(modo) {
+    var L = LUGARES[lugar];
+    if (modo === "desde") return lugar === "cl" ? "desde que salió GTA 6" : "desde que salió en " + L.nombre;
+    return "medianoche en " + L.nombre + (lugar === "cl" ? "" : '<i class="sep"> · </i><i class="hora-cl">' + dia(L.ts) + ", " + hora(L.ts) + " hora de Chile</i>");
+  }
   // Escribe los cuatro números. Si las cajas ya existen, solo cambia los números: así una
   // animación de las cajas no vuelve a empezar cada segundo.
   function pintar(caja, s, modo) {
     var v = [[Math.floor(s / 86400), "días"], [Math.floor(s % 86400 / 3600), "horas"], [Math.floor(s % 3600 / 60), "min"], [s % 60, "seg"]];
-    if (caja.dataset.modo !== modo) {
-      caja.dataset.modo = modo;
+    var clave = modo + "|" + lugar;
+    if (caja.dataset.modo !== clave) {
+      caja.dataset.modo = clave;
       caja.classList.toggle("desde", modo === "desde");
       caja.innerHTML = v.map(function (x) { return '<div class="caja"><b></b><small>' + x[1] + "</small></div>"; }).join("")
-        + (modo === "desde" ? '<p class="cuenta-nota"><span>desde que salió GTA 6</span></p>' : "");
+        + '<p class="cuenta-nota"><span>' + notaLugar(modo) + "</span></p>";
     }
     caja.querySelectorAll("b").forEach(function (b, i) { b.textContent = String(v[i][0]).padStart(2, "0"); });
   }
+  // Botones de lugar: el elegido queda marcado; los lugares donde ya salió llevan un ✓.
+  function pintarLugares() {
+    document.querySelectorAll("[data-lugar]").forEach(function (b) {
+      var L = LUGARES[b.dataset.lugar], ya = ahora() >= L.ts;
+      b.setAttribute("aria-pressed", b.dataset.lugar === lugar ? "true" : "false");
+      b.classList.toggle("ya", ya);
+      b.title = (ya ? "Ya salió en " : "Medianoche en ") + L.nombre + ": " + dia(L.ts) + ", " + hora(L.ts) + " hora de Chile";
+    });
+  }
+  $("lugares").addEventListener("click", function (e) {
+    var b = e.target.closest("[data-lugar]"); if (!b) return;
+    lugar = b.dataset.lugar;
+    try { localStorage.setItem("gta6-lugar", lugar); } catch (err) { /* sin almacenamiento: vale hasta recargar */ }
+    pintarLugares(); cuenta();
+  });
   function cuenta() {
-    var falta = SALIDA - ahora(), caja = $("cuenta");
-    if (falta <= 0) {
-      pintar(caja, Math.floor(-falta / 1000), "desde");
-      if (!celebrado && -falta < FIESTA) { celebrado = true; horaCero(); }
-      return;
-    }
-    pintar(caja, Math.floor(falta / 1000), "falta");
+    var t = ahora(), caja = $("cuenta"), falta = LUGARES[lugar].ts - t;
+    // La fiesta de la hora cero sigue siendo la de Chile, mire el lugar que se mire.
+    if (!celebrado && t >= SALIDA && t - SALIDA < FIESTA) { celebrado = true; horaCero(); }
+    if (falta <= 0) pintar(caja, Math.floor(-falta / 1000), "desde");
+    else pintar(caja, Math.floor(falta / 1000), "falta");
+    pintarLugares();
   }
   function horaCero() {
     var lema = document.querySelector(".lema"), portada = document.querySelector(".portada");
@@ -186,9 +220,16 @@
     });
   })();
 
-  /* ---------- Línea de tiempo ---------- */
-  (function () {
-    var ev = [];
+  /* ---------- Línea de tiempo ----------
+     Se dibuja al final (lineaDeTiempo), porque también usa los récords de "Logros y récords". */
+  var eventosExtra = [];   // los llena la sección de récords: hitos de Twitch, video más visto, tráilers
+  function lineaDeTiempo() {
+    var ev = eventosExtra.slice();
+    // Hora cero de cada lugar (tarea 7.6), solo cuando ya pasó.
+    [["nz", "Medianoche en Nueva Zelanda: GTA 6 ya se puede jugar allí"], ["cl", "Hora cero en Chile: sale GTA 6"],
+     ["mia", "Medianoche en Miami: GTA 6 ya se puede jugar allí"]].forEach(function (x) {
+      if (ahora() >= LUGARES[x[0]].ts) ev.push({ ts: LUGARES[x[0]].ts, texto: x[1], auto: true });
+    });
     if (picoTwitch) ev.push({ ts: picoTwitch.ts, texto: "Máximo de espectadores en Twitch: " + num(picoTwitch.espectadores), auto: true });
     if (picoTrends) ev.push({ ts: picoTrends.ts, texto: "Máximo de búsquedas en Google Trends (" + picoTrends.interes + " de 100)", auto: true });
     SERVICIOS.forEach(function (s) {
@@ -209,7 +250,7 @@
       return '<li class="' + (e.auto ? "auto" : "mano") + '"><time>' + dia(e.ts) + " · " + hora(e.ts) + '</time><span class="que">' + limpio(e.texto) +
         '</span><span class="etiqueta">' + (e.auto ? "automático" : "a mano") + "</span></li>";
     }).join("") : '<li class="vacio">Todavía no hay eventos.</li>';
-  })();
+  }
 
   /* ---------- Gráficos de línea (SVG hecho a mano) ---------- */
   var globo = $("globo");
@@ -665,13 +706,98 @@
     }).join("");
     caja.innerHTML = html || '<li class="vacio">Sin datos todavía.</li>';
 
+    // Para la línea de tiempo: hitos redondos de espectadores en Twitch y cada vez que cambia el video más visto.
+    var HITOS = [2500, 5000, 10000, 25000, 50000, 100000, 250000, 500000, 1000000, 2000000, 5000000];
+    var pasados = 0;
+    esp.forEach(function (e) {
+      while (pasados < HITOS.length && e.valor >= HITOS[pasados]) {
+        if (filas.length && e.ts > filas[0].ts) eventosExtra.push({ ts: e.ts, texto: "Twitch pasa los " + num(HITOS[pasados]) + " espectadores a la vez", auto: true });
+        pasados++;
+      }
+    });
+    lideres.slice(1).forEach(function (l) {
+      eventosExtra.push({ ts: l.ts, texto: "Nuevo video más visto en YouTube: " + l.que, auto: true });
+    });
+
     // Tráilers oficiales de GTA VI (se miden desde el 13 nov).
     var tr = D.trailers || [];
+    // Para la línea de tiempo: cada vez que un tráiler pasa otra decena de millones de visitas.
+    tr.forEach(function (t) {
+      var nombre = t.titulo.replace(/^Grand Theft Auto VI[:\s]*/, "") || t.titulo;
+      t.serie.forEach(function (p, i) {
+        if (!i) return;
+        var antes = Math.floor(t.serie[i - 1].visitas / 1e7), ahoraM = Math.floor(p.visitas / 1e7);
+        if (ahoraM > antes) eventosExtra.push({ ts: Date.parse(p.t), texto: "El " + nombre + " de GTA VI pasa los " + num(ahoraM * 10) + " millones de visitas", auto: true });
+      });
+    });
     $("records-trailers").innerHTML = tr.length ? tr.map(function (t) {
       var s = t.serie, u = s[s.length - 1], sube = s.length > 1 ? u.visitas - s[0].visitas : null;
       return "<li>" + enlace(urlVideo(t.id), limpio(t.titulo.replace(/^Grand Theft Auto VI[:\s]*/, "") || t.titulo)) + "<b>" + compacto(u.visitas) + "</b><small>visitas</small>" +
         (sube != null ? '<span class="rc-sube">+' + num(sube) + " desde el " + dia(Date.parse(s[0].t)) + "</span>" : "") + "</li>";
     }).join("") : '<li class="vacio">Todavía sin mediciones.</li>';
+  })();
+
+  lineaDeTiempo();
+
+  /* ---------- Resumen del día (tarea 7.5) ----------
+     Una tarjeta por día (en hora de Santiago) con lo más importante de ese día. Todo sale de los
+     datos ya guardados; los cuadros iguales a los de "Logros y récords" para que se vean parejos. */
+  (function () {
+    var caja = $("resumen-tarjeta");
+    if (!caja) return;
+    var fLargo = new Intl.DateTimeFormat("es-CL", { timeZone: ZONA, weekday: "long", day: "numeric", month: "long" });
+    function clave(ts) { var o = partes(ts); return o.year + "-" + String(o.month).padStart(2, "0") + "-" + String(o.day).padStart(2, "0"); }
+    var dias = [];
+    M.forEach(function (m) { var k = clave(m.ts); if (dias.indexOf(k) < 0) dias.push(k); });
+    dias.reverse();   // lo más nuevo primero (pedido de Bruno)
+    if (!dias.length) { caja.innerHTML = '<p class="vacio">Todavía no hay mediciones.</p>'; return; }
+    var elegido = dias.indexOf(clave(SALIDA)) >= 0 ? clave(SALIDA) : dias[0];
+    var ultimoDia = dias[0];
+
+    function resumen(k) {
+      var med = M.filter(function (m) { return clave(m.ts) === k; }), r = { med: med.length, huecos: 0 };
+      med.forEach(function (m) {
+        if (m.espectadores == null || m.interes == null) r.huecos++;
+        if (m.espectadores != null && (!r.tw || m.espectadores > r.tw.espectadores)) r.tw = m;
+        if (m.interes != null && (!r.tr || m.interes > r.tr.interes)) r.tr = m;
+      });
+      (D.youtube || []).forEach(function (v) {
+        v.serie.forEach(function (p) {
+          var ts = Date.parse(p.t);
+          if (clave(ts) === k && (!r.yt || p.visitas > r.yt.visitas)) r.yt = { visitas: p.visitas, ts: ts, titulo: v.titulo, url: urlVideo(v.id) };
+        });
+      });
+      r.titulares = (D.noticias || []).filter(function (n) { var ts = Date.parse(n.t); return !isNaN(ts) && clave(ts) === k; }).length;
+      r.reddit = ((D.reddit || {}).publicaciones || []).filter(function (p) { var ts = Date.parse(p.t); return !isNaN(ts) && clave(ts) === k; }).length;
+      return r;
+    }
+    function cuadro(nombre, valor, uni, que, cuando) {
+      return "<li><small>" + nombre + "</small><b>" + valor + '</b><span class="rc-uni">' + uni + "</span>" +
+        (que ? '<p class="rc-que">' + que + "</p>" : "") + (cuando ? '<p class="rc-cuando">' + cuando + "</p>" : "") + "</li>";
+    }
+    function pintar() {
+      $("resumen-dias").innerHTML = dias.map(function (k) {
+        var ts = deSantiago(k + " 12:00");
+        return '<button type="button" class="' + (k === elegido ? "activo" : "") + '" data-dia="' + k + '" aria-pressed="' + (k === elegido) + '">' + dia(ts) + "</button>";
+      }).join("");
+      var r = resumen(elegido), ts = deSantiago(elegido + " 12:00");
+      caja.innerHTML = '<h3 class="rd-titulo">' + fLargo.format(new Date(ts)) + "</h3>" +
+        (elegido === ultimoDia ? '<p class="rd-curso">Día en curso: se completa con cada medición.</p>' : "") +
+        '<ul class="rc-vitrina rd-cuadros">' +
+        (r.tw ? cuadro("Máximo en Twitch", num(r.tw.espectadores), "espectadores a la vez",
+          r.tw.canal ? "Más visto: " + enlace(urlCanal(r.tw.canal.login), limpio(r.tw.canal.nombre)) : "", "a las " + hora(r.tw.ts))
+          : cuadro("Máximo en Twitch", "—", "sin dato ese día")) +
+        (r.yt ? cuadro("Video más visto", compacto(r.yt.visitas), "visitas", enlace(r.yt.url, limpio(r.yt.titulo)), "medido a las " + hora(r.yt.ts))
+          : cuadro("Video más visto", "—", "sin dato ese día")) +
+        (r.tr ? cuadro("Interés en Google Trends", r.tr.interes, "de 100, lo más alto del día", "", "a las " + hora(r.tr.ts))
+          : cuadro("Interés en Google Trends", "—", "sin dato ese día")) +
+        cuadro("Titulares", num(r.titulares), r.titulares === 1 ? "titular publicado ese día" : "titulares publicados ese día") +
+        cuadro("Publicaciones en r/GTA6", num(r.reddit), r.reddit === 1 ? "publicación guardada" : "publicaciones guardadas") +
+        cuadro("Mediciones", num(r.med), r.med === 1 ? "medición guardada" : "mediciones guardadas", "", r.huecos ? r.huecos + " con algún hueco" : "sin huecos") +
+        "</ul>";
+    }
+    $("resumen-dias").addEventListener("click", function (e) { var k = e.target.dataset.dia; if (k) { elegido = k; pintar(); } });
+    pintar();
   })();
 
   /* ---------- GTA frente a lo más visto (tarea 6.3; opción A "dos columnas", elegida por Bruno, 2026-11-13) ----------

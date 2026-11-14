@@ -388,6 +388,12 @@ td a:hover, td a:focus-visible { color: var(--a1); text-decoration-color: var(--
 .rc-vitrina small { display: block; margin-bottom: 4px; font-size: 12px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--tenue); }
 .rc-vitrina > li > b { display: block; margin-top: 6px; font: 700 clamp(26px, 3vw, 34px)/1.1 var(--f-texto); font-variant-numeric: tabular-nums; color: var(--a1); }
 :root[data-tema="ochenta"] .rc-vitrina > li > b { color: var(--a2); text-shadow: 0 0 14px rgba(34, 230, 255, .6); }
+/* Resumen del día (tarea 7.5): usa los cuadros de "Logros y récords" */
+.rd-titulo { margin: 4px 0 0; font: 700 clamp(20px, 2.4vw, 26px)/1.2 var(--f-texto); }
+.rd-titulo::first-letter { text-transform: uppercase; }
+.rd-curso { margin: 4px 0 0; font-size: 13px; font-weight: 600; color: var(--tenue); }
+.rd-cuadros { margin-top: 12px; grid-template-columns: repeat(3, 1fr); }
+@media (max-width: 640px) { .rd-cuadros { grid-template-columns: 1fr 1fr; gap: 10px; } .rd-cuadros > li { padding: 12px 12px; } }
 .rc-nuevo { display: inline-block; padding: 2px 9px; border-radius: 999px; background: var(--a3); color: #1b1440; font: 700 11px var(--f-texto); letter-spacing: .1em; text-transform: uppercase; }
 :root[data-tema="ochenta"] .rc-nuevo { box-shadow: 0 0 12px var(--a3); }
 .rc-uni { font-size: 13px; font-weight: 600; color: var(--tenue); }
@@ -569,6 +575,16 @@ td a:hover, td a:focus-visible { color: var(--a1); text-decoration-color: var(--
 .cuenta-nota span { display: inline-block; padding: 4px 12px; border-radius: var(--radio); background: var(--panel); box-shadow: var(--sombra); }
 :root[data-tema="ochenta"] .cuenta-nota { color: var(--a2); text-shadow: 0 0 10px var(--a2); }
 :root[data-tema="actual"] .cuenta-nota { color: #1b1440; }
+/* Botones de lugar de la cuenta regresiva (tarea 7.6): mismo aspecto que los de la hora del día */
+.lugares { display: inline-grid; grid-template-columns: repeat(3, auto); gap: 2px; padding: 4px; border-radius: 999px; background: rgba(10, 2, 30, .55); border: 1px solid rgba(255,255,255,.35); }
+.lugares button { border: 0; background: none; cursor: pointer; padding: 8px 14px; border-radius: 999px; font: 700 13px var(--f-texto); letter-spacing: .06em; text-transform: uppercase; color: rgba(255,255,255,.75); }
+.lugares button:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
+.lugares button[aria-pressed="true"] { color: #fff; background: rgba(255,255,255,.22); box-shadow: inset 0 0 0 1px rgba(255,255,255,.5); }
+.lugares button.ya::after { content: " ✓"; }
+@media (max-width: 420px) { .lugares button { padding: 8px 10px; font-size: 12px; letter-spacing: .03em; } }
+.cuenta-nota i { font-style: normal; }
+.cuenta-nota .hora-cl { white-space: nowrap; }
+@media (max-width: 640px) { .cuenta-nota .sep { display: none; } .cuenta-nota .hora-cl { display: block; } }
 .lema.ya-salio { animation: aparecer-lema 1.2s cubic-bezier(.16, 1, .3, 1) both; }
 @keyframes aparecer-lema { from { transform: scale(.4); opacity: 0; } 60% { transform: scale(1.15); opacity: 1; } to { transform: scale(1); } }
 /* Fuegos artificiales */
