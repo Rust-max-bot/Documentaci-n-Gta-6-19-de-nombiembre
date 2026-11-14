@@ -1,4 +1,4 @@
-# Tarea 6.1: las 4 preguntas extra a Google Trends, UNA sola vez (decisión de Bruno, 2026-11-13:
+# Tarea 6.1: las 5 preguntas extra a Google Trends, UNA sola vez (decisión de Bruno, 2026-11-13:
 # entre el 20 y el 25 nov, fuera del recolector de cada hora). Solo se lanza a mano, con el
 # botón "Run workflow" de GitHub. Guarda un archivo nuevo en datos/trends_extra/.
 # Para probar sin guardar: "Probar fuentes" con la casilla de Trends extra marcada.
@@ -20,7 +20,7 @@ jobs:
         with:
           python-version: "3.12"
 
-      - name: Hacer las 4 preguntas a Google Trends
+      - name: Hacer las 5 preguntas a Google Trends
         run: python3 recolector/trends_extra.py
 
       - name: Guardar el resultado en el repositorio

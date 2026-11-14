@@ -99,7 +99,8 @@ usarla. Ver el aviso 7, sobre la fecha del lanzamiento.)*
   - **Pregunta 5, pedida por Bruno el 2026-11-14: GTA 6 frente a Avengers: Doomsday, día
     por día** (solo esas dos palabras). En la página se muestra solo esa comparación directa,
     nada más de la película. El estreno de la película es el 18 dic: si se quiere ver, hay
-    que repetir la pregunta después (ver el punto 3 de abajo).
+    que repetir la pregunta después (ver el punto 3 de abajo). Probada sin guardar desde GitHub
+    el 2026-11-14 (ejecución 43616477908): 93 días, sin bloqueo, junto con las otras 4.
   - Falta: (1) ejecutarlo de verdad entre el 20 y el 25 nov, cuando Bruno diga; (2) mostrarlo
     en la página, con opciones y capturas; (3) idea: repetir la pregunta en enero, para que
     salga el estreno de Doomsday (sin decidir). Queda en `[ ]`.
