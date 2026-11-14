@@ -43,7 +43,7 @@ ya estaba acordado y faltaba. **Es la lista ordenada de qué hacer y en qué ord
   tiempo), 7.5 (resumen del día), 7.6 (hora cero en cada lugar; se prueba con
   `?probar-fecha=2026-11-18T12:30Z`), la línea de tiempo con eventos nuevos, 7.7 (álbum de
   momentos), 7.8 (resumen como imagen) y 7.9 (comparar con otros lanzamientos). Quedan 7.1,
-  7.4, 7.10 y 7.11.
+  7.4. Hechas también 7.10 (arranque frente a los más grandes) y 7.11 (Próximamente).
 - *Idea 4 (instalarla como app en el celular): descartada por Bruno el 2026-11-14 ("prefiero
   que simplemente sea una página web").*
 
@@ -121,17 +121,19 @@ la página, así que cada una se presenta con opciones y capturas antes de aplic
       Bruno lo deja para más adelante (2026-11-14) y pidió que se le recuerde: hay un
       recordatorio programado para el 17 nov, 19:00 de Chile.
 
-- [ ] **7.10 GTA 6 frente a los juegos más grandes: el arranque** (pedido de Bruno,
+- [x] **7.10 GTA 6 frente a los juegos más grandes: el arranque** (pedido de Bruno,
       2026-11-14). Ventas de los primeros días o semanas de los juegos más esperados y
       vendidos, cada una con su fuente y con cuántos días son, y un hueco de GTA 6 "esperando
       cifra oficial". Copias y dólares van separados. Incluye Ocarina of Time (5,2 M en 4
       días, "el único que se atrevió a salir el mismo mes que GTA 6"). Nada de ventas totales
-      de toda la vida (eso es la Fase 8). Diseño con 3 opciones y capturas.
-- [ ] **7.11 "Próximamente"** (idea de Bruno, 2026-11-14). Una lista de lo que la página
+      de toda la vida (eso es la Fase 8). **Hecha el 2026-11-14** con 13 juegos y la opción B de
+      Bruno (barras por plazo). Falta solo, cuando Take-Two la publique, escribir la cifra de GTA 6
+      en `gta6` de `web/lanzamientos.js`.
+- [x] **7.11 "Próximamente"** (idea de Bruno, 2026-11-14). Una lista de lo que la página
       mostrará más adelante, donde cada cosa se llena sola cuando llega su momento: ventas
       oficiales de GTA 6, análisis del primer mes (4.3), rebobinar (7.1) y "GTA 6 en PC: sin
-      fecha oficial". Lectura de Claude, a confirmar con Bruno junto con las capturas.
-      Diseño con 3 opciones y capturas.
+      fecha oficial". **Hecha el 2026-11-14** con la opción C de Bruno (camino hacia adelante).
+      Al terminar la 4.3, la 7.1 o la Fase 8, marcar su punto como listo en `web/app.js`.
 
 ## Fase 8 — Segundo lanzamiento: GTA 6 en PC (dormida)
 

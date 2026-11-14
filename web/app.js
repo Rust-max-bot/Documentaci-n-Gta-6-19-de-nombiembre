@@ -624,8 +624,37 @@
       '<ul class="ln-barras">' + filas.map(function (f) {
         return '<li class="' + (f.propio ? "propio" : "") + '"><span class="ln-juego">' + limpio(f.juego) + "<small>" + limpio(f.cuando) + (f.propio ? "" : " · " + fuente(f)) + "</small></span>" +
           '<span class="ln-barra"><i style="width:' + Math.max(1.5, f.valor / tope * 100).toFixed(1) + '%"></i></span><b>' + valorTw(f) + "</b></li>";
-      }).join("") + "</ul>" +
+      }).join("") + "</ul>" + ventasArranque() +
       '<h3>Otros récords de la saga</h3><ul class="rc-vitrina">' + hechos + "</ul>";
+
+    /* Ventas del arranque (tarea 7.10, pedida por Bruno el 2026-11-14): copias en los primeros
+       días o semanas, cada una con su fuente y su plazo. GTA VI espera la cifra oficial (L.gta6).
+       Diseño B de Bruno (2026-11-14): barras en 3 grupos por plazo, para comparar solo juegos con
+       el mismo plazo; todas en la misma escala. */
+    function ventasArranque() {
+      var V = (L.ventas || []).slice();
+      if (!V.length) return "";
+      var g6 = L.gta6 ? Object.assign({ juego: "GTA VI", propio: true }, L.gta6) : null;
+      var maxV = Math.max.apply(null, V.concat(g6 ? [g6] : []).map(function (v) { return v.copias; }));
+      var millones = function (v) { return (v.mas ? "más de " : "") + compacto(v.copias).replace(" M", " millones"); };
+      var detalle = function (v) {
+        return limpio(v.anio) + (v.nota ? " · " + limpio(v.nota) : "") + (v.tiendas ? " · enviadas a tiendas" : "") + " · " + fuente(v);
+      };
+      var porPlazo = function (a, b) { return a.dias - b.dias || b.copias - a.copias; };
+      var fila = function (v) {
+        return '<li class="' + (v.propio ? "propio" : "") + '"><span class="ln-juego">' + limpio(v.juego) + "<small>" + (v.propio ? fuente(v) : detalle(v)) + "</small></span>" +
+          '<span class="ln-barra"><i style="width:' + Math.max(1.5, v.copias / maxV * 100).toFixed(1) + '%"></i></span>' +
+          "<b>" + millones(v) + '<small class="ln-plazo">' + limpio(v.plazo) + "</small></b></li>";
+      };
+      var espera = '<li class="propio ln-espera"><span class="ln-juego">GTA VI<small>Take-Two todavía no publica cuántas copias vendió.</small></span>' +
+        '<span class="ln-barra"></span><b>esperando la cifra oficial</b></li>';
+      var grupos = [["El primer día", 0, 1], ["Los primeros 3 a 5 días", 2, 5], ["Las primeras 1 a 3 semanas", 6, 99]];
+      return "<h3>Copias vendidas en los primeros días</h3><p class=\"ln-sub\">Solo el arranque, no las ventas de toda la vida. Cada juego dice en cuántos días las vendió: compara los que tienen el mismo plazo.</p>" +
+        '<ul class="ln-barras ln-ventas">' + (g6 ? fila(g6) : espera) + "</ul>" + grupos.map(function (gr) {
+          var lista = V.filter(function (v) { return v.dias >= gr[1] && v.dias <= gr[2]; }).sort(porPlazo);
+          return lista.length ? '<h4 class="ln-grupo">' + gr[0] + '</h4><ul class="ln-barras ln-ventas">' + lista.map(fila).join("") + "</ul>" : "";
+        }).join("");
+    }
   })();
 
   /* ---------- Álbum de momentos (tarea 7.7, idea 5) ----------
@@ -655,6 +684,32 @@
       grande.showModal();
     });
     grande.addEventListener("click", function (e) { if (e.target === grande || e.target.closest(".album-cerrar")) grande.close(); });
+  })();
+
+  /* ---------- Próximamente (tarea 7.11, idea de Bruno, 2026-11-14) ----------
+     Lo que la página mostrará más adelante. "listo" se calcula solo cuando hay un dato que lo
+     diga (la cifra oficial en lanzamientos.js, los datos de la 6.1 en datos.js); lo demás se
+     marca a mano al terminar cada tarea. Diseño C de Bruno (2026-11-14): un camino hacia adelante
+     que empieza el 19 nov, con un punto por cada cosa. */
+  (function () {
+    var caja = $("proximamente-lista"); if (!caja) return;
+    var L = window.LANZAMIENTOS || {};
+    var P = [
+      { titulo: "Ventas oficiales de GTA 6", cuando: "Cuando Take-Two publique la cifra", listo: !!L.gta6, ir: "lanzamientos",
+        que: "Cuántas copias vendió en sus primeros días, al lado de los otros juegos grandes." },
+      { titulo: "Más de Google Trends", cuando: "Una vez, entre el 20 y el 25 de noviembre", listo: !!D.trendsExtra,
+        que: "En qué países se busca más GTA 6, qué más busca la gente y GTA 6 frente a Avengers: Doomsday, día por día." },
+      { titulo: "Rebobinar el lanzamiento", cuando: "Después del 19 de noviembre", listo: false,
+        que: "Una barra para mover la página hora por hora y revivir el día del lanzamiento." },
+      { titulo: "Análisis del primer mes", cuando: "Cuando haya varias semanas de datos", listo: false,
+        que: "Cuánto duró el interés y cómo cambió antes y después del lanzamiento." },
+      { titulo: "GTA 6 en PC", cuando: "Sin fecha oficial", listo: false,
+        que: "Un segundo lanzamiento: cuenta regresiva, jugadores en Steam y consolas frente a PC." }
+    ];
+    var estado = function (x) { return x.listo ? (x.ir ? '<a href="#' + x.ir + '">Ya está: ver</a>' : "Ya está") : limpio(x.cuando); };
+    caja.innerHTML = '<ol class="px-c"><li class="px-hito"><span class="px-punto"></span><b>19 nov · Lanzamiento en consolas</b><p>PlayStation 5 y Xbox Series.</p></li>' + P.map(function (x) {
+      return '<li class="' + (x.listo ? "listo" : "") + '"><span class="px-punto"></span><small>' + estado(x) + "</small><b>" + limpio(x.titulo) + "</b><p>" + limpio(x.que) + "</p></li>";
+    }).join("") + "</ol>";
   })();
 
   /* ---------- Pie ---------- */
@@ -714,7 +769,7 @@
     var caja = $("menu"); if (!caja) return;
     var S = [["records", "Récords"], ["seccion-linea", "Línea de tiempo"], ["resumen", "Resumen"], ["seccion-twitch", "Twitch"],
       ["seccion-trends", "Trends"], ["seccion-servidores", "Servidores"], ["seccion-videos", "Videos"], ["comparacion", "Comparación"], ["lanzamientos", "Otros lanzamientos"],
-      ["seccion-noticias", "Titulares"], ["seccion-reddit", "Reddit"], ["album", "Álbum"], ["capsula", "Cápsula"]].filter(function (x) { return $(x[0]); });
+      ["seccion-noticias", "Titulares"], ["seccion-reddit", "Reddit"], ["album", "Álbum"], ["capsula", "Cápsula"], ["proximamente", "Próximamente"]].filter(function (x) { return $(x[0]); });
     caja.innerHTML = '<button type="button" class="menu-boton" aria-expanded="false" aria-controls="menu-lista"><span aria-hidden="true">☰</span> Secciones</button>' +
       '<div class="menu-lista" id="menu-lista" hidden>' +
       S.map(function (x) { return '<a href="#' + x[0] + '" data-ir="' + x[0] + '">' + x[1] + "</a>"; }).join("") +

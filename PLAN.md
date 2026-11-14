@@ -251,6 +251,23 @@ Resultado final: **una página web** con:
     "Se abre después del lanzamiento" hasta el 19 nov.
   - Se descartaron A (dos tarjetas simples) y C (medalla del 19 nov entre los dos textos).
 
+- **Copias vendidas en los primeros días (tarea 7.10, opción B de Bruno, 2026-11-14): barras por plazo.**
+  - Dentro de "GTA 6 frente a otros lanzamientos", entre Twitch y "Otros récords de la saga".
+  - Arriba, GTA VI con una barra punteada y "esperando la cifra oficial" hasta que se escriba
+    en `web/lanzamientos.js` (`gta6`).
+  - Debajo, 3 grupos: el primer día, los primeros 3 a 5 días y las primeras 1 a 3 semanas.
+    Todas las barras en la misma escala. Cada juego dice su año, su plazo y su fuente; Skyrim y
+    RDR2 dicen "enviadas a tiendas".
+  - Se descartaron A (una sola lista de más a menos copias) y C (fichas).
+- **Próximamente (tarea 7.11, opción C de Bruno, 2026-11-14): camino hacia adelante.**
+  - Sección al final, después de la cápsula, también en el menú "Secciones".
+  - Una línea punteada que empieza en "19 nov · Lanzamiento en consolas", con un punto por cosa:
+    ventas oficiales, más de Google Trends (con Doomsday), rebobinar, análisis del primer mes
+    y GTA 6 en PC. Cada punto dice cuándo llega; al estar listo, se rellena y dice "Ya está".
+  - Las ventas se marcan solas al escribir `gta6`, y Trends cuando `datos.js` traiga
+    `trendsExtra`; las demás se marcan a mano en `web/app.js` al terminar su tarea.
+  - Se descartaron A (lista con casillas) y B (carteles con sello).
+
 ## 3. Qué se descartó y por qué
 
 - **Tabla de jugadores en vivo**: descartada. GTA 6 sale en PS5 y Xbox Series,
