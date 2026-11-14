@@ -132,5 +132,7 @@ La lista completa y su orden están en `PLAN_DE_TRABAJO.md`. Resumen (2026-11-14
      proponerlo hasta que él lo retome. Quitar el correo de esos commits exige reescribir
      `main` con `--force`: solo si Bruno lo autoriza;
    - borrar en GitHub las ramas ya unidas: `claude/project-thread-en9qib`,
-     `claude/project-thread-odgsms` y, cuando se una su último PR, `claude/project-thread-yceo71`.
+     `claude/project-thread-odgsms`, `revision/resumen-imagen` (capturas de opciones ya
+     elegidas; la nube no puede borrar ramas) y, cuando se una su último PR,
+     `claude/project-thread-yceo71`.
 8. **Opcional:** el hook de Impeccable (`npx impeccable install` en el PC).
