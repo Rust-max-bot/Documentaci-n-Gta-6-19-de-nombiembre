@@ -1,0 +1,76 @@
+# Publica la página (web/) en GitHub Pages para verla desde el celular, sin el PC
+# (pedido de Bruno, 2026-11-14). Prepara web/datos.js con recolector/generar_web.py (no va en
+# git) y sube la carpeta web/ tal cual: la página no tiene paso de compilación.
+#
+# Se lanza:
+# - al terminar cada medición ("Recolectar datos"), salga bien o con algún hueco, porque la
+#   medición se guarda igual. El push que hace esa ejecución no lanza otros workflows (GitHub
+#   no lo permite con su clave automática), por eso se usa workflow_run;
+# - cuando cambia la página o el programa que prepara sus datos en main (por ejemplo, al unir
+#   un pull request);
+# - a mano, desde la pestaña Actions.
+#
+# Antes de la primera vez hay que activar Pages una sola vez: Settings → Pages → Build and
+# deployment → Source: GitHub Actions.
+#
+# Acciones sin Node.js 20 (regla del proyecto; revisado en su action.yml el 2026-11-14):
+# checkout@v5 (node24), upload-pages-artifact@v5 (compuesta; usa upload-artifact v7, node24),
+# deploy-pages@v5 (node24).
+name: Publicar página
+
+on:
+  workflow_run:
+    workflows: ["Recolectar datos"]
+    types: [completed]
+    branches: [main]
+  push:
+    branches: [main]
+    paths:
+      - "web/**"
+      - "recolector/generar_web.py"
+      - ".github/workflows/publicar-pagina.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Si llegan dos seguidas, basta con publicar la más nueva.
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  preparar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v5   # v5 usa Node.js 24
+        with:
+          ref: main                 # siempre lo último de main, con la medición recién guardada
+
+      - name: Preparar los datos de la página
+        run: python3 recolector/generar_web.py
+
+      - name: Juntar los archivos de la página
+        run: |
+          mkdir -p _sitio
+          cp -r web/. _sitio/
+          test -s _sitio/datos.js   # si no hay datos, mejor no publicar que publicar los de ejemplo
+
+      - uses: actions/upload-pages-artifact@v5   # compuesta; usa upload-artifact v7 (Node.js 24)
+        with:
+          path: _sitio
+
+  publicar:
+    needs: preparar
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    environment:
+      name: github-pages
+      url: ${{ steps.publicar.outputs.page_url }}
+    steps:
+      - name: Publicar en GitHub Pages
+        id: publicar
+        uses: actions/deploy-pages@v5   # v5 usa Node.js 24

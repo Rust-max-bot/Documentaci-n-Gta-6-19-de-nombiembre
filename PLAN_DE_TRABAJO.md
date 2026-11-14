@@ -53,6 +53,15 @@ ya estaba acordado y faltaba. **Es la lista ordenada de qué hacer y en qué ord
       384 px en los dos estilos, sin errores ni desborde, y con 40 días simulados (las barras se
       deslizan y empiezan en el día más nuevo).
 
+- [x] **2.7 README al día (pedido de Bruno, 2026-11-14).** Qué es el proyecto, qué tiene la
+      página, qué se mide, cómo funciona y cómo verla.
+- [ ] **2.8 Página publicada en internet, para verla desde el celular (pedido de Bruno,
+      2026-11-14).** Workflow `publicar-pagina.yml`: después de cada medición y al cambiar la
+      página prepara `web/datos.js` y publica `web/` en GitHub Pages. Probado el sitio armado
+      con un servidor local (datos reales, sin errores ni desborde a 384 px). **Falta:** que
+      Bruno active Pages (Settings → Pages → Source: GitHub Actions), lance la primera
+      publicación y se compruebe la página en la dirección pública.
+
 ## Fase 4 — Mejoras largas (lo que queda)
 
 - [ ] **4.3 Análisis de datos (A3):** estadísticas e "datos interesantes" (popularidad,
