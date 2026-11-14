@@ -18,9 +18,9 @@
     "semantic_hash": ""
   },
   "web/app.js": {
-    "mtime": 1794674951.5848753,
-    "seen": 1794675072.8718402,
-    "ast_hash": "ea50777f0341fb1cf839429cf3ff52b1",
+    "mtime": 1794675438.15543,
+    "seen": 1794675475.4457276,
+    "ast_hash": "7df06e09243b4aa83fdb9e93d70aacfe",
     "semantic_hash": ""
   },
   "web/datos-ejemplo.js": {
@@ -84,9 +84,9 @@
     "semantic_hash": ""
   },
   "recolector/probar_fuentes.py": {
-    "mtime": 1794672288.2180436,
-    "seen": 1794675072.871834,
-    "ast_hash": "fc07e37f3543e8c5ce98f4544ee3f255",
+    "mtime": 1794675464.781776,
+    "seen": 1794675475.4457173,
+    "ast_hash": "115e323af9a0daddc541cf84ef78649a",
     "semantic_hash": ""
   },
   ".github/workflows/recolectar.yml": {

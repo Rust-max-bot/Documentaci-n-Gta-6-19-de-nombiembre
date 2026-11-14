@@ -155,7 +155,8 @@ def _():
 @prueba("Estado de Rockstar")
 def _():
     cod, txt = pedir("https://support.rockstargames.com/servicestatus", espera=20)
-    print("Codigo", cod, "| tamano:", len(txt))
+    # El título de la página dice el estado general (por ejemplo "All services operational").
+    print("Codigo", cod, "| tamano:", len(txt), "| titulo:", re.findall(r"<title[^>]*>(.*?)</title>", txt, re.S)[:1])
     return cod == 200
 
 

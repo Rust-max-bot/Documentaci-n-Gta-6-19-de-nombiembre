@@ -264,7 +264,7 @@ h2 { margin: 0 0 6px; font-family: var(--f-sub); font-weight: 700; font-size: cl
 
 /* Gráficos */
 .grafico { position: relative; }
-.grafico svg { display: block; width: 100%; height: auto; overflow: visible; }
+.grafico svg { display: block; width: 100%; height: auto; overflow: visible; touch-action: pan-y; }  /* deslizar de lado recorre el gráfico */
 .grafico .eje text { fill: var(--tenue); font: 600 12px var(--f-texto); font-variant-numeric: tabular-nums; }
 .grafico .guia { stroke: var(--tenue); stroke-opacity: .22; }
 .grafico .dia { stroke: var(--tenue); stroke-opacity: .5; stroke-dasharray: 3 5; }

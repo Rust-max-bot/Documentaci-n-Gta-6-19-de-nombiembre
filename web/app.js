@@ -374,7 +374,13 @@
         globo.style.left = Math.max(8, gx) + "px"; globo.style.top = (e.clientY - 54) + "px";
       }
       function salir() { globo.hidden = true; cursor.setAttribute("visibility", "hidden"); punto.setAttribute("visibility", "hidden"); }
-      svg.addEventListener("pointermove", mover); svg.addEventListener("pointerdown", mover); svg.addEventListener("pointerleave", salir);
+      /* Con el dedo (arreglo pedido por Bruno, 2026-11-14): deslizar de lado recorre el gráfico y
+         el globo se queda al soltar; deslizar hacia arriba o abajo sigue moviendo la página
+         (touch-action: pan-y en estilos.css). Se esconde al tocar fuera o al mover la página. */
+      svg.addEventListener("pointermove", mover); svg.addEventListener("pointerdown", mover);
+      svg.addEventListener("pointerleave", function (e) { if (e.pointerType !== "touch") salir(); });
+      document.addEventListener("pointerdown", function (e) { if (e.pointerType === "touch" && !svg.contains(e.target)) salir(); }, { passive: true });
+      window.addEventListener("scroll", function () { if (!globo.hidden && svg.querySelector(".cursor[visibility=visible]")) salir(); }, { passive: true });
     }
     dibujar();
     var espera, anchoAnterior = caja.clientWidth;

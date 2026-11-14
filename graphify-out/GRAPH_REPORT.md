@@ -1,17 +1,17 @@
 # Graph Report - Documentaci-n-Gta-6-19-de-nombiembre  (2026-11-14)
 
 ## Corpus Check
-- 42 files · ~60,589 words
+- 42 files · ~60,693 words
 - Verdict: corpus is large enough that graph structure adds value.
 - Unclassified: 8 file(s) not represented in the graph (top: (none) 3, .jsonl 3, .bat 1)
 
 ## Summary
 - 547 nodes · 918 edges · 37 communities (23 shown, 14 thin omitted)
-- Extraction: 89% EXTRACTED · 11% INFERRED · 0% AMBIGUOUS · INFERRED: 100 edges (avg confidence: 0.87)
+- Extraction: 89% EXTRACTED · 11% INFERRED · 0% AMBIGUOUS · INFERRED: 99 edges (avg confidence: 0.87)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `c39525b7`
+- Built from commit: `5b58da24`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
