@@ -100,6 +100,27 @@ Resultado final: **una página web** con:
   - De día, los fuegos y los reflectores usan colores fuertes para que se vean sobre el cielo claro.
   - Para verla antes: agregar `?probar-hora-cero` a la dirección (la cuenta empieza 5 s antes de 0).
   - Se descartó B (destello y vuelta de las cajas).
+- **Hora cero en cada lugar (tarea 7.6, 2026-11-14). Diseño elegido por Claude: Bruno pidió
+  hacer la tanda "sin preguntarme"; él la revisa en el PR antes de unirla.**
+  - Tres botones bajo el lema, iguales a los de la hora del día: "Nueva Zelanda", "Chile" y
+    "Miami". La cuenta grande cuenta hacia la medianoche del lugar elegido; debajo dice cuál y
+    a qué hora de Chile es (NZ: 18 nov 08:00; Miami: 19 nov 02:00).
+  - Empieza en Chile. El lugar elegido se recuerda en ese navegador (si se puede guardar).
+  - Al pasar la medianoche de un lugar, su botón lleva un ✓ y la cuenta pasa a "desde que
+    salió en …". La fiesta (fuegos y reflectores) sigue siendo solo la de Chile.
+  - Para revisarlo antes: `?probar-fecha=2026-11-18T12:30Z` hace como si fuera esa hora (UTC).
+- **Línea de tiempo con más eventos automáticos (Bruno, 2026-11-14: "no ha registrado algo
+  nuevo").** Antes solo tenía el máximo de Twitch, el de Trends y las caídas de servidores, y
+  `web/eventos.js` (a mano) está vacío. Ahora suma, sacado de los datos: la hora cero de cada
+  lugar (cuando ya pasó), cada vez que Twitch pasa una cifra redonda de espectadores (2.500,
+  5.000, 10.000, 25.000…), cada cambio de video más visto en YouTube y cada decena de millones
+  de visitas que pasa un tráiler oficial.
+- **Resumen del día (tarea 7.5, 2026-11-14). Diseño elegido por Claude (misma tanda).**
+  - Sección después de la línea de tiempo, con botones de día (lo más nuevo primero, como la
+    tabla de Twitch) y una tarjeta con 6 cuadros, iguales a los de "Logros y récords": máximo
+    en Twitch (con el canal más visto), video más visto (global), interés máximo en Trends,
+    titulares publicados, publicaciones de r/GTA6 guardadas y mediciones (con huecos).
+  - El día del lanzamiento sale elegido al abrir, si ya hay datos de ese día.
 - **Videos de YouTube en español (tarea 6.4, Bruno, 2026-11-13): el recolector ahora, la página después.**
   - Segunda búsqueda de "GTA 6" con idioma preferido español (fuente `youtube_es`), además
     de la global, que sigue igual. En el orden de **relevancia** de YouTube, no por visitas:

@@ -22,7 +22,7 @@ ya estaba acordado y faltaba. **Es la lista ordenada de qué hacer y en qué ord
 - **19 de noviembre de 2026, 00:00 de Santiago:** lanzamiento.
 - **Antes del 19 nov** (después ya no sirve):
   - 7.4, Cápsula del tiempo: Bruno escribe lo que espera del juego.
-  - 7.6, hora cero en Nueva Zelanda: antes del **18 nov, 08:00 de Chile**.
+  - 7.6, hora cero en Nueva Zelanda: antes del **18 nov, 08:00 de Chile** (hecha el 14 nov).
   - (Ya hechas: 7.2 Hora cero, en `main` por el PR #9; y el recolector ya guarda lo de la
     6.3 desde el 13 nov.)
 
@@ -36,7 +36,8 @@ ya estaba acordado y faltaba. **Es la lista ordenada de qué hacer y en qué ord
 - **Fase 3 — Mejoras medianas:** hecha, 3.1 a 3.3 (paleta B de 2026, Reddit por RSS,
   torres de Miami).
 - **Fase 4:** hechas 4.1 y 4.2 (día, atardecer y noche según la hora de Miami). Queda la 4.3.
-- **Fase 7:** hecha la 7.2 (hora cero; se prueba con `?probar-hora-cero`).
+- **Fase 7:** hecha la 7.2 (hora cero; se prueba con `?probar-hora-cero`; y la cuenta de cada
+  lugar, con `?probar-fecha=2026-11-18T12:30Z`).
 
 ## Fase 2 — Mejoras rápidas (lo que queda)
 
@@ -169,25 +170,24 @@ la página, así que cada una se presenta con opciones y capturas antes de aplic
       no inventa ese contenido. La página los muestra uno al lado del otro.
       **Página lista el 2026-11-13** (opción B, postales de Miami; ver `PLAN.md`). **Falta el
       texto de Bruno** en `web/capsula.js`, antes del 19 nov; queda en `[ ]` hasta entonces.
-- [ ] **7.6 Hora cero en Nueva Zelanda y Miami (idea de Bruno, 2026-11-13).** Rockstar
-      confirmó que el juego se abre a medianoche del 19 nov **en la hora de cada país**
-      ([Push Square](https://www.pushsquare.com/guides/gta-6-release-times-and-preload-when-can-you-start-playing),
-      actualizado el 12 nov 2026). Que Nueva Zelanda sea la primera es una deducción por la zona
-      horaria, no un anuncio. Horas, calculadas a mano con los husos de noviembre:
-  - Nueva Zelanda (UTC+13): 18 nov, 11:00 UTC = **18 nov, 08:00 de Chile**.
-  - Chile (UTC-3): 19 nov, 03:00 UTC = 19 nov, 00:00 (la hora cero que ya tiene la página).
-  - Miami (UTC-5): 19 nov, 05:00 UTC = **19 nov, 02:00 de Chile**.
-  - Se puede hacer: es solo código de la página, con las mismas horas para todos (no depende
-    de ninguna fuente). El recolector ya mide cada 30 minutos desde el 17 nov, así que la
-    salida en Nueva Zelanda queda medida.
-  - Propuesta: una cuenta regresiva pequeña por cada lugar debajo de la principal, que se
-    marca como "¡Ya salió!" al llegar; y un evento en la línea de tiempo. Cambia cómo se ve:
-    opciones con capturas antes.
-  - **Fecha límite: antes del 18 nov, 08:00 de Chile.** Después ya no sirve la cuenta regresiva
-    de Nueva Zelanda.
-- [ ] **7.5 Resumen del día.** Una tarjeta automática por día con lo más importante: máximo de
+- [x] **7.6 Hora cero en Nueva Zelanda y Miami (idea de Bruno, 2026-11-13).** **En la página
+      desde el 2026-11-14** (diseño de Claude, porque Bruno pidió la tanda "sin preguntarme";
+      ver `PLAN.md`): botones "Nueva Zelanda", "Chile" y "Miami" sobre la cuenta regresiva, ✓ en
+      los lugares donde ya salió y un evento en la línea de tiempo por cada uno. Probada a 1280 y
+      384 px en los dos estilos, antes y después de la hora de Nueva Zelanda, sin errores ni
+      desborde. Horas: Nueva Zelanda 18 nov 08:00 de Chile (Rockstar confirmó medianoche de cada
+      país, [Push Square](https://www.pushsquare.com/guides/gta-6-release-times-and-preload-when-can-you-start-playing),
+      12 nov 2026; que sea la primera es una deducción por el huso), Chile 19 nov 00:00 y Miami
+      19 nov 02:00.
+- [x] **7.5 Resumen del día.** Una tarjeta automática por día con lo más importante: máximo de
       espectadores, video más visto, interés en Trends, cantidad de titulares y de
-      publicaciones. Sale de los datos ya guardados. Sin fecha límite.
+      publicaciones. Sale de los datos ya guardados. **En la página desde el 2026-11-14**
+      (diseño de Claude, misma tanda; ver `PLAN.md`). Probada a 1280 y 384 px en los dos
+      estilos, sin errores ni desborde.
+- [x] **Línea de tiempo con eventos nuevos (pedido de Bruno, 2026-11-14).** Ahora registra sola
+      la hora cero de cada lugar, las cifras redondas de Twitch, los cambios de video más visto
+      y las decenas de millones de los tráilers (ver `PLAN.md`). Los eventos a mano siguen en
+      `web/eventos.js` (vacío por ahora).
 
 ## Sin definir
 
