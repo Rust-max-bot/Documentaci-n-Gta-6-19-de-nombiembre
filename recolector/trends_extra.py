@@ -5,7 +5,7 @@ recolector de cada hora, para que un bloqueo de Google (429) no ponga en riesgo 
 normal de "GTA 6", sobre todo el 19. Antes del 26 nov, porque Trends solo da el detalle
 hora por hora de los últimos 7 días.
 
-Hace 4 preguntas a Trends, con una pausa entre una y otra:
+Hace 5 preguntas a Trends, con una pausa entre una y otra:
   1. paises      en qué países se busca más "GTA 6" (últimos 7 días);
   2. relacionadas qué más busca la gente junto con "GTA 6": las más buscadas y las que
                   están "en aumento" (últimos 7 días);
@@ -13,6 +13,8 @@ Hace 4 preguntas a Trends, con una pausa entre una y otra:
                   (últimos 7 días);
   4. historica   GTA V frente a GTA 6, mes a mes, desde 2013 (el lanzamiento de GTA V fue en
                   septiembre de 2013).
+  5. pelicula    GTA 6 frente a Avengers: Doomsday, día por día, últimos 90 días (pedido de
+                  Bruno, 2026-11-14: en la página va solo esta comparación directa).
 
 Guarda UN archivo nuevo: datos/trends_extra/AAAA-MM-DDTHHMMZ.json (hora UTC de la ejecución).
 Nunca sobrescribe uno que ya exista. Si algo no cuadra, se detiene sin escribir nada.
@@ -51,6 +53,9 @@ COMPARAR = ("GTA 6", "GTA 5", "Minecraft", "Fortnite", "Marvel Rivals")
 # repetir esta pregunta después, por ejemplo en enero).
 HISTORICA = ("GTA 6", "GTA 5", "Ocarina of Time", "Avengers Doomsday")
 HISTORICA_DESDE = "2013-01-01"
+# Día por día (Trends da un punto por día con "today 3-m"): solo el juego y la película.
+PELICULA = ("GTA 6", "Avengers Doomsday")
+RANGO_PELICULA = "today 3-m"
 RANGO_SEMANA = "now 7-d"
 PAUSA = 20                       # segundos entre una pregunta y la siguiente
 REINTENTOS = (60, 180)           # si Google responde 429, se espera esto y se reintenta
@@ -122,7 +127,7 @@ def relacionadas(d):
 
 
 def preguntar():
-    """Hace las 4 preguntas. Devuelve el diccionario que se guarda."""
+    """Hace las 5 preguntas. Devuelve el diccionario que se guarda."""
     t = Trends()
     r = {}
     print("1-2. Países y búsquedas relacionadas de", PALABRA)
@@ -145,6 +150,12 @@ def preguntar():
     time.sleep(PAUSA)
     r["historica"] = {"palabras": list(HISTORICA), "rango": rango,
                       "puntos": serie(t.datos("multiline", widget(ws, "TIMESERIES")), HISTORICA)}
+    time.sleep(PAUSA)
+    print("5. Día por día:", ", ".join(PELICULA), "|", RANGO_PELICULA)
+    ws = t.widgets(PELICULA, RANGO_PELICULA)
+    time.sleep(PAUSA)
+    r["pelicula"] = {"palabras": list(PELICULA), "rango": RANGO_PELICULA,
+                     "puntos": serie(t.datos("multiline", widget(ws, "TIMESERIES")), PELICULA)}
     r["consultas"] = t.consultas
     return r
 
@@ -173,6 +184,7 @@ def comprobar(r):
            "relacionadas: búsqueda vacía")
     comprobar_serie(r["comparacion"], "comparación", 100)    # 7 días por hora: unas 168
     comprobar_serie(r["historica"], "histórica", 100)        # desde 2013 por mes: más de 150
+    comprobar_serie(r["pelicula"], "película", 60)           # 90 días, uno por día
     meses = r["historica"]["puntos"]
     exigir(meses[0]["t"] < "2013-02-01T00:00:00Z", "histórica: no empieza en enero de 2013")
     exigir(len(json.dumps(r, ensure_ascii=False)) <= TAMANO_MAX, "el resultado pesa demasiado")
@@ -212,7 +224,7 @@ def main():
     rel = r["relacionadas"]
     print("Más buscadas:", ", ".join(k["busqueda"] for k in rel["mas_buscadas"][:10]))
     print("En aumento:", ", ".join(f"{k['busqueda']} ({k['valor']})" for k in rel["en_aumento"][:10]))
-    for nombre in ("comparacion", "historica"):
+    for nombre in ("comparacion", "historica", "pelicula"):
         s = r[nombre]
         maximos = {p: max(x["interes"][p] for x in s["puntos"]) for p in s["palabras"]}
         print(f"{nombre}: {len(s['puntos'])} puntos, de {s['puntos'][0]['t']} a {s['puntos'][-1]['t']}; máximos {maximos}")

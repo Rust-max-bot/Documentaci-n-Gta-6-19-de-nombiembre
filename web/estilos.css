@@ -264,7 +264,7 @@ h2 { margin: 0 0 6px; font-family: var(--f-sub); font-weight: 700; font-size: cl
 
 /* Gráficos */
 .grafico { position: relative; }
-.grafico svg { display: block; width: 100%; height: auto; overflow: visible; }
+.grafico svg { display: block; width: 100%; height: auto; overflow: visible; touch-action: pan-y; }  /* deslizar de lado recorre el gráfico */
 .grafico .eje text { fill: var(--tenue); font: 600 12px var(--f-texto); font-variant-numeric: tabular-nums; }
 .grafico .guia { stroke: var(--tenue); stroke-opacity: .22; }
 .grafico .dia { stroke: var(--tenue); stroke-opacity: .5; stroke-dasharray: 3 5; }
@@ -680,3 +680,25 @@ section[id], .bloque { scroll-margin-top: 16px; }
   .ln-barra { grid-column: 1 / -1; grid-row: 2; }
 }
 #lanzamientos a { color: inherit; text-decoration: underline; text-underline-offset: 2px; }
+/* Ventas del arranque (tarea 7.10) */
+.ln-ventas b { min-width: 12ch; }
+.ln-plazo { display: block; font-weight: 500; font-size: 12px; color: var(--tenue); }
+.ln-grupo { margin: 16px 0 8px; font: 700 13px var(--f-texto); letter-spacing: .12em; text-transform: uppercase; color: var(--tenue); }
+.ln-espera .ln-barra { background: none; border: 2px dashed color-mix(in srgb, var(--a1) 70%, transparent); }
+.ln-espera b { color: var(--a1); font-size: 14px; }
+
+
+/* ---------- Próximamente (tarea 7.11) ---------- */
+#proximamente-lista { margin-top: 16px; }
+#proximamente a { color: var(--a1); font-weight: 700; }
+#proximamente ol { list-style: none; margin: 0; padding: 0; }
+#proximamente p { margin: 4px 0 0; color: var(--tenue); font-size: 14px; line-height: 1.45; }
+/* Camino hacia adelante (diseño C de Bruno) */
+.px-c { position: relative; padding-left: 30px !important; }
+.px-c::before { content: ""; position: absolute; left: 9px; top: 8px; bottom: 8px; border-left: 3px dashed color-mix(in srgb, var(--a1) 55%, transparent); }
+.px-c li { position: relative; padding: 0 0 20px; }
+.px-punto { position: absolute; left: -28px; top: 4px; width: 16px; height: 16px; border-radius: 50%; border: 3px solid var(--a1); background: var(--panel); }
+.px-c li.px-hito .px-punto, .px-c li.listo .px-punto { background: var(--a1); }
+.px-c small { display: block; font-size: 12px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--a2); }
+:root[data-tema="actual"] .px-c small { color: var(--a1); }
+.px-c b { font: 700 18px var(--f-texto); }

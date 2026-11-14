@@ -55,7 +55,7 @@ jobs:
               print(nombre + ":", json.dumps(m.get(nombre), ensure_ascii=False)[:3000])
           FIN
 
-  # Tarea 6.1: las 4 preguntas extra a Google Trends, guardando en una carpeta temporal (nunca
+  # Tarea 6.1: las 5 preguntas extra a Google Trends, guardando en una carpeta temporal (nunca
   # en datos/). Va aparte, y solo si se marca la casilla, para no gastar consultas a Trends en
   # cada prueba normal. Tarda unos minutos por las pausas entre preguntas.
   trends_extra:
@@ -67,7 +67,7 @@ jobs:
       - uses: actions/setup-python@v6   # v6 usa Node.js 24 (la v5 usaba Node.js 20, retirado)
         with:
           python-version: "3.12"
-      - name: Hacer las 4 preguntas extra sin guardar
+      - name: Hacer las 5 preguntas extra sin guardar
         run: |
           python3 recolector/trends_extra.py --carpeta "$RUNNER_TEMP/trends"
           python3 - "$RUNNER_TEMP/trends" <<'FIN'

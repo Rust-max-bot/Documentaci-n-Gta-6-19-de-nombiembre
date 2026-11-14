@@ -82,6 +82,13 @@ esos sitios): no es un fallo de la página.
 
 **Fecha límite:** lanzamiento el 19 de noviembre de 2026, 00:00 de Santiago.
 
+**Tanda del 14 nov por la tarde (pedida por Bruno, terminada):** 7.10 "Copias vendidas en los
+primeros días" (13 juegos con fuente, Ocarina incluido, opción B: barras por plazo; GTA 6 espera
+su cifra oficial en `gta6` de `web/lanzamientos.js`), 7.11 "Próximamente" (opción C: camino
+hacia adelante) y la pregunta 5 de la 6.1 (GTA 6 frente a Avengers: Doomsday, día por día;
+probada sin guardar). La **Fase 8 (GTA 6 en PC)** queda anotada y dormida hasta que Bruno
+avise con una confirmación oficial.
+
 **Reglas en pausa:** ninguna. "Paso a paso con permiso" está activa **por tandas**: Bruno
 dice qué pasos hacer y Claude no para hasta completarlos (ver `CLAUDE.md`). Última tanda
 (14 nov, pedida por Bruno, **terminada**): 2.13 datos por días, 2.14 muchas visitas, 2.15
@@ -93,6 +100,8 @@ Bruno ya eligió las palabras de la comparación.
 
 ## Últimos cambios
 
+- 2026-11-14: copias vendidas en los primeros días (7.10, opción B) y "Próximamente" (7.11, opción C); pregunta GTA 6 frente a Doomsday en la 6.1, probada.
+- 2026-11-14: plan nuevo de Bruno: comparar solo el arranque de GTA 6 con los juegos más grandes (7.10), "Próximamente" (7.11), GTA 6 frente a Doomsday en Trends (6.1) y Fase 8 dormida para el lanzamiento en PC (`PLAN.md`).
 - 2026-11-14: álbum de momentos (7.7, fotos instantáneas, opción B de Bruno), resumen del día como imagen cuadrada (7.8, opción A) y GTA 6 frente a otros lanzamientos con barras (7.9, opción A); `PLAN_DE_TRABAJO.md` archivado en `historial/PLAN_DE_TRABAJO_2026-11-14.md`.
 - 2026-11-14: revisión de seguridad con el skill de Cloudflare (2.15): sin fallos confirmados; 4 refuerzos (comillas, miniaturas, CSP, clave del checkout) y 3 cosas para Bruno en sus cuentas (`PLAN.md`).
 - 2026-11-14: datos por días (2.13: `datos.js` de 222 a 50 KB, los titulares de cada día se cargan al mostrarlos) y revisión de datos nuevos con `version.json` para aguantar muchas visitas (2.14).
@@ -100,8 +109,6 @@ Bruno ya eligió las palabras de la comparación.
 - 2026-11-14: nota "hecho con Claude" en el README y en el pie de la página (2.9, pedido de Bruno); en lo público, Bruno aparece como "Rust" (regla nueva en `CLAUDE.md`).
 - 2026-11-14: README al día (2.7) y página publicada en GitHub Pages para verla desde el celular (2.8, pedido de Bruno).
 - 2026-11-14: filtro por día en los titulares con barras por día (2.6, opción C de Bruno).
-- 2026-11-14: cuenta regresiva con botones Nueva Zelanda, Chile y Miami (7.6), "Resumen del día" (7.5) y más eventos automáticos en la línea de tiempo (pedido de Bruno); diseño de Claude porque Bruno pidió no preguntarle.
-- 2026-11-13: las torres nuevas suben una por una al pasar a 2026 y bajan al volver a 1986 (7.3, opción B de Bruno).
 
 ## Pendiente
 
@@ -113,7 +120,8 @@ La lista completa y su orden están en `PLAN_DE_TRABAJO.md`. Resumen (2026-11-14
 3. **Fase 6** (ideas de Bruno): 6.1 más Google Trends, **una sola vez entre el 20 y el 25 nov**,
    fuera del recolector de cada hora (decisión de Bruno, 2026-11-13; ver `PLAN.md`). Programa
    listo y probado, con las palabras que eligió Bruno; falta ejecutarlo y mostrarlo. 6.2 y 6.3, hechas. 6.4 videos en español, hecha (pestañas en la página).
-4. **Fase 7:** 7.1 rebobinar (después del lanzamiento); 7.3 y 7.5 a 7.9, hechas.
+4. **Fase 7:** 7.1 rebobinar (después del lanzamiento); 7.3 y 7.5 a 7.11, hechas. Cuando Take-Two publique las ventas, escribirlas en `gta6` de `web/lanzamientos.js`.
+   **Fase 8 (GTA 6 en PC):** dormida hasta que Bruno avise con confirmación oficial.
 5. **Fase 5** (después del lanzamiento): búsqueda calmada; clave de Reddit.
 6. **Ideas sueltas:** 2.5 TikTok (sin acceso fácil); D6 (Bruno pidió ignorarla por ahora).
 7. **Bruno:**

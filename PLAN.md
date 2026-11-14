@@ -37,6 +37,9 @@ Resultado final: **una página web** con:
 | Tecnología | Dos piezas: **Python** recoge los datos (Bruno no lo ve, corre en GitHub) y **HTML, CSS y JavaScript** forman la página que Bruno abre en el navegador. No es una aplicación instalable |
 | Dónde se trabaja | En la nube (Claude Code web) y también en el PC, indistintamente |
 | Cómo se guardan los datos | **Decidido por Bruno el 2026-11-12:** archivos de texto, uno por día, en `datos/` (una línea por medición), en vez de una base de datos SQL. Motivo: en GitHub solo perduran los archivos del repositorio, y una base de datos en un archivo (SQLite) se guardaría entera en cada cambio, inflando el repositorio. Para el análisis se pueden cargar en una base de datos en el PC |
+| Comparar GTA 6 con otros juegos | **Decidido por Bruno el 2026-11-14 (tareas 7.10 y 7.11):** en la fase de consolas solo se compara **el arranque**: ventas de los primeros días o semanas y popularidad de esos días (Twitch, YouTube, Trends), no las ventas totales de toda la vida, porque los otros juegos tardaron años en juntarlas. Cada cifra va con su fuente (la empresa o Guinness, o un medio que la cite) y con cuántos días son; copias y dólares no se mezclan en la misma barra. GTA 6 tiene un hueco "esperando cifra oficial" que se llena a mano cuando Take-Two la publique. Las estimaciones (como las reservas de Sensor Tower) solo entran marcadas como estimación, y los escenarios inventados (10, 15 o 20 millones) no entran. Los más vendidos de la historia (Tetris, Minecraft, GTA V…) quedan para la fase 2 (PC) |
+| Google Trends: GTA 6 frente a Avengers: Doomsday | **Pedido de Bruno el 2026-11-14:** una pregunta más en la 6.1, día por día, solo con esas dos palabras. La página muestra solo esa comparación directa y nada más de la película |
+| Segundo lanzamiento: GTA 6 en PC (fase 2) | **Decidido por Bruno el 2026-11-14:** Bruno no tiene consola y espera otro "boom" cuando el juego salga en PC. Todo lo de ahora es la fase 1 (consolas, PS5 y Xbox). La fase 2 queda **dormida hasta que Bruno avise** con una confirmación oficial de la versión de PC (al 2026-11-14 no la hay). Lo de la fase 1 no se toca: queda como recuerdo. Plan en la Fase 8 de `PLAN_DE_TRABAJO.md` |
 
 ## Diseño de la página
 
@@ -248,6 +251,23 @@ Resultado final: **una página web** con:
     "Se abre después del lanzamiento" hasta el 19 nov.
   - Se descartaron A (dos tarjetas simples) y C (medalla del 19 nov entre los dos textos).
 
+- **Copias vendidas en los primeros días (tarea 7.10, opción B de Bruno, 2026-11-14): barras por plazo.**
+  - Dentro de "GTA 6 frente a otros lanzamientos", entre Twitch y "Otros récords de la saga".
+  - Arriba, GTA VI con una barra punteada y "esperando la cifra oficial" hasta que se escriba
+    en `web/lanzamientos.js` (`gta6`).
+  - Debajo, 3 grupos: el primer día, los primeros 3 a 5 días y las primeras 1 a 3 semanas.
+    Todas las barras en la misma escala. Cada juego dice su año, su plazo y su fuente; Skyrim y
+    RDR2 dicen "enviadas a tiendas".
+  - Se descartaron A (una sola lista de más a menos copias) y C (fichas).
+- **Próximamente (tarea 7.11, opción C de Bruno, 2026-11-14): camino hacia adelante.**
+  - Sección al final, después de la cápsula, también en el menú "Secciones".
+  - Una línea punteada que empieza en "19 nov · Lanzamiento en consolas", con un punto por cosa:
+    ventas oficiales, más de Google Trends (con Doomsday), rebobinar, análisis del primer mes
+    y GTA 6 en PC. Cada punto dice cuándo llega; al estar listo, se rellena y dice "Ya está".
+  - Las ventas se marcan solas al escribir `gta6`, y Trends cuando `datos.js` traiga
+    `trendsExtra`; las demás se marcan a mano en `web/app.js` al terminar su tarea.
+  - Se descartaron A (lista con casillas) y B (carteles con sello).
+
 ## 3. Qué se descartó y por qué
 
 - **Tabla de jugadores en vivo**: descartada. GTA 6 sale en PS5 y Xbox Series,
@@ -319,7 +339,7 @@ servidores pueden recibir un trato distinto.
 | Estado de PlayStation | Funciona. Lista de servicios por país (incluye Chile); lista vacía significa sin problemas | `status.playstation.com/data/statuses/region/SCEA.json` |
 | Estado de Xbox | Funciona. Estado general y por categoría; `None` significa sin problemas | `xnotify.xboxlive.com/servicestatusv6/US/en-US` |
 | Google Trends | Funciona con condiciones. Método no oficial en tres pasos: abrir la página para recibir una cookie, pedir `api/explore` y luego `api/widgetdata/multiline`. Sin la cookie responde "demasiadas peticiones" (429). Dio 169 puntos, uno por hora, de los últimos 7 días | `trends.google.com/trends/api/...` |
-| Estado de Rockstar | **No funciona.** La conexión se abre pero el sitio no responde a programas (se agota la espera). Probablemente protección contra robots | `support.rockstargames.com/servicestatus` |
+| Estado de Rockstar | **No funciona.** La conexión se abre pero el sitio no responde a programas (se agota la espera). Probablemente protección contra robots. **Vuelto a probar desde GitHub el 2026-11-14** (ejecución 43618474895), porque Bruno vio que en su navegador carga rápido y sin "no soy un robot": sigue sin responder en 20 segundos. A un navegador en una casa lo deja pasar; a un programa en un servidor, no | `support.rockstargames.com/servicestatus` |
 | Twitch | **Funciona** (probado desde GitHub el 2026-11-12). Categoría "Grand Theft Auto VI", id `1867279146`. Entrega espectadores por transmisión; el total se obtiene sumando páginas de 100 | `api.twitch.tv/helix/streams?game_id=1867279146` |
 | YouTube | **Funciona** (probado desde GitHub el 2026-11-12). Una búsqueda cuesta 100 unidades de las 10.000 diarias; las estadísticas, 1 | `googleapis.com/youtube/v3/search` y `/videos` |
 
