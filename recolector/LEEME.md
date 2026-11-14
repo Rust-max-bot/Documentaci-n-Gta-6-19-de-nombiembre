@@ -14,7 +14,7 @@ de texto por día en vez de una base de datos SQL (motivos en `PLAN.md`).
 | `red.py` | Piezas comunes para pedir datos a internet |
 | `interruptor.json` | **Encender, apagar o alargar** la recolección |
 | `revisar.py` | Resumen de cómo va: mediciones, huecos, fallos, cupo de YouTube y peso |
-| `generar_web.py` | Convierte `datos/` en `web/datos.js` para la página (lo usa `ver_pagina.bat`) |
+| `generar_web.py` | Convierte `datos/` en `web/datos.js`, `web/dias/` y `web/version.json` para la página (lo usa `ver_pagina.bat`) |
 | `probar_fuentes.py` | Prueba suelta de las fuentes (workflow "Probar fuentes"); no guarda nada |
 | `trends_extra.py` | Tarea 6.1: 4 preguntas extra a Google Trends, **una sola vez** (ver abajo) |
 
@@ -120,8 +120,22 @@ guarda nada. Las palabras están en `COMPARAR` y `HISTORICA` (elegidas por Bruno
 
 ## De `datos/` a la página (`generar_web.py`)
 
-`web/datos.js` tiene el mismo formato que `web/datos-ejemplo.js`, sin la marca de ejemplo.
-Se genera en el PC y no se sube a git. Qué toma de cada medición:
+`generar_web.py` escribe tres cosas en `web/`, que no se suben a git (en GitHub las prepara
+`publicar-pagina.yml` antes de publicar):
+
+- `web/datos.js` (`"formato": 2`): lo que la página necesita al abrir. Es como
+  `web/datos-ejemplo.js`, con tres diferencias para que pese menos (2026-11-14): de los
+  titulares solo trae sus horas (`noticias_t`, en segundos desde 1970, de la más vieja a la más
+  nueva); de Reddit, las horas (`reddit.publicaciones_t`) y las 8 publicaciones más nuevas
+  (`reddit.ultimas`); y las series de visitas de los videos van como `[segundos, visitas]`.
+  `dias` dice qué días hay y la huella de cada archivo.
+- `web/dias/AAAA-MM-DD.js`: los titulares (cada uno con su número `i`, su posición en
+  `noticias_t`) y las publicaciones de Reddit completos de un día UTC. La página los carga solo
+  cuando tiene que mostrarlos.
+- `web/version.json`: solo la fecha `generado`. La página lo mira cada 2 minutos para saber si
+  hay datos nuevos.
+
+Qué toma de cada medición:
 
 - Twitch: total de espectadores y los 3 canales con más público (con su foto, si la hay).
 - Google Trends: el interés de la **última hora completa** de esa medición (la hora en curso

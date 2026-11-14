@@ -3,6 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Política de seguridad (revisión del 2026-11-14): la página solo ejecuta sus propios archivos
+     .js, y solo carga letras de Google Fonts y fotos de YouTube y Twitch. Si algún día un texto
+     de las fuentes (un titular, un título de Reddit) colara código, el navegador no lo ejecutaría. -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https://i.ytimg.com https://static-cdn.jtvnw.net; connect-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta name="referrer" content="strict-origin-when-cross-origin">
 <title>19·NOV·2026 — El día de GTA 6</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -174,6 +179,13 @@
     <div class="cp-cols" id="comparacion-cols"></div>
   </section>
 
+  <!-- Otros lanzamientos (tarea 7.9): datos con fuente en lanzamientos.js -->
+  <section class="bloque observar" id="lanzamientos">
+    <h2>GTA 6 frente a otros lanzamientos</h2>
+    <p class="nota" id="lanzamientos-nota">Récords de otros juegos, cada uno con su fuente, junto a lo que mide este proyecto.</p>
+    <div id="lanzamientos-caja"></div>
+  </section>
+
   <section class="bloque observar" id="seccion-noticias">
     <h2>Titulares</h2>
     <div class="nt-filtro" id="noticias-filtro"></div>
@@ -190,6 +202,18 @@
     <p class="leyenda" id="reddit-leyenda"></p>
     <h3 class="sub">Lo último</h3>
     <ul class="noticias chicas" id="reddit-ultimas"></ul>
+  </section>
+
+  <!-- Álbum de momentos (tarea 7.7): las fotos las sube Rust a web/album/ (ver web/album/LEEME.md) -->
+  <section class="bloque observar" id="album">
+    <h2>Álbum de momentos</h2>
+    <p class="nota">Capturas y memes guardados el día del lanzamiento, con su hora (hora de Santiago de Chile). Las elige y las sube Rust.</p>
+    <div id="album-fotos"></div>
+    <dialog class="album-grande" id="album-grande" aria-label="Foto ampliada">
+      <button type="button" class="album-cerrar" aria-label="Cerrar">✕</button>
+      <img alt="">
+      <p></p>
+    </dialog>
   </section>
 
   <!-- Cápsula del tiempo (tarea 7.4): los textos los escribe Bruno en capsula.js -->
@@ -210,9 +234,10 @@
 <div class="globo" id="globo" hidden></div>
 
 <script src="datos-ejemplo.js"></script>
-<script src="datos.js" onerror="void 0"></script>
-<script src="eventos.js" onerror="void 0"></script>
-<script src="capsula.js" onerror="void 0"></script>
+<script src="datos.js"></script>
+<script src="eventos.js"></script>
+<script src="capsula.js"></script>
+<script src="lanzamientos.js"></script>
 <script src="app.js"></script>
 </body>
 </html>

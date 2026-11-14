@@ -3,10 +3,22 @@
 Uso:  python recolector/generar_web.py
       (o doble clic en ver_pagina.bat, que además trae los datos nuevos y abre la página)
 
-Solo LEE datos/ y solo escribe web/datos.js. Ese archivo no se sube a git (.gitignore):
-se rehace entero cada vez, y subirlo cada 30 minutos inflaría el repositorio.
-Si algo no cuadra, se detiene y deja web/datos.js como estaba.
+Solo LEE datos/ y solo escribe en web/: datos.js, version.json y la carpeta web/dias/.
+Nada de eso se sube a git (.gitignore): se rehace entero cada vez, y subirlo cada 30 minutos
+inflaría el repositorio. Si algo no cuadra, se detiene y deja web/datos.js como estaba.
+
+Datos por días (pedido de Bruno, 2026-11-14: "no puedes siempre cargar todos los datos de todos
+los días"). Lo que más pesa y menos se comprime son los titulares (sus enlaces de Google Noticias
+son muy largos) y las publicaciones de Reddit. Por eso:
+- web/datos.js lleva todo lo que la página necesita al abrir: las mediciones (para los gráficos,
+  los récords y los resúmenes), los videos y, de los titulares y de Reddit, solo sus horas (para
+  contarlos por día y por hora) y las 8 publicaciones de Reddit más nuevas.
+- web/dias/AAAA-MM-DD.js lleva los titulares y las publicaciones completas de un día (UTC, según
+  la hora de cada titular). La página carga un día solo cuando hace falta mostrarlo.
+- web/version.json solo dice cuándo se generaron los datos: la página lo mira cada 2 minutos para
+  saber si hay datos nuevos, en vez de bajar datos.js entero.
 """
+import hashlib
 import json
 import os
 import re
@@ -17,6 +29,15 @@ from pathlib import Path
 RAIZ = Path(__file__).resolve().parent.parent
 DATOS = RAIZ / "datos"
 SALIDA = RAIZ / "web" / "datos.js"
+DIAS = RAIZ / "web" / "dias"
+VERSION = RAIZ / "web" / "version.json"
+ALBUM = RAIZ / "web" / "album"
+# Álbum de momentos (tarea 7.7): Bruno sube capturas a web/album/ con nombres como
+# "2026-11-19 02-10 Se caen los servidores.jpg" (hora de Santiago). El nombre es todo lo que
+# hace falta: la página toma de ahí la hora y el texto.
+NOMBRE_FOTO = re.compile(r"^(\d{4}-\d{2}-\d{2}) (\d{2})[-.:h](\d{2})\s*(.*)\.(jpe?g|png|webp|gif)$", re.IGNORECASE)
+FOTO_PESADA = 2 * 1024 * 1024   # más de 2 MB: se avisa (con muchas visitas, gasta tráfico)
+REDDIT_ULTIMAS = 8   # publicaciones de Reddit completas en datos.js (la página muestra las 8 últimas)
 NOMBRE_ARCHIVO = re.compile(r"^\d{4}-\d{2}-\d{2}\.jsonl$")
 VIDEOS = 20         # videos de YouTube que se muestran (los más vistos en la última medición)
 CANALES = 3         # canales de Twitch por medición
@@ -166,6 +187,83 @@ def convertir(medidas):
             "trailers": sorted(trailers.values(), key=lambda v: v.get("publicado") or "")}   # todos: la página los muestra por páginas (Bruno, 2026-11-13)
 
 
+def segundos(iso):
+    """'2026-11-14T03:07:00Z' -> segundos desde 1970 (UTC). Más corto que el texto."""
+    return int(datetime.fromisoformat(iso.replace("Z", "+00:00")).timestamp())
+
+
+def serie_corta(serie):
+    """[{"t": ..., "visitas": n}, ...] -> [[segundos, n], ...]: la mitad de largo, sin perder nada."""
+    return [[segundos(p["t"]), p["visitas"]] for p in serie]
+
+
+def separar_por_dias(d):
+    """Saca de d los titulares y las publicaciones de Reddit completos y los reparte por día.
+
+    En d quedan solo sus horas, en el mismo orden (de la más vieja a la más nueva): la posición
+    de cada titular en esa lista es su número "i", que también va en el archivo de su día. Así la
+    página sabe qué días cargar para mostrar una página de titulares."""
+    dias = {}
+    for i, n in enumerate(d["noticias"]):
+        s = segundos(n["t"])
+        dia = datetime.fromtimestamp(s, timezone.utc).strftime("%Y-%m-%d")
+        dias.setdefault(dia, {"noticias": [], "reddit": []})["noticias"].append(
+            {"i": i, "t": s, "titulo": n["titulo"], "medio": n["medio"], "url": n["url"]})
+    pubs = d["reddit"]["publicaciones"]
+    for p in pubs:
+        s = segundos(p["t"])
+        dia = datetime.fromtimestamp(s, timezone.utc).strftime("%Y-%m-%d")
+        dias.setdefault(dia, {"noticias": [], "reddit": []})["reddit"].append(
+            {"t": s, "titulo": p["titulo"], "autor": p["autor"], "url": p["url"]})
+    d["formato"] = 2
+    d["noticias_t"] = [segundos(n["t"]) for n in d.pop("noticias")]
+    d["reddit"]["publicaciones_t"] = [segundos(p["t"]) for p in pubs]
+    d["reddit"]["ultimas"] = pubs[-REDDIT_ULTIMAS:]
+    del d["reddit"]["publicaciones"]
+    for v in d["youtube"] + d["youtube_es"] + d["trailers"]:
+        v["serie"] = serie_corta(v["serie"])
+    archivos = {}
+    for dia, contenido in sorted(dias.items()):
+        texto = ("/* DATOS REALES de un día (UTC), generados por recolector/generar_web.py. No editar a mano. */\n"
+                 "window.DATOS_DIA && window.DATOS_DIA(" + json.dumps(dia) + "," +
+                 json.dumps(contenido, ensure_ascii=False, separators=(",", ":")) + ");\n")
+        archivos[dia] = texto
+    # La huella de cada archivo va en datos.js: el navegador guarda un día que no cambió y
+    # vuelve a pedirlo solo si cambió (lo nuevo llega siempre, y lo viejo no se baja otra vez).
+    d["dias"] = {dia: hashlib.sha256(t.encode("utf-8")).hexdigest()[:10] for dia, t in archivos.items()}
+    total = sum(len(c["noticias"]) for c in dias.values())
+    if total != len(d["noticias_t"]) or sum(len(c["reddit"]) for c in dias.values()) != len(pubs):
+        abortar("se perdieron titulares o publicaciones al repartirlos por días")
+    return archivos
+
+
+def leer_album():
+    """Lista las fotos de web/album/ con su hora (texto de Santiago) y su texto. Las que no
+    siguen el formato del nombre se avisan y no se muestran (no se toca ningún archivo)."""
+    fotos = []
+    if not ALBUM.is_dir():
+        return fotos
+    for p in sorted(ALBUM.iterdir()):
+        if p.name.startswith(".") or p.name.lower() in ("leeme.md", "readme.md"):
+            continue
+        m = NOMBRE_FOTO.match(p.name)
+        if not m:
+            print(f"AVISO: web/album/{p.name} no sigue el formato 'AAAA-MM-DD HH-MM texto.jpg': no se muestra.")
+            continue
+        if p.stat().st_size > FOTO_PESADA:
+            print(f"AVISO: web/album/{p.name} pesa {p.stat().st_size // 1024} KB; conviene que sea de menos de 2 MB.")
+        fotos.append({"archivo": "album/" + p.name, "hora": f"{m.group(1)} {m.group(2)}:{m.group(3)}",
+                      "texto": m.group(4).strip()})
+    fotos.sort(key=lambda f: f["hora"])
+    return fotos
+
+
+def escribir(ruta, texto):
+    temporal = ruta.with_name(ruta.name + ".tmp")
+    temporal.write_text(texto, encoding="utf-8", newline="\n")
+    os.replace(temporal, ruta)   # se cambia de golpe: nunca queda un archivo a medias
+
+
 def comprobar(d, medidas):
     if len(d["mediciones"]) != len(medidas):
         abortar("se perdieron mediciones al convertir")
@@ -190,17 +288,27 @@ def main():
         abortar(f"no hay mediciones en {carpeta}")
     d = convertir(medidas)
     comprobar(d, medidas)
+    archivos = separar_por_dias(d)
+    d["album"] = leer_album()
     d["generado"] = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
     d["eventos"] = []   # los eventos a mano están en web/eventos.js
     texto = ("/* DATOS REALES generados por recolector/generar_web.py a partir de datos/.\n"
              "   No editar a mano: se rehace entero cada vez. No se sube a git. */\n"
              "window.DATOS = " + json.dumps(d, ensure_ascii=False, separators=(",", ":")) + ";\n")
-    temporal = SALIDA.with_suffix(".js.tmp")
-    temporal.write_text(texto, encoding="utf-8", newline="\n")
-    os.replace(temporal, SALIDA)   # se cambia de golpe: nunca queda un archivo a medias
+    # Primero los días y al final datos.js, que es el que dice qué días hay.
+    DIAS.mkdir(exist_ok=True)
+    for dia, t in archivos.items():
+        escribir(DIAS / f"{dia}.js", t)
+    for viejo in DIAS.glob("*.js"):
+        if viejo.stem not in archivos:   # un día que ya no existe (por ejemplo, otra carpeta de datos)
+            viejo.unlink()
+    escribir(SALIDA, texto)
+    escribir(VERSION, json.dumps({"generado": d["generado"]}) + "\n")
+    peso_dias = sum(len(t.encode("utf-8")) for t in archivos.values())
     print(f"web/datos.js listo: {len(d['mediciones'])} mediciones (de {medidas[0]['t']} a {medidas[-1]['t']} UTC), "
-          f"{len(d['youtube'])} videos, {len(d['noticias'])} titulares, "
-          f"{len(d['reddit']['publicaciones'])} publicaciones de Reddit, {len(texto.encode('utf-8')) // 1024} KB.")
+          f"{len(d['youtube'])} videos, {len(d['noticias_t'])} titulares, "
+          f"{len(d['reddit']['publicaciones_t'])} publicaciones de Reddit, {len(texto.encode('utf-8')) // 1024} KB; "
+          f"{len(archivos)} días en web/dias/ ({peso_dias // 1024} KB, se cargan solo si hacen falta).")
 
 
 if __name__ == "__main__":

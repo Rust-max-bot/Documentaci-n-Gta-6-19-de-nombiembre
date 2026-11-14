@@ -1,7 +1,8 @@
 # Plan de trabajo
 
-> El plan anterior, con el detalle de todas las tareas ya hechas, está en
-> `historial/PLAN_DE_TRABAJO_2026-11-13.md` (archivado el 2026-11-13 al pasar de 20.000 bytes).
+> El plan anterior, con el detalle de las tareas hechas hasta el 2026-11-14 (2.6 a 2.15, 6.2 a
+> 6.4, 7.3, 7.5 a 7.9), está en `historial/PLAN_DE_TRABAJO_2026-11-14.md` (archivado el
+> 2026-11-14 al pasar de 20.000 bytes). El de antes, en `historial/PLAN_DE_TRABAJO_2026-11-13.md`.
 
 Creado el 2026-11-12 a partir de la lista "Cosas que quiero para mi app" de Bruno y de lo que
 ya estaba acordado y faltaba. **Es la lista ordenada de qué hacer y en qué orden.**
@@ -20,24 +21,31 @@ ya estaba acordado y faltaba. **Es la lista ordenada de qué hacer y en qué ord
 - **18 de noviembre de 2026:** el recolector tiene que llevar días funcionando solo (cumplido:
   funciona solo desde el 13 nov).
 - **19 de noviembre de 2026, 00:00 de Santiago:** lanzamiento.
-- **Antes del 19 nov** (después ya no sirve):
-  - 7.4, Cápsula del tiempo: Bruno escribe lo que espera del juego.
-  - 7.6, hora cero en Nueva Zelanda: antes del **18 nov, 08:00 de Chile** (hecha el 14 nov).
-  - (Ya hechas: 7.2 Hora cero, en `main` por el PR #9; y el recolector ya guarda lo de la
-    6.3 desde el 13 nov.)
+- **Antes del 19 nov** (después ya no sirve): 7.4, Cápsula del tiempo: Bruno escribe lo que
+  espera del juego. (Ya hechas: 7.2 hora cero y 7.6 hora cero en Nueva Zelanda y Miami.)
+- **Entre el 20 y el 25 nov:** 6.1, una sola vez, cuando Bruno diga.
 
 ## Lo ya hecho (detalle en el historial)
 
 - **Fase 0 — Claves y fuentes:** hecha (claves en GitHub; fuentes probadas).
 - **Fase 1 — Recolector funcionando:** hecha, 1.1 a 1.7 (datos en `datos/`, interruptor,
   despertador de Cloudflare, página con datos reales, prueba completa).
-- **Fase 2 — Mejoras rápidas:** hechas 2.1 a 2.4 (enlaces, miniaturas, suelo de 1986 sin
-  parpadeo, rayas del sol). Queda la 2.5 (abajo).
+- **Fase 2 — Mejoras rápidas:** hechas 2.1 a 2.4 y 2.6 a 2.15 (filtro por día de titulares,
+  README, página publicada en GitHub Pages, nota "hecho con Claude", actualización sola, vista
+  previa al compartir, menú de secciones, datos por días, muchas visitas y revisión de
+  seguridad). Queda la 2.5 (abajo).
 - **Fase 3 — Mejoras medianas:** hecha, 3.1 a 3.3 (paleta B de 2026, Reddit por RSS,
   torres de Miami).
 - **Fase 4:** hechas 4.1 y 4.2 (día, atardecer y noche según la hora de Miami). Queda la 4.3.
-- **Fase 7:** hecha la 7.2 (hora cero; se prueba con `?probar-hora-cero`; y la cuenta de cada
-  lugar, con `?probar-fecha=2026-11-18T12:30Z`).
+- **Fase 6:** hechas 6.2 (logros y récords), 6.3 (GTA frente a lo más visto) y 6.4 (videos en
+  español). Queda la 6.1.
+- **Fase 7:** hechas 7.2 (hora cero; se prueba con `?probar-hora-cero`), 7.3 (viaje en el
+  tiempo), 7.5 (resumen del día), 7.6 (hora cero en cada lugar; se prueba con
+  `?probar-fecha=2026-11-18T12:30Z`), la línea de tiempo con eventos nuevos, 7.7 (álbum de
+  momentos), 7.8 (resumen como imagen) y 7.9 (comparar con otros lanzamientos). Quedan 7.1 y
+  7.4.
+- *Idea 4 (instalarla como app en el celular): descartada por Bruno el 2026-11-14 ("prefiero
+  que simplemente sea una página web").*
 
 ## Fase 2 — Mejoras rápidas (lo que queda)
 
@@ -47,37 +55,6 @@ ya estaba acordado y faltaba. **Es la lista ordenada de qué hacer y en qué ord
       API y bloquea consultas desde servidores. Caminos: probarlo con una consulta real desde
       el PC y desde GitHub, o anotar a mano lo llamativo como evento. Bruno lo dejó para
       después.
-
-- [x] **2.6 Filtro por día en los titulares (idea de Bruno, 2026-11-13).** **En la página desde
-      el 2026-11-14** (opción C de Bruno, barras por día; ver `PLAN.md`). Probada a 1280 y
-      384 px en los dos estilos, sin errores ni desborde, y con 40 días simulados (las barras se
-      deslizan y empiezan en el día más nuevo).
-
-- [x] **2.7 README al día (pedido de Bruno, 2026-11-14).** Qué es el proyecto, qué tiene la
-      página, qué se mide, cómo funciona y cómo verla.
-- [x] **2.8 Página publicada en internet, para verla desde el celular (pedido de Bruno,
-      2026-11-14).** Workflow `publicar-pagina.yml`: después de cada medición y al cambiar la
-      página prepara `web/datos.js` y publica `web/` en GitHub Pages, en
-      <https://rust-max-bot.github.io/Documentaci-n-Gta-6-19-de-nombiembre/>. Bruno activó Pages
-      el 2026-11-14; la primera publicación (ejecución 43541223135) falló porque Pages aún no
-      estaba activado, y la segunda (43541607157, lanzada a mano) salió bien. Bruno comprobó
-      la página. Desde la nube no se puede abrir `github.io` (la red lo bloquea).
-- [x] **2.9 Nota "hecho con Claude" (pedido de Bruno, 2026-11-14).** En el README y en el pie
-      de la página: la idea, el plan y las decisiones son de Bruno; el código, los textos y
-      las pruebas los escribió Claude a pedido suyo.
-- [x] **2.10 Actualización sola (idea de Claude elegida por Bruno, 2026-11-14).** Arriba de las
-      fichas, "Última medición hace X min · HH:MM". Con la página abierta en internet revisa
-      cada 2 minutos (y al volver a la pestaña) si `datos.js` tiene otra fecha de "generado";
-      si nadie la toca hace 90 s o está en segundo plano, se recarga sola y vuelve al mismo
-      lugar; si no, muestra "Hay datos nuevos · tocar para actualizar". Probado con datos
-      simulados en un servidor local.
-- [x] **2.11 Vista previa al compartir e ícono propio (misma tanda).** Imagen `web/compartir.jpg`
-      (opción C de Bruno: las dos portadas mitad y mitad, 1200×630) con etiquetas Open Graph y
-      `twitter:card`, y un ícono original para la pestaña (`web/icono.svg`: sol, palmera y
-      mar). Las redes guardan la vista previa un tiempo: puede tardar en verse la nueva.
-- [x] **2.12 Menú de secciones (misma tanda).** Botón flotante "☰ Secciones" abajo a la derecha
-      (opción B de Bruno) con la lista de secciones y "↑ Volver arriba"; se cierra al tocar
-      fuera o con Escape. Probado a 1280 y 384 px en los dos estilos.
 
 ## Fase 4 — Mejoras largas (lo que queda)
 
@@ -92,11 +69,10 @@ ya estaba acordado y faltaba. **Es la lista ordenada de qué hacer y en qué ord
       (formulario de soporte para desarrolladores) para guardar votos y comentarios. Tarda
       ~7 días y no está garantizado: ver `PLAN.md`, "Clave de Reddit".
 
-## Fase 6 — Ideas nuevas de Bruno: más estadísticas, logros y comparaciones
+## Fase 6 — Ideas nuevas de Bruno: más estadísticas, logros y comparaciones (lo que queda)
 
-*(Pedido de Bruno, 2026-11-13. Se hace poco a poco, **después de terminar la Fase 4**. Nada de
-esto está probado todavía, salvo lo que se dice en la 6.3: cada fuente nueva se verifica con
-una consulta real antes de usarla. Ver el aviso 7, sobre la fecha del lanzamiento.)*
+*(Pedido de Bruno, 2026-11-13. Cada fuente nueva se verifica con una consulta real antes de
+usarla. Ver el aviso 7, sobre la fecha del lanzamiento.)*
 
 - [ ] **6.1 Más estadísticas de Google Trends.** Hoy se guarda solo "GTA 6" en todo el mundo,
       hora por hora, últimos 7 días. Lo que se podría agregar, cada cosa con su consulta aparte:
@@ -123,65 +99,8 @@ una consulta real antes de usarla. Ver el aviso 7, sobre la fecha del lanzamient
   - Falta: (1) ejecutarlo de verdad entre el 20 y el 25 nov, cuando Bruno diga; (2) mostrarlo
     en la página, con opciones y capturas; (3) idea: repetir la pregunta mes a mes en enero,
     para que salga el estreno de Doomsday (sin decidir). Queda en `[ ]`.
-- [x] **6.2 Sección de logros y récords (que se actualiza sola).** **En la página desde el
-      2026-11-13** (opción A de Bruno, "vitrina"; ver `PLAN.md`). El recolector mide los 4
-      videos oficiales de GTA VI desde el PR #11. Quedaron fuera, a propósito: "la hora con
-      más interés en Trends" (siempre vale 100, aviso 8) y los récords históricos de los
-      tráilers (no se buscó una fuente verificada; idea para después si Bruno la quiere).
-  - Con los datos que ya se guardan, sin fuentes nuevas:
-    - el máximo de espectadores en Twitch y cuándo fue;
-    - el canal con más espectadores en un solo directo;
-    - el máximo de transmisiones a la vez;
-    - el video más visto de los medidos (título y enlace) y el que más creció en una hora;
-    - la hora con más interés en Trends;
-    - el día con más titulares;
-    - la hora con más publicaciones en r/GTA6.
-  - Cada récord muestra su fecha y un aviso de "nuevo récord" cuando se supera, con la lista
-    de récords anteriores.
-  - Dato nuevo, barato: las visitas de los tráilers oficiales, medidas por su enlace fijo, sin
-    búsqueda, casi sin gastar cuota de YouTube. Los récords históricos de esos tráilers se
-    anotan solo con fuente verificada.
-- [x] **6.3 GTA comparado con lo más visto en Twitch y YouTube.** **En la página desde el
-      2026-11-13** (opción A de Bruno, "dos columnas"; ver `PLAN.md`).
-  - **Guardado desde el 2026-11-13** (Bruno eligió empezar antes del 19 nov). Hay dos fuentes
-    nuevas en el recolector, `twitch_ranking` y `youtube_tendencias` (formato en
-    `recolector/LEEME.md`). Se probaron con una consulta real desde GitHub (ejecución
-    43499158586): GTA V iba en el puesto 4, GTA VI aún fuera de las 100 primeras, 5 videos de
-    GTA en tendencias de Chile y 4 en las de EE. UU., y Rockstar con 14 millones de
-    suscriptores.
-  - Twitch:
-    - en qué puesto está GTA VI entre todas las categorías (Twitch da el orden, no el número);
-    - los espectadores de las 5 primeras, contados aparte;
-    - GTA VI frente a GTA V.
-  - YouTube:
-    - cuántos videos de GTA hay entre los videos en tendencia de Chile y de EE. UU., y en qué
-      puesto (1 unidad de cuota por país);
-    - los suscriptores del canal de Rockstar (1 unidad).
 
-- [x] **6.4 Videos de YouTube en español (pedido de Bruno, 2026-11-13).** Hoy la búsqueda es
-      "GTA 6" en todo el mundo, de más a menos visto: salen sobre todo videos en inglés. En la
-      medición del 13 nov, 21:07 UTC, solo 5 de 50 parecían en español (casi todos shorts).
-      Bruno quiere seguir viendo lo global y, además, a los creadores hispanohablantes (Chile,
-      España, etc.; por ejemplo, si el Rubius sube un video muy visto).
-  - Propuesta: una segunda búsqueda con idioma preferido español (`relevanceLanguage=es`).
-    Es una preferencia de YouTube, no un filtro: puede traer algunos en inglés. Probado:
-    solo funciona en el orden de relevancia (19 de 25 en español), no por visitas (3 de 25).
-  - Cuota: cada búsqueda cuesta 100 unidades. La semana del lanzamiento se mide 2 veces por
-    hora (48 × 105 = 5.040 al día); con la búsqueda en español en cada turno (101 unidades con
-    sus estadísticas) serían ~9.900,
-    demasiado cerca del límite de 10.000 (si se pasa, YouTube no responde nada más ese día).
-    Por eso, la búsqueda en español solo en el turno del minuto 7 (24 al día): ~7.500.
-  - Orden: el recolector, antes del 19 nov (el crecimiento hora por hora de esos videos el
-    día del lanzamiento no se puede medir después). Cómo mostrarlo en la página (por
-    ejemplo, pestañas "Global" y "En español"), con opciones y capturas, sin apuro.
-  - Se verifica con una consulta real desde GitHub antes de usarla.
-  - **Decisión de Bruno (2026-11-13): el recolector ahora, la página después.** Recolector
-    hecho el 2026-11-13 (fuente `youtube_es`). Falta mostrarlo en la página, con opciones y
-    capturas; queda en `[ ]` hasta entonces.
-  - **En la página desde el 2026-11-13** (opción A de Bruno, pestañas "Global" y "En español";
-    ver `PLAN.md`). Probada a 1280 y 384 px en los dos estilos, sin errores ni desborde.
-
-## Fase 7 — Ideas para que la página sea memorable
+## Fase 7 — Ideas para que la página sea memorable (lo que queda)
 
 *(Sugerencias de Claude que Bruno aprobó el 2026-11-13: "las 5 me gustan". Cambian cómo se ve
 la página, así que cada una se presenta con opciones y capturas antes de aplicarla.)*
@@ -189,13 +108,6 @@ la página, así que cada una se presenta con opciones y capturas antes de aplic
 - [ ] **7.1 Rebobinar el lanzamiento.** Una barra para mover la página hora por hora (con cada
       medición guardada) y revivir el 19 nov: los números, el gráfico y los titulares cambian
       a esa hora. Se puede hacer después del lanzamiento: los datos ya quedan guardados.
-- [x] **7.3 Viaje en el tiempo.** Al cambiar de Miami 1986 a 2026, las torres nuevas (tarea
-      3.3) suben detrás de los hoteles, y al volver a 1986 bajan. Sin fecha límite.
-      **En la página desde el 2026-11-13** (opción B de Bruno, "una por una"; ver `PLAN.md`).
-      Probada a 1280 y 384 px en los dos estilos, sin errores ni desborde.
-  - Arreglado de paso (2026-11-13): el barrido de colores al cambiar de estilo se había perdido
-    con la hora cero (PR #9), porque los reflectores usaban otra animación con el mismo nombre
-    (`barrer`). Lo mismo dejaba sin relleno los gráficos (`aparecer`). Se renombraron.
 - [ ] **7.4 Cápsula del tiempo.** Un texto de Bruno con lo que espera del juego, escrito
       **antes del 19 nov**, y otro después con lo que le pareció. Los escribe Bruno: Claude
       no inventa ese contenido. La página los muestra uno al lado del otro.
@@ -203,24 +115,6 @@ la página, así que cada una se presenta con opciones y capturas antes de aplic
       texto de Bruno** en `web/capsula.js`, antes del 19 nov; queda en `[ ]` hasta entonces.
       Bruno lo deja para más adelante (2026-11-14) y pidió que se le recuerde: hay un
       recordatorio programado para el 17 nov, 19:00 de Chile.
-- [x] **7.6 Hora cero en Nueva Zelanda y Miami (idea de Bruno, 2026-11-13).** **En la página
-      desde el 2026-11-14** (diseño de Claude, porque Bruno pidió la tanda "sin preguntarme";
-      ver `PLAN.md`): botones "Nueva Zelanda", "Chile" y "Miami" sobre la cuenta regresiva, ✓ en
-      los lugares donde ya salió y un evento en la línea de tiempo por cada uno. Probada a 1280 y
-      384 px en los dos estilos, antes y después de la hora de Nueva Zelanda, sin errores ni
-      desborde. Horas: Nueva Zelanda 18 nov 08:00 de Chile (Rockstar confirmó medianoche de cada
-      país, [Push Square](https://www.pushsquare.com/guides/gta-6-release-times-and-preload-when-can-you-start-playing),
-      12 nov 2026; que sea la primera es una deducción por el huso), Chile 19 nov 00:00 y Miami
-      19 nov 02:00.
-- [x] **7.5 Resumen del día.** Una tarjeta automática por día con lo más importante: máximo de
-      espectadores, video más visto, interés en Trends, cantidad de titulares y de
-      publicaciones. Sale de los datos ya guardados. **En la página desde el 2026-11-14**
-      (diseño de Claude, misma tanda; ver `PLAN.md`). Probada a 1280 y 384 px en los dos
-      estilos, sin errores ni desborde.
-- [x] **Línea de tiempo con eventos nuevos (pedido de Bruno, 2026-11-14).** Ahora registra sola
-      la hora cero de cada lugar, las cifras redondas de Twitch, los cambios de video más visto
-      y las decenas de millones de los tráilers (ver `PLAN.md`). Los eventos a mano siguen en
-      `web/eventos.js` (vacío por ahora).
 
 ## Sin definir
 
@@ -229,8 +123,8 @@ la página, así que cada una se presenta con opciones y capturas antes de aplic
 
 ## Avisos para Bruno (cosas donde su idea tiene un límite o un fallo)
 
-Se conserva la numeración del plan anterior. Los avisos 1, 3 y 4 ya están resueltos (texto
-completo en el historial).
+Se conserva la numeración de los planes anteriores. Los avisos 1, 3 y 4 ya están resueltos
+(texto completo en el historial).
 
 1. *(Resuelto: Bruno aceptó archivos de texto por día en vez de una base de datos SQL.)*
 2. **Peso de los datos (A3).** Unos 20 a 25 KB por medición; en el mes, del orden de 20 a

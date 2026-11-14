@@ -122,6 +122,38 @@ Resultado final: **una página web** con:
   hay más días de los que caben, las barras se deslizan hacia el lado y empiezan en los más
   nuevos. Se descartaron A (un botón por día: serían ~40 al 19 dic) y B (lista desplegable: no
   muestra qué día tuvo más titulares).
+- **Datos por días y muchas visitas (pedido de Bruno, 2026-11-14).** No hace falta base de
+  datos ni otro servicio: todo sigue en GitHub. `datos.js` lleva lo que se usa al abrir y los
+  titulares y publicaciones completos van en un archivo por día (`web/dias/`), que se carga solo
+  cuando se muestra. La página revisa si hay datos nuevos con `version.json` (unos 40 bytes).
+  - Límites de GitHub Pages (docs.github.com, "GitHub Pages limits", leído el 2026-11-14):
+    sitio de hasta 1 GB, **100 GB al mes de tráfico (límite blando)** y, si se pasa, puede dejar
+    de servirla o escribir sugiriendo poner una CDN delante o cambiar de servicio.
+  - Una primera visita baja ~94 KB comprimidos (las fotos de YouTube y Twitch y las letras
+    vienen de sus propios servidores): ~1 millón de visitas al mes.
+  - **Plan B, solo si GitHub avisa:** publicar la misma carpeta `web/` en Cloudflare Pages
+    (Bruno ya tiene cuenta de Cloudflare). No se hace antes porque no hace falta y suma otra
+    cuenta que cuidar.
+- **Revisión de seguridad (2026-11-14, skill `security-audit` de Cloudflare en modo guiado,
+  elección de Bruno).** Se revisaron la página (textos de fuentes externas que se muestran),
+  los workflows (quién los lanza, qué claves ven), el despertador, las claves y el historial.
+  - **Sin fallos confirmados.** Ningún workflow corre código de otras personas (no hay
+    `pull_request`); el despertador no lanza nada si alguien abre su dirección; la clave del
+    despertador solo tiene "Actions" sobre este repositorio; el recolector solo usa la
+    biblioteca estándar de Python; no hay claves, correos ni rutas del PC en los archivos ni en
+    el historial (búsqueda en los 161 commits).
+  - **Refuerzos aplicados** (no arreglan un fallo encontrado, pero cierran puertas):
+    `limpio()` también cambia las comillas; las miniaturas de YouTube solo se aceptan desde
+    `i.ytimg.com`; política de seguridad (CSP) en `index.html`, que impide ejecutar código que
+    no venga de los propios `.js` de la página (comprobado: un código metido a propósito no se
+    ejecuta); `publicar-pagina.yml` no guarda la clave de GitHub al descargar el código.
+  - **Para Bruno, en sus cuentas** (no se ve desde el repositorio): 1) que la clave de YouTube
+    esté restringida a "YouTube Data API v3"; 2) en GitHub, una regla para `main` que impida
+    borrarla o reescribirla con `--force` (las mediciones se siguen guardando); 3) que
+    "Secret scanning" y "Push protection" estén activados (Settings → Advanced Security).
+  - **Opcional, no hecho:** fijar cada acción de GitHub a un commit exacto en vez de `@v5`.
+    Protege si alguien tomara el control de una acción oficial, pero obliga a actualizar a
+    mano o con Dependabot (más pull requests que unir).
 - **Tres mejoras de la página (Bruno eligió "las tres primeras" ideas de Claude, 2026-11-14).**
   - Actualización sola con "Última medición hace X min" (2.10): no hubo opciones porque solo
     añade una línea arriba de las fichas; Bruno la vio en captura.
@@ -139,6 +171,26 @@ Resultado final: **una página web** con:
     en Twitch (con el canal más visto), video más visto (global), interés máximo en Trends,
     titulares publicados, publicaciones de r/GTA6 guardadas y mediciones (con huecos).
   - El día del lanzamiento sale elegido al abrir, si ya hay datos de ese día.
+- **Ideas 5 a 7 (tareas 7.7 a 7.9, pedidas por Bruno el 2026-11-14; diseños elegidos por él con
+  capturas).**
+  - **7.8 Resumen del día como imagen: formato A, cuadrado (1080 x 1080).** Se dibuja en el
+    navegador con los colores del estilo que se está viendo. Solo texto y formas: las fotos de
+    YouTube y Twitch vienen de otros sitios y el navegador no deja guardarlas dentro de una
+    imagen. Se descartaron B (vertical, 1080 x 1920, para historias) y C (horizontal, 1200 x 675).
+  - **7.9 Otros lanzamientos: diseño A, barras.** Una barra por juego con los espectadores en
+    Twitch el día de la salida, junto al máximo medido de GTA VI, y tarjetas con otros récords
+    de la saga. **Solo datos con fuente** (en `web/lanzamientos.js`): Hogwarts Legacy cerca de
+    1.270.000 y Cyberpunk 2077 1.143.965 espectadores (Streams Charts); GTA V, más de 800
+    millones de dólares el primer día (comunicado de Take-Two, 18 sep 2013) y más de 1.000
+    millones en 3 días (Take-Two, citado por Gematsu); tráiler 1 de GTA VI, 90,4 millones de
+    visitas en 24 horas (Guinness). No se encontró una cifra con fuente de espectadores en Twitch
+    del lanzamiento de GTA V (2013), por eso no está. Se descartó la opción B.
+  - **7.7 Álbum de momentos: diseño B, fotos instantáneas con marco blanco.** Las fotos las
+    elige y las sube Bruno a `web/album/` (guía en `web/album/LEEME.md`); la hora y el texto
+    salen del nombre del archivo (`AAAA-MM-DD HH-MM texto.jpg`, hora de Santiago). Al tocar una
+    se ve en grande. Las fotos van tal cual a la página pública: nada personal en ellas. Se
+    descartaron A (cuadrícula) y C (tira que se desliza). Las fotos quedan rectas, como en la
+    captura que eligió Bruno (la inclinación que se había escrito no funcionaba y se quitó).
 - **Videos de YouTube en español (tarea 6.4, Bruno, 2026-11-13): el recolector ahora, la página después.**
   - Segunda búsqueda de "GTA 6" con idioma preferido español (fuente `youtube_es`), además
     de la global, que sigue igual. En el orden de **relevancia** de YouTube, no por visitas:
@@ -202,6 +254,8 @@ Resultado final: **una página web** con:
   y esas plataformas no publican cuánta gente está jugando. Si la empresa anuncia
   cifras de ventas, se pueden añadir a mano después.
 - **Tendencias de X (Twitter)**: fuera del plan. Leerlas de forma automática es de pago.
+- **Instalar la página como app en el celular** (idea 4 de Claude): descartada por Bruno el
+  2026-11-14, "prefiero que simplemente sea una página web".
 
 ## 4. Fases del proyecto
 
@@ -355,6 +409,8 @@ web/                  la página (ya existe)
   datos-ejemplo.js    datos inventados para probar el diseño
   eventos.js          eventos que Bruno anota a mano (hora de Santiago)
   capsula.js          los dos textos de la cápsula del tiempo, escritos por Bruno (tarea 7.4)
+  lanzamientos.js     récords de otros lanzamientos, cada uno con su fuente (tarea 7.9)
+  album/              fotos del álbum de momentos, las sube Bruno (tarea 7.7; guía en album/LEEME.md)
   datos.js            datos reales, generados en el PC por recolector/generar_web.py (no va a git)
 recolector/           programa en Python que consulta las fuentes (formato y uso en recolector/LEEME.md)
   interruptor.json    encender, apagar o alargar la recolección
