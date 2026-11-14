@@ -417,8 +417,40 @@
   // no crezca sin fin (pedidos de Bruno, 2026-11-13).
   (function () {
     var POR_PAGINA = 12;
-    var todas = (D.noticias || []).slice().sort(function (a, b) { return Date.parse(b.t) - Date.parse(a.t); });
-    var total = Math.max(1, Math.ceil(todas.length / POR_PAGINA)), actual = 1;
+    var lista = (D.noticias || []).slice().sort(function (a, b) { return Date.parse(b.t) - Date.parse(a.t); });
+    var todas = lista, total = 1, actual = 1;
+    /* Filtro por día (idea de Bruno). Días en hora de Santiago, lo más nuevo primero. */
+    function claveDia(ts) { var o = partes(ts); return o.year + "-" + String(o.month).padStart(2, "0") + "-" + String(o.day).padStart(2, "0"); }
+    var porDia = {}, diasN = [];
+    lista.forEach(function (n) { var ts = Date.parse(n.t); if (isNaN(ts)) return; var k = claveDia(ts); if (!porDia[k]) { porDia[k] = 0; diasN.push(k); } porDia[k]++; });
+    var filtro = "";
+    function nombreDia(k) { return dia(deSantiago(k + " 12:00")); }
+    function aplicar() {
+      todas = filtro ? lista.filter(function (n) { var ts = Date.parse(n.t); return !isNaN(ts) && claveDia(ts) === filtro; }) : lista;
+      total = Math.max(1, Math.ceil(todas.length / POR_PAGINA)); actual = 1;
+    }
+    // Opción C de Bruno (2026-11-14): una barra por día (de izquierda, lo más viejo, a derecha, lo
+    // más nuevo, como los gráficos). Al tocar una barra se ven solo los titulares de ese día; al
+    // tocarla otra vez, o con "Ver todos los días", vuelven todos.
+    function pintarFiltro() {
+      var caja = $("noticias-filtro");
+      var max = Math.max.apply(null, diasN.map(function (k) { return porDia[k]; }).concat(1));
+      caja.innerHTML = diasN.length < 2 ? "" : '<div class="nt-barras" role="group" aria-label="Titulares por día: toca un día para verlos">' +
+        diasN.slice().reverse().map(function (k) {
+          return '<button type="button" data-dia="' + k + '" class="' + (k === filtro ? "activo" : "") + '" aria-pressed="' + (k === filtro) + '" title="' + nombreDia(k) + ": " + porDia[k] + ' titulares">' +
+            '<span class="nt-num">' + porDia[k] + '</span><i style="height:' + Math.max(6, porDia[k] / max * 100).toFixed(1) + '%"></i><span class="nt-dia">' + nombreDia(k).replace(" ", "<br>") + "</span></button>";
+        }).join("") + "</div>" +
+        (filtro ? '<button type="button" class="nt-todos" data-dia="">Ver todos los días</button>' : "");
+    }
+    $("noticias-filtro").addEventListener("click", function (e) {
+      var b = e.target.closest("[data-dia]"); if (!b) return;
+      var barras = $("noticias-filtro").querySelector(".nt-barras"), x = barras ? barras.scrollLeft : 0;
+      filtro = filtro === b.dataset.dia ? "" : b.dataset.dia; aplicar(); pintarFiltro(); pintar();
+      barras = $("noticias-filtro").querySelector(".nt-barras"); if (barras) barras.scrollLeft = x;   // no saltar al tocar
+    });
+    aplicar(); pintarFiltro();
+    // Si hay más días de los que caben, las barras empiezan mostrando los más nuevos (a la derecha).
+    (function () { var barras = $("noticias-filtro").querySelector(".nt-barras"); if (barras) barras.scrollLeft = barras.scrollWidth; })();
     function tarjeta(n) {
       var ts = Date.parse(n.t), seguro = /^https?:\/\//.test(n.url || "");
       return "<li>" + (seguro ? enlace(n.url, limpio(n.titulo)) : "<a>" + limpio(n.titulo) + "</a>") + "<small>" +
@@ -442,7 +474,8 @@
       var desde = (actual - 1) * POR_PAGINA, hasta = Math.min(todas.length, desde + POR_PAGINA);
       $("noticias").innerHTML = todas.slice(desde, hasta).map(tarjeta).join("") || "<li>Todavía no hay titulares.</li>";
       $("noticias-cuenta").textContent = todas.length
-        ? todas.length + " titulares, del más nuevo al más viejo · mostrando " + (desde + 1) + " a " + hasta : "";
+        ? todas.length + (filtro ? " titulares del " + nombreDia(filtro) : " titulares, del más nuevo al más viejo") + " · mostrando " + (desde + 1) + " a " + hasta +
+          (!filtro && diasN.length > 1 ? " · toca una barra para ver un solo día" : "") : "";
       $("noticias-paginas").innerHTML = total < 2 ? "" :
         boton("‹ Más nuevos", actual - 1, actual === 1 ? " disabled" : "") +
         numeros().map(function (x) { return x === "…" ? '<span class="salto">…</span>' : boton(x, x); }).join("") +

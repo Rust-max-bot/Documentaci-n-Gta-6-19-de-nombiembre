@@ -48,6 +48,11 @@ ya estaba acordado y faltaba. **Es la lista ordenada de qué hacer y en qué ord
       el PC y desde GitHub, o anotar a mano lo llamativo como evento. Bruno lo dejó para
       después.
 
+- [x] **2.6 Filtro por día en los titulares (idea de Bruno, 2026-11-13).** **En la página desde
+      el 2026-11-14** (opción C de Bruno, barras por día; ver `PLAN.md`). Probada a 1280 y
+      384 px en los dos estilos, sin errores ni desborde, y con 40 días simulados (las barras se
+      deslizan y empiezan en el día más nuevo).
+
 ## Fase 4 — Mejoras largas (lo que queda)
 
 - [ ] **4.3 Análisis de datos (A3):** estadísticas e "datos interesantes" (popularidad,
@@ -170,6 +175,8 @@ la página, así que cada una se presenta con opciones y capturas antes de aplic
       no inventa ese contenido. La página los muestra uno al lado del otro.
       **Página lista el 2026-11-13** (opción B, postales de Miami; ver `PLAN.md`). **Falta el
       texto de Bruno** en `web/capsula.js`, antes del 19 nov; queda en `[ ]` hasta entonces.
+      Bruno lo deja para más adelante (2026-11-14) y pidió que se le recuerde: hay un
+      recordatorio programado para el 17 nov, 19:00 de Chile.
 - [x] **7.6 Hora cero en Nueva Zelanda y Miami (idea de Bruno, 2026-11-13).** **En la página
       desde el 2026-11-14** (diseño de Claude, porque Bruno pidió la tanda "sin preguntarme";
       ver `PLAN.md`): botones "Nueva Zelanda", "Chile" y "Miami" sobre la cuenta regresiva, ✓ en
