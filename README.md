@@ -4,8 +4,15 @@ Quiero recordar un evento histórico: la salida de GTA 6 el 19 de noviembre de 2
 repositorio es para documentarlo. No busco hacer algo productivo, solo divertirme.
 
 **Ver la página:** <https://rust-max-bot.github.io/Documentaci-n-Gta-6-19-de-nombiembre/>
-(se abre en el celular o en el PC y se actualiza sola después de cada medición; funciona
-cuando la publicación en GitHub Pages está activada, ver "Cómo ver la página").
+(se abre en el celular o en el PC y se actualiza sola después de cada medición).
+
+## Cómo se hizo
+
+**Este proyecto está hecho con Claude**, una inteligencia artificial de Anthropic (con
+Claude Code). Yo, Bruno, tuve la idea, planeé el proyecto, decidí qué medir y cómo debía
+verse la página, y elegí entre las opciones que me presentaba. **El código, los textos y las
+pruebas no los escribí yo:** los escribió Claude, siguiendo lo que yo le pedía. Las reglas con
+las que trabaja están en `CLAUDE.md`.
 
 ## Qué es
 
@@ -90,9 +97,8 @@ secretos de GitHub (y la del despertador, como secreto de Cloudflare).
 
 ## Cómo ver la página
 
-- **Desde el celular o cualquier navegador:** en la dirección de arriba. Para que funcione,
-  la publicación tiene que estar activada una vez en GitHub: *Settings → Pages → Build and
-  deployment → Source: GitHub Actions*.
+- **Desde el celular o cualquier navegador:** en la dirección de arriba. La publica GitHub
+  Pages (activado en *Settings → Pages → Source: GitHub Actions*).
 - **En el PC con Windows, sin internet:** doble clic en `ver_pagina.bat`. Trae las mediciones
   nuevas, prepara `web/datos.js` y abre `web/index.html` en el navegador. En otro sistema:
 

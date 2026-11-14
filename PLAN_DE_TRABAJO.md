@@ -55,12 +55,16 @@ ya estaba acordado y faltaba. **Es la lista ordenada de qué hacer y en qué ord
 
 - [x] **2.7 README al día (pedido de Bruno, 2026-11-14).** Qué es el proyecto, qué tiene la
       página, qué se mide, cómo funciona y cómo verla.
-- [ ] **2.8 Página publicada en internet, para verla desde el celular (pedido de Bruno,
+- [x] **2.8 Página publicada en internet, para verla desde el celular (pedido de Bruno,
       2026-11-14).** Workflow `publicar-pagina.yml`: después de cada medición y al cambiar la
-      página prepara `web/datos.js` y publica `web/` en GitHub Pages. Probado el sitio armado
-      con un servidor local (datos reales, sin errores ni desborde a 384 px). **Falta:** que
-      Bruno active Pages (Settings → Pages → Source: GitHub Actions), lance la primera
-      publicación y se compruebe la página en la dirección pública.
+      página prepara `web/datos.js` y publica `web/` en GitHub Pages, en
+      <https://rust-max-bot.github.io/Documentaci-n-Gta-6-19-de-nombiembre/>. Bruno activó Pages
+      el 2026-11-14; la primera publicación (ejecución 43541223135) falló porque Pages aún no
+      estaba activado, y la segunda (43541607157, lanzada a mano) salió bien. Bruno comprobó
+      la página. Desde la nube no se puede abrir `github.io` (la red lo bloquea).
+- [x] **2.9 Nota "hecho con Claude" (pedido de Bruno, 2026-11-14).** En el README y en el pie
+      de la página: la idea, el plan y las decisiones son de Bruno; el código, los textos y
+      las pruebas los escribió Claude a pedido suyo.
 
 ## Fase 4 — Mejoras largas (lo que queda)
 

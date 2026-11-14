@@ -18,8 +18,9 @@
 *(2026-11-14, ~01:50 UTC.)*
 
 **La página está lista para el lanzamiento.** Hechas las fases 0, 1, 2 (menos la 2.5, para
-después), 3 y las tareas 2.6, 2.7, 4.1, 4.2, 6.2, 6.3, 6.4, 7.2, 7.3, 7.5 y 7.6. La 2.8 (publicarla en
-internet) está en un PR y falta que Bruno active GitHub Pages. Lo que tiene:
+después), 3 y las tareas 2.6 a 2.9, 4.1, 4.2, 6.2, 6.3, 6.4, 7.2, 7.3, 7.5 y 7.6. **La página está
+publicada en internet** (2.8) y dice en el pie y en el README que está hecha con Claude a
+pedido de Bruno (2.9). Lo que tiene:
 - dos estilos de Miami (1986 y 2026, paleta B "Atardecer encendido") con torres de Miami que
   suben una por una al pasar a 2026;
 - día, atardecer y noche según la hora de Miami, con botones;
@@ -56,8 +57,9 @@ alarga en `recolector/interruptor.json` (por defecto, hasta el 19 dic).
 
 **Para ver la página:** en internet, en
 <https://rust-max-bot.github.io/Documentaci-n-Gta-6-19-de-nombiembre/> (tarea 2.8; la publica
-`publicar-pagina.yml` tras cada medición; **funciona cuando Bruno active Pages**: Settings →
-Pages → Source: GitHub Actions). En el PC, doble clic en `ver_pagina.bat` (trae las
+`publicar-pagina.yml` tras cada medición; Pages activado por Bruno el 14 nov). Desde la nube
+no se puede abrir `github.io` (la red lo bloquea): para revisarla, mirar la ejecución del
+workflow en GitHub. En el PC, doble clic en `ver_pagina.bat` (trae las
 mediciones, prepara `web/datos.js` y abre la página). `web/datos.js` lo genera
 `recolector/generar_web.py`: no se edita a mano ni va a git.
 
@@ -71,21 +73,22 @@ esos sitios): no es un fallo de la página.
 
 **Reglas en pausa:** ninguna. "Paso a paso con permiso" está activa **por tandas**: Bruno
 dice qué pasos hacer y Claude no para hasta completarlos (ver `CLAUDE.md`). Tanda actual:
-README (2.7) y publicar la página en internet (2.8), del 14 nov. Antes, ese día: 7.6, 7.5,
+ninguna (la última, del 14 nov: README, publicar la página y la nota "hecho con Claude",
+2.7 a 2.9). Antes, ese día: 7.6, 7.5,
 la línea de tiempo (PR #16) y el filtro por día de los titulares (2.6, PR #17), unidos. Quedan 7.1 (después del lanzamiento) y 7.4 (el texto de Bruno). La 6.1 se ejecuta una vez entre el 20 y el 25 nov: el programa
 (`recolector/trends_extra.py`, workflow "Trends extra (6.1)") quedó listo y probado el 13 nov;
 Bruno ya eligió las palabras de la comparación.
 
 ## Últimos cambios
 
-- 2026-11-14: README al día (2.7) y workflow para publicar la página en GitHub Pages y verla desde el celular (2.8, pedido de Bruno); falta que Bruno active Pages.
+- 2026-11-14: nota "hecho con Claude" en el README y en el pie de la página (2.9, pedido de Bruno).
+- 2026-11-14: README al día (2.7) y página publicada en GitHub Pages para verla desde el celular (2.8, pedido de Bruno).
 - 2026-11-14: filtro por día en los titulares con barras por día (2.6, opción C de Bruno).
 - 2026-11-14: cuenta regresiva con botones Nueva Zelanda, Chile y Miami (7.6), "Resumen del día" (7.5) y más eventos automáticos en la línea de tiempo (pedido de Bruno); diseño de Claude porque Bruno pidió no preguntarle.
 - 2026-11-13: las torres nuevas suben una por una al pasar a 2026 y bajan al volver a 1986 (7.3, opción B de Bruno).
 - 2026-11-13: vuelve el barrido de colores al cambiar de estilo (se había perdido con la hora cero) y vuelve el relleno de los gráficos; nueva tarea 7.6, hora cero en Nueva Zelanda y Miami.
 - 2026-11-13: pestañas "Global" y "En español" en los videos de YouTube (6.4, opción A de Bruno).
 - 2026-11-13: programa aparte para las preguntas extra a Google Trends (6.1), probado desde GitHub sin guardar, con las palabras que eligió Bruno; falta ejecutarlo del 20 al 25 nov.
-- 2026-11-13: el recolector busca también videos en español una vez por hora (6.4, pedido de Bruno); la página, después.
 - 2026-11-13: sección "Logros y récords" en la página, con los tráilers oficiales (6.2, opción A de Bruno).
 
 ## Pendiente
@@ -102,8 +105,8 @@ La lista completa y su orden están en `PLAN_DE_TRABAJO.md`. Resumen (2026-11-13
 5. **Fase 5** (después del lanzamiento): búsqueda calmada; clave de Reddit.
 6. **Ideas sueltas:** 2.5 TikTok (sin acceso fácil); D6 (Bruno pidió ignorarla por ahora).
 7. **Bruno:**
-   - activar GitHub Pages una vez (Settings → Pages → Build and deployment → Source: GitHub
-     Actions) para que se vea la página en internet (2.8);
+   - si quiere, borrar en GitHub la ejecución fallida 43541223135 de "Publicar página" (falló
+     porque Pages aún no estaba activado; Actions → la ejecución → "…" → Delete workflow run);
    - pedir a soporte de GitHub que borre la referencia del PR #1 (deja alcanzable el primer
      commit, con su correo de Outlook);
    - activar en GitHub "Keep my email addresses private" y "Block command line pushes that
