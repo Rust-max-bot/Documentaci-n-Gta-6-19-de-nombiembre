@@ -122,6 +122,17 @@ Resultado final: **una página web** con:
   hay más días de los que caben, las barras se deslizan hacia el lado y empiezan en los más
   nuevos. Se descartaron A (un botón por día: serían ~40 al 19 dic) y B (lista desplegable: no
   muestra qué día tuvo más titulares).
+- **Tres mejoras de la página (Bruno eligió "las tres primeras" ideas de Claude, 2026-11-14).**
+  - Actualización sola con "Última medición hace X min" (2.10): no hubo opciones porque solo
+    añade una línea arriba de las fichas; Bruno la vio en captura.
+  - Menú de secciones (2.12): **opción B de Bruno, botón flotante** abajo a la derecha. Se
+    descartaron A (barra fija arriba: en el celular hay que deslizarla para ver las últimas
+    secciones y ocupa pantalla) y C (índice arriba de las fichas y una flecha para volver: solo
+    sirve estando arriba).
+  - Imagen al compartir (2.11): **opción C de Bruno, las dos portadas mitad y mitad** (cada
+    mitad es la portada dibujada a 600 px, para que el título no quede cortado). Se
+    descartaron A (solo 1986 de noche) y B (solo 2026 al atardecer). Ícono de la pestaña
+    original de Claude: sol con rayas, palmera y mar.
 - **Resumen del día (tarea 7.5, 2026-11-14). Diseño elegido por Claude (misma tanda).**
   - Sección después de la línea de tiempo, con botones de día (lo más nuevo primero, como la
     tabla de Twitch) y una tarjeta con 6 cuadros, iguales a los de "Logros y récords": máximo

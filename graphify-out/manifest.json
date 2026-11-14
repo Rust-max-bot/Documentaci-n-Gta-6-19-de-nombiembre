@@ -18,9 +18,9 @@
     "semantic_hash": ""
   },
   "web/app.js": {
-    "mtime": 1794621084.8580854,
-    "seen": 1794621199.683077,
-    "ast_hash": "6dbf9198295e38f6d73e715e5789f08a",
+    "mtime": 1794625801.2088604,
+    "seen": 1794626000.0694802,
+    "ast_hash": "9dd94f7934395f81c91efa37e7b45e5d",
     "semantic_hash": ""
   },
   "web/datos-ejemplo.js": {
@@ -48,9 +48,9 @@
     "semantic_hash": ""
   },
   "ESTADO_ACTUAL.md": {
-    "mtime": 1794621098.02881,
-    "seen": 1794621199.6830845,
-    "ast_hash": "dbfde0acb88fd2e39973e99a53121296",
+    "mtime": 1794625994.3955529,
+    "seen": 1794626000.0694928,
+    "ast_hash": "5290d08a9e080ea208649b0ee52f4831",
     "semantic_hash": ""
   },
   "GUIA_CLAVES.md": {
@@ -60,21 +60,21 @@
     "semantic_hash": ""
   },
   "PLAN.md": {
-    "mtime": 1794619841.9104862,
-    "seen": 1794621199.6830878,
-    "ast_hash": "1f11b0d2ca70df90f0ad0c1861aa197b",
+    "mtime": 1794625994.3739793,
+    "seen": 1794626000.0694988,
+    "ast_hash": "a3a1c8f776dad69e53f25924b733d206",
     "semantic_hash": ""
   },
   "README.md": {
-    "mtime": 1794621084.8554378,
-    "seen": 1794621199.68309,
-    "ast_hash": "6109930858d33936c6e88181e8662b1f",
+    "mtime": 1794625994.3758652,
+    "seen": 1794626000.0695014,
+    "ast_hash": "8e2bdfb463a0117a76c10ed29fe8ae36",
     "semantic_hash": ""
   },
   "web/index.html": {
-    "mtime": 1794621084.8572173,
-    "seen": 1794621199.6830983,
-    "ast_hash": "90f7d61bd705aa20d8b3e7d3227322a1",
+    "mtime": 1794625807.6142318,
+    "seen": 1794626000.0695117,
+    "ast_hash": "f189561046a9347d8bbeb958d3ce3b4d",
     "semantic_hash": ""
   },
   ".github/workflows/probar-fuentes.yml": {
@@ -132,9 +132,9 @@
     "semantic_hash": ""
   },
   "PLAN_DE_TRABAJO.md": {
-    "mtime": 1794620541.1166842,
-    "seen": 1794621199.6830888,
-    "ast_hash": "250554bbcd78a3982a827b45d64891e1",
+    "mtime": 1794625994.373469,
+    "seen": 1794626000.0695002,
+    "ast_hash": "0d21517b94b23c9fdfe1917af97ecb18",
     "semantic_hash": ""
   },
   "recolector/LEEME.md": {
@@ -243,6 +243,18 @@
     "mtime": 1794619685.70978,
     "seen": 1794621199.6830525,
     "ast_hash": "cef0ee4933dcc4010a985f85baa79d69",
+    "semantic_hash": ""
+  },
+  "web/compartir.jpg": {
+    "mtime": 1794625807.594918,
+    "seen": 1794626000.0695136,
+    "ast_hash": "65ffa16bf5476eabd5dbfb67d08935aa",
+    "semantic_hash": ""
+  },
+  "web/icono.svg": {
+    "mtime": 1794625775.3248174,
+    "seen": 1794626000.0695148,
+    "ast_hash": "45fbce9c1836ea0ff4f512763bf381c7",
     "semantic_hash": ""
   }
 }

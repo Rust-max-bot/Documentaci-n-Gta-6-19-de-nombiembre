@@ -65,6 +65,19 @@ ya estaba acordado y faltaba. **Es la lista ordenada de qué hacer y en qué ord
 - [x] **2.9 Nota "hecho con Claude" (pedido de Bruno, 2026-11-14).** En el README y en el pie
       de la página: la idea, el plan y las decisiones son de Bruno; el código, los textos y
       las pruebas los escribió Claude a pedido suyo.
+- [x] **2.10 Actualización sola (idea de Claude elegida por Bruno, 2026-11-14).** Arriba de las
+      fichas, "Última medición hace X min · HH:MM". Con la página abierta en internet revisa
+      cada 2 minutos (y al volver a la pestaña) si `datos.js` tiene otra fecha de "generado";
+      si nadie la toca hace 90 s o está en segundo plano, se recarga sola y vuelve al mismo
+      lugar; si no, muestra "Hay datos nuevos · tocar para actualizar". Probado con datos
+      simulados en un servidor local.
+- [x] **2.11 Vista previa al compartir e ícono propio (misma tanda).** Imagen `web/compartir.jpg`
+      (opción C de Bruno: las dos portadas mitad y mitad, 1200×630) con etiquetas Open Graph y
+      `twitter:card`, y un ícono original para la pestaña (`web/icono.svg`: sol, palmera y
+      mar). Las redes guardan la vista previa un tiempo: puede tardar en verse la nueva.
+- [x] **2.12 Menú de secciones (misma tanda).** Botón flotante "☰ Secciones" abajo a la derecha
+      (opción B de Bruno) con la lista de secciones y "↑ Volver arriba"; se cierra al tocar
+      fuera o con Escape. Probado a 1280 y 384 px en los dos estilos.
 
 ## Fase 4 — Mejoras largas (lo que queda)
 

@@ -28,6 +28,9 @@ la página están en hora de Santiago de Chile.
 
 ## Qué tiene la página
 
+- **Menú de secciones**: un botón "☰ Secciones" abajo a la derecha para saltar a cualquier
+  parte. Arriba de las fichas dice cuándo fue la última medición, y si la página queda
+  abierta se actualiza sola.
 - **Cuenta regresiva** hasta la medianoche del 19 nov en Nueva Zelanda, Chile o Miami (con
   botones para elegir). Al llegar la hora cero de Chile hay fuegos artificiales y reflectores.
 - **Fichas** con el máximo de espectadores en Twitch, el máximo en Google Trends y cuántas

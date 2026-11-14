@@ -8,7 +8,19 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Limelight&family=Monoton&family=Outfit:wght@400;500;600;700&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="estilos.css">
-<link rel="icon" href="data:,"><!-- sin icono: evita que el navegador pida favicon.ico y avise con un 404 al publicarla -->
+<link rel="icon" href="icono.svg" type="image/svg+xml"><!-- icono original: sol, palmera y mar (hecho para este proyecto) -->
+<!-- Vista previa al compartir el enlace (WhatsApp, Discord, X...). Las redes piden la imagen con dirección completa. -->
+<meta name="description" content="Recuerdo del lanzamiento de GTA 6 (19 de noviembre de 2026): Twitch, YouTube, Google Trends, titulares y Reddit, antes, durante y después del día.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="19·NOV·2026 — El día que salió GTA 6">
+<meta property="og:description" content="Cómo se vivió el lanzamiento en internet: espectadores, videos, búsquedas y titulares, medición por medición.">
+<meta property="og:url" content="https://rust-max-bot.github.io/Documentaci-n-Gta-6-19-de-nombiembre/">
+<meta property="og:image" content="https://rust-max-bot.github.io/Documentaci-n-Gta-6-19-de-nombiembre/compartir.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="es_CL">
+<meta name="twitter:card" content="summary_large_image">
 </head>
 <body>
 
@@ -97,6 +109,7 @@
 </header>
 
 <main>
+  <p class="en-vivo" id="en-vivo" hidden></p>
   <section class="fichas" id="fichas"></section>
 
   <!-- Logros y récords (tarea 6.2, opción A "vitrina" de Bruno) -->
@@ -108,7 +121,7 @@
     <ul class="rc-trailers" id="records-trailers"></ul>
   </section>
 
-  <section class="bloque observar">
+  <section class="bloque observar" id="seccion-linea">
     <h2>Línea de tiempo</h2>
     <p class="nota">Eventos detectados por el programa y eventos anotados a mano. Todas las horas de la página están en hora de Santiago de Chile.</p>
     <ol class="linea" id="linea"></ol>
@@ -122,32 +135,32 @@
     <div class="rd-tarjeta" id="resumen-tarjeta"></div>
   </section>
 
-  <section class="bloque observar">
+  <section class="bloque observar" id="seccion-twitch">
     <h2>Espectadores en Twitch</h2>
     <p class="nota">Personas viendo transmisiones del juego en cada medición.</p>
     <div class="grafico" id="g-twitch"></div>
   </section>
 
-  <section class="bloque observar">
+  <section class="bloque observar" id="seccion-trends">
     <h2>Interés en Google Trends</h2>
     <p class="nota">Escala de 0 a 100. El 100 es el momento de más búsquedas del periodo.</p>
     <div class="grafico" id="g-trends"></div>
   </section>
 
-  <section class="bloque observar">
+  <section class="bloque observar" id="seccion-servidores">
     <h2>¿Se cayeron los servidores?</h2>
     <p class="nota">Según las páginas oficiales de estado. Cada cuadro es una medición.</p>
     <div id="servidores"></div>
     <p class="leyenda"><i class="c ok"></i> Funcionando <i class="c mal"></i> Con problemas <i class="c nd"></i> Sin dato</p>
   </section>
 
-  <section class="bloque observar">
+  <section class="bloque observar" id="seccion-tabla">
     <h2>Twitch, medición por medición</h2>
     <div class="filtros" id="filtros-dia"></div>
     <div class="tabla-caja"><table id="t-twitch"></table></div>
   </section>
 
-  <section class="bloque observar">
+  <section class="bloque observar" id="seccion-videos">
     <h2>Videos más vistos en YouTube</h2>
     <p class="nota" id="videos-nota">Visitas al final del periodo medido y cuánto subieron desde el inicio.</p>
     <div class="filtros" id="videos-tabs" role="group" aria-label="Qué videos ver"></div>
@@ -193,6 +206,7 @@
   <p>Proyecto personal de recuerdo. No afiliado a Rockstar Games ni a Take-Two Interactive.</p>
 </footer>
 
+<nav class="menu" id="menu" aria-label="Secciones de la página"></nav>
 <div class="globo" id="globo" hidden></div>
 
 <script src="datos-ejemplo.js"></script>
