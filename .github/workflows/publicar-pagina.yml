@@ -49,6 +49,7 @@ jobs:
       - uses: actions/checkout@v5   # v5 usa Node.js 24
         with:
           ref: main                 # siempre lo último de main, con la medición recién guardada
+          persist-credentials: false   # este trabajo no sube nada a git: no guarda la clave (seguridad, 2026-11-14)
 
       - name: Preparar los datos de la página
         run: python3 recolector/generar_web.py

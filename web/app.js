@@ -83,7 +83,12 @@
     var f = [1, 2, 2.5, 5, 10].filter(function (x) { return x * mag >= crudo; })[0];
     return f * mag;
   }
-  function limpio(s) { var d = document.createElement("div"); d.textContent = s == null ? "" : s; return d.innerHTML; }
+  /* Texto seguro para poner dentro del HTML, también entre comillas de un atributo (revisión de
+     seguridad, 2026-11-14: antes no cambiaba las comillas). */
+  function limpio(s) {
+    return String(s == null ? "" : s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;").replace(/'/g, "&#39;");
+  }
   /* Enlace que se abre en otra pestaña del navegador. Solo se arma con direcciones construidas
      aquí (YouTube, Twitch) o que empiezan por http(s); si no, queda el texto sin enlace. */
   function enlace(url, texto) {
@@ -436,7 +441,7 @@
         // Solo miniaturas de YouTube; la imagen repite el enlace del título, así que no recibe foco.
         var foto = /^https:\/\/i\.ytimg\.com\//.test(f.v.miniatura || "")
           ? (url ? '<a class="foto" href="' + limpio(url) + '" target="_blank" rel="noopener noreferrer" tabindex="-1" aria-hidden="true">' : '<div class="foto">') +
-            '<img src="' + limpio(f.v.miniatura) + '" alt="" loading="lazy" width="320" height="180">' + (url ? "</a>" : "</div>")
+            '<img src="' + (/^https:\/\/i\.ytimg\.com\//.test(f.v.miniatura || "") ? limpio(f.v.miniatura) : "data:,") + '" alt="" loading="lazy" width="320" height="180">' + (url ? "</a>" : "</div>")
           : "";
         return "<li>" + foto + '<div class="v-texto">' + enlace(url, limpio(f.v.titulo)) +
           '<small title="Al inicio: ' + num(f.a) + " · Al final: " + num(f.b) + '">' + limpio(f.v.canal) + " · " + compacto(f.b) +

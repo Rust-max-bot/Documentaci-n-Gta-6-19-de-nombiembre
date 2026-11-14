@@ -3,6 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Política de seguridad (revisión del 2026-11-14): la página solo ejecuta sus propios archivos
+     .js, y solo carga letras de Google Fonts y fotos de YouTube y Twitch. Si algún día un texto
+     de las fuentes (un titular, un título de Reddit) colara código, el navegador no lo ejecutaría. -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https://i.ytimg.com https://static-cdn.jtvnw.net; connect-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta name="referrer" content="strict-origin-when-cross-origin">
 <title>19·NOV·2026 — El día de GTA 6</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -210,9 +215,9 @@
 <div class="globo" id="globo" hidden></div>
 
 <script src="datos-ejemplo.js"></script>
-<script src="datos.js" onerror="void 0"></script>
-<script src="eventos.js" onerror="void 0"></script>
-<script src="capsula.js" onerror="void 0"></script>
+<script src="datos.js"></script>
+<script src="eventos.js"></script>
+<script src="capsula.js"></script>
 <script src="app.js"></script>
 </body>
 </html>

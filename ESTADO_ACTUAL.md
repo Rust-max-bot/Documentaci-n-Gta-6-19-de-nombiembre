@@ -76,7 +76,7 @@ esos sitios): no es un fallo de la página.
 
 **Reglas en pausa:** ninguna. "Paso a paso con permiso" está activa **por tandas**: Bruno
 dice qué pasos hacer y Claude no para hasta completarlos (ver `CLAUDE.md`). Tanda actual
-(14 nov, pedida por Bruno): 2.13 datos por días y 2.14 muchas visitas (hechas), 2.15 seguridad,
+(14 nov, pedida por Bruno): 2.13 datos por días, 2.14 muchas visitas y 2.15 seguridad (hechas),
 7.8 resumen como imagen, 7.7 álbum y 7.9 comparar lanzamientos. Antes: las tres mejoras 2.10 a 2.12; antes, README, publicar la página
 y la nota "hecho con Claude", 2.7 a 2.9). Antes, ese día: 7.6, 7.5,
 la línea de tiempo (PR #16) y el filtro por día de los titulares (2.6, PR #17), unidos. Quedan 7.1 (después del lanzamiento) y 7.4 (el texto de Bruno). La 6.1 se ejecuta una vez entre el 20 y el 25 nov: el programa
@@ -85,6 +85,7 @@ Bruno ya eligió las palabras de la comparación.
 
 ## Últimos cambios
 
+- 2026-11-14: revisión de seguridad con el skill de Cloudflare (2.15): sin fallos confirmados; 4 refuerzos (comillas, miniaturas, CSP, clave del checkout) y 3 cosas para Bruno en sus cuentas (`PLAN.md`).
 - 2026-11-14: datos por días (2.13: `datos.js` de 222 a 50 KB, los titulares de cada día se cargan al mostrarlos) y revisión de datos nuevos con `version.json` para aguantar muchas visitas (2.14).
 - 2026-11-14: actualización sola con "Última medición hace X min" (2.10), vista previa al compartir con ícono propio (2.11, opción C de Bruno) y menú de secciones con botón flotante (2.12, opción B de Bruno).
 - 2026-11-14: nota "hecho con Claude" en el README y en el pie de la página (2.9, pedido de Bruno); en lo público, Bruno aparece como "Rust" (regla nueva en `CLAUDE.md`).
@@ -93,7 +94,6 @@ Bruno ya eligió las palabras de la comparación.
 - 2026-11-14: cuenta regresiva con botones Nueva Zelanda, Chile y Miami (7.6), "Resumen del día" (7.5) y más eventos automáticos en la línea de tiempo (pedido de Bruno); diseño de Claude porque Bruno pidió no preguntarle.
 - 2026-11-13: las torres nuevas suben una por una al pasar a 2026 y bajan al volver a 1986 (7.3, opción B de Bruno).
 - 2026-11-13: vuelve el barrido de colores al cambiar de estilo (se había perdido con la hora cero) y vuelve el relleno de los gráficos; nueva tarea 7.6, hora cero en Nueva Zelanda y Miami.
-- 2026-11-13: pestañas "Global" y "En español" en los videos de YouTube (6.4, opción A de Bruno).
 
 ## Pendiente
 
@@ -109,6 +109,9 @@ La lista completa y su orden están en `PLAN_DE_TRABAJO.md`. Resumen (2026-11-13
 5. **Fase 5** (después del lanzamiento): búsqueda calmada; clave de Reddit.
 6. **Ideas sueltas:** 2.5 TikTok (sin acceso fácil); D6 (Bruno pidió ignorarla por ahora).
 7. **Bruno:**
+   - revisar en sus cuentas 3 cosas de la revisión de seguridad (2.15, detalle en `PLAN.md`):
+     clave de YouTube restringida a "YouTube Data API v3", regla en GitHub para que `main` no
+     se pueda borrar ni reescribir, y "Secret scanning" + "Push protection" activados;
    - si quiere, borrar en GitHub la ejecución fallida 43541223135 de "Publicar página" (falló
      porque Pages aún no estaba activado; Actions → la ejecución → "…" → Delete workflow run);
    - pedir a soporte de GitHub que borre la referencia del PR #1 (deja alcanzable el primer

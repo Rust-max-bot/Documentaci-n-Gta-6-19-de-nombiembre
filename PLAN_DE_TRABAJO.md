@@ -87,8 +87,10 @@ ya estaba acordado y faltaba. **Es la lista ordenada de qué hacer y en qué ord
       minutos mira `version.json` (menos de 50 bytes) en vez de bajar `datos.js` entero.
       Una primera visita baja unos 94 KB comprimidos: el límite blando de GitHub Pages (100 GB
       al mes) da para cerca de 1 millón de visitas. Plan B si no alcanza: ver `PLAN.md`.
-- [ ] **2.15 Revisión de seguridad (misma tanda).** Con el skill `security-audit` de
-      Cloudflare, en modo guiado (elección de Bruno).
+- [x] **2.15 Revisión de seguridad (misma tanda).** Con el skill `security-audit` de
+      Cloudflare (`cloudflare/security-audit-skill`, commit c1c8a8c), en modo guiado (elección
+      de Bruno). Sin fallos confirmados; se aplicaron 4 refuerzos y quedan 3 cosas que Bruno
+      revisa en sus cuentas (ver `PLAN.md`, "Revisión de seguridad").
 
 ## Fase 4 — Mejoras largas (lo que queda)
 

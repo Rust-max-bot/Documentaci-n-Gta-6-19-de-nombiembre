@@ -134,6 +134,26 @@ Resultado final: **una página web** con:
   - **Plan B, solo si GitHub avisa:** publicar la misma carpeta `web/` en Cloudflare Pages
     (Bruno ya tiene cuenta de Cloudflare). No se hace antes porque no hace falta y suma otra
     cuenta que cuidar.
+- **Revisión de seguridad (2026-11-14, skill `security-audit` de Cloudflare en modo guiado,
+  elección de Bruno).** Se revisaron la página (textos de fuentes externas que se muestran),
+  los workflows (quién los lanza, qué claves ven), el despertador, las claves y el historial.
+  - **Sin fallos confirmados.** Ningún workflow corre código de otras personas (no hay
+    `pull_request`); el despertador no lanza nada si alguien abre su dirección; la clave del
+    despertador solo tiene "Actions" sobre este repositorio; el recolector solo usa la
+    biblioteca estándar de Python; no hay claves, correos ni rutas del PC en los archivos ni en
+    el historial (búsqueda en los 161 commits).
+  - **Refuerzos aplicados** (no arreglan un fallo encontrado, pero cierran puertas):
+    `limpio()` también cambia las comillas; las miniaturas de YouTube solo se aceptan desde
+    `i.ytimg.com`; política de seguridad (CSP) en `index.html`, que impide ejecutar código que
+    no venga de los propios `.js` de la página (comprobado: un código metido a propósito no se
+    ejecuta); `publicar-pagina.yml` no guarda la clave de GitHub al descargar el código.
+  - **Para Bruno, en sus cuentas** (no se ve desde el repositorio): 1) que la clave de YouTube
+    esté restringida a "YouTube Data API v3"; 2) en GitHub, una regla para `main` que impida
+    borrarla o reescribirla con `--force` (las mediciones se siguen guardando); 3) que
+    "Secret scanning" y "Push protection" estén activados (Settings → Advanced Security).
+  - **Opcional, no hecho:** fijar cada acción de GitHub a un commit exacto en vez de `@v5`.
+    Protege si alguien tomara el control de una acción oficial, pero obliga a actualizar a
+    mano o con Dependabot (más pull requests que unir).
 - **Tres mejoras de la página (Bruno eligió "las tres primeras" ideas de Claude, 2026-11-14).**
   - Actualización sola con "Última medición hace X min" (2.10): no hubo opciones porque solo
     añade una línea arriba de las fichas; Bruno la vio en captura.

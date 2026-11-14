@@ -18,9 +18,9 @@
     "semantic_hash": ""
   },
   "web/app.js": {
-    "mtime": 1794627698.258906,
-    "seen": 1794628067.4548361,
-    "ast_hash": "987bba6990d8a45447c74a6143ad2159",
+    "mtime": 1794628188.8745837,
+    "seen": 1794628341.3815787,
+    "ast_hash": "b4322541105e116ad4f22ede10ddb94a",
     "semantic_hash": ""
   },
   "web/datos-ejemplo.js": {
@@ -48,9 +48,9 @@
     "semantic_hash": ""
   },
   "ESTADO_ACTUAL.md": {
-    "mtime": 1794628055.3734958,
-    "seen": 1794628067.4548452,
-    "ast_hash": "4fc5270a85f6c76aad5f591c57b3d59d",
+    "mtime": 1794628340.2166877,
+    "seen": 1794628341.3815875,
+    "ast_hash": "c3600d50a2876b41d1870c0cfab894ce",
     "semantic_hash": ""
   },
   "GUIA_CLAVES.md": {
@@ -60,9 +60,9 @@
     "semantic_hash": ""
   },
   "PLAN.md": {
-    "mtime": 1794628045.7106156,
-    "seen": 1794628067.4548492,
-    "ast_hash": "dbadd270bd268d59775a904d7de32a67",
+    "mtime": 1794628327.5496168,
+    "seen": 1794628341.3815916,
+    "ast_hash": "fc2f0f5cfff20bdb1566b0f25dabc9dc",
     "semantic_hash": ""
   },
   "README.md": {
@@ -72,9 +72,9 @@
     "semantic_hash": ""
   },
   "web/index.html": {
-    "mtime": 1794626009.58293,
-    "seen": 1794628067.4548612,
-    "ast_hash": "f189561046a9347d8bbeb958d3ce3b4d",
+    "mtime": 1794628188.8759484,
+    "seen": 1794628341.3816035,
+    "ast_hash": "d8933f55fceced9b2741292784ed2ea5",
     "semantic_hash": ""
   },
   ".github/workflows/probar-fuentes.yml": {
@@ -132,9 +132,9 @@
     "semantic_hash": ""
   },
   "PLAN_DE_TRABAJO.md": {
-    "mtime": 1794628045.709424,
-    "seen": 1794628067.4548507,
-    "ast_hash": "3c8604df95c7018bdd528a06198032d4",
+    "mtime": 1794628327.548876,
+    "seen": 1794628341.381593,
+    "ast_hash": "ff4636c1ac5ff2c30f477a4357385dce",
     "semantic_hash": ""
   },
   "recolector/LEEME.md": {
@@ -240,9 +240,9 @@
     "semantic_hash": ""
   },
   ".github/workflows/publicar-pagina.yml": {
-    "mtime": 1794628021.6865537,
-    "seen": 1794628067.454808,
-    "ast_hash": "e7e25a9a9279e544597498b9ac274e61",
+    "mtime": 1794628188.8763406,
+    "seen": 1794628341.381553,
+    "ast_hash": "0cdfb80b001908ce25abdee1a09f7e7c",
     "semantic_hash": ""
   },
   "web/compartir.jpg": {
