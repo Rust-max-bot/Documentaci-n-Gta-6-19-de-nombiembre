@@ -157,10 +157,10 @@ la página, así que cada una se presenta con opciones y capturas antes de aplic
 - [ ] **7.1 Rebobinar el lanzamiento.** Una barra para mover la página hora por hora (con cada
       medición guardada) y revivir el 19 nov: los números, el gráfico y los titulares cambian
       a esa hora. Se puede hacer después del lanzamiento: los datos ya quedan guardados.
-- [ ] **7.3 Viaje en el tiempo.** Al cambiar de Miami 1986 a 2026, las torres nuevas (tarea
+- [x] **7.3 Viaje en el tiempo.** Al cambiar de Miami 1986 a 2026, las torres nuevas (tarea
       3.3) suben detrás de los hoteles, y al volver a 1986 bajan. Sin fecha límite.
-      **2026-11-13:** 3 opciones grabadas en GIF (A juntas, B una por una, C por pisos),
-      esperando que Bruno elija.
+      **En la página desde el 2026-11-13** (opción B de Bruno, "una por una"; ver `PLAN.md`).
+      Probada a 1280 y 384 px en los dos estilos, sin errores ni desborde.
   - Arreglado de paso (2026-11-13): el barrido de colores al cambiar de estilo se había perdido
     con la hora cero (PR #9), porque los reflectores usaban otra animación con el mismo nombre
     (`barrer`). Lo mismo dejaba sin relleno los gráficos (`aparecer`). Se renombraron.

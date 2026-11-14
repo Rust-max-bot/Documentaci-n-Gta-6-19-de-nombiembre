@@ -73,6 +73,11 @@ Resultado final: **una página web** con:
     - Torre en forma de vela, con piscina en voladizo.
     - Estructura curva por fuera (idea del One Thousand Museum).
     - Cubos apilados y corridos, aún en obra, con grúa (idea del Waldorf Astoria Miami, en obra en ago. 2026 y que termina en 2028).
+- **Viaje en el tiempo (tarea 7.3, opción B de Bruno, 2026-11-13): una por una.** Al pasar a
+  2026, después del barrido, las torres nuevas suben en tres partes (centro, izquierda,
+  derecha) con un pequeño rebote; al volver a 1986 bajan en orden inverso y después pasa el
+  barrido. Se descartaron "todas juntas" (A) y "por pisos, a saltos" (C). Sin animación si el
+  sistema pide menos movimiento.
     - Una torre que gira, balcones ondulados y terrazas con plantas.
     - Van en azul suave para que los hoteles sigan al frente.
   - **Ojo:** según Wikipedia, GTA Vice City tiene un edificio basado en el Atlantis. Por eso la torre con hueco es genérica y no debe parecerse más a ese edificio.

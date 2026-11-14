@@ -18,8 +18,9 @@
 *(2026-11-13, ~22:30 UTC.)*
 
 **La página está lista para el lanzamiento.** Hechas las fases 0, 1, 2 (menos la 2.5, para
-después), 3 y las tareas 4.1, 4.2 y 7.2. Lo que tiene:
-- dos estilos de Miami (1986 y 2026, paleta B "Atardecer encendido") con torres de Miami;
+después), 3 y las tareas 4.1, 4.2, 6.2, 6.3, 6.4, 7.2 y 7.3. Lo que tiene:
+- dos estilos de Miami (1986 y 2026, paleta B "Atardecer encendido") con torres de Miami que
+  suben una por una al pasar a 2026;
 - día, atardecer y noche según la hora de Miami, con botones;
 - hora cero con fuegos y reflectores (se prueba con `?probar-hora-cero`);
 - videos y Twitch con miniaturas y enlaces; titulares por páginas; Reddit por RSS;
@@ -66,13 +67,13 @@ Bruno ya eligió las palabras de la comparación.
 
 ## Últimos cambios
 
+- 2026-11-13: las torres nuevas suben una por una al pasar a 2026 y bajan al volver a 1986 (7.3, opción B de Bruno).
 - 2026-11-13: vuelve el barrido de colores al cambiar de estilo (se había perdido con la hora cero) y vuelve el relleno de los gráficos; nueva tarea 7.6, hora cero en Nueva Zelanda y Miami.
 - 2026-11-13: pestañas "Global" y "En español" en los videos de YouTube (6.4, opción A de Bruno).
 - 2026-11-13: programa aparte para las preguntas extra a Google Trends (6.1), probado desde GitHub sin guardar, con las palabras que eligió Bruno; falta ejecutarlo del 20 al 25 nov.
 - 2026-11-13: el recolector busca también videos en español una vez por hora (6.4, pedido de Bruno); la página, después.
 - 2026-11-13: sección "Logros y récords" en la página, con los tráilers oficiales (6.2, opción A de Bruno).
 - 2026-11-13: la página muestra "GTA frente a lo más visto" (6.3, opción A de Bruno) y el recolector mide los 4 videos oficiales de GTA VI (6.2).
-- 2026-11-13: estado anterior archivado en historial/ESTADO_2026-11-13.md
 - 2026-11-13: revisado el despertador: sin claves ni datos de Bruno en el repositorio; el Worker de Cloudflare es igual a la copia. Hallado: el correo de Outlook en las uniones de PR hechas desde la web.
 - 2026-11-13: `PLAN_DE_TRABAJO.md` archivado en `historial/PLAN_DE_TRABAJO_2026-11-13.md` y reescrito con lo pendiente; regla nueva: también se archiva al pasar de 20.000 bytes (decisión de Bruno).
 
@@ -86,7 +87,7 @@ La lista completa y su orden están en `PLAN_DE_TRABAJO.md`. Resumen (2026-11-13
 3. **Fase 6** (ideas de Bruno): 6.1 más Google Trends, **una sola vez entre el 20 y el 25 nov**,
    fuera del recolector de cada hora (decisión de Bruno, 2026-11-13; ver `PLAN.md`). Programa
    listo y probado, con las palabras que eligió Bruno; falta ejecutarlo y mostrarlo. 6.2 y 6.3, hechas. 6.4 videos en español, hecha (pestañas en la página).
-4. **Fase 7:** 7.1 rebobinar; 7.3 viaje en el tiempo (3 opciones en GIF, falta que Bruno elija); 7.5 resumen del día; 7.6 hora cero en Nueva Zelanda y Miami.
+4. **Fase 7:** 7.1 rebobinar; 7.3 viaje en el tiempo, hecha; 7.5 resumen del día; 7.6 hora cero en Nueva Zelanda y Miami.
 5. **Fase 5** (después del lanzamiento): búsqueda calmada; clave de Reddit.
 6. **Ideas sueltas:** 2.5 TikTok (sin acceso fácil); un filtro por día en los titulares
    (idea de Bruno, sin tarea todavía); D6 (Bruno pidió ignorarla por ahora).
