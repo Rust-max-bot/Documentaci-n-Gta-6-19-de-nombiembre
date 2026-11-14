@@ -461,14 +461,28 @@
   /* ---------- Cambio de estilo ---------- */
   (function () {
     var raiz = document.documentElement;
+    // Tarea 7.3 (opción B de Bruno, 2026-11-13): las torres nuevas suben una por una al ir a 2026
+    // y bajan al volver a 1986. Duraciones de las animaciones de estilos.css, con margen.
+    var SUBIR_MS = 2400, BAJAR_MS = 1200;
     try { var guardado = localStorage.getItem("tema"); if (guardado === "ochenta" || guardado === "actual") raiz.dataset.tema = guardado; } catch (e) {}
     document.querySelector(".cambio").addEventListener("click", function (e) {
       var tema = e.target.dataset.poner;
-      if (!tema || tema === raiz.dataset.tema || document.body.classList.contains("cambiando")) return;
+      if (!tema || tema === raiz.dataset.tema || document.body.classList.contains("cambiando-espera")) return;
       var quieto = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-      document.body.classList.add("cambiando");
-      setTimeout(function () { raiz.dataset.tema = tema; try { localStorage.setItem("tema", tema); } catch (e) {} }, quieto ? 0 : 380);
-      setTimeout(function () { document.body.classList.remove("cambiando"); }, quieto ? 0 : 820);
+      // Tarea 7.3: al ir a 2026 las torres nuevas suben después del barrido; al volver a 1986
+      // primero bajan y después pasa el barrido.
+      var bajar = !quieto && tema === "ochenta" ? BAJAR_MS : 0;
+      document.body.classList.add("cambiando-espera");
+      if (bajar) raiz.classList.add("torres-bajan");
+      setTimeout(function () {
+        document.body.classList.add("cambiando");
+        setTimeout(function () {
+          raiz.classList.remove("torres-bajan");
+          raiz.dataset.tema = tema; try { localStorage.setItem("tema", tema); } catch (e) {}
+          if (!quieto && tema === "actual") { raiz.classList.add("torres-suben"); setTimeout(function () { raiz.classList.remove("torres-suben"); }, SUBIR_MS); }
+        }, quieto ? 0 : 380);
+        setTimeout(function () { document.body.classList.remove("cambiando", "cambiando-espera"); }, quieto ? 0 : 820);
+      }, bajar);
     });
   })();
 

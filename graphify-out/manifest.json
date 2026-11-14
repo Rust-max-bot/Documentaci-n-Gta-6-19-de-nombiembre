@@ -18,9 +18,9 @@
     "semantic_hash": ""
   },
   "web/app.js": {
-    "mtime": 1794609547.1307838,
-    "seen": 1794609787.3826346,
-    "ast_hash": "591f808ee95a752f6ed550e995d73e0e",
+    "mtime": 1794614624.2041724,
+    "seen": 1794614815.7607696,
+    "ast_hash": "2fd698bc80df9e47b69b221583b9877b",
     "semantic_hash": ""
   },
   "web/datos-ejemplo.js": {
@@ -48,9 +48,9 @@
     "semantic_hash": ""
   },
   "ESTADO_ACTUAL.md": {
-    "mtime": 1794609775.538978,
-    "seen": 1794609787.3826482,
-    "ast_hash": "d44cf99c1f5e62299d6d47eef6e89cb4",
+    "mtime": 1794614813.257763,
+    "seen": 1794614815.760779,
+    "ast_hash": "fd1d8edc1b5b09e580da6fd7e6a17431",
     "semantic_hash": ""
   },
   "GUIA_CLAVES.md": {
@@ -60,9 +60,9 @@
     "semantic_hash": ""
   },
   "PLAN.md": {
-    "mtime": 1794609775.538185,
-    "seen": 1794609787.3826547,
-    "ast_hash": "ae337f35d984607ff673a128ca883a6e",
+    "mtime": 1794614795.816302,
+    "seen": 1794614815.760783,
+    "ast_hash": "00deaedb4a5964b7dab0b282ca087215",
     "semantic_hash": ""
   },
   "README.md": {
@@ -72,9 +72,9 @@
     "semantic_hash": ""
   },
   "web/index.html": {
-    "mtime": 1794609547.1318796,
-    "seen": 1794609787.3826747,
-    "ast_hash": "1227fd2b61e0fc3402925db7e2bb49ef",
+    "mtime": 1794614624.2031376,
+    "seen": 1794614815.7607946,
+    "ast_hash": "16e35911f892c8e587a653ed6266cea8",
     "semantic_hash": ""
   },
   ".github/workflows/probar-fuentes.yml": {
@@ -132,9 +132,9 @@
     "semantic_hash": ""
   },
   "PLAN_DE_TRABAJO.md": {
-    "mtime": 1794609775.5392063,
-    "seen": 1794609787.3826568,
-    "ast_hash": "7e85017f3681fbf969a6391c86bc8f9d",
+    "mtime": 1794614795.8173585,
+    "seen": 1794614815.760784,
+    "ast_hash": "cdb5e621fe803688c1ec799411b464d7",
     "semantic_hash": ""
   },
   "recolector/LEEME.md": {

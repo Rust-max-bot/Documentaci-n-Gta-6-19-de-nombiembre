@@ -77,6 +77,13 @@ body {
   display: flex; flex-direction: column;
 }
 .escena { position: absolute; inset: 0; opacity: 0; transition: opacity .7s; }
+/* Tarea 7.3 (opción B de Bruno, 2026-11-13): al pasar a 2026 las torres nuevas suben una por una
+   (centro, izquierda, derecha) con un pequeño rebote; al volver a 1986 bajan en orden inverso.
+   app.js pone las clases torres-suben y torres-bajan en <html>. */
+.t26 { transform-box: view-box; }
+.torres-suben .escena-26 .t26 { animation: t26-subir 1.1s calc(.35s + var(--n) * .3s) cubic-bezier(.3, 1.35, .5, 1) both; }
+.torres-bajan .escena-26 .t26 { animation: t26-subir .6s calc((2 - var(--n)) * .25s) cubic-bezier(.6, 0, .8, .3) reverse both; }
+@keyframes t26-subir { from { transform: translateY(70%); } }
 :root[data-tema="ochenta"] .escena-80,
 :root[data-tema="actual"] .escena-26 { opacity: 1; }
 
@@ -567,16 +574,18 @@ td a:hover, td a:focus-visible { color: var(--a1); text-decoration-color: var(--
 /* Fuegos artificiales */
 .fuegos { position: absolute; inset: 0; z-index: 1; pointer-events: none; }
 /* Reflectores y ventanas encendidas */
-.reflectores { position: absolute; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; animation: aparecer 1.5s ease-out both; }
+.reflectores { position: absolute; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; animation: reflectores-aparecer 1.5s ease-out both; }
 .reflectores i { position: absolute; bottom: 24%; width: 16vw; max-width: 180px; height: 120%; transform-origin: 50% 100%;
   background: linear-gradient(to top, rgba(255,255,255,.55), rgba(255,255,255,0) 85%); clip-path: polygon(42% 100%, 58% 100%, 100% 0, 0 0); filter: blur(2px); }
-.reflectores i:nth-child(1) { left: 12%; animation: barrer 6s ease-in-out infinite alternate; }
-.reflectores i:nth-child(2) { left: 34%; animation: barrer 7s ease-in-out -2s infinite alternate-reverse; }
-.reflectores i:nth-child(3) { left: 58%; animation: barrer 6.5s ease-in-out -4s infinite alternate; }
-.reflectores i:nth-child(4) { left: 80%; animation: barrer 7.5s ease-in-out -1s infinite alternate-reverse; }
+.reflectores i:nth-child(1) { left: 12%; animation: reflector-girar 6s ease-in-out infinite alternate; }
+.reflectores i:nth-child(2) { left: 34%; animation: reflector-girar 7s ease-in-out -2s infinite alternate-reverse; }
+.reflectores i:nth-child(3) { left: 58%; animation: reflector-girar 6.5s ease-in-out -4s infinite alternate; }
+.reflectores i:nth-child(4) { left: 80%; animation: reflector-girar 7.5s ease-in-out -1s infinite alternate-reverse; }
 :root[data-tema="ochenta"] .reflectores i { background: linear-gradient(to top, rgba(34,230,255,.6), rgba(255,46,151,0) 85%); }
 /* De día, la luz blanca o celeste no se ve sobre el cielo: reflectores de color, como luces de escenario */
 :root[data-hora="dia"] .reflectores i { background: linear-gradient(to top, rgba(255,46,151,.5), rgba(106,43,217,0) 85%); }
-@keyframes barrer { from { rotate: -28deg; } to { rotate: 28deg; } }
-@keyframes aparecer { from { opacity: 0; } }
+/* Nombres propios: si se repite el nombre de una animación, la última pisa a la otra (le pasó al
+   barrido del cambio de estilo y al relleno de los gráficos, 2026-11-13). */
+@keyframes reflector-girar { from { rotate: -28deg; } to { rotate: 28deg; } }
+@keyframes reflectores-aparecer { from { opacity: 0; } }
 .fiesta .escena { --vent: var(--luz); --t80-ventana: var(--luz); }

@@ -22,6 +22,7 @@ ya estaba acordado y faltaba. **Es la lista ordenada de qué hacer y en qué ord
 - **19 de noviembre de 2026, 00:00 de Santiago:** lanzamiento.
 - **Antes del 19 nov** (después ya no sirve):
   - 7.4, Cápsula del tiempo: Bruno escribe lo que espera del juego.
+  - 7.6, hora cero en Nueva Zelanda: antes del **18 nov, 08:00 de Chile**.
   - (Ya hechas: 7.2 Hora cero, en `main` por el PR #9; y el recolector ya guarda lo de la
     6.3 desde el 13 nov.)
 
@@ -156,13 +157,34 @@ la página, así que cada una se presenta con opciones y capturas antes de aplic
 - [ ] **7.1 Rebobinar el lanzamiento.** Una barra para mover la página hora por hora (con cada
       medición guardada) y revivir el 19 nov: los números, el gráfico y los titulares cambian
       a esa hora. Se puede hacer después del lanzamiento: los datos ya quedan guardados.
-- [ ] **7.3 Viaje en el tiempo.** Al cambiar de Miami 1986 a 2026, las torres nuevas (tarea
+- [x] **7.3 Viaje en el tiempo.** Al cambiar de Miami 1986 a 2026, las torres nuevas (tarea
       3.3) suben detrás de los hoteles, y al volver a 1986 bajan. Sin fecha límite.
+      **En la página desde el 2026-11-13** (opción B de Bruno, "una por una"; ver `PLAN.md`).
+      Probada a 1280 y 384 px en los dos estilos, sin errores ni desborde.
+  - Arreglado de paso (2026-11-13): el barrido de colores al cambiar de estilo se había perdido
+    con la hora cero (PR #9), porque los reflectores usaban otra animación con el mismo nombre
+    (`barrer`). Lo mismo dejaba sin relleno los gráficos (`aparecer`). Se renombraron.
 - [ ] **7.4 Cápsula del tiempo.** Un texto de Bruno con lo que espera del juego, escrito
       **antes del 19 nov**, y otro después con lo que le pareció. Los escribe Bruno: Claude
       no inventa ese contenido. La página los muestra uno al lado del otro.
       **Página lista el 2026-11-13** (opción B, postales de Miami; ver `PLAN.md`). **Falta el
       texto de Bruno** en `web/capsula.js`, antes del 19 nov; queda en `[ ]` hasta entonces.
+- [ ] **7.6 Hora cero en Nueva Zelanda y Miami (idea de Bruno, 2026-11-13).** Rockstar
+      confirmó que el juego se abre a medianoche del 19 nov **en la hora de cada país**
+      ([Push Square](https://www.pushsquare.com/guides/gta-6-release-times-and-preload-when-can-you-start-playing),
+      actualizado el 12 nov 2026). Que Nueva Zelanda sea la primera es una deducción por la zona
+      horaria, no un anuncio. Horas, calculadas a mano con los husos de noviembre:
+  - Nueva Zelanda (UTC+13): 18 nov, 11:00 UTC = **18 nov, 08:00 de Chile**.
+  - Chile (UTC-3): 19 nov, 03:00 UTC = 19 nov, 00:00 (la hora cero que ya tiene la página).
+  - Miami (UTC-5): 19 nov, 05:00 UTC = **19 nov, 02:00 de Chile**.
+  - Se puede hacer: es solo código de la página, con las mismas horas para todos (no depende
+    de ninguna fuente). El recolector ya mide cada 30 minutos desde el 17 nov, así que la
+    salida en Nueva Zelanda queda medida.
+  - Propuesta: una cuenta regresiva pequeña por cada lugar debajo de la principal, que se
+    marca como "¡Ya salió!" al llegar; y un evento en la línea de tiempo. Cambia cómo se ve:
+    opciones con capturas antes.
+  - **Fecha límite: antes del 18 nov, 08:00 de Chile.** Después ya no sirve la cuenta regresiva
+    de Nueva Zelanda.
 - [ ] **7.5 Resumen del día.** Una tarjeta automática por día con lo más importante: máximo de
       espectadores, video más visto, interés en Trends, cantidad de titulares y de
       publicaciones. Sale de los datos ya guardados. Sin fecha límite.
