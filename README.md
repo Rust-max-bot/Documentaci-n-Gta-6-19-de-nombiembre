@@ -3,65 +3,123 @@
 Quiero recordar un evento histórico: la salida de GTA 6 el 19 de noviembre de 2026. Este
 repositorio es para documentarlo. No busco hacer algo productivo, solo divertirme.
 
+**Ver la página:** <https://rust-max-bot.github.io/Documentaci-n-Gta-6-19-de-nombiembre/>
+(se abre en el celular o en el PC y se actualiza sola después de cada medición; funciona
+cuando la publicación en GitHub Pages está activada, ver "Cómo ver la página").
+
 ## Qué es
 
 Un proyecto personal, hecho por diversión, que guarda **cómo se vivió el lanzamiento en
 internet**: cuánta gente lo miraba en Twitch, qué videos se subían a YouTube, cuánto se
-buscaba en Google y qué decían los titulares, antes, durante y después del día.
+buscaba en Google, qué decían los titulares y qué se publicaba en Reddit, antes, durante y
+después del día.
 
-El resultado es **una página web** con una línea de tiempo del día y tablas y gráficos de
-esos números. Tiene dos estilos visuales, "Miami 1986" y "Miami 2026", con un diseño
-original inspirado en Miami (no usa logotipos, tipografías ni arte de los juegos).
+El resultado es **una página web** con dos estilos visuales, "Miami 1986" y "Miami 2026", y
+un diseño original inspirado en Miami (no usa logotipos, tipografías ni arte de los juegos).
+El cielo cambia entre día, atardecer y noche según la hora real de Miami. Todas las horas de
+la página están en hora de Santiago de Chile.
+
+## Qué tiene la página
+
+- **Cuenta regresiva** hasta la medianoche del 19 nov en Nueva Zelanda, Chile o Miami (con
+  botones para elegir). Al llegar la hora cero de Chile hay fuegos artificiales y reflectores.
+- **Fichas** con el máximo de espectadores en Twitch, el máximo en Google Trends y cuántas
+  mediciones hay guardadas.
+- **Logros y récords**: lo más alto que se ha medido (espectadores, directos, videos,
+  titulares, Reddit) y las visitas de los 4 videos oficiales de GTA VI.
+- **Línea de tiempo**: eventos que el programa detecta solo (récords, cifras redondas, hora
+  cero de cada lugar, caídas de servidores) y eventos anotados a mano en `web/eventos.js`.
+- **Resumen del día**: una tarjeta por día con lo más importante.
+- **Gráficos** de espectadores en Twitch y de interés en Google Trends.
+- **¿Se cayeron los servidores?**: estado de PlayStation Network y de la red de Xbox.
+- **Twitch, medición por medición**, con un filtro por día.
+- **Videos más vistos en YouTube**, con pestañas "Global" y "En español".
+- **GTA frente a lo más visto**: el puesto de GTA en Twitch y los videos de GTA en
+  tendencias de YouTube (Chile y EE. UU.).
+- **Titulares** de Google Noticias, por páginas, con barras por día para filtrarlos.
+- **Reddit (r/GTA6)**: publicaciones por hora y las últimas publicadas.
+- **Cápsula del tiempo**: lo que espero del juego (escrito antes del 19 nov) y lo que me
+  pareció (después).
 
 ## Qué se mide
 
 | Fuente | Qué se guarda |
 | --- | --- |
-| Twitch | Espectadores y transmisiones en la categoría del juego, y los canales con más público |
-| YouTube | Videos recientes sobre "GTA 6" y sus visitas, "me gusta" y comentarios |
+| Twitch | Espectadores y transmisiones de GTA VI, los canales con más público y el puesto de GTA VI y GTA V entre todas las categorías |
+| YouTube | Los videos más vistos sobre "GTA 6" (en todo el mundo y en español), las visitas de los 4 videos oficiales, los videos de GTA en tendencias de Chile y EE. UU. y los suscriptores del canal de Rockstar |
 | Google Trends | Interés de búsqueda por hora (es relativo: 100 es el máximo de esos días) |
-| Google Noticias | Titulares nuevos sobre el juego |
+| Google Noticias | Titulares sobre el juego |
+| Reddit | Publicaciones nuevas en r/GTA6 (por RSS: sin votos ni comentarios) |
 | PlayStation y Xbox | Si sus servicios en línea tienen problemas |
 
 Se mide **cada hora**, y **cada 30 minutos** del 17 al 21 de noviembre, la semana del
 lanzamiento. La recolección empezó el 12 de noviembre de 2026 y dura, en principio, hasta
-el 19 de diciembre.
+el 19 de diciembre. Si una fuente falla, se anota el hueco y siguen las demás: **nunca se
+inventa un dato**.
 
 Algunas cosas no se pueden medir con un programa (por ejemplo, el estado de los servidores
 de Rockstar Games). Esas se anotan a mano.
 
 ## Cómo funciona
 
-- **`recolector/`**: programa en Python que consulta las fuentes. Lo ejecuta GitHub Actions
-  según el horario de `.github/workflows/recolectar.yml`. Si una fuente falla, se anota el
-  hueco y siguen las demás: nunca se inventa un dato.
-- **`datos/`**: las mediciones, un archivo de texto por día (en UTC), con una línea por
-  medición en formato JSON. El formato está explicado en `recolector/LEEME.md`.
-- **`web/`**: la página, hecha solo con HTML, CSS y JavaScript, sin librerías ni compilación.
-- **`despertador/`**: un Worker de Cloudflare que lanza el recolector a su hora, porque
-  GitHub no lanzaba solas las ejecuciones programadas (funciona desde el 13 de noviembre).
-- **`pruebas/`**: pruebas automáticas de la página y del despertador con Playwright.
+1. **El despertador** (`despertador/`): un Worker de Cloudflare que, a los minutos 7 y 37 de
+   cada hora (UTC), le pide a GitHub que lance el recolector. Existe porque GitHub no
+   lanzaba a tiempo sus ejecuciones programadas.
+2. **El recolector** (`recolector/`): un programa en Python que corre en GitHub Actions
+   (`.github/workflows/recolectar.yml`), consulta las fuentes, revisa que todo cuadre y
+   guarda una línea nueva en `datos/`. Se enciende, apaga o alarga en
+   `recolector/interruptor.json`.
+3. **Los datos** (`datos/`): un archivo de texto por día (en UTC), con una línea por
+   medición en formato JSON. Es el recuerdo: no se borra ni se reescribe. El formato está
+   explicado en `recolector/LEEME.md`.
+4. **La página** (`web/`): solo HTML, CSS y JavaScript, sin librerías ni compilación.
+   `recolector/generar_web.py` convierte `datos/` en `web/datos.js`, que es lo que lee la
+   página.
+5. **La publicación** (`.github/workflows/publicar-pagina.yml`): después de cada medición, y
+   cuando cambia la página, GitHub prepara `web/datos.js` y publica `web/` en GitHub Pages.
+
+Además:
+
+- **`pruebas/`**: pruebas automáticas de la página (a 1280 y 384 px, en los dos estilos) y
+  del despertador, con Playwright. Detalle en `pruebas/LEEME.md`.
+- **`recolector/trends_extra.py`**: preguntas extra a Google Trends (por país, búsquedas
+  relacionadas y comparaciones), que se lanzan a mano una sola vez después del lanzamiento.
 
 Las claves de acceso a Twitch y YouTube no están en el repositorio: se guardan como
-secretos de GitHub.
+secretos de GitHub (y la del despertador, como secreto de Cloudflare).
 
 ## Cómo ver la página
 
-En Windows, doble clic en `ver_pagina.bat`: trae las mediciones nuevas, prepara
-`web/datos.js` y abre `web/index.html` en el navegador. En otro sistema:
+- **Desde el celular o cualquier navegador:** en la dirección de arriba. Para que funcione,
+  la publicación tiene que estar activada una vez en GitHub: *Settings → Pages → Build and
+  deployment → Source: GitHub Actions*.
+- **En el PC con Windows, sin internet:** doble clic en `ver_pagina.bat`. Trae las mediciones
+  nuevas, prepara `web/datos.js` y abre `web/index.html` en el navegador. En otro sistema:
 
-```sh
-python recolector/generar_web.py
-```
+  ```sh
+  python recolector/generar_web.py
+  ```
 
-y después abrir `web/index.html`. Sin ese paso, la página muestra datos de ejemplo
-(marcados como tales).
+  y después abrir `web/index.html`. Sin ese paso, la página muestra datos de ejemplo
+  (marcados como tales).
+
+## Documentos del proyecto
+
+| Archivo | Qué tiene |
+| --- | --- |
+| `ESTADO_ACTUAL.md` | Dónde quedó el trabajo, los últimos cambios y lo pendiente |
+| `PLAN_DE_TRABAJO.md` | La lista ordenada de tareas |
+| `PLAN.md` | Las decisiones tomadas, las fuentes de datos y los riesgos |
+| `CLAUDE.md` | Las reglas de trabajo para Claude, el asistente que ayuda con el proyecto |
+| `NUBE.md` | Cómo trabajar en el proyecto desde una sesión en la nube |
+| `GUIA_CLAVES.md` | Cómo se crearon las claves de Twitch y YouTube |
+| `historial/` | Versiones viejas de `ESTADO_ACTUAL.md` y `PLAN_DE_TRABAJO.md` |
 
 ## Aviso legal
 
 Proyecto de fans, sin fines comerciales y no afiliado, patrocinado ni aprobado por
 Rockstar Games ni por Take-Two Interactive. Los datos vienen de fuentes públicas (Twitch,
-YouTube, Google, PlayStation y Xbox) y pertenecen a sus dueños.
+YouTube, Google, Reddit, PlayStation y Xbox) y pertenecen a sus dueños.
 
 Grand Theft Auto® y Rockstar Games® son marcas registradas de Take-Two Interactive
 Software, Inc.

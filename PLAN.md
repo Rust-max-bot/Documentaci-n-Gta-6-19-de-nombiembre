@@ -24,7 +24,7 @@ Resultado final: **una página web** con:
 | Cada cuánto se guardan datos | **Cambiado el 2026-11-12 (Bruno):** cada hora (minuto 7), y también al minuto 37 del 17 al 21 de noviembre (UTC), la semana del lanzamiento. Motivo: gastar menos sin perder los picos cortos del lanzamiento. Antes era cada 30 minutos siempre |
 | Qué días | **Cambiado el 2026-11-12:** un mes, empezando cuanto antes (para registrar el interés previo) y hasta el 19 de diciembre de 2026 por defecto. Con interruptor manual para apagar, encender o alargar. Antes eran solo del 18 al 20 de noviembre |
 | Claves de Twitch y YouTube | Las creó Bruno con la guía paso a paso (`GUIA_CLAVES.md`) y están guardadas como secretos de GitHub (`TWITCH_CLIENT_ID`, `TWITCH_CLIENT_SECRET`, `YOUTUBE_API_KEY`). Probadas el 2026-11-12 y en uso cada hora desde entonces |
-| Visibilidad de la página | Privada por ahora: se abre como archivo en el PC, sin enlace público. Se puede hacer pública más adelante |
+| Visibilidad de la página | **Cambiado por Bruno el 2026-11-14: pública en GitHub Pages**, para verla desde el celular sin el PC (<https://rust-max-bot.github.io/Documentaci-n-Gta-6-19-de-nombiembre/>). La publica el workflow `publicar-pagina.yml` después de cada medición y al cambiar la página. Cualquiera con el enlace la puede ver; muestra lo mismo que ya está en el repositorio, que es público. Antes: privada, solo como archivo en el PC (`ver_pagina.bat`, que sigue funcionando) |
 | Visibilidad del repositorio | **Decidido por Bruno el 2026-11-12: público.** Motivos: con el repositorio privado GitHub no lanzaba las ejecuciones programadas, y en los públicos los minutos son gratis. Antes se limpió el historial (con `--force`, autorizado por Bruno solo para esto): sus correos pasaron al correo anónimo de GitHub y las rutas de su PC a `%USERPROFILE%`. Respaldo del historial original solo en el PC: `%USERPROFILE%\Proyectos\respaldo-historial-gta6-2026-11-12.git`. Pendiente: pedir a soporte de GitHub que borre la referencia del PR #1, que deja alcanzable el primer commit con el correo de Outlook |
 | Eventos de la línea de tiempo | Ambos: automáticos (deducidos de los números, como el máximo de espectadores) y escritos a mano por Bruno en un archivo simple |
 | Orden de las listas de la página | **Decidido por Bruno el 2026-11-13:** lo más nuevo arriba y lo más viejo abajo en la línea de tiempo, la tabla de Twitch (y sus botones de día) y los titulares. Los gráficos siguen de izquierda (viejo) a derecha (nuevo) y los videos de YouTube, por visitas |
@@ -348,7 +348,7 @@ web/                  la página (ya existe)
 recolector/           programa en Python que consulta las fuentes (formato y uso en recolector/LEEME.md)
   interruptor.json    encender, apagar o alargar la recolección
 datos/                mediciones: un archivo de texto por día UTC (AAAA-MM-DD.jsonl), una línea por medición
-.github/workflows/    recolectar.yml (cada hora; cada 30 min la semana del lanzamiento) y probar-fuentes.yml (prueba manual)
+.github/workflows/    recolectar.yml (cada hora; cada 30 min la semana del lanzamiento), probar-fuentes.yml (prueba manual), trends-extra.yml (6.1, a mano) y publicar-pagina.yml (publica web/ en GitHub Pages)
 despertador/          Worker de Cloudflare que lanza el recolector a su hora (montado el 2026-11-13, sin verificar; LEEME.md)
 ```
 
