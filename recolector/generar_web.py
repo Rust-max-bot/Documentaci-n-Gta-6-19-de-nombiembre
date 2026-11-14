@@ -31,6 +31,12 @@ DATOS = RAIZ / "datos"
 SALIDA = RAIZ / "web" / "datos.js"
 DIAS = RAIZ / "web" / "dias"
 VERSION = RAIZ / "web" / "version.json"
+ALBUM = RAIZ / "web" / "album"
+# Álbum de momentos (tarea 7.7): Bruno sube capturas a web/album/ con nombres como
+# "2026-11-19 02-10 Se caen los servidores.jpg" (hora de Santiago). El nombre es todo lo que
+# hace falta: la página toma de ahí la hora y el texto.
+NOMBRE_FOTO = re.compile(r"^(\d{4}-\d{2}-\d{2}) (\d{2})[-.:h](\d{2})\s*(.*)\.(jpe?g|png|webp|gif)$", re.IGNORECASE)
+FOTO_PESADA = 2 * 1024 * 1024   # más de 2 MB: se avisa (con muchas visitas, gasta tráfico)
 REDDIT_ULTIMAS = 8   # publicaciones de Reddit completas en datos.js (la página muestra las 8 últimas)
 NOMBRE_ARCHIVO = re.compile(r"^\d{4}-\d{2}-\d{2}\.jsonl$")
 VIDEOS = 20         # videos de YouTube que se muestran (los más vistos en la última medición)
@@ -231,6 +237,27 @@ def separar_por_dias(d):
     return archivos
 
 
+def leer_album():
+    """Lista las fotos de web/album/ con su hora (texto de Santiago) y su texto. Las que no
+    siguen el formato del nombre se avisan y no se muestran (no se toca ningún archivo)."""
+    fotos = []
+    if not ALBUM.is_dir():
+        return fotos
+    for p in sorted(ALBUM.iterdir()):
+        if p.name.startswith(".") or p.name.lower() in ("leeme.md", "readme.md"):
+            continue
+        m = NOMBRE_FOTO.match(p.name)
+        if not m:
+            print(f"AVISO: web/album/{p.name} no sigue el formato 'AAAA-MM-DD HH-MM texto.jpg': no se muestra.")
+            continue
+        if p.stat().st_size > FOTO_PESADA:
+            print(f"AVISO: web/album/{p.name} pesa {p.stat().st_size // 1024} KB; conviene que sea de menos de 2 MB.")
+        fotos.append({"archivo": "album/" + p.name, "hora": f"{m.group(1)} {m.group(2)}:{m.group(3)}",
+                      "texto": m.group(4).strip()})
+    fotos.sort(key=lambda f: f["hora"])
+    return fotos
+
+
 def escribir(ruta, texto):
     temporal = ruta.with_name(ruta.name + ".tmp")
     temporal.write_text(texto, encoding="utf-8", newline="\n")
@@ -262,6 +289,7 @@ def main():
     d = convertir(medidas)
     comprobar(d, medidas)
     archivos = separar_por_dias(d)
+    d["album"] = leer_album()
     d["generado"] = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
     d["eventos"] = []   # los eventos a mano están en web/eventos.js
     texto = ("/* DATOS REALES generados por recolector/generar_web.py a partir de datos/.\n"

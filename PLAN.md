@@ -171,6 +171,26 @@ Resultado final: **una página web** con:
     en Twitch (con el canal más visto), video más visto (global), interés máximo en Trends,
     titulares publicados, publicaciones de r/GTA6 guardadas y mediciones (con huecos).
   - El día del lanzamiento sale elegido al abrir, si ya hay datos de ese día.
+- **Ideas 5 a 7 (tareas 7.7 a 7.9, pedidas por Bruno el 2026-11-14; diseños elegidos por él con
+  capturas).**
+  - **7.8 Resumen del día como imagen: formato A, cuadrado (1080 x 1080).** Se dibuja en el
+    navegador con los colores del estilo que se está viendo. Solo texto y formas: las fotos de
+    YouTube y Twitch vienen de otros sitios y el navegador no deja guardarlas dentro de una
+    imagen. Se descartaron B (vertical, 1080 x 1920, para historias) y C (horizontal, 1200 x 675).
+  - **7.9 Otros lanzamientos: diseño A, barras.** Una barra por juego con los espectadores en
+    Twitch el día de la salida, junto al máximo medido de GTA VI, y tarjetas con otros récords
+    de la saga. **Solo datos con fuente** (en `web/lanzamientos.js`): Hogwarts Legacy cerca de
+    1.270.000 y Cyberpunk 2077 1.143.965 espectadores (Streams Charts); GTA V, más de 800
+    millones de dólares el primer día (comunicado de Take-Two, 18 sep 2013) y más de 1.000
+    millones en 3 días (Take-Two, citado por Gematsu); tráiler 1 de GTA VI, 90,4 millones de
+    visitas en 24 horas (Guinness). No se encontró una cifra con fuente de espectadores en Twitch
+    del lanzamiento de GTA V (2013), por eso no está. Se descartó la opción B.
+  - **7.7 Álbum de momentos: diseño B, fotos instantáneas con marco blanco.** Las fotos las
+    elige y las sube Bruno a `web/album/` (guía en `web/album/LEEME.md`); la hora y el texto
+    salen del nombre del archivo (`AAAA-MM-DD HH-MM texto.jpg`, hora de Santiago). Al tocar una
+    se ve en grande. Las fotos van tal cual a la página pública: nada personal en ellas. Se
+    descartaron A (cuadrícula) y C (tira que se desliza). Las fotos quedan rectas, como en la
+    captura que eligió Bruno (la inclinación que se había escrito no funcionaba y se quitó).
 - **Videos de YouTube en español (tarea 6.4, Bruno, 2026-11-13): el recolector ahora, la página después.**
   - Segunda búsqueda de "GTA 6" con idioma preferido español (fuente `youtube_es`), además
     de la global, que sigue igual. En el orden de **relevancia** de YouTube, no por visitas:
@@ -389,6 +409,8 @@ web/                  la página (ya existe)
   datos-ejemplo.js    datos inventados para probar el diseño
   eventos.js          eventos que Bruno anota a mano (hora de Santiago)
   capsula.js          los dos textos de la cápsula del tiempo, escritos por Bruno (tarea 7.4)
+  lanzamientos.js     récords de otros lanzamientos, cada uno con su fuente (tarea 7.9)
+  album/              fotos del álbum de momentos, las sube Bruno (tarea 7.7; guía en album/LEEME.md)
   datos.js            datos reales, generados en el PC por recolector/generar_web.py (no va a git)
 recolector/           programa en Python que consulta las fuentes (formato y uso en recolector/LEEME.md)
   interruptor.json    encender, apagar o alargar la recolección

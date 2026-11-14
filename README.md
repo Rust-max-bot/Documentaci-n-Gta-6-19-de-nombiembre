@@ -39,7 +39,8 @@ la página están en hora de Santiago de Chile.
   titulares, Reddit) y las visitas de los 4 videos oficiales de GTA VI.
 - **Línea de tiempo**: eventos que el programa detecta solo (récords, cifras redondas, hora
   cero de cada lugar, caídas de servidores) y eventos anotados a mano en `web/eventos.js`.
-- **Resumen del día**: una tarjeta por día con lo más importante.
+- **Resumen del día**: una tarjeta por día con lo más importante, que se puede descargar como
+  imagen cuadrada para compartir.
 - **Gráficos** de espectadores en Twitch y de interés en Google Trends.
 - **¿Se cayeron los servidores?**: estado de PlayStation Network y de la red de Xbox.
 - **Twitch, medición por medición**, con un filtro por día.
@@ -48,6 +49,9 @@ la página están en hora de Santiago de Chile.
   tendencias de YouTube (Chile y EE. UU.).
 - **Titulares** de Google Noticias, por páginas, con barras por día para filtrarlos.
 - **Reddit (r/GTA6)**: publicaciones por hora y las últimas publicadas.
+- **GTA 6 frente a otros lanzamientos**: espectadores en Twitch el día de la salida de otros
+  juegos y otros récords de la saga, cada dato con su fuente.
+- **Álbum de momentos**: capturas y memes del día del lanzamiento, cada uno con su hora.
 - **Cápsula del tiempo**: lo que espero del juego (escrito antes del 19 nov) y lo que me
   pareció (después).
 

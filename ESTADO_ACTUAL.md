@@ -15,10 +15,10 @@
 
 ## Dónde quedamos
 
-*(2026-11-14, ~03:20 UTC.)*
+*(2026-11-14, ~05:00 UTC.)*
 
 **La página está lista para el lanzamiento.** Hechas las fases 0, 1, 2 (menos la 2.5, para
-después), 3 y las tareas 2.6 a 2.12, 4.1, 4.2, 6.2, 6.3, 6.4, 7.2, 7.3, 7.5 y 7.6. **La página está
+después), 3 y las tareas 2.6 a 2.15, 4.1, 4.2, 6.2, 6.3, 6.4, 7.2, 7.3 y 7.5 a 7.9. **La página está
 publicada en internet** (2.8) y dice en el pie y en el README que está hecha con Claude a
 pedido de Bruno (2.9). Lo que tiene:
 - dos estilos de Miami (1986 y 2026, paleta B "Atardecer encendido") con torres de Miami que
@@ -33,7 +33,15 @@ pedido de Bruno (2.9). Lo que tiene:
   filtrarlos (2.6); Reddit por RSS;
 - la cápsula del tiempo (7.4) como dos postales al final;
 - "Última medición hace X min" y actualización sola si la página queda abierta (2.10), imagen
-  propia al compartir el enlace y en la pestaña (2.11) y botón flotante "☰ Secciones" (2.12).
+  propia al compartir el enlace y en la pestaña (2.11) y botón flotante "☰ Secciones" (2.12);
+- titulares y Reddit de cada día en archivos aparte que se cargan al mostrarlos (2.13), para
+  aguantar muchas visitas (2.14); revisión de seguridad hecha (2.15);
+- "GTA 6 frente a otros lanzamientos" con barras (7.9), el resumen del día descargable como
+  imagen cuadrada (7.8) y el álbum de momentos (7.7).
+
+**Álbum (7.7):** está vacío hasta que Bruno suba fotos a `web/album/` con el nombre
+`AAAA-MM-DD HH-MM texto.jpg` (hora de Santiago). Guía paso a paso, también desde el celular,
+en `web/album/LEEME.md`. La foto aparece en la página en la siguiente publicación.
 
 **Lo único con fecha:** Bruno escribe "Lo que espero" en `web/capsula.js` antes del 19 nov
 (o se lo pasa a Claude para ponerlo). La 7.4 queda en `[ ]` hasta entonces. Bruno lo dejó
@@ -75,9 +83,9 @@ esos sitios): no es un fallo de la página.
 **Fecha límite:** lanzamiento el 19 de noviembre de 2026, 00:00 de Santiago.
 
 **Reglas en pausa:** ninguna. "Paso a paso con permiso" está activa **por tandas**: Bruno
-dice qué pasos hacer y Claude no para hasta completarlos (ver `CLAUDE.md`). Tanda actual
-(14 nov, pedida por Bruno): 2.13 datos por días, 2.14 muchas visitas y 2.15 seguridad (hechas),
-7.8 resumen como imagen, 7.7 álbum y 7.9 comparar lanzamientos. Antes: las tres mejoras 2.10 a 2.12; antes, README, publicar la página
+dice qué pasos hacer y Claude no para hasta completarlos (ver `CLAUDE.md`). Última tanda
+(14 nov, pedida por Bruno, **terminada**): 2.13 datos por días, 2.14 muchas visitas, 2.15
+seguridad, 7.8 resumen como imagen, 7.7 álbum y 7.9 comparar lanzamientos. Antes: las tres mejoras 2.10 a 2.12; antes, README, publicar la página
 y la nota "hecho con Claude", 2.7 a 2.9). Antes, ese día: 7.6, 7.5,
 la línea de tiempo (PR #16) y el filtro por día de los titulares (2.6, PR #17), unidos. Quedan 7.1 (después del lanzamiento) y 7.4 (el texto de Bruno). La 6.1 se ejecuta una vez entre el 20 y el 25 nov: el programa
 (`recolector/trends_extra.py`, workflow "Trends extra (6.1)") quedó listo y probado el 13 nov;
@@ -85,6 +93,7 @@ Bruno ya eligió las palabras de la comparación.
 
 ## Últimos cambios
 
+- 2026-11-14: álbum de momentos (7.7, fotos instantáneas, opción B de Bruno), resumen del día como imagen cuadrada (7.8, opción A) y GTA 6 frente a otros lanzamientos con barras (7.9, opción A); `PLAN_DE_TRABAJO.md` archivado en `historial/PLAN_DE_TRABAJO_2026-11-14.md`.
 - 2026-11-14: revisión de seguridad con el skill de Cloudflare (2.15): sin fallos confirmados; 4 refuerzos (comillas, miniaturas, CSP, clave del checkout) y 3 cosas para Bruno en sus cuentas (`PLAN.md`).
 - 2026-11-14: datos por días (2.13: `datos.js` de 222 a 50 KB, los titulares de cada día se cargan al mostrarlos) y revisión de datos nuevos con `version.json` para aguantar muchas visitas (2.14).
 - 2026-11-14: actualización sola con "Última medición hace X min" (2.10), vista previa al compartir con ícono propio (2.11, opción C de Bruno) y menú de secciones con botón flotante (2.12, opción B de Bruno).
@@ -93,11 +102,10 @@ Bruno ya eligió las palabras de la comparación.
 - 2026-11-14: filtro por día en los titulares con barras por día (2.6, opción C de Bruno).
 - 2026-11-14: cuenta regresiva con botones Nueva Zelanda, Chile y Miami (7.6), "Resumen del día" (7.5) y más eventos automáticos en la línea de tiempo (pedido de Bruno); diseño de Claude porque Bruno pidió no preguntarle.
 - 2026-11-13: las torres nuevas suben una por una al pasar a 2026 y bajan al volver a 1986 (7.3, opción B de Bruno).
-- 2026-11-13: vuelve el barrido de colores al cambiar de estilo (se había perdido con la hora cero) y vuelve el relleno de los gráficos; nueva tarea 7.6, hora cero en Nueva Zelanda y Miami.
 
 ## Pendiente
 
-La lista completa y su orden están en `PLAN_DE_TRABAJO.md`. Resumen (2026-11-13):
+La lista completa y su orden están en `PLAN_DE_TRABAJO.md`. Resumen (2026-11-14):
 
 1. **Antes del 19 nov:** 7.4, Bruno escribe sus expectativas en `web/capsula.js`.
    7.6 hecha y unida (PR #16).
@@ -105,7 +113,7 @@ La lista completa y su orden están en `PLAN_DE_TRABAJO.md`. Resumen (2026-11-13
 3. **Fase 6** (ideas de Bruno): 6.1 más Google Trends, **una sola vez entre el 20 y el 25 nov**,
    fuera del recolector de cada hora (decisión de Bruno, 2026-11-13; ver `PLAN.md`). Programa
    listo y probado, con las palabras que eligió Bruno; falta ejecutarlo y mostrarlo. 6.2 y 6.3, hechas. 6.4 videos en español, hecha (pestañas en la página).
-4. **Fase 7:** 7.1 rebobinar (después del lanzamiento); 7.3, 7.5 y 7.6, hechas.
+4. **Fase 7:** 7.1 rebobinar (después del lanzamiento); 7.3 y 7.5 a 7.9, hechas.
 5. **Fase 5** (después del lanzamiento): búsqueda calmada; clave de Reddit.
 6. **Ideas sueltas:** 2.5 TikTok (sin acceso fácil); D6 (Bruno pidió ignorarla por ahora).
 7. **Bruno:**

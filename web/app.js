@@ -602,6 +602,61 @@
     }).join("");
   })();
 
+  /* ---------- GTA 6 frente a otros lanzamientos (tarea 7.9, idea 7) ----------
+     Los datos de otros juegos están en lanzamientos.js, cada uno con su fuente; el de GTA VI es
+     el máximo de Twitch que midió este proyecto. Diseño A de Bruno (2026-11-14): una barra por juego. */
+  (function () {
+    var caja = $("lanzamientos-caja"), L = window.LANZAMIENTOS;
+    if (!caja || !L) return;
+    var gta = picoTwitch ? { juego: "GTA VI", cuando: "máximo medido: " + dia(picoTwitch.ts) + " · " + hora(picoTwitch.ts), valor: picoTwitch.espectadores, propio: true } : null;
+    var filas = (gta ? [gta] : []).concat(L.twitch || []);
+    var tope = Math.max.apply(null, filas.map(function (f) { return f.valor; }).concat(1));
+    var fuente = function (f) { return f.url ? enlace(f.url, limpio(f.fuente)) : limpio(f.fuente || ""); };
+    var valorTw = function (f) { return (f.aprox ? "cerca de " : "") + num(f.valor); };
+    var hechos = (L.hechos || []).map(function (h) {
+      return '<li><small>' + limpio(h.titulo) + '</small><b class="ln-hecho">' + limpio(h.valor) + '</b><span class="rc-uni">' + limpio(h.detalle || "") + "</span>" +
+        '<p class="rc-cuando">' + limpio(h.cuando) + " · Fuente: " + fuente(h) + "</p></li>";
+    }).join("");
+    var nota = "Espectadores a la vez en Twitch el día de la salida. GTA VI muestra lo más alto que ha medido este proyecto" +
+      (Date.now() < SALIDA ? " (todavía antes del lanzamiento)." : ".");
+    caja.className = "ln-a";
+    caja.innerHTML = "<h3>Twitch, el día de la salida</h3><p class=\"ln-sub\">" + nota + "</p>" +
+      '<ul class="ln-barras">' + filas.map(function (f) {
+        return '<li class="' + (f.propio ? "propio" : "") + '"><span class="ln-juego">' + limpio(f.juego) + "<small>" + limpio(f.cuando) + (f.propio ? "" : " · " + fuente(f)) + "</small></span>" +
+          '<span class="ln-barra"><i style="width:' + Math.max(1.5, f.valor / tope * 100).toFixed(1) + '%"></i></span><b>' + valorTw(f) + "</b></li>";
+      }).join("") + "</ul>" +
+      '<h3>Otros récords de la saga</h3><ul class="rc-vitrina">' + hechos + "</ul>";
+  })();
+
+  /* ---------- Álbum de momentos (tarea 7.7, idea 5) ----------
+     Las fotos las sube Rust a web/album/ y generar_web.py arma la lista con la hora y el texto
+     del nombre de cada archivo. Claude no pone fotos. Diseño B de Bruno (2026-11-14): fotos
+     instantáneas con marco blanco. */
+  (function () {
+    var caja = $("album-fotos"), grande = $("album-grande");
+    if (!caja) return;
+    var fotos = (D.album || []).map(function (f) { return { src: f.archivo, ts: deSantiago(f.hora), texto: f.texto || "" }; })
+      .filter(function (f) { return /^album\/[^/]+$/.test(f.src) && !isNaN(f.ts); });
+    if (!fotos.length) {
+      caja.innerHTML = '<p class="vacio">El álbum se llena el día del lanzamiento: aquí van las capturas y los memes de ese día, cada uno con su hora.</p>';
+      return;
+    }
+    caja.className = "album album-b";
+    caja.innerHTML = fotos.map(function (f, i) {
+      return '<figure><button type="button" data-foto="' + i + '" aria-label="Ver más grande: ' + limpio(f.texto || "foto") + '">' +
+        '<img src="' + encodeURI(f.src) + '" alt="' + limpio(f.texto) + '" loading="lazy"></button>' +
+        "<figcaption><time>" + dia(f.ts) + " · " + hora(f.ts) + "</time>" + (f.texto ? "<span>" + limpio(f.texto) + "</span>" : "") + "</figcaption></figure>";
+    }).join("");
+    caja.addEventListener("click", function (e) {
+      var b = e.target.closest("[data-foto]"); if (!b || !grande.showModal) return;
+      var f = fotos[+b.dataset.foto];
+      grande.querySelector("img").src = encodeURI(f.src); grande.querySelector("img").alt = f.texto;
+      grande.querySelector("p").textContent = dia(f.ts) + " · " + hora(f.ts) + (f.texto ? " · " + f.texto : "");
+      grande.showModal();
+    });
+    grande.addEventListener("click", function (e) { if (e.target === grande || e.target.closest(".album-cerrar")) grande.close(); });
+  })();
+
   /* ---------- Pie ---------- */
   $("pie-info").textContent = (D.ejemplo ? "Mostrando datos de ejemplo. " : "") +
     (D.generado ? "Datos actualizados por última vez el " + dia(Date.parse(D.generado)) + " a las " + hora(Date.parse(D.generado)) + " (hora de Santiago)." : "");
@@ -658,8 +713,8 @@
   (function () {
     var caja = $("menu"); if (!caja) return;
     var S = [["records", "Récords"], ["seccion-linea", "Línea de tiempo"], ["resumen", "Resumen"], ["seccion-twitch", "Twitch"],
-      ["seccion-trends", "Trends"], ["seccion-servidores", "Servidores"], ["seccion-videos", "Videos"], ["comparacion", "Comparación"],
-      ["seccion-noticias", "Titulares"], ["seccion-reddit", "Reddit"], ["capsula", "Cápsula"]].filter(function (x) { return $(x[0]); });
+      ["seccion-trends", "Trends"], ["seccion-servidores", "Servidores"], ["seccion-videos", "Videos"], ["comparacion", "Comparación"], ["lanzamientos", "Otros lanzamientos"],
+      ["seccion-noticias", "Titulares"], ["seccion-reddit", "Reddit"], ["album", "Álbum"], ["capsula", "Cápsula"]].filter(function (x) { return $(x[0]); });
     caja.innerHTML = '<button type="button" class="menu-boton" aria-expanded="false" aria-controls="menu-lista"><span aria-hidden="true">☰</span> Secciones</button>' +
       '<div class="menu-lista" id="menu-lista" hidden>' +
       S.map(function (x) { return '<a href="#' + x[0] + '" data-ir="' + x[0] + '">' + x[1] + "</a>"; }).join("") +
@@ -977,6 +1032,122 @@
     }
     $("resumen-dias").addEventListener("click", function (e) { var k = e.target.dataset.dia; if (k) { elegido = k; pintar(); } });
     pintar();
+
+    /* ---------- Descargar el resumen como imagen (tarea 7.8, idea 6) ----------
+       Se dibuja en un <canvas> con los colores y letras del estilo que se está viendo. Solo
+       texto y formas: las fotos de YouTube y Twitch vienen de otros sitios y el navegador no
+       deja guardarlas dentro de una imagen. Formato A de Bruno (2026-11-14): cuadrada, 1080 x 1080. */
+    function recortar(ctx, texto, ancho) {
+      if (ctx.measureText(texto).width <= ancho) return texto;
+      while (texto.length > 1 && ctx.measureText(texto + "…").width > ancho) texto = texto.slice(0, -1);
+      return texto.trimEnd() + "…";
+    }
+    function dibujar(r, k) {
+      var W = 1080, H = 1080, u = 1;
+      var lienzo = document.createElement("canvas"); lienzo.width = W; lienzo.height = H;
+      var ctx = lienzo.getContext("2d"), css = getComputedStyle(document.documentElement);
+      var ochenta = document.documentElement.dataset.tema === "ochenta";
+      var c = function (n) { return css.getPropertyValue(n).trim(); };
+      var fTit = c("--f-titulo"), fTxt = c("--f-texto"), a1 = c("--a1"), a2 = c("--a2"), texto = c("--texto"), tenue = c("--tenue");
+      // Fondo
+      var g = ctx.createLinearGradient(0, 0, 0, H);
+      if (ochenta) { g.addColorStop(0, "#0d0221"); g.addColorStop(.6, "#2a0845"); g.addColorStop(1, "#0d0221"); }
+      else { g.addColorStop(0, "#3b5bff"); g.addColorStop(.45, "#ff6fa8"); g.addColorStop(.75, "#ffb36b"); g.addColorStop(1, "#fff3e8"); }
+      ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+      // Sol detrás del título
+      var solY = 150 * u, solR = 150 * u;
+      var gs = ctx.createLinearGradient(0, solY - solR, 0, solY + solR);
+      gs.addColorStop(0, ochenta ? "#ffd1f0" : "#fff1a8"); gs.addColorStop(1, ochenta ? a1 : "#ff7a59");
+      ctx.globalAlpha = ochenta ? .55 : .5; ctx.fillStyle = gs; ctx.beginPath(); ctx.arc(W / 2, solY, solR, 0, Math.PI * 2); ctx.fill(); ctx.globalAlpha = 1;
+      if (ochenta) {   // cuadrícula de neón abajo
+        ctx.strokeStyle = a1; ctx.globalAlpha = .35; ctx.lineWidth = 2 * u;
+        var hz = H * .86;
+        for (var y = hz; y < H; y += (y - hz) * .35 + 10 * u) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke(); }
+        for (var x = -W; x <= 2 * W; x += 90 * u) { ctx.beginPath(); ctx.moveTo(W / 2 + (x - W / 2) * .15, hz); ctx.lineTo(x, H); ctx.stroke(); }
+        ctx.globalAlpha = 1;
+      }
+      // Encabezado
+      ctx.textAlign = "center"; ctx.textBaseline = "alphabetic";
+      ctx.fillStyle = "#fff";
+      if (ochenta) { ctx.shadowColor = a1; ctx.shadowBlur = 30 * u; }
+      var tt = .8;
+      ctx.font = Math.round(96 * tt * u) + "px " + fTit; ctx.fillText("19·NOV·2026", W / 2, solY + 30 * tt * u);
+      ctx.shadowBlur = 0;
+      ctx.font = "700 " + Math.round(34 * tt * u) + "px " + fTxt;
+      ctx.fillStyle = ochenta ? a2 : "#1b1440";
+      ctx.fillText(ochenta ? "EL DÍA QUE SALIÓ GTA 6" : "El día que salió GTA 6", W / 2, solY + 80 * tt * u);
+      var fecha = fLargo.format(new Date(deSantiago(k + " 12:00")));
+      fecha = "Resumen del " + fecha;
+      ctx.font = "700 " + Math.round(40 * u) + "px " + fTxt; ctx.fillStyle = ochenta ? "#fff" : "#1b1440";
+      var yTop = solY + 150 * u;
+      ctx.fillText(fecha, W / 2, yTop);
+      if (k === ultimoDia) {
+        ctx.font = "600 " + Math.round(24 * u) + "px " + fTxt; ctx.fillStyle = ochenta ? tenue : "#3d3566";
+        var ult = M.length ? M[M.length - 1].ts : Date.now();
+        ctx.fillText("Día en curso: datos hasta las " + hora(ult) + " (hora de Chile)", W / 2, yTop + 38 * u);
+      }
+      // Cuadros
+      var cuadros = [
+        ["MÁXIMO EN TWITCH", r.tw ? num(r.tw.espectadores) : "—", r.tw ? "espectadores a la vez" : "sin dato", r.tw && r.tw.canal ? "Más visto: " + r.tw.canal.nombre : ""],
+        ["VIDEO MÁS VISTO", r.yt ? compacto(r.yt.visitas) : "—", r.yt ? "visitas" : "sin dato", r.yt ? r.yt.titulo : ""],
+        ["GOOGLE TRENDS", r.tr ? String(r.tr.interes) : "—", r.tr ? "de 100, lo más alto del día" : "sin dato", ""],
+        ["TITULARES", num(r.titulares), "publicados ese día", ""],
+        ["REDDIT r/GTA6", num(r.reddit), "publicaciones", ""],
+        ["MEDICIONES", num(r.med), r.huecos ? r.huecos + " con algún hueco" : "sin huecos", ""]
+      ];
+      var cols = 2, filas = Math.ceil(cuadros.length / cols);
+      var margen = 60 * u, gap = 22 * u, yIni = yTop + (k === ultimoDia ? 70 : 40) * u, yFin = H - 100 * u;
+      var cw = (W - 2 * margen - gap * (cols - 1)) / cols, ch = Math.min(260 * u, (yFin - yIni - gap * (filas - 1)) / filas);
+      // Tamaño del contenido según el alto del cuadro: con poco alto, todo un poco más chico.
+      var e = Math.min(1.25, ch / (190 * u)) * u, conExtra = ch >= 175 * u;
+      yIni += Math.max(0, (yFin - yIni) - (ch * filas + gap * (filas - 1))) / 2;
+      cuadros.forEach(function (q, i) {
+        var cx = margen + (i % cols) * (cw + gap), cy = yIni + Math.floor(i / cols) * (ch + gap);
+        ctx.fillStyle = ochenta ? "rgba(22,4,54,.82)" : "rgba(255,250,244,.92)";
+        ctx.strokeStyle = ochenta ? a2 : "rgba(27,20,64,.08)"; ctx.lineWidth = 2 * u;
+        ctx.beginPath(); ctx.roundRect(cx, cy, cw, ch, 22 * u); ctx.fill(); if (ochenta) ctx.stroke();
+        ctx.textAlign = "left"; var px = cx + 26 * u, ancho = cw - 52 * u;
+        var alto = (conExtra && q[3] ? 172 : 140) * e, y0 = cy + (ch - alto) / 2;   // contenido centrado en el cuadro
+        ctx.font = "700 " + Math.round(20 * e) + "px " + fTxt; ctx.fillStyle = ochenta ? tenue : "#5f5884";
+        ctx.fillText(recortar(ctx, q[0], ancho), px, y0 + 20 * e);
+        ctx.font = "700 " + Math.round(62 * e) + "px " + fTxt; ctx.fillStyle = ochenta ? a2 : a1;
+        if (ochenta) { ctx.shadowColor = a2; ctx.shadowBlur = 18 * u; }
+        ctx.fillText(q[1], px, y0 + 84 * e); ctx.shadowBlur = 0;
+        ctx.font = "600 " + Math.round(22 * e) + "px " + fTxt; ctx.fillStyle = ochenta ? texto : "#1b1440";
+        ctx.fillText(recortar(ctx, q[2], ancho), px, y0 + 120 * e);
+        if (q[3] && conExtra) {
+          ctx.font = "500 " + Math.round(19 * e) + "px " + fTxt; ctx.fillStyle = ochenta ? tenue : "#5f5884";
+          ctx.fillText(recortar(ctx, q[3], ancho), px, y0 + 158 * e);
+        }
+      });
+      // Pie
+      ctx.textAlign = "center"; ctx.font = "600 " + Math.round(22 * u) + "px " + fTxt;
+      ctx.fillStyle = ochenta ? tenue : "#1b1440";
+      ctx.fillText("Datos de Twitch, YouTube, Google Trends, Google Noticias y Reddit · hora de Chile", W / 2, H - 62 * u);
+      ctx.fillText("rust-max-bot.github.io/Documentaci-n-Gta-6-19-de-nombiembre", W / 2, H - 30 * u);
+      return lienzo;
+    }
+    var botonImagen = document.createElement("button");
+    botonImagen.type = "button"; botonImagen.className = "rd-descargar"; botonImagen.id = "resumen-imagen";
+    botonImagen.textContent = "Descargar como imagen";
+    caja.insertAdjacentElement("afterend", botonImagen);
+    botonImagen.addEventListener("click", function () {
+      var k = elegido, r = resumen(k);
+      var css = getComputedStyle(document.documentElement);
+      // Las letras de la página tienen que estar cargadas antes de dibujar.
+      var letras = [css.getPropertyValue("--f-titulo"), css.getPropertyValue("--f-texto")].map(function (f) { return "700 40px " + f.trim(); });
+      Promise.all(letras.map(function (f) { return document.fonts ? document.fonts.load(f).catch(function () {}) : null; })).then(function () {
+        var lienzo = dibujar(r, k);
+        window.__ultimaImagen = lienzo;   // para las pruebas
+        lienzo.toBlob(function (blob) {
+          if (!blob) return;
+          var a = document.createElement("a");
+          a.href = URL.createObjectURL(blob); a.download = "resumen-gta6-" + k + ".png";
+          document.body.appendChild(a); a.click(); a.remove();
+          setTimeout(function () { URL.revokeObjectURL(a.href); }, 10000);
+        }, "image/png");
+      });
+    });
   })();
 
   /* ---------- GTA frente a lo más visto (tarea 6.3; opción A "dos columnas", elegida por Bruno, 2026-11-13) ----------
