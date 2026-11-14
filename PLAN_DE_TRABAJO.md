@@ -42,8 +42,8 @@ ya estaba acordado y faltaba. **Es la lista ordenada de qué hacer y en qué ord
 - **Fase 7:** hechas 7.2 (hora cero; se prueba con `?probar-hora-cero`), 7.3 (viaje en el
   tiempo), 7.5 (resumen del día), 7.6 (hora cero en cada lugar; se prueba con
   `?probar-fecha=2026-11-18T12:30Z`), la línea de tiempo con eventos nuevos, 7.7 (álbum de
-  momentos), 7.8 (resumen como imagen) y 7.9 (comparar con otros lanzamientos). Quedan 7.1 y
-  7.4.
+  momentos), 7.8 (resumen como imagen) y 7.9 (comparar con otros lanzamientos). Quedan 7.1,
+  7.4, 7.10 y 7.11.
 - *Idea 4 (instalarla como app en el celular): descartada por Bruno el 2026-11-14 ("prefiero
   que simplemente sea una página web").*
 
@@ -96,9 +96,13 @@ usarla. Ver el aviso 7, sobre la fecha del lanzamiento.)*
   - **Palabras elegidas por Bruno (2026-11-13):** hora por hora, GTA 6, GTA 5, Minecraft,
     Fortnite y Marvel Rivals; mes a mes desde 2013, GTA 6, GTA 5, Ocarina of Time (remake,
     5 nov 2026) y Avengers Doomsday (18 dic 2026).
+  - **Pregunta 5, pedida por Bruno el 2026-11-14: GTA 6 frente a Avengers: Doomsday, día
+    por día** (solo esas dos palabras). En la página se muestra solo esa comparación directa,
+    nada más de la película. El estreno de la película es el 18 dic: si se quiere ver, hay
+    que repetir la pregunta después (ver el punto 3 de abajo).
   - Falta: (1) ejecutarlo de verdad entre el 20 y el 25 nov, cuando Bruno diga; (2) mostrarlo
-    en la página, con opciones y capturas; (3) idea: repetir la pregunta mes a mes en enero,
-    para que salga el estreno de Doomsday (sin decidir). Queda en `[ ]`.
+    en la página, con opciones y capturas; (3) idea: repetir la pregunta en enero, para que
+    salga el estreno de Doomsday (sin decidir). Queda en `[ ]`.
 
 ## Fase 7 — Ideas para que la página sea memorable (lo que queda)
 
@@ -115,6 +119,39 @@ la página, así que cada una se presenta con opciones y capturas antes de aplic
       texto de Bruno** en `web/capsula.js`, antes del 19 nov; queda en `[ ]` hasta entonces.
       Bruno lo deja para más adelante (2026-11-14) y pidió que se le recuerde: hay un
       recordatorio programado para el 17 nov, 19:00 de Chile.
+
+- [ ] **7.10 GTA 6 frente a los juegos más grandes: el arranque** (pedido de Bruno,
+      2026-11-14). Ventas de los primeros días o semanas de los juegos más esperados y
+      vendidos, cada una con su fuente y con cuántos días son, y un hueco de GTA 6 "esperando
+      cifra oficial". Copias y dólares van separados. Incluye Ocarina of Time (5,2 M en 4
+      días, "el único que se atrevió a salir el mismo mes que GTA 6"). Nada de ventas totales
+      de toda la vida (eso es la Fase 8). Diseño con 3 opciones y capturas.
+- [ ] **7.11 "Próximamente"** (idea de Bruno, 2026-11-14). Una lista de lo que la página
+      mostrará más adelante, donde cada cosa se llena sola cuando llega su momento: ventas
+      oficiales de GTA 6, análisis del primer mes (4.3), rebobinar (7.1) y "GTA 6 en PC: sin
+      fecha oficial". Lectura de Claude, a confirmar con Bruno junto con las capturas.
+      Diseño con 3 opciones y capturas.
+
+## Fase 8 — Segundo lanzamiento: GTA 6 en PC (dormida)
+
+*(Decisión de Bruno, 2026-11-14. No se empieza hasta que Bruno avise con una confirmación
+oficial de la versión de PC. Todo lo anterior es la fase 1, consolas, y no se toca.)*
+
+- [ ] **8.1 Apenas Bruno avise:** alargar el recolector en `recolector/interruptor.json` (hoy
+      mide hasta el 19 dic) y renovar la clave de GitHub del despertador de Cloudflare, que
+      caduca después del 19 dic (31 ene 2027, o ~1 mar 2027 según recuerda Bruno). Revisar
+      la cuota de YouTube.
+- [ ] **8.2 Fuente nueva: Steam.** Jugadores a la vez (API oficial y gratis de Steam, sin
+      clave). Es la cifra estrella de un lanzamiento en PC; en consolas no existe. Se
+      verifica con una consulta real cuando el juego tenga su página en Steam (hace falta su
+      número de app). Rockstar Games Launcher y Epic no publican cifras.
+- [ ] **8.3 La página:** cuenta regresiva y hora cero del lanzamiento en PC, y "consolas
+      frente a PC" (Twitch, YouTube y Trends de los dos lanzamientos). Diseño con opciones y
+      capturas.
+- [ ] **8.4 Los más vendidos de la historia** (pedido de Bruno, 2026-11-14): ventas totales
+      de toda la vida (Tetris, Minecraft, GTA V, RDR2…), con las cifras al día y su fuente,
+      para ver dónde queda GTA 6 meses después. Ojo: el documento que trajo Bruno el 14 nov
+      tenía cifras viejas (GTA V iba en más de 230 M y RDR2 en más de 87 M en ago 2026).
 
 ## Sin definir
 
