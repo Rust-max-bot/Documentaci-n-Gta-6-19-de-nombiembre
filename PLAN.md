@@ -122,6 +122,18 @@ Resultado final: **una página web** con:
   hay más días de los que caben, las barras se deslizan hacia el lado y empiezan en los más
   nuevos. Se descartaron A (un botón por día: serían ~40 al 19 dic) y B (lista desplegable: no
   muestra qué día tuvo más titulares).
+- **Datos por días y muchas visitas (pedido de Bruno, 2026-11-14).** No hace falta base de
+  datos ni otro servicio: todo sigue en GitHub. `datos.js` lleva lo que se usa al abrir y los
+  titulares y publicaciones completos van en un archivo por día (`web/dias/`), que se carga solo
+  cuando se muestra. La página revisa si hay datos nuevos con `version.json` (unos 40 bytes).
+  - Límites de GitHub Pages (docs.github.com, "GitHub Pages limits", leído el 2026-11-14):
+    sitio de hasta 1 GB, **100 GB al mes de tráfico (límite blando)** y, si se pasa, puede dejar
+    de servirla o escribir sugiriendo poner una CDN delante o cambiar de servicio.
+  - Una primera visita baja ~94 KB comprimidos (las fotos de YouTube y Twitch y las letras
+    vienen de sus propios servidores): ~1 millón de visitas al mes.
+  - **Plan B, solo si GitHub avisa:** publicar la misma carpeta `web/` en Cloudflare Pages
+    (Bruno ya tiene cuenta de Cloudflare). No se hace antes porque no hace falta y suma otra
+    cuenta que cuidar.
 - **Tres mejoras de la página (Bruno eligió "las tres primeras" ideas de Claude, 2026-11-14).**
   - Actualización sola con "Última medición hace X min" (2.10): no hubo opciones porque solo
     añade una línea arriba de las fichas; Bruno la vio en captura.
@@ -202,6 +214,8 @@ Resultado final: **una página web** con:
   y esas plataformas no publican cuánta gente está jugando. Si la empresa anuncia
   cifras de ventas, se pueden añadir a mano después.
 - **Tendencias de X (Twitter)**: fuera del plan. Leerlas de forma automática es de pago.
+- **Instalar la página como app en el celular** (idea 4 de Claude): descartada por Bruno el
+  2026-11-14, "prefiero que simplemente sea una página web".
 
 ## 4. Fases del proyecto
 

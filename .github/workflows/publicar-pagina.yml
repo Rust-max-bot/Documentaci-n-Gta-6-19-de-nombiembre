@@ -1,6 +1,6 @@
 # Publica la página (web/) en GitHub Pages para verla desde el celular, sin el PC
-# (pedido de Bruno, 2026-11-14). Prepara web/datos.js con recolector/generar_web.py (no va en
-# git) y sube la carpeta web/ tal cual: la página no tiene paso de compilación.
+# (pedido de Bruno, 2026-11-14). Prepara web/datos.js, web/dias/ y web/version.json con
+# recolector/generar_web.py (no van en git) y sube la carpeta web/ tal cual: la página no tiene paso de compilación.
 #
 # Se lanza:
 # - al terminar cada medición ("Recolectar datos"), salga bien o con algún hueco, porque la
@@ -58,6 +58,8 @@ jobs:
           mkdir -p _sitio
           cp -r web/. _sitio/
           test -s _sitio/datos.js   # si no hay datos, mejor no publicar que publicar los de ejemplo
+          test -s _sitio/version.json   # la página lo mira para saber si hay datos nuevos
+          test -d _sitio/dias           # titulares y Reddit de cada día (se cargan a pedido)
 
       - uses: actions/upload-pages-artifact@v5   # compuesta; usa upload-artifact v7 (Node.js 24)
         with:

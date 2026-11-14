@@ -635,3 +635,4 @@ section[id], .bloque { scroll-margin-top: 16px; }
 .menu-lista[hidden] { display: none; }
 .menu-lista a { padding: 9px 12px; border-radius: 10px; }
 .menu-lista a:hover { background: color-mix(in srgb, var(--a1) 15%, transparent); }
+.noticias .cargando { color: var(--tenue); list-style: none; }

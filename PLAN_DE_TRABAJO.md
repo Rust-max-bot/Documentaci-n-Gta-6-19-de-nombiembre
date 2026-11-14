@@ -78,6 +78,17 @@ ya estaba acordado y faltaba. **Es la lista ordenada de qué hacer y en qué ord
 - [x] **2.12 Menú de secciones (misma tanda).** Botón flotante "☰ Secciones" abajo a la derecha
       (opción B de Bruno) con la lista de secciones y "↑ Volver arriba"; se cierra al tocar
       fuera o con Escape. Probado a 1280 y 384 px en los dos estilos.
+- [x] **2.13 Datos por días (pedido de Bruno, 2026-11-14).** `datos.js` trae solo lo necesario al
+      abrir (titulares y Reddit, solo sus horas); los titulares completos de cada día están en
+      `web/dias/AAAA-MM-DD.js` y se cargan cuando se muestran. `datos.js` bajó de 222 a 50 KB.
+      Comprobado: la página muestra exactamente lo mismo que antes (récords, resumen, Reddit,
+      línea de tiempo y titulares por páginas y por día).
+- [x] **2.14 Aguantar muchas visitas (misma tanda).** La revisión de datos nuevos de cada 2
+      minutos mira `version.json` (menos de 50 bytes) en vez de bajar `datos.js` entero.
+      Una primera visita baja unos 94 KB comprimidos: el límite blando de GitHub Pages (100 GB
+      al mes) da para cerca de 1 millón de visitas. Plan B si no alcanza: ver `PLAN.md`.
+- [ ] **2.15 Revisión de seguridad (misma tanda).** Con el skill `security-audit` de
+      Cloudflare, en modo guiado (elección de Bruno).
 
 ## Fase 4 — Mejoras largas (lo que queda)
 
@@ -221,6 +232,14 @@ la página, así que cada una se presenta con opciones y capturas antes de aplic
       la hora cero de cada lugar, las cifras redondas de Twitch, los cambios de video más visto
       y las decenas de millones de los tráilers (ver `PLAN.md`). Los eventos a mano siguen en
       `web/eventos.js` (vacío por ahora).
+
+- [ ] **7.7 Álbum de momentos (idea 5, Bruno la pidió el 2026-11-14).** Capturas o memes que
+      Bruno guarde el día 19, con su hora. Las fotos las pone él: Claude no las inventa.
+- [ ] **7.8 Descargar el "Resumen del día" como imagen (idea 6, misma fecha).**
+- [ ] **7.9 Comparar con otros lanzamientos (idea 7, misma fecha).** Por ejemplo GTA V en 2013,
+      solo con datos verificados y su fuente.
+- *Idea 4 (instalarla como app en el celular): descartada por Bruno el 2026-11-14 ("prefiero
+  que simplemente sea una página web").*
 
 ## Sin definir
 

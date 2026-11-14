@@ -22,10 +22,12 @@ graphify-out/cost.json
 
 # Datos de la página: se generan en el PC con recolector/generar_web.py (o ver_pagina.bat)
 web/datos.js
-web/datos.js.tmp
+web/*.tmp
 
 # Capturas de las pruebas (pruebas/): se rehacen cada vez
 pruebas/capturas/
 
 # Graphify: guarda la ruta de la carpeta del PC (scan_root); el repositorio es público
 graphify-out/.graphify_build_state.json
+web/version.json
+web/dias/

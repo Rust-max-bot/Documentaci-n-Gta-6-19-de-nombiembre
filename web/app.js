@@ -8,6 +8,51 @@
   var D = window.DATOS || window.DATOS_EJEMPLO || { mediciones: [], youtube: [], noticias: [], reddit: {}, eventos: [] };
   var $ = function (id) { return document.getElementById(id); };
 
+  /* ---------- Datos por días (formato 2, pedido de Bruno, 2026-11-14) ----------
+     datos.js trae de los titulares y de Reddit solo sus horas (en segundos), y las series de
+     visitas de los videos en forma corta ([segundos, visitas]). Aquí se dejan como antes para el
+     resto de la página. Los titulares completos de cada día se cargan aparte, solo cuando hacen
+     falta (ver "Días cargados a pedido"). Los datos de ejemplo vienen completos. */
+  function isoDe(seg) { return new Date(seg * 1000).toISOString(); }
+  function diaUTC(seg) { return isoDe(seg).slice(0, 10); }
+  if (D.formato === 2) {
+    D.noticias = (D.noticias_t || []).map(function (seg, i) { return { t: isoDe(seg), i: i }; });
+    D.reddit = D.reddit || {};
+    D.reddit.publicaciones = (D.reddit.publicaciones_t || []).map(function (seg) { return { t: isoDe(seg) }; });
+    [D.youtube, D.youtube_es, D.trailers].forEach(function (lista) {
+      (lista || []).forEach(function (v) {
+        v.serie = (v.serie || []).map(function (p) { return Array.isArray(p) ? { t: isoDe(p[0]), visitas: p[1] } : p; });
+      });
+    });
+  }
+
+  /* ---------- Días cargados a pedido ----------
+     Cada web/dias/AAAA-MM-DD.js (día UTC) llama a window.DATOS_DIA con los titulares y las
+     publicaciones de ese día. Se piden con una etiqueta <script> (funciona también abriendo la
+     página como archivo en el PC) y con la huella del archivo en la dirección: si el día no
+     cambió, el navegador usa el que ya tiene guardado. */
+  var DIAS = (function () {
+    var cargados = {}, promesas = {}, avisar = {};
+    window.DATOS_DIA = function (dia, contenido) {
+      cargados[dia] = contenido;
+      if (avisar[dia]) avisar[dia](contenido);
+    };
+    function uno(dia) {
+      if (cargados[dia]) return Promise.resolve(cargados[dia]);
+      if (!(D.dias || {})[dia]) return Promise.resolve({ noticias: [], reddit: [] });
+      if (!promesas[dia]) promesas[dia] = new Promise(function (listo, fallo) {
+        var s = document.createElement("script");
+        avisar[dia] = listo;
+        s.src = "dias/" + dia + ".js?v=" + encodeURIComponent(D.dias[dia]);
+        s.onload = function () { if (!cargados[dia]) { delete promesas[dia]; fallo(new Error("día vacío")); } };
+        s.onerror = function () { delete promesas[dia]; s.remove(); fallo(new Error("no cargó")); };
+        document.head.appendChild(s);
+      });
+      return promesas[dia];
+    }
+    return { cargar: function (dias) { return Promise.all(dias.map(uno)); }, cargados: cargados };
+  })();
+
   /* ---------- Fechas y números ---------- */
   var fHora = new Intl.DateTimeFormat("es-CL", { timeZone: ZONA, hour: "2-digit", minute: "2-digit", hourCycle: "h23" });
   var fDia = new Intl.DateTimeFormat("es-CL", { timeZone: ZONA, day: "numeric", month: "short" });
@@ -420,7 +465,7 @@
   // Lo más nuevo arriba, y por páginas como en una tienda o un buscador, para que la sección
   // no crezca sin fin (pedidos de Bruno, 2026-11-13).
   (function () {
-    var POR_PAGINA = 12;
+    var POR_PAGINA = 12, pintando = 0;
     var lista = (D.noticias || []).slice().sort(function (a, b) { return Date.parse(b.t) - Date.parse(a.t); });
     var todas = lista, total = 1, actual = 1;
     /* Filtro por día (idea de Bruno). Días en hora de Santiago, lo más nuevo primero. */
@@ -476,7 +521,26 @@
     }
     function pintar() {
       var desde = (actual - 1) * POR_PAGINA, hasta = Math.min(todas.length, desde + POR_PAGINA);
-      $("noticias").innerHTML = todas.slice(desde, hasta).map(tarjeta).join("") || "<li>Todavía no hay titulares.</li>";
+      var turno = ++pintando, trozo = todas.slice(desde, hasta);
+      var faltan = D.formato === 2 ? trozo.filter(function (n) { return !n.titulo; }) : [];
+      if (faltan.length) {
+        $("noticias").innerHTML = '<li class="cargando">Cargando titulares…</li>';
+        var dias = []; faltan.forEach(function (n) { var k = diaUTC(Date.parse(n.t) / 1000); if (dias.indexOf(k) < 0) dias.push(k); });
+        DIAS.cargar(dias).then(function (contenidos) {
+          var porNumero = {};
+          contenidos.forEach(function (c) { (c.noticias || []).forEach(function (x) { porNumero[x.i] = x; }); });
+          faltan.forEach(function (n) {
+            var x = porNumero[n.i];
+            if (x) { n.titulo = x.titulo; n.medio = x.medio; n.url = x.url; }
+            else n.titulo = "(titular no encontrado)";   // no debería pasar: el día y datos.js salen juntos
+          });
+          if (turno === pintando) pintar();
+        }).catch(function () {
+          if (turno === pintando) $("noticias").innerHTML = '<li class="cargando">No se pudieron cargar estos titulares. Revisa la conexión y vuelve a tocar la página.</li>';
+        });
+      } else {
+        $("noticias").innerHTML = trozo.map(tarjeta).join("") || "<li>Todavía no hay titulares.</li>";
+      }
       $("noticias-cuenta").textContent = todas.length
         ? todas.length + (filtro ? " titulares del " + nombreDia(filtro) : " titulares, del más nuevo al más viejo") + " · mostrando " + (desde + 1) + " a " + hasta +
           (!filtro && diasN.length > 1 ? " · toca una barra para ver un solo día" : "") : "";
@@ -525,7 +589,8 @@
     $("reddit-leyenda").innerHTML = todas.length
       ? '<i class="c nd"></i> Sin dato (antes de la primera publicación guardada) · máximo: ' + max + " en una hora · " + todas.length + " publicaciones guardadas"
       : "Todavía no hay publicaciones guardadas.";
-    $("reddit-ultimas").innerHTML = todas.slice(0, 8).map(function (p) {
+    var ultimas = R.ultimas ? R.ultimas.slice().sort(function (a, b) { return Date.parse(b.t) - Date.parse(a.t); }) : todas;
+    $("reddit-ultimas").innerHTML = ultimas.slice(0, 8).map(function (p) {
       var autor = (p.autor || "").replace(/^\/u\//, "u/");
       return "<li>" + (/^https:\/\/www\.reddit\.com\//.test(p.url || "") ? enlace(p.url, limpio(p.titulo)) : "<a>" + limpio(p.titulo) + "</a>") +
         "<small>" + limpio(autor) + " · " + dia(Date.parse(p.t)) + " " + hora(Date.parse(p.t)) + "</small></li>";
@@ -538,7 +603,7 @@
 
   /* ---------- Actualización sola (pedido de Bruno, 2026-11-14) ----------
      Dice cuánto hace de la última medición. Publicada en internet, cada 2 minutos mira si hay
-     datos nuevos (datos.js con otra fecha de "generado"). Si los hay y nadie está tocando la
+     datos nuevos (version.json con una fecha de "generado" más nueva). Si los hay y nadie está tocando la
      página (1,5 min sin moverla) o la pestaña está en segundo plano, recarga sola y vuelve al
      mismo lugar; si no, ofrece un botón para no mover la página mientras alguien la lee.
      Abierta como archivo en el PC no puede mirar (el navegador no deja): solo dice la hora. */
@@ -558,15 +623,19 @@
     }
     function recargar() {
       try { sessionStorage.setItem("gta6-recarga", "1"); sessionStorage.setItem("gta6-scroll", String(window.scrollY)); } catch (e) { /* sin almacenamiento */ }
-      location.reload();
+      // GitHub Pages deja guardar datos.js hasta 10 minutos: se pide de nuevo a la red (eso
+      // también renueva la copia guardada) y recién entonces se recarga, para no volver a
+      // mostrar los datos viejos.
+      fetch("datos.js", { cache: "reload" }).catch(function () {}).then(function () { location.reload(); });
     }
     ["pointerdown", "keydown", "scroll", "wheel", "touchstart"].forEach(function (t) { window.addEventListener(t, function () { ultimoToque = Date.now(); }, { passive: true }); });
     chip.addEventListener("click", function (e) { if (e.target.closest("#en-vivo-boton")) recargar(); });
     function revisar() {
       if (hayNuevos || !D.generado) return;
-      fetch("datos.js?v=" + Date.now(), { cache: "no-store" }).then(function (r) { return r.ok ? r.text() : ""; }).then(function (t) {
-        var m = /"generado":"([^"]+)"/.exec(t);
-        if (!m || m[1] === D.generado) return;
+      // version.json pesa menos de 50 bytes, y si no cambió el servidor responde "sin cambios"
+      // sin mandarlo: con mucha gente mirando no se baja datos.js entero cada 2 minutos.
+      fetch("version.json", { cache: "no-cache" }).then(function (r) { return r.ok ? r.json() : {}; }).then(function (v) {
+        if (!v || !v.generado || v.generado <= D.generado) return;
         hayNuevos = true;
         if (document.hidden || Date.now() - ultimoToque > 90000) recargar(); else pintar();
       }).catch(function () { /* sin conexión: se vuelve a intentar en 2 minutos */ });

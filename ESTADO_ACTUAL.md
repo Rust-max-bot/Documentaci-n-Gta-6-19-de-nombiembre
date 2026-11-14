@@ -63,7 +63,8 @@ alarga en `recolector/interruptor.json` (por defecto, hasta el 19 dic).
 no se puede abrir `github.io` (la red lo bloquea): para revisarla, mirar la ejecución del
 workflow en GitHub. En el PC, doble clic en `ver_pagina.bat` (trae las
 mediciones, prepara `web/datos.js` y abre la página). `web/datos.js` lo genera
-`recolector/generar_web.py`: no se edita a mano ni va a git.
+`recolector/generar_web.py` (junto con `web/dias/`, los titulares y Reddit de cada día, y
+`web/version.json`): no se editan a mano ni van a git.
 
 **Trabajo en PC y nube:** revisado el 2026-11-13. El PC y GitHub están iguales y no hay pull
 requests abiertos. El grafo de Graphify está al día en el código. La parte de los documentos
@@ -74,8 +75,9 @@ esos sitios): no es un fallo de la página.
 **Fecha límite:** lanzamiento el 19 de noviembre de 2026, 00:00 de Santiago.
 
 **Reglas en pausa:** ninguna. "Paso a paso con permiso" está activa **por tandas**: Bruno
-dice qué pasos hacer y Claude no para hasta completarlos (ver `CLAUDE.md`). Tanda actual:
-ninguna (la última, del 14 nov: las tres mejoras 2.10 a 2.12; antes, README, publicar la página
+dice qué pasos hacer y Claude no para hasta completarlos (ver `CLAUDE.md`). Tanda actual
+(14 nov, pedida por Bruno): 2.13 datos por días y 2.14 muchas visitas (hechas), 2.15 seguridad,
+7.8 resumen como imagen, 7.7 álbum y 7.9 comparar lanzamientos. Antes: las tres mejoras 2.10 a 2.12; antes, README, publicar la página
 y la nota "hecho con Claude", 2.7 a 2.9). Antes, ese día: 7.6, 7.5,
 la línea de tiempo (PR #16) y el filtro por día de los titulares (2.6, PR #17), unidos. Quedan 7.1 (después del lanzamiento) y 7.4 (el texto de Bruno). La 6.1 se ejecuta una vez entre el 20 y el 25 nov: el programa
 (`recolector/trends_extra.py`, workflow "Trends extra (6.1)") quedó listo y probado el 13 nov;
@@ -83,6 +85,7 @@ Bruno ya eligió las palabras de la comparación.
 
 ## Últimos cambios
 
+- 2026-11-14: datos por días (2.13: `datos.js` de 222 a 50 KB, los titulares de cada día se cargan al mostrarlos) y revisión de datos nuevos con `version.json` para aguantar muchas visitas (2.14).
 - 2026-11-14: actualización sola con "Última medición hace X min" (2.10), vista previa al compartir con ícono propio (2.11, opción C de Bruno) y menú de secciones con botón flotante (2.12, opción B de Bruno).
 - 2026-11-14: nota "hecho con Claude" en el README y en el pie de la página (2.9, pedido de Bruno); en lo público, Bruno aparece como "Rust" (regla nueva en `CLAUDE.md`).
 - 2026-11-14: README al día (2.7) y página publicada en GitHub Pages para verla desde el celular (2.8, pedido de Bruno).
@@ -91,7 +94,6 @@ Bruno ya eligió las palabras de la comparación.
 - 2026-11-13: las torres nuevas suben una por una al pasar a 2026 y bajan al volver a 1986 (7.3, opción B de Bruno).
 - 2026-11-13: vuelve el barrido de colores al cambiar de estilo (se había perdido con la hora cero) y vuelve el relleno de los gráficos; nueva tarea 7.6, hora cero en Nueva Zelanda y Miami.
 - 2026-11-13: pestañas "Global" y "En español" en los videos de YouTube (6.4, opción A de Bruno).
-- 2026-11-13: programa aparte para las preguntas extra a Google Trends (6.1), probado desde GitHub sin guardar, con las palabras que eligió Bruno; falta ejecutarlo del 20 al 25 nov.
 
 ## Pendiente
 
