@@ -75,6 +75,10 @@
   var picoTwitch = maximo("espectadores"), picoTrends = maximo("interes");
   var SERVICIOS = [["rockstar", "Rockstar"], ["playstation", "PlayStation Network"], ["xbox", "Red de Xbox"]];
 
+  /* ¿Esta carga la hizo la propia página al traer datos nuevos? (ver "Actualización sola") */
+  var recargaSola = false;
+  try { recargaSola = sessionStorage.getItem("gta6-recarga") === "1"; sessionStorage.removeItem("gta6-recarga"); } catch (e) { /* sin almacenamiento */ }
+
   /* ---------- Aviso de datos de ejemplo ---------- */
   if (D.ejemplo) $("aviso-ejemplo").hidden = false;
 
@@ -144,7 +148,7 @@
     var lema = document.querySelector(".lema"), portada = document.querySelector(".portada");
     lema.textContent = "¡Ya salió GTA 6!";
     lema.classList.add("ya-salio");
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches || recargaSola) return;   // tras una recarga automática, sin repetir la fiesta
     // Fuegos artificiales y reflectores a la vez (elección de Bruno, 2026-11-13: opciones A y C).
     portada.classList.add("fiesta");
     fuegos(portada);
@@ -531,6 +535,74 @@
   /* ---------- Pie ---------- */
   $("pie-info").textContent = (D.ejemplo ? "Mostrando datos de ejemplo. " : "") +
     (D.generado ? "Datos actualizados por última vez el " + dia(Date.parse(D.generado)) + " a las " + hora(Date.parse(D.generado)) + " (hora de Santiago)." : "");
+
+  /* ---------- Actualización sola (pedido de Bruno, 2026-11-14) ----------
+     Dice cuánto hace de la última medición. Publicada en internet, cada 2 minutos mira si hay
+     datos nuevos (datos.js con otra fecha de "generado"). Si los hay y nadie está tocando la
+     página (1,5 min sin moverla) o la pestaña está en segundo plano, recarga sola y vuelve al
+     mismo lugar; si no, ofrece un botón para no mover la página mientras alguien la lee.
+     Abierta como archivo en el PC no puede mirar (el navegador no deja): solo dice la hora. */
+  (function () {
+    var chip = $("en-vivo"); if (!chip) return;
+    var fin = M.length ? M[M.length - 1].ts : null, hayNuevos = false, ultimoToque = Date.now();
+    if (!fin) return;
+    chip.hidden = false;
+    function hace() {
+      var min = Math.max(0, Math.round((Date.now() - fin) / 60000));
+      return min < 1 ? "hace menos de 1 min" : min < 60 ? "hace " + min + " min" : min < 1440 ? "hace " + Math.floor(min / 60) + " h " + (min % 60) + " min" : "el " + dia(fin);
+    }
+    function pintar() {
+      chip.innerHTML = hayNuevos
+        ? '<button type="button" id="en-vivo-boton"><i aria-hidden="true"></i>Hay datos nuevos · tocar para actualizar</button>'
+        : '<span><i aria-hidden="true"></i>Última medición ' + hace() + " · " + hora(fin) + "</span>";
+    }
+    function recargar() {
+      try { sessionStorage.setItem("gta6-recarga", "1"); sessionStorage.setItem("gta6-scroll", String(window.scrollY)); } catch (e) { /* sin almacenamiento */ }
+      location.reload();
+    }
+    ["pointerdown", "keydown", "scroll", "wheel", "touchstart"].forEach(function (t) { window.addEventListener(t, function () { ultimoToque = Date.now(); }, { passive: true }); });
+    chip.addEventListener("click", function (e) { if (e.target.closest("#en-vivo-boton")) recargar(); });
+    function revisar() {
+      if (hayNuevos || !D.generado) return;
+      fetch("datos.js?v=" + Date.now(), { cache: "no-store" }).then(function (r) { return r.ok ? r.text() : ""; }).then(function (t) {
+        var m = /"generado":"([^"]+)"/.exec(t);
+        if (!m || m[1] === D.generado) return;
+        hayNuevos = true;
+        if (document.hidden || Date.now() - ultimoToque > 90000) recargar(); else pintar();
+      }).catch(function () { /* sin conexión: se vuelve a intentar en 2 minutos */ });
+    }
+    // Al volver de una recarga automática, a la misma altura de la página.
+    if (recargaSola) { try { var y = +sessionStorage.getItem("gta6-scroll"); if (y) window.scrollTo(0, y); } catch (e) { /* nada */ } }
+    pintar(); setInterval(function () { if (!hayNuevos) pintar(); }, 30000);
+    if (/^https?:$/.test(location.protocol)) {
+      setInterval(revisar, 120000);
+      document.addEventListener("visibilitychange", function () { if (!document.hidden) revisar(); else if (hayNuevos) recargar(); });
+    }
+  })();
+
+  /* ---------- Menú de secciones (opción B de Bruno, 2026-11-14: botón flotante) ---------- */
+  (function () {
+    var caja = $("menu"); if (!caja) return;
+    var S = [["records", "Récords"], ["seccion-linea", "Línea de tiempo"], ["resumen", "Resumen"], ["seccion-twitch", "Twitch"],
+      ["seccion-trends", "Trends"], ["seccion-servidores", "Servidores"], ["seccion-videos", "Videos"], ["comparacion", "Comparación"],
+      ["seccion-noticias", "Titulares"], ["seccion-reddit", "Reddit"], ["capsula", "Cápsula"]].filter(function (x) { return $(x[0]); });
+    caja.innerHTML = '<button type="button" class="menu-boton" aria-expanded="false" aria-controls="menu-lista"><span aria-hidden="true">☰</span> Secciones</button>' +
+      '<div class="menu-lista" id="menu-lista" hidden>' +
+      S.map(function (x) { return '<a href="#' + x[0] + '" data-ir="' + x[0] + '">' + x[1] + "</a>"; }).join("") +
+      '<a href="#" data-ir="arriba">↑ Volver arriba</a></div>';
+    var boton = caja.querySelector(".menu-boton"), lista = caja.querySelector(".menu-lista");
+    function abrir(si) { lista.hidden = !si; boton.setAttribute("aria-expanded", String(si)); }
+    document.addEventListener("click", function (e) {
+      var a = e.target.closest("[data-ir]");
+      if (a && caja.contains(a)) {
+        e.preventDefault(); abrir(false);
+        if (a.dataset.ir === "arriba") window.scrollTo({ top: 0, behavior: "smooth" });
+        else { var el = $(a.dataset.ir); el.classList.add("visible"); el.scrollIntoView({ behavior: "smooth", block: "start" }); }
+      } else if (e.target.closest(".menu-boton")) abrir(lista.hidden);
+      else if (!caja.contains(e.target)) abrir(false);   // tocar fuera la cierra
+    });
+    document.addEventListener("keydown", function (e) { if (e.key === "Escape" && !lista.hidden) { abrir(false); boton.focus(); } });
+  })();
 
   /* ---------- Cambio de estilo ---------- */
   (function () {

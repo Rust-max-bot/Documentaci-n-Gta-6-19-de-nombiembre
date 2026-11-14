@@ -15,10 +15,10 @@
 
 ## Dónde quedamos
 
-*(2026-11-14, ~01:50 UTC.)*
+*(2026-11-14, ~03:20 UTC.)*
 
 **La página está lista para el lanzamiento.** Hechas las fases 0, 1, 2 (menos la 2.5, para
-después), 3 y las tareas 2.6 a 2.9, 4.1, 4.2, 6.2, 6.3, 6.4, 7.2, 7.3, 7.5 y 7.6. **La página está
+después), 3 y las tareas 2.6 a 2.12, 4.1, 4.2, 6.2, 6.3, 6.4, 7.2, 7.3, 7.5 y 7.6. **La página está
 publicada en internet** (2.8) y dice en el pie y en el README que está hecha con Claude a
 pedido de Bruno (2.9). Lo que tiene:
 - dos estilos de Miami (1986 y 2026, paleta B "Atardecer encendido") con torres de Miami que
@@ -31,7 +31,9 @@ pedido de Bruno (2.9). Lo que tiene:
   cero de cada lugar) y "Resumen del día", una tarjeta por día (7.5);
 - videos y Twitch con miniaturas y enlaces; titulares por páginas, con barras por día para
   filtrarlos (2.6); Reddit por RSS;
-- la cápsula del tiempo (7.4) como dos postales al final.
+- la cápsula del tiempo (7.4) como dos postales al final;
+- "Última medición hace X min" y actualización sola si la página queda abierta (2.10), imagen
+  propia al compartir el enlace y en la pestaña (2.11) y botón flotante "☰ Secciones" (2.12).
 
 **Lo único con fecha:** Bruno escribe "Lo que espero" en `web/capsula.js` antes del 19 nov
 (o se lo pasa a Claude para ponerlo). La 7.4 queda en `[ ]` hasta entonces. Bruno lo dejó
@@ -73,14 +75,15 @@ esos sitios): no es un fallo de la página.
 
 **Reglas en pausa:** ninguna. "Paso a paso con permiso" está activa **por tandas**: Bruno
 dice qué pasos hacer y Claude no para hasta completarlos (ver `CLAUDE.md`). Tanda actual:
-ninguna (la última, del 14 nov: README, publicar la página y la nota "hecho con Claude",
-2.7 a 2.9). Antes, ese día: 7.6, 7.5,
+ninguna (la última, del 14 nov: las tres mejoras 2.10 a 2.12; antes, README, publicar la página
+y la nota "hecho con Claude", 2.7 a 2.9). Antes, ese día: 7.6, 7.5,
 la línea de tiempo (PR #16) y el filtro por día de los titulares (2.6, PR #17), unidos. Quedan 7.1 (después del lanzamiento) y 7.4 (el texto de Bruno). La 6.1 se ejecuta una vez entre el 20 y el 25 nov: el programa
 (`recolector/trends_extra.py`, workflow "Trends extra (6.1)") quedó listo y probado el 13 nov;
 Bruno ya eligió las palabras de la comparación.
 
 ## Últimos cambios
 
+- 2026-11-14: actualización sola con "Última medición hace X min" (2.10), vista previa al compartir con ícono propio (2.11, opción C de Bruno) y menú de secciones con botón flotante (2.12, opción B de Bruno).
 - 2026-11-14: nota "hecho con Claude" en el README y en el pie de la página (2.9, pedido de Bruno); en lo público, Bruno aparece como "Rust" (regla nueva en `CLAUDE.md`).
 - 2026-11-14: README al día (2.7) y página publicada en GitHub Pages para verla desde el celular (2.8, pedido de Bruno).
 - 2026-11-14: filtro por día en los titulares con barras por día (2.6, opción C de Bruno).
@@ -89,7 +92,6 @@ Bruno ya eligió las palabras de la comparación.
 - 2026-11-13: vuelve el barrido de colores al cambiar de estilo (se había perdido con la hora cero) y vuelve el relleno de los gráficos; nueva tarea 7.6, hora cero en Nueva Zelanda y Miami.
 - 2026-11-13: pestañas "Global" y "En español" en los videos de YouTube (6.4, opción A de Bruno).
 - 2026-11-13: programa aparte para las preguntas extra a Google Trends (6.1), probado desde GitHub sin guardar, con las palabras que eligió Bruno; falta ejecutarlo del 20 al 25 nov.
-- 2026-11-13: sección "Logros y récords" en la página, con los tráilers oficiales (6.2, opción A de Bruno).
 
 ## Pendiente
 
