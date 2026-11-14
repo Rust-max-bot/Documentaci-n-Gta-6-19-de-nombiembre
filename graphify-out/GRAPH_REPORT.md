@@ -1,17 +1,17 @@
 # Graph Report - Documentaci-n-Gta-6-19-de-nombiembre  (2026-11-14)
 
 ## Corpus Check
-- 38 files · ~47,725 words
+- 38 files · ~48,285 words
 - Verdict: corpus is large enough that graph structure adds value.
 - Unclassified: 8 file(s) not represented in the graph (top: (none) 3, .jsonl 3, .bat 1)
 
 ## Summary
-- 470 nodes · 811 edges · 33 communities (19 shown, 14 thin omitted)
+- 474 nodes · 821 edges · 33 communities (19 shown, 14 thin omitted)
 - Extraction: 88% EXTRACTED · 12% INFERRED · 0% AMBIGUOUS · INFERRED: 95 edges (avg confidence: 0.87)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `2f9d5416`
+- Built from commit: `b27f9519`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -48,7 +48,7 @@
 
 ## God Nodes (most connected - your core abstractions)
 1. `Falla` - 22 edges
-2. `pintar()` - 18 edges
+2. `pintar()` - 19 edges
 3. `pedir()` - 16 edges
 4. `exigir()` - 16 edges
 5. `Decisiones ya tomadas` - 14 edges
@@ -117,8 +117,8 @@ Cohesion: 0.07
 Nodes (30): TWITCH_CLIENT_ID, TWITCH_CLIENT_SECRET, YOUTUBE_API_KEY, solo_trends_extra, jobs, probar, trends_extra, name (+22 more)
 
 ### Community 8 - "Código de la página (app.js)"
-Cohesion: 0.10
-Nodes (42): ahora(), aPantalla(), boton(), clave(), compacto(), cuadro(), cuando(), cuenta() (+34 more)
+Cohesion: 0.09
+Nodes (46): ahora(), aPantalla(), aplicar(), boton(), clave(), claveDia(), compacto(), cuadro() (+38 more)
 
 ### Community 9 - "Validaciones (validar.py)"
 Cohesion: 0.12
@@ -169,16 +169,16 @@ Nodes (5): Dónde quedamos (2026-11-13), Eje del gráfico de Twitch con números
 _Questions this graph is uniquely positioned to answer:_
 
 - **Why does `compacto()` connect `Código de la página (app.js)` to `Despertador y plan de trabajo`, `Plan de trabajo`?**
-  _High betweenness centrality (0.171) - this node is a cross-community bridge._
+  _High betweenness centrality (0.176) - this node is a cross-community bridge._
 - **What connects `Estado de Rockstar (anotado a mano en web/eventos.js)`, `Fallo del eje de Twitch (compacto() en web/app.js)`, `Reddit (A5)` to the rest of the system?**
   _32 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Despertador y plan de trabajo` be split into smaller, more focused modules?**
   _Cohesion score 0.05 - nodes in this community are weakly interconnected._
 - **Why does `Plan de trabajo` connect `Plan de trabajo` to `Fuentes de datos (fuentes.py)`?**
-  _High betweenness centrality (0.160) - this node is a cross-community bridge._
+  _High betweenness centrality (0.163) - this node is a cross-community bridge._
 - **Should `Fuentes de datos (fuentes.py)` be split into smaller, more focused modules?**
-  _Cohesion score 0.07773664727657324 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.07814207650273224 - nodes in this community are weakly interconnected._
 - **Why does `Fase 6 — Ideas nuevas de Bruno: más estadísticas, logros y comparaciones` connect `Fuentes de datos (fuentes.py)` to `Plan de trabajo`?**
-  _High betweenness centrality (0.151) - this node is a cross-community bridge._
+  _High betweenness centrality (0.153) - this node is a cross-community bridge._
 - **Should `Resultado de las pruebas reales de fuentes (12 nov 2026)` be split into smaller, more focused modules?**
   _Cohesion score 0.061979648473635525 - nodes in this community are weakly interconnected._

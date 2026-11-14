@@ -115,6 +115,13 @@ Resultado final: **una página web** con:
   lugar (cuando ya pasó), cada vez que Twitch pasa una cifra redonda de espectadores (2.500,
   5.000, 10.000, 25.000…), cada cambio de video más visto en YouTube y cada decena de millones
   de visitas que pasa un tráiler oficial.
+- **Filtro por día en los titulares (idea de Bruno; opción C elegida por él, 2026-11-14).**
+  Sobre los titulares, una barra por día (de izquierda, lo más viejo, a derecha, lo más nuevo,
+  como los gráficos) con su cantidad. Al tocar una barra se ven solo los titulares de ese día
+  (con las mismas páginas); al tocarla otra vez, o con "Ver todos los días", vuelven todos. Si
+  hay más días de los que caben, las barras se deslizan hacia el lado y empiezan en los más
+  nuevos. Se descartaron A (un botón por día: serían ~40 al 19 dic) y B (lista desplegable: no
+  muestra qué día tuvo más titulares).
 - **Resumen del día (tarea 7.5, 2026-11-14). Diseño elegido por Claude (misma tanda).**
   - Sección después de la línea de tiempo, con botones de día (lo más nuevo primero, como la
     tabla de Twitch) y una tarjeta con 6 cuadros, iguales a los de "Logros y récords": máximo

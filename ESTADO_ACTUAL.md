@@ -15,11 +15,11 @@
 
 ## Dónde quedamos
 
-*(2026-11-14, ~01:15 UTC.)*
+*(2026-11-14, ~01:30 UTC.)*
 
 **La página está lista para el lanzamiento.** Hechas las fases 0, 1, 2 (menos la 2.5, para
-después), 3 y las tareas 4.1, 4.2, 6.2, 6.3, 6.4, 7.2, 7.3, 7.5 y 7.6 (las dos últimas, en el PR de
-la tanda del 14 nov, esperando que Bruno lo una). Lo que tiene:
+después), 3 y las tareas 2.6, 4.1, 4.2, 6.2, 6.3, 6.4, 7.2, 7.3, 7.5 y 7.6 (la 2.6, en un PR esperando
+que Bruno lo una). Lo que tiene:
 - dos estilos de Miami (1986 y 2026, paleta B "Atardecer encendido") con torres de Miami que
   suben una por una al pasar a 2026;
 - día, atardecer y noche según la hora de Miami, con botones;
@@ -28,11 +28,13 @@ la tanda del 14 nov, esperando que Bruno lo una). Lo que tiene:
   `?probar-fecha=2026-11-18T12:30Z`);
 - línea de tiempo con eventos automáticos (cifras de Twitch, video más visto, tráilers, hora
   cero de cada lugar) y "Resumen del día", una tarjeta por día (7.5);
-- videos y Twitch con miniaturas y enlaces; titulares por páginas; Reddit por RSS;
+- videos y Twitch con miniaturas y enlaces; titulares por páginas, con barras por día para
+  filtrarlos (2.6); Reddit por RSS;
 - la cápsula del tiempo (7.4) como dos postales al final.
 
 **Lo único con fecha:** Bruno escribe "Lo que espero" en `web/capsula.js` antes del 19 nov
-(o se lo pasa a Claude para ponerlo). La 7.4 queda en `[ ]` hasta entonces.
+(o se lo pasa a Claude para ponerlo). La 7.4 queda en `[ ]` hasta entonces. Bruno lo dejó
+para después (2026-11-14) y pidió que se le recuerde: recordatorio el 17 nov, 19:00 de Chile.
 
 **El recolector funciona solo.** Lo lanza el despertador de Cloudflare (Worker
 `despertador-recolector`, horario `7,37 * * * *`; el minuto 37 solo mide del 17 nov 00:07 al
@@ -66,13 +68,14 @@ esos sitios): no es un fallo de la página.
 
 **Reglas en pausa:** ninguna. "Paso a paso con permiso" está activa **por tandas**: Bruno
 dice qué pasos hacer y Claude no para hasta completarlos (ver `CLAUDE.md`). Tanda actual:
-la del 14 nov ("haz dos de 7.1, 7.4, 7.6 y 7.5 sin preguntarme", más la línea de tiempo):
-hechas 7.6 y 7.5; quedan 7.1 (después del lanzamiento) y 7.4 (el texto de Bruno). La 6.1 se ejecuta una vez entre el 20 y el 25 nov: el programa
+ninguna (la del 14 nov terminó: 7.6, 7.5 y la línea de tiempo, PR #16 unido; luego el filtro
+por día de los titulares, 2.6). Quedan 7.1 (después del lanzamiento) y 7.4 (el texto de Bruno). La 6.1 se ejecuta una vez entre el 20 y el 25 nov: el programa
 (`recolector/trends_extra.py`, workflow "Trends extra (6.1)") quedó listo y probado el 13 nov;
 Bruno ya eligió las palabras de la comparación.
 
 ## Últimos cambios
 
+- 2026-11-14: filtro por día en los titulares con barras por día (2.6, opción C de Bruno).
 - 2026-11-14: cuenta regresiva con botones Nueva Zelanda, Chile y Miami (7.6), "Resumen del día" (7.5) y más eventos automáticos en la línea de tiempo (pedido de Bruno); diseño de Claude porque Bruno pidió no preguntarle.
 - 2026-11-13: las torres nuevas suben una por una al pasar a 2026 y bajan al volver a 1986 (7.3, opción B de Bruno).
 - 2026-11-13: vuelve el barrido de colores al cambiar de estilo (se había perdido con la hora cero) y vuelve el relleno de los gráficos; nueva tarea 7.6, hora cero en Nueva Zelanda y Miami.
@@ -81,22 +84,20 @@ Bruno ya eligió las palabras de la comparación.
 - 2026-11-13: el recolector busca también videos en español una vez por hora (6.4, pedido de Bruno); la página, después.
 - 2026-11-13: sección "Logros y récords" en la página, con los tráilers oficiales (6.2, opción A de Bruno).
 - 2026-11-13: la página muestra "GTA frente a lo más visto" (6.3, opción A de Bruno) y el recolector mide los 4 videos oficiales de GTA VI (6.2).
-- 2026-11-13: revisado el despertador: sin claves ni datos de Bruno en el repositorio; el Worker de Cloudflare es igual a la copia. Hallado: el correo de Outlook en las uniones de PR hechas desde la web.
 
 ## Pendiente
 
 La lista completa y su orden están en `PLAN_DE_TRABAJO.md`. Resumen (2026-11-13):
 
 1. **Antes del 19 nov:** 7.4, Bruno escribe sus expectativas en `web/capsula.js`.
-   7.6 hecha (en el PR del 14 nov): tiene que estar unida antes del **18 nov a las 08:00 de Chile**.
+   7.6 hecha y unida (PR #16).
 2. **Fase 4:** 4.3 análisis de datos (necesita varios días de datos).
 3. **Fase 6** (ideas de Bruno): 6.1 más Google Trends, **una sola vez entre el 20 y el 25 nov**,
    fuera del recolector de cada hora (decisión de Bruno, 2026-11-13; ver `PLAN.md`). Programa
    listo y probado, con las palabras que eligió Bruno; falta ejecutarlo y mostrarlo. 6.2 y 6.3, hechas. 6.4 videos en español, hecha (pestañas en la página).
 4. **Fase 7:** 7.1 rebobinar (después del lanzamiento); 7.3, 7.5 y 7.6, hechas.
 5. **Fase 5** (después del lanzamiento): búsqueda calmada; clave de Reddit.
-6. **Ideas sueltas:** 2.5 TikTok (sin acceso fácil); un filtro por día en los titulares
-   (idea de Bruno, sin tarea todavía); D6 (Bruno pidió ignorarla por ahora).
+6. **Ideas sueltas:** 2.5 TikTok (sin acceso fácil); D6 (Bruno pidió ignorarla por ahora).
 7. **Bruno:**
    - pedir a soporte de GitHub que borre la referencia del PR #1 (deja alcanzable el primer
      commit, con su correo de Outlook);
@@ -107,6 +108,6 @@ La lista completa y su orden están en `PLAN_DE_TRABAJO.md`. Resumen (2026-11-13
      después** (2026-11-13: lo peor sería recibir correos no deseados). No volver a
      proponerlo hasta que él lo retome. Quitar el correo de esos commits exige reescribir
      `main` con `--force`: solo si Bruno lo autoriza;
-   - borrar en GitHub las ramas ya unidas: `claude/project-thread-en9qib` y
-     `claude/project-thread-odgsms` (revisado el 2026-11-13: las otras 4 ya no existen).
+   - borrar en GitHub las ramas ya unidas: `claude/project-thread-en9qib`,
+     `claude/project-thread-odgsms` y, cuando se una su último PR, `claude/project-thread-yceo71`.
 8. **Opcional:** el hook de Impeccable (`npx impeccable install` en el PC).
