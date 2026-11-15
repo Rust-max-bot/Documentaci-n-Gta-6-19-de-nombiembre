@@ -472,32 +472,38 @@ td a:hover, td a:focus-visible { color: var(--a1); text-decoration-color: var(--
   .cp-barras li { grid-template-columns: 100px 1fr 56px; font-size: 13px; }
 }
 
-/* Cápsula del tiempo (tarea 7.4): dos postales de Miami, opción B elegida por Bruno el
-   2026-11-13. Sello con la palmera de la página y matasellos con el día en que se escribió. */
-.cap-postales { display: grid; grid-template-columns: 1fr 1fr; gap: 26px; margin-top: 22px; padding: 6px; }
-.cap-postal { display: grid; grid-template-columns: 1fr 96px; gap: 16px; padding: 20px; border-radius: 4px; background: color-mix(in srgb, var(--a3) 8%, var(--panel)); border: 1px solid color-mix(in srgb, var(--a3) 45%, transparent); transform: rotate(-1deg); box-shadow: 0 12px 26px -14px rgba(0, 0, 0, .5); }
-.cap-postal + .cap-postal { transform: rotate(1deg); }
-.cap-texto { min-width: 0; padding-right: 16px; border-right: 1px solid color-mix(in srgb, var(--tenue) 45%, transparent); overflow-wrap: anywhere; }
-.cap-texto h3 { margin: 0 0 10px; font-family: var(--f-sub); font-size: clamp(20px, 2.4vw, 26px); font-weight: 700; line-height: 1.2; }
-:root[data-tema="actual"] .cap-texto h3 { font-weight: 400; }
-.cap-texto p { margin: 0 0 10px; }
-.cap-texto p:last-child { margin-bottom: 0; }
-.cap-postal.cerrada .cap-texto { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; min-height: 170px; text-align: center; color: var(--tenue); }
-.cap-postal.cerrada strong { color: var(--texto); font-size: 1.05em; }
-.cap-candado { width: 34px; height: 34px; color: var(--tenue); }
-.cap-lado { display: flex; flex-direction: column; align-items: center; gap: 12px; }
-.cap-estampa { width: 76px; height: 92px; padding: 8px; background: var(--a1); border: 3px solid var(--a1); outline: 3px dotted var(--panel); outline-offset: -3px; }
+/* Cápsula del tiempo (tarea 7.4): dos cintas de casete, "Cara A" (lo que espero) y "Cara B"
+   (lo que me pareció). Opción C elegida por Bruno el 2026-11-15; reemplaza a las postales del
+   2026-11-13 porque el texto largo las estiraba. El texto sale recortado con "Leer todo".
+   Sello con la palmera de la página y matasellos con el día en que se escribió. */
+.cap-postales { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; align-items: start; margin-top: 22px; }
+.cap-cinta { --cap-fondo: color-mix(in srgb, var(--a3) 6%, var(--panel)); min-width: 0; background: var(--cap-fondo); border-radius: 12px; border: 1px solid color-mix(in srgb, var(--a3) 45%, transparent); overflow: hidden; box-shadow: 0 12px 26px -14px rgba(0, 0, 0, .5); }
+.cap-etiqueta { position: relative; display: flex; align-items: center; gap: 14px; padding: 16px 18px 20px; background: color-mix(in srgb, var(--a1) 14%, var(--panel)); border-bottom: 1px solid color-mix(in srgb, var(--a3) 45%, transparent); }
+.cap-rayas { position: absolute; left: 0; right: 0; bottom: 0; height: 6px; background: linear-gradient(90deg, var(--a1) 0 33%, var(--a3) 33% 66%, var(--a2) 66%); }
+.cap-tit { flex: 1; min-width: 0; }
+.cap-tit small { color: var(--a2); font-weight: 700; font-size: 12px; letter-spacing: .14em; text-transform: uppercase; }
+.cap-tit h3 { margin: 2px 0 0; font-family: var(--f-sub); font-size: clamp(19px, 2.2vw, 24px); font-weight: 700; line-height: 1.2; overflow-wrap: anywhere; }
+:root[data-tema="actual"] .cap-tit h3 { font-weight: 400; }
+.cap-estampa { flex: none; width: 46px; height: 56px; padding: 4px; background: var(--a1); border: 3px solid var(--a1); outline: 3px dotted var(--panel); outline-offset: -3px; }
 .cap-estampa svg { display: block; width: 100%; height: 100%; fill: var(--a3); }
 .cap-estampa.vacia { background: none; border: 2px dashed color-mix(in srgb, var(--tenue) 60%, transparent); outline: none; }
-.cap-matasellos { width: 84px; height: 84px; margin: 0; border-radius: 50%; border: 2px solid var(--a2); color: var(--a2); display: flex; flex-direction: column; align-items: center; justify-content: center; font: 700 11px var(--f-texto); letter-spacing: .12em; line-height: 1.2; text-transform: uppercase; transform: rotate(-12deg); }
-.cap-matasellos b { font-size: 15px; white-space: nowrap; }
-@media (max-width: 640px) {
+.cap-matasellos { flex: none; width: 58px; height: 58px; margin: 0; border-radius: 50%; border: 2px solid var(--a2); color: var(--a2); display: flex; flex-direction: column; align-items: center; justify-content: center; font: 700 8px var(--f-texto); letter-spacing: .12em; line-height: 1.2; text-transform: uppercase; transform: rotate(-12deg); }
+.cap-matasellos b { font-size: 11px; white-space: nowrap; }
+.cap-cuerpo { padding: 18px; }
+.cap-texto { position: relative; max-height: 9.5em; overflow: hidden; overflow-wrap: anywhere; }
+.cap-texto::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 4em; background: linear-gradient(transparent, var(--cap-fondo)); pointer-events: none; }
+.cap-texto p { margin: 0 0 10px; }
+.cap-texto p:last-child { margin-bottom: 0; }
+.cap-cuerpo.abierto .cap-texto, .cap-cuerpo.corto .cap-texto { max-height: none; }
+.cap-cuerpo.abierto .cap-texto::after, .cap-cuerpo.corto .cap-texto::after { display: none; }
+.cap-cuerpo.corto .cap-leer { display: none; }
+.cap-leer { margin-top: 12px; padding: 8px 16px; border-radius: 999px; border: 1px solid var(--a1); background: none; color: var(--texto); font: 600 15px var(--f-texto); cursor: pointer; }
+.cap-leer:hover, .cap-leer:focus-visible { background: color-mix(in srgb, var(--a1) 15%, transparent); }
+.cap-vacio { display: flex; align-items: center; gap: 8px; color: var(--tenue); }
+.cap-candado { flex: none; width: 1em; height: 1em; }
+@media (max-width: 700px) {
   .cap-postales { grid-template-columns: 1fr; }
-  .cap-postal { grid-template-columns: 1fr 70px; gap: 12px; padding: 16px; }
-  .cap-texto { padding-right: 12px; }
-  .cap-estampa { width: 58px; height: 70px; padding: 6px; }
-  .cap-matasellos { width: 66px; height: 66px; font-size: 9px; }
-  .cap-matasellos b { font-size: 12px; }
+  .cap-matasellos { display: none; }
 }
 
 .pie { text-align: center; padding: 10px 16px 50px; color: var(--tenue); font-size: 14px; font-weight: 500; }

@@ -31,7 +31,7 @@ pedido de Bruno (2.9). Lo que tiene:
   cero de cada lugar) y "Resumen del día", una tarjeta por día (7.5);
 - videos y Twitch con miniaturas y enlaces; titulares por páginas, con barras por día para
   filtrarlos (2.6); Reddit por RSS;
-- la cápsula del tiempo (7.4) como dos postales al final;
+- la cápsula del tiempo (7.4) como dos cintas de casete al final ("Cara A" y "Cara B", con "Leer todo");
 - "Última medición hace X min" y actualización sola si la página queda abierta (2.10), imagen
   propia al compartir el enlace y en la pestaña (2.11) y botón flotante "☰ Secciones" (2.12);
 - titulares y Reddit de cada día en archivos aparte que se cargan al mostrarlos (2.13), para
@@ -43,9 +43,10 @@ pedido de Bruno (2.9). Lo que tiene:
 `AAAA-MM-DD HH-MM texto.jpg` (hora de Santiago). Guía paso a paso, también desde el celular,
 en `web/album/LEEME.md`. La foto aparece en la página en la siguiente publicación.
 
-**Lo único con fecha:** Bruno escribe "Lo que espero" en `web/capsula.js` antes del 19 nov
-(o se lo pasa a Claude para ponerlo). La 7.4 queda en `[ ]` hasta entonces. Bruno lo dejó
-para después (2026-11-14) y pidió que se le recuerde: recordatorio el 17 nov, 19:00 de Chile.
+**Cápsula (7.4):** "Lo que espero" ya está en `web/capsula.js` (2026-11-15, texto de Bruno
+con la ortografía corregida por Claude y aprobado por él; en el PR de la rama
+`claude/project-thread-wk5yjx` hasta que Bruno lo una). Falta "Lo que me pareció", después del
+lanzamiento: la 7.4 sigue en `[ ]`. El recordatorio del 17 nov ya no hace falta.
 
 **El recolector funciona solo.** Lo lanza el despertador de Cloudflare (Worker
 `despertador-recolector`, horario `7,37 * * * *`; el minuto 37 solo mide del 17 nov 00:07 al
@@ -100,6 +101,7 @@ Bruno ya eligió las palabras de la comparación.
 
 ## Últimos cambios
 
+- 2026-11-15: "Lo que espero de GTA 6 (mi opinión)" en la cápsula del tiempo (7.4), texto de Bruno corregido y aprobado por él, y cápsula rediseñada como cintas de casete con "Leer todo" (opción C); PR #25 para que lo una.
 - 2026-11-15: PR #23 unido (17:42 UTC). Primera medición con los cambios (18:07 UTC) en verde: 44 de 50 Shorts en Global, 23 de 50 en español, 0 de 25 en los de 4 a 20 min; 14 se marcaron por la forma porque youtube.com no respondió a tiempo (se vuelven a preguntar en el turno siguiente).
 - 2026-11-15: récords "Video más visto" y "Short más visto" por separado, con aviso dentro de cada cuadro (opción A de Bruno); idea a futuro del panel de control en el plan.
 - 2026-11-15: videos y Shorts separados (6.5, opción B: tira de Shorts), filtro "¿es de GTA 6?" (título + tema de YouTube + lista, Roblox fuera) y búsqueda de videos de 4 a 20 minutos; PR para que Bruno lo una.
@@ -109,15 +111,13 @@ Bruno ya eligió las palabras de la comparación.
 - 2026-11-14: revisión de seguridad con el skill de Cloudflare (2.15): sin fallos confirmados; 4 refuerzos (comillas, miniaturas, CSP, clave del checkout) y 3 cosas para Bruno en sus cuentas (`PLAN.md`).
 - 2026-11-14: datos por días (2.13: `datos.js` de 222 a 50 KB, los titulares de cada día se cargan al mostrarlos) y revisión de datos nuevos con `version.json` para aguantar muchas visitas (2.14).
 - 2026-11-14: actualización sola con "Última medición hace X min" (2.10), vista previa al compartir con ícono propio (2.11, opción C de Bruno) y menú de secciones con botón flotante (2.12, opción B de Bruno).
-- 2026-11-14: nota "hecho con Claude" en el README y en el pie de la página (2.9, pedido de Bruno); en lo público, Bruno aparece como "Rust" (regla nueva en `CLAUDE.md`).
-- 2026-11-14: README al día (2.7) y página publicada en GitHub Pages para verla desde el celular (2.8, pedido de Bruno).
 
 ## Pendiente
 
 La lista completa y su orden están en `PLAN_DE_TRABAJO.md`. Resumen (2026-11-14):
 
-1. **Antes del 19 nov:** 7.4, Bruno escribe sus expectativas en `web/capsula.js`.
-   7.6 hecha y unida (PR #16).
+1. **Antes del 19 nov:** unir el PR de "Lo que espero" (7.4). Después del lanzamiento, Bruno
+   escribe "Lo que me pareció" en `web/capsula.js`.
 2. **Fase 4:** 4.3 análisis de datos (necesita varios días de datos).
 3. **Fase 6** (ideas de Bruno): 6.1 más Google Trends, **una sola vez entre el 20 y el 25 nov**,
    fuera del recolector de cada hora (decisión de Bruno, 2026-11-13; ver `PLAN.md`). Programa
