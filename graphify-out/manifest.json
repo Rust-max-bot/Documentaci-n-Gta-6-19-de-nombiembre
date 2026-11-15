@@ -18,9 +18,9 @@
     "semantic_hash": ""
   },
   "web/app.js": {
-    "mtime": 1794767138.2402842,
-    "seen": 1794767332.8445117,
-    "ast_hash": "7ce629d2048df683399ae4adad24980e",
+    "mtime": 1794767827.8254066,
+    "seen": 1794768008.609293,
+    "ast_hash": "ca0fd7b0eee2292384ebea875a3ee2cc",
     "semantic_hash": ""
   },
   "web/datos-ejemplo.js": {
@@ -48,9 +48,9 @@
     "semantic_hash": ""
   },
   "ESTADO_ACTUAL.md": {
-    "mtime": 1794767285.1752322,
-    "seen": 1794767332.8445215,
-    "ast_hash": "b03c707330152ffb3e63795dc559d909",
+    "mtime": 1794768007.3762403,
+    "seen": 1794768008.6093035,
+    "ast_hash": "6d2ae43d3217069fdb7af29cc68b27b9",
     "semantic_hash": ""
   },
   "GUIA_CLAVES.md": {
@@ -60,9 +60,9 @@
     "semantic_hash": ""
   },
   "PLAN.md": {
-    "mtime": 1794767090.337095,
-    "seen": 1794767332.844525,
-    "ast_hash": "eec61fef79548f18e92ca82077990520",
+    "mtime": 1794768007.3748841,
+    "seen": 1794768008.6093073,
+    "ast_hash": "f73a6f821b5381c23069ae670f6996a1",
     "semantic_hash": ""
   },
   "README.md": {
@@ -132,9 +132,9 @@
     "semantic_hash": ""
   },
   "PLAN_DE_TRABAJO.md": {
-    "mtime": 1794767279.3157847,
-    "seen": 1794767332.8445258,
-    "ast_hash": "29459f125da4b1736d97ea4f89512da8",
+    "mtime": 1794768007.3754563,
+    "seen": 1794768008.6093085,
+    "ast_hash": "19d12317480f585005ee05a09b3f9618",
     "semantic_hash": ""
   },
   "recolector/LEEME.md": {
@@ -210,9 +210,9 @@
     "semantic_hash": ""
   },
   "web/capsula.js": {
-    "mtime": 1794767131.9153264,
-    "seen": 1794767332.844513,
-    "ast_hash": "b6eebdb65820d0b115bc81fa6fd65797",
+    "mtime": 1794767839.0135503,
+    "seen": 1794768008.6092947,
+    "ast_hash": "331008a0f9510efaf42f87091a509637",
     "semantic_hash": ""
   },
   "historial/ESTADO_2026-11-13.md": {

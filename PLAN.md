@@ -309,6 +309,15 @@ Resultado final: **una página web** con:
   - Mientras un texto esté vacío, su postal sale cerrada con un candado. La de "después" dice
     "Se abre después del lanzamiento" hasta el 19 nov.
   - Se descartaron A (dos tarjetas simples) y C (medalla del 19 nov entre los dos textos).
+- **Cápsula, diseño nuevo (opción C de Bruno, 2026-11-15): cintas de casete.** Reemplaza a las
+  postales porque el texto largo de Bruno las estiraba (y la postal cerrada de al lado también).
+  - Dos tarjetas como cintas de los 80: "Cara A" (Lo que espero de GTA 6 (mi opinión)) y
+    "Cara B" (Lo que me pareció), con etiqueta, rayas de colores, el sello de la palmera y el
+    matasellos (en el celular, sin matasellos para que quepa el título).
+  - El texto sale recortado y se abre con "Leer todo" / "Leer menos". Si cabe entero, no hay botón.
+  - La Cara B, mientras esté vacía, dice "Se graba después del lanzamiento." con candado.
+  - Se descartaron A (cuaderno con pestañas) y B (lista que se despliega). Capturas en los
+    archivos del proyecto, carpeta `capsula-plegable/`.
 
 - **Copias vendidas en los primeros días (tarea 7.10, opción B de Bruno, 2026-11-14): barras por plazo.**
   - Dentro de "GTA 6 frente a otros lanzamientos", entre Twitch y "Otros récords de la saga".

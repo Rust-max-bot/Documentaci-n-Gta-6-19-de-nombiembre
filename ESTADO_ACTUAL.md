@@ -31,7 +31,7 @@ pedido de Bruno (2.9). Lo que tiene:
   cero de cada lugar) y "Resumen del día", una tarjeta por día (7.5);
 - videos y Twitch con miniaturas y enlaces; titulares por páginas, con barras por día para
   filtrarlos (2.6); Reddit por RSS;
-- la cápsula del tiempo (7.4) como dos postales al final;
+- la cápsula del tiempo (7.4) como dos cintas de casete al final ("Cara A" y "Cara B", con "Leer todo");
 - "Última medición hace X min" y actualización sola si la página queda abierta (2.10), imagen
   propia al compartir el enlace y en la pestaña (2.11) y botón flotante "☰ Secciones" (2.12);
 - titulares y Reddit de cada día en archivos aparte que se cargan al mostrarlos (2.13), para
@@ -101,7 +101,7 @@ Bruno ya eligió las palabras de la comparación.
 
 ## Últimos cambios
 
-- 2026-11-15: "Lo que espero de GTA 6 (mi opinión)" en la cápsula del tiempo (7.4), texto de Bruno corregido y aprobado por él; PR para que lo una.
+- 2026-11-15: "Lo que espero de GTA 6 (mi opinión)" en la cápsula del tiempo (7.4), texto de Bruno corregido y aprobado por él, y cápsula rediseñada como cintas de casete con "Leer todo" (opción C); PR #25 para que lo una.
 - 2026-11-15: récords "Video más visto" y "Short más visto" por separado, con aviso dentro de cada cuadro (opción A de Bruno); idea a futuro del panel de control en el plan.
 - 2026-11-15: videos y Shorts separados (6.5, opción B: tira de Shorts), filtro "¿es de GTA 6?" (título + tema de YouTube + lista, Roblox fuera) y búsqueda de videos de 4 a 20 minutos; PR para que Bruno lo una.
 - 2026-11-14: copias vendidas en los primeros días (7.10, opción B) y "Próximamente" (7.11, opción C); pregunta GTA 6 frente a Doomsday en la 6.1, probada.

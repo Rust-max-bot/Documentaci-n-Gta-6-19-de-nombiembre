@@ -125,8 +125,9 @@ la página, así que cada una se presenta con opciones y capturas antes de aplic
       no inventa ese contenido. La página los muestra uno al lado del otro.
       **Página lista el 2026-11-13** (opción B, postales de Miami; ver `PLAN.md`). **"Lo que
       espero" ya está** (2026-11-15): texto de Bruno, con la ortografía y la redacción
-      corregidas por Claude y aprobado por Bruno; la postal se titula "Lo que espero de GTA 6
-      (mi opinión)". **Falta "Lo que me pareció"**, después del lanzamiento; la 7.4 queda en
+      corregidas por Claude y aprobado por Bruno; la Cara A se titula "Lo que espero de GTA 6
+      (mi opinión)". El mismo día, diseño nuevo: cintas de casete con "Leer todo" (opción C
+      de Bruno), porque el texto largo estiraba las postales. **Falta "Lo que me pareció"**, después del lanzamiento; la 7.4 queda en
       `[ ]` hasta entonces. El recordatorio del 17 nov, 19:00 de Chile, ya no hace falta.
 
 - [x] **7.10 GTA 6 frente a los juegos más grandes: el arranque** (pedido de Bruno,
