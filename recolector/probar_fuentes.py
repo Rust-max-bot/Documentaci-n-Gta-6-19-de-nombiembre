@@ -190,15 +190,16 @@ def _():
     return cod == 200
 
 
-# Separar videos y Shorts: comparación de tres formas de saber si un video es un Short, con los
-# videos de la última medición guardada (2 unidades de cuota y una visita a youtube.com por video).
-# 1) youtube.com/shorts/<id>: si es Short responde 200; si no, redirige (303) a /watch.
-# 2) duración (contentDetails): los Shorts duran como mucho 3 minutos.
-# 3) forma del reproductor (player con maxWidth): un Short es vertical (más alto que ancho).
-@prueba("Shorts de YouTube (comparar 3 formas)")
+# Separar videos y Shorts (15 nov, ejecución 43736224115): de 96 videos, la dirección
+# youtube.com/shorts/<id> (200 = Short, 303 = video) y "duración <= 3 min + reproductor vertical"
+# coincidieron en 94; los 2 distintos eran Shorts cuadrados, que la dirección sí reconoce.
+# Resultado en PLAN.md.
+
+# Filtro "¿de verdad es de GTA 6?": qué datos trae YouTube de cada video (categoría, temas,
+# etiquetas, descripción) para comparar formas de filtrar. 2 unidades de cuota; no guarda nada.
+@prueba("Filtro de videos de GTA 6 (datos para comparar)")
 def _():
     import glob
-    import http.client
     clave = os.environ.get("YOUTUBE_API_KEY", "")
     if not clave:
         print("Falta la clave de YouTube")
@@ -210,52 +211,28 @@ def _():
         for v in m.get(f, {}).get("videos", []):
             if v["id"] not in ids:
                 ids.append(v["id"])
-    info = {}
+    gta6 = re.compile(r"gta\s*(6|vi)\b|gta(6|vi)\b|grand\s+theft\s+auto\s+(6|vi)\b", re.I)
+    esencia = re.compile(r"miami|vice\s*city|leonida|lucia|luc\u00eda|jason|rockstar|trailer|tr\u00e1iler|gameplay|ps5|xbox|mapa|map\b|lanzamiento|launch|release", re.I)
+    cats = {}
+    print("id | cat | temas | GTA6 en: titulo-sin-#/desc/etiquetas | palabras del juego (desc+etiq) | titulo")
     for i in range(0, len(ids), 50):
         cod, txt = pedir("https://www.googleapis.com/youtube/v3/videos?" + urllib.parse.urlencode(
-            {"part": "snippet,contentDetails,player", "maxWidth": 400, "id": ",".join(ids[i:i + 50]), "key": clave}))
+            {"part": "snippet,topicDetails", "id": ",".join(ids[i:i + 50]), "key": clave}))
         if cod != 200:
             print("videos.list: codigo", cod)
             return False
         for v in json.loads(txt).get("items", []):
-            info[v["id"]] = v
-
-    def segundos(d):
-        r = re.fullmatch(r"P(?:(\d+)D)?T?(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?", d or "")
-        if not r:
-            return None
-        dd, h, mi, s = (int(x or 0) for x in r.groups())
-        return dd * 86400 + h * 3600 + mi * 60 + s
-
-    def url_short(vid):
-        c = http.client.HTTPSConnection("www.youtube.com", timeout=20)
-        try:
-            c.request("HEAD", "/shorts/" + vid, headers={"User-Agent": UA})
-            r = c.getresponse()
-            return r.status, (r.getheader("Location") or "")[:60]
-        finally:
-            c.close()
-
-    cuenta = {"de_acuerdo": 0, "distintos": 0}
-    print("id | /shorts/ | segundos | ancho x alto | titulo")
-    for vid in ids:
-        v = info.get(vid)
-        if not v:
-            print(vid, "| (YouTube no lo devolvio)")
-            continue
-        try:
-            cod, loc = url_short(vid)
-        except Exception as e:
-            cod, loc = type(e).__name__, ""
-        seg = segundos(v.get("contentDetails", {}).get("duration"))
-        pl = v.get("player", {})
-        w, h = pl.get("embedWidth"), pl.get("embedHeight")
-        por_url = cod == 200
-        por_forma = seg is not None and seg <= 180 and w and h and int(h) > int(w)
-        cuenta["de_acuerdo" if por_url == bool(por_forma) else "distintos"] += 1
-        print(f"{vid} | {cod} {loc} | {seg} | {w}x{h} | {'SHORT' if por_url else 'video'}"
-              f"{'' if por_url == bool(por_forma) else ' <- NO COINCIDE'} | {v['snippet']['title'][:60]}")
-    print("Coinciden la URL y (duracion + forma):", cuenta)
+            sn = v["snippet"]
+            cat = sn.get("categoryId")
+            cats[cat] = cats.get(cat, 0) + 1
+            temas = ",".join(t.rsplit("/", 1)[-1] for t in v.get("topicDetails", {}).get("topicCategories", []))
+            titulo = re.sub(r"#\S+", "", sn.get("title", ""))
+            desc = re.sub(r"#\S+", "", sn.get("description", ""))
+            etiq = " ".join(sn.get("tags", []))
+            en = "".join("S" if gta6.search(x) else "-" for x in (titulo, desc, etiq))
+            pal = sorted({w.lower() for w in esencia.findall(desc + " " + etiq + " " + titulo) if isinstance(w, str)})
+            print(f"{v['id']} | {cat} | {temas[:60]} | {en} | {','.join(pal)[:70]} | {len(sn.get('description',''))} car. desc | {sn.get('title','')[:55]}")
+    print("Categorias:", cats)
     return True
 
 
