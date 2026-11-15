@@ -123,10 +123,11 @@ la página, así que cada una se presenta con opciones y capturas antes de aplic
 - [ ] **7.4 Cápsula del tiempo.** Un texto de Bruno con lo que espera del juego, escrito
       **antes del 19 nov**, y otro después con lo que le pareció. Los escribe Bruno: Claude
       no inventa ese contenido. La página los muestra uno al lado del otro.
-      **Página lista el 2026-11-13** (opción B, postales de Miami; ver `PLAN.md`). **Falta el
-      texto de Bruno** en `web/capsula.js`, antes del 19 nov; queda en `[ ]` hasta entonces.
-      Bruno lo deja para más adelante (2026-11-14) y pidió que se le recuerde: hay un
-      recordatorio programado para el 17 nov, 19:00 de Chile.
+      **Página lista el 2026-11-13** (opción B, postales de Miami; ver `PLAN.md`). **"Lo que
+      espero" ya está** (2026-11-15): texto de Bruno, con la ortografía y la redacción
+      corregidas por Claude y aprobado por Bruno; la postal se titula "Lo que espero de GTA 6
+      (mi opinión)". **Falta "Lo que me pareció"**, después del lanzamiento; la 7.4 queda en
+      `[ ]` hasta entonces. El recordatorio del 17 nov, 19:00 de Chile, ya no hace falta.
 
 - [x] **7.10 GTA 6 frente a los juegos más grandes: el arranque** (pedido de Bruno,
       2026-11-14). Ventas de los primeros días o semanas de los juegos más esperados y
