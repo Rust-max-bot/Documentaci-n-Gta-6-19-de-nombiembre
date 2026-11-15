@@ -101,6 +101,7 @@ Bruno ya eligió las palabras de la comparación.
 
 ## Últimos cambios
 
+- 2026-11-15: microinteracciones aprobadas por Bruno tras una vista previa: gota con resorte en todos los botones de elegir, enfoque de la cuenta al cambiar de país, "Secciones" que crece hasta ser el menú, hundirse al presionar, flechas en días/páginas/Shorts, controles que no cambian de lugar al tocarlos y barra de desplazamiento estable (`DISENO_VISUAL.md` al día).
 - 2026-11-15: `DISENO_VISUAL.md`, descripción solo de lo visual (estilos, día/atardecer/noche, hora cero, colores, letras) con instrucciones para pedir sugerencias a otra IA (pedido de Bruno).
 - 2026-11-15: arreglos pedidos por Bruno: sin el recuadro azul al tocar botones (celulares) ni contorno al hacer clic (el del teclado sigue); volver a Miami 1986 tarda lo mismo que ir a 2026 (~0,4 s; antes ~1,6 s, las torres bajan durante el barrido); "Short más visto" aparte en el Resumen del día y en su imagen (ahora en 3 columnas, opción elegida por Bruno).
 - 2026-11-15: "Lo que espero de GTA 6 (mi opinión)" en la cápsula del tiempo (7.4), texto de Bruno corregido y aprobado por él, y cápsula rediseñada como cintas de casete con "Leer todo" (opción C); PR #25 para que lo una.
@@ -108,9 +109,6 @@ Bruno ya eligió las palabras de la comparación.
 - 2026-11-15: récords "Video más visto" y "Short más visto" por separado, con aviso dentro de cada cuadro (opción A de Bruno); idea a futuro del panel de control en el plan.
 - 2026-11-15: videos y Shorts separados (6.5, opción B: tira de Shorts), filtro "¿es de GTA 6?" (título + tema de YouTube + lista, Roblox fuera) y búsqueda de videos de 4 a 20 minutos; PR para que Bruno lo una.
 - 2026-11-14: copias vendidas en los primeros días (7.10, opción B) y "Próximamente" (7.11, opción C); pregunta GTA 6 frente a Doomsday en la 6.1, probada.
-- 2026-11-14: plan nuevo de Bruno: comparar solo el arranque de GTA 6 con los juegos más grandes (7.10), "Próximamente" (7.11), GTA 6 frente a Doomsday en Trends (6.1) y Fase 8 dormida para el lanzamiento en PC (`PLAN.md`).
-- 2026-11-14: álbum de momentos (7.7, fotos instantáneas, opción B de Bruno), resumen del día como imagen cuadrada (7.8, opción A) y GTA 6 frente a otros lanzamientos con barras (7.9, opción A); `PLAN_DE_TRABAJO.md` archivado en `historial/PLAN_DE_TRABAJO_2026-11-14.md`.
-- 2026-11-14: revisión de seguridad con el skill de Cloudflare (2.15): sin fallos confirmados; 4 refuerzos (comillas, miniaturas, CSP, clave del checkout) y 3 cosas para Bruno en sus cuentas (`PLAN.md`).
 
 ## Pendiente
 

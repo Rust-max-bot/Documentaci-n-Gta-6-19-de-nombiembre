@@ -8,6 +8,85 @@
   var D = window.DATOS || window.DATOS_EJEMPLO || { mediciones: [], youtube: [], noticias: [], reddit: {}, eventos: [] };
   var $ = function (id) { return document.getElementById(id); };
 
+  /* ---------- Microinteracciones (pedido de Bruno, 2026-11-15; probadas antes en una vista previa) ----------
+     Una "gota" que se desliza con un resorte al botón elegido, flechas para avanzar, y los
+     controles que se tocan no cambian de lugar en la pantalla. Los estilos, al final de estilos.css. */
+  var QUIETO = window.matchMedia("(prefers-reduced-motion: reduce)");
+  document.addEventListener("touchstart", function () {}, { passive: true });   // sin esto, :active no funciona en iPhone
+  // Reinicia una animación CSS que se pone con una clase.
+  function repetir(el, clase, ms) {
+    el.classList.remove(clase); void el.offsetWidth; el.classList.add(clase);
+    clearTimeout(el["_t" + clase]);
+    el["_t" + clase] = setTimeout(function () { el.classList.remove(clase); }, ms);
+  }
+  var SVG_FLECHA = '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  function flechaHTML(lado, etiqueta, extra) {
+    return '<button type="button" class="flecha flecha-' + lado + '" aria-label="' + etiqueta + '" title="' + etiqueta + '"' + (extra || "") + ">" + SVG_FLECHA + "</button>";
+  }
+  /* Gota en un grupo de botones: "clase" es su estilo (indicador de la portada o gota rosada) y
+     "activo" dice cuál está elegido. Si app.js redibuja los botones, la gota vuelve a ponerse
+     desde donde estaba, así se desliza y no aparece de golpe. Con conFlechas, usa las flechas
+     del .selector que lo envuelve y mantiene el elegido a la vista dentro de la tira. */
+  function gota(caja, clase, activo, conFlechas) {
+    if (!caja) return;
+    var g = document.createElement("span"), ultimo = null;
+    g.className = clase; g.setAttribute("aria-hidden", "true");
+    var marco = conFlechas ? caja.parentNode : null;
+    var antes = marco && marco.querySelector(".flecha-izq"), despues = marco && marco.querySelector(".flecha-der");
+    function botones() { return [].slice.call(caja.querySelectorAll("button")); }
+    function actualizar(saltar) {
+      if (g.parentNode !== caja) { caja.insertBefore(g, caja.firstChild); void g.offsetWidth; }
+      var b = caja.querySelector(activo);
+      if (conFlechas) caja.classList.toggle("desliza", caja.scrollWidth > caja.clientWidth + 1);
+      if (!b) { g.classList.remove("listo"); ultimo = null; }
+      else {
+        g.style.setProperty("--x", b.offsetLeft + "px"); g.style.setProperty("--y", b.offsetTop + "px");
+        g.style.setProperty("--w", b.offsetWidth + "px"); g.style.setProperty("--h", b.offsetHeight + "px");
+        if (saltar && ultimo !== null && ultimo !== b.textContent && !QUIETO.matches) repetir(g, "salto", 520);
+        ultimo = b.textContent;
+        if (!g.classList.contains("listo")) requestAnimationFrame(function () { g.classList.add("listo"); });
+        if (conFlechas && caja.scrollWidth > caja.clientWidth) {   // solo se mueve la tira, nunca la página
+          var izq = b.offsetLeft - 8, der = b.offsetLeft + b.offsetWidth + 8 - caja.clientWidth, modo = QUIETO.matches ? "auto" : "smooth";
+          if (izq < caja.scrollLeft) caja.scrollTo({ left: izq, behavior: modo });
+          else if (der > caja.scrollLeft) caja.scrollTo({ left: der, behavior: modo });
+        }
+      }
+      if (antes) { var l = botones(), i = l.indexOf(b); antes.disabled = i <= 0; despues.disabled = i < 0 || i >= l.length - 1; }
+    }
+    function ir(paso) { var l = botones(), i = l.indexOf(caja.querySelector(activo)); if (l[i + paso]) l[i + paso].click(); }
+    if (antes) { antes.addEventListener("click", function () { ir(-1); }); despues.addEventListener("click", function () { ir(1); }); }
+    new MutationObserver(function (cambios) {
+      if (cambios.every(function (c) { return c.target === g; })) return;   // cambios de la propia gota
+      actualizar(true);
+    }).observe(caja, { childList: true, subtree: true, attributes: true, attributeFilter: ["aria-pressed", "class"] });
+    if ("ResizeObserver" in window) new ResizeObserver(function () { actualizar(false); }).observe(caja);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { actualizar(false); });
+    actualizar(false);
+  }
+  /* Sin saltos: el selector que se tocó queda en el mismo lugar de la pantalla aunque cambie lo
+     que hay arriba (por ejemplo, otra página de titulares más alta o más baja). En las páginas se
+     sigue corrigiendo 1,5 s porque los titulares de otros días llegan un momento después. Si la
+     persona mueve la página (rueda, dedo, teclado o barra de desplazamiento), se deja de corregir. */
+  (function () {
+    var ancla = null, yPropia = null;
+    function corregir() {
+      if (!ancla) return;
+      var d = ancla.el.getBoundingClientRect().top - ancla.top;
+      if (Math.abs(d) > 0.5) { yPropia = window.scrollY + d; window.scrollTo({ top: yPropia, behavior: "instant" }); }
+      if (performance.now() < ancla.hasta) requestAnimationFrame(corregir); else ancla = null;
+    }
+    function soltar() { ancla = null; }
+    ["wheel", "touchmove", "keydown", "pointerdown"].forEach(function (t) { window.addEventListener(t, soltar, { passive: true }); });
+    window.addEventListener("scroll", function () { if (ancla && yPropia !== null && Math.abs(window.scrollY - yPropia) > 2) ancla = null; }, { passive: true });
+    document.addEventListener("click", function (e) {
+      if (!e.isTrusted) return;                      // los clics que hace el propio código no cuentan
+      ancla = null;
+      var c = e.target.closest && e.target.closest(".selector, .paginas");
+      if (c) ancla = { el: c, top: c.getBoundingClientRect().top, hasta: performance.now() + (c.classList.contains("paginas") ? 1500 : 0) };
+    }, true);
+    document.addEventListener("click", function (e) { if (e.isTrusted && ancla) corregir(); });
+  })();
+
   /* ---------- Datos por días (formato 2, pedido de Bruno, 2026-11-14) ----------
      datos.js trae de los titulares y de Reddit solo sus horas (en segundos), y las series de
      visitas de los videos en forma corta ([segundos, visitas]). Aquí se dejan como antes para el
@@ -185,6 +264,7 @@
     lugar = b.dataset.lugar;
     try { localStorage.setItem("gta6-lugar", lugar); } catch (err) { /* sin almacenamiento: vale hasta recargar */ }
     pintarLugares(); cuenta();
+    if (!QUIETO.matches) repetir($("cuenta"), "enfoca", 220);   // los números se enfocan (microinteracciones)
   });
   function cuenta() {
     var t = ahora(), caja = $("cuenta"), falta = LUGARES[lugar].ts - t;
@@ -245,6 +325,7 @@
     });
   }
   cuenta(); setInterval(cuenta, 1000);
+  gota($("lugares"), "indicador", 'button[aria-pressed="true"]');
 
   /* ---------- Fichas de resumen ---------- */
   (function () {
@@ -425,6 +506,7 @@
     }
     $("filtros-dia").addEventListener("click", function (e) { var d = e.target.dataset.dia; if (d) { elegido = d; pintar(); } });
     pintar();
+    gota($("filtros-dia"), "gota-sel", "button.activo", true);
   })();
 
   /* ---------- Videos de YouTube (tarjetas con miniatura; opción B elegida por Bruno, 2026-11-13) ---------- */
@@ -476,11 +558,23 @@
       var normales = todas.filter(function (f) { return f.v.short !== true; }).slice(0, VIDEOS_VISIBLES);
       var shorts = todas.filter(function (f) { return f.v.short === true; });
       caja.innerHTML = '<h3 class="sub v-sub">Videos</h3><ul class="videos">' + tarjetas(normales, "Todavía no hay videos.") + "</ul>" +
-        (shorts.length ? '<h3 class="sub v-sub">Shorts <small>' + shorts.length + " · desliza para ver más</small></h3>" +
+        (shorts.length ? '<h3 class="sub v-sub">Shorts <small>' + shorts.length + " · desliza para ver más</small>" +
+          '<span class="flechas-shorts">' + flechaHTML("izq", "Ver Shorts anteriores") + flechaHTML("der", "Ver más Shorts") + "</span></h3>" +
           '<ul class="videos shorts" aria-label="Shorts: desliza hacia el lado para ver más">' + tarjetas(shorts, "") + "</ul>" : "");
+      flechasShorts();
+    }
+    // Flechas de la tira de Shorts (pedido de Bruno, 2026-11-15): además de deslizar, se pasan con un toque.
+    function flechasShorts() {
+      var tira = caja.querySelector(".videos.shorts"); if (!tira) return;
+      var a = caja.querySelector(".flechas-shorts .flecha-izq"), b = caja.querySelector(".flechas-shorts .flecha-der");
+      function estado() { a.disabled = tira.scrollLeft <= 2; b.disabled = tira.scrollLeft + tira.clientWidth >= tira.scrollWidth - 2; }
+      function mover(s) { tira.scrollBy({ left: s * Math.max(160, tira.clientWidth - 160), behavior: QUIETO.matches ? "auto" : "smooth" }); }
+      a.addEventListener("click", function () { mover(-1); }); b.addEventListener("click", function () { mover(1); });
+      tira.addEventListener("scroll", estado, { passive: true }); estado();
     }
     tabs.addEventListener("click", function (e) { var l = e.target.dataset.lista; if (l) { elegida = l; pintar(); } });
     pintar();
+    gota(tabs, "gota-sel", "button.activo");
   })();
 
   /* ---------- Noticias ---------- */
@@ -527,26 +621,43 @@
       return "<li>" + (seguro ? enlace(n.url, limpio(n.titulo)) : "<a>" + limpio(n.titulo) + "</a>") + "<small>" +
         limpio(n.medio) + (isNaN(ts) ? "" : " · " + dia(ts) + " " + hora(ts)) + "</small></li>";
     }
-    // Números a mostrar: la primera, la última y las vecinas de la actual; "…" en los saltos.
-    function numeros() {
-      var lista = [];
-      for (var i = 1; i <= total; i++) {
-        if (i === 1 || i === total || Math.abs(i - actual) <= 1) lista.push(i);
-        else if (lista[lista.length - 1] !== "…") lista.push("…");
-      }
-      return lista;
+    // Casillas de números (pedido de Bruno, 2026-11-15): siempre la misma cantidad (k = 7, o 5
+    // en el celular) para que las flechas y los números no cambien de lugar al avanzar. La
+    // primera, la última y la actual con sus vecinas; "…" en los saltos.
+    function numeros(k) {
+      var r = [], i, medio = k - 4;                      // casillas del centro: 3 (o 1 en el celular)
+      if (total <= k) { for (i = 1; i <= total; i++) r.push(i); return r; }
+      if (actual <= medio + 1) { for (i = 1; i <= k - 2; i++) r.push(i); return r.concat("…", total); }
+      if (actual >= total - medio) { r = [1, "…"]; for (i = total - (k - 3); i <= total; i++) r.push(i); return r; }
+      r = [1, "…"]; for (i = actual - (medio - 1) / 2; i <= actual + (medio - 1) / 2; i++) r.push(i); return r.concat("…", total);
     }
-    function boton(texto, pagina, extra) {
-      var activo = pagina === actual && typeof texto === "number";
-      return '<button type="button" data-pagina="' + pagina + '"' + (activo ? ' class="activo" aria-current="page"' : "") +
-        (extra || "") + ">" + texto + "</button>";
+    var nav = $("noticias-paginas");
+    nav.innerHTML = flechaHTML("izq", "Página anterior (titulares más nuevos)", ' data-paso="-1"') + '<div class="pg-numeros"></div>' +
+      flechaHTML("der", "Página siguiente (titulares más viejos)", ' data-paso="1"');
+    var casillas = nav.querySelector(".pg-numeros");
+    function pintarPaginas() {
+      nav.hidden = total < 2;
+      if (nav.hidden) return;
+      var foco = casillas.contains(document.activeElement);
+      casillas.innerHTML = numeros(nav.parentNode.clientWidth < 420 ? 5 : 7).map(function (x) {
+        return x === "…" ? '<span class="pg-salto" aria-hidden="true">…</span>'
+          : '<button type="button" data-pagina="' + x + '"' + (x === actual ? ' class="activo" aria-current="page"' : "") + ">" + x + "</button>";
+      }).join("");
+      nav.querySelector(".flecha-izq").disabled = actual === 1;
+      nav.querySelector(".flecha-der").disabled = actual === total;
+      if (foco && casillas.querySelector(".activo")) casillas.querySelector(".activo").focus({ preventScroll: true });
     }
+    gota(casillas, "gota-sel", "button.activo");
+    if ("ResizeObserver" in window) new ResizeObserver(function () { pintarPaginas(); }).observe(nav.parentNode);
     function pintar() {
       var desde = (actual - 1) * POR_PAGINA, hasta = Math.min(todas.length, desde + POR_PAGINA);
       var turno = ++pintando, trozo = todas.slice(desde, hasta);
       var faltan = D.formato === 2 ? trozo.filter(function (n) { return !n.titulo; }) : [];
+      var ul = $("noticias");
       if (faltan.length) {
-        $("noticias").innerHTML = '<li class="cargando">Cargando titulares…</li>';
+        // Mientras cargan, la lista conserva su alto: antes se achicaba a una línea y la página saltaba.
+        ul.style.minHeight = ul.offsetHeight + "px";
+        ul.innerHTML = '<li class="cargando">Cargando titulares…</li>';
         var dias = []; faltan.forEach(function (n) { var k = diaUTC(Date.parse(n.t) / 1000); if (dias.indexOf(k) < 0) dias.push(k); });
         DIAS.cargar(dias).then(function (contenidos) {
           var porNumero = {};
@@ -558,24 +669,24 @@
           });
           if (turno === pintando) pintar();
         }).catch(function () {
-          if (turno === pintando) $("noticias").innerHTML = '<li class="cargando">No se pudieron cargar estos titulares. Revisa la conexión y vuelve a tocar la página.</li>';
+          if (turno === pintando) { ul.style.minHeight = ""; ul.innerHTML = '<li class="cargando">No se pudieron cargar estos titulares. Revisa la conexión y vuelve a tocar la página.</li>'; }
         });
       } else {
-        $("noticias").innerHTML = trozo.map(tarjeta).join("") || "<li>Todavía no hay titulares.</li>";
+        ul.style.minHeight = "";
+        ul.innerHTML = trozo.map(tarjeta).join("") || "<li>Todavía no hay titulares.</li>";
       }
       $("noticias-cuenta").textContent = todas.length
         ? todas.length + (filtro ? " titulares del " + nombreDia(filtro) : " titulares, del más nuevo al más viejo") + " · mostrando " + (desde + 1) + " a " + hasta +
           (!filtro && diasN.length > 1 ? " · toca una barra para ver un solo día" : "") : "";
-      $("noticias-paginas").innerHTML = total < 2 ? "" :
-        boton("‹ Más nuevos", actual - 1, actual === 1 ? " disabled" : "") +
-        numeros().map(function (x) { return x === "…" ? '<span class="salto">…</span>' : boton(x, x); }).join("") +
-        boton("Más viejos ›", actual + 1, actual === total ? " disabled" : "");
+      pintarPaginas();
     }
-    $("noticias-paginas").addEventListener("click", function (e) {
+    // Ya no se sube al principio de la sección al cambiar de página (pedido de Bruno, 2026-11-15):
+    // las flechas quedan bajo el dedo (ver "Sin saltos" en Microinteracciones).
+    nav.addEventListener("click", function (e) {
       var b = e.target.closest("button"); if (!b || b.disabled) return;
-      actual = Math.min(total, Math.max(1, +b.dataset.pagina)); pintar();
-      // Si el principio de la sección quedó arriba, fuera de la vista, se vuelve a él.
-      var sec = $("seccion-noticias"); if (sec.getBoundingClientRect().top < 0) sec.scrollIntoView({ block: "start" });
+      var p = b.dataset.paso ? actual + +b.dataset.paso : +b.dataset.pagina;
+      p = Math.min(total, Math.max(1, p)); if (p === actual) return;
+      actual = p; pintar();
     });
     pintar();
   })();
@@ -792,17 +903,51 @@
       S.map(function (x) { return '<a href="#' + x[0] + '" data-ir="' + x[0] + '">' + x[1] + "</a>"; }).join("") +
       '<a href="#" data-ir="arriba">↑ Volver arriba</a></div>';
     var boton = caja.querySelector(".menu-boton"), lista = caja.querySelector(".menu-lista");
-    function abrir(si) { lista.hidden = !si; boton.setAttribute("aria-expanded", String(si)); }
+    /* Microinteracciones (2026-11-15): la misma caja del botón crece hasta ser el menú. Se le
+       cambia el ancho y el alto de verdad (no se escala), y las opciones aparecen cuando ya casi
+       terminó de abrirse. Solo se anima si el estado cambia: antes, cada clic fuera del menú lo
+       "cerraba" otra vez y la caja amagaba con abrirse (fallo visto por Bruno). */
+    lista.querySelectorAll("a").forEach(function (a, i) { a.style.setProperty("--i", i); });
+    var abierto = false, DUR = 420, relojes = [];
+    function limpiar() { relojes.forEach(clearTimeout); relojes = []; }
+    function luego(ms, f) { relojes.push(setTimeout(f, ms)); }
+    function tam() { var r = caja.getBoundingClientRect(); return { w: r.width, h: r.height }; }
+    function fijar(t) { caja.style.width = t.w + "px"; caja.style.height = t.h + "px"; }
+    function soltar() { caja.style.width = ""; caja.style.height = ""; caja.classList.remove("animando", "cerrando"); }
+    function medir(abierta) {   // tamaño de la caja abierta o cerrada, sin que se llegue a pintar
+      var antes = { ab: caja.classList.contains("abierto"), oc: lista.hidden, w: caja.style.width, h: caja.style.height };
+      caja.classList.toggle("abierto", abierta); lista.hidden = !abierta; caja.style.width = ""; caja.style.height = "";
+      var t = tam();
+      caja.classList.toggle("abierto", antes.ab); lista.hidden = antes.oc; caja.style.width = antes.w; caja.style.height = antes.h;
+      return t;
+    }
+    function abrir(si) {
+      if (si === abierto) return;
+      abierto = si; boton.setAttribute("aria-expanded", String(si)); limpiar();
+      if (QUIETO.matches) { soltar(); lista.hidden = !si; caja.classList.toggle("abierto", si); caja.classList.toggle("texto", si); return; }
+      if (si) {
+        var desde = caja.style.width ? tam() : medir(false), hasta = medir(true);   // si estaba cerrándose, desde donde iba
+        caja.classList.remove("cerrando", "texto", "abierto"); lista.hidden = false; fijar(desde); void caja.offsetWidth;
+        caja.classList.add("animando", "abierto"); fijar(hasta);
+        luego(DUR * 0.6, function () { caja.classList.add("texto"); });
+        luego(DUR + 40, soltar);
+      } else {
+        var ahora = tam(), cerrada = medir(false);
+        fijar(ahora); caja.classList.add("cerrando"); caja.classList.remove("texto");   // primero se va el texto
+        luego(110, function () { caja.classList.add("animando"); void caja.offsetWidth; caja.classList.remove("abierto"); fijar(cerrada); });
+        luego(110 + DUR + 40, function () { lista.hidden = true; soltar(); });
+      }
+    }
     document.addEventListener("click", function (e) {
       var a = e.target.closest("[data-ir]");
       if (a && caja.contains(a)) {
         e.preventDefault(); abrir(false);
         if (a.dataset.ir === "arriba") window.scrollTo({ top: 0, behavior: "smooth" });
         else { var el = $(a.dataset.ir); el.classList.add("visible"); el.scrollIntoView({ behavior: "smooth", block: "start" }); }
-      } else if (e.target.closest(".menu-boton")) abrir(lista.hidden);
+      } else if (e.target.closest(".menu-boton")) abrir(!abierto);
       else if (!caja.contains(e.target)) abrir(false);   // tocar fuera la cierra
     });
-    document.addEventListener("keydown", function (e) { if (e.key === "Escape" && !lista.hidden) { abrir(false); boton.focus(); } });
+    document.addEventListener("keydown", function (e) { if (e.key === "Escape" && abierto) { abrir(false); boton.focus(); } });
   })();
 
   /* ---------- Cambio de estilo ---------- */
@@ -816,10 +961,16 @@
     // apagó (380 ms + 0,7 s del fundido), para que no se vean volver a su sitio.
     var SUBIR_MS = 2400, BAJAR_MS = 1200, quitarTorres = null;
     try { var guardado = localStorage.getItem("tema"); if (guardado === "ochenta" || guardado === "actual") raiz.dataset.tema = guardado; } catch (e) {}
-    document.querySelector(".cambio").addEventListener("click", function (e) {
+    // Microinteracciones (2026-11-15): la píldora del botón se mueve en cuanto se toca (data-va),
+    // con el resorte, sin esperar a que cambie el estilo a mitad de la cortina.
+    var cambio = document.querySelector(".cambio");
+    cambio.dataset.va = raiz.dataset.tema;
+    cambio.addEventListener("click", function (e) {
       var tema = e.target.dataset.poner;
       if (!tema || tema === raiz.dataset.tema || document.body.classList.contains("cambiando-espera")) return;
       var quieto = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      cambio.dataset.va = tema;
+      if (!quieto) repetir(cambio, "salto", 520);
       clearTimeout(quitarTorres);
       raiz.classList.remove("torres-suben", "torres-bajan");
       if (!quieto && tema === "ochenta") {
@@ -874,6 +1025,7 @@
       var b = e.target.closest("button");
       if (b) { fijada = b.dataset.horaPoner; poner(fijada); }
     });
+    gota(document.querySelector(".horas"), "indicador", 'button[aria-pressed="true"]');
   })();
 
   /* ---------- Suelo de Miami 1986 (rejilla dibujada en un lienzo) ----------
@@ -1117,6 +1269,7 @@
     }
     $("resumen-dias").addEventListener("click", function (e) { var k = e.target.dataset.dia; if (k) { elegido = k; pintar(); } });
     pintar();
+    gota($("resumen-dias"), "gota-sel", "button.activo", true);
 
     /* ---------- Descargar el resumen como imagen (tarea 7.8, idea 6) ----------
        Se dibuja en un <canvas> con los colores y letras del estilo que se está viendo. Solo

@@ -393,15 +393,23 @@ td a:hover, td a:focus-visible { color: var(--a1); text-decoration-color: var(--
 .nt-barras .nt-dia { color: var(--tenue); line-height: 1.1; text-transform: uppercase; font-size: 11px; letter-spacing: .04em; }
 .nt-barras button:focus-visible { outline: 2px solid var(--a1); outline-offset: 2px; border-radius: 6px; }
 .nt-todos { cursor: pointer; padding: 6px 14px; border-radius: 999px; border: 1px solid var(--tenue); background: none; color: var(--texto); font: 700 13px var(--f-texto); letter-spacing: .06em; text-transform: uppercase; }
-.paginas { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 8px; margin-top: 18px; }
-.paginas:empty { display: none; }
-.paginas button { cursor: pointer; min-width: 42px; padding: 7px 14px; border-radius: 999px; border: 1px solid var(--tenue); background: none; color: var(--texto); font: 700 14px var(--f-texto); letter-spacing: .04em; transition: all .25s; }
-.paginas button:hover:not(:disabled) { border-color: var(--a1); color: var(--a1); }
-.paginas button.activo { background: var(--a1); border-color: var(--a1); color: #fff; }
-:root[data-tema="ochenta"] .paginas button.activo { box-shadow: 0 0 16px var(--a1); }
-.paginas button:disabled { opacity: .35; cursor: default; }
-.paginas .salto { color: var(--tenue); padding: 0 2px; }
-@media (max-width: 640px) { .paginas { gap: 6px; } .paginas button { min-width: 36px; padding: 6px 10px; font-size: 13px; } }
+/* Pedido de Bruno (2026-11-15): flechas a los costados y siempre la misma cantidad de casillas
+   del mismo ancho (7, o 5 en el celular), así nada cambia de lugar al pasar de página. */
+.paginas { display: flex; justify-content: center; align-items: center; gap: 8px; margin-top: 18px; }
+.paginas[hidden] { display: none; }
+.pg-numeros { position: relative; display: flex; gap: 6px; }
+.pg-numeros > button, .pg-numeros > .pg-salto { width: 42px; height: 38px; flex: none; }
+.pg-numeros > button {
+  position: relative; z-index: 1; cursor: pointer; padding: 0; border-radius: 999px; border: 1px solid var(--tenue);
+  background: none; color: var(--texto); font: 700 14px var(--f-texto); font-variant-numeric: tabular-nums;
+}
+.pg-numeros > button:hover:not(.activo) { border-color: var(--a1); color: var(--a1); }
+.pg-salto { display: grid; place-items: center; color: var(--tenue); }
+@media (max-width: 640px) {
+  .paginas { gap: 6px; }
+  .pg-numeros { gap: 4px; }
+  .pg-numeros > button, .pg-numeros > .pg-salto { width: 36px; height: 36px; font-size: 13px; }
+}
 
 /* Logros y récords (tarea 6.2): opción A "vitrina", elegida por Bruno el 2026-11-13. Una
    tarjeta por récord y, abajo, los tráilers oficiales con sus visitas. */
@@ -730,3 +738,115 @@ section[id], .bloque { scroll-margin-top: 16px; }
 .px-c small { display: block; font-size: 12px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--a2); }
 :root[data-tema="actual"] .px-c small { color: var(--a1); }
 .px-c b { font: 700 18px var(--f-texto); }
+
+/* ============================================================
+   Microinteracciones (pedido de Bruno, 2026-11-15; probadas antes en una vista previa).
+   Resorte con leve sobrepaso: cubic-bezier(.22, 1.15, .36, 1). Con "reducir movimiento"
+   las apaga la regla general de arriba (animation/transition: none).
+   ============================================================ */
+:root { --resorte: cubic-bezier(.22, 1.15, .36, 1); }
+
+/* 1. Portada: una sola "gota" se desliza al botón elegido en Día / Atardecer / Noche y en
+   Nueva Zelanda / Chile / Miami (antes cada botón se pintaba solo). */
+.horas, .lugares { position: relative; }
+.horas button, .lugares button { position: relative; z-index: 1; }
+:root .horas button[aria-pressed="true"], :root .lugares button[aria-pressed="true"] { background: none; box-shadow: none; }
+.indicador {
+  position: absolute; top: 4px; bottom: 4px; left: 0; z-index: 0; pointer-events: none;
+  width: var(--w, 0px); transform: translateX(var(--x, 0px));
+  border-radius: 999px; background: rgba(255, 255, 255, .22); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .5);
+  opacity: 0;
+}
+.indicador.listo { opacity: 1; transition: transform .5s var(--resorte), width .5s var(--resorte), opacity .2s; }
+/* Al saltar, la gota se estira a lo ancho y se aplasta un poco. Se usa la propiedad "scale" para
+   no pisar el desplazamiento. 1.06 y no más: con más se salía del borde del grupo. */
+.indicador.salto, .gota-sel.salto, .cambio.salto .cambio-fondo { animation: gota .5s var(--resorte); }
+@keyframes gota { 35% { scale: 1.06 .88; } }
+
+/* Miami 1986 / 2026: la píldora usa el resorte y se mueve en cuanto se toca (antes esperaba a
+   la mitad de la cortina y casi no se veía). app.js pone data-va con el estilo elegido. */
+:root .cambio-fondo { transition: transform .55s var(--resorte), background .45s, box-shadow .45s; }
+:root .cambio[data-va="ochenta"] .cambio-fondo { transform: none; }
+:root .cambio[data-va="actual"] .cambio-fondo { transform: translateX(100%); }
+:root .cambio[data-va="ochenta"] [data-poner="ochenta"], :root .cambio[data-va="actual"] [data-poner="actual"] { color: #fff; }
+:root .cambio[data-va="ochenta"] [data-poner="actual"], :root .cambio[data-va="actual"] [data-poner="ochenta"] { color: rgba(255, 255, 255, .72); }
+
+/* 2. Cuenta regresiva: los números se enfocan al cambiar de país. */
+#cuenta.enfoca .caja b, #cuenta.enfoca .cuenta-nota span { animation: enfocar .18s ease-out; }
+@keyframes enfocar { from { filter: blur(3px); opacity: .35; } }
+
+/* 3. "☰ Secciones": la misma caja crece hasta ser el menú (app.js le cambia el ancho y el alto).
+   Las opciones aparecen con la caja casi abierta; como no se escala, las letras no se ven
+   borrosas. El ícono queda siempre como ☰ (pedido de Bruno). */
+:root .menu { gap: 0; overflow: hidden; border-radius: 26px; background: var(--a1); box-shadow: var(--sombra); }
+:root[data-tema="ochenta"] .menu { box-shadow: 0 0 18px var(--a1); }
+:root .menu .menu-boton { flex: none; min-width: max-content; background: none; box-shadow: none; transition: color .3s; }
+:root .menu .menu-lista { background: none; box-shadow: none; border-radius: 0; padding: 8px 8px 0; }
+:root .menu.abierto { background: var(--panel); border-radius: calc(var(--radio) + 8px); }
+:root .menu.abierto .menu-boton { color: var(--a1); }
+.menu-boton span { display: inline-block; width: 1em; height: 1em; line-height: 1; text-align: center; vertical-align: -.1em; }
+.menu.animando { transition: width .42s var(--resorte), height .42s var(--resorte), background-color .3s, border-radius .42s var(--resorte); }
+/* Al cerrar, sin sobrepaso: si la caja se encogía de más, apretaba o recortaba el botón. */
+.menu.animando.cerrando { transition-timing-function: cubic-bezier(.4, 0, .2, 1); }
+/* Mientras cambia de tamaño, la lista no muestra su barra de desplazamiento. */
+.menu.animando .menu-lista { overflow: hidden; }
+:root .menu .menu-lista a { opacity: 0; transform: translateY(6px); transition: opacity .12s, transform .12s; }
+:root .menu.texto .menu-lista a { opacity: 1; transform: none; transition: opacity .2s, transform .28s var(--resorte); transition-delay: calc(var(--i, 0) * 14ms); }
+
+/* 4. Al presionar: botones, tarjetas y cintas se hunden un poco y rebotan al soltar. Se usa
+   "scale" para no pisar los "transform" que ya tienen. Sin will-change. */
+@media (prefers-reduced-motion: no-preference) {
+  :root :is(button, .rc-vitrina > li:not(.vacio), .videos li:not(.vacio), .noticias li, .rc-trailers li:not(.vacio), .album-b figure, .cap-cinta) {
+    transition: color .3s, background-color .25s, border-color .25s, box-shadow .25s, transform .25s, scale .38s var(--resorte);
+  }
+  :root button:not(:disabled):active { scale: .95; transition-duration: .3s, .25s, .25s, .25s, .25s, .08s; }
+  :root :is(.rc-vitrina > li:not(.vacio), .videos li:not(.vacio), .noticias li, .rc-trailers li:not(.vacio), .album-b figure):active { scale: .975; transition-duration: .3s, .25s, .25s, .25s, .25s, .1s; }
+  :root .cap-cinta:active { scale: .99; transition-duration: .3s, .25s, .25s, .25s, .25s, .1s; }
+  /* "Secciones" no se achica (al achicarse y abrirse a la vez daba un tirón): se oscurece. */
+  :root .menu .menu-boton:active { scale: none; }
+  :root .menu:not(.abierto):active { filter: brightness(.88); }
+}
+
+/* 5. Selectores de día y pestañas: una sola fila siempre (también en el celular). Si no caben,
+   la tira se desliza de lado, sus bordes se desvanecen y las flechas quedan fijas. */
+.flecha {
+  display: inline-grid; place-items: center; flex: none; width: 38px; height: 38px; padding: 0; cursor: pointer;
+  border-radius: 50%; border: 1px solid var(--tenue); background: none; color: var(--texto);
+}
+.flecha-der svg { transform: scaleX(-1); }
+.flecha:hover:not(:disabled) { border-color: var(--a1); color: var(--a1); }
+.flecha:disabled { opacity: .3; cursor: default; }
+@media (max-width: 640px) { .flecha { width: 36px; height: 36px; } }
+.selector { display: flex; align-items: center; gap: 6px; margin: 12px 0 14px; max-width: 100%; }
+.selector > .filtros {
+  position: relative; flex: 0 1 auto; min-width: 0; margin: -8px 0; padding: 8px 6px;
+  flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; overscroll-behavior-x: contain;
+}
+.selector > .filtros::-webkit-scrollbar { display: none; }
+.selector > .filtros.desliza { -webkit-mask-image: linear-gradient(90deg, transparent, #000 18px, #000 calc(100% - 18px), transparent); mask-image: linear-gradient(90deg, transparent, #000 18px, #000 calc(100% - 18px), transparent); }
+.selector > .filtros button { flex: none; position: relative; z-index: 1; }
+/* La gota rosada del elegido (días, pestañas y páginas). */
+.gota-sel {
+  position: absolute; left: 0; top: 0; z-index: 0; pointer-events: none;
+  width: var(--w, 0px); height: var(--h, 0px); transform: translate(var(--x, 0px), var(--y, 0px));
+  border-radius: 999px; background: var(--a1); opacity: 0;
+}
+:root[data-tema="ochenta"] .gota-sel { box-shadow: 0 0 10px var(--a1); }
+.gota-sel.listo { opacity: 1; transition: transform .5s var(--resorte), width .5s var(--resorte), opacity .2s; }
+:root .selector .filtros button.activo, :root .paginas button.activo {
+  background: none; border-color: transparent; box-shadow: none; color: #fff;
+  transition: color .2s .08s, border-color .2s;
+}
+
+/* 6. Flechas de la tira de Shorts, en su título (además de deslizar). */
+.v-sub { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+.flechas-shorts { display: inline-flex; gap: 6px; margin-left: auto; }
+
+/* 7. Barra de desplazamiento de la página estable: era delgada, con fondo transparente, y
+   Windows y Edge la escondían. Ahora tiene ancho normal, fondo visible y su espacio reservado.
+   Las barras de adentro (tablas, Shorts) siguen delgadas. */
+:root {
+  scrollbar-gutter: stable;
+  scrollbar-width: auto;
+  scrollbar-color: var(--a1) color-mix(in srgb, var(--tenue) 22%, var(--fondo));
+}

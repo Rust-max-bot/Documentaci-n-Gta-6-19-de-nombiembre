@@ -136,7 +136,7 @@
   <section class="bloque observar" id="resumen">
     <h2>Resumen del día</h2>
     <p class="nota">Lo más importante de cada día, sacado solo de las mediciones guardadas. Los días van en hora de Santiago de Chile.</p>
-    <div class="filtros" id="resumen-dias" role="group" aria-label="Qué día ver"></div>
+    <!-- Flechas y una sola fila (pedido de Bruno, 2026-11-15) --><div class="selector"><button type="button" class="flecha flecha-izq" aria-label="Día más nuevo" title="Día más nuevo"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button><div class="filtros" id="resumen-dias" role="group" aria-label="Qué día ver"></div><button type="button" class="flecha flecha-der" aria-label="Día más viejo" title="Día más viejo"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div>
     <div class="rd-tarjeta" id="resumen-tarjeta"></div>
   </section>
 
@@ -161,14 +161,14 @@
 
   <section class="bloque observar" id="seccion-tabla">
     <h2>Twitch, medición por medición</h2>
-    <div class="filtros" id="filtros-dia"></div>
+    <div class="selector"><button type="button" class="flecha flecha-izq" aria-label="Día más nuevo" title="Día más nuevo"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button><div class="filtros" id="filtros-dia" role="group" aria-label="Qué día ver"></div><button type="button" class="flecha flecha-der" aria-label="Día más viejo" title="Día más viejo"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div>
     <div class="tabla-caja"><table id="t-twitch"></table></div>
   </section>
 
   <section class="bloque observar" id="seccion-videos">
     <h2>Videos más vistos en YouTube</h2>
     <p class="nota" id="videos-nota">Visitas al final del periodo medido y cuánto subieron desde el inicio.</p>
-    <div class="filtros" id="videos-tabs" role="group" aria-label="Qué videos ver"></div>
+    <div class="selector"><div class="filtros" id="videos-tabs" role="group" aria-label="Qué videos ver"></div></div>
     <div id="videos"></div>
   </section>
 

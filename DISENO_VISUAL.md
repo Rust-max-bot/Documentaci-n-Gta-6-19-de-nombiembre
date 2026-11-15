@@ -98,7 +98,7 @@ Paleta llamada "Atardecer encendido" (elegida por Bruno).
 ### Cambio de un estilo a otro
 
 - El interruptor es una píldora con un fondo de color que se desliza al lado elegido
-  (rosa neón en 1986, naranja-rosa en 2026).
+  (rosa neón en 1986, naranja-rosa en 2026), con un resorte, en cuanto se toca.
 - Al cambiar pasa una **cortina diagonal** de colores (cian, rosa, amarillo, naranja) que
   barre la pantalla en 0,8 s; el estilo cambia a mitad del barrido (a los 0,38 s) y las dos
   escenas se funden en 0,7 s.
@@ -161,6 +161,22 @@ cambian con cada estilo y cada momento del día.
 (2,2 s) al aparecer en pantalla; las barras crecen; un punto verde "late" junto a "Última
 medición hace X min"; "¡Nuevo récord!" marca los récords recientes.
 
+**Microinteracciones** (2026-11-15, probadas antes en una vista previa y aprobadas por Bruno).
+Resorte con leve sobrepaso: `cubic-bezier(.22, 1.15, .36, 1)`.
+
+- **Gota que se desliza:** en Día / Atardecer / Noche, Nueva Zelanda / Chile / Miami, los días
+  del Resumen y de la tabla de Twitch, las pestañas Global / En español y las páginas de
+  titulares, una sola píldora se desliza al botón elegido y se estira un poco al llegar.
+- **Cuenta regresiva:** al cambiar de país, los números aparecen desenfocados y se enfocan en 0,18 s.
+- **"☰ Secciones":** la misma caja del botón crece hasta ser el menú; las opciones aparecen con
+  la caja casi abierta. El botón no se mueve ni cambia de tamaño, y el ícono no cambia.
+- **Al presionar:** botones, tarjetas y cintas se hunden un poco y rebotan al soltar.
+- **Flechas ‹ ›:** en los días del Resumen y de la tabla de Twitch (una sola fila, también en el
+  celular; si no caben, la fila se desliza y sus bordes se desvanecen), en las páginas de
+  titulares (siempre 7 casillas, o 5 en el celular) y en la tira de Shorts.
+- **Sin saltos:** el control que se toca queda en el mismo lugar de la pantalla.
+- **Barra de desplazamiento** de la página de ancho normal, con fondo visible y siempre presente.
+
 ## 8. Dónde está cada cosa (por si quien ayuda puede leer código)
 
 | Qué | Dónde |
@@ -172,6 +188,7 @@ medición hace X min"; "¡Nuevo récord!" marca los récords recientes.
 | Dibujos de palmera, hoteles y torres (SVG) | `web/index.html`, al principio (`<symbol id="palmera">`, `edificios`, `torres80`, `torres26`) |
 | Rejilla del suelo de 1986 | `web/app.js`, "Suelo de Miami 1986" |
 | Cambio de estilo (barrido, torres) | `web/app.js`, "Cambio de estilo" |
+| Microinteracciones (gota, flechas, sin saltos, menú) | `web/estilos.css`, al final; `web/app.js`, "Microinteracciones" |
 
 ## 9. Cómo pedir sugerencias a otra IA
 
