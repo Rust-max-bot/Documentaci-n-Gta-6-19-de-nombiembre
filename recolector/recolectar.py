@@ -53,7 +53,7 @@ def leer_interruptor():
 def leer_estado(carpeta):
     """Lee los archivos más recientes. Si alguno está dañado, aborta: no se añade nada encima."""
     estado = {"ultima_t": None, "youtube_previos": [], "noticias_vistas": set(), "reddit_vistas": set(),
-              "youtube_es_previos": [], "youtube_es_busqueda": None}
+              "youtube_es_previos": [], "youtube_es_busqueda": None, "shorts": {}}
     videos_es = []
     archivos = sorted(p for p in carpeta.glob("*.jsonl"))
     for p in archivos:
@@ -81,6 +81,10 @@ def leer_estado(carpeta):
             videos_es = es.get("videos") or videos_es
             if es.get("busco"):
                 estado["youtube_es_busqueda"] = m["t"]
+            # Videos y Shorts: lo que ya se supo preguntando a youtube.com no se vuelve a preguntar.
+            for v in m.get("youtube", {}).get("videos", []) + es.get("videos", []):
+                if v.get("short_por") == "url" and isinstance(v.get("short"), bool):
+                    estado["shorts"][v["id"]] = v["short"]
     if ultima:
         estado["ultima_t"] = ultima["t"]
         estado["youtube_previos"] = [v["id"] for v in sorted(videos, key=lambda v: v.get("visitas") or 0, reverse=True)]

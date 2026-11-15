@@ -64,6 +64,11 @@ def _youtube(r):
         for campo in ("visitas", "me_gusta", "comentarios"):
             exigir(v.get(campo) is None or es_entero(v[campo]), f"YouTube: '{campo}' inválido")
         exigir(isinstance(v.get("titulo"), str), "YouTube: video sin título")
+        # Videos y Shorts (15 nov): campos nuevos; las mediciones anteriores no los tienen.
+        if "short" in v:
+            exigir(isinstance(v["short"], bool) and v.get("short_por") in ("url", "forma"), "YouTube: marca de Short inválida")
+            exigir(v.get("duracion") is None or es_entero(v["duracion"]), "YouTube: duración inválida")
+            exigir(isinstance(v.get("temas"), list) and all(isinstance(t, str) for t in v["temas"]), "YouTube: temas inválidos")
 
 
 def _youtube_es(r):

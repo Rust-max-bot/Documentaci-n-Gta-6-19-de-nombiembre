@@ -10,6 +10,7 @@ archivo y añadir su comprobación en validar.py. No hace falta tocar las demás
 Las consultas son las mismas que se probaron desde GitHub el 2026-11-12
 (probar_fuentes.py). Rockstar no está: no responde a programas; sus caídas se anotan a mano.
 """
+import http.client
 import http.cookiejar
 import json
 import os
@@ -21,7 +22,7 @@ import xml.etree.ElementTree as ET
 from datetime import datetime, timedelta, timezone
 from email.utils import parsedate_to_datetime
 
-from red import Falla, a_iso, pedir, pedir_json
+from red import UA, Falla, a_iso, pedir, pedir_json
 
 TWITCH_CATEGORIA = "1867279146"   # "Grand Theft Auto VI", verificado el 2026-11-12
 TWITCH_CANALES = 20               # canales con más público que se guardan en cada medición
@@ -34,6 +35,9 @@ YOUTUBE_SEGUIMIENTO = 50          # máximo de videos cuyas visitas se miden (1 
 # en los otros turnos solo se vuelven a medir sus videos (1 unidad). Ver PLAN_DE_TRABAJO.md, 6.4.
 YOUTUBE_ES_IDIOMA = "es"
 YOUTUBE_ES_CADA_MIN = 50          # minutos mínimos entre dos búsquedas en español
+# Partes que se piden de cada video. Cuesta 1 unidad igual, pidan las partes que se pidan.
+PARTES_VIDEO = "snippet,statistics,contentDetails,topicDetails,player"
+SHORTS_SEGUNDOS = 45              # tiempo máximo por fuente para preguntar a youtube.com qué videos son Shorts
 TRENDS_PALABRA = "GTA 6"
 TRENDS_PUNTOS = 24                # últimas 24 horas de la serie de 7 días
 NOTICIAS_RSS = "https://news.google.com/rss/search?q=%22GTA+6%22&hl=es-419&gl=CL&ceid=CL:es-419"
@@ -138,6 +142,50 @@ def _mensaje_youtube(txt):
         return ""
 
 
+def _segundos(duracion):
+    """Duración de YouTube (ISO 8601, por ejemplo "PT1M5S") en segundos; None si no se entiende."""
+    r = re.fullmatch(r"P(?:(\d+)D)?T?(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?", duracion or "")
+    if not r or not any(r.groups()):
+        return None
+    d, h, m, s = (int(x or 0) for x in r.groups())
+    return d * 86400 + h * 3600 + m * 60 + s
+
+
+def _preguntar_short(vid):
+    """youtube.com/shorts/<id> responde 200 si el video es un Short y redirige (303) a /watch si
+    no lo es. Probado con 96 videos el 15 nov (ejecución 43736224115). None si no hay respuesta clara."""
+    c = http.client.HTTPSConnection("www.youtube.com", timeout=5)
+    try:
+        c.request("HEAD", "/shorts/" + vid, headers={"User-Agent": UA})
+        cod = c.getresponse().status
+        return True if cod == 200 else False if cod in (301, 302, 303) else None
+    except (OSError, http.client.HTTPException):
+        return None
+    finally:
+        c.close()
+
+
+def _datos_video(v, conocidos, limite):
+    """Tarea "videos y Shorts" (pedido de Bruno, 15 nov): duración, temas que YouTube asigna solo
+    al video (para el filtro "¿es de GTA 6?") y si es un Short. Si ya se supo en una medición
+    anterior (preguntando a youtube.com), se reutiliza; si youtube.com no responde a tiempo, se
+    adivina: Short si dura 3 minutos o menos y el reproductor no es apaisado (en la prueba
+    coincidió en 94 de 96 videos) y se vuelve a preguntar en la próxima medición."""
+    seg = _segundos(v.get("contentDetails", {}).get("duration"))
+    pl = v.get("player", {})
+    try:
+        ancho, alto = int(pl.get("embedWidth")), int(pl.get("embedHeight"))
+    except (TypeError, ValueError):
+        ancho = alto = None
+    temas = [t.rsplit("/", 1)[-1] for t in v.get("topicDetails", {}).get("topicCategories", []) if isinstance(t, str)]
+    short, por = conocidos.get(v["id"]), "url"
+    if short is None and time.monotonic() < limite:
+        short = _preguntar_short(v["id"])
+    if short is None:
+        short, por = bool(seg and seg <= 180 and ancho and alto and alto >= ancho), "forma"
+    return {"duracion": seg, "temas": temas, "short": short, "short_por": por}
+
+
 def youtube(estado):
     clave = os.environ.get("YOUTUBE_API_KEY", "")
     if not clave:
@@ -160,7 +208,7 @@ def youtube(estado):
         raise Falla("la búsqueda de YouTube no devolvió videos")
 
     cod, txt = pedir("https://www.googleapis.com/youtube/v3/videos?" + urllib.parse.urlencode(
-        {"part": "snippet,statistics", "id": ",".join(ids), "key": clave}))
+        {"part": PARTES_VIDEO, "maxWidth": 400, "id": ",".join(ids), "key": clave}))
     unidades += 1
     if cod != 200:
         raise Falla(f"estadísticas de YouTube: código {cod}. {_mensaje_youtube(txt)}")
@@ -168,7 +216,7 @@ def youtube(estado):
     def numero(st, campo):
         return int(st[campo]) if campo in st else None   # None: el canal lo oculta
 
-    videos = []
+    videos, conocidos, limite = [], estado.get("shorts", {}), time.monotonic() + SHORTS_SEGUNDOS
     for v in json.loads(txt).get("items", []):
         sn, st = v.get("snippet", {}), v.get("statistics", {})
         miniaturas = sn.get("thumbnails", {})
@@ -185,6 +233,7 @@ def youtube(estado):
             "en_vivo": sn.get("liveBroadcastContent", "none"),
             "miniatura": mini,
             "puesto": puesto.get(v["id"]),   # puesto en la búsqueda de esta medición; None si ya no sale
+            **_datos_video(v, conocidos, limite),
         })
     if not videos:
         raise Falla("YouTube no devolvió las estadísticas de ningún video")
@@ -221,11 +270,11 @@ def youtube_es(estado):
     if not ids:
         raise Falla("la búsqueda de YouTube en español no devolvió videos")
     cod, txt = pedir("https://www.googleapis.com/youtube/v3/videos?" + urllib.parse.urlencode(
-        {"part": "snippet,statistics", "id": ",".join(ids), "key": clave}))
+        {"part": PARTES_VIDEO, "maxWidth": 400, "id": ",".join(ids), "key": clave}))
     unidades += 1
     if cod != 200:
         raise Falla(f"estadísticas de YouTube en español: código {cod}. {_mensaje_youtube(txt)}")
-    videos = []
+    videos, conocidos, limite = [], estado.get("shorts", {}), time.monotonic() + SHORTS_SEGUNDOS
     for v in json.loads(txt).get("items", []):
         sn, st = v.get("snippet", {}), v.get("statistics", {})
         miniaturas = sn.get("thumbnails", {})
@@ -238,6 +287,7 @@ def youtube_es(estado):
             "comentarios": int(st["commentCount"]) if "commentCount" in st else None,
             "idioma": sn.get("defaultAudioLanguage") or sn.get("defaultLanguage"),   # None si el video no lo declara
             "miniatura": mini, "puesto": puesto.get(v["id"]),
+            **_datos_video(v, conocidos, limite),
         })
     if not videos:
         raise Falla("YouTube no devolvió las estadísticas de ningún video en español")
