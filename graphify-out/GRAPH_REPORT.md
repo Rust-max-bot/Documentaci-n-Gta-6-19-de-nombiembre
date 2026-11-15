@@ -1,17 +1,17 @@
-# Graph Report - Documentaci-n-Gta-6-19-de-nombiembre  (2026-11-15)
+# Graph Report - Documentación Gta 6  (2026-11-15)
 
 ## Corpus Check
-- 43 files · ~65,115 words
+- 43 files · ~65,364 words
 - Verdict: corpus is large enough that graph structure adds value.
 - Unclassified: 9 file(s) not represented in the graph (top: .jsonl 4, (none) 3, .bat 1)
 
 ## Summary
-- 570 nodes · 973 edges · 38 communities (22 shown, 16 thin omitted)
-- Extraction: 90% EXTRACTED · 10% INFERRED · 0% AMBIGUOUS · INFERRED: 101 edges (avg confidence: 0.87)
+- 570 nodes · 974 edges · 38 communities (22 shown, 16 thin omitted)
+- Extraction: 90% EXTRACTED · 10% INFERRED · 0% AMBIGUOUS · INFERRED: 102 edges (avg confidence: 0.87)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `517f878d`
+- Built from commit: `23633ac4`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -53,8 +53,8 @@
 ## God Nodes (most connected - your core abstractions)
 1. `pintar()` - 25 edges
 2. `Falla` - 23 edges
-3. `pedir()` - 17 edges
-4. `exigir()` - 17 edges
+3. `exigir()` - 17 edges
+4. `pedir()` - 17 edges
 5. `a_iso()` - 14 edges
 6. `Decisiones ya tomadas` - 14 edges
 7. `Plan de trabajo` - 13 edges
@@ -67,11 +67,11 @@
   historial/PLAN_DE_TRABAJO_2026-11-13.md → web/app.js
 - `Fase 1 — Recolector funcionando (lo más importante)` --references--> `compacto()`  [INFERRED]
   PLAN_DE_TRABAJO.md → web/app.js
+- `Fase 6 — Ideas nuevas de Bruno: más estadísticas, logros y comparaciones` --references--> `youtube_es()`  [INFERRED]
+  historial/PLAN_DE_TRABAJO_2026-11-14.md → recolector/fuentes.py
 - `Fase 6 — Ideas nuevas de Bruno: más estadísticas, logros y comparaciones` --references--> `twitch_ranking()`  [INFERRED]
   historial/PLAN_DE_TRABAJO_2026-11-13.md → recolector/fuentes.py
 - `Fase 6 — Ideas nuevas de Bruno: más estadísticas, logros y comparaciones` --references--> `twitch_ranking()`  [INFERRED]
-  historial/PLAN_DE_TRABAJO_2026-11-14.md → recolector/fuentes.py
-- `Fase 6 — Ideas nuevas de Bruno: más estadísticas, logros y comparaciones` --references--> `youtube_es()`  [INFERRED]
   historial/PLAN_DE_TRABAJO_2026-11-14.md → recolector/fuentes.py
 
 ## Import Cycles
@@ -109,7 +109,7 @@ Cohesion: 0.12
 Nodes (15): jobs, trends_extra, name, on, workflow_dispatch, permissions, contents, name (+7 more)
 
 ### Community 5 - "Generar la página (generar_web.py)"
-Cohesion: 0.13
+Cohesion: 0.12
 Nodes (10): main(), abrir(), preparar_salida(), main(), main(), recorrer(), fecha(), main() (+2 more)
 
 ### Community 6 - "Workflow Recolectar datos"

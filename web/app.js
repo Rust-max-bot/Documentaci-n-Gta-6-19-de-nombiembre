@@ -810,26 +810,28 @@
     var raiz = document.documentElement;
     // Tarea 7.3 (opción B de Bruno, 2026-11-13): las torres nuevas suben una por una al ir a 2026
     // y bajan al volver a 1986. Duraciones de las animaciones de estilos.css, con margen.
-    var SUBIR_MS = 2400, BAJAR_MS = 1200;
+    // Pedido de Bruno (2026-11-15): volver a 1986 tardaba 1,2 s más que ir a 2026, porque se
+    // esperaba a que bajaran las torres antes del barrido. Ahora el barrido empieza enseguida en los
+    // dos sentidos y las torres bajan a la vez; la clase se quita cuando la escena de 2026 ya se
+    // apagó (380 ms + 0,7 s del fundido), para que no se vean volver a su sitio.
+    var SUBIR_MS = 2400, BAJAR_MS = 1200, quitarTorres = null;
     try { var guardado = localStorage.getItem("tema"); if (guardado === "ochenta" || guardado === "actual") raiz.dataset.tema = guardado; } catch (e) {}
     document.querySelector(".cambio").addEventListener("click", function (e) {
       var tema = e.target.dataset.poner;
       if (!tema || tema === raiz.dataset.tema || document.body.classList.contains("cambiando-espera")) return;
       var quieto = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-      // Tarea 7.3: al ir a 2026 las torres nuevas suben después del barrido; al volver a 1986
-      // primero bajan y después pasa el barrido.
-      var bajar = !quieto && tema === "ochenta" ? BAJAR_MS : 0;
-      document.body.classList.add("cambiando-espera");
-      if (bajar) raiz.classList.add("torres-bajan");
+      clearTimeout(quitarTorres);
+      raiz.classList.remove("torres-suben", "torres-bajan");
+      if (!quieto && tema === "ochenta") {
+        raiz.classList.add("torres-bajan");
+        quitarTorres = setTimeout(function () { raiz.classList.remove("torres-bajan"); }, BAJAR_MS);
+      }
+      document.body.classList.add("cambiando-espera", "cambiando");
       setTimeout(function () {
-        document.body.classList.add("cambiando");
-        setTimeout(function () {
-          raiz.classList.remove("torres-bajan");
-          raiz.dataset.tema = tema; try { localStorage.setItem("tema", tema); } catch (e) {}
-          if (!quieto && tema === "actual") { raiz.classList.add("torres-suben"); setTimeout(function () { raiz.classList.remove("torres-suben"); }, SUBIR_MS); }
-        }, quieto ? 0 : 380);
-        setTimeout(function () { document.body.classList.remove("cambiando", "cambiando-espera"); }, quieto ? 0 : 820);
-      }, bajar);
+        raiz.dataset.tema = tema; try { localStorage.setItem("tema", tema); } catch (e) {}
+        if (!quieto && tema === "actual") { raiz.classList.add("torres-suben"); quitarTorres = setTimeout(function () { raiz.classList.remove("torres-suben"); }, SUBIR_MS); }
+      }, quieto ? 0 : 380);
+      setTimeout(function () { document.body.classList.remove("cambiando", "cambiando-espera"); }, quieto ? 0 : 820);
     });
   })();
 
@@ -1073,10 +1075,13 @@
         if (m.espectadores != null && (!r.tw || m.espectadores > r.tw.espectadores)) r.tw = m;
         if (m.interes != null && (!r.tr || m.interes > r.tr.interes)) r.tr = m;
       });
+      // Video y Short más vistos del día, por separado (pedido de Bruno, 2026-11-15), como en
+      // "Logros y récords". Los videos sin la marca de Short cuentan como videos, igual que en las listas.
       (D.youtube || []).forEach(function (v) {
+        var tipo = v.short === true ? "sh" : "yt";
         v.serie.forEach(function (p) {
           var ts = Date.parse(p.t);
-          if (clave(ts) === k && (!r.yt || p.visitas > r.yt.visitas)) r.yt = { visitas: p.visitas, ts: ts, titulo: v.titulo, url: urlVideo(v.id) };
+          if (clave(ts) === k && (!r[tipo] || p.visitas > r[tipo].visitas)) r[tipo] = { visitas: p.visitas, ts: ts, titulo: v.titulo, url: urlVideo(v.id) };
         });
       });
       r.titulares = (D.noticias || []).filter(function (n) { var ts = Date.parse(n.t); return !isNaN(ts) && clave(ts) === k; }).length;
@@ -1101,6 +1106,8 @@
           : cuadro("Máximo en Twitch", "—", "sin dato ese día")) +
         (r.yt ? cuadro("Video más visto", compacto(r.yt.visitas), "visitas", enlace(r.yt.url, limpio(r.yt.titulo)), "medido a las " + hora(r.yt.ts))
           : cuadro("Video más visto", "—", "sin dato ese día")) +
+        (r.sh ? cuadro("Short más visto", compacto(r.sh.visitas), "visitas", enlace(r.sh.url, limpio(r.sh.titulo)), "medido a las " + hora(r.sh.ts))
+          : cuadro("Short más visto", "—", "sin dato ese día")) +
         (r.tr ? cuadro("Interés en Google Trends", r.tr.interes, "de 100, lo más alto del día", "", "a las " + hora(r.tr.ts))
           : cuadro("Interés en Google Trends", "—", "sin dato ese día")) +
         cuadro("Titulares", num(r.titulares), r.titulares === 1 ? "titular publicado ese día" : "titulares publicados ese día") +
@@ -1168,12 +1175,14 @@
       var cuadros = [
         ["MÁXIMO EN TWITCH", r.tw ? num(r.tw.espectadores) : "—", r.tw ? "espectadores a la vez" : "sin dato", r.tw && r.tw.canal ? "Más visto: " + r.tw.canal.nombre : ""],
         ["VIDEO MÁS VISTO", r.yt ? compacto(r.yt.visitas) : "—", r.yt ? "visitas" : "sin dato", r.yt ? r.yt.titulo : ""],
+        ["SHORT MÁS VISTO", r.sh ? compacto(r.sh.visitas) : "—", r.sh ? "visitas" : "sin dato", r.sh ? r.sh.titulo : ""],
         ["GOOGLE TRENDS", r.tr ? String(r.tr.interes) : "—", r.tr ? "de 100, lo más alto del día" : "sin dato", ""],
         ["TITULARES", num(r.titulares), "publicados ese día", ""],
         ["REDDIT r/GTA6", num(r.reddit), "publicaciones", ""],
         ["MEDICIONES", num(r.med), r.huecos ? r.huecos + " con algún hueco" : "sin huecos", ""]
       ];
-      var cols = 2, filas = Math.ceil(cuadros.length / cols);
+      // Tres columnas, como en la página: con 7 cuadros en dos columnas quedaban tan bajos que no cabía el título del video.
+      var cols = 3, filas = Math.ceil(cuadros.length / cols);
       var margen = 60 * u, gap = 22 * u, yIni = yTop + (k === ultimoDia ? 70 : 40) * u, yFin = H - 100 * u;
       var cw = (W - 2 * margen - gap * (cols - 1)) / cols, ch = Math.min(260 * u, (yFin - yIni - gap * (filas - 1)) / filas);
       // Tamaño del contenido según el alto del cuadro: con poco alto, todo un poco más chico.
@@ -1181,10 +1190,11 @@
       yIni += Math.max(0, (yFin - yIni) - (ch * filas + gap * (filas - 1))) / 2;
       cuadros.forEach(function (q, i) {
         var cx = margen + (i % cols) * (cw + gap), cy = yIni + Math.floor(i / cols) * (ch + gap);
+        var w = i === cuadros.length - 1 && i % cols === 0 ? W - 2 * margen : cw;   // si el último queda solo, ocupa todo el ancho
         ctx.fillStyle = ochenta ? "rgba(22,4,54,.82)" : "rgba(255,250,244,.92)";
         ctx.strokeStyle = ochenta ? a2 : "rgba(27,20,64,.08)"; ctx.lineWidth = 2 * u;
-        ctx.beginPath(); ctx.roundRect(cx, cy, cw, ch, 22 * u); ctx.fill(); if (ochenta) ctx.stroke();
-        ctx.textAlign = "left"; var px = cx + 26 * u, ancho = cw - 52 * u;
+        ctx.beginPath(); ctx.roundRect(cx, cy, w, ch, 22 * u); ctx.fill(); if (ochenta) ctx.stroke();
+        ctx.textAlign = "left"; var px = cx + 26 * u, ancho = w - 52 * u;
         var alto = (conExtra && q[3] ? 172 : 140) * e, y0 = cy + (ch - alto) / 2;   // contenido centrado en el cuadro
         ctx.font = "700 " + Math.round(20 * e) + "px " + fTxt; ctx.fillStyle = ochenta ? tenue : "#5f5884";
         ctx.fillText(recortar(ctx, q[0], ancho), px, y0 + 20 * e);

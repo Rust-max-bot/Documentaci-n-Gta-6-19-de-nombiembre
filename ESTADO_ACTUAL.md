@@ -101,6 +101,7 @@ Bruno ya eligió las palabras de la comparación.
 
 ## Últimos cambios
 
+- 2026-11-15: arreglos pedidos por Bruno: sin el recuadro azul al tocar botones (celulares) ni contorno al hacer clic (el del teclado sigue); volver a Miami 1986 tarda lo mismo que ir a 2026 (~0,4 s; antes ~1,6 s, las torres bajan durante el barrido); "Short más visto" aparte en el Resumen del día y en su imagen (ahora en 3 columnas, opción elegida por Bruno).
 - 2026-11-15: "Lo que espero de GTA 6 (mi opinión)" en la cápsula del tiempo (7.4), texto de Bruno corregido y aprobado por él, y cápsula rediseñada como cintas de casete con "Leer todo" (opción C); PR #25 para que lo una.
 - 2026-11-15: PR #23 unido (17:42 UTC). Primera medición con los cambios (18:07 UTC) en verde: 44 de 50 Shorts en Global, 23 de 50 en español, 0 de 25 en los de 4 a 20 min; 14 se marcaron por la forma porque youtube.com no respondió a tiempo (se vuelven a preguntar en el turno siguiente).
 - 2026-11-15: récords "Video más visto" y "Short más visto" por separado, con aviso dentro de cada cuadro (opción A de Bruno); idea a futuro del panel de control en el plan.
@@ -110,7 +111,6 @@ Bruno ya eligió las palabras de la comparación.
 - 2026-11-14: álbum de momentos (7.7, fotos instantáneas, opción B de Bruno), resumen del día como imagen cuadrada (7.8, opción A) y GTA 6 frente a otros lanzamientos con barras (7.9, opción A); `PLAN_DE_TRABAJO.md` archivado en `historial/PLAN_DE_TRABAJO_2026-11-14.md`.
 - 2026-11-14: revisión de seguridad con el skill de Cloudflare (2.15): sin fallos confirmados; 4 refuerzos (comillas, miniaturas, CSP, clave del checkout) y 3 cosas para Bruno en sus cuentas (`PLAN.md`).
 - 2026-11-14: datos por días (2.13: `datos.js` de 222 a 50 KB, los titulares de cada día se cargan al mostrarlos) y revisión de datos nuevos con `version.json` para aguantar muchas visitas (2.14).
-- 2026-11-14: actualización sola con "Última medición hace X min" (2.10), vista previa al compartir con ícono propio (2.11, opción C de Bruno) y menú de secciones con botón flotante (2.12, opción B de Bruno).
 
 ## Pendiente
 
