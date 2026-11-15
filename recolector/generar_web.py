@@ -180,9 +180,13 @@ def convertir(medidas):
                 r: len(d["gta"]) for r, d in yt["regiones"].items()}
         mediciones.append(fila)
 
-        for v in m.get("youtube", {}).get("videos", []):
+        # "Global" junta la búsqueda por visitas y, desde el 15 nov, la de videos de 4 a 20 minutos
+        # (youtube_largos). Si un video sale en las dos, cuenta una sola vez por medición.
+        for v in m.get("youtube", {}).get("videos", []) + m.get("youtube_largos", {}).get("videos", []):
             if isinstance(v.get("visitas"), int):
-                series.setdefault(v["id"], []).append({"t": m["t"], "visitas": v["visitas"]})
+                serie = series.setdefault(v["id"], [])
+                if not serie or serie[-1]["t"] != m["t"]:
+                    serie.append({"t": m["t"], "visitas": v["visitas"]})
                 ultimo_video[v["id"]] = v
         for v in m.get("youtube_es", {}).get("videos", []):
             if isinstance(v.get("visitas"), int):
@@ -213,6 +217,9 @@ def convertir(medidas):
     # Los videos que aparecen en la última medición en que YouTube respondió, de más a menos visto.
     filtro = leer_filtro()
     ultima_yt = next((m["youtube"]["videos"] for m in reversed(medidas) if m.get("youtube", {}).get("videos")), [])
+    ultima_lg = next((m["youtube_largos"]["videos"] for m in reversed(medidas) if m.get("youtube_largos", {}).get("videos")), [])
+    vistos = {v["id"] for v in ultima_yt}
+    ultima_yt = sorted(ultima_yt + [v for v in ultima_lg if v["id"] not in vistos], key=lambda v: v.get("visitas") or 0, reverse=True)
     youtube = [{
         "id": v["id"],
         "titulo": ultimo_video[v["id"]]["titulo"],

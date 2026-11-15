@@ -66,7 +66,7 @@ def _youtube(r):
         exigir(isinstance(v.get("titulo"), str), "YouTube: video sin título")
         # Videos y Shorts (15 nov): campos nuevos; las mediciones anteriores no los tienen.
         if "short" in v:
-            exigir(isinstance(v["short"], bool) and v.get("short_por") in ("url", "forma"), "YouTube: marca de Short inválida")
+            exigir(isinstance(v["short"], bool) and v.get("short_por") in ("url", "forma", "duracion"), "YouTube: marca de Short inválida")
             exigir(v.get("duracion") is None or es_entero(v["duracion"]), "YouTube: duración inválida")
             exigir(isinstance(v.get("temas"), list) and all(isinstance(t, str) for t in v["temas"]), "YouTube: temas inválidos")
 
@@ -78,6 +78,13 @@ def _youtube_es(r):
     exigir(r["unidades"] == (101 if r["busco"] else 1), "YouTube en español: unidades inesperadas")
     for v in r["videos"]:
         exigir(v.get("idioma") is None or isinstance(v["idioma"], str), "YouTube en español: idioma de video inválido")
+
+
+def _youtube_largos(r):
+    _youtube(r)
+    exigir(r.get("duracion") == "4-20 min", "YouTube largos: duración de búsqueda inesperada")
+    exigir(isinstance(r.get("busco"), bool), "YouTube largos: falta 'busco'")
+    exigir(r["unidades"] == (101 if r["busco"] else 1), "YouTube largos: unidades inesperadas")
 
 
 def _trends(r):
@@ -179,6 +186,7 @@ CHEQUEOS = {
     "twitch": _twitch,
     "youtube": _youtube,
     "youtube_es": _youtube_es,
+    "youtube_largos": _youtube_largos,
     "trends": _trends,
     "noticias": _noticias,
     "reddit": _reddit,

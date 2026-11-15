@@ -35,6 +35,8 @@ YOUTUBE_SEGUIMIENTO = 50          # máximo de videos cuyas visitas se miden (1 
 # en los otros turnos solo se vuelven a medir sus videos (1 unidad). Ver PLAN_DE_TRABAJO.md, 6.4.
 YOUTUBE_ES_IDIOMA = "es"
 YOUTUBE_ES_CADA_MIN = 50          # minutos mínimos entre dos búsquedas en español
+YOUTUBE_CADA_MIN = 50             # minutos mínimos entre dos búsquedas globales (antes del 15 nov: en cada medición)
+YOUTUBE_LARGOS_CADA_MIN = 50      # minutos mínimos entre dos búsquedas de videos de 4 a 20 minutos
 # Partes que se piden de cada video. Cuesta 1 unidad igual, pidan las partes que se pidan.
 PARTES_VIDEO = "snippet,statistics,contentDetails,topicDetails,player"
 SHORTS_SEGUNDOS = 45              # tiempo máximo por fuente para preguntar a youtube.com qué videos son Shorts
@@ -179,6 +181,8 @@ def _datos_video(v, conocidos, limite):
         ancho = alto = None
     temas = [t.rsplit("/", 1)[-1] for t in v.get("topicDetails", {}).get("topicCategories", []) if isinstance(t, str)]
     short, por = conocidos.get(v["id"]), "url"
+    if short is None and seg and seg > 180:   # un Short dura como mucho 3 minutos: no hace falta preguntar
+        short, por = False, "duracion"
     if short is None and time.monotonic() < limite:
         short = _preguntar_short(v["id"])
     if short is None:
@@ -186,18 +190,29 @@ def _datos_video(v, conocidos, limite):
     return {"duracion": seg, "temas": temas, "short": short, "short_por": por}
 
 
+def _toca_buscar(previos, ultima, ahora, cada_min):
+    """Las búsquedas cuestan 100 unidades: se hacen como mucho una vez cada `cada_min` minutos.
+    En los demás turnos solo se vuelven a medir los videos anteriores (1 unidad)."""
+    return not previos or not ultima or ahora - datetime.fromisoformat(ultima.replace("Z", "+00:00")) >= timedelta(minutes=cada_min)
+
+
 def youtube(estado):
     clave = os.environ.get("YOUTUBE_API_KEY", "")
     if not clave:
         raise Falla("falta la clave de YouTube")
-    desde = a_iso(datetime.now(timezone.utc) - timedelta(days=7))
-    q = {"part": "snippet", "q": YOUTUBE_BUSQUEDA, "type": "video", "order": "viewCount",
-         "publishedAfter": desde, "maxResults": YOUTUBE_RESULTADOS, "key": clave}
-    cod, txt = pedir("https://www.googleapis.com/youtube/v3/search?" + urllib.parse.urlencode(q))
-    if cod != 200:
-        raise Falla(f"búsqueda de YouTube: código {cod}. {_mensaje_youtube(txt)}")
-    unidades = 100
-    nuevos = [i["id"]["videoId"] for i in json.loads(txt).get("items", []) if i.get("id", {}).get("videoId")]
+    # Desde el 15 nov (decisión de Bruno, con la búsqueda de videos largos): como mucho una vez
+    # por hora, para no pasar el cupo diario de YouTube; las visitas se siguen midiendo siempre.
+    ahora = datetime.now(timezone.utc)
+    buscar = _toca_buscar(estado["youtube_previos"], estado.get("youtube_busqueda"), ahora, YOUTUBE_CADA_MIN)
+    unidades, nuevos = 0, []
+    if buscar:
+        q = {"part": "snippet", "q": YOUTUBE_BUSQUEDA, "type": "video", "order": "viewCount",
+             "publishedAfter": a_iso(ahora - timedelta(days=7)), "maxResults": YOUTUBE_RESULTADOS, "key": clave}
+        cod, txt = pedir("https://www.googleapis.com/youtube/v3/search?" + urllib.parse.urlencode(q))
+        if cod != 200:
+            raise Falla(f"búsqueda de YouTube: código {cod}. {_mensaje_youtube(txt)}")
+        unidades = 100
+        nuevos = [i["id"]["videoId"] for i in json.loads(txt).get("items", []) if i.get("id", {}).get("videoId")]
     puesto = {vid: n + 1 for n, vid in enumerate(nuevos)}
 
     # Se siguen midiendo los videos de la medición anterior (los más vistos primero), para que
@@ -238,7 +253,57 @@ def youtube(estado):
     if not videos:
         raise Falla("YouTube no devolvió las estadísticas de ningún video")
     videos.sort(key=lambda v: v["visitas"] or 0, reverse=True)
-    return {"busqueda": YOUTUBE_BUSQUEDA, "unidades": unidades, "videos": videos}
+    return {"busqueda": YOUTUBE_BUSQUEDA, "busco": buscar, "unidades": unidades, "videos": videos}
+
+
+def youtube_largos(estado):
+    """Videos normales para "Global" (pedido de Bruno, 15 nov): en la búsqueda por visitas, 45 de
+    50 eran Shorts. Esta busca "GTA 6" de los últimos 7 días, de 4 a 20 minutos, por visitas.
+    Comparada el 15 nov (ejecución 43737292527) con la de más de 20 minutos: la de 4 a 20 trajo
+    25 de 25 que nombran GTA 6 en el título; la de más de 20 traía directos y partidas de GTA 5.
+    Busca como mucho una vez por hora; en los demás turnos vuelve a medir los anteriores."""
+    clave = os.environ.get("YOUTUBE_API_KEY", "")
+    if not clave:
+        raise Falla("falta la clave de YouTube")
+    ahora = datetime.now(timezone.utc)
+    previos = estado.get("youtube_largos_previos", [])
+    buscar = _toca_buscar(previos, estado.get("youtube_largos_busqueda"), ahora, YOUTUBE_LARGOS_CADA_MIN)
+    unidades, nuevos = 0, []
+    if buscar:
+        q = {"part": "snippet", "q": YOUTUBE_BUSQUEDA, "type": "video", "order": "viewCount", "videoDuration": "medium",
+             "publishedAfter": a_iso(ahora - timedelta(days=7)), "maxResults": YOUTUBE_RESULTADOS, "key": clave}
+        cod, txt = pedir("https://www.googleapis.com/youtube/v3/search?" + urllib.parse.urlencode(q))
+        if cod != 200:
+            raise Falla(f"búsqueda de videos largos de YouTube: código {cod}. {_mensaje_youtube(txt)}")
+        unidades += 100
+        nuevos = [i["id"]["videoId"] for i in json.loads(txt).get("items", []) if i.get("id", {}).get("videoId")]
+    puesto = {vid: n + 1 for n, vid in enumerate(nuevos)}
+    ids = nuevos + [vid for vid in previos if vid not in puesto][:YOUTUBE_SEGUIMIENTO - len(nuevos)]
+    if not ids:
+        raise Falla("la búsqueda de videos largos de YouTube no devolvió videos")
+    cod, txt = pedir("https://www.googleapis.com/youtube/v3/videos?" + urllib.parse.urlencode(
+        {"part": PARTES_VIDEO, "maxWidth": 400, "id": ",".join(ids), "key": clave}))
+    unidades += 1
+    if cod != 200:
+        raise Falla(f"estadísticas de videos largos de YouTube: código {cod}. {_mensaje_youtube(txt)}")
+    videos, conocidos, limite = [], estado.get("shorts", {}), time.monotonic() + SHORTS_SEGUNDOS
+    for v in json.loads(txt).get("items", []):
+        sn, st = v.get("snippet", {}), v.get("statistics", {})
+        miniaturas = sn.get("thumbnails", {})
+        mini = (miniaturas.get("medium") or miniaturas.get("high") or miniaturas.get("default") or {}).get("url", "")
+        videos.append({
+            "id": v["id"], "titulo": sn.get("title", ""), "canal": sn.get("channelTitle", ""),
+            "canal_id": sn.get("channelId", ""), "publicado": sn.get("publishedAt"),
+            "visitas": int(st["viewCount"]) if "viewCount" in st else None,
+            "me_gusta": int(st["likeCount"]) if "likeCount" in st else None,
+            "comentarios": int(st["commentCount"]) if "commentCount" in st else None,
+            "miniatura": mini, "puesto": puesto.get(v["id"]),
+            **_datos_video(v, conocidos, limite),
+        })
+    if not videos:
+        raise Falla("YouTube no devolvió las estadísticas de ningún video largo")
+    videos.sort(key=lambda v: v["visitas"] or 0, reverse=True)
+    return {"busqueda": YOUTUBE_BUSQUEDA, "duracion": "4-20 min", "busco": buscar, "unidades": unidades, "videos": videos}
 
 
 def youtube_es(estado):
@@ -254,7 +319,7 @@ def youtube_es(estado):
     ahora = datetime.now(timezone.utc)
     previos = estado.get("youtube_es_previos", [])
     ultima = estado.get("youtube_es_busqueda")
-    buscar = not previos or not ultima or ahora - datetime.fromisoformat(ultima.replace("Z", "+00:00")) >= timedelta(minutes=YOUTUBE_ES_CADA_MIN)
+    buscar = _toca_buscar(previos, ultima, ahora, YOUTUBE_ES_CADA_MIN)
     unidades, nuevos = 0, []
     if buscar:
         q = {"part": "snippet", "q": YOUTUBE_BUSQUEDA, "type": "video", "order": "relevance",
@@ -535,6 +600,7 @@ FUENTES = {
     "twitch": twitch,
     "youtube": youtube,
     "youtube_es": youtube_es,
+    "youtube_largos": youtube_largos,
     "trends": trends,
     "noticias": noticias,
     "reddit": reddit,
