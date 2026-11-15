@@ -339,6 +339,15 @@ td a:hover, td a:focus-visible { color: var(--a1); text-decoration-color: var(--
 .v-texto small { margin-top: 6px; color: var(--tenue); font-weight: 600; }
 .v-texto .mini { width: 100%; height: 26px; margin-top: auto; padding-top: 8px; box-sizing: content-box; }
 .v-texto .mini path { vector-effect: non-scaling-stroke; }
+/* Videos y Shorts (opción B de Bruno, 2026-11-15): títulos de cada grupo y tira de Shorts
+   verticales que se desliza hacia el lado. */
+.v-sub { margin: 18px 0 10px; }
+.v-sub small { margin-left: 6px; color: var(--tenue); font-size: 13px; font-weight: 600; letter-spacing: 0; text-transform: none; }
+.videos.shorts { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 8px; overscroll-behavior-x: contain; }
+.videos.shorts li { flex: 0 0 160px; scroll-snap-align: start; }
+.videos.shorts li:hover { transform: none; }
+.videos.shorts .foto { aspect-ratio: 9 / 16; }
+.videos.shorts .v-texto a { font-size: 14px; }
 
 /* Noticias */
 .noticias { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); gap: 12px; }

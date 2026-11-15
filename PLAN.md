@@ -210,6 +210,41 @@ Resultado final: **una página web** con:
     dos columnas (B) y una sección aparte (C, quedaba muy abajo en el celular). En español solo
     se muestran los que YouTube marca en español (idioma `es…`), porque la búsqueda también
     trae algunos en inglés (5 de 20 en la primera medición).
+- **Videos y Shorts de YouTube, y filtro "¿de verdad es de GTA 6?" (pedido de Bruno, 2026-11-15).**
+  - Cómo se sabe si un video es un Short: la API no lo dice. Se pregunta a
+    `youtube.com/shorts/<id>`: responde 200 si es Short y redirige (303) a `/watch` si no.
+    Probado con los 96 videos de la última medición (ejecución 43736224115 de "Probar
+    fuentes"). La otra forma, "dura 3 minutos o menos y el reproductor no es apaisado",
+    coincidió en 94 de 96 (los 2 distintos eran Shorts cuadrados): queda de respaldo si
+    youtube.com no responde. No gasta cuota extra. Cada video se pregunta una sola vez.
+  - Hallazgo: en la búsqueda global por visitas, 45 de 50 videos eran Shorts; en español
+    (solo los marcados `es`), 14 de 26. Separar deja muy pocos videos normales en "Global".
+  - Formas de filtrar, probadas con los 96 videos (ejecución 43736720118):
+    GTA 6 en el título sin hashtags (quita los de solo hashtags, los videos chinos y los de
+    GTA 5); "temas" que YouTube asigna solo al video (`topicDetails`: casi todos tienen
+    "Video_game_culture", los dos chinos solo "Entertainment"); categoría que elige el
+    creador (solo 51 de 96 usan "Videojuegos": descartada, quitaría videos de Ibai o
+    Tecnonauta); palabras del juego en descripción y etiquetas (descartada: la mayoría de los
+    Shorts no tiene descripción); transcripciones (YouTube solo las da al dueño del video:
+    descartada); IA que lea el texto (necesita una clave de pago: Bruno decide).
+  - Desde el 2026-11-15 el recolector guarda en cada video de `youtube` y `youtube_es`:
+    `duracion`, `temas`, `short` y `short_por` (`url` o `forma`).
+  - **Filtro elegido por Bruno (2026-11-15): título + tema de YouTube + lista.** Se muestra un
+    video si su título, sin hashtags, nombra GTA 6 / GTA VI / Grand Theft Auto VI y YouTube le
+    puso un tema de videojuegos. Además, `excluir_palabras` (por ahora "roblox": Bruno no quiere
+    animaciones de Roblox aunque nombren GTA 6) y `ocultar` (videos que Bruno marque a mano).
+    Todo en `recolector/filtro_videos.json`, con un interruptor (`estricto`, `titulo`,
+    `ninguno`) para volver atrás cambiando una palabra (Bruno pidió poder volver atrás). Solo
+    decide qué se muestra: `datos/` no cambia. Lo aplica `generar_web.py`, así que también vale
+    para "Video más visto" en los récords y la línea de tiempo.
+  - **Diseño elegido por Bruno (2026-11-15): opción B.** En cada pestaña (Global y En español),
+    primero hasta 8 videos normales en tarjetas y debajo una tira de Shorts verticales que se
+    desliza hacia el lado. Se descartaron A (segunda fila de botones Videos / Shorts) y C (todo
+    mezclado con etiqueta SHORT). Capturas en la carpeta del proyecto `videos-shorts/`.
+  - **Idea a futuro (Bruno, 2026-11-15), no ahora:** una IA barata que lea título, descripción y
+    etiquetas para decidir si un video habla del juego. Bruno no quiere usar Claude para esto
+    cada vez porque saldría caro; si se retoma, buscar una opción de bajo costo y hacer antes
+    un plan pequeño.
 - **Más Google Trends (tarea 6.1): una sola vez, entre el 20 y el 25 nov (Bruno, 2026-11-13).**
   - Consultas sueltas con pausas, fuera del recolector de cada hora: si Google bloquea (429),
     no se pierde la medición normal de "GTA 6", sobre todo el 19.

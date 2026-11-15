@@ -432,9 +432,13 @@
   // YouTube marca en español (idioma "es", "es-MX", "es-419"…): la búsqueda prefiere el
   // español pero también trae algunos en inglés. Pestañas "Global" y "En español" sobre la
   // misma lista (opción A de Bruno, 2026-11-13).
+  // Videos y Shorts (opción B de Bruno, 2026-11-15): en cada pestaña, primero los videos
+  // normales y debajo una tira de Shorts verticales que se desliza hacia el lado. Los videos sin
+  // marca de Short (mediciones de antes del 15 nov) cuentan como videos normales.
   (function () {
-    function tarjetas(lista) {
-      var filas = (lista || []).map(function (v) {
+    var VIDEOS_VISIBLES = 8;
+    function filas(lista) {
+      return (lista || []).map(function (v) {
         var serie = (v.serie || []).filter(function (p) { return typeof p.visitas === "number"; });
         if (!serie.length) return null;
         var a = serie[0].visitas, b = serie[serie.length - 1].visitas, min = a, max = b;
@@ -442,22 +446,24 @@
         var camino = serie.map(function (p, i) { return (i ? "L" : "M") + (i / (serie.length - 1 || 1) * 120).toFixed(1) + " " + (28 - (p.visitas - min) / (max - min || 1) * 26).toFixed(1); }).join("");
         return { v: v, a: a, b: b, camino: camino };
       }).filter(Boolean).sort(function (x, y) { return y.b - x.b; });
-      return filas.map(function (f) {
+    }
+    function tarjetas(fs, vacio) {
+      return fs.map(function (f) {
         var url = urlVideo(f.v.id);
         // Solo miniaturas de YouTube; la imagen repite el enlace del título, así que no recibe foco.
         var foto = /^https:\/\/i\.ytimg\.com\//.test(f.v.miniatura || "")
           ? (url ? '<a class="foto" href="' + limpio(url) + '" target="_blank" rel="noopener noreferrer" tabindex="-1" aria-hidden="true">' : '<div class="foto">') +
-            '<img src="' + (/^https:\/\/i\.ytimg\.com\//.test(f.v.miniatura || "") ? limpio(f.v.miniatura) : "data:,") + '" alt="" loading="lazy" width="320" height="180">' + (url ? "</a>" : "</div>")
+            '<img src="' + limpio(f.v.miniatura) + '" alt="" loading="lazy" width="320" height="180">' + (url ? "</a>" : "</div>")
           : "";
         return "<li>" + foto + '<div class="v-texto">' + enlace(url, limpio(f.v.titulo)) +
           '<small title="Al inicio: ' + num(f.a) + " · Al final: " + num(f.b) + '">' + limpio(f.v.canal) + " · " + compacto(f.b) +
           ' visitas · <span class="crece">+' + compacto(f.b - f.a) + "</span></small>" +
           '<svg class="mini" viewBox="0 0 120 30" preserveAspectRatio="none" aria-hidden="true"><path d="' + f.camino + '"/></svg></div></li>';
-      }).join("") || '<li class="vacio">Todavía no hay datos.</li>';
+      }).join("") || '<li class="vacio">' + vacio + "</li>";
     }
     var global = D.youtube || [];
     var espanol = (D.youtube_es || []).filter(function (v) { return /^es\b/i.test(v.idioma || ""); });
-    var lista = $("videos"), nota = $("videos-nota"), tabs = $("videos-tabs");
+    var caja = $("videos"), nota = $("videos-nota"), tabs = $("videos-tabs");
     var NOTAS = { global: nota.textContent,
                   es: "Videos que YouTube marca en español, de creadores de Chile, España, México y otros países. La búsqueda se hace una vez por hora." };
     var elegida = "global";
@@ -466,7 +472,12 @@
         return '<button type="button" data-lista="' + t[0] + '" aria-pressed="' + (t[0] === elegida) + '"' + (t[0] === elegida ? ' class="activo"' : "") + ">" + t[1] + "</button>";
       }).join("");
       nota.textContent = NOTAS[elegida];
-      lista.innerHTML = tarjetas(elegida === "es" ? espanol : global);
+      var todas = filas(elegida === "es" ? espanol : global);
+      var normales = todas.filter(function (f) { return f.v.short !== true; }).slice(0, VIDEOS_VISIBLES);
+      var shorts = todas.filter(function (f) { return f.v.short === true; });
+      caja.innerHTML = '<h3 class="sub v-sub">Videos</h3><ul class="videos">' + tarjetas(normales, "Todavía no hay videos.") + "</ul>" +
+        (shorts.length ? '<h3 class="sub v-sub">Shorts <small>' + shorts.length + " · desliza para ver más</small></h3>" +
+          '<ul class="videos shorts" aria-label="Shorts: desliza hacia el lado para ver más">' + tarjetas(shorts, "") + "</ul>" : "");
     }
     tabs.addEventListener("click", function (e) { var l = e.target.dataset.lista; if (l) { elegida = l; pintar(); } });
     pintar();
