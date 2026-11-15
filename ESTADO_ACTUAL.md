@@ -102,6 +102,7 @@ Bruno ya eligió las palabras de la comparación.
 ## Últimos cambios
 
 - 2026-11-15: "Lo que espero de GTA 6 (mi opinión)" en la cápsula del tiempo (7.4), texto de Bruno corregido y aprobado por él, y cápsula rediseñada como cintas de casete con "Leer todo" (opción C); PR #25 para que lo una.
+- 2026-11-15: PR #23 unido (17:42 UTC). Primera medición con los cambios (18:07 UTC) en verde: 44 de 50 Shorts en Global, 23 de 50 en español, 0 de 25 en los de 4 a 20 min; 14 se marcaron por la forma porque youtube.com no respondió a tiempo (se vuelven a preguntar en el turno siguiente).
 - 2026-11-15: récords "Video más visto" y "Short más visto" por separado, con aviso dentro de cada cuadro (opción A de Bruno); idea a futuro del panel de control en el plan.
 - 2026-11-15: videos y Shorts separados (6.5, opción B: tira de Shorts), filtro "¿es de GTA 6?" (título + tema de YouTube + lista, Roblox fuera) y búsqueda de videos de 4 a 20 minutos; PR para que Bruno lo una.
 - 2026-11-14: copias vendidas en los primeros días (7.10, opción B) y "Próximamente" (7.11, opción C); pregunta GTA 6 frente a Doomsday en la 6.1, probada.
@@ -126,8 +127,6 @@ La lista completa y su orden están en `PLAN_DE_TRABAJO.md`. Resumen (2026-11-14
 5. **Fase 5** (después del lanzamiento): búsqueda calmada; clave de Reddit.
 6. **Ideas sueltas:** 2.5 TikTok (sin acceso fácil); D6 (Bruno pidió ignorarla por ahora).
 7. **Bruno:**
-   - unir el PR #23 de videos y Shorts (6.5, con los récords de video y Short más visto) desde GitHub: hasta entonces el recolector sigue con lo
-     de antes y la página no cambia;
    - revisar en sus cuentas 3 cosas de la revisión de seguridad (2.15, detalle en `PLAN.md`):
      clave de YouTube restringida a "YouTube Data API v3", regla en GitHub para que `main` no
      se pueda borrar ni reescribir, y "Secret scanning" + "Push protection" activados;
