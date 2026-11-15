@@ -241,6 +241,13 @@ Resultado final: **una página web** con:
     primero hasta 8 videos normales en tarjetas y debajo una tira de Shorts verticales que se
     desliza hacia el lado. Se descartaron A (segunda fila de botones Videos / Shorts) y C (todo
     mezclado con etiqueta SHORT). Capturas en la carpeta del proyecto `videos-shorts/`.
+  - **Videos normales para "Global" (decisión de Bruno, 2026-11-15).** Fuente nueva
+    `youtube_largos`: "GTA 6" de los últimos 7 días, de 4 a 20 minutos, por visitas (probada en
+    la ejecución 43737292527: 25 de 25 nombran GTA 6; la de más de 20 minutos traía directos y
+    partidas de GTA 5, descartada). Para no pasar el cupo, la búsqueda global pasa a hacerse
+    como mucho una vez por hora, como la de español; las visitas se siguen midiendo en cada
+    turno. Total: unas 7.500 unidades al día, como antes. Se descartaron hacerla cada 2 horas
+    (unas 8.700) y no hacerla (Global con 3 o 4 videos normales).
   - **Idea a futuro (Bruno, 2026-11-15), no ahora:** una IA barata que lea título, descripción y
     etiquetas para decidir si un video habla del juego. Bruno no quiere usar Claude para esto
     cada vez porque saldría caro; si se retoma, buscar una opción de bajo costo y hacer antes

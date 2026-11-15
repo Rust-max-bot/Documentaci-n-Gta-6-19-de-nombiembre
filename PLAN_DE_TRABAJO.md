@@ -37,8 +37,11 @@ ya estaba acordado y faltaba. **Es la lista ordenada de qué hacer y en qué ord
 - **Fase 3 — Mejoras medianas:** hecha, 3.1 a 3.3 (paleta B de 2026, Reddit por RSS,
   torres de Miami).
 - **Fase 4:** hechas 4.1 y 4.2 (día, atardecer y noche según la hora de Miami). Queda la 4.3.
-- **Fase 6:** hechas 6.2 (logros y récords), 6.3 (GTA frente a lo más visto) y 6.4 (videos en
-  español). Queda la 6.1.
+- **Fase 6:** hechas 6.2 (logros y récords), 6.3 (GTA frente a lo más visto), 6.4 (videos en
+  español) y 6.5 (videos y Shorts separados, filtro "¿es de GTA 6?" y búsqueda de videos de 4 a
+  20 minutos; pedido de Bruno, 2026-11-15, opciones en `PLAN.md`). Queda la 6.1.
+  **Idea a futuro (Bruno, 2026-11-15), sin fecha:** una IA barata que lea título, descripción
+  y etiquetas de cada video para filtrar mejor (no Claude, por el costo). Antes, un plan pequeño.
 - **Fase 7:** hechas 7.2 (hora cero; se prueba con `?probar-hora-cero`), 7.3 (viaje en el
   tiempo), 7.5 (resumen del día), 7.6 (hora cero en cada lugar; se prueba con
   `?probar-fecha=2026-11-18T12:30Z`), la línea de tiempo con eventos nuevos, 7.7 (álbum de
@@ -171,9 +174,9 @@ Se conserva la numeración de los planes anteriores. Los avisos 1, 3 y 4 ya est�
    35 MB sin comprimir (git los comprime). GitHub lo admite. El día del lanzamiento habrá
    más canales y titulares: se revisa.
 3. *(Resuelto: el repositorio es público, así que los minutos de GitHub son gratis.)* YouTube
-   no es problema: 105 unidades por medición desde la 6.3 y los tráilers de la 6.2, más la
-   búsqueda en español de la 6.4 una vez por hora: unas 7.500 de las 10.000 diarias la semana
-   del lanzamiento.
+   no es problema: desde el 15 nov, las tres búsquedas (global, español y videos de 4 a 20
+   minutos, 6.5) se hacen como mucho una vez por hora y las visitas se miden en cada turno: unas
+   7.500 de las 10.000 diarias, también la semana del lanzamiento.
 4. *(Resuelto: Reddit se lee por RSS; la clave queda en la Fase 5.)*
 5. **Estado de Rockstar.** No se puede leer con programas, ni desde la nube ni desde GitHub.
    Las caídas de Rockstar se anotan a mano en `web/eventos.js`. Vuelto a probar desde GitHub el

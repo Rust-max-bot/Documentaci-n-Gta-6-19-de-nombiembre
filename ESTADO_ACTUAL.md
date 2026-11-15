@@ -59,7 +59,7 @@ en Twitch y tendencias de YouTube), que la página ya muestra en "GTA frente a l
 desde el PR #11 (unido el 2026-11-13), las visitas de los 4 videos oficiales de GTA VI
 (fuente `youtube_trailers`, tarea 6.2), que se ven en "Logros y récords". Desde el PR #12 (unido el
 2026-11-13), también una búsqueda de videos en español (fuente `youtube_es`, tarea 6.4), una
-vez por hora: la primera, a las 22:07 UTC, trajo 25 videos. La página la muestra con la pestaña "En español" de los videos. Se apaga, enciende o
+vez por hora: la primera, a las 22:07 UTC, trajo 25 videos. La página la muestra con la pestaña "En español" de los videos. **Desde el 15 nov (6.5, pedido de Bruno, en el PR de la rama `claude/project-thread-ff8vqi` hasta que Bruno lo una):** cada video guarda si es Short, su duración y sus temas; hay una tercera búsqueda, de videos de 4 a 20 minutos (`youtube_largos`), y las tres búsquedas se hacen como mucho una vez por hora (unas 7.500 unidades al día). La página filtra lo que no es de GTA 6 (`recolector/filtro_videos.json`: se puede apagar) y muestra los Shorts en una tira aparte. Se apaga, enciende o
 alarga en `recolector/interruptor.json` (por defecto, hasta el 19 dic).
 
 **Si un día faltan mediciones:** mirar el registro del Worker en Cloudflare
@@ -100,6 +100,7 @@ Bruno ya eligió las palabras de la comparación.
 
 ## Últimos cambios
 
+- 2026-11-15: videos y Shorts separados (6.5, opción B: tira de Shorts), filtro "¿es de GTA 6?" (título + tema de YouTube + lista, Roblox fuera) y búsqueda de videos de 4 a 20 minutos; PR para que Bruno lo una.
 - 2026-11-14: copias vendidas en los primeros días (7.10, opción B) y "Próximamente" (7.11, opción C); pregunta GTA 6 frente a Doomsday en la 6.1, probada.
 - 2026-11-14: plan nuevo de Bruno: comparar solo el arranque de GTA 6 con los juegos más grandes (7.10), "Próximamente" (7.11), GTA 6 frente a Doomsday en Trends (6.1) y Fase 8 dormida para el lanzamiento en PC (`PLAN.md`).
 - 2026-11-14: álbum de momentos (7.7, fotos instantáneas, opción B de Bruno), resumen del día como imagen cuadrada (7.8, opción A) y GTA 6 frente a otros lanzamientos con barras (7.9, opción A); `PLAN_DE_TRABAJO.md` archivado en `historial/PLAN_DE_TRABAJO_2026-11-14.md`.
@@ -108,7 +109,6 @@ Bruno ya eligió las palabras de la comparación.
 - 2026-11-14: actualización sola con "Última medición hace X min" (2.10), vista previa al compartir con ícono propio (2.11, opción C de Bruno) y menú de secciones con botón flotante (2.12, opción B de Bruno).
 - 2026-11-14: nota "hecho con Claude" en el README y en el pie de la página (2.9, pedido de Bruno); en lo público, Bruno aparece como "Rust" (regla nueva en `CLAUDE.md`).
 - 2026-11-14: README al día (2.7) y página publicada en GitHub Pages para verla desde el celular (2.8, pedido de Bruno).
-- 2026-11-14: filtro por día en los titulares con barras por día (2.6, opción C de Bruno).
 
 ## Pendiente
 
@@ -125,6 +125,8 @@ La lista completa y su orden están en `PLAN_DE_TRABAJO.md`. Resumen (2026-11-14
 5. **Fase 5** (después del lanzamiento): búsqueda calmada; clave de Reddit.
 6. **Ideas sueltas:** 2.5 TikTok (sin acceso fácil); D6 (Bruno pidió ignorarla por ahora).
 7. **Bruno:**
+   - unir el PR de videos y Shorts (6.5) desde GitHub: hasta entonces el recolector sigue con lo
+     de antes y la página no cambia;
    - revisar en sus cuentas 3 cosas de la revisión de seguridad (2.15, detalle en `PLAN.md`):
      clave de YouTube restringida a "YouTube Data API v3", regla en GitHub para que `main` no
      se pueda borrar ni reescribir, y "Secret scanning" + "Push protection" activados;

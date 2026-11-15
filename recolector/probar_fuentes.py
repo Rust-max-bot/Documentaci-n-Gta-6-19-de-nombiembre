@@ -198,32 +198,9 @@ def _():
 # Filtro "¿de verdad es de GTA 6?" (15 nov, ejecución 43736720118): categoría, temas,
 # descripción y etiquetas de 96 videos. Resultado en PLAN.md.
 
-# Videos normales para "Global": en la búsqueda por visitas, 45 de 50 eran Shorts. Se comparan
-# dos búsquedas extra por duración (4 a 20 minutos y más de 20). 200 unidades; no guarda nada.
-@prueba("Busquedas de videos largos (comparar)")
-def _():
-    clave = os.environ.get("YOUTUBE_API_KEY", "")
-    if not clave:
-        print("Falta la clave de YouTube")
-        return False
-    gta6 = re.compile(r"\bgta\s*-?\s*(6|vi)\b|\bgta(6|vi)\b|\bgrand\s+theft\s+auto\s*-?\s*(6|vi)\b", re.I)
-    desde = (datetime.now(timezone.utc) - timedelta(days=7)).strftime("%Y-%m-%dT%H:%M:%SZ")
-    for dur in ("medium", "long"):
-        q = {"part": "snippet", "q": "GTA 6", "type": "video", "order": "viewCount", "videoDuration": dur,
-             "publishedAfter": desde, "maxResults": 25, "key": clave}
-        cod, txt = pedir("https://www.googleapis.com/youtube/v3/search?" + urllib.parse.urlencode(q))
-        if cod != 200:
-            print(dur, "codigo", cod)
-            return False
-        ids = [i["id"]["videoId"] for i in json.loads(txt).get("items", []) if i.get("id", {}).get("videoId")]
-        cod, txt = pedir("https://www.googleapis.com/youtube/v3/videos?" + urllib.parse.urlencode(
-            {"part": "snippet,statistics", "id": ",".join(ids), "key": clave}))
-        vs = sorted(json.loads(txt).get("items", []), key=lambda v: -int(v.get("statistics", {}).get("viewCount", 0)))
-        pasan = sum(bool(gta6.search(re.sub(r"#\S+", " ", v["snippet"]["title"]))) for v in vs)
-        print(f"--- {dur}: {len(vs)} videos, {pasan} nombran GTA 6 en el titulo")
-        for v in vs[:15]:
-            print(f"  {v['statistics'].get('viewCount')} | {v['snippet']['channelTitle'][:20]} | {v['snippet']['title'][:70]}")
-    return True
+# Videos normales para "Global" (15 nov, ejecución 43737292527): búsqueda extra de 4 a 20
+# minutos (25 de 25 nombran GTA 6) contra la de más de 20 (directos y partidas de GTA 5). Se
+# quitó para no gastar 200 unidades en cada prueba. Resultado en PLAN.md.
 
 
 # Tarea 6.4: la comparación de cuatro formas de buscar videos en español (unas 400 unidades)
