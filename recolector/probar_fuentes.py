@@ -195,44 +195,34 @@ def _():
 # coincidieron en 94; los 2 distintos eran Shorts cuadrados, que la dirección sí reconoce.
 # Resultado en PLAN.md.
 
-# Filtro "¿de verdad es de GTA 6?": qué datos trae YouTube de cada video (categoría, temas,
-# etiquetas, descripción) para comparar formas de filtrar. 2 unidades de cuota; no guarda nada.
-@prueba("Filtro de videos de GTA 6 (datos para comparar)")
+# Filtro "¿de verdad es de GTA 6?" (15 nov, ejecución 43736720118): categoría, temas,
+# descripción y etiquetas de 96 videos. Resultado en PLAN.md.
+
+# Videos normales para "Global": en la búsqueda por visitas, 45 de 50 eran Shorts. Se comparan
+# dos búsquedas extra por duración (4 a 20 minutos y más de 20). 200 unidades; no guarda nada.
+@prueba("Busquedas de videos largos (comparar)")
 def _():
-    import glob
     clave = os.environ.get("YOUTUBE_API_KEY", "")
     if not clave:
         print("Falta la clave de YouTube")
         return False
-    ultimo = sorted(glob.glob("datos/*.jsonl"))[-1]
-    m = json.loads(open(ultimo, encoding="utf-8").read().splitlines()[-1])
-    ids = []
-    for f in ("youtube", "youtube_es"):
-        for v in m.get(f, {}).get("videos", []):
-            if v["id"] not in ids:
-                ids.append(v["id"])
-    gta6 = re.compile(r"gta\s*(6|vi)\b|gta(6|vi)\b|grand\s+theft\s+auto\s+(6|vi)\b", re.I)
-    esencia = re.compile(r"miami|vice\s*city|leonida|lucia|luc\u00eda|jason|rockstar|trailer|tr\u00e1iler|gameplay|ps5|xbox|mapa|map\b|lanzamiento|launch|release", re.I)
-    cats = {}
-    print("id | cat | temas | GTA6 en: titulo-sin-#/desc/etiquetas | palabras del juego (desc+etiq) | titulo")
-    for i in range(0, len(ids), 50):
-        cod, txt = pedir("https://www.googleapis.com/youtube/v3/videos?" + urllib.parse.urlencode(
-            {"part": "snippet,topicDetails", "id": ",".join(ids[i:i + 50]), "key": clave}))
+    gta6 = re.compile(r"\bgta\s*-?\s*(6|vi)\b|\bgta(6|vi)\b|\bgrand\s+theft\s+auto\s*-?\s*(6|vi)\b", re.I)
+    desde = (datetime.now(timezone.utc) - timedelta(days=7)).strftime("%Y-%m-%dT%H:%M:%SZ")
+    for dur in ("medium", "long"):
+        q = {"part": "snippet", "q": "GTA 6", "type": "video", "order": "viewCount", "videoDuration": dur,
+             "publishedAfter": desde, "maxResults": 25, "key": clave}
+        cod, txt = pedir("https://www.googleapis.com/youtube/v3/search?" + urllib.parse.urlencode(q))
         if cod != 200:
-            print("videos.list: codigo", cod)
+            print(dur, "codigo", cod)
             return False
-        for v in json.loads(txt).get("items", []):
-            sn = v["snippet"]
-            cat = sn.get("categoryId")
-            cats[cat] = cats.get(cat, 0) + 1
-            temas = ",".join(t.rsplit("/", 1)[-1] for t in v.get("topicDetails", {}).get("topicCategories", []))
-            titulo = re.sub(r"#\S+", "", sn.get("title", ""))
-            desc = re.sub(r"#\S+", "", sn.get("description", ""))
-            etiq = " ".join(sn.get("tags", []))
-            en = "".join("S" if gta6.search(x) else "-" for x in (titulo, desc, etiq))
-            pal = sorted({w.lower() for w in esencia.findall(desc + " " + etiq + " " + titulo) if isinstance(w, str)})
-            print(f"{v['id']} | {cat} | {temas[:60]} | {en} | {','.join(pal)[:70]} | {len(sn.get('description',''))} car. desc | {sn.get('title','')[:55]}")
-    print("Categorias:", cats)
+        ids = [i["id"]["videoId"] for i in json.loads(txt).get("items", []) if i.get("id", {}).get("videoId")]
+        cod, txt = pedir("https://www.googleapis.com/youtube/v3/videos?" + urllib.parse.urlencode(
+            {"part": "snippet,statistics", "id": ",".join(ids), "key": clave}))
+        vs = sorted(json.loads(txt).get("items", []), key=lambda v: -int(v.get("statistics", {}).get("viewCount", 0)))
+        pasan = sum(bool(gta6.search(re.sub(r"#\S+", " ", v["snippet"]["title"]))) for v in vs)
+        print(f"--- {dur}: {len(vs)} videos, {pasan} nombran GTA 6 en el titulo")
+        for v in vs[:15]:
+            print(f"  {v['statistics'].get('viewCount')} | {v['snippet']['channelTitle'][:20]} | {v['snippet']['title'][:70]}")
     return True
 
 
