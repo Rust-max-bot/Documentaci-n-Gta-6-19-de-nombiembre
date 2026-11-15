@@ -143,6 +143,16 @@ la página, así que cada una se presenta con opciones y capturas antes de aplic
       oficiales de GTA 6, análisis del primer mes (4.3), rebobinar (7.1) y "GTA 6 en PC: sin
       fecha oficial". **Hecha el 2026-11-14** con la opción C de Bruno (camino hacia adelante).
       Al terminar la 4.3, la 7.1 o la Fase 8, marcar su punto como listo en `web/app.js`.
+- [ ] **7.12 Una portada con más lógica: que Miami tenga suelo** (idea de Bruno, 2026-11-15;
+      sin fecha, es una posibilidad). Hoy los hoteles y las palmeras están parados directo sobre
+      el mar (2026) o sobre la rejilla de neón (1986), y los troncos de las palmeras terminan en
+      el agua. Idea: poner tierra entre los hoteles y el mar, como en Ocean Drive (una calle,
+      una vereda y la arena antes del agua), y que las palmeras estén plantadas en la vereda o
+      la arena, o que la base de su tronco quede oculta detrás de algo (un muro bajo, una
+      baranda), para que la escena se vea más viva y creíble. En 1986, lo mismo a su manera (por
+      ejemplo, una calle de neón antes de la rejilla). Tiene que funcionar en los 2 estilos, los
+      3 momentos del día y a 1280 y 384 px, y la portada no puede crecer tanto que tape la
+      cuenta regresiva. Cambia cómo se ve la página: antes, opciones con capturas para Bruno.
 
 ## Fase 8 — Segundo lanzamiento: GTA 6 en PC (dormida)
 

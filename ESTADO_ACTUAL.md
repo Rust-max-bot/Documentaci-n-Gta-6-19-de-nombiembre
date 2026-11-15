@@ -101,6 +101,7 @@ Bruno ya eligió las palabras de la comparación.
 
 ## Últimos cambios
 
+- 2026-11-15: idea de Bruno anotada en el plan (7.12): que la portada tenga suelo (calle, vereda o arena) y las palmeras no salgan del mar.
 - 2026-11-15: microinteracciones aprobadas por Bruno tras una vista previa: gota con resorte en todos los botones de elegir, enfoque de la cuenta al cambiar de país, "Secciones" que crece hasta ser el menú, hundirse al presionar, flechas en días/páginas/Shorts, controles que no cambian de lugar al tocarlos y barra de desplazamiento estable (`DISENO_VISUAL.md` al día).
 - 2026-11-15: `DISENO_VISUAL.md`, descripción solo de lo visual (estilos, día/atardecer/noche, hora cero, colores, letras) con instrucciones para pedir sugerencias a otra IA (pedido de Bruno).
 - 2026-11-15: arreglos pedidos por Bruno: sin el recuadro azul al tocar botones (celulares) ni contorno al hacer clic (el del teclado sigue); volver a Miami 1986 tarda lo mismo que ir a 2026 (~0,4 s; antes ~1,6 s, las torres bajan durante el barrido); "Short más visto" aparte en el Resumen del día y en su imagen (ahora en 3 columnas, opción elegida por Bruno).
@@ -120,7 +121,7 @@ La lista completa y su orden están en `PLAN_DE_TRABAJO.md`. Resumen (2026-11-14
 3. **Fase 6** (ideas de Bruno): 6.1 más Google Trends, **una sola vez entre el 20 y el 25 nov**,
    fuera del recolector de cada hora (decisión de Bruno, 2026-11-13; ver `PLAN.md`). Programa
    listo y probado, con las palabras que eligió Bruno; falta ejecutarlo y mostrarlo. 6.2 y 6.3, hechas. 6.4 videos en español, hecha (pestañas en la página).
-4. **Fase 7:** 7.1 rebobinar (después del lanzamiento); 7.3 y 7.5 a 7.11, hechas. Cuando Take-Two publique las ventas, escribirlas en `gta6` de `web/lanzamientos.js`.
+4. **Fase 7:** 7.1 rebobinar (después del lanzamiento); 7.12 portada con suelo (idea de Bruno, sin fecha); 7.3 y 7.5 a 7.11, hechas. Cuando Take-Two publique las ventas, escribirlas en `gta6` de `web/lanzamientos.js`.
    **Fase 8 (GTA 6 en PC):** dormida hasta que Bruno avise con confirmación oficial.
 5. **Fase 5** (después del lanzamiento): búsqueda calmada; clave de Reddit.
 6. **Ideas sueltas:** 2.5 TikTok (sin acceso fácil); D6 (Bruno pidió ignorarla por ahora).
