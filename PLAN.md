@@ -210,6 +210,56 @@ Resultado final: **una página web** con:
     dos columnas (B) y una sección aparte (C, quedaba muy abajo en el celular). En español solo
     se muestran los que YouTube marca en español (idioma `es…`), porque la búsqueda también
     trae algunos en inglés (5 de 20 en la primera medición).
+- **Videos y Shorts de YouTube, y filtro "¿de verdad es de GTA 6?" (pedido de Bruno, 2026-11-15).**
+  - Cómo se sabe si un video es un Short: la API no lo dice. Se pregunta a
+    `youtube.com/shorts/<id>`: responde 200 si es Short y redirige (303) a `/watch` si no.
+    Probado con los 96 videos de la última medición (ejecución 43736224115 de "Probar
+    fuentes"). La otra forma, "dura 3 minutos o menos y el reproductor no es apaisado",
+    coincidió en 94 de 96 (los 2 distintos eran Shorts cuadrados): queda de respaldo si
+    youtube.com no responde. No gasta cuota extra. Cada video se pregunta una sola vez.
+  - Hallazgo: en la búsqueda global por visitas, 45 de 50 videos eran Shorts; en español
+    (solo los marcados `es`), 14 de 26. Separar deja muy pocos videos normales en "Global".
+  - Formas de filtrar, probadas con los 96 videos (ejecución 43736720118):
+    GTA 6 en el título sin hashtags (quita los de solo hashtags, los videos chinos y los de
+    GTA 5); "temas" que YouTube asigna solo al video (`topicDetails`: casi todos tienen
+    "Video_game_culture", los dos chinos solo "Entertainment"); categoría que elige el
+    creador (solo 51 de 96 usan "Videojuegos": descartada, quitaría videos de Ibai o
+    Tecnonauta); palabras del juego en descripción y etiquetas (descartada: la mayoría de los
+    Shorts no tiene descripción); transcripciones (YouTube solo las da al dueño del video:
+    descartada); IA que lea el texto (necesita una clave de pago: Bruno decide).
+  - Desde el 2026-11-15 el recolector guarda en cada video de `youtube` y `youtube_es`:
+    `duracion`, `temas`, `short` y `short_por` (`url` o `forma`).
+  - **Filtro elegido por Bruno (2026-11-15): título + tema de YouTube + lista.** Se muestra un
+    video si su título, sin hashtags, nombra GTA 6 / GTA VI / Grand Theft Auto VI y YouTube le
+    puso un tema de videojuegos. Además, `excluir_palabras` (por ahora "roblox": Bruno no quiere
+    animaciones de Roblox aunque nombren GTA 6) y `ocultar` (videos que Bruno marque a mano).
+    Todo en `recolector/filtro_videos.json`, con un interruptor (`estricto`, `titulo`,
+    `ninguno`) para volver atrás cambiando una palabra (Bruno pidió poder volver atrás). Solo
+    decide qué se muestra: `datos/` no cambia. Lo aplica `generar_web.py`, así que también vale
+    para "Video más visto" en los récords y la línea de tiempo.
+  - **Diseño elegido por Bruno (2026-11-15): opción B.** En cada pestaña (Global y En español),
+    primero hasta 8 videos normales en tarjetas y debajo una tira de Shorts verticales que se
+    desliza hacia el lado. Se descartaron A (segunda fila de botones Videos / Shorts) y C (todo
+    mezclado con etiqueta SHORT). Capturas en la carpeta del proyecto `videos-shorts/`.
+  - **Videos normales para "Global" (decisión de Bruno, 2026-11-15).** Fuente nueva
+    `youtube_largos`: "GTA 6" de los últimos 7 días, de 4 a 20 minutos, por visitas (probada en
+    la ejecución 43737292527: 25 de 25 nombran GTA 6; la de más de 20 minutos traía directos y
+    partidas de GTA 5, descartada). Para no pasar el cupo, la búsqueda global pasa a hacerse
+    como mucho una vez por hora, como la de español; las visitas se siguen midiendo en cada
+    turno. Total: unas 7.500 unidades al día, como antes. Se descartaron hacerla cada 2 horas
+    (unas 8.700) y no hacerla (Global con 3 o 4 videos normales).
+  - **Idea a futuro (Bruno, 2026-11-15), no ahora:** una IA barata que lea título, descripción y
+    etiquetas para decidir si un video habla del juego. Bruno no quiere usar Claude para esto
+    cada vez porque saldría caro; si se retoma, buscar una opción de bajo costo y hacer antes
+    un plan pequeño.
+  - **Idea a futuro (Bruno, 2026-11-15), no ahora, trabajo extra:** un panel de control para
+    hacer ajustes de la página y revisar los videos más vistos uno por uno: "sí es de GTA 6" lo
+    deja como está y "no" lo oculta (lo agrega a `ocultar` en `recolector/filtro_videos.json`;
+    no se borra nada de `datos/`). Riesgo principal: la página es pública y no tiene servidor,
+    así que un panel dentro de ella podría usarlo cualquiera. Opciones a estudiar si se retoma:
+    un panel que solo funcione en el PC de Bruno (abre la página local y escribe el archivo) o
+    uno que guarde los cambios en GitHub con la cuenta de Bruno. Mientras tanto, ocultar un
+    video se hace a mano agregando su enlace a `ocultar` (se puede editar desde la web de GitHub).
 - **Más Google Trends (tarea 6.1): una sola vez, entre el 20 y el 25 nov (Bruno, 2026-11-13).**
   - Consultas sueltas con pausas, fuera del recolector de cada hora: si Google bloquea (429),
     no se pierde la medición normal de "GTA 6", sobre todo el 19.
@@ -222,10 +272,19 @@ Resultado final: **una página web** con:
   - Sección justo después de las fichas de arriba. Una tarjeta por récord: número grande,
     quién o qué, cuándo, y "Récords anteriores" (los 5 más recientes) al tocar.
   - Récords: más espectadores en Twitch, directo con más público, más transmisiones a la
-    vez, video más visto (cuenta como récord nuevo solo cuando cambia el video que va
-    primero), video que más creció en una hora (solo entre mediciones seguidas, hasta 1,6 h),
+    vez, video más visto y Short más visto (por separado desde el 15 nov, pedido de Bruno),
+    video que más creció en una hora (solo entre mediciones seguidas, hasta 1,6 h),
     día con más titulares y hora con más publicaciones en r/GTA6.
   - "¡Nuevo récord!" marca los que se batieron en las 6 horas anteriores a la última medición.
+  - **Video y Short más vistos (pedido de Bruno, 2026-11-15; aviso: opción A).** Los calcula
+    `generar_web.py` (`records_youtube`) con todas las mediciones de Global, no solo con los
+    videos que se muestran hoy: un récord no se pierde cuando su video deja de salir en la
+    búsqueda. Un récord nuevo es cuando un video supera el máximo de visitas de su tipo. Pasan
+    el mismo filtro que las listas. Solo cuentan los videos con marca de Short (desde el PR #23):
+    los de antes quedan fuera, porque clasificarlos por el título sería adivinar. Cada cuadro
+    lleva un aviso chico: "Puede que no trate de GTA 6: el filtro quita los que solo usan el
+    hashtag, pero no es perfecto." (opción A de Bruno; B era una sola línea arriba, C un botón
+    "Aviso" al tocar). La línea de tiempo anota cada nuevo video y cada nuevo Short más visto.
   - Sin "hora con más interés en Trends": siempre vale 100 (aviso 8 de `PLAN_DE_TRABAJO.md`).
   - Abajo, los 4 videos oficiales de GTA VI con sus visitas y cuánto subieron desde la
     primera medición (fuente `youtube_trailers` del recolector, 1 unidad por medición).

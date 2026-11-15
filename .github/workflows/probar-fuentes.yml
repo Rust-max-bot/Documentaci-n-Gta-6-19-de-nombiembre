@@ -51,8 +51,16 @@ jobs:
           for c in canales[:3]:
               print(" ", c["login"], c.get("foto", "(sin foto)"))
           # Tareas 6.3, 6.2 y 6.4: ranking de Twitch, tendencias, tráilers y videos en español (comprobar nombres y números).
-          for nombre in ("twitch_ranking", "youtube_tendencias", "youtube_trailers", "youtube_es"):
+          for nombre in ("twitch_ranking", "youtube_tendencias", "youtube_trailers", "youtube_es", "youtube_largos"):
               print(nombre + ":", json.dumps(m.get(nombre), ensure_ascii=False)[:3000])
+          # Videos y Shorts (15 nov): cuántos son Shorts, cómo se supo y qué temas puso YouTube.
+          for nombre in ("youtube", "youtube_es", "youtube_largos"):
+              vs = m[nombre].get("videos", [])
+              print(nombre, "->", len(vs), "videos;", sum(v.get("short") is True for v in vs), "Shorts;",
+                    sum(v.get("short_por") == "url" for v in vs), "por youtube.com y",
+                    sum(v.get("short_por") == "forma" for v in vs), "adivinados por la forma")
+              for v in vs[:8]:
+                  print("  ", v["id"], "Short" if v.get("short") else "video", v.get("short_por"), v.get("duracion"), v.get("temas"), v["titulo"][:50])
           FIN
 
   # Tarea 6.1: las 5 preguntas extra a Google Trends, guardando en una carpeta temporal (nunca

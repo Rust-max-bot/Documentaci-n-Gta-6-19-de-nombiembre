@@ -432,9 +432,13 @@
   // YouTube marca en español (idioma "es", "es-MX", "es-419"…): la búsqueda prefiere el
   // español pero también trae algunos en inglés. Pestañas "Global" y "En español" sobre la
   // misma lista (opción A de Bruno, 2026-11-13).
+  // Videos y Shorts (opción B de Bruno, 2026-11-15): en cada pestaña, primero los videos
+  // normales y debajo una tira de Shorts verticales que se desliza hacia el lado. Los videos sin
+  // marca de Short (mediciones de antes del 15 nov) cuentan como videos normales.
   (function () {
-    function tarjetas(lista) {
-      var filas = (lista || []).map(function (v) {
+    var VIDEOS_VISIBLES = 8;
+    function filas(lista) {
+      return (lista || []).map(function (v) {
         var serie = (v.serie || []).filter(function (p) { return typeof p.visitas === "number"; });
         if (!serie.length) return null;
         var a = serie[0].visitas, b = serie[serie.length - 1].visitas, min = a, max = b;
@@ -442,22 +446,24 @@
         var camino = serie.map(function (p, i) { return (i ? "L" : "M") + (i / (serie.length - 1 || 1) * 120).toFixed(1) + " " + (28 - (p.visitas - min) / (max - min || 1) * 26).toFixed(1); }).join("");
         return { v: v, a: a, b: b, camino: camino };
       }).filter(Boolean).sort(function (x, y) { return y.b - x.b; });
-      return filas.map(function (f) {
+    }
+    function tarjetas(fs, vacio) {
+      return fs.map(function (f) {
         var url = urlVideo(f.v.id);
         // Solo miniaturas de YouTube; la imagen repite el enlace del título, así que no recibe foco.
         var foto = /^https:\/\/i\.ytimg\.com\//.test(f.v.miniatura || "")
           ? (url ? '<a class="foto" href="' + limpio(url) + '" target="_blank" rel="noopener noreferrer" tabindex="-1" aria-hidden="true">' : '<div class="foto">') +
-            '<img src="' + (/^https:\/\/i\.ytimg\.com\//.test(f.v.miniatura || "") ? limpio(f.v.miniatura) : "data:,") + '" alt="" loading="lazy" width="320" height="180">' + (url ? "</a>" : "</div>")
+            '<img src="' + limpio(f.v.miniatura) + '" alt="" loading="lazy" width="320" height="180">' + (url ? "</a>" : "</div>")
           : "";
         return "<li>" + foto + '<div class="v-texto">' + enlace(url, limpio(f.v.titulo)) +
           '<small title="Al inicio: ' + num(f.a) + " · Al final: " + num(f.b) + '">' + limpio(f.v.canal) + " · " + compacto(f.b) +
           ' visitas · <span class="crece">+' + compacto(f.b - f.a) + "</span></small>" +
           '<svg class="mini" viewBox="0 0 120 30" preserveAspectRatio="none" aria-hidden="true"><path d="' + f.camino + '"/></svg></div></li>';
-      }).join("") || '<li class="vacio">Todavía no hay datos.</li>';
+      }).join("") || '<li class="vacio">' + vacio + "</li>";
     }
     var global = D.youtube || [];
     var espanol = (D.youtube_es || []).filter(function (v) { return /^es\b/i.test(v.idioma || ""); });
-    var lista = $("videos"), nota = $("videos-nota"), tabs = $("videos-tabs");
+    var caja = $("videos"), nota = $("videos-nota"), tabs = $("videos-tabs");
     var NOTAS = { global: nota.textContent,
                   es: "Videos que YouTube marca en español, de creadores de Chile, España, México y otros países. La búsqueda se hace una vez por hora." };
     var elegida = "global";
@@ -466,7 +472,12 @@
         return '<button type="button" data-lista="' + t[0] + '" aria-pressed="' + (t[0] === elegida) + '"' + (t[0] === elegida ? ' class="activo"' : "") + ">" + t[1] + "</button>";
       }).join("");
       nota.textContent = NOTAS[elegida];
-      lista.innerHTML = tarjetas(elegida === "es" ? espanol : global);
+      var todas = filas(elegida === "es" ? espanol : global);
+      var normales = todas.filter(function (f) { return f.v.short !== true; }).slice(0, VIDEOS_VISIBLES);
+      var shorts = todas.filter(function (f) { return f.v.short === true; });
+      caja.innerHTML = '<h3 class="sub v-sub">Videos</h3><ul class="videos">' + tarjetas(normales, "Todavía no hay videos.") + "</ul>" +
+        (shorts.length ? '<h3 class="sub v-sub">Shorts <small>' + shorts.length + " · desliza para ver más</small></h3>" +
+          '<ul class="videos shorts" aria-label="Shorts: desliza hacia el lado para ver más">' + tarjetas(shorts, "") + "</ul>" : "");
     }
     tabs.addEventListener("click", function (e) { var l = e.target.dataset.lista; if (l) { elegida = l; pintar(); } });
     pintar();
@@ -958,12 +969,18 @@
       if (typeof f.tw.transmisiones === "number") trans.push({ ts: f.ts, valor: f.tw.transmisiones });
       (f.tw.canales || []).forEach(function (c) { canal.push({ ts: f.ts, valor: c.espectadores, que: c.nombre, url: urlCanal(c.login) }); });
     });
-    // Video más visto: el que va primero en cada medición. Cuenta como récord nuevo solo cuando cambia de video.
-    var porT = {}, crece = [];
+    // Video y Short más vistos (pedido de Bruno, 2026-11-15): los calcula generar_web.py con todas
+    // las mediciones, así un récord no se pierde cuando su video deja de salir en la búsqueda.
+    var RY = D.records_youtube || {};
+    function lideresDe(lista) {
+      return (lista || []).map(function (r) { return { ts: Date.parse(r.t), valor: r.visitas, que: r.titulo, url: urlVideo(r.id) }; })
+        .filter(function (r) { return !isNaN(r.ts); });
+    }
+    var lideres = lideresDe(RY.video), lideresShort = lideresDe(RY.short);
+    var crece = [];
     (D.youtube || []).forEach(function (v) {
       v.serie.forEach(function (p, i) {
-        var ts = Date.parse(p.t), l = porT[ts];
-        if (!l || p.visitas > l.valor) porT[ts] = { ts: ts, valor: p.visitas, que: v.titulo, url: urlVideo(v.id), id: v.id };
+        var ts = Date.parse(p.t);
         if (i) {
           var horas = (ts - Date.parse(v.serie[i - 1].t)) / 3600000;
           // Solo entre mediciones seguidas (hasta 1,6 h), para no promediar huecos largos.
@@ -971,18 +988,14 @@
         }
       });
     });
-    var lideres = [];
-    Object.keys(porT).map(Number).sort(function (a, b) { return a - b; }).forEach(function (ts) {
-      var l = porT[ts], ant = lideres[lideres.length - 1];
-      if (!ant || ant.id !== l.id) lideres.push(l); else ant.valor = l.valor;   // el mismo video: solo se actualizan sus visitas
-    });
     var fClave = function (ts) { var o = partes(ts); return o.year + "-" + o.month + "-" + o.day; };
     var fClaveHora = function (ts) { return fClave(ts) + " " + partes(ts).hour; };
     var R = [
       { nombre: "Más espectadores en Twitch", h: historia(esp), fmt: num, uni: "espectadores a la vez" },
       { nombre: "Directo con más público", h: historia(canal), fmt: num, uni: "espectadores en un solo directo" },
       { nombre: "Más transmisiones a la vez", h: historia(trans), fmt: num, uni: "transmisiones de GTA VI" },
-      { nombre: "Video más visto", h: lideres, fmt: compacto, uni: "visitas", prev: "Antes iba primero" },
+      { nombre: "Video más visto", h: lideres, fmt: compacto, uni: "visitas", prev: "Récords anteriores", aviso: true },
+      { nombre: "Short más visto", h: lideresShort, fmt: compacto, uni: "visitas", prev: "Récords anteriores", aviso: true },
       { nombre: "Video que más creció en una hora", h: historia(crece), fmt: num, uni: "visitas en una hora" },
       { nombre: "Día con más titulares", h: historiaConteo(D.noticias || [], fClave, dia), fmt: num, uni: "titulares", solo: "dia" },
       { nombre: "Hora con más publicaciones en r/GTA6", h: historiaConteo((D.reddit || {}).publicaciones || [], fClaveHora, function (ts) { return dia(ts) + " · " + hora(ts).slice(0, 2) + ":00"; }), fmt: num, uni: "publicaciones", solo: "hora" }
@@ -995,6 +1008,7 @@
       return '<li class="' + (nuevo ? "nuevo" : "") + '"><small>' + r.nombre + "</small>" + (nuevo ? '<span class="rc-nuevo">¡Nuevo récord!</span>' : "") +
         "<b>" + r.fmt(e.valor) + '</b><span class="rc-uni">' + r.uni + "</span>" +
         (quien(r, e) ? '<p class="rc-que">' + quien(r, e) + "</p>" : "") + '<p class="rc-cuando">' + cuando(r, e) + "</p>" +
+        (r.aviso ? '<p class="rc-aviso">Puede que no trate de GTA 6: el filtro quita los que solo usan el hashtag, pero no es perfecto.</p>' : "") +
         (prev.length ? '<details class="rc-prev"><summary>' + (r.prev || "Récords anteriores") + " (" + (r.h.length - 1) + ")</summary><ul>" + prev.map(function (p) {
           return "<li><b>" + r.fmt(p.valor) + "</b> " + (quien(r, p) ? quien(r, p) + " · " : "") + cuando(r, p) + "</li>";
         }).join("") + "</ul></details>" : "") + "</li>";
@@ -1012,6 +1026,9 @@
     });
     lideres.slice(1).forEach(function (l) {
       eventosExtra.push({ ts: l.ts, texto: "Nuevo video más visto en YouTube: " + l.que, auto: true });
+    });
+    lideresShort.slice(1).forEach(function (l) {
+      eventosExtra.push({ ts: l.ts, texto: "Nuevo Short más visto en YouTube: " + l.que, auto: true });
     });
 
     // Tráilers oficiales de GTA VI (se miden desde el 13 nov).

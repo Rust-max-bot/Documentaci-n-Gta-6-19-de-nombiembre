@@ -13,6 +13,7 @@ de texto por día en vez de una base de datos SQL (motivos en `PLAN.md`).
 | `validar.py` | Comprobaciones antes de guardar. Si algo no cuadra, no se guarda nada |
 | `red.py` | Piezas comunes para pedir datos a internet |
 | `interruptor.json` | **Encender, apagar o alargar** la recolección |
+| `filtro_videos.json` | Qué videos de YouTube muestra la página (filtro "¿es de GTA 6?"; se puede apagar) |
 | `revisar.py` | Resumen de cómo va: mediciones, huecos, fallos, cupo de YouTube y peso |
 | `generar_web.py` | Convierte `datos/` en `web/datos.js`, `web/dias/` y `web/version.json` para la página (lo usa `ver_pagina.bat`) |
 | `probar_fuentes.py` | Prueba suelta de las fuentes (workflow "Probar fuentes"); no guarda nada |
@@ -50,7 +51,14 @@ twitch       espectadores (suma de todas las transmisiones de la categoría), tr
              los canales van sin foto y se anota error_fotos (la medición no se pierde)
 youtube      busqueda, unidades gastadas, videos (hasta 50): id, titulo, canal, canal_id,
              publicado, visitas, me_gusta, comentarios, en_vivo, miniatura, puesto (en la
-             búsqueda de esa medición; null si ya no sale pero se sigue midiendo)
+             búsqueda de esa medición; null si ya no sale pero se sigue midiendo). Desde el
+             15 nov: busco (la búsqueda se hace como mucho una vez por hora; en los otros
+             turnos solo se vuelven a medir los anteriores) y, en cada video, duracion
+             (segundos), temas (los que YouTube asigna solo al video), short (true o false)
+             y short_por: "url" (youtube.com/shorts/<id> responde 200 si es Short y redirige
+             si no), "duracion" (más de 3 minutos: no puede ser Short) o "forma" (youtube.com
+             no respondió: se adivina por duración y forma del reproductor, y se vuelve a
+             preguntar en la siguiente medición). youtube_es y youtube_largos traen lo mismo
 trends       palabra, rango, puntos_en_fuente, puntos: últimas 24 horas {t, interes, parcial}
 noticias     en_fuente, nuevas: solo titulares que no estaban en los 3 días anteriores
              {titulo, medio, medio_url, url, t}
@@ -73,6 +81,10 @@ youtube_es   (desde el 13 nov, tarea 6.4) como youtube, pero con idioma preferid
              esa medición hizo la búsqueda; se busca como mucho una vez por hora, y en los otros
              turnos solo se vuelven a medir los videos anteriores) e idioma de cada video (el que
              declara el video; null si no lo declara)
+youtube_largos   (desde el 15 nov, pedido de Bruno) como youtube, pero solo videos de 4 a
+             20 minutos (videoDuration=medium), para tener videos normales en "Global": en la
+             búsqueda por visitas, 45 de 50 eran Shorts. Además: duracion "4-20 min" y busco
+             (como mucho una vez por hora)
 youtube_trailers     (desde el 13 nov, tarea 6.2) unidades (1), pedidos (cuántos videos se
              pidieron, 4), videos: los videos oficiales de GTA VI del canal de Rockstar,
              medidos por su enlace fijo (lista en fuentes.py, YOUTUBE_TRAILERS) {id, titulo,
@@ -83,11 +95,12 @@ youtube_trailers     (desde el 13 nov, tarea 6.2) unidades (1), pedidos (cuánto
   dato. GitHub marca la ejecución en rojo y avisa por correo, pero la medición se guarda.
 - **Google Trends es relativo:** 100 es el máximo de los últimos 7 días, así que el mismo
   punto puede valer distinto en mediciones distintas.
-- **YouTube:** cada medición busca los 25 videos más vistos de "GTA 6" publicados en los
-  últimos 7 días y vuelve a medir los de la medición anterior, para tener series continuas.
-  Gasta 101 unidades de las 10.000 diarias (105 con las tendencias de la tarea 6.3 y los
-  tráilers de la 6.2). La búsqueda en español (6.4) suma 101 una vez por hora y 1 en el otro
-  turno: unas 7.500 al día la semana del lanzamiento, que mide dos veces por hora.
+- **YouTube:** tres búsquedas de "GTA 6" de los últimos 7 días (la global por visitas, la de
+  español y la de videos de 4 a 20 minutos), cada una como mucho una vez por hora (100
+  unidades). En cada medición se vuelven a medir los videos anteriores de las tres (1 unidad
+  cada una), para tener series continuas, más 4 de las tendencias (6.3) y los tráilers (6.2).
+  Unas 7.500 de las 10.000 unidades diarias, también la semana del lanzamiento, que mide dos
+  veces por hora (decisión de Bruno, 2026-11-15).
 - Enlaces (tarea 2.1): Twitch `https://www.twitch.tv/<login>`, YouTube
   `https://www.youtube.com/watch?v=<id>`, noticias en `url`.
 - Miniaturas (tarea 2.2): la de Twitch (`miniatura`, con `{width}x{height}` que hay que
@@ -145,7 +158,11 @@ Qué toma de cada medición:
   viene a medias). Es relativo a los 7 días anteriores a cada medición, así que valores muy
   separados en el tiempo no se comparan del todo bien.
 - Servidores: `ok`, `problemas` o sin dato. Rockstar siempre sin dato: se anota a mano.
-- YouTube: los 20 videos de la última medición, con la serie de visitas de cada uno.
+- YouTube: de la última medición, los que pasan el filtro de `filtro_videos.json` (pedido de
+  Bruno, 2026-11-15): hasta 20 videos normales y 20 Shorts, con la serie de visitas de cada
+  uno. "Global" junta la búsqueda por visitas y la de 4 a 20 minutos. El filtro: título sin
+  hashtags que nombra GTA 6, tema de videojuegos según YouTube, sin las palabras de
+  `excluir_palabras` y sin los videos de `ocultar`. Con `"modo": "ninguno"` se muestran todos.
 - Noticias: todos los titulares guardados (la página los muestra por páginas de 12).
 
 ## Comprobaciones

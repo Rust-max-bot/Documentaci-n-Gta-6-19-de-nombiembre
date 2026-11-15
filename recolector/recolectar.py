@@ -53,7 +53,9 @@ def leer_interruptor():
 def leer_estado(carpeta):
     """Lee los archivos más recientes. Si alguno está dañado, aborta: no se añade nada encima."""
     estado = {"ultima_t": None, "youtube_previos": [], "noticias_vistas": set(), "reddit_vistas": set(),
-              "youtube_es_previos": [], "youtube_es_busqueda": None}
+              "youtube_es_previos": [], "youtube_es_busqueda": None, "shorts": {},
+              "youtube_busqueda": None, "youtube_largos_previos": [], "youtube_largos_busqueda": None}
+    videos_largos = []
     videos_es = []
     archivos = sorted(p for p in carpeta.glob("*.jsonl"))
     for p in archivos:
@@ -76,15 +78,28 @@ def leer_estado(carpeta):
                 estado["reddit_vistas"].add(pub["id"])
             # videos de la última medición en que YouTube respondió (si la última fue hueco)
             videos = m.get("youtube", {}).get("videos") or videos
+            # Desde el 15 nov la búsqueda global es como mucho una vez por hora; antes era en cada
+            # medición (esas no traen "busco").
+            if m.get("youtube", {}).get("videos") and m["youtube"].get("busco", True):
+                estado["youtube_busqueda"] = m["t"]
+            lg = m.get("youtube_largos", {})
+            videos_largos = lg.get("videos") or videos_largos
+            if lg.get("busco"):
+                estado["youtube_largos_busqueda"] = m["t"]
             # Tarea 6.4: videos en español de la última vez que respondió, y hora de la última búsqueda.
             es = m.get("youtube_es", {})
             videos_es = es.get("videos") or videos_es
             if es.get("busco"):
                 estado["youtube_es_busqueda"] = m["t"]
+            # Videos y Shorts: lo que ya se supo preguntando a youtube.com no se vuelve a preguntar.
+            for v in m.get("youtube", {}).get("videos", []) + es.get("videos", []) + lg.get("videos", []):
+                if v.get("short_por") == "url" and isinstance(v.get("short"), bool):
+                    estado["shorts"][v["id"]] = v["short"]
     if ultima:
         estado["ultima_t"] = ultima["t"]
         estado["youtube_previos"] = [v["id"] for v in sorted(videos, key=lambda v: v.get("visitas") or 0, reverse=True)]
         estado["youtube_es_previos"] = [v["id"] for v in sorted(videos_es, key=lambda v: v.get("visitas") or 0, reverse=True)]
+        estado["youtube_largos_previos"] = [v["id"] for v in sorted(videos_largos, key=lambda v: v.get("visitas") or 0, reverse=True)]
     return estado
 
 
@@ -101,9 +116,10 @@ def resumen(nombre, r):
         return f"HUECO: {r['error']}"
     if nombre == "twitch":
         return f"{r['espectadores']} espectadores en {r['transmisiones']} transmisiones"
-    if nombre == "youtube":
+    if nombre in ("youtube", "youtube_largos"):
         v = r["videos"][0]
-        return f"{len(r['videos'])} videos ({r['unidades']} unidades); el más visto: {v['visitas']} visitas"
+        busco = "" if "busco" not in r else ("; buscó" if r["busco"] else "; sin búsqueda")
+        return f"{len(r['videos'])} videos ({r['unidades']} unidades{busco}); el más visto: {v['visitas']} visitas"
     if nombre == "trends":
         p = r["puntos"][-1]
         return f"{len(r['puntos'])} puntos; último {p['t']} = {p['interes']}"

@@ -39,8 +39,92 @@ NOMBRE_FOTO = re.compile(r"^(\d{4}-\d{2}-\d{2}) (\d{2})[-.:h](\d{2})\s*(.*)\.(jp
 FOTO_PESADA = 2 * 1024 * 1024   # más de 2 MB: se avisa (con muchas visitas, gasta tráfico)
 REDDIT_ULTIMAS = 8   # publicaciones de Reddit completas en datos.js (la página muestra las 8 últimas)
 NOMBRE_ARCHIVO = re.compile(r"^\d{4}-\d{2}-\d{2}\.jsonl$")
-VIDEOS = 20         # videos de YouTube que se muestran (los más vistos en la última medición)
+VIDEOS = 20         # videos de YouTube que se muestran de cada tipo (videos y Shorts), los más vistos
+FILTRO = RAIZ / "recolector" / "filtro_videos.json"   # qué videos se muestran (pedido de Bruno, 2026-11-15)
 CANALES = 3         # canales de Twitch por medición
+
+
+# Filtro "¿de verdad es de GTA 6?" (pedido de Bruno, 2026-11-15; pruebas en PLAN.md).
+NOMBRA_GTA6 = re.compile(r"\bgta\s*-?\s*(6|vi)\b|\bgta(6|vi)\b|\bgrand\s+theft\s+auto\s*-?\s*(6|vi)\b", re.IGNORECASE)
+CODIGO_VIDEO = re.compile(r"(?:v=|youtu\.be/|shorts/)?([\w-]{11})$")
+
+
+def leer_filtro():
+    """Lee recolector/filtro_videos.json. Si está mal escrito, aborta: mejor no publicar que
+    publicar con un filtro que no es el que Bruno eligió."""
+    try:
+        f = json.loads(FILTRO.read_text(encoding="utf-8"))
+    except (OSError, ValueError) as e:
+        abortar(f"no se pudo leer {FILTRO.name}: {e}")
+    if f.get("modo") not in ("estricto", "titulo", "ninguno"):
+        abortar(f"{FILTRO.name}: 'modo' debe ser estricto, titulo o ninguno")
+    palabras, ocultar = f.get("excluir_palabras", []), f.get("ocultar", [])
+    if not (isinstance(palabras, list) and all(isinstance(x, str) and x.strip() for x in palabras)):
+        abortar(f"{FILTRO.name}: 'excluir_palabras' debe ser una lista de palabras")
+    if not (isinstance(ocultar, list) and all(isinstance(x, str) for x in ocultar)):
+        abortar(f"{FILTRO.name}: 'ocultar' debe ser una lista de videos")
+    codigos = set()
+    for x in ocultar:
+        r = CODIGO_VIDEO.search(x.strip().split("&")[0].rstrip("/"))
+        if not r:
+            abortar(f"{FILTRO.name}: no se entiende el video a ocultar {x!r}")
+        codigos.add(r.group(1))
+    return {"modo": f["modo"], "palabras": [x.strip().lower() for x in palabras], "ocultar": codigos}
+
+
+def pasa_filtro(v, filtro):
+    if v["id"] in filtro["ocultar"]:
+        return False
+    titulo = v.get("titulo", "")
+    if any(p in titulo.lower() for p in filtro["palabras"]):
+        return False
+    if filtro["modo"] == "ninguno":
+        return True
+    if not NOMBRA_GTA6.search(re.sub(r"#\S+", " ", titulo)):
+        return False
+    temas = v.get("temas")
+    if filtro["modo"] == "estricto" and isinstance(temas, list):   # las mediciones de antes del 15 nov no traen temas
+        return any(t == "Video_game_culture" or t.endswith("_game") for t in temas)
+    return True
+
+
+def elegir_videos(ultima, ultimos, series, filtro):
+    """De los videos de la última medición, los que pasan el filtro: hasta VIDEOS videos normales
+    y hasta VIDEOS Shorts, de más a menos visto. Los que no traen la marca de Short (mediciones de
+    antes del 15 nov) cuentan como videos normales."""
+    normales, shorts = [], []
+    for v in ultima:
+        if v["id"] in series and pasa_filtro(ultimos[v["id"]], filtro):
+            (shorts if ultimos[v["id"]].get("short") is True else normales).append(v)
+    return normales[:VIDEOS] + shorts[:VIDEOS]
+
+
+def marca_short(v):
+    """Videos y Shorts (pedido de Bruno, 15 nov): la página separa los Shorts de los videos.
+    Las mediciones de antes del 15 nov no traen la marca: entonces no se pone nada."""
+    return {"short": v["short"]} if isinstance(v.get("short"), bool) else {}
+
+
+def records_videos(medidas, ultimos, filtro):
+    """Récords "Video más visto" y "Short más visto" (pedido de Bruno, 2026-11-15). Recorre todas
+    las mediciones de Global (no solo los videos que se muestran hoy) y anota cada vez que un video
+    supera el máximo de visitas de su tipo. Si el mismo video sigue primero, solo suben sus visitas.
+    Pasan el mismo filtro que las listas. Los videos sin marca de Short (los que no se midieron
+    desde el 15 nov) quedan fuera: no se sabe de qué tipo son y no se adivina."""
+    h = {"video": [], "short": []}
+    for m in medidas:
+        for v in m.get("youtube", {}).get("videos", []) + m.get("youtube_largos", {}).get("videos", []):
+            u = ultimos.get(v["id"], {})
+            if not isinstance(v.get("visitas"), int) or not isinstance(u.get("short"), bool) or not pasa_filtro(u, filtro):
+                continue
+            lista = h["short" if u["short"] else "video"]
+            if lista and v["visitas"] <= lista[-1]["visitas"]:
+                continue
+            if lista and lista[-1]["id"] == v["id"]:
+                lista[-1]["visitas"] = v["visitas"]
+            else:
+                lista.append({"t": m["t"], "id": v["id"], "titulo": u["titulo"], "visitas": v["visitas"]})
+    return h
 
 
 def abortar(mensaje):
@@ -118,9 +202,13 @@ def convertir(medidas):
                 r: len(d["gta"]) for r, d in yt["regiones"].items()}
         mediciones.append(fila)
 
-        for v in m.get("youtube", {}).get("videos", []):
+        # "Global" junta la búsqueda por visitas y, desde el 15 nov, la de videos de 4 a 20 minutos
+        # (youtube_largos). Si un video sale en las dos, cuenta una sola vez por medición.
+        for v in m.get("youtube", {}).get("videos", []) + m.get("youtube_largos", {}).get("videos", []):
             if isinstance(v.get("visitas"), int):
-                series.setdefault(v["id"], []).append({"t": m["t"], "visitas": v["visitas"]})
+                serie = series.setdefault(v["id"], [])
+                if not serie or serie[-1]["t"] != m["t"]:
+                    serie.append({"t": m["t"], "visitas": v["visitas"]})
                 ultimo_video[v["id"]] = v
         for v in m.get("youtube_es", {}).get("videos", []):
             if isinstance(v.get("visitas"), int):
@@ -149,14 +237,20 @@ def convertir(medidas):
                                    "url": p["url"]})
 
     # Los videos que aparecen en la última medición en que YouTube respondió, de más a menos visto.
+    filtro = leer_filtro()
     ultima_yt = next((m["youtube"]["videos"] for m in reversed(medidas) if m.get("youtube", {}).get("videos")), [])
+    ultima_lg = next((m["youtube_largos"]["videos"] for m in reversed(medidas) if m.get("youtube_largos", {}).get("videos")), [])
+    vistos = {v["id"] for v in ultima_yt}
+    ultima_yt = sorted(ultima_yt + [v for v in ultima_lg if v["id"] not in vistos], key=lambda v: v.get("visitas") or 0, reverse=True)
     youtube = [{
         "id": v["id"],
         "titulo": ultimo_video[v["id"]]["titulo"],
         "canal": ultimo_video[v["id"]]["canal"],
         "miniatura": ultimo_video[v["id"]].get("miniatura", ""),
+        **marca_short(ultimo_video[v["id"]]),
         "serie": series[v["id"]],
-    } for v in ultima_yt if v["id"] in series][:VIDEOS]
+    } for v in elegir_videos(ultima_yt, ultimo_video, series, filtro)]
+    records_youtube = records_videos(medidas, ultimo_video, filtro)
 
     # Lo último de la 6.3, para las tarjetas de comparación (la medición más nueva sin hueco).
     ult_rk = next((m for m in reversed(medidas) if "error" not in m.get("twitch_ranking", {"error": 1})), None)
@@ -176,12 +270,15 @@ def convertir(medidas):
     youtube_es = [{
         "id": v["id"], "titulo": ultimo_es[v["id"]]["titulo"], "canal": ultimo_es[v["id"]]["canal"],
         "miniatura": ultimo_es[v["id"]].get("miniatura", ""), "idioma": ultimo_es[v["id"]].get("idioma"),
+        **marca_short(ultimo_es[v["id"]]),
         "serie": series_es[v["id"]],
-    } for v in ultima_es if v["id"] in series_es][:VIDEOS]
+    } for v in elegir_videos([v for v in ultima_es if re.match(r"es\b", ultimo_es.get(v["id"], {}).get("idioma") or "", re.I)],
+                             ultimo_es, series_es, filtro)]
 
     noticias.sort(key=lambda n: n["t"])
     reddit.sort(key=lambda p: p["t"])
     return {"mediciones": mediciones, "youtube": youtube, "youtube_es": youtube_es, "noticias": noticias,
+            "records_youtube": records_youtube,
             "reddit": {"comunidad": "r/GTA6", "publicaciones": reddit, "mediciones": reddit_medidas},
             "comparacion": comparacion,
             "trailers": sorted(trailers.values(), key=lambda v: v.get("publicado") or "")}   # todos: la página los muestra por páginas (Bruno, 2026-11-13)
@@ -274,6 +371,9 @@ def comprobar(d, medidas):
         i = f["trends"].get("interes")
         if i is not None and not (0 <= i <= 100):
             abortar(f"interés de Trends fuera de 0-100 en {f['t']}")
+    for tipo, h in d["records_youtube"].items():
+        if any(a["visitas"] >= b["visitas"] or a["t"] > b["t"] for a, b in zip(h, h[1:])):
+            abortar(f"el récord de {tipo} de YouTube no sube en orden de tiempo")
     for v in d["youtube"] + d["youtube_es"] + d["trailers"]:
         if [p["t"] for p in v["serie"]] != sorted(p["t"] for p in v["serie"]):
             abortar(f"la serie del video {v['id']} está desordenada")

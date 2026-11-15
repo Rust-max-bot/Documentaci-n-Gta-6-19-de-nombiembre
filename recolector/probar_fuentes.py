@@ -190,6 +190,19 @@ def _():
     return cod == 200
 
 
+# Separar videos y Shorts (15 nov, ejecución 43736224115): de 96 videos, la dirección
+# youtube.com/shorts/<id> (200 = Short, 303 = video) y "duración <= 3 min + reproductor vertical"
+# coincidieron en 94; los 2 distintos eran Shorts cuadrados, que la dirección sí reconoce.
+# Resultado en PLAN.md.
+
+# Filtro "¿de verdad es de GTA 6?" (15 nov, ejecución 43736720118): categoría, temas,
+# descripción y etiquetas de 96 videos. Resultado en PLAN.md.
+
+# Videos normales para "Global" (15 nov, ejecución 43737292527): búsqueda extra de 4 a 20
+# minutos (25 de 25 nombran GTA 6) contra la de más de 20 (directos y partidas de GTA 5). Se
+# quitó para no gastar 200 unidades en cada prueba. Resultado en PLAN.md.
+
+
 # Tarea 6.4: la comparación de cuatro formas de buscar videos en español (unas 400 unidades)
 # se hizo una vez el 13 nov (ejecución 43515144506) y se quitó para no gastar cuota en cada
 # prueba. Resultado en PLAN.md, "Videos de YouTube en español".
