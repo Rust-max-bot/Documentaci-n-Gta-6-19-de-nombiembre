@@ -252,6 +252,14 @@ Resultado final: **una página web** con:
     etiquetas para decidir si un video habla del juego. Bruno no quiere usar Claude para esto
     cada vez porque saldría caro; si se retoma, buscar una opción de bajo costo y hacer antes
     un plan pequeño.
+  - **Idea a futuro (Bruno, 2026-11-15), no ahora, trabajo extra:** un panel de control para
+    hacer ajustes de la página y revisar los videos más vistos uno por uno: "sí es de GTA 6" lo
+    deja como está y "no" lo oculta (lo agrega a `ocultar` en `recolector/filtro_videos.json`;
+    no se borra nada de `datos/`). Riesgo principal: la página es pública y no tiene servidor,
+    así que un panel dentro de ella podría usarlo cualquiera. Opciones a estudiar si se retoma:
+    un panel que solo funcione en el PC de Bruno (abre la página local y escribe el archivo) o
+    uno que guarde los cambios en GitHub con la cuenta de Bruno. Mientras tanto, ocultar un
+    video se hace a mano agregando su enlace a `ocultar` (se puede editar desde la web de GitHub).
 - **Más Google Trends (tarea 6.1): una sola vez, entre el 20 y el 25 nov (Bruno, 2026-11-13).**
   - Consultas sueltas con pausas, fuera del recolector de cada hora: si Google bloquea (429),
     no se pierde la medición normal de "GTA 6", sobre todo el 19.

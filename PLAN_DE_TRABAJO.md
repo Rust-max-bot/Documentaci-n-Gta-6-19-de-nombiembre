@@ -42,6 +42,10 @@ ya estaba acordado y faltaba. **Es la lista ordenada de qué hacer y en qué ord
   20 minutos; pedido de Bruno, 2026-11-15, opciones en `PLAN.md`). Queda la 6.1.
   **Idea a futuro (Bruno, 2026-11-15), sin fecha:** una IA barata que lea título, descripción
   y etiquetas de cada video para filtrar mejor (no Claude, por el costo). Antes, un plan pequeño.
+  **Idea a futuro (Bruno, 2026-11-15), sin fecha, trabajo extra:** un panel de control para
+  ajustar la página y, en la lista de lo más visto, marcar cada video como "es de GTA 6" (se
+  queda) o "no lo es" (se oculta: va a `ocultar` de `recolector/filtro_videos.json`, no se
+  borra nada de `datos/`). Detalle y riesgos en `PLAN.md`.
 - **Fase 7:** hechas 7.2 (hora cero; se prueba con `?probar-hora-cero`), 7.3 (viaje en el
   tiempo), 7.5 (resumen del día), 7.6 (hora cero en cada lugar; se prueba con
   `?probar-fecha=2026-11-18T12:30Z`), la línea de tiempo con eventos nuevos, 7.7 (álbum de
