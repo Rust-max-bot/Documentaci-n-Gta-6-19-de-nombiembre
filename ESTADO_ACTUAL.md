@@ -100,6 +100,7 @@ Bruno ya eligió las palabras de la comparación.
 
 ## Últimos cambios
 
+- 2026-11-15: récords "Video más visto" y "Short más visto" por separado, con aviso dentro de cada cuadro (opción A de Bruno); idea a futuro del panel de control en el plan.
 - 2026-11-15: videos y Shorts separados (6.5, opción B: tira de Shorts), filtro "¿es de GTA 6?" (título + tema de YouTube + lista, Roblox fuera) y búsqueda de videos de 4 a 20 minutos; PR para que Bruno lo una.
 - 2026-11-14: copias vendidas en los primeros días (7.10, opción B) y "Próximamente" (7.11, opción C); pregunta GTA 6 frente a Doomsday en la 6.1, probada.
 - 2026-11-14: plan nuevo de Bruno: comparar solo el arranque de GTA 6 con los juegos más grandes (7.10), "Próximamente" (7.11), GTA 6 frente a Doomsday en Trends (6.1) y Fase 8 dormida para el lanzamiento en PC (`PLAN.md`).
@@ -125,7 +126,7 @@ La lista completa y su orden están en `PLAN_DE_TRABAJO.md`. Resumen (2026-11-14
 5. **Fase 5** (después del lanzamiento): búsqueda calmada; clave de Reddit.
 6. **Ideas sueltas:** 2.5 TikTok (sin acceso fácil); D6 (Bruno pidió ignorarla por ahora).
 7. **Bruno:**
-   - unir el PR de videos y Shorts (6.5) desde GitHub: hasta entonces el recolector sigue con lo
+   - unir el PR #23 de videos y Shorts (6.5, con los récords de video y Short más visto) desde GitHub: hasta entonces el recolector sigue con lo
      de antes y la página no cambia;
    - revisar en sus cuentas 3 cosas de la revisión de seguridad (2.15, detalle en `PLAN.md`):
      clave de YouTube restringida a "YouTube Data API v3", regla en GitHub para que `main` no

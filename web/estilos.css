@@ -420,6 +420,8 @@ td a:hover, td a:focus-visible { color: var(--a1); text-decoration-color: var(--
 .rc-que a, .rc-prev a, .rc-trailers a { color: inherit; text-decoration: none; }
 .rc-que a:hover, .rc-prev a:hover, .rc-trailers a:hover, .rc-que a:focus-visible, .rc-prev a:focus-visible, .rc-trailers a:focus-visible { color: var(--a1); }
 .rc-cuando { margin: 4px 0 0; font-size: 13px; font-weight: 600; color: var(--tenue); }
+.rc-aviso { margin: 8px 0 0; font-size: 12px; line-height: 1.35; color: var(--tenue); }
+.rc-aviso::before { content: "⚠ "; color: var(--a3); }
 .rc-prev { margin-top: 8px; font-size: 13px; }
 .rc-prev summary { cursor: pointer; font-weight: 700; color: var(--a2); }
 .rc-prev ul { margin: 6px 0 0; padding-left: 16px; color: var(--tenue); overflow-wrap: anywhere; }

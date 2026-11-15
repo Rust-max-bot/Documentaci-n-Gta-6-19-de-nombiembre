@@ -105,6 +105,28 @@ def marca_short(v):
     return {"short": v["short"]} if isinstance(v.get("short"), bool) else {}
 
 
+def records_videos(medidas, ultimos, filtro):
+    """Récords "Video más visto" y "Short más visto" (pedido de Bruno, 2026-11-15). Recorre todas
+    las mediciones de Global (no solo los videos que se muestran hoy) y anota cada vez que un video
+    supera el máximo de visitas de su tipo. Si el mismo video sigue primero, solo suben sus visitas.
+    Pasan el mismo filtro que las listas. Los videos sin marca de Short (los que no se midieron
+    desde el 15 nov) quedan fuera: no se sabe de qué tipo son y no se adivina."""
+    h = {"video": [], "short": []}
+    for m in medidas:
+        for v in m.get("youtube", {}).get("videos", []) + m.get("youtube_largos", {}).get("videos", []):
+            u = ultimos.get(v["id"], {})
+            if not isinstance(v.get("visitas"), int) or not isinstance(u.get("short"), bool) or not pasa_filtro(u, filtro):
+                continue
+            lista = h["short" if u["short"] else "video"]
+            if lista and v["visitas"] <= lista[-1]["visitas"]:
+                continue
+            if lista and lista[-1]["id"] == v["id"]:
+                lista[-1]["visitas"] = v["visitas"]
+            else:
+                lista.append({"t": m["t"], "id": v["id"], "titulo": u["titulo"], "visitas": v["visitas"]})
+    return h
+
+
 def abortar(mensaje):
     print(f"ABORTADO, web/datos.js no se tocó: {mensaje}")
     sys.exit(2)
@@ -228,6 +250,7 @@ def convertir(medidas):
         **marca_short(ultimo_video[v["id"]]),
         "serie": series[v["id"]],
     } for v in elegir_videos(ultima_yt, ultimo_video, series, filtro)]
+    records_youtube = records_videos(medidas, ultimo_video, filtro)
 
     # Lo último de la 6.3, para las tarjetas de comparación (la medición más nueva sin hueco).
     ult_rk = next((m for m in reversed(medidas) if "error" not in m.get("twitch_ranking", {"error": 1})), None)
@@ -255,6 +278,7 @@ def convertir(medidas):
     noticias.sort(key=lambda n: n["t"])
     reddit.sort(key=lambda p: p["t"])
     return {"mediciones": mediciones, "youtube": youtube, "youtube_es": youtube_es, "noticias": noticias,
+            "records_youtube": records_youtube,
             "reddit": {"comunidad": "r/GTA6", "publicaciones": reddit, "mediciones": reddit_medidas},
             "comparacion": comparacion,
             "trailers": sorted(trailers.values(), key=lambda v: v.get("publicado") or "")}   # todos: la página los muestra por páginas (Bruno, 2026-11-13)
@@ -347,6 +371,9 @@ def comprobar(d, medidas):
         i = f["trends"].get("interes")
         if i is not None and not (0 <= i <= 100):
             abortar(f"interés de Trends fuera de 0-100 en {f['t']}")
+    for tipo, h in d["records_youtube"].items():
+        if any(a["visitas"] >= b["visitas"] or a["t"] > b["t"] for a, b in zip(h, h[1:])):
+            abortar(f"el récord de {tipo} de YouTube no sube en orden de tiempo")
     for v in d["youtube"] + d["youtube_es"] + d["trailers"]:
         if [p["t"] for p in v["serie"]] != sorted(p["t"] for p in v["serie"]):
             abortar(f"la serie del video {v['id']} está desordenada")

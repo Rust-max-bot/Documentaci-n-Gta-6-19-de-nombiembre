@@ -272,10 +272,19 @@ Resultado final: **una página web** con:
   - Sección justo después de las fichas de arriba. Una tarjeta por récord: número grande,
     quién o qué, cuándo, y "Récords anteriores" (los 5 más recientes) al tocar.
   - Récords: más espectadores en Twitch, directo con más público, más transmisiones a la
-    vez, video más visto (cuenta como récord nuevo solo cuando cambia el video que va
-    primero), video que más creció en una hora (solo entre mediciones seguidas, hasta 1,6 h),
+    vez, video más visto y Short más visto (por separado desde el 15 nov, pedido de Bruno),
+    video que más creció en una hora (solo entre mediciones seguidas, hasta 1,6 h),
     día con más titulares y hora con más publicaciones en r/GTA6.
   - "¡Nuevo récord!" marca los que se batieron en las 6 horas anteriores a la última medición.
+  - **Video y Short más vistos (pedido de Bruno, 2026-11-15; aviso: opción A).** Los calcula
+    `generar_web.py` (`records_youtube`) con todas las mediciones de Global, no solo con los
+    videos que se muestran hoy: un récord no se pierde cuando su video deja de salir en la
+    búsqueda. Un récord nuevo es cuando un video supera el máximo de visitas de su tipo. Pasan
+    el mismo filtro que las listas. Solo cuentan los videos con marca de Short (desde el PR #23):
+    los de antes quedan fuera, porque clasificarlos por el título sería adivinar. Cada cuadro
+    lleva un aviso chico: "Puede que no trate de GTA 6: el filtro quita los que solo usan el
+    hashtag, pero no es perfecto." (opción A de Bruno; B era una sola línea arriba, C un botón
+    "Aviso" al tocar). La línea de tiempo anota cada nuevo video y cada nuevo Short más visto.
   - Sin "hora con más interés en Trends": siempre vale 100 (aviso 8 de `PLAN_DE_TRABAJO.md`).
   - Abajo, los 4 videos oficiales de GTA VI con sus visitas y cuánto subieron desde la
     primera medición (fuente `youtube_trailers` del recolector, 1 unidad por medición).

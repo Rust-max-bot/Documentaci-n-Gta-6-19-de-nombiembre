@@ -969,12 +969,18 @@
       if (typeof f.tw.transmisiones === "number") trans.push({ ts: f.ts, valor: f.tw.transmisiones });
       (f.tw.canales || []).forEach(function (c) { canal.push({ ts: f.ts, valor: c.espectadores, que: c.nombre, url: urlCanal(c.login) }); });
     });
-    // Video más visto: el que va primero en cada medición. Cuenta como récord nuevo solo cuando cambia de video.
-    var porT = {}, crece = [];
+    // Video y Short más vistos (pedido de Bruno, 2026-11-15): los calcula generar_web.py con todas
+    // las mediciones, así un récord no se pierde cuando su video deja de salir en la búsqueda.
+    var RY = D.records_youtube || {};
+    function lideresDe(lista) {
+      return (lista || []).map(function (r) { return { ts: Date.parse(r.t), valor: r.visitas, que: r.titulo, url: urlVideo(r.id) }; })
+        .filter(function (r) { return !isNaN(r.ts); });
+    }
+    var lideres = lideresDe(RY.video), lideresShort = lideresDe(RY.short);
+    var crece = [];
     (D.youtube || []).forEach(function (v) {
       v.serie.forEach(function (p, i) {
-        var ts = Date.parse(p.t), l = porT[ts];
-        if (!l || p.visitas > l.valor) porT[ts] = { ts: ts, valor: p.visitas, que: v.titulo, url: urlVideo(v.id), id: v.id };
+        var ts = Date.parse(p.t);
         if (i) {
           var horas = (ts - Date.parse(v.serie[i - 1].t)) / 3600000;
           // Solo entre mediciones seguidas (hasta 1,6 h), para no promediar huecos largos.
@@ -982,18 +988,14 @@
         }
       });
     });
-    var lideres = [];
-    Object.keys(porT).map(Number).sort(function (a, b) { return a - b; }).forEach(function (ts) {
-      var l = porT[ts], ant = lideres[lideres.length - 1];
-      if (!ant || ant.id !== l.id) lideres.push(l); else ant.valor = l.valor;   // el mismo video: solo se actualizan sus visitas
-    });
     var fClave = function (ts) { var o = partes(ts); return o.year + "-" + o.month + "-" + o.day; };
     var fClaveHora = function (ts) { return fClave(ts) + " " + partes(ts).hour; };
     var R = [
       { nombre: "Más espectadores en Twitch", h: historia(esp), fmt: num, uni: "espectadores a la vez" },
       { nombre: "Directo con más público", h: historia(canal), fmt: num, uni: "espectadores en un solo directo" },
       { nombre: "Más transmisiones a la vez", h: historia(trans), fmt: num, uni: "transmisiones de GTA VI" },
-      { nombre: "Video más visto", h: lideres, fmt: compacto, uni: "visitas", prev: "Antes iba primero" },
+      { nombre: "Video más visto", h: lideres, fmt: compacto, uni: "visitas", prev: "Récords anteriores", aviso: true },
+      { nombre: "Short más visto", h: lideresShort, fmt: compacto, uni: "visitas", prev: "Récords anteriores", aviso: true },
       { nombre: "Video que más creció en una hora", h: historia(crece), fmt: num, uni: "visitas en una hora" },
       { nombre: "Día con más titulares", h: historiaConteo(D.noticias || [], fClave, dia), fmt: num, uni: "titulares", solo: "dia" },
       { nombre: "Hora con más publicaciones en r/GTA6", h: historiaConteo((D.reddit || {}).publicaciones || [], fClaveHora, function (ts) { return dia(ts) + " · " + hora(ts).slice(0, 2) + ":00"; }), fmt: num, uni: "publicaciones", solo: "hora" }
@@ -1006,6 +1008,7 @@
       return '<li class="' + (nuevo ? "nuevo" : "") + '"><small>' + r.nombre + "</small>" + (nuevo ? '<span class="rc-nuevo">¡Nuevo récord!</span>' : "") +
         "<b>" + r.fmt(e.valor) + '</b><span class="rc-uni">' + r.uni + "</span>" +
         (quien(r, e) ? '<p class="rc-que">' + quien(r, e) + "</p>" : "") + '<p class="rc-cuando">' + cuando(r, e) + "</p>" +
+        (r.aviso ? '<p class="rc-aviso">Puede que no trate de GTA 6: el filtro quita los que solo usan el hashtag, pero no es perfecto.</p>' : "") +
         (prev.length ? '<details class="rc-prev"><summary>' + (r.prev || "Récords anteriores") + " (" + (r.h.length - 1) + ")</summary><ul>" + prev.map(function (p) {
           return "<li><b>" + r.fmt(p.valor) + "</b> " + (quien(r, p) ? quien(r, p) + " · " : "") + cuando(r, p) + "</li>";
         }).join("") + "</ul></details>" : "") + "</li>";
@@ -1023,6 +1026,9 @@
     });
     lideres.slice(1).forEach(function (l) {
       eventosExtra.push({ ts: l.ts, texto: "Nuevo video más visto en YouTube: " + l.que, auto: true });
+    });
+    lideresShort.slice(1).forEach(function (l) {
+      eventosExtra.push({ ts: l.ts, texto: "Nuevo Short más visto en YouTube: " + l.que, auto: true });
     });
 
     // Tráilers oficiales de GTA VI (se miden desde el 13 nov).
