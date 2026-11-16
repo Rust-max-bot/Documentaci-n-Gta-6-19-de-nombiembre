@@ -51,11 +51,12 @@ Reddit. El estado vivo (dónde quedamos) está en `ESTADO_ACTUAL.md`; las reglas
       **Hecho (2026-11-16):** se guarda la serie de 7 días (~169 puntos) en vez de 24; un solo
       reintento a los 20 s ante un 429 (solo si el primer intento tardó menos de 40 s); Trends al
       final de `FUENTES`. **Descartado:** saltarse Trends a los :37 (rompía validaciones y quitaba el
-      segundo intento gratis). **Falta, en orden:** (a) la página arma la serie por la hora de cada
-      punto (la medición más nueva que la traiga completa): tapa huecos y corrige que hoy cada valor
-      se dibuja ~1 h tarde; (b) la escala cambia en cada medición (la hora 14:00 del 16 nov pasó de 88
-      a 74): mostrar la curva de la última medición o encadenar escalas, con opciones y capturas
-      para Bruno; (c) asegurar que la 6.1 corra entre el 20 y el 25 nov (programarla o recordatorio).
+      segundo intento gratis). **Hecho también (2026-11-16, opción A de Bruno):** el gráfico
+      de Trends es por hora (`trends_horas` en `datos.js`), cada hora en su hora real (antes ~1 h tarde)
+      y con el valor de la medición más nueva que la trae: tapa los huecos y deja la última semana en
+      una sola escala (la escala cambia en cada medición: la hora 14:00 del 16 nov pasó de 88 a 74).
+      Descartada la opción B (encadenar escalas con un cálculo propio). **Falta:** asegurar que la
+      6.1 corra entre el 20 y el 25 nov (programarla o recordatorio; preguntar a Bruno).
 - [ ] **6.6 Instagram** (Kick ya está hecho; ver "Lo ya hecho"). Parece difícil: la API de Meta
       solo funciona con una cuenta de empresa o creador propia unida a una página de Facebook, y
       la búsqueda por hashtag da pocas publicaciones, no el total, con límite semanal. Si no

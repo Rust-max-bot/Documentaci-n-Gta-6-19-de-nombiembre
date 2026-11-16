@@ -416,7 +416,7 @@
   /* ---------- Gráficos de línea (SVG hecho a mano) ---------- */
   var globo = $("globo");
   function grafico(caja, campo, opciones) {
-    var puntos = M.map(function (m) { return { ts: m.ts, v: m[campo] }; });
+    var puntos = opciones.serie || M.map(function (m) { return { ts: m.ts, v: m[campo] }; });   // serie propia (Trends, por hora)
     var extra = opciones.extra, puntos2 = extra ? M.map(function (m) { return { ts: m.ts, v: m[extra.campo] }; }) : null;
     function dibujar() {
       var ancho = Math.max(300, caja.clientWidth), alto = Math.round(Math.max(230, Math.min(380, ancho * 0.36)));
@@ -512,7 +512,12 @@
      Una línea por plataforma, con su leyenda. Kick se mide desde el 16 nov: antes no tiene línea. */
   $("g-twitch").insertAdjacentHTML("beforebegin", '<p class="leyenda-k"><i class="lk-tw"></i> Twitch <i class="lk-kick"></i> Kick</p>');
   grafico($("g-twitch"), "espectadores", { color: "--a1", unidad: "espectadores", nombre: "Espectadores en Twitch y Kick a lo largo del tiempo", extra: { campo: "kickEsp", color: "--kick" } });
-  grafico($("g-trends"), "interes", { color: "--a2", unidad: "de 100", tope: 100, nombre: "Interés de búsqueda en Google Trends a lo largo del tiempo" });
+  /* Trends por hora ("Trends sin huecos", 2026-11-16): cada punto es una hora, dibujado en su hora
+     (antes, en la hora de la medición: ~1 h tarde), con el valor de la medición más nueva que la trae. */
+  var serieTrends = (D.trends_horas || []).map(function (h) { return { ts: Date.parse(h[0]), v: typeof h[1] === "number" ? h[1] : null }; })
+    .filter(function (p) { return !isNaN(p.ts); });
+  grafico($("g-trends"), "interes", { color: "--a2", unidad: "de 100", tope: 100, nombre: "Interés de búsqueda en Google Trends a lo largo del tiempo",
+    serie: serieTrends.length ? serieTrends : null });
 
   /* ---------- Servidores ---------- */
   $("servidores").innerHTML = M.length ? SERVICIOS.map(function (s) {

@@ -155,9 +155,11 @@ guarda nada. Las palabras están en `COMPARAR`, `HISTORICA` (elegidas por Bruno 
 Qué toma de cada medición:
 
 - Twitch: total de espectadores y los 3 canales con más público (con su foto, si la hay).
-- Google Trends: el interés de la **última hora completa** de esa medición (la hora en curso
-  viene a medias). Es relativo a los 7 días anteriores a cada medición, así que valores muy
-  separados en el tiempo no se comparan del todo bien.
+- Google Trends: una serie **por hora** (`trends_horas`), con cada hora tomada de la medición
+  más nueva que la trae completa (desde el 2026-11-16, opción A de Bruno). Así una medición
+  fallida no deja hueco y la última semana queda en una sola escala. Cada fila de medición
+  lleva el interés de su última hora completa (`hora`). Las horas de hace más de 7 días quedan
+  en la escala de la última medición que las vio: valores muy separados no se comparan del todo.
 - Servidores: `ok`, `problemas` o sin dato. Rockstar siempre sin dato: se anota a mano.
 - YouTube: de la última medición, los que pasan el filtro de `filtro_videos.json` (pedido de
   Bruno, 2026-11-15): hasta 20 videos normales y 20 Shorts, con la serie de visitas de cada

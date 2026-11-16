@@ -24,7 +24,7 @@ import os
 import re
 import sys
 from collections import Counter
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 RAIZ = Path(__file__).resolve().parent.parent
@@ -159,10 +159,36 @@ def leer_mediciones(carpeta):
     return medidas
 
 
-def ultima_hora_completa(trends):
-    """Interés de la última hora completa de esa medición (la hora en curso viene a medias)."""
-    puntos = [p for p in trends.get("puntos", []) if not p.get("parcial")]
-    return puntos[-1]["interes"] if puntos else None
+def horas_trends(medidas):
+    """Interés de cada hora completa, tomado de la medición MÁS NUEVA que la trae ("Trends sin
+    huecos", 2026-11-16). Cada medición guarda muchas horas (24 hasta el 16 nov; 7 días desde
+    entonces), así que si una falla, la siguiente trae su hora y el hueco se tapa solo. Además,
+    Trends cambia de escala en cada medición (100 = el máximo de sus 7 días): usar siempre la más
+    nueva deja las horas vecinas en escalas casi iguales y evita saltos falsos en el gráfico."""
+    horas = {}
+    for m in medidas:   # en orden de tiempo: las más nuevas pisan a las más viejas
+        tr = m.get("trends") or {}
+        for p in tr.get("puntos", []) if "error" not in tr else []:
+            if not p.get("parcial"):
+                horas[p["t"]] = p["interes"]
+    return horas
+
+
+def hora_de_medicion(t):
+    """La última hora completa en el momento de una medición (la hora en curso viene a medias)."""
+    d = datetime.strptime(t, "%Y-%m-%dT%H:%M:%SZ").replace(minute=0, second=0, tzinfo=timezone.utc)
+    return (d - timedelta(hours=1)).strftime("%Y-%m-%dT%H:%M:%SZ")
+
+
+def serie_trends(horas, desde, hasta):
+    """Una entrada por hora entre 'desde' y 'hasta' (ISO), con None donde no hay dato."""
+    serie, d = [], datetime.strptime(desde, "%Y-%m-%dT%H:%M:%SZ")
+    fin = datetime.strptime(hasta, "%Y-%m-%dT%H:%M:%SZ")
+    while d <= fin:
+        t = d.strftime("%Y-%m-%dT%H:%M:%SZ")
+        serie.append([t, horas.get(t)])
+        d += timedelta(hours=1)
+    return serie
 
 
 def estado_servidor(r):
@@ -176,6 +202,7 @@ def convertir(medidas):
     reddit, reddit_vistas, reddit_medidas = [], set(), []
     series_es, ultimo_es = {}, {}   # tarea 6.4: videos de la búsqueda en español
     trailers = {}   # tarea 6.2: serie de visitas de cada video oficial, desde el 13 nov
+    horas = horas_trends(medidas)
     for m in medidas:
         tw, tr = m.get("twitch", {}), m.get("trends", {})
         fila = {"t": m["t"]}
@@ -193,8 +220,9 @@ def convertir(medidas):
                 "espectadores": kk["espectadores"], "transmisiones": kk["transmisiones"],
                 "canales": [{"canal": c["canal"], "espectadores": c["espectadores"], "idioma": c["idioma"]}
                             for c in kk["canales"][:5]]}
-        interes = None if "error" in tr else ultima_hora_completa(tr)
-        fila["trends"] = {"interes": interes} if interes is not None else {"error": tr.get("error", "sin hora completa")}
+        hora = hora_de_medicion(m["t"])
+        interes = horas.get(hora)
+        fila["trends"] = {"interes": interes, "hora": hora} if interes is not None else {"error": tr.get("error", "sin hora completa")}
         fila["servidores"] = {
             "rockstar": None,   # no se puede medir con programas; sus caídas se anotan en web/eventos.js
             "playstation": estado_servidor(m.get("playstation")),
@@ -287,7 +315,9 @@ def convertir(medidas):
 
     noticias.sort(key=lambda n: n["t"])
     reddit.sort(key=lambda p: p["t"])
-    return {"mediciones": mediciones, "youtube": youtube, "youtube_es": youtube_es, "noticias": noticias,
+    trends_horas = (serie_trends(horas, hora_de_medicion(medidas[0]["t"]), hora_de_medicion(medidas[-1]["t"]))
+                    if medidas else [])
+    return {"mediciones": mediciones, "trends_horas": trends_horas, "youtube": youtube, "youtube_es": youtube_es, "noticias": noticias,
             "records_youtube": records_youtube,
             "reddit": {"comunidad": "r/GTA6", "publicaciones": reddit, "mediciones": reddit_medidas},
             "comparacion": comparacion,
@@ -388,6 +418,11 @@ def comprobar(d, medidas):
         i = f["trends"].get("interes")
         if i is not None and not (0 <= i <= 100):
             abortar(f"interés de Trends fuera de 0-100 en {f['t']}")
+    th = d["trends_horas"]
+    if [t for t, _ in th] != sorted({t for t, _ in th}):
+        abortar("la serie por hora de Trends está desordenada o repetida")
+    if any(v is not None and not (0 <= v <= 100) for _, v in th):
+        abortar("la serie por hora de Trends tiene un interés fuera de 0-100")
     for tipo, h in d["records_youtube"].items():
         if any(a["visitas"] >= b["visitas"] or a["t"] > b["t"] for a, b in zip(h, h[1:])):
             abortar(f"el récord de {tipo} de YouTube no sube en orden de tiempo")
