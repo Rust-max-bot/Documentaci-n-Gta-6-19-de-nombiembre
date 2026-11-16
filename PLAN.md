@@ -96,9 +96,9 @@ Reddit. El estado vivo (dónde quedamos) está en `ESTADO_ACTUAL.md`; las reglas
       abrió una prueba alfa de una API oficial de Trends (developers.google.com/search/apis/trends):
       se pide con un formulario y solo la dan a un grupo limitado; no se sabe si aceptarán a Bruno.
       Da 5 años de datos (la 6.1 pide desde 2013, no cabría), cifras sin escalar a 100, varios
-      términos juntos y regiones. **Estado:** el formulario quedó lleno en el Chrome de Bruno,
-      **sin enviar**: falta el ID de su proyecto de Google Cloud (el de la clave de YouTube) y que
-      él diga "envíalo". Texto, fecha de inicio 16 nov y comentarios por correo ya puestos.
+      términos juntos y regiones. **Estado:** Bruno puso el ID de su proyecto de Google Cloud y
+      **envió el formulario él mismo el 2026-11-16**. Claude no vio la confirmación (el navegador
+      se desconectó): falta saber si responden. La respuesta llegaría al Gmail de Bruno.
       **Si lo aceptan:** conversar con Bruno qué hacer (¿reemplaza el 429 de `trends`? ¿qué
       pasa con la 6.1?) antes de tocar el recolector. No cuenta para el 19 nov.
 - [ ] **D6:** quedó cortado en la lista de Bruno ("El miami actual de…"). Bruno pidió ignorarlo
