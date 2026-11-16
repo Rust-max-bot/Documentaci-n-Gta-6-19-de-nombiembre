@@ -185,12 +185,16 @@
 
   /* ---------- Preparar las mediciones ---------- */
   var M = (D.mediciones || []).map(function (m) {
-    var tw = m.twitch || {}, tr = m.trends || {};
+    var tw = m.twitch || {}, tr = m.trends || {}, kk = m.kick || {};
     return {
       ts: Date.parse(m.t),
       espectadores: typeof tw.espectadores === "number" ? tw.espectadores : null,
       canal: tw.canales && tw.canales[0] ? tw.canales[0] : null,   // nombre, login, espectadores y, si hay, foto
       errorTwitch: tw.error || null,
+      kickEsp: typeof kk.espectadores === "number" ? kk.espectadores : null,   // Kick, tarea 6.6: solo desde el 16 nov
+      kickTrans: typeof kk.transmisiones === "number" ? kk.transmisiones : null,
+      kickCanal: kk.canales && kk.canales[0] ? kk.canales[0] : null,   // canal, espectadores e idioma
+      errorKick: kk.error || null,
       interes: typeof tr.interes === "number" ? tr.interes : null,
       servidores: m.servidores || {}
     };
@@ -201,7 +205,8 @@
     M.forEach(function (m) { if (m[campo] != null && (!mejor || m[campo] > mejor[campo])) mejor = m; });
     return mejor;
   }
-  var picoTwitch = maximo("espectadores"), picoTrends = maximo("interes");
+  var picoTwitch = maximo("espectadores"), picoTrends = maximo("interes"), picoKick = maximo("kickEsp");
+  function urlKick(canal) { return /^[\w-]{1,40}$/.test(canal || "") ? "https://kick.com/" + canal : ""; }
   var SERVICIOS = [["rockstar", "Rockstar"], ["playstation", "PlayStation Network"], ["xbox", "Red de Xbox"]];
 
   /* ¿Esta carga la hizo la propia página al traer datos nuevos? (ver "Actualización sola") */
@@ -391,13 +396,14 @@
   var globo = $("globo");
   function grafico(caja, campo, opciones) {
     var puntos = M.map(function (m) { return { ts: m.ts, v: m[campo] }; });
+    var extra = opciones.extra, puntos2 = extra ? M.map(function (m) { return { ts: m.ts, v: m[extra.campo] }; }) : null;
     function dibujar() {
       var ancho = Math.max(300, caja.clientWidth), alto = Math.round(Math.max(230, Math.min(380, ancho * 0.36)));
       var mi = 54, md = 14, ma = 26, mb = 34;
       if (!puntos.length) { caja.innerHTML = '<p class="nota">Todavía no hay datos.</p>'; return; }
       var t0 = puntos[0].ts, t1 = puntos[puntos.length - 1].ts;
       var tope = opciones.tope || 0, paso;
-      puntos.forEach(function (p) { if (p.v > tope) tope = p.v; });
+      puntos.concat(puntos2 || []).forEach(function (p) { if (p.v > tope) tope = p.v; });
       if (opciones.tope) paso = tope / 4;
       else { paso = pasoRedondo(tope); tope = Math.max(1, Math.ceil(tope / paso)) * paso; }
       var X = function (ts) { return mi + (ts - t0) / (t1 - t0 || 1) * (ancho - mi - md); };
@@ -436,6 +442,14 @@
         s += '<path class="relleno" d="' + linea + "L" + X(tr[tr.length - 1].ts).toFixed(1) + " " + Y(0) + "L" + X(tr[0].ts).toFixed(1) + " " + Y(0) + 'Z"/>';
         s += '<path class="trazo" pathLength="1" d="' + linea + '"/>';
       });
+      if (puntos2) {                               // segunda línea (Kick), sin relleno ni huecos
+        var t2 = [], a2 = [];
+        puntos2.forEach(function (p) { if (p.v == null) { if (a2.length) { t2.push(a2); a2 = []; } } else a2.push(p); });
+        if (a2.length) t2.push(a2);
+        t2.forEach(function (tr) {
+          s += '<path class="trazo trazo-extra" pathLength="1" style="--color:var(' + extra.color + ')" d="' + tr.map(function (p, i) { return (i ? "L" : "M") + X(p.ts).toFixed(1) + " " + Y(p.v).toFixed(1); }).join("") + '"/>';
+        });
+      }
       s += '<line class="cursor" y1="' + ma + '" y2="' + (alto - mb) + '" visibility="hidden"/><circle class="punto" r="6" visibility="hidden"/>';
       s += '<rect class="zona" x="' + mi + '" y="' + ma + '" width="' + (ancho - mi - md) + '" height="' + (alto - ma - mb) + '" fill="transparent"/></svg>';
       caja.innerHTML = s;
@@ -450,7 +464,10 @@
         if (cerca.v != null) { punto.setAttribute("cx", x); punto.setAttribute("cy", Y(cerca.v)); punto.setAttribute("visibility", "visible"); }
         else punto.setAttribute("visibility", "hidden");
         globo.hidden = false;
-        globo.innerHTML = "<small>" + dia(cerca.ts) + " · " + hora(cerca.ts) + "</small>" + (cerca.v == null ? "Sin dato" : num(cerca.v) + " " + opciones.unidad);
+        var c2 = puntos2 ? puntos2[puntos.indexOf(cerca)] : null;
+        globo.innerHTML = "<small>" + dia(cerca.ts) + " · " + hora(cerca.ts) + "</small>" + (puntos2
+          ? (cerca.v == null ? "Twitch: sin dato" : num(cerca.v) + " en Twitch") + "<br>" + (c2.v == null ? "Kick: sin dato" : num(c2.v) + " en Kick")
+          : (cerca.v == null ? "Sin dato" : num(cerca.v) + " " + opciones.unidad));
         var gx = Math.min(window.innerWidth - globo.offsetWidth - 8, e.clientX + 14);
         globo.style.left = Math.max(8, gx) + "px"; globo.style.top = (e.clientY - 54) + "px";
       }
@@ -470,7 +487,10 @@
       espera = setTimeout(function () { if (caja.clientWidth !== anchoAnterior) { anchoAnterior = caja.clientWidth; dibujar(); } }, 150);
     });
   }
-  grafico($("g-twitch"), "espectadores", { color: "--a1", unidad: "espectadores", nombre: "Espectadores en Twitch a lo largo del tiempo" });
+  /* ---------- Twitch y Kick en el mismo gráfico (tarea 6.6, opción B de Bruno, 2026-11-16) ----------
+     Una línea por plataforma, con su leyenda. Kick se mide desde el 16 nov: antes no tiene línea. */
+  $("g-twitch").insertAdjacentHTML("beforebegin", '<p class="leyenda-k"><i class="lk-tw"></i> Twitch <i class="lk-kick"></i> Kick</p>');
+  grafico($("g-twitch"), "espectadores", { color: "--a1", unidad: "espectadores", nombre: "Espectadores en Twitch y Kick a lo largo del tiempo", extra: { campo: "kickEsp", color: "--kick" } });
   grafico($("g-trends"), "interes", { color: "--a2", unidad: "de 100", tope: 100, nombre: "Interés de búsqueda en Google Trends a lo largo del tiempo" });
 
   /* ---------- Servidores ---------- */
@@ -487,22 +507,40 @@
     return '<div class="servicio"><div class="nombre">' + s[1] + '</div><div class="tira">' + tira + "</div>" + veredicto + "</div>";
   }).join("") : '<p class="nota">Todavía no hay datos.</p>';
 
-  /* ---------- Tabla de Twitch con filtro por día ---------- */
+  /* ---------- Tabla de Twitch y Kick con filtro por día ----------
+     Pedido de Bruno (2026-11-16): una columna "Plataforma" aparte de la de espectadores, y una fila
+     por plataforma en cada medición (Kick, solo desde el 16 nov). */
   (function () {
     // Lo más nuevo primero (pedido de Bruno): días y filas de la más reciente a la más vieja.
     var nuevas = M.slice().reverse();
     var dias = []; nuevas.forEach(function (m) { var d = dia(m.ts); if (dias.indexOf(d) < 0) dias.push(d); });
     var elegido = dias.indexOf(dia(SALIDA)) >= 0 ? dia(SALIDA) : (dias[0] || "");
-    var tope = picoTwitch ? picoTwitch.espectadores : 1;
+    var tope = Math.max(1, picoTwitch ? picoTwitch.espectadores : 0, picoKick ? picoKick.kickEsp : 0);
+    var PLATAFORMAS = [
+      { nombre: "Twitch", clase: "pl-twitch", esp: function (m) { return m.espectadores; }, error: function (m) { return m.errorTwitch; },
+        canal: function (m) { return m.canal && { nombre: m.canal.nombre, espectadores: m.canal.espectadores, url: urlCanal(m.canal.login), foto: foto(m.canal.foto) }; },
+        hay: function () { return true; } },
+      { nombre: "Kick", clase: "pl-kick", esp: function (m) { return m.kickEsp; }, error: function (m) { return m.errorKick; },
+        canal: function (m) { return m.kickCanal && { nombre: m.kickCanal.canal, espectadores: m.kickCanal.espectadores, url: urlKick(m.kickCanal.canal), foto: foto("") }; },
+        hay: function (m) { return m.kickEsp != null || m.errorKick; } }   // antes del 16 nov no se medía
+    ];
+    function fila(m, pl, primera, filasHora) {
+      var horaTd = primera ? '<td rowspan="' + filasHora + '">' + hora(m.ts) + "</td>" : "";
+      var plTd = '<td><span class="plataforma ' + pl.clase + '">' + pl.nombre + "</span></td>";
+      var e = pl.esp(m);
+      if (e == null) return '<tr class="sin-dato">' + horaTd + plTd + '<td colspan="3">Sin dato' + (pl.error(m) ? " (" + limpio(pl.error(m)) + ")" : "") + "</td></tr>";
+      var c = pl.canal(m);
+      return "<tr>" + horaTd + plTd + '<td class="n">' + num(e) + '</td><td class="barra-celda ' + pl.clase + '"><i style="--w:' + (e / tope * 100).toFixed(1) + '%"></i></td><td>' +
+        (c ? '<span class="canal">' + c.foto + "<span>" + enlace(c.url, limpio(c.nombre)) + " (" + compacto(c.espectadores) + ")</span></span>" : "—") + "</td></tr>";
+    }
     function pintar() {
       $("filtros-dia").innerHTML = dias.map(function (d) { return '<button type="button" class="' + (d === elegido ? "activo" : "") + '" data-dia="' + d + '">' + d + "</button>"; }).join("");
       var filas = nuevas.filter(function (m) { return dia(m.ts) === elegido; }).map(function (m) {
-        if (m.espectadores == null) return '<tr class="sin-dato"><td>' + hora(m.ts) + '</td><td colspan="3">Sin dato' + (m.errorTwitch ? " (" + limpio(m.errorTwitch) + ")" : "") + "</td></tr>";
-        return "<tr><td>" + hora(m.ts) + '</td><td class="n">' + num(m.espectadores) + '</td><td class="barra-celda"><i style="--w:' + (m.espectadores / tope * 100).toFixed(1) + '%"></i></td><td>' +
-          (m.canal ? '<span class="canal">' + foto(m.canal.foto) + "<span>" + enlace(urlCanal(m.canal.login), limpio(m.canal.nombre)) + " (" + compacto(m.canal.espectadores) + ")</span></span>" : "—") + "</td></tr>";
+        var pls = PLATAFORMAS.filter(function (pl) { return pl.hay(m); });
+        return pls.map(function (pl, i) { return fila(m, pl, i === 0, pls.length); }).join("");
       }).join("");
-      $("t-twitch").innerHTML = '<thead><tr><th>Hora</th><th class="n">Espectadores</th><th></th><th>Canal con más público</th></tr></thead><tbody>' +
-        (filas || '<tr class="sin-dato"><td colspan="4">Todavía no hay datos.</td></tr>') + "</tbody>";
+      $("t-twitch").innerHTML = '<thead><tr><th>Hora</th><th>Plataforma</th><th class="n">Espectadores</th><th></th><th>Canal con más público</th></tr></thead><tbody>' +
+        (filas || '<tr class="sin-dato"><td colspan="5">Todavía no hay datos.</td></tr>') + "</tbody>";
     }
     $("filtros-dia").addEventListener("click", function (e) { var d = e.target.dataset.dia; if (d) { elegido = d; pintar(); } });
     pintar();
@@ -895,7 +933,7 @@
   /* ---------- Menú de secciones (opción B de Bruno, 2026-11-14: botón flotante) ---------- */
   (function () {
     var caja = $("menu"); if (!caja) return;
-    var S = [["records", "Récords"], ["seccion-linea", "Línea de tiempo"], ["resumen", "Resumen"], ["seccion-twitch", "Twitch"],
+    var S = [["records", "Récords"], ["seccion-linea", "Línea de tiempo"], ["resumen", "Resumen"], ["seccion-twitch", "Twitch y Kick"],
       ["seccion-trends", "Trends"], ["seccion-servidores", "Servidores"], ["seccion-videos", "Videos"], ["comparacion", "Comparación"], ["lanzamientos", "Otros lanzamientos"],
       ["seccion-noticias", "Titulares"], ["seccion-reddit", "Reddit"], ["album", "Álbum"], ["capsula", "Cápsula"], ["proximamente", "Próximamente"]].filter(function (x) { return $(x[0]); });
     caja.innerHTML = '<button type="button" class="menu-boton" aria-expanded="false" aria-controls="menu-lista"><span aria-hidden="true">☰</span> Secciones</button>' +
@@ -1117,6 +1155,15 @@
       return h;
     }
     var esp = [], canal = [], trans = [];
+    // Kick (tarea 6.6, pedido de Bruno, 2026-11-16): los mismos récords que Twitch, desde que se mide.
+    var kEsp = [], kCanal = [], kTrans = [];
+    (D.mediciones || []).forEach(function (m) {
+      var k = m.kick, ts = Date.parse(m.t);
+      if (!k || k.error || isNaN(ts)) return;
+      if (typeof k.espectadores === "number") kEsp.push({ ts: ts, valor: k.espectadores });
+      if (typeof k.transmisiones === "number") kTrans.push({ ts: ts, valor: k.transmisiones });
+      (k.canales || []).forEach(function (c) { kCanal.push({ ts: ts, valor: c.espectadores, que: c.canal, url: urlKick(c.canal) }); });
+    });
     filas.forEach(function (f) {
       if (f.tw.error) return;
       if (typeof f.tw.espectadores === "number") esp.push({ ts: f.ts, valor: f.tw.espectadores });
@@ -1146,8 +1193,11 @@
     var fClaveHora = function (ts) { return fClave(ts) + " " + partes(ts).hour; };
     var R = [
       { nombre: "Más espectadores en Twitch", h: historia(esp), fmt: num, uni: "espectadores a la vez" },
-      { nombre: "Directo con más público", h: historia(canal), fmt: num, uni: "espectadores en un solo directo" },
-      { nombre: "Más transmisiones a la vez", h: historia(trans), fmt: num, uni: "transmisiones de GTA VI" },
+      { nombre: "Directo con más público en Twitch", h: historia(canal), fmt: num, uni: "espectadores en un solo directo" },
+      { nombre: "Más transmisiones a la vez en Twitch", h: historia(trans), fmt: num, uni: "transmisiones de GTA VI" },
+      { nombre: "Más espectadores en Kick", h: historia(kEsp), fmt: num, uni: "espectadores a la vez" },
+      { nombre: "Directo con más público en Kick", h: historia(kCanal), fmt: num, uni: "espectadores en un solo directo" },
+      { nombre: "Más directos a la vez en Kick", h: historia(kTrans), fmt: num, uni: "directos de GTA VI" },
       { nombre: "Video más visto", h: lideres, fmt: compacto, uni: "visitas", prev: "Récords anteriores", aviso: true },
       { nombre: "Short más visto", h: lideresShort, fmt: compacto, uni: "visitas", prev: "Récords anteriores", aviso: true },
       { nombre: "Video que más creció en una hora", h: historia(crece), fmt: num, uni: "visitas en una hora" },

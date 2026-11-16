@@ -21,5 +21,7 @@
   "36": "Estructura de carpetas (web/, recolector/, datos/, .github/workflows/, despertador/)",
   "37": "Worker de Cloudflare despertador-recolector (horario 7,37 * * * *)",
   "38": "Criterios para saber si salió bien",
-  "39": "Dónde quedamos (2026-11-13)"
+  "39": "Dónde quedamos (2026-11-13)",
+  "40": "gota",
+  "41": "sincronizar_datos.ps1"
 }

@@ -335,6 +335,20 @@ Resultado final: **una página web** con:
   - Las ventas se marcan solas al escribir `gta6`, y Trends cuando `datos.js` traiga
     `trendsExtra`; las demás se marcan a mano en `web/app.js` al terminar su tarea.
   - Se descartaron A (lista con casillas) y B (carteles con sello).
+- **Kick en la página (tarea 6.6, opción B de Bruno, 2026-11-16): todo junto con Twitch.**
+  - Un solo gráfico, "Espectadores en Twitch y Kick", con una línea por plataforma (Kick en verde
+    propio, `--kick`) y su leyenda. Kick no tiene línea antes del 16 nov, cuando empezó a medirse.
+  - Tabla "Twitch y Kick, medición por medición": pedido de Bruno, una columna **Plataforma**
+    aparte de la de **Espectadores**; una fila por plataforma en cada hora. En el celular se
+    oculta la barra para que se vean los números.
+  - Récords de Kick como los de Twitch: más espectadores, directo con más público y más directos
+    a la vez. Las tarjetas de Twitch ahora dicen "en Twitch".
+  - Se descartaron A (secciones aparte) y C (pestañas Twitch | Kick).
+- **Sincronizar el PC solo (pedido de Bruno, 2026-11-16).** `sincronizar_datos.ps1` y una tarea
+  de Windows ("Recuerdo GTA 6 - sincronizar datos", cada 30 min, a los :15 y :45) traen las
+  mediciones de GitHub. Solo avanza (fast-forward); si hay commits del PC sin subir no toca nada;
+  aparta y repone los cambios sin guardar (--autostash). Registro en
+  `%LOCALAPPDATA%\recuerdo-gta6\sincronizar.log`. Se quita con `-Quitar`.
 - **Portada con suelo (tarea 7.12, opción A de Bruno, 2026-11-15): calle y playa.**
   - Condición de Bruno: el suelo se agrega sin quitar el mar.
   - Bajo los hoteles: vereda, cordón, calle con línea discontinua y arena, con las palmeras

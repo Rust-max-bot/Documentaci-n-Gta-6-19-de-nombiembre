@@ -137,6 +137,10 @@ usarla. Ver el aviso 7, sobre la fecha del lanzamiento.)*
     con los Secrets en `recolectar.yml`; probado el 2026-11-16 con "Probar fuentes", ejecución
     43800745324: 1.906 espectadores en 98 directos frente a 1.341 en 109 de Twitch). **Falta:**
     mostrarlo en la página (opciones con capturas). Instagram sigue sin probar.
+    **En la página desde el 2026-11-16 (opción B de Bruno):** las dos líneas en el gráfico
+    "Espectadores en Twitch y Kick", la tabla con una columna "Plataforma" (una fila por
+    plataforma en cada medición) y tres récords de Kick en "Logros y récords". Ver `PLAN.md`.
+    Queda en `[ ]` por Instagram.
   - **Instagram:** parece difícil. La API oficial de Meta solo funciona con una cuenta de
     empresa o creador propia, unida a una página de Facebook, y la búsqueda por hashtag da
     pocas publicaciones y no el total (además, tiene límite de hashtags por semana). Si no

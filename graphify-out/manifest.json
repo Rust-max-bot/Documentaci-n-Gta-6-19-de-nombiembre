@@ -18,9 +18,9 @@
     "semantic_hash": ""
   },
   "web/app.js": {
-    "mtime": 1794802101.3820245,
-    "seen": 1794802192.5831735,
-    "ast_hash": "fb8d2072cbc53e3b8cadfbf857b50522",
+    "mtime": 1794846289.364028,
+    "seen": 1794846396.1136982,
+    "ast_hash": "ed01a54d5250185a7b92c99f606f2847",
     "semantic_hash": ""
   },
   "web/datos-ejemplo.js": {
@@ -48,9 +48,9 @@
     "semantic_hash": ""
   },
   "ESTADO_ACTUAL.md": {
-    "mtime": 1794801269.8831375,
-    "seen": 1794802192.5831847,
-    "ast_hash": "c0a2d1a5b7b996ec274ca628421c6043",
+    "mtime": 1794846389.888144,
+    "seen": 1794846396.1137156,
+    "ast_hash": "dbd40a30379aa759f5acfe0e07f0a052",
     "semantic_hash": ""
   },
   "GUIA_CLAVES.md": {
@@ -60,9 +60,9 @@
     "semantic_hash": ""
   },
   "PLAN.md": {
-    "mtime": 1794795159.7849188,
-    "seen": 1794796408.0737157,
-    "ast_hash": "40b1413e21b9548b6aa4d75c242985f3",
+    "mtime": 1794846389.8871405,
+    "seen": 1794846396.1137211,
+    "ast_hash": "13c7f869301f550d5b5b04ef8178bfc4",
     "semantic_hash": ""
   },
   "README.md": {
@@ -72,9 +72,9 @@
     "semantic_hash": ""
   },
   "web/index.html": {
-    "mtime": 1794795159.7929256,
-    "seen": 1794796408.0737295,
-    "ast_hash": "d9456ec80344960f8a3457453883be46",
+    "mtime": 1794845979.929614,
+    "seen": 1794846396.113744,
+    "ast_hash": "7d08360467bec72a9391ed42c5b1d4d6",
     "semantic_hash": ""
   },
   ".github/workflows/probar-fuentes.yml": {
@@ -132,9 +132,9 @@
     "semantic_hash": ""
   },
   "PLAN_DE_TRABAJO.md": {
-    "mtime": 1794801269.8841386,
-    "seen": 1794802192.5831895,
-    "ast_hash": "ba1148f0acdd748d0914ae8a09b0e911",
+    "mtime": 1794846389.8871405,
+    "seen": 1794846396.1137228,
+    "ast_hash": "809eec0240dce7219d4014ba8fc16230",
     "semantic_hash": ""
   },
   "recolector/LEEME.md": {
@@ -144,8 +144,8 @@
     "semantic_hash": ""
   },
   "recolector/generar_web.py": {
-    "mtime": 1794801680.716187,
-    "seen": 1794802192.583161,
+    "mtime": 1794802195.5092373,
+    "seen": 1794846396.1136744,
     "ast_hash": "b47dbc0773b253b2e1fbdaa829491328",
     "semantic_hash": ""
   },
@@ -297,6 +297,12 @@
     "mtime": 1794796362.3612783,
     "seen": 1794796408.0736926,
     "ast_hash": "e9751fe4e7d3bf90f2759e42cda6c08f",
+    "semantic_hash": ""
+  },
+  "sincronizar_datos.ps1": {
+    "mtime": 1794846329.5168083,
+    "seen": 1794846396.1136954,
+    "ast_hash": "d0e1294ceb0a7a484ad8f20cc7d93ff7",
     "semantic_hash": ""
   }
 }

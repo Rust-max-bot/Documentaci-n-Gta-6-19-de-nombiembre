@@ -873,3 +873,17 @@ section[id], .bloque { scroll-margin-top: 16px; }
   scrollbar-width: auto;
   scrollbar-color: var(--a1) color-mix(in srgb, var(--tenue) 22%, var(--fondo));
 }
+
+/* ---------- Kick (tarea 6.6, opción B de Bruno) ----------
+   Verde propio para Kick en cada estilo: segunda línea del gráfico y etiqueta de la tabla. */
+.escena-80, :root[data-tema="ochenta"] { --kick: #39ff88; }
+:root[data-tema="actual"] { --kick: #0fa968; }
+.grafico .trazo-extra { stroke-width: 3; }
+.leyenda-k { display: flex; gap: 16px; align-items: center; margin: 6px 0 4px; font: 700 13px var(--f-texto); letter-spacing: .06em; text-transform: uppercase; color: var(--tenue); }
+.leyenda-k i { display: inline-block; width: 22px; height: 4px; border-radius: 2px; margin-right: -8px; }
+.leyenda-k .lk-tw { background: var(--a1); }
+.leyenda-k .lk-kick { background: var(--kick); }
+.plataforma { display: inline-block; padding: 2px 9px; border-radius: 999px; font: 700 12px var(--f-texto); letter-spacing: .08em; text-transform: uppercase; color: #fff; background: var(--a1); }
+.plataforma.pl-kick { background: var(--kick); color: #06130c; }
+.barra-celda.pl-kick i { background: var(--kick); }
+@media (max-width: 600px) { #t-twitch thead th:nth-child(4), #t-twitch .barra-celda { display: none; } #t-twitch .plataforma { padding: 2px 7px; font-size: 11px; } #t-twitch th, #t-twitch td { padding: 8px 6px; } #t-twitch th { letter-spacing: .04em; font-size: 11px; } #t-twitch .canal { gap: 6px; } #t-twitch .avatar { display: none; } }
