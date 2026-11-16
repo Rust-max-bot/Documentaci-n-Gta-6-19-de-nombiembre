@@ -100,6 +100,7 @@ Bruno ya eligió las palabras de la comparación.
 
 ## Últimos cambios
 
+- 2026-11-16: imagen del Resumen del día: botón "Personalizar" con vista previa y casillas (diseño A de Bruno; todo marcado por defecto), Kick en la imagen y en la tarjeta, lema de 1986 legible y emojis que ya no se cortan a la mitad.
 - 2026-11-16: imagen al compartir nueva (opción C de Bruno): un solo título grande sobre las dos portadas al día (con suelo), lema en franja legible y "Twitch · Kick · YouTube · Google Trends"; la hace `pruebas/hacer_compartir.py --opcion C --guardar`. Kick agregado al texto de la vista previa.
 - 2026-11-16: la 6.1 se lanza sola: el despertador de Cloudflare (nuevo horario `41 15 21-24 11 *`, puesto por Claude a pedido de Bruno) del 21 al 24 nov, con respaldo de GitHub a las 18:41 UTC; guarda una sola vez. Recordatorios en el calendario de Bruno el 21 y el 24.
 - 2026-11-16: gráfico de Trends por hora (opción A de Bruno): cada hora con el valor de la medición más nueva que la trae; sin huecos y la última semana en una sola escala.
@@ -108,7 +109,6 @@ Bruno ya eligió las palabras de la comparación.
 - 2026-11-16: titulares como resumen (opción B de Bruno): los 8 medios que más publican y los 6 últimos; la lista completa y el filtro por día quedan tras el botón "Ver los N titulares". El resumen lo deja hecho `generar_web.py` en `datos.js`.
 - 2026-11-16: horas en 12 h o 24 h según el dispositivo de quien visita; en 24 h la cuenta aclara "(8 de la mañana)" (pedido de Bruno).
 - 2026-11-16: un solo plan (pedido de Bruno): `PLAN.md` junta tareas, decisiones y riesgos en corto (de ~68 KB a ~14 KB); los dos planes completos, en `historial/PLAN_2026-11-16.md` y `historial/PLAN_DE_TRABAJO_2026-11-16.md`.
-- 2026-11-16: Kick en la página (opción B de Bruno): líneas de Twitch y Kick en un gráfico, tabla con columna "Plataforma" y récords de Kick.
 
 ## Pendiente
 

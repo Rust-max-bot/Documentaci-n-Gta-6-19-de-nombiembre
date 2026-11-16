@@ -461,9 +461,10 @@ td a:hover, td a:focus-visible { color: var(--a1); text-decoration-color: var(--
 .rd-cuadros { margin-top: 12px; grid-template-columns: repeat(3, 1fr); }
 /* Con "Short más visto" son 7 cuadros: el último (Mediciones), si queda solo en su fila, ocupa todo el ancho. */
 .rd-cuadros > li:last-child:nth-child(3n + 1) { grid-column: 1 / -1; }
+.rd-cuadros > li:last-child:nth-child(3n + 2) { grid-column: span 2; }   /* con Kick son 8: el último llena la fila */
 @media (max-width: 640px) {
   .rd-cuadros { grid-template-columns: 1fr 1fr; gap: 10px; } .rd-cuadros > li { padding: 12px 12px; }
-  .rd-cuadros > li:last-child:nth-child(3n + 1) { grid-column: auto; }
+  .rd-cuadros > li:last-child:nth-child(3n + 1), .rd-cuadros > li:last-child:nth-child(3n + 2) { grid-column: auto; }
   .rd-cuadros > li:last-child:nth-child(odd) { grid-column: 1 / -1; }
 }
 .rc-nuevo { display: inline-block; padding: 2px 9px; border-radius: 999px; background: var(--a3); color: #1b1440; font: 700 11px var(--f-texto); letter-spacing: .1em; text-transform: uppercase; }
@@ -711,6 +712,30 @@ section[id], .bloque { scroll-margin-top: 16px; }
 .rd-descargar { margin-top: 14px; cursor: pointer; padding: 10px 18px; border-radius: 999px; border: 1px solid var(--a1); background: none; color: var(--texto); font: 700 14px var(--f-texto); letter-spacing: .06em; text-transform: uppercase; }
 .rd-descargar:hover { background: color-mix(in srgb, var(--a1) 15%, transparent); }
 .rd-descargar::before { content: "↓ "; color: var(--a1); }
+/* "Personalizar" la imagen del resumen, con vista previa (pedido de Bruno, 2026-11-16) */
+.rd-acciones { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+.rd-acciones .rd-descargar { margin-top: 14px; }
+.rd-personalizar { margin-top: 14px; cursor: pointer; padding: 10px 16px; border-radius: 999px; border: 1px solid color-mix(in srgb, var(--tenue) 60%, transparent);
+  background: none; color: var(--tenue); font: 700 14px var(--f-texto); letter-spacing: .06em; text-transform: uppercase; }
+.rd-personalizar:hover, .rd-personalizar[aria-expanded="true"] { color: var(--texto); border-color: var(--a1); }
+.rd-personalizar::before { content: "⚙ "; }
+.rd-panel { margin-top: 14px; padding: 16px; border-radius: 18px; border: 1px solid color-mix(in srgb, var(--tenue) 35%, transparent);
+  background: color-mix(in srgb, var(--fondo) 70%, transparent); }
+.rd-panel[hidden] { display: none; }
+.rd-previa { text-align: center; }
+.rd-previa canvas { display: block; width: 100%; height: auto; border-radius: 12px; box-shadow: 0 8px 24px rgba(0, 0, 0, .25); }
+.rd-previa small { display: block; margin-top: 6px; color: var(--tenue); font-size: 12px; font-weight: 600; }
+.rd-opciones { border: 0; margin: 0; padding: 0; min-width: 0; }
+.rd-opciones legend { padding: 0; margin-bottom: 8px; font: 700 13px var(--f-texto); letter-spacing: .08em; text-transform: uppercase; color: var(--tenue); }
+.rd-marcas label { cursor: pointer; font-weight: 600; }
+.rd-marcas input { accent-color: var(--a1); width: 18px; height: 18px; vertical-align: -3px; }
+.rd-botones { margin: 12px 0 0; }
+.rd-todo { cursor: pointer; padding: 6px 12px; border-radius: 999px; border: 1px solid color-mix(in srgb, var(--tenue) 50%, transparent);
+  background: none; color: var(--texto); font: 600 13px var(--f-texto); }
+/* Diseño A de Bruno (2026-11-16): vista previa a la izquierda y casillas en columna a la derecha */
+.rd-panel:not([hidden]) { display: grid; grid-template-columns: minmax(0, 340px) 1fr; gap: 22px; align-items: start; }
+.rd-marcas { display: grid; gap: 10px; }
+@media (max-width: 640px) { .rd-panel:not([hidden]) { grid-template-columns: 1fr; } }
 
 /* ---------- Álbum de momentos (tarea 7.7; diseño B de Bruno: fotos instantáneas) ---------- */
 .album figure { margin: 0; }

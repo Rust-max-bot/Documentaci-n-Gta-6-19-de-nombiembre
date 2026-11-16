@@ -1338,6 +1338,7 @@
         if (m.espectadores == null || m.interes == null) r.huecos++;
         if (m.espectadores != null && (!r.tw || m.espectadores > r.tw.espectadores)) r.tw = m;
         if (m.interes != null && (!r.tr || m.interes > r.tr.interes)) r.tr = m;
+        if (m.kickEsp != null && (!r.kk || m.kickEsp > r.kk.kickEsp)) r.kk = m;   // Kick: desde el 16 nov
       });
       // Video y Short más vistos del día, por separado (pedido de Bruno, 2026-11-15), como en
       // "Logros y récords". Los videos sin la marca de Short cuentan como videos, igual que en las listas.
@@ -1368,6 +1369,8 @@
         (r.tw ? cuadro("Máximo en Twitch", num(r.tw.espectadores), "espectadores a la vez",
           r.tw.canal ? "Más visto: " + enlace(urlCanal(r.tw.canal.login), limpio(r.tw.canal.nombre)) : "", "a las " + hora(r.tw.ts))
           : cuadro("Máximo en Twitch", "—", "sin dato ese día")) +
+        (r.kk ? cuadro("Máximo en Kick", num(r.kk.kickEsp), "espectadores a la vez",
+          r.kk.kickCanal ? "Más visto: " + enlace(urlKick(r.kk.kickCanal.canal), limpio(r.kk.kickCanal.canal)) : "", "a las " + hora(r.kk.ts)) : "") +
         (r.yt ? cuadro("Video más visto", compacto(r.yt.visitas), "visitas", enlace(r.yt.url, limpio(r.yt.titulo)), "medido a las " + hora(r.yt.ts))
           : cuadro("Video más visto", "—", "sin dato ese día")) +
         (r.sh ? cuadro("Short más visto", compacto(r.sh.visitas), "visitas", enlace(r.sh.url, limpio(r.sh.titulo)), "medido a las " + hora(r.sh.ts))
@@ -1389,10 +1392,11 @@
        deja guardarlas dentro de una imagen. Formato A de Bruno (2026-11-14): cuadrada, 1080 x 1080. */
     function recortar(ctx, texto, ancho) {
       if (ctx.measureText(texto).width <= ancho) return texto;
-      while (texto.length > 1 && ctx.measureText(texto + "…").width > ancho) texto = texto.slice(0, -1);
-      return texto.trimEnd() + "…";
+      var letras = Array.from(texto);   // por letra, no por mitades de emoji (salía "👑 �…")
+      while (letras.length > 1 && ctx.measureText(letras.join("") + "…").width > ancho) letras.pop();
+      return letras.join("").trimEnd() + "…";
     }
-    function dibujar(r, k) {
+    function dibujar(r, k, sel) {
       var W = 1080, H = 1080, u = 1;
       var lienzo = document.createElement("canvas"); lienzo.width = W; lienzo.height = H;
       var ctx = lienzo.getContext("2d"), css = getComputedStyle(document.documentElement);
@@ -1424,8 +1428,16 @@
       ctx.font = Math.round(96 * tt * u) + "px " + fTit; ctx.fillText("19·NOV·2026", W / 2, solY + 30 * tt * u);
       ctx.shadowBlur = 0;
       ctx.font = "700 " + Math.round(34 * tt * u) + "px " + fTxt;
-      ctx.fillStyle = ochenta ? a2 : "#1b1440";
-      ctx.fillText(ochenta ? "EL DÍA QUE SALIÓ GTA 6" : "El día que salió GTA 6", W / 2, solY + 80 * tt * u);
+      // Lema legible (pedido de Bruno, 2026-11-16): en 1986 iba celeste sobre el sol rosado y casi
+      // no se leía. Ahora blanco con borde oscuro y brillo celeste.
+      if (ochenta) {
+        ctx.lineWidth = 6 * u; ctx.strokeStyle = "#12042e"; ctx.lineJoin = "round";
+        ctx.strokeText("EL DÍA QUE SALIÓ GTA 6", W / 2, solY + 80 * tt * u);
+        ctx.shadowColor = a2; ctx.shadowBlur = 16 * u; ctx.fillStyle = "#fff";
+        ctx.fillText("EL DÍA QUE SALIÓ GTA 6", W / 2, solY + 80 * tt * u); ctx.shadowBlur = 0;
+      } else {
+        ctx.fillStyle = "#1b1440"; ctx.fillText("El día que salió GTA 6", W / 2, solY + 80 * tt * u);
+      }
       var fecha = fLargo.format(new Date(deSantiago(k + " 12:00")));
       fecha = "Resumen del " + fecha;
       ctx.font = "700 " + Math.round(40 * u) + "px " + fTxt; ctx.fillStyle = ochenta ? "#fff" : "#1b1440";
@@ -1437,25 +1449,20 @@
         ctx.fillText("Día en curso: datos hasta las " + hora(ult) + " (hora de Chile)", W / 2, yTop + 38 * u);
       }
       // Cuadros
-      var cuadros = [
-        ["MÁXIMO EN TWITCH", r.tw ? num(r.tw.espectadores) : "—", r.tw ? "espectadores a la vez" : "sin dato", r.tw && r.tw.canal ? "Más visto: " + r.tw.canal.nombre : ""],
-        ["VIDEO MÁS VISTO", r.yt ? compacto(r.yt.visitas) : "—", r.yt ? "visitas" : "sin dato", r.yt ? r.yt.titulo : ""],
-        ["SHORT MÁS VISTO", r.sh ? compacto(r.sh.visitas) : "—", r.sh ? "visitas" : "sin dato", r.sh ? r.sh.titulo : ""],
-        ["GOOGLE TRENDS", r.tr ? String(r.tr.interes) : "—", r.tr ? "de 100, lo más alto del día" : "sin dato", ""],
-        ["TITULARES", num(r.titulares), "publicados ese día", ""],
-        ["REDDIT r/GTA6", num(r.reddit), "publicaciones", ""],
-        ["MEDICIONES", num(r.med), r.huecos ? r.huecos + " con algún hueco" : "sin huecos", ""]
-      ];
-      // Tres columnas, como en la página: con 7 cuadros en dos columnas quedaban tan bajos que no cabía el título del video.
-      var cols = 3, filas = Math.ceil(cuadros.length / cols);
+      var cuadros = cuadrosImagen(r).filter(function (q) { return !sel || sel[q.id]; });
+      // Tres columnas, como en la página: con 7 cuadros en dos columnas quedaban tan bajos que no
+      // cabía el título del video. Con pocos cuadros (si se quitan en "Personalizar"), menos columnas.
+      var cols = cuadros.length >= 5 ? 3 : cuadros.length >= 2 ? 2 : 1, filas = Math.max(1, Math.ceil(cuadros.length / cols));
       var margen = 60 * u, gap = 22 * u, yIni = yTop + (k === ultimoDia ? 70 : 40) * u, yFin = H - 100 * u;
       var cw = (W - 2 * margen - gap * (cols - 1)) / cols, ch = Math.min(260 * u, (yFin - yIni - gap * (filas - 1)) / filas);
       // Tamaño del contenido según el alto del cuadro: con poco alto, todo un poco más chico.
       var e = Math.min(1.25, ch / (190 * u)) * u, conExtra = ch >= 175 * u;
       yIni += Math.max(0, (yFin - yIni) - (ch * filas + gap * (filas - 1))) / 2;
+      var enUltima = cuadros.length - (filas - 1) * cols, cwUlt = (W - 2 * margen - gap * (enUltima - 1)) / enUltima;
       cuadros.forEach(function (q, i) {
-        var cx = margen + (i % cols) * (cw + gap), cy = yIni + Math.floor(i / cols) * (ch + gap);
-        var w = i === cuadros.length - 1 && i % cols === 0 ? W - 2 * margen : cw;   // si el último queda solo, ocupa todo el ancho
+        q = [q.nombre, q.valor, q.uni, q.extra];
+        var w = Math.floor(i / cols) === filas - 1 ? cwUlt : cw;   // la última fila reparte su ancho entre los que tenga
+        var cx = margen + (i % cols) * (w + gap), cy = yIni + Math.floor(i / cols) * (ch + gap);
         ctx.fillStyle = ochenta ? "rgba(22,4,54,.82)" : "rgba(255,250,244,.92)";
         ctx.strokeStyle = ochenta ? a2 : "rgba(27,20,64,.08)"; ctx.lineWidth = 2 * u;
         ctx.beginPath(); ctx.roundRect(cx, cy, w, ch, 22 * u); ctx.fill(); if (ochenta) ctx.stroke();
@@ -1466,7 +1473,11 @@
         ctx.font = "700 " + Math.round(62 * e) + "px " + fTxt; ctx.fillStyle = ochenta ? a2 : a1;
         if (ochenta) { ctx.shadowColor = a2; ctx.shadowBlur = 18 * u; }
         ctx.fillText(q[1], px, y0 + 84 * e); ctx.shadowBlur = 0;
-        ctx.font = "600 " + Math.round(22 * e) + "px " + fTxt; ctx.fillStyle = ochenta ? texto : "#1b1440";
+        ctx.fillStyle = ochenta ? texto : "#1b1440";
+        for (var t2 = 22; t2 > 17; t2--) {   // la letra de 2026 es más ancha: se achica un poco antes de cortar
+          ctx.font = "600 " + Math.round(t2 * e) + "px " + fTxt;
+          if (ctx.measureText(q[2]).width <= ancho) break;
+        }
         ctx.fillText(recortar(ctx, q[2], ancho), px, y0 + 120 * e);
         if (q[3] && conExtra) {
           ctx.font = "500 " + Math.round(19 * e) + "px " + fTxt; ctx.fillStyle = ochenta ? tenue : "#5f5884";
@@ -1476,21 +1487,76 @@
       // Pie
       ctx.textAlign = "center"; ctx.font = "600 " + Math.round(22 * u) + "px " + fTxt;
       ctx.fillStyle = ochenta ? tenue : "#1b1440";
-      ctx.fillText("Datos de Twitch, YouTube, Google Trends, Google Noticias y Reddit · hora de Chile", W / 2, H - 62 * u);
+      ctx.fillText(recortar(ctx, "Datos de Twitch, Kick, YouTube, Google Trends, Google Noticias y Reddit · hora de Chile", W - 80 * u), W / 2, H - 62 * u);
       ctx.fillText("rust-max-bot.github.io/Documentaci-n-Gta-6-19-de-nombiembre", W / 2, H - 30 * u);
       return lienzo;
     }
-    var botonImagen = document.createElement("button");
-    botonImagen.type = "button"; botonImagen.className = "rd-descargar"; botonImagen.id = "resumen-imagen";
-    botonImagen.textContent = "Descargar como imagen";
-    caja.insertAdjacentElement("afterend", botonImagen);
-    botonImagen.addEventListener("click", function () {
-      var k = elegido, r = resumen(k);
+    /* Los cuadros que puede llevar la imagen. "Personalizar" (pedido de Bruno, 2026-11-16) deja
+       quitar los que no se quieran; por defecto van todos (Kick, solo si ese día se midió). */
+    function cuadrosImagen(r) {
+      var q = [
+        { id: "twitch", nombre: "MÁXIMO EN TWITCH", valor: r.tw ? num(r.tw.espectadores) : "—", uni: r.tw ? "espectadores a la vez" : "sin dato", extra: r.tw && r.tw.canal ? "Más visto: " + r.tw.canal.nombre : "" },
+        { id: "kick", nombre: "MÁXIMO EN KICK", valor: r.kk ? num(r.kk.kickEsp) : "—", uni: r.kk ? "espectadores a la vez" : "sin dato", extra: r.kk && r.kk.kickCanal ? "Más visto: " + r.kk.kickCanal.canal : "", hay: !!r.kk },
+        { id: "video", nombre: "VIDEO MÁS VISTO", valor: r.yt ? compacto(r.yt.visitas) : "—", uni: r.yt ? "visitas" : "sin dato", extra: r.yt ? r.yt.titulo : "" },
+        { id: "short", nombre: "SHORT MÁS VISTO", valor: r.sh ? compacto(r.sh.visitas) : "—", uni: r.sh ? "visitas" : "sin dato", extra: r.sh ? r.sh.titulo : "" },
+        { id: "trends", nombre: "GOOGLE TRENDS", valor: r.tr ? String(r.tr.interes) : "—", uni: r.tr ? "de 100, lo más alto" : "sin dato", extra: "" },
+        { id: "titulares", nombre: "TITULARES", valor: num(r.titulares), uni: "publicados ese día", extra: "" },
+        { id: "reddit", nombre: "REDDIT r/GTA6", valor: num(r.reddit), uni: "publicaciones", extra: "" },
+        { id: "mediciones", nombre: "MEDICIONES", valor: num(r.med), uni: r.huecos ? r.huecos + " con algún hueco" : "sin huecos", extra: "" }
+      ];
+      return q.filter(function (c) { return c.hay !== false; });
+    }
+    var NOMBRES = { twitch: "Twitch", kick: "Kick", video: "Video más visto", short: "Short más visto", trends: "Google Trends",
+      titulares: "Titulares", reddit: "Reddit", mediciones: "Mediciones" };
+    var quitados = {};   // lo que la persona desmarcó (se recuerda mientras la página esté abierta)
+    function seleccion(r) {
+      var sel = {};
+      cuadrosImagen(r).forEach(function (c) { sel[c.id] = !quitados[c.id]; });
+      return sel;
+    }
+    function conLetras(hacer) {   // las letras de la página tienen que estar cargadas antes de dibujar
       var css = getComputedStyle(document.documentElement);
-      // Las letras de la página tienen que estar cargadas antes de dibujar.
       var letras = [css.getPropertyValue("--f-titulo"), css.getPropertyValue("--f-texto")].map(function (f) { return "700 40px " + f.trim(); });
-      Promise.all(letras.map(function (f) { return document.fonts ? document.fonts.load(f).catch(function () {}) : null; })).then(function () {
-        var lienzo = dibujar(r, k);
+      Promise.all(letras.map(function (f) { return document.fonts ? document.fonts.load(f).catch(function () {}) : null; })).then(hacer);
+    }
+
+    var acciones = document.createElement("div"); acciones.className = "rd-acciones";
+    acciones.innerHTML = '<button type="button" class="rd-descargar" id="resumen-imagen">Descargar como imagen</button>' +
+      '<button type="button" class="rd-personalizar" id="resumen-personalizar" aria-expanded="false" aria-controls="resumen-panel">Personalizar</button>';
+    var panel = document.createElement("div"); panel.className = "rd-panel";   /* diseño A de Bruno */ panel.id = "resumen-panel"; panel.hidden = true;
+    panel.innerHTML = '<div class="rd-previa"><canvas width="1080" height="1080" aria-label="Vista previa de la imagen"></canvas><small>Vista previa</small></div>' +
+      '<fieldset class="rd-opciones"><legend>Qué mostrar</legend><div class="rd-marcas"></div>' +
+      '<p class="rd-botones"><button type="button" class="rd-todo">Marcar todo</button></p></fieldset>';
+    caja.insertAdjacentElement("afterend", acciones);
+    acciones.insertAdjacentElement("afterend", panel);
+    var previa = panel.querySelector("canvas"), marcas = panel.querySelector(".rd-marcas");
+    function verPrevia() {
+      if (panel.hidden) return;
+      var r = resumen(elegido), sel = seleccion(r);
+      marcas.innerHTML = cuadrosImagen(r).map(function (c) {
+        return '<label class="' + (sel[c.id] ? "on" : "") + '"><input type="checkbox" value="' + c.id + '"' + (sel[c.id] ? " checked" : "") + "> " + NOMBRES[c.id] + "</label>";
+      }).join("");
+      conLetras(function () { var x = previa.getContext("2d"); x.clearRect(0, 0, 1080, 1080); x.drawImage(dibujar(r, elegido, sel), 0, 0); });
+    }
+    marcas.addEventListener("change", function (e) {
+      var id = e.target.value;
+      quitados[id] = !e.target.checked;
+      var sel = seleccion(resumen(elegido));
+      if (!Object.keys(sel).some(function (k) { return sel[k]; })) quitados[id] = false;   // al menos uno
+      verPrevia();
+    });
+    panel.querySelector(".rd-todo").addEventListener("click", function () { quitados = {}; verPrevia(); });
+    $("resumen-personalizar").addEventListener("click", function () {
+      panel.hidden = !panel.hidden;
+      this.setAttribute("aria-expanded", String(!panel.hidden));
+      verPrevia();
+    });
+    $("resumen-dias").addEventListener("click", function (e) { if (e.target.dataset.dia) verPrevia(); });
+    new MutationObserver(verPrevia).observe(document.documentElement, { attributes: true, attributeFilter: ["data-tema"] });   // al cambiar de estilo
+    $("resumen-imagen").addEventListener("click", function () {
+      var k = elegido, r = resumen(k), sel = seleccion(r);
+      conLetras(function () {
+        var lienzo = dibujar(r, k, sel);
         window.__ultimaImagen = lienzo;   // para las pruebas
         lienzo.toBlob(function (blob) {
           if (!blob) return;
