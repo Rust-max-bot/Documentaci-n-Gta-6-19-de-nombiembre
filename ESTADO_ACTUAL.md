@@ -100,6 +100,7 @@ Bruno ya eligió las palabras de la comparación.
 
 ## Últimos cambios
 
+- 2026-11-16: Graphify actualizado de 0.9.107 a 0.9.111 (programa en Python 3.14, skill del proyecto y la del usuario); "Trends sin huecos" marcada como hecha en `PLAN.md` (pedido de Bruno).
 - 2026-11-16: página probada en Firefox 159 (pedido de Bruno): sin errores ni desborde a 1280 y 384 px en los dos estilos. Nueva opción `python pruebas/probar_pagina.py --firefox` (necesita `python -m playwright install firefox`); el aviso de Firefox sobre la letra Rajdhani de Google Fonts no cuenta como fallo.
 - 2026-11-16: pestañas Global / En español de los videos sin cambios de tamaño (pedido de Bruno): las dos se dibujan una vez, apiladas en el mismo lugar, y la sección mide siempre lo de la más alta (también la nota de arriba). Al cambiar, la vieja se desvanece y las tarjetas de la nueva entran en cascada con las miniaturas enfocándose (~0,5 s).
 - 2026-11-16: imagen del Resumen del día: botón "Personalizar" con vista previa y casillas (diseño A de Bruno; todo marcado por defecto), Kick en la imagen y en la tarjeta, lema de 1986 legible y emojis que ya no se cortan a la mitad.

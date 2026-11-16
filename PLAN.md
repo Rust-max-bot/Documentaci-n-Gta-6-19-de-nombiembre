@@ -50,7 +50,7 @@ Reddit. El estado vivo (dónde quedamos) está en `ESTADO_ACTUAL.md`; las reglas
       dobles y con 25 min de tiempo. Recordatorios en el Google Calendar de Bruno el 21 y el 24 nov
       (16:30 de Santiago). **Falta:** (1) comprobar el 21 que se guardó; (2) mostrarlo en la página, con opciones y capturas; (3) idea sin
       decidir: repetir lo de Doomsday en enero, después de su estreno (18 dic).
-- [ ] **Trends sin huecos** (pedido de Bruno, 2026-11-16, tras un debate entre dos agentes). Las 4
+- [x] **Trends sin huecos** (pedido de Bruno, 2026-11-16, tras un debate entre dos agentes). Las 4
       fallas hasta el 16 nov fueron 429 y ninguna hora se perdió: la medición siguiente la trae.
       **Hecho (2026-11-16):** se guarda la serie de 7 días (~169 puntos) en vez de 24; un solo
       reintento a los 20 s ante un 429 (solo si el primer intento tardó menos de 40 s); Trends al

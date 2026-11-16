@@ -153,13 +153,13 @@ vivos, ganan los vivos.
 - **Graphify** (mapa del proyecto para gastar menos tokens): la skill en
   `.claude/skills/graphify/`, el grafo en `graphify-out/` (`graph.html` para verlo,
   `GRAPH_REPORT.md` el informe) y `.graphifyignore` deja fuera las skills de terceros.
-  Programa: paquete `graphifyy` 0.9.107 de PyPI (repositorio oficial `Graphify-Labs/graphify`).
+  Programa: paquete `graphifyy` 0.9.111 de PyPI (repositorio oficial `Graphify-Labs/graphify`).
   - **El grafo se sube a git** para que las sesiones en la nube lo usen: `graph.json`,
     `graph.html`, `GRAPH_REPORT.md`, `manifest.json` y las etiquetas. La caché y las rutas
     propias de cada máquina quedan fuera (`.gitignore`).
   - **Si el trabajo cambia código** (`.js`, `.py`, `.sh`), antes del último commit correr
     `graphify update .` y subir `graphify-out/` en el mismo commit. No gasta tokens. En la nube,
-    instalarlo antes si falta: `pip install graphifyy==0.9.107`.
+    instalarlo antes si falta: `pip install graphifyy==0.9.111`.
   - **Con cambios solo en documentos** no hace falta: `graphify update` no los vuelve a leer.
     Volver a leerlos (`/graphify --update`) **sí gasta tokens: avisar a Bruno antes.**
   - **Si `graphify update` falla o se niega a achicar el grafo:** no usar `--force`; dejarlo

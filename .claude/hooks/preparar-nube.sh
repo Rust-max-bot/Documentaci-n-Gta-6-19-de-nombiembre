@@ -17,7 +17,7 @@ instalar_python() {
     python3 -m pip install -q --break-system-packages "$@" >>"$registro" 2>&1
 }
 
-if instalar_python -r pruebas/requisitos.txt graphifyy==0.9.107; then
+if instalar_python -r pruebas/requisitos.txt graphifyy==0.9.111; then
   listo+=("Playwright, Pillow y Graphify")
 else
   falta+=("paquetes de Python (pip falló)")

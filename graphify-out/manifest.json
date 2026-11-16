@@ -42,15 +42,15 @@
     "semantic_hash": "9b31786b637be3c13978bec4c2330752"
   },
   "CLAUDE.md": {
-    "mtime": 1794860263.715524,
-    "seen": 1794860265.6889205,
-    "ast_hash": "8fed863541430a0a18b94c63612c3dd8",
+    "mtime": 1794861573.831504,
+    "seen": 1794861575.8693097,
+    "ast_hash": "b9c210fb36cd26d777e115730948c612",
     "semantic_hash": ""
   },
   "ESTADO_ACTUAL.md": {
-    "mtime": 1794860263.7165215,
-    "seen": 1794860265.6889234,
-    "ast_hash": "51a56097eca268316170bf9a5d5543e3",
+    "mtime": 1794861574.016047,
+    "seen": 1794861575.8693125,
+    "ast_hash": "eeb872be5177ef356b9aa82e2626b2ad",
     "semantic_hash": ""
   },
   "GUIA_CLAVES.md": {
@@ -60,9 +60,9 @@
     "semantic_hash": ""
   },
   "PLAN.md": {
-    "mtime": 1794856242.9914305,
-    "seen": 1794857476.470876,
-    "ast_hash": "602a8a88098b754795c8b9603be7f642",
+    "mtime": 1794861574.016047,
+    "seen": 1794861575.8693163,
+    "ast_hash": "bcfd864131687ea0c17fe5529d9f4d41",
     "semantic_hash": ""
   },
   "README.md": {
@@ -156,9 +156,9 @@
     "semantic_hash": ""
   },
   ".claude/hooks/preparar-nube.sh": {
-    "mtime": 1794589090.2227538,
-    "seen": 1794781810.564065,
-    "ast_hash": "bdd97079cecd81f926da760e6c948261",
+    "mtime": 1794861573.80916,
+    "seen": 1794861575.8692572,
+    "ast_hash": "ae44dba2f1789ea0084052ca019764f8",
     "semantic_hash": ""
   },
   "pruebas/medir_parpadeo.py": {
@@ -168,8 +168,8 @@
     "semantic_hash": ""
   },
   "pruebas/navegador.py": {
-    "mtime": 1794860068.0704415,
-    "seen": 1794860265.6888874,
+    "mtime": 1794860278.5541248,
+    "seen": 1794861575.86928,
     "ast_hash": "b4e0ac2c9a373983b78b65facdd55eaf",
     "semantic_hash": ""
   },
@@ -180,8 +180,8 @@
     "semantic_hash": ""
   },
   "pruebas/probar_pagina.py": {
-    "mtime": 1794860082.5628998,
-    "seen": 1794860265.6888914,
+    "mtime": 1794860278.5551174,
+    "seen": 1794861575.8692834,
     "ast_hash": "1cf9186e3d0dd86dc2b3b730aa7dd818",
     "semantic_hash": ""
   },
@@ -192,8 +192,8 @@
     "semantic_hash": ""
   },
   "pruebas/LEEME.md": {
-    "mtime": 1794860263.7145267,
-    "seen": 1794860265.6889396,
+    "mtime": 1794860278.5541248,
+    "seen": 1794861575.8693273,
     "ast_hash": "5e18fd924fdd24b66a956ce020727f95",
     "semantic_hash": ""
   },
