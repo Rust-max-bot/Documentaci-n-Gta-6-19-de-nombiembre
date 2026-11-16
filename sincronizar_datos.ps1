@@ -26,13 +26,49 @@
 # Uso:  powershell -ExecutionPolicy Bypass -File sincronizar_datos.ps1            (una vez)
 #       powershell -ExecutionPolicy Bypass -File sincronizar_datos.ps1 -Instalar  (crea la tarea)
 #       powershell -ExecutionPolicy Bypass -File sincronizar_datos.ps1 -Quitar    (borra la tarea)
-param([switch]$Instalar, [switch]$Quitar)
+#       powershell -ExecutionPolicy Bypass -File sincronizar_datos.ps1 -Pausar    (la apaga, sin borrarla)
+#       powershell -ExecutionPolicy Bypass -File sincronizar_datos.ps1 -Reanudar  (la vuelve a encender)
+#       powershell -ExecutionPolicy Bypass -File sincronizar_datos.ps1 -Alternar  (apaga si está encendida y al revés;
+#                                                                                  lo usa sincronizar_interruptor.bat)
+#
+# Notificaciones (pedido de Bruno, 2026-11-16): cuando trae mediciones nuevas, o si algo necesita
+# atención, aparece una notificación de Windows con el título "Recuerdo GTA 6 · Sincronización".
+# No abre ventanas ni roba el foco; con un juego en pantalla completa, Windows las guarda en el
+# centro de notificaciones sin mostrarlas.
+param([switch]$Instalar, [switch]$Quitar, [switch]$Pausar, [switch]$Reanudar, [switch]$Alternar)
 
 $TAREA = "Recuerdo GTA 6 - sincronizar datos"
 $carpetaLog = Join-Path $env:LOCALAPPDATA "recuerdo-gta6"
 $log = Join-Path $carpetaLog "sincronizar.log"
 New-Item -ItemType Directory -Force $carpetaLog | Out-Null
 function Anotar([string]$t) { Add-Content -Path $log -Value ("{0:yyyy-MM-dd HH:mm:ss}  {1}" -f (Get-Date), $t) -Encoding utf8 }
+
+# Notificación de Windows (la de PowerShell, que ya viene con Windows). Si falla, solo se anota.
+function Avisar([string]$texto) {
+    try {
+        [Windows.UI.Notifications.ToastNotificationManager, Windows.UI.Notifications, ContentType = WindowsRuntime] | Out-Null
+        [Windows.Data.Xml.Dom.XmlDocument, Windows.Data.Xml.Dom.XmlDocument, ContentType = WindowsRuntime] | Out-Null
+        $esc = [Security.SecurityElement]::Escape($texto)
+        $xml = New-Object Windows.Data.Xml.Dom.XmlDocument
+        $xml.LoadXml("<toast><visual><binding template=`"ToastGeneric`"><text>Recuerdo GTA 6 · Sincronización</text><text>$esc</text></binding></visual></toast>")
+        $app = '{1AC14E77-02E7-4E5D-B744-2EB1AE5198B7}\WindowsPowerShell\v1.0\powershell.exe'
+        [Windows.UI.Notifications.ToastNotificationManager]::CreateToastNotifier($app).Show([Windows.UI.Notifications.ToastNotification]::new($xml))
+    } catch { Anotar "no se pudo mostrar la notificación: $($_.Exception.Message)" }
+}
+
+if ($Alternar) {
+    $t = Get-ScheduledTask -TaskName $TAREA -ErrorAction SilentlyContinue
+    if (-not $t) { Write-Output "La tarea no existe. Para crearla: sincronizar_datos.ps1 -Instalar"; exit 1 }
+    if ($t.State -eq "Disabled") { $Reanudar = $true } else { $Pausar = $true }
+}
+if ($Pausar -or $Reanudar) {
+    $t = Get-ScheduledTask -TaskName $TAREA -ErrorAction SilentlyContinue
+    if (-not $t) { Write-Output "La tarea no existe. Para crearla: sincronizar_datos.ps1 -Instalar"; exit 1 }
+    if ($Pausar) { Disable-ScheduledTask -TaskName $TAREA | Out-Null; $msg = "APAGADA: ya no trae mediciones sola. Se vuelve a encender con sincronizar_interruptor.bat." }
+    else { Enable-ScheduledTask -TaskName $TAREA | Out-Null; $msg = "ENCENDIDA: trae las mediciones nuevas cada 30 minutos." }
+    Anotar "sincronización $msg"; Avisar "Sincronización $msg"; Write-Output "Sincronización $msg"
+    exit 0
+}
 
 if ($Quitar) {
     Unregister-ScheduledTask -TaskName $TAREA -Confirm:$false -ErrorAction SilentlyContinue
@@ -82,12 +118,15 @@ if ($adelante -gt 0) {
 $salida = git merge --ff-only --autostash origin/main 2>&1 | Out-String
 if ($LASTEXITCODE -ne 0) {
     Anotar ("no se pudo avanzar sin riesgo; no se cambió nada. Git dijo: " + $salida.Trim())
+    Avisar "No se pudieron traer los datos sin riesgo; no se cambió nada. Detalle en el registro."
     exit 0
 }
 if ($salida -match "conflict|conflicto") {
     Anotar "se trajeron $atras commit(s), pero los cambios sin guardar del PC no se pudieron volver a poner: están a salvo en 'git stash list'."
+    Avisar "Llegaron datos nuevos, pero hay cambios sin guardar que quedaron apartados (git stash list). Avísale a Claude."
 } else {
     Anotar "se trajeron $atras commit(s) de GitHub."
+    Avisar ("Llegaron {0} novedad(es) de GitHub (mediciones nuevas). Todo en orden." -f $atras)
 }
 
 # Que la página del PC muestre lo último (si falla, la página sigue con los datos anteriores).

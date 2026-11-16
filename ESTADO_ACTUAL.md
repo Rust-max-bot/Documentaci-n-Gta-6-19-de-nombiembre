@@ -102,7 +102,7 @@ Bruno ya eligió las palabras de la comparación.
 ## Últimos cambios
 
 - 2026-11-16: Kick en la página (opción B de Bruno): líneas de Twitch y Kick en un gráfico, tabla con columna "Plataforma" y récords de Kick.
-- 2026-11-16: el PC se sincroniza solo con GitHub cada 30 min (`sincronizar_datos.ps1` y tarea de Windows; solo avanza, no toca commits sin subir).
+- 2026-11-16: sincronización del PC con GitHub (`sincronizar_datos.ps1`, tarea de Windows cada 30 min, sin ventana y con notificación al traer datos). **Apagada por Bruno**: se enciende con doble clic en `sincronizar_interruptor.bat`.
 - 2026-11-16: Kick ya se mide cada hora (fuente `kick`: espectadores y directos de la categoría 13155, más sus 10 canales). Probado en GitHub sin guardar; falta mostrarlo en la página.
 - 2026-11-16: Kick probado (6.6): la app de Bruno funciona, la categoría de GTA 6 es 13155 y se vieron 106 directos con 2.238 espectadores. 
 - 2026-11-15: portada con suelo (7.12, opción A de Bruno): vereda, calle y arena entre los hoteles y el mar, con las palmeras plantadas en la arena; el mar se queda, más angosto. Investigada la API de Kick (6.6): gratis, falta que Bruno cree la app.

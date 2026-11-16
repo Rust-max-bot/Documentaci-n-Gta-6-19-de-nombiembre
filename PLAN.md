@@ -351,7 +351,11 @@ Resultado final: **una página web** con:
   `%LOCALAPPDATA%\recuerdo-gta6\sincronizar.log`. Se quita con `-Quitar`. Corre sin ventana
   (`conhost --headless`, para no interrumpir juegos ni documentos) y, para distinguirla de un
   virus, su autor es "Recuerdo GTA 6 (proyecto de Bruno)" y su descripción empieza con "LEGÍTIMA"
-  (cómo comprobarla, en la cabecera del script).
+  (cómo comprobarla, en la cabecera del script). Avisa con una notificación de Windows
+  ("Recuerdo GTA 6 · Sincronización") cuando trae mediciones nuevas o si algo necesita atención.
+  Se apaga y enciende con doble clic en `sincronizar_interruptor.bat` (o `-Pausar` y
+  `-Reanudar`); **Bruno la dejó apagada el 2026-11-16.** Apagada no se pierde nada: los datos
+  siguen en GitHub y llegan al encenderla o al abrir `ver_pagina.bat`.
 - **Portada con suelo (tarea 7.12, opción A de Bruno, 2026-11-15): calle y playa.**
   - Condición de Bruno: el suelo se agrega sin quitar el mar.
   - Bajo los hoteles: vereda, cordón, calle con línea discontinua y arena, con las palmeras
