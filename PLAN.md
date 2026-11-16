@@ -50,16 +50,33 @@ Reddit. El estado vivo (dónde quedamos) está en `ESTADO_ACTUAL.md`; las reglas
       dobles y con 25 min de tiempo. Recordatorios en el Google Calendar de Bruno el 21 y el 24 nov
       (16:30 de Santiago). **Falta:** (1) comprobar el 21 que se guardó; (2) mostrarlo en la página, con opciones y capturas; (3) idea sin
       decidir: repetir lo de Doomsday en enero, después de su estreno (18 dic).
-- [x] **Trends sin huecos** (pedido de Bruno, 2026-11-16, tras un debate entre dos agentes). Las 4
-      fallas hasta el 16 nov fueron 429 y ninguna hora se perdió: la medición siguiente la trae.
-      **Hecho (2026-11-16):** se guarda la serie de 7 días (~169 puntos) en vez de 24; un solo
-      reintento a los 20 s ante un 429 (solo si el primer intento tardó menos de 40 s); Trends al
-      final de `FUENTES`. **Descartado:** saltarse Trends a los :37 (rompía validaciones y quitaba el
-      segundo intento gratis). **Hecho también (2026-11-16, opción A de Bruno):** el gráfico
-      de Trends es por hora (`trends_horas` en `datos.js`), cada hora en su hora real (antes ~1 h tarde)
-      y con el valor de la medición más nueva que la trae: tapa los huecos y deja la última semana en
-      una sola escala (la escala cambia en cada medición: la hora 14:00 del 16 nov pasó de 88 a 74).
-      Descartada la opción B (encadenar escalas con un cálculo propio). La 6.1 quedó asegurada (ver la 6.1).
+- [ ] **9.1 "¿Se cayeron los servidores?" más corto** (Bruno, 2026-11-16; **primero**, antes del 19).
+      Hoy hay un cuadro por medición en una tira (`web/app.js`, `$("servidores")`): 101 el 16 nov, ~340 el
+      22 nov y ~1.000 el 19 dic; en el celular los espacios de 1 px se comen los cuadros y la
+      animación (6 ms por cuadro) pasaría de 0,6 s a ~6 s. Plan: arriba "Ahora: todo funciona" (o qué
+      servicio falla) con la hora de la última medición; la tira, con opción **A** últimas 24 h por
+      hora, **B** un cuadro por día (rojo si hubo algún problema) o **C** las dos. El veredicto sigue
+      contando todo. Antes de aplicar: opciones con capturas.
+- [ ] **9.2 "¿Cuánta gente faltó?"** (Bruno, 2026-11-16; **segundo**). Nada cuenta las faltas reales.
+      Tres partes: (1) **antes del 19:** lo que dicen las encuestas, cada una leída en su fuente
+      original y marcada como intención (GameSquare 10 % planea faltar; BambooHR +9 a 17 % de días
+      libres pedidos; los ~1.000 millones de dólares del economista García Montalvo son un cálculo
+      rápido, no un estudio; el "46 %" es de GTA V, 2013); (2) **después:** lo medido por nosotros:
+      Twitch y Kick en horario laboral y escolar el 19 y 20 nov frente a los días hábiles anteriores
+      (señal, no prueba: Twitch es mundial), y Trends de "call in sick" / "excusa para faltar" (una
+      vez, del 20 al 25 nov, sin tocar la 6.1); (3) cifras reales que se publiquen (RR. HH., ISP).
+      **Datos de economía probados (2026-11-16):** metro de Nueva York por día (data.ny.gov,
+      `sayj-mze2`, sin clave, ~4 días de atraso; nació en la pandemia) responde, pero los jueves
+      varían ~2 a 5 % y el efecto esperado es ~1 %: probablemente no se note. El BLS (encuesta de
+      hogares) mide la semana del 12, no la del 19; Homebase es mensual. Una calculadora de dinero
+      perdido choca con "sin escenarios inventados": solo si Bruno lo decide. Diseño con capturas.
+- [ ] **9.3 Menos alarmas por Google** (Bruno, 2026-11-16; **tercero**, después del 22: toca el
+      recolector). Hasta el 16 nov, 6 huecos en 101 mediciones, todos de Google (Trends 429 ×4,
+      Noticias 429 y 503) y ninguno perdió datos (la siguiente medición los trae). Posible patrón:
+      14:07 y 21:07 UTC fallaron dos veces cada una (pocos casos). Plan: resumen de huecos por fuente,
+      hora, día y código en `recolector/revisar.py` (el registro ya está en `datos/`); un reintento
+      a los 20 s para Noticias, como Reddit; y aviso amarillo (no rojo) si solo falla Google con
+      429/503, dejando el rojo para claves caducadas o fallos varias horas seguidas.
 - [ ] **6.6 Instagram** (Kick ya está hecho; ver "Lo ya hecho"). Parece difícil: la API de Meta
       solo funciona con una cuenta de empresa o creador propia unida a una página de Facebook, y
       la búsqueda por hashtag da pocas publicaciones, no el total, con límite semanal. Si no
@@ -149,6 +166,8 @@ No se empieza hasta que Bruno avise con una confirmación oficial de la versión
 - **Fase 7:** 7.2 hora cero, 7.3 viaje en el tiempo, 7.5 resumen del día, 7.6 hora cero en cada
   lugar, línea de tiempo con eventos automáticos, 7.7 álbum, 7.8 resumen como imagen, 7.9 otros
   lanzamientos, 7.10 copias de los primeros días, 7.11 Próximamente y 7.12 portada con suelo.
+- **Trends sin huecos (2026-11-16):** serie de 7 días guardada, un reintento ante 429 y gráfico
+  por hora en una sola escala (opción A); descartados saltarse los :37 y encadenar escalas (B).
 - **Herramientas:** Graphify (mapa del proyecto) y sincronización del PC con GitHub
   (`sincronizar_datos.ps1`).
 - Descartado por Bruno: instalar la página como app en el celular (2026-11-14).

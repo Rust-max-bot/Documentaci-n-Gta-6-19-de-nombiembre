@@ -100,6 +100,7 @@ Bruno ya eligió las palabras de la comparación.
 
 ## Últimos cambios
 
+- 2026-11-16: tres planes nuevos en `PLAN.md`, en este orden (Bruno): 9.1 servidores más cortos (antes del 19), 9.2 "¿Cuánta gente faltó?" y 9.3 menos alarmas por Google (después del 22). El fallo de las 21:07 UTC fue Noticias 429: la medición se guardó y no se perdió nada.
 - 2026-11-16: Graphify actualizado de 0.9.107 a 0.9.111 (programa en Python 3.14, skill del proyecto y la del usuario); "Trends sin huecos" marcada como hecha en `PLAN.md` (pedido de Bruno).
 - 2026-11-16: página probada en Firefox 159 (pedido de Bruno): sin errores ni desborde a 1280 y 384 px en los dos estilos. Nueva opción `python pruebas/probar_pagina.py --firefox` (necesita `python -m playwright install firefox`); el aviso de Firefox sobre la letra Rajdhani de Google Fonts no cuenta como fallo.
 - 2026-11-16: pestañas Global / En español de los videos sin cambios de tamaño (pedido de Bruno): las dos se dibujan una vez, apiladas en el mismo lugar, y la sección mide siempre lo de la más alta (también la nota de arriba). Al cambiar, la vieja se desvanece y las tarjetas de la nueva entran en cascada con las miniaturas enfocándose (~0,5 s).
@@ -111,12 +112,14 @@ Bruno ya eligió las palabras de la comparación.
 - 2026-11-16: anotada en el plan la API alfa de Google Trends; Bruno envió el formulario él mismo (falta saber si responden).
 - 2026-11-16: titulares como resumen (opción B de Bruno): los 8 medios que más publican y los 6 últimos; la lista completa y el filtro por día quedan tras el botón "Ver los N titulares". El resumen lo deja hecho `generar_web.py` en `datos.js`.
 - 2026-11-16: horas en 12 h o 24 h según el dispositivo de quien visita; en 24 h la cuenta aclara "(8 de la mañana)" (pedido de Bruno).
-- 2026-11-16: un solo plan (pedido de Bruno): `PLAN.md` junta tareas, decisiones y riesgos en corto (de ~68 KB a ~14 KB); los dos planes completos, en `historial/PLAN_2026-11-16.md` y `historial/PLAN_DE_TRABAJO_2026-11-16.md`.
 
 ## Pendiente
 
 La lista completa y su orden están en `PLAN.md`. Resumen (2026-11-14):
 
+0. **Nuevo (2026-11-16, orden de Bruno):** 9.1 servidores más cortos (antes del 19), 9.2
+   "¿Cuánta gente faltó?" (encuestas antes del 19; lo medido, después) y 9.3 menos alarmas por
+   Google (después del 22). Detalle en `PLAN.md`.
 1. **Antes del 19 nov:** unir el PR de "Lo que espero" (7.4). Después del lanzamiento, Bruno
    escribe "Lo que me pareció" en `web/capsula.js`.
 2. **Fase 4:** 4.3 análisis de datos (necesita varios días de datos).
