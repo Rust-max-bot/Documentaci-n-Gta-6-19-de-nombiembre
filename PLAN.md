@@ -58,18 +58,22 @@ Reddit. El estado vivo (dónde quedamos) está en `ESTADO_ACTUAL.md`; las reglas
       hora, **B** un cuadro por día (rojo si hubo algún problema) o **C** las dos. El veredicto sigue
       contando todo. Antes de aplicar: opciones con capturas.
 - [ ] **9.2 "¿Cuánta gente faltó?"** (Bruno, 2026-11-16; **segundo**). Nada cuenta las faltas reales.
-      Tres partes: (1) **antes del 19:** lo que dicen las encuestas, cada una leída en su fuente
-      original y marcada como intención (GameSquare 10 % planea faltar; BambooHR +9 a 17 % de días
-      libres pedidos; los ~1.000 millones de dólares del economista García Montalvo son un cálculo
-      rápido, no un estudio; el "46 %" es de GTA V, 2013); (2) **después:** lo medido por nosotros:
-      Twitch y Kick en horario laboral y escolar el 19 y 20 nov frente a los días hábiles anteriores
-      (señal, no prueba: Twitch es mundial), y Trends de "call in sick" / "excusa para faltar" (una
-      vez, del 20 al 25 nov, sin tocar la 6.1); (3) cifras reales que se publiquen (RR. HH., ISP).
-      **Datos de economía probados (2026-11-16):** metro de Nueva York por día (data.ny.gov,
-      `sayj-mze2`, sin clave, ~4 días de atraso; nació en la pandemia) responde, pero los jueves
-      varían ~2 a 5 % y el efecto esperado es ~1 %: probablemente no se note. El BLS (encuesta de
-      hogares) mide la semana del 12, no la del 19; Homebase es mensual. Una calculadora de dinero
-      perdido choca con "sin escenarios inventados": solo si Bruno lo decide. Diseño con capturas.
+      (1) **Antes del 19:** las encuestas, leídas en su fuente original y marcadas como intención
+      (GameSquare 10 % planea faltar; BambooHR +9 a 17 % de días libres pedidos; los ~1.000 millones
+      de dólares de García Montalvo son un cálculo rápido; el "46 %" es de GTA V, 2013). (2)
+      **Después:** Twitch y Kick en horario laboral y escolar el 19 y 20 nov frente a los días hábiles
+      anteriores (señal, no prueba), y **Trends de frases para faltar** (Bruno: "estoy enfermo", "no
+      puedo ir al trabajo", "faltar al trabajo", "call in sick"…): una vez del 20 al 25 nov, aparte de
+      la 6.1; frases cortas (las largas suelen dar 0) y Bruno elige las palabras tras una prueba
+      real. (3) Cifras reales que se publiquen. **Economía solo como curiosidad** (Bruno): metro de
+      Nueva York por día (data.ny.gov `sayj-mze2`, sin clave, probado) con la advertencia de que
+      los jueves varían más (~6 %) que el efecto esperado (~1 %). Sin calculadora de dinero perdido.
+- [ ] **9.4 Tráfico de internet** (Bruno, 2026-11-16, sin decidir). Hay precedente: Warzone (2020) y
+      Assassin's Creed (2024) dieron récords en DE-CIX. **Cloudflare Radar** da tráfico por país y por
+      hora, también de días pasados: se pide una vez después del 22 (12 al 26 nov, varios países) sin tocar el recolector. Probado: la API responde y pide una clave (gratis
+      con la cuenta de Cloudflare de Bruno; va en `.env` y en los Secrets). Límite: solo ve lo que
+      pasa por Cloudflare; las descargas de PlayStation y Xbox usan otras redes. Además, las
+      noticias de récords de DE-CIX y proveedores, con su fuente.
 - [ ] **9.3 Menos alarmas por Google** (Bruno, 2026-11-16; **tercero**, después del 22: toca el
       recolector). Hasta el 16 nov, 6 huecos en 101 mediciones, todos de Google (Trends 429 ×4,
       Noticias 429 y 503) y ninguno perdió datos (la siguiente medición los trae). Posible patrón:
