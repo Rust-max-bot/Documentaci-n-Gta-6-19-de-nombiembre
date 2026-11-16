@@ -612,32 +612,52 @@
     var caja = $("videos"), nota = $("videos-nota"), tabs = $("videos-tabs");
     var NOTAS = { global: nota.textContent,
                   es: "Videos que YouTube marca en español, de creadores de Chile, España, México y otros países. La búsqueda se hace una vez por hora." };
+    var LISTAS = [["global", "Global"], ["es", "En español"]];
     var elegida = "global";
-    function pintar() {
-      tabs.innerHTML = [["global", "Global"], ["es", "En español"]].map(function (t) {
-        return '<button type="button" data-lista="' + t[0] + '" aria-pressed="' + (t[0] === elegida) + '"' + (t[0] === elegida ? ' class="activo"' : "") + ">" + t[1] + "</button>";
-      }).join("");
-      nota.textContent = NOTAS[elegida];
-      var todas = filas(elegida === "es" ? espanol : global);
+    /* Sin cambios de tamaño al pasar de pestaña (pedido de Bruno, 2026-11-16): las dos pestañas
+       se dibujan una sola vez, apiladas en el mismo lugar, y la caja mide lo de la más alta (lo
+       mismo con las dos notas de arriba). Así cambiar no estira ni encoge la sección. La que no
+       se ve queda oculta e "inert" (sin foco con el teclado). Al cambiar, la vieja se desvanece
+       rápido y las tarjetas de la nueva entran en cascada, como si se cargaran. */
+    nota.innerHTML = LISTAS.map(function (t) { return '<span data-lista="' + t[0] + '">' + limpio(NOTAS[t[0]]) + "</span>"; }).join("");
+    caja.classList.add("v-pilas");
+    caja.innerHTML = LISTAS.map(function (t) { return '<div class="v-panel" data-lista="' + t[0] + '">' + contenido(t[0]) + "</div>"; }).join("");
+    [].forEach.call(caja.querySelectorAll(".v-panel"), flechasShorts);
+    function contenido(lista) {
+      var todas = filas(lista === "es" ? espanol : global);
       var normales = todas.filter(function (f) { return f.v.short !== true; }).slice(0, VIDEOS_VISIBLES);
       var shorts = todas.filter(function (f) { return f.v.short === true; });
-      caja.innerHTML = '<h3 class="sub v-sub">Videos</h3><ul class="videos">' + tarjetas(normales, "Todavía no hay videos.") + "</ul>" +
+      return '<h3 class="sub v-sub">Videos</h3><ul class="videos">' + tarjetas(normales, "Todavía no hay videos.") + "</ul>" +
         (shorts.length ? '<h3 class="sub v-sub">Shorts <small>' + shorts.length + " · desliza para ver más</small>" +
           '<span class="flechas-shorts">' + flechaHTML("izq", "Ver Shorts anteriores") + flechaHTML("der", "Ver más Shorts") + "</span></h3>" +
           '<ul class="videos shorts" aria-label="Shorts: desliza hacia el lado para ver más">' + tarjetas(shorts, "") + "</ul>" : "");
-      flechasShorts();
+    }
+    function pintar(animar) {
+      tabs.innerHTML = LISTAS.map(function (t) {
+        return '<button type="button" data-lista="' + t[0] + '" aria-pressed="' + (t[0] === elegida) + '"' + (t[0] === elegida ? ' class="activo"' : "") + ">" + t[1] + "</button>";
+      }).join("");
+      [].forEach.call(nota.children, function (s) { s.classList.toggle("fuera", s.dataset.lista !== elegida); });
+      [].forEach.call(caja.children, function (p) {
+        var ver = p.dataset.lista === elegida;
+        p.classList.toggle("fuera", !ver); p.inert = !ver;
+        if (ver && animar) {
+          // Cada tarjeta lleva su número para la cascada (solo las primeras esperan; el resto entra junto).
+          [].forEach.call(p.querySelectorAll("li"), function (li, i) { li.style.setProperty("--i", Math.min(li.parentNode.classList.contains("shorts") ? i + 4 : i, 9)); });
+          repetir(p, "entra", 900); repetir(nota, "entra", 400);
+        }
+      });
     }
     // Flechas de la tira de Shorts (pedido de Bruno, 2026-11-15): además de deslizar, se pasan con un toque.
-    function flechasShorts() {
-      var tira = caja.querySelector(".videos.shorts"); if (!tira) return;
-      var a = caja.querySelector(".flechas-shorts .flecha-izq"), b = caja.querySelector(".flechas-shorts .flecha-der");
+    function flechasShorts(panel) {
+      var tira = panel.querySelector(".videos.shorts"); if (!tira) return;
+      var a = panel.querySelector(".flechas-shorts .flecha-izq"), b = panel.querySelector(".flechas-shorts .flecha-der");
       function estado() { a.disabled = tira.scrollLeft <= 2; b.disabled = tira.scrollLeft + tira.clientWidth >= tira.scrollWidth - 2; }
       function mover(s) { tira.scrollBy({ left: s * Math.max(160, tira.clientWidth - 160), behavior: QUIETO.matches ? "auto" : "smooth" }); }
       a.addEventListener("click", function () { mover(-1); }); b.addEventListener("click", function () { mover(1); });
       tira.addEventListener("scroll", estado, { passive: true }); estado();
     }
-    tabs.addEventListener("click", function (e) { var l = e.target.dataset.lista; if (l) { elegida = l; pintar(); } });
-    pintar();
+    tabs.addEventListener("click", function (e) { var l = e.target.dataset.lista; if (l && l !== elegida) { elegida = l; pintar(true); } });
+    pintar(false);
     gota(tabs, "gota-sel", "button.activo");
   })();
 

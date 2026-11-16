@@ -18,9 +18,9 @@
     "semantic_hash": ""
   },
   "web/app.js": {
-    "mtime": 1794858121.8280118,
-    "seen": 1794858311.596573,
-    "ast_hash": "cc0108a599e9303f374569732cd94b70",
+    "mtime": 1794858657.377031,
+    "seen": 1794858845.1293848,
+    "ast_hash": "3989b0feddb633cb5a67e0cf6c0ab602",
     "semantic_hash": ""
   },
   "web/datos-ejemplo.js": {
@@ -48,9 +48,9 @@
     "semantic_hash": ""
   },
   "ESTADO_ACTUAL.md": {
-    "mtime": 1794858309.399421,
-    "seen": 1794858311.5965855,
-    "ast_hash": "fc1bae90bca128e26bde0a5cd990c519",
+    "mtime": 1794858842.808156,
+    "seen": 1794858845.1293962,
+    "ast_hash": "887b439f9ff357aac22836fa47f6d81d",
     "semantic_hash": ""
   },
   "GUIA_CLAVES.md": {

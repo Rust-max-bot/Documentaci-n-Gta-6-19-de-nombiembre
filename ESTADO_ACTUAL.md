@@ -100,6 +100,7 @@ Bruno ya eligió las palabras de la comparación.
 
 ## Últimos cambios
 
+- 2026-11-16: pestañas Global / En español de los videos sin cambios de tamaño (pedido de Bruno): las dos se dibujan una vez, apiladas en el mismo lugar, y la sección mide siempre lo de la más alta (también la nota de arriba). Al cambiar, la vieja se desvanece y las tarjetas de la nueva entran en cascada con las miniaturas enfocándose (~0,5 s).
 - 2026-11-16: imagen del Resumen del día: botón "Personalizar" con vista previa y casillas (diseño A de Bruno; todo marcado por defecto), Kick en la imagen y en la tarjeta, lema de 1986 legible y emojis que ya no se cortan a la mitad.
 - 2026-11-16: imagen al compartir nueva (opción C de Bruno): un solo título grande sobre las dos portadas al día (con suelo), lema en franja legible y "Twitch · Kick · YouTube · Google Trends"; la hace `pruebas/hacer_compartir.py --opcion C --guardar`. Kick agregado al texto de la vista previa.
 - 2026-11-16: la 6.1 se lanza sola: el despertador de Cloudflare (nuevo horario `41 15 21-24 11 *`, puesto por Claude a pedido de Bruno) del 21 al 24 nov, con respaldo de GitHub a las 18:41 UTC; guarda una sola vez. Recordatorios en el calendario de Bruno el 21 y el 24.
