@@ -71,6 +71,7 @@ televisor antiguo.
 | Sol | Grande, en el centro, amarillo → naranja → rosa → magenta, **cortado en franjas horizontales** que se ensanchan hacia abajo. Brillo rosa que "late" (6 s). |
 | Torres de fondo | Siluetas oscuras con bordes cian de neón (una con fachada hueca y palmera dentro; otra de tres niveles con luces). |
 | Hoteles | Fila de hoteles art déco (dibujo compartido con 2026) con brillo rosa alrededor. |
+| Calle y playa (7.12) | Bajo los hoteles, en neón: vereda violeta, cordón rosa, calle oscura con línea discontinua cian y arena violeta, con las palmeras plantadas en ella; un borde de espuma rosa da paso a la rejilla. |
 | Suelo | **Rejilla de neón** en perspectiva que avanza hacia quien mira: líneas cian hacia el horizonte y líneas rosas de lado a lado. Se dibuja en un `<canvas>` (una casilla cada 1,6 s). Borde cian brillante en el horizonte. |
 | Palmeras | Tres siluetas negro-violeta que se mecen (7 s). En el celular se oculta la más chica. |
 | Encima de todo | **Líneas de televisor antiguo** (rayas horizontales finas) sobre toda la página. |
@@ -89,7 +90,8 @@ Paleta llamada "Atardecer encendido" (elegida por Bruno).
 | Sol | Disco blanco-amarillo difuso a la derecha que flota suavemente (12 s). |
 | Torres de fondo | Torres modernas en lila suave, "a lo lejos": una en forma de vela, cubos en obra con **grúa**, una con estructura curva por fuera, una torcida, una de balcones ondulados y terrazas verdes. **Suben una por una con un pequeño rebote** al pasar de 1986 a 2026. |
 | Hoteles | La misma fila art déco, en colores vivos: verde menta, rosa, amarillo, celeste y naranja, con bordes blancos. |
-| Mar | En vez de rejilla: **agua** turquesa → azul profundo, con líneas de oleaje que se mueven (2,4 s) y el reflejo del sol en el agua. |
+| Calle y playa (7.12) | Bajo los hoteles: vereda rosada, cordón claro, calle violeta con línea discontinua amarilla y arena dorada, con las palmeras plantadas en ella; una espuma blanca que se mueve marca dónde empieza el mar. De día, colores más claros; de noche, calle casi negra, cordón cian y arena lila. |
+| Mar | Debajo de la arena (más angosto desde la 7.12): **agua** turquesa → azul profundo, con líneas de oleaje que se mueven (2,4 s) y el reflejo del sol en el agua. |
 | Palmeras | Las mismas tres, en violeta oscuro. |
 | Título | Letra **Limelight** (art déco), blanca con sombra rosa sólida debajo; las tres partes del título suben al cargar, una tras otra. Lema en **Outfit**, azul marino. |
 | Fondo de la página | Degradado melocotón → rosa → celeste claro. |

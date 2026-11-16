@@ -170,7 +170,7 @@ la página, así que cada una se presenta con opciones y capturas antes de aplic
       oficiales de GTA 6, análisis del primer mes (4.3), rebobinar (7.1) y "GTA 6 en PC: sin
       fecha oficial". **Hecha el 2026-11-14** con la opción C de Bruno (camino hacia adelante).
       Al terminar la 4.3, la 7.1 o la Fase 8, marcar su punto como listo en `web/app.js`.
-- [ ] **7.12 Una portada con más lógica: que Miami tenga suelo** (idea de Bruno, 2026-11-15;
+- [x] **7.12 Una portada con más lógica: que Miami tenga suelo** (idea de Bruno, 2026-11-15;
       sin fecha, es una posibilidad). Hoy los hoteles y las palmeras están parados directo sobre
       el mar (2026) o sobre la rejilla de neón (1986), y los troncos de las palmeras terminan en
       el agua. Idea: poner tierra entre los hoteles y el mar, como en Ocean Drive (una calle,
@@ -182,6 +182,7 @@ la página, así que cada una se presenta con opciones y capturas antes de aplic
       cuenta regresiva. Cambia cómo se ve la página: antes, opciones con capturas para Bruno.
       **Condición de Bruno (2026-11-15): el suelo se agrega sin quitar el mar.** El mar sigue
       en la escena; el suelo va entre los hoteles y el agua.
+      **Hecha el 2026-11-15 con la opción A de Bruno** (calle y playa; ver `PLAN.md`).
 - [ ] **7.13 Sección de memes** (pedido de Bruno, 2026-11-15: "si es posible"; requiere
       investigación antes de hacer nada). Va de la mano con la "búsqueda calmada" de la
       Fase 5, que ya incluía memes (`PLAN.md`, sección 4). Lo que hay que investigar primero:

@@ -179,13 +179,36 @@ body {
 @keyframes brillar { to { background-position: 0 0, 0 16px, 0 0; } }
 
 /* Palmeras (en ambas escenas) */
-.palma { position: absolute; bottom: 4%; transform-origin: 50% 100%; animation: mecer 7s ease-in-out infinite alternate; }
+.palma { position: absolute; bottom: 2%; transform-origin: 50% 100%; animation: mecer 7s ease-in-out infinite alternate; }
 .escena-80 .palma { fill: #0a0118; }
 .escena-26 .palma { fill: #2a1446; }
 .p1 { left: -1%; height: 72%; width: 30vh; }
 .p2 { right: 1%; height: 82%; width: 34vh; animation-delay: -3s; transform: scaleX(-1); }
-.p3 { left: 13%; height: 46%; width: 20vh; animation-delay: -5s; opacity: .92; }
+.p3 { left: 13%; bottom: 7%; height: 46%; width: 20vh; animation-delay: -5s; opacity: .92; }
 @keyframes mecer { from { rotate: -1.6deg; } to { rotate: 1.8deg; } }
+
+/* ---------- Suelo entre los hoteles y el mar (tarea 7.12, idea de Bruno, 2026-11-15) ----------
+   Opción A elegida por Bruno: vereda, cordón, calle con línea discontinua y arena, con las
+   palmeras plantadas en la arena y la espuma donde empieza el mar (o la rejilla, en 1986).
+   Condición de Bruno: el mar se queda. Ocupa la parte de arriba de la franja del mar (24 % de
+   abajo), así que la portada no crece. */
+.orilla { position: absolute; left: 0; right: 0; bottom: 0; height: 24%; pointer-events: none; }
+.escena-26 { --vereda: #f6b9b4; --bordillo: #fff1e4; --calle: #5b4a88; --raya: #ffe08a; --arena: #ffd6a0; --arena2: #f1ae7a; --espuma: rgba(255, 255, 255, .92); --brillo-suelo: none; }
+.escena-80 { --vereda: #2b0a5a; --bordillo: #ff2e97; --calle: #0d0221; --raya: #22e6ff; --arena: #3a0d6a; --arena2: #1e0640; --espuma: #ff2e97; --brillo-suelo: drop-shadow(0 0 5px rgba(255, 46, 151, .8)); }
+[data-hora="dia"] .escena-26 { --vereda: #ffd8cc; --bordillo: #ffffff; --calle: #6c7a9a; --raya: #ffffff; --arena: #ffe9bf; --arena2: #ffd08c; }
+[data-hora="noche"] .escena-26 { --vereda: #3c2b66; --bordillo: #7ff6ff; --calle: #151030; --raya: #ffd98a; --arena: #6c5678; --arena2: #3f3157; --espuma: rgba(190, 230, 255, .65); }
+[data-hora="dia"] .escena-80 { --vereda: #ffc4ec; --bordillo: #ff2e97; --calle: #3a2a7a; --raya: #fff07a; --arena: #ffe0b0; --arena2: #ffb8a0; --espuma: #ffffff; --brillo-suelo: none; }
+.calle-playa {
+  position: absolute; left: 0; right: 0; top: 0; height: 56%; filter: var(--brillo-suelo);
+  background: linear-gradient(var(--vereda) 0 15%, var(--bordillo) 15% 19%, var(--calle) 19% 50%, var(--bordillo) 50% 52%, var(--arena) 52%, var(--arena2) 100%);
+}
+.calle-playa::before { content: ""; position: absolute; left: 0; right: 0; top: 33%; height: 3%; min-height: 2px; background: repeating-linear-gradient(90deg, var(--raya) 0 34px, transparent 34px 72px); }
+.calle-playa::after {
+  content: ""; position: absolute; left: 0; right: 0; top: 100%; height: 12px;
+  background: linear-gradient(var(--espuma) 0 3px, transparent 3px), radial-gradient(circle at 50% 0, var(--espuma) 0 7px, transparent 8px) 0 0 / 22px 10px repeat-x;
+  animation: espuma 3.2s ease-in-out infinite alternate;
+}
+@keyframes espuma { to { transform: translate(-8px, 3px); } }
 
 /* Barra superior y botón de cambio de estilo */
 .barra { position: relative; z-index: 3; display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 18px clamp(16px, 4vw, 48px); flex-wrap: wrap; }

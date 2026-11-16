@@ -335,6 +335,14 @@ Resultado final: **una página web** con:
   - Las ventas se marcan solas al escribir `gta6`, y Trends cuando `datos.js` traiga
     `trendsExtra`; las demás se marcan a mano en `web/app.js` al terminar su tarea.
   - Se descartaron A (lista con casillas) y B (carteles con sello).
+- **Portada con suelo (tarea 7.12, opción A de Bruno, 2026-11-15): calle y playa.**
+  - Condición de Bruno: el suelo se agrega sin quitar el mar.
+  - Bajo los hoteles: vereda, cordón, calle con línea discontinua y arena, con las palmeras
+    plantadas en la arena; después, espuma y el mar (en 1986, lo mismo en neón y la rejilla).
+  - Ocupa la parte de arriba de la franja del mar: la portada no crece. A cambio, el mar queda
+    más angosto (en el celular se ve poco), algo que Bruno vio en las capturas antes de elegir.
+  - Se descartaron B (paseo con muro bajo que tapa la base de las palmeras) y C (bahía: arena
+    a los lados y el mar entrando por el centro).
 
 ## 3. Qué se descartó y por qué
 
