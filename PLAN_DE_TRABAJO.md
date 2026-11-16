@@ -111,6 +111,21 @@ usarla. Ver el aviso 7, sobre la fecha del lanzamiento.)*
   - Falta: (1) ejecutarlo de verdad entre el 20 y el 25 nov, cuando Bruno diga; (2) mostrarlo
     en la página, con opciones y capturas; (3) idea: repetir la pregunta en enero, para que
     salga el estreno de Doomsday (sin decidir). Queda en `[ ]`.
+- [ ] **6.6 Estadísticas de Kick e Instagram** (pedido de Bruno, 2026-11-15: "si es posible";
+      para hacerla más adelante). Nada de esto está verificado todavía: lo que sigue es lo que
+      Claude cree y hay que probarlo con una consulta real antes de dar nada por hecho.
+  - **Kick:** parece la más posible. Kick tiene una API oficial para desarrolladores (hay que
+    registrar una app y pedir una clave). Idea: espectadores en vivo de GTA 6 en Kick, como ya
+    se hace con Twitch, y Kick frente a Twitch en la página. La clave iría en los Secrets de
+    GitHub.
+  - **Instagram:** parece difícil. La API oficial de Meta solo funciona con una cuenta de
+    empresa o creador propia, unida a una página de Facebook, y la búsqueda por hashtag da
+    pocas publicaciones y no el total (además, tiene límite de hashtags por semana). Si no
+    sirve, la alternativa es anotar a mano lo llamativo como evento, como con TikTok (2.5).
+  - **Ojo con la fecha (aviso 7):** lo que se mide en vivo (espectadores de Kick) solo se puede
+    guardar mientras pasa. Si se quiere tener Kick el día del lanzamiento, hay que hacerla
+    antes del 19 nov; después, solo se medirá desde el día en que empiece.
+  - Si cambia la página, opciones con capturas antes de aplicarla.
 
 ## Fase 7 — Ideas para que la página sea memorable (lo que queda)
 
@@ -153,6 +168,21 @@ la página, así que cada una se presenta con opciones y capturas antes de aplic
       ejemplo, una calle de neón antes de la rejilla). Tiene que funcionar en los 2 estilos, los
       3 momentos del día y a 1280 y 384 px, y la portada no puede crecer tanto que tape la
       cuenta regresiva. Cambia cómo se ve la página: antes, opciones con capturas para Bruno.
+      **Condición de Bruno (2026-11-15): el suelo se agrega sin quitar el mar.** El mar sigue
+      en la escena; el suelo va entre los hoteles y el agua.
+- [ ] **7.13 Sección de memes** (pedido de Bruno, 2026-11-15: "si es posible"; requiere
+      investigación antes de hacer nada). Va de la mano con la "búsqueda calmada" de la
+      Fase 5, que ya incluía memes (`PLAN.md`, sección 4). Lo que hay que investigar primero:
+  - **De dónde salen:** por ejemplo, las publicaciones de Reddit que ya se guardan (las que
+    son imagen), Know Your Meme, o memes que Bruno elija y suba él mismo (como el álbum, 7.7).
+  - **Derechos de autor:** la página es pública; copiar imágenes de otros tiene riesgo. Lo
+    más seguro es enlazar a la publicación original (con su miniatura, si el sitio lo
+    permite) en vez de guardar la imagen, y siempre decir de dónde viene.
+  - **Contenido:** algunos memes pueden ser ofensivos; habría que elegirlos, no mostrarlos
+    todos solos.
+  - **No inventar:** Claude no crea memes ni dice que algo es "el meme del día" sin una fuente.
+  - Resultado de la investigación: un plan corto con opciones para Bruno. La sección cambia
+    cómo se ve la página: opciones con capturas antes de aplicarla.
 
 ## Fase 8 — Segundo lanzamiento: GTA 6 en PC (dormida)
 

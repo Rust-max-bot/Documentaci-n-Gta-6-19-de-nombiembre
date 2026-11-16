@@ -101,6 +101,7 @@ Bruno ya eligió las palabras de la comparación.
 
 ## Últimos cambios
 
+- 2026-11-15: pedidos de Bruno anotados en el plan para después: 6.6 Kick e Instagram, 7.13 sección de memes (requiere investigación) y, en la 7.12, que el suelo se agregue sin quitar el mar.
 - 2026-11-15: las torres nuevas de 2026 ya no suben ni bajan partidas en dos (los cortes de la animación pasaban por la vela y la torre con grúa).
 - 2026-11-15: torre con hueco y palmera arreglada (opción B de Bruno): el hueco sube para que los hoteles no lo tapen y se quitó la escalera roja en zigzag.
 - 2026-11-15: idea de Bruno anotada en el plan (7.12): que la portada tenga suelo (calle, vereda o arena) y las palmeras no salgan del mar.
@@ -110,8 +111,6 @@ Bruno ya eligió las palabras de la comparación.
 - 2026-11-15: "Lo que espero de GTA 6 (mi opinión)" en la cápsula del tiempo (7.4), texto de Bruno corregido y aprobado por él, y cápsula rediseñada como cintas de casete con "Leer todo" (opción C); PR #25 para que lo una.
 - 2026-11-15: PR #23 unido (17:42 UTC). Primera medición con los cambios (18:07 UTC) en verde: 44 de 50 Shorts en Global, 23 de 50 en español, 0 de 25 en los de 4 a 20 min; 14 se marcaron por la forma porque youtube.com no respondió a tiempo (se vuelven a preguntar en el turno siguiente).
 - 2026-11-15: récords "Video más visto" y "Short más visto" por separado, con aviso dentro de cada cuadro (opción A de Bruno); idea a futuro del panel de control en el plan.
-- 2026-11-15: videos y Shorts separados (6.5, opción B: tira de Shorts), filtro "¿es de GTA 6?" (título + tema de YouTube + lista, Roblox fuera) y búsqueda de videos de 4 a 20 minutos; PR para que Bruno lo una.
-- 2026-11-14: copias vendidas en los primeros días (7.10, opción B) y "Próximamente" (7.11, opción C); pregunta GTA 6 frente a Doomsday en la 6.1, probada.
 
 ## Pendiente
 
@@ -122,8 +121,8 @@ La lista completa y su orden están en `PLAN_DE_TRABAJO.md`. Resumen (2026-11-14
 2. **Fase 4:** 4.3 análisis de datos (necesita varios días de datos).
 3. **Fase 6** (ideas de Bruno): 6.1 más Google Trends, **una sola vez entre el 20 y el 25 nov**,
    fuera del recolector de cada hora (decisión de Bruno, 2026-11-13; ver `PLAN.md`). Programa
-   listo y probado, con las palabras que eligió Bruno; falta ejecutarlo y mostrarlo. 6.2 y 6.3, hechas. 6.4 videos en español, hecha (pestañas en la página).
-4. **Fase 7:** 7.1 rebobinar (después del lanzamiento); 7.12 portada con suelo (idea de Bruno, sin fecha); 7.3 y 7.5 a 7.11, hechas. Cuando Take-Two publique las ventas, escribirlas en `gta6` de `web/lanzamientos.js`.
+   listo y probado, con las palabras que eligió Bruno; falta ejecutarlo y mostrarlo. 6.2 y 6.3, hechas. 6.4 videos en español, hecha (pestañas en la página). 6.6 Kick e Instagram (pedido de Bruno, sin verificar; Kick, si se quiere el día del lanzamiento, antes del 19 nov).
+4. **Fase 7:** 7.1 rebobinar (después del lanzamiento); 7.12 portada con suelo, sin quitar el mar (idea de Bruno, sin fecha); 7.13 sección de memes (requiere investigación); 7.3 y 7.5 a 7.11, hechas. Cuando Take-Two publique las ventas, escribirlas en `gta6` de `web/lanzamientos.js`.
    **Fase 8 (GTA 6 en PC):** dormida hasta que Bruno avise con confirmación oficial.
 5. **Fase 5** (después del lanzamiento): búsqueda calmada; clave de Reddit.
 6. **Ideas sueltas:** 2.5 TikTok (sin acceso fácil); D6 (Bruno pidió ignorarla por ahora).
