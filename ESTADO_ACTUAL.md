@@ -100,6 +100,7 @@ Bruno ya eligió las palabras de la comparación.
 
 ## Últimos cambios
 
+- 2026-11-16: Trends más resistente al 429 (pedido de Bruno): guarda la serie de 7 días (~169 puntos) en vez de 24 y reintenta una vez a los 20 s. Falta en la página: serie por hora y el problema de la escala (ver "Trends sin huecos" en `PLAN.md`).
 - 2026-11-16: anotada en el plan la API alfa de Google Trends; Bruno envió el formulario él mismo (falta saber si responden).
 - 2026-11-16: titulares como resumen (opción B de Bruno): los 8 medios que más publican y los 6 últimos; la lista completa y el filtro por día quedan tras el botón "Ver los N titulares". El resumen lo deja hecho `generar_web.py` en `datos.js`.
 - 2026-11-16: horas en 12 h o 24 h según el dispositivo de quien visita; en 24 h la cuenta aclara "(8 de la mañana)" (pedido de Bruno).
@@ -108,12 +109,6 @@ Bruno ya eligió las palabras de la comparación.
 - 2026-11-16: sincronización del PC con GitHub (`sincronizar_datos.ps1`, tarea de Windows cada 30 min, sin ventana y con notificación al traer datos). **Apagada por Bruno**: se enciende con doble clic en `sincronizar_interruptor.bat`.
 - 2026-11-16: Kick ya se mide cada hora (fuente `kick`: espectadores y directos de la categoría 13155, más sus 10 canales). Probado en GitHub sin guardar; falta mostrarlo en la página.
 - 2026-11-16: Kick probado (6.6): la app de Bruno funciona, la categoría de GTA 6 es 13155 y se vieron 106 directos con 2.238 espectadores. 
-- 2026-11-15: portada con suelo (7.12, opción A de Bruno): vereda, calle y arena entre los hoteles y el mar, con las palmeras plantadas en la arena; el mar se queda, más angosto. Investigada la API de Kick (6.6): gratis, falta que Bruno cree la app.
-- 2026-11-15: pedidos de Bruno anotados en el plan para después: 6.6 Kick e Instagram, 7.13 sección de memes (requiere investigación) y, en la 7.12, que el suelo se agregue sin quitar el mar.
-- 2026-11-15: las torres nuevas de 2026 ya no suben ni bajan partidas en dos (los cortes de la animación pasaban por la vela y la torre con grúa).
-- 2026-11-15: torre con hueco y palmera arreglada (opción B de Bruno): el hueco sube para que los hoteles no lo tapen y se quitó la escalera roja en zigzag.
-- 2026-11-15: idea de Bruno anotada en el plan (7.12): que la portada tenga suelo (calle, vereda o arena) y las palmeras no salgan del mar.
-- 2026-11-15: microinteracciones aprobadas por Bruno tras una vista previa: gota con resorte en todos los botones de elegir, enfoque de la cuenta al cambiar de país, "Secciones" que crece hasta ser el menú, hundirse al presionar, flechas en días/páginas/Shorts, controles que no cambian de lugar al tocarlos y barra de desplazamiento estable (`DISENO_VISUAL.md` al día).
 
 ## Pendiente
 
@@ -124,7 +119,7 @@ La lista completa y su orden están en `PLAN.md`. Resumen (2026-11-14):
 2. **Fase 4:** 4.3 análisis de datos (necesita varios días de datos).
 3. **Fase 6** (ideas de Bruno): 6.1 más Google Trends, **una sola vez entre el 20 y el 25 nov**,
    fuera del recolector de cada hora (decisión de Bruno, 2026-11-13; ver `PLAN.md`). Programa
-   listo y probado, con las palabras que eligió Bruno; falta ejecutarlo y mostrarlo. 6.2 y 6.3, hechas. 6.4 videos en español, hecha (pestañas en la página). 6.6 Kick e Instagram (pedido de Bruno; Kick investigada: Bruno crea la app en kick.com/settings/developer y guarda las claves en los Secrets; si se quiere el día del lanzamiento, antes del 19 nov).
+   listo y probado, con las palabras que eligió Bruno; falta ejecutarlo y mostrarlo. **Trends sin huecos** (16 nov): recolector hecho; falta la serie por hora y la escala en la página. 6.2 y 6.3, hechas. 6.4 videos en español, hecha (pestañas en la página). 6.6 Kick e Instagram (pedido de Bruno; Kick investigada: Bruno crea la app en kick.com/settings/developer y guarda las claves en los Secrets; si se quiere el día del lanzamiento, antes del 19 nov).
 4. **Fase 7:** 7.1 rebobinar (después del lanzamiento); 7.13 sección de memes (requiere investigación); 7.3 y 7.5 a 7.11, hechas. Cuando Take-Two publique las ventas, escribirlas en `gta6` de `web/lanzamientos.js`.
    **Fase 8 (GTA 6 en PC):** dormida hasta que Bruno avise con confirmación oficial.
 5. **Fase 5** (después del lanzamiento): búsqueda calmada; clave de Reddit.

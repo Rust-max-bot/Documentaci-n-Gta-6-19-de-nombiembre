@@ -44,7 +44,16 @@ YOUTUBE_LARGOS_CADA_MIN = 50      # minutos mínimos entre dos búsquedas de vid
 PARTES_VIDEO = "snippet,statistics,contentDetails,topicDetails,player"
 SHORTS_SEGUNDOS = 45              # tiempo máximo por fuente para preguntar a youtube.com qué videos son Shorts
 TRENDS_PALABRA = "GTA 6"
-TRENDS_PUNTOS = 24                # últimas 24 horas de la serie de 7 días
+# Desde el 2026-11-16 (Bruno) se guarda la serie entera de 7 días (unos 169 puntos por hora, ~10 KB),
+# no solo las últimas 24 horas: así basta con que una medición salga bien cada pocos días para no
+# perder ninguna hora, y hay más horas en común para comparar las escalas de dos mediciones.
+TRENDS_PUNTOS = 200               # tope de puntos que se guardan (la serie de 7 días trae ~169)
+# Google responde a veces 429 ("demasiadas peticiones") a las máquinas de GitHub: 4 de 98
+# mediciones hasta el 16 nov. Un solo reintento corto, y solo si queda tiempo, para no
+# arriesgar el límite de 8 minutos del workflow. Trends va al final de FUENTES por lo mismo.
+TRENDS_ESPERA_429 = 20            # segundos antes del reintento
+TRENDS_REINTENTA_ANTES_DE = 40    # solo se reintenta si el primer intento tardó menos que esto (s)
+TRENDS_ESPERA_CONSULTA = 20       # segundos máximos por consulta (pedir() usa 30 por defecto)
 NOTICIAS_RSS = "https://news.google.com/rss/search?q=%22GTA+6%22&hl=es-419&gl=CL&ceid=CL:es-419"
 REDDIT_RSS = "https://www.reddit.com/r/GTA6/new/.rss?limit=100"
 # Tarea 6.3 (Bruno, 2026-11-13): GTA comparado con lo más visto. Se guarda desde antes del
@@ -363,12 +372,20 @@ def youtube_es(estado):
     return {"busqueda": YOUTUBE_BUSQUEDA, "idioma": YOUTUBE_ES_IDIOMA, "busco": buscar, "unidades": unidades, "videos": videos}
 
 
-def trends(estado):
+class _Trends429(Exception):
+    """Google respondió 429 en algún paso; se puede reintentar."""
+
+
+def _serie_trends():
+    """Un intento completo (cookie nueva, explore, serie). Devuelve timelineData."""
+    espera = TRENDS_ESPERA_CONSULTA
     ab = urllib.request.build_opener(urllib.request.HTTPCookieProcessor(http.cookiejar.CookieJar()))
-    pedir("https://trends.google.com/trends/explore?q=GTA%206&date=now%207-d", abridor=ab)  # solo da la cookie
+    pedir("https://trends.google.com/trends/explore?q=GTA%206&date=now%207-d", abridor=ab, espera=espera)  # solo da la cookie
     req = {"comparisonItem": [{"keyword": TRENDS_PALABRA, "geo": "", "time": "now 7-d"}], "category": 0, "property": ""}
     cod, txt = pedir("https://trends.google.com/trends/api/explore?" + urllib.parse.urlencode(
-        {"hl": "es", "tz": 0, "req": json.dumps(req)}), abridor=ab)
+        {"hl": "es", "tz": 0, "req": json.dumps(req)}), abridor=ab, espera=espera)
+    if cod == 429:
+        raise _Trends429("paso explore")
     if cod != 200:
         raise Falla(f"Google Trends (paso explore): código {cod}")
     widgets = json.loads(txt[txt.index("{"):]).get("widgets", [])
@@ -376,10 +393,27 @@ def trends(estado):
     if not w:
         raise Falla("Google Trends no entregó la serie de tiempo")
     cod, txt = pedir("https://trends.google.com/trends/api/widgetdata/multiline?" + urllib.parse.urlencode(
-        {"hl": "es", "tz": 0, "req": json.dumps(w["request"], separators=(",", ":")), "token": w["token"]}), abridor=ab)
+        {"hl": "es", "tz": 0, "req": json.dumps(w["request"], separators=(",", ":")), "token": w["token"]}),
+        abridor=ab, espera=espera)
+    if cod == 429:
+        raise _Trends429("paso serie")
     if cod != 200:
         raise Falla(f"Google Trends (paso serie): código {cod}")
-    linea = json.loads(txt[txt.index("{"):])["default"]["timelineData"]
+    return json.loads(txt[txt.index("{"):])["default"]["timelineData"]
+
+
+def trends(estado):
+    inicio = time.monotonic()
+    try:
+        linea = _serie_trends()
+    except _Trends429 as e:
+        if time.monotonic() - inicio >= TRENDS_REINTENTA_ANTES_DE:
+            raise Falla(f"Google Trends ({e}): código 429, sin tiempo para reintentar") from None
+        time.sleep(TRENDS_ESPERA_429)
+        try:
+            linea = _serie_trends()
+        except _Trends429 as e2:
+            raise Falla(f"Google Trends ({e2}): código 429 tras 2 intentos") from None
     if not linea:
         raise Falla("Google Trends devolvió una serie vacía")
     puntos = [{
@@ -638,7 +672,6 @@ FUENTES = {
     "youtube": youtube,
     "youtube_es": youtube_es,
     "youtube_largos": youtube_largos,
-    "trends": trends,
     "noticias": noticias,
     "reddit": reddit,
     "twitch_ranking": twitch_ranking,
@@ -646,4 +679,5 @@ FUENTES = {
     "youtube_trailers": youtube_trailers,
     "playstation": playstation,
     "xbox": xbox,
+    "trends": trends,   # al final: si Google pide esperar (429), el reintento no atrasa a las demás
 }

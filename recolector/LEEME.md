@@ -59,7 +59,8 @@ youtube      busqueda, unidades gastadas, videos (hasta 50): id, titulo, canal, 
              si no), "duracion" (más de 3 minutos: no puede ser Short) o "forma" (youtube.com
              no respondió: se adivina por duración y forma del reproductor, y se vuelve a
              preguntar en la siguiente medición). youtube_es y youtube_largos traen lo mismo
-trends       palabra, rango, puntos_en_fuente, puntos: últimas 24 horas {t, interes, parcial}
+trends       palabra, rango, puntos_en_fuente, puntos: la serie de 7 días {t, interes, parcial}
+             (hasta el 16 nov, solo las últimas 24 horas). Ante un 429, un reintento a los 20 s.
 noticias     en_fuente, nuevas: solo titulares que no estaban en los 3 días anteriores
              {titulo, medio, medio_url, url, t}
 playstation  ok, servicios_chile, region, problemas (+ original si hay problemas)

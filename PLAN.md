@@ -46,6 +46,16 @@ Reddit. El estado vivo (dónde quedamos) está en `ESTADO_ACTUAL.md`; las reglas
       a Doomsday día por día (en la página, solo esa comparación). **Falta:** (1) ejecutarlo
       cuando Bruno diga; (2) mostrarlo en la página, con opciones y capturas; (3) idea sin
       decidir: repetir lo de Doomsday en enero, después de su estreno (18 dic).
+- [ ] **Trends sin huecos** (pedido de Bruno, 2026-11-16, tras un debate entre dos agentes). Las 4
+      fallas hasta el 16 nov fueron 429 y ninguna hora se perdió: la medición siguiente la trae.
+      **Hecho (2026-11-16):** se guarda la serie de 7 días (~169 puntos) en vez de 24; un solo
+      reintento a los 20 s ante un 429 (solo si el primer intento tardó menos de 40 s); Trends al
+      final de `FUENTES`. **Descartado:** saltarse Trends a los :37 (rompía validaciones y quitaba el
+      segundo intento gratis). **Falta, en orden:** (a) la página arma la serie por la hora de cada
+      punto (la medición más nueva que la traiga completa): tapa huecos y corrige que hoy cada valor
+      se dibuja ~1 h tarde; (b) la escala cambia en cada medición (la hora 14:00 del 16 nov pasó de 88
+      a 74): mostrar la curva de la última medición o encadenar escalas, con opciones y capturas
+      para Bruno; (c) asegurar que la 6.1 corra entre el 20 y el 25 nov (programarla o recordatorio).
 - [ ] **6.6 Instagram** (Kick ya está hecho; ver "Lo ya hecho"). Parece difícil: la API de Meta
       solo funciona con una cuenta de empresa o creador propia unida a una página de Facebook, y
       la búsqueda por hashtag da pocas publicaciones, no el total, con límite semanal. Si no
@@ -193,8 +203,9 @@ Cada una, en corto. El porqué y las opciones descartadas, en `historial/PLAN_20
 
 1. **Lo que no se guarda el 19 nov no se recupera** (espectadores en vivo, visitas de esa hora).
    Trends sí se puede pedir después.
-2. **Google Trends es frágil:** sin acceso oficial; responde 429 si se le pregunta mucho.
-   Respaldo: descargar a mano desde su web.
+2. **Google Trends es frágil:** sin acceso oficial; responde 429 si se le pregunta mucho
+   (desde GitHub, ~1 de cada 25 mediciones). Defensas: reintento, serie de 7 días guardada y
+   medición a los :37 la semana del lanzamiento. Respaldo: descargar a mano desde su web.
 3. **El "máximo en Google Trends" siempre vale 100:** no sirve como logro sin otra cosa con qué
    comparar (eso es la 6.1).
 4. **Peso de los datos:** ~20 a 25 KB por medición (más el día del lanzamiento); del orden de 20

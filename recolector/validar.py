@@ -104,7 +104,8 @@ def _youtube_largos(r):
 
 def _trends(r):
     puntos = r.get("puntos")
-    exigir(isinstance(puntos, list) and 0 < len(puntos) <= 24, "Trends: lista de puntos inválida")
+    # Hasta el 16 nov se guardaban 24 puntos; desde entonces, la serie de 7 días (~169).
+    exigir(isinstance(puntos, list) and 0 < len(puntos) <= 200, "Trends: lista de puntos inválida")
     for p in puntos:
         exigir(es_iso(p.get("t")), "Trends: hora inválida")
         exigir(es_entero(p.get("interes")) and p["interes"] <= 100, "Trends: interés fuera de 0-100")
