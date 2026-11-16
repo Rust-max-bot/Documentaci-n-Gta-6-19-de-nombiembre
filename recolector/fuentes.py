@@ -25,6 +25,9 @@ from email.utils import parsedate_to_datetime
 from red import UA, Falla, a_iso, pedir, pedir_json
 
 TWITCH_CATEGORIA = "1867279146"   # "Grand Theft Auto VI", verificado el 2026-11-12
+KICK_CATEGORIA = 13155            # "Grand Theft Auto VI (GTA)" en Kick, verificado el 2026-11-16 (tarea 6.6)
+KICK_PAGINAS_MAX = 5              # 1.000 directos por página
+KICK_CANALES = 10                 # canales con más público que se guardan en cada medición
 TWITCH_CANALES = 20               # canales con más público que se guardan en cada medición
 TWITCH_PAGINAS_MAX = 60           # 100 transmisiones por página: hasta 6.000 transmisiones
 YOUTUBE_BUSQUEDA = "GTA 6"
@@ -596,8 +599,42 @@ def youtube_trailers(estado):
     return {"unidades": 1, "pedidos": len(YOUTUBE_TRAILERS), "videos": videos}
 
 
+def kick(estado):
+    """Tarea 6.6: espectadores de GTA VI en Kick (API oficial, clave temporal de la app de Bruno).
+    Suma el público de todos los directos de la categoría y guarda los de más público."""
+    cid = os.environ.get("KICK_CLIENT_ID", "")
+    sec = os.environ.get("KICK_CLIENT_SECRET", "")
+    if not cid or not sec:
+        raise Falla("faltan las claves de Kick")
+    cuerpo = urllib.parse.urlencode({"grant_type": "client_credentials", "client_id": cid, "client_secret": sec}).encode()
+    cod, txt = pedir("https://id.kick.com/oauth/token", {"Content-Type": "application/x-www-form-urlencoded"}, cuerpo)
+    if cod != 200:
+        raise Falla(f"clave temporal de Kick: código {cod}")
+    try:
+        cab = {"Authorization": "Bearer " + json.loads(txt)["access_token"], "Accept": "application/json"}
+    except (ValueError, KeyError):
+        raise Falla("clave temporal de Kick: respuesta inesperada") from None
+    directos, cursor, completo = [], "", False
+    for _ in range(KICK_PAGINAS_MAX):
+        url = f"https://api.kick.com/public/v2/livestreams?category_id={KICK_CATEGORIA}&limit=1000"
+        if cursor:
+            url += "&cursor=" + urllib.parse.quote(cursor)
+        d = pedir_json(url, "directos de Kick", cab)
+        directos += d.get("data") or []
+        cursor = (d.get("pagination") or {}).get("next_cursor") or ""
+        if not cursor:
+            completo = True
+            break
+    directos.sort(key=lambda x: x.get("viewer_count", 0), reverse=True)
+    canales = [{"canal": (x.get("channel") or {}).get("slug", ""), "espectadores": x.get("viewer_count", 0),
+                "idioma": x.get("language_code", "")} for x in directos[:KICK_CANALES]]
+    return {"categoria": KICK_CATEGORIA, "espectadores": sum(x.get("viewer_count", 0) for x in directos),
+            "transmisiones": len(directos), "completo": completo, "canales": canales}
+
+
 FUENTES = {
     "twitch": twitch,
+    "kick": kick,
     "youtube": youtube,
     "youtube_es": youtube_es,
     "youtube_largos": youtube_largos,

@@ -30,7 +30,7 @@ SANTIAGO = timezone(timedelta(hours=-3))
 NOMBRE_ARCHIVO = re.compile(r"^\d{4}-\d{2}-\d{2}\.jsonl$")
 DIAS_DE_ESTADO = 3                # archivos recientes que se leen para no repetir titulares
 TAMANO_MAX_FUENTE = 100_000       # caracteres; si una fuente entrega más, se guarda como hueco
-SECRETOS = ("TWITCH_CLIENT_ID", "TWITCH_CLIENT_SECRET", "YOUTUBE_API_KEY")
+SECRETOS = ("TWITCH_CLIENT_ID", "TWITCH_CLIENT_SECRET", "YOUTUBE_API_KEY", "KICK_CLIENT_ID", "KICK_CLIENT_SECRET")
 
 
 def abortar(mensaje):
@@ -116,6 +116,8 @@ def resumen(nombre, r):
         return f"HUECO: {r['error']}"
     if nombre == "twitch":
         return f"{r['espectadores']} espectadores en {r['transmisiones']} transmisiones"
+    if nombre == "kick":
+        return f"{r['espectadores']} espectadores en {r['transmisiones']} directos"
     if nombre in ("youtube", "youtube_largos"):
         v = r["videos"][0]
         busco = "" if "busco" not in r else ("; buscó" if r["busco"] else "; sin búsqueda")

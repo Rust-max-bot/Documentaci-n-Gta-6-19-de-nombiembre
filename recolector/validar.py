@@ -53,6 +53,21 @@ def _twitch(r):
     exigir(sum(c["espectadores"] for c in canales) <= r["espectadores"], "Twitch: los canales suman más que el total")
 
 
+def _kick(r):
+    exigir(es_entero(r.get("categoria"), 1), "Kick: categoría inválida")
+    exigir(es_entero(r.get("espectadores")), "Kick: espectadores no es un número válido")
+    exigir(es_entero(r.get("transmisiones")), "Kick: transmisiones no es un número válido")
+    exigir(isinstance(r.get("completo"), bool), "Kick: falta 'completo'")
+    canales = r.get("canales")
+    exigir(isinstance(canales, list) and len(canales) <= 10, "Kick: lista de canales inválida")
+    exigir(r["transmisiones"] >= len(canales), "Kick: hay más canales que transmisiones")
+    for c in canales:
+        exigir(isinstance(c.get("canal"), str) and c["canal"], "Kick: canal sin nombre")
+        exigir(es_entero(c.get("espectadores")), "Kick: espectadores de un canal inválidos")
+        exigir(isinstance(c.get("idioma"), str), "Kick: idioma inválido")
+    exigir(sum(c["espectadores"] for c in canales) <= r["espectadores"], "Kick: los canales suman más que el total")
+
+
 def _youtube(r):
     exigir(es_entero(r.get("unidades"), 1), "YouTube: faltan las unidades gastadas")
     videos = r.get("videos")
@@ -184,6 +199,7 @@ def _servidor(r):
 
 CHEQUEOS = {
     "twitch": _twitch,
+    "kick": _kick,
     "youtube": _youtube,
     "youtube_es": _youtube_es,
     "youtube_largos": _youtube_largos,
