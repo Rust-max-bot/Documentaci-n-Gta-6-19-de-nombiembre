@@ -50,18 +50,7 @@ Reddit. El estado vivo (dónde quedamos) está en `ESTADO_ACTUAL.md`; las reglas
       dobles y con 25 min de tiempo. Recordatorios en el Google Calendar de Bruno el 21 y el 24 nov
       (16:30 de Santiago). **Falta:** (1) comprobar el 21 que se guardó; (2) mostrarlo en la página, con opciones y capturas; (3) idea sin
       decidir: repetir lo de Doomsday en enero, después de su estreno (18 dic).
-- [ ] **9.2 "¿Cuánta gente faltó?"** (Bruno, 2026-11-16; **segundo**). Nada cuenta las faltas reales.
-      (1) **Antes del 19:** las encuestas, leídas en su fuente original y marcadas como intención
-      (GameSquare 10 % planea faltar; BambooHR +9 a 17 % de días libres pedidos; los ~1.000 millones
-      de dólares de García Montalvo son un cálculo rápido; el "46 %" es de GTA V, 2013). (2)
-      **Después:** Twitch y Kick en horario laboral y escolar el 19 y 20 nov frente a los días hábiles
-      anteriores (señal, no prueba), y **Trends de frases para faltar** (Bruno: "estoy enfermo", "no
-      puedo ir al trabajo", "faltar al trabajo", "call in sick"…): una vez del 20 al 25 nov, aparte de
-      la 6.1; frases cortas (las largas suelen dar 0) y Bruno elige las palabras tras una prueba
-      real. (3) Cifras reales que se publiquen. **Economía solo como curiosidad** (Bruno): metro de
-      Nueva York por día (data.ny.gov `sayj-mze2`, sin clave, probado) con la advertencia de que
-      los jueves varían más (~6 %) que el efecto esperado (~1 %). Sin calculadora de dinero perdido.
-- [ ] **9.3 Menos alarmas por Google** (Bruno, 2026-11-16; **tercero**, después del 22: toca el
+- [ ] **9.3 Menos alarmas por Google** (Bruno, 2026-11-16; después del 22: toca el
       recolector). Hasta el 16 nov, 6 huecos en 101 mediciones, todos de Google (Trends 429 ×4,
       Noticias 429 y 503) y ninguno perdió datos (la siguiente medición los trae). Posible patrón:
       14:07 y 21:07 UTC fallaron dos veces cada una (pocos casos). Plan: resumen de huecos por fuente,
@@ -165,7 +154,9 @@ No se empieza hasta que Bruno avise con una confirmación oficial de la versión
   (`sincronizar_datos.ps1`).
 - Descartado por Bruno: instalar la página como app en el celular (2026-11-14); tráfico de
   internet con Cloudflare Radar (2026-11-16); medir las redes de descarga de PlayStation y Xbox
-  (CloudFront, Akamai, Fastly: no publican cifras): basta con "¿Se cayeron los servidores?".
+  (CloudFront, Akamai, Fastly: no publican cifras): basta con "¿Se cayeron los servidores?";
+  la 9.2 "¿Cuánta gente faltó?" (2026-11-16: encuestas, Twitch y Kick en horario laboral, Trends
+  de frases para faltar y el metro de Nueva York; el detalle quedó en `git log`).
 
 ## Decisiones vigentes
 

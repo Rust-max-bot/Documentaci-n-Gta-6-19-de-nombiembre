@@ -100,6 +100,7 @@ Bruno ya eligió las palabras de la comparación.
 
 ## Últimos cambios
 
+- 2026-11-16: 9.2 "¿Cuánta gente faltó?" descartada (decisión de Bruno); queda la 9.3 (después del 22).
 - 2026-11-16: 9.1 hecha (opción C de Bruno): "¿Se cayeron los servidores?" con caja "Ahora" (verde o rojo, con la hora de la última medición) y, por servicio, un cuadro por día y cada medición de las últimas 24 h; ya no crece sin fin. Se prueba con `?probar-servidores-mal`.
 - 2026-11-16: tres planes nuevos en `PLAN.md`, en este orden (Bruno): 9.1 servidores más cortos (antes del 19), 9.2 "¿Cuánta gente faltó?" y 9.3 menos alarmas por Google (después del 22). El fallo de las 21:07 UTC fue Noticias 429: la medición se guardó y no se perdió nada.
 - 2026-11-16: Graphify actualizado de 0.9.107 a 0.9.111 (programa en Python 3.14, skill del proyecto y la del usuario); "Trends sin huecos" marcada como hecha en `PLAN.md` (pedido de Bruno).
@@ -117,11 +118,9 @@ Bruno ya eligió las palabras de la comparación.
 
 La lista completa y su orden están en `PLAN.md`. Resumen (2026-11-14):
 
-0. **Nuevo (2026-11-16, orden de Bruno):** 9.1 servidores más cortos (**hecha**, opción C), 9.2
-   "¿Cuánta gente faltó?" (encuestas antes del 19; lo medido, después) y 9.3 menos alarmas por
-   Google (después del 22). En la 9.2, economía solo como curiosidad y Trends de frases para
-   faltar. Descartados (Bruno): Cloudflare Radar y medir las redes de descarga de las consolas.
-   Detalle en `PLAN.md`.
+0. **Nuevo (2026-11-16, orden de Bruno):** 9.1 servidores más cortos (**hecha**, opción C) y 9.3
+   menos alarmas por Google (después del 22). Descartados (Bruno): la 9.2 "¿Cuánta gente
+   faltó?", Cloudflare Radar y medir las redes de descarga de las consolas. Detalle en `PLAN.md`.
 1. **Antes del 19 nov:** unir el PR de "Lo que espero" (7.4). Después del lanzamiento, Bruno
    escribe "Lo que me pareció" en `web/capsula.js`.
 2. **Fase 4:** 4.3 análisis de datos (necesita varios días de datos).
