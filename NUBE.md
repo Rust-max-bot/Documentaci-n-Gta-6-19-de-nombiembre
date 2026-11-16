@@ -17,7 +17,7 @@ que siga con el trabajo del proyecto. Las reglas para Claude están en `CLAUDE.m
 
 Un mensaje así (cambiando las tareas):
 
-> Lee CLAUDE.md, ESTADO_ACTUAL.md y PLAN_DE_TRABAJO.md, resúmeme dónde quedamos y, cuando te
+> Lee CLAUDE.md, ESTADO_ACTUAL.md y PLAN.md, resúmeme dónde quedamos y, cuando te
 > confirme, haz la tanda de la 2.4 a la 3.3. Si una tarea necesita que yo decida algo,
 > pregúntame con capturas y mientras tanto sigue con las tareas de la tanda que no dependan
 > de esa decisión.

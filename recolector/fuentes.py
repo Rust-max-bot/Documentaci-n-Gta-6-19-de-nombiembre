@@ -35,7 +35,7 @@ YOUTUBE_RESULTADOS = 25           # videos nuevos que entrega cada búsqueda
 YOUTUBE_SEGUIMIENTO = 50          # máximo de videos cuyas visitas se miden (1 unidad cada 50)
 # Tarea 6.4 (Bruno, 2026-11-13): una segunda búsqueda con idioma preferido español, para ver a
 # los creadores hispanohablantes. La búsqueda (100 unidades) se hace como mucho una vez por hora;
-# en los otros turnos solo se vuelven a medir sus videos (1 unidad). Ver PLAN_DE_TRABAJO.md, 6.4.
+# en los otros turnos solo se vuelven a medir sus videos (1 unidad). Ver historial/PLAN_DE_TRABAJO_2026-11-14.md, 6.4.
 YOUTUBE_ES_IDIOMA = "es"
 YOUTUBE_ES_CADA_MIN = 50          # minutos mínimos entre dos búsquedas en español
 YOUTUBE_CADA_MIN = 50             # minutos mínimos entre dos búsquedas globales (antes del 15 nov: en cada medición)

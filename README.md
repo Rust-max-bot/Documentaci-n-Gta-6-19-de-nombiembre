@@ -121,12 +121,11 @@ secretos de GitHub (y la del despertador, como secreto de Cloudflare).
 | Archivo | Qué tiene |
 | --- | --- |
 | `ESTADO_ACTUAL.md` | Dónde quedó el trabajo, los últimos cambios y lo pendiente |
-| `PLAN_DE_TRABAJO.md` | La lista ordenada de tareas |
-| `PLAN.md` | Las decisiones tomadas, las fuentes de datos y los riesgos |
+| `PLAN.md` | Las tareas que faltan, las decisiones vigentes y los riesgos |
 | `CLAUDE.md` | Las reglas de trabajo para Claude, el asistente que ayuda con el proyecto |
 | `NUBE.md` | Cómo trabajar en el proyecto desde una sesión en la nube |
 | `GUIA_CLAVES.md` | Cómo se crearon las claves de Twitch y YouTube |
-| `historial/` | Versiones viejas de `ESTADO_ACTUAL.md` y `PLAN_DE_TRABAJO.md` |
+| `historial/` | Versiones viejas de `ESTADO_ACTUAL.md` y del plan |
 
 ## Aviso legal
 

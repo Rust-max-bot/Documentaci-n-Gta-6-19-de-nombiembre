@@ -44,7 +44,7 @@ FILTRO = RAIZ / "recolector" / "filtro_videos.json"   # qué videos se muestran 
 CANALES = 3         # canales de Twitch por medición
 
 
-# Filtro "¿de verdad es de GTA 6?" (pedido de Bruno, 2026-11-15; pruebas en PLAN.md).
+# Filtro "¿de verdad es de GTA 6?" (pedido de Bruno, 2026-11-15; pruebas en historial/PLAN_2026-11-16.md).
 NOMBRA_GTA6 = re.compile(r"\bgta\s*-?\s*(6|vi)\b|\bgta(6|vi)\b|\bgrand\s+theft\s+auto\s*-?\s*(6|vi)\b", re.IGNORECASE)
 CODIGO_VIDEO = re.compile(r"(?:v=|youtu\.be/|shorts/)?([\w-]{11})$")
 

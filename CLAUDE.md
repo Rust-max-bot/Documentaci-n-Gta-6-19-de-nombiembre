@@ -19,16 +19,17 @@ tiempo y tablas de números de Twitch, YouTube y Google Trends. Es un proyecto p
 ## Al iniciar una sesión
 
 1. Trae los últimos cambios con `git pull`.
-2. Lee `ESTADO_ACTUAL.md` entero (es corto) y la fase en curso de `PLAN_DE_TRABAJO.md`. Lee
-   `PLAN.md` cuando la tarea toque una decisión, una fuente de datos, un riesgo o la
+2. Lee `ESTADO_ACTUAL.md` entero (es corto) y, de `PLAN.md`, las tareas que faltan. Lee el
+   resto de `PLAN.md` cuando la tarea toque una decisión, una fuente de datos, un riesgo o la
    estructura de carpetas.
 3. Si algo no te queda claro, pregúntalo antes de resumir: no rellenes huecos.
 4. Resume a Bruno qué está hecho, qué está pendiente, qué reglas están en pausa (si hay) y dónde quedó
    el trabajo (no como si se empezara de cero) y espera su confirmación antes de trabajar.
 
 **Fuentes de verdad:** las reglas, aquí; el estado vivo, en `ESTADO_ACTUAL.md`; la lista
-ordenada de tareas, en `PLAN_DE_TRABAJO.md`; las decisiones, fases y riesgos, en `PLAN.md`;
-qué se hizo y por qué, en `git log`. Si un chat viejo contradice
+de tareas, las decisiones vigentes y los riesgos, en `PLAN.md` (un solo plan desde el
+2026-11-16, pedido de Bruno: antes eran `PLAN.md` y `PLAN_DE_TRABAJO.md`); qué se hizo y por
+qué, en `git log`. Si un chat viejo contradice
 a estos archivos, ganan los archivos.
 
 ## Cómo comunicarse con Bruno
@@ -60,7 +61,7 @@ a estos archivos, ganan los archivos.
   nuevo. Los fallos se reportan tal cual. Con `python pruebas/probar_pagina.py` (hace todo
   eso; `--seccion "#id"` captura una parte de cerca) y, si se toca el despertador,
   `python pruebas/probar_despertador.py`. Detalle en `pruebas/LEEME.md`.
-- **Seguir `PLAN_DE_TRABAJO.md` en orden.** Una tarea se marca `[x]` solo cuando está hecha y
+- **Seguir las tareas de `PLAN.md` en orden.** Una tarea se marca `[x]` solo cuando está hecha y
   verificada sin errores; si queda a medias, sigue en `[ ]` con el fallo anotado al lado.
 - **Usar Graphify siempre que se pueda, para ahorrar tokens y tiempo** (pedido de Bruno,
   2026-11-12): antes de abrir o buscar en archivos del proyecto, preguntar al grafo
@@ -75,7 +76,8 @@ a estos archivos, ganan los archivos.
 Cada paso terminado y verificado se guarda solo, sin que Bruno lo pida:
 
 1. Actualizar `ESTADO_ACTUAL.md` si cambió el estado, un pendiente o "Dónde quedamos";
-   `PLAN.md` si se tomó una decisión; y este archivo si cambió una regla.
+   `PLAN.md` si se tomó una decisión o cambió una tarea (en corto: el detalle va en el commit);
+   y este archivo si cambió una regla.
 2. Commit en español que diga **qué y por qué**, con el detalle en el cuerpo.
 3. `git fetch` y push. Nunca `--force` (Bruno lo autorizó una sola vez, el 2026-11-12, para
    limpiar su información personal del historial). Si hay cambios remotos, `git pull --rebase` y avisar
@@ -85,14 +87,14 @@ No se guarda trabajo a medias: si el paso espera una decisión de Bruno, se dice
 y se termina sin guardar. Para deshacer, `git revert`. `ESTADO_ACTUAL.md` se mantiene corto
 borrando lo viejo (ya está en `git log`).
 
-## Archivar `ESTADO_ACTUAL.md` y `PLAN_DE_TRABAJO.md`
+## Archivar `ESTADO_ACTUAL.md` y `PLAN.md`
 
 Cuando uno de los dos pasa de **20.000 bytes**, se archiva en vez de seguir creciendo
 (el freno automático avisa al terminar una respuesta; límite de los dos decidido por Bruno,
 2026-11-13):
 
 1. Moverlo con `git mv` a `historial/ESTADO_AAAA-MM-DD.md` o
-   `historial/PLAN_DE_TRABAJO_AAAA-MM-DD.md` (fecha del día; si ya existe uno con esa fecha,
+   `historial/PLAN_AAAA-MM-DD.md` (fecha del día; si ya existe uno con esa fecha,
    añadir `-2`, `-3`…). Los archivos de `historial/` no se editan, salvo para corregir un
    error factual, y anotándolo en el propio archivo.
 2. Crear uno nuevo con la misma estructura, conservando solo lo necesario para seguir:
@@ -100,15 +102,15 @@ Cuando uno de los dos pasa de **20.000 bytes**, se archiva en vez de seguir crec
      "Pendiente" completo y las decisiones o avisos que sigan vigentes. "Últimos cambios"
      empieza con una sola línea:
      `- AAAA-MM-DD: estado anterior archivado en historial/ESTADO_AAAA-MM-DD.md`.
-   - **`PLAN_DE_TRABAJO.md`:** las reglas de la cabecera, las fechas que mandan, **todas las
-     tareas `[ ]` con su texto completo** (lo que falta, los fallos anotados y lo que ya
-     existe para ellas), una línea por fase con lo ya hecho (por ejemplo, "Fase 1: hecha,
-     1.1 a 1.7") y los avisos que sigan vigentes. Arriba, una línea que diga dónde quedó el
-     plan anterior.
+   - **`PLAN.md`:** la cabecera, las fechas que mandan, **todas las tareas `[ ]` con su
+     texto completo** (lo que falta, los fallos anotados y lo que ya existe para ellas), una
+     línea por fase con lo ya hecho (por ejemplo, "Fase 1: hecha, 1.1 a 1.7"), las decisiones
+     vigentes en una o dos líneas cada una y los riesgos y avisos que sigan vigentes. Arriba,
+     una línea que diga dónde quedó el plan anterior.
 3. Comprobar que no se perdió ninguna tarea pendiente ni aviso vigente comparando los dos
    archivos.
 4. Guardar y subir en un solo commit ("Archivar ESTADO_ACTUAL.md…" o
-   "Archivar PLAN_DE_TRABAJO.md…").
+   "Archivar PLAN.md…").
 
 Al iniciar una sesión no se lee `historial/`: solo se consulta si hace falta un detalle viejo
 (con búsquedas o `git log`, no entero). Si algo de `historial/` contradice a los archivos
@@ -120,8 +122,8 @@ vivos, ganan los vivos.
   guardar, `↑` commits sin subir.
 - Hook `Stop` `.claude/hooks/revisar-guardado.sh`: frena el final de una respuesta si quedan
   cambios sin commit o sin push, y recuerda esta regla (avisa una sola vez por respuesta).
-  También avisa si `ESTADO_ACTUAL.md` o `PLAN_DE_TRABAJO.md` pasó de 20.000 bytes (ver
-  "Archivar `ESTADO_ACTUAL.md` y `PLAN_DE_TRABAJO.md`").
+  También avisa si `ESTADO_ACTUAL.md` o `PLAN.md` pasó de 20.000 bytes (ver
+  "Archivar `ESTADO_ACTUAL.md` y `PLAN.md`").
 - `.gitattributes` fuerza finales de línea LF en los `.sh` para que funcionen en Windows y en
   la nube.
 

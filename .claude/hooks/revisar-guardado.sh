@@ -3,7 +3,7 @@
 # Si al terminar una respuesta quedan archivos sin commit o commits sin push, no deja
 # terminar y le recuerda a Claude la regla del proyecto. Solo avisa una vez por respuesta
 # (stop_hook_active), para no entrar en un bucle si Claude tiene un motivo para no guardar.
-# Tambien avisa si ESTADO_ACTUAL.md o PLAN_DE_TRABAJO.md pasaron el limite de tamano y hay
+# Tambien avisa si ESTADO_ACTUAL.md o PLAN.md pasaron el limite de tamano y hay
 # que archivarlos.
 entrada=$(cat)
 if echo "$entrada" | grep -q '"stop_hook_active" *: *true'; then
@@ -16,11 +16,11 @@ sucios=$(git status --porcelain 2>/dev/null | wc -l | tr -d ' ')
 sin_subir=$(git rev-list --count '@{u}..HEAD' 2>/dev/null || echo 0)
 
 aviso_tamano=""
-for archivo in ESTADO_ACTUAL.md PLAN_DE_TRABAJO.md; do
+for archivo in ESTADO_ACTUAL.md PLAN.md; do
     tam=$(wc -c < "$archivo" 2>/dev/null | tr -d ' ')
     tam=${tam:-0}
     if [ "$tam" -gt "$LIMITE" ]; then
-        aviso_tamano="${aviso_tamano}$archivo mide $tam bytes y el limite es $LIMITE. Archivalo segun CLAUDE.md, seccion 'Archivar ESTADO_ACTUAL.md y PLAN_DE_TRABAJO.md': muevelo a historial/ y crea uno nuevo con lo esencial. "
+        aviso_tamano="${aviso_tamano}$archivo mide $tam bytes y el limite es $LIMITE. Archivalo segun CLAUDE.md, seccion 'Archivar ESTADO_ACTUAL.md y PLAN.md': muevelo a historial/ y crea uno nuevo con lo esencial. "
     fi
 done
 

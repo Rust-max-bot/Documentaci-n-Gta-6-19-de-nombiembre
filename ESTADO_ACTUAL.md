@@ -1,8 +1,7 @@
 # Estado actual del proyecto
 
 > Estado **vivo** y corto. Las reglas y la forma de trabajo están en `CLAUDE.md`; las
-> decisiones, fases y riesgos, en `PLAN.md`; la lista ordenada de tareas, en
-> `PLAN_DE_TRABAJO.md`. Al iniciar una sesión se lee este archivo entero.
+> tareas, decisiones vigentes y riesgos, en `PLAN.md` (un solo plan desde el 2026-11-16). Al iniciar una sesión se lee este archivo entero.
 
 ## Cómo usar este archivo
 
@@ -11,7 +10,7 @@
 - **Tiene que seguir siendo corto.** "Últimos cambios" guarda unas 8 entradas de una línea;
   las viejas se borran porque ya están en `git log`.
 - Si pasa de 20.000 bytes, se archiva en `historial/` y se empieza uno nuevo (ver
-  "Archivar `ESTADO_ACTUAL.md` y `PLAN_DE_TRABAJO.md`" en `CLAUDE.md`).
+  "Archivar `ESTADO_ACTUAL.md` y `PLAN.md`" en `CLAUDE.md`).
 
 ## Dónde quedamos
 
@@ -101,6 +100,7 @@ Bruno ya eligió las palabras de la comparación.
 
 ## Últimos cambios
 
+- 2026-11-16: un solo plan (pedido de Bruno): `PLAN.md` junta tareas, decisiones y riesgos en corto (de ~68 KB a ~14 KB); los dos planes completos, en `historial/PLAN_2026-11-16.md` y `historial/PLAN_DE_TRABAJO_2026-11-16.md`.
 - 2026-11-16: Kick en la página (opción B de Bruno): líneas de Twitch y Kick en un gráfico, tabla con columna "Plataforma" y récords de Kick.
 - 2026-11-16: sincronización del PC con GitHub (`sincronizar_datos.ps1`, tarea de Windows cada 30 min, sin ventana y con notificación al traer datos). **Apagada por Bruno**: se enciende con doble clic en `sincronizar_interruptor.bat`.
 - 2026-11-16: Kick ya se mide cada hora (fuente `kick`: espectadores y directos de la categoría 13155, más sus 10 canales). Probado en GitHub sin guardar; falta mostrarlo en la página.
@@ -117,7 +117,7 @@ Bruno ya eligió las palabras de la comparación.
 
 ## Pendiente
 
-La lista completa y su orden están en `PLAN_DE_TRABAJO.md`. Resumen (2026-11-14):
+La lista completa y su orden están en `PLAN.md`. Resumen (2026-11-14):
 
 1. **Antes del 19 nov:** unir el PR de "Lo que espero" (7.4). Después del lanzamiento, Bruno
    escribe "Lo que me pareció" en `web/capsula.js`.
