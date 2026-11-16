@@ -100,6 +100,7 @@ Bruno ya eligió las palabras de la comparación.
 
 ## Últimos cambios
 
+- 2026-11-16: anotada en el plan la API alfa de Google Trends (formulario lleno en el Chrome de Bruno, sin enviar: falta el ID de su proyecto de Google Cloud).
 - 2026-11-16: titulares como resumen (opción B de Bruno): los 8 medios que más publican y los 6 últimos; la lista completa y el filtro por día quedan tras el botón "Ver los N titulares". El resumen lo deja hecho `generar_web.py` en `datos.js`.
 - 2026-11-16: horas en 12 h o 24 h según el dispositivo de quien visita; en 24 h la cuenta aclara "(8 de la mañana)" (pedido de Bruno).
 - 2026-11-16: un solo plan (pedido de Bruno): `PLAN.md` junta tareas, decisiones y riesgos en corto (de ~68 KB a ~14 KB); los dos planes completos, en `historial/PLAN_2026-11-16.md` y `historial/PLAN_DE_TRABAJO_2026-11-16.md`.
@@ -113,7 +114,6 @@ Bruno ya eligió las palabras de la comparación.
 - 2026-11-15: torre con hueco y palmera arreglada (opción B de Bruno): el hueco sube para que los hoteles no lo tapen y se quitó la escalera roja en zigzag.
 - 2026-11-15: idea de Bruno anotada en el plan (7.12): que la portada tenga suelo (calle, vereda o arena) y las palmeras no salgan del mar.
 - 2026-11-15: microinteracciones aprobadas por Bruno tras una vista previa: gota con resorte en todos los botones de elegir, enfoque de la cuenta al cambiar de país, "Secciones" que crece hasta ser el menú, hundirse al presionar, flechas en días/páginas/Shorts, controles que no cambian de lugar al tocarlos y barra de desplazamiento estable (`DISENO_VISUAL.md` al día).
-- 2026-11-15: `DISENO_VISUAL.md`, descripción solo de lo visual (estilos, día/atardecer/noche, hora cero, colores, letras) con instrucciones para pedir sugerencias a otra IA (pedido de Bruno).
 
 ## Pendiente
 
