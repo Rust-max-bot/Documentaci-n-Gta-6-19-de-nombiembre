@@ -100,6 +100,7 @@ Bruno ya eligió las palabras de la comparación.
 
 ## Últimos cambios
 
+- 2026-11-16: horas en 12 h o 24 h según el dispositivo de quien visita; en 24 h la cuenta aclara "(8 de la mañana)" (pedido de Bruno).
 - 2026-11-16: un solo plan (pedido de Bruno): `PLAN.md` junta tareas, decisiones y riesgos en corto (de ~68 KB a ~14 KB); los dos planes completos, en `historial/PLAN_2026-11-16.md` y `historial/PLAN_DE_TRABAJO_2026-11-16.md`.
 - 2026-11-16: Kick en la página (opción B de Bruno): líneas de Twitch y Kick en un gráfico, tabla con columna "Plataforma" y récords de Kick.
 - 2026-11-16: sincronización del PC con GitHub (`sincronizar_datos.ps1`, tarea de Windows cada 30 min, sin ventana y con notificación al traer datos). **Apagada por Bruno**: se enciende con doble clic en `sincronizar_interruptor.bat`.

@@ -153,6 +153,9 @@ Cada una, en corto. El porqué y las opciones descartadas, en `historial/PLAN_20
   la hora de Miami. Sin logotipos, tipografías ni arte de Rockstar. Letras: Monoton, Rajdhani,
   Limelight y Outfit. Descripción de lo visual en `DISENO_VISUAL.md`.
 - Toda decisión que cambie cómo se ve: opciones con capturas para Bruno antes de aplicarla.
+- Formato de la hora (Bruno, 2026-11-16): automático según el dispositivo de quien visita
+  (12 h con a. m./p. m. o 24 h), sin botón y sin guardar nada; en 24 h la cuenta regresiva
+  aclara en palabras ("08:00 (8 de la mañana)"). Para probar: `?probar-formato=12` o `=24`.
 - Listas: lo más nuevo arriba; gráficos de viejo (izquierda) a nuevo (derecha).
 - Opciones elegidas por Bruno (resumen): portada con calle y playa sin quitar el mar (7.12, A);
   Twitch y Kick en un gráfico y una tabla con columna "Plataforma" (6.6, B); videos en tarjetas

@@ -136,7 +136,27 @@
   var fHora = new Intl.DateTimeFormat("es-CL", { timeZone: ZONA, hour: "2-digit", minute: "2-digit", hourCycle: "h23" });
   var fDia = new Intl.DateTimeFormat("es-CL", { timeZone: ZONA, day: "numeric", month: "short" });
   var fPartes = new Intl.DateTimeFormat("en-US", { timeZone: ZONA, hourCycle: "h23", year: "numeric", month: "numeric", day: "numeric", hour: "numeric", minute: "numeric" });
-  function hora(ts) { return fHora.format(new Date(ts)); }
+  /* Formato de la hora (pedido de Bruno, 2026-11-16: "08:00" no dejaba claro si era de mañana o
+     de noche). Bruno eligió que siga solo lo que usa el dispositivo de quien visita, sin botón:
+     el navegador dice si su idioma usa 12 h (a. m. / p. m.) o 24 h. No se guarda ni se envía
+     nada. En 24 h, la cuenta regresiva aclara en palabras ("8 de la mañana"). */
+  var en12 = false;
+  try {
+    var ciclo = new Intl.DateTimeFormat(undefined, { hour: "numeric" }).resolvedOptions().hourCycle;
+    en12 = ciclo ? (ciclo === "h11" || ciclo === "h12") : /[ap]\.?\s?m/i.test(new Date(2026, 0, 1, 15).toLocaleTimeString());
+  } catch (e) { /* navegador muy viejo: 24 h */ }
+  // Para probar el otro formato sin cambiar el dispositivo: "?probar-formato=24" o "=12".
+  var formatoPrueba = /[?&]probar-formato=(12|24)(?:&|$)/.exec(location.search);
+  if (formatoPrueba) en12 = formatoPrueba[1] === "12";
+  var fHora12 = new Intl.DateTimeFormat("es-CL", { timeZone: ZONA, hour: "numeric", minute: "2-digit", hourCycle: "h12" });
+  function hora(ts) { return (en12 ? fHora12 : fHora).format(new Date(ts)); }
+  // "de la mañana", "de la tarde"…: aclara una hora de 24 h en palabras.
+  function momento(ts) {
+    var h = partes(ts).hour, h12 = h % 12 || 12;
+    if (h === 0) return "medianoche";
+    if (h === 12) return "mediodía";
+    return h12 + (h < 6 ? " de la madrugada" : h < 12 ? " de la mañana" : h < 20 ? " de la tarde" : " de la noche");
+  }
   function dia(ts) { return fDia.format(new Date(ts)).replace(".", ""); }
   function partes(ts) { var o = {}; fPartes.formatToParts(new Date(ts)).forEach(function (p) { o[p.type] = +p.value; }); return o; }
   function desfase(ts) { var o = partes(ts); return Date.UTC(o.year, o.month - 1, o.day, o.hour, o.minute) - Math.floor(ts / 60000) * 60000; }
@@ -240,7 +260,8 @@
   function notaLugar(modo) {
     var L = LUGARES[lugar];
     if (modo === "desde") return lugar === "cl" ? "desde que salió GTA 6" : "desde que salió en " + L.nombre;
-    return "medianoche en " + L.nombre + (lugar === "cl" ? "" : '<i class="sep"> · </i><i class="hora-cl">' + dia(L.ts) + ", " + hora(L.ts) + " hora de Chile</i>");
+    var aclara = en12 ? "" : " (" + momento(L.ts) + ")";
+    return "medianoche en " + L.nombre + (lugar === "cl" ? "" : '<i class="sep"> · </i><i class="hora-cl">' + dia(L.ts) + ", " + hora(L.ts) + aclara + " hora de Chile</i>");
   }
   // Escribe los cuatro números. Si las cajas ya existen, solo cambia los números: así una
   // animación de las cajas no vuelve a empezar cada segundo.
@@ -261,7 +282,7 @@
       var L = LUGARES[b.dataset.lugar], ya = ahora() >= L.ts;
       b.setAttribute("aria-pressed", b.dataset.lugar === lugar ? "true" : "false");
       b.classList.toggle("ya", ya);
-      b.title = (ya ? "Ya salió en " : "Medianoche en ") + L.nombre + ": " + dia(L.ts) + ", " + hora(L.ts) + " hora de Chile";
+      b.title = (ya ? "Ya salió en " : "Medianoche en ") + L.nombre + ": " + dia(L.ts) + ", " + hora(L.ts) + (en12 ? "" : " (" + momento(L.ts) + ")") + " hora de Chile";
     });
   }
   $("lugares").addEventListener("click", function (e) {
