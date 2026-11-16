@@ -100,6 +100,7 @@ Bruno ya eligió las palabras de la comparación.
 
 ## Últimos cambios
 
+- 2026-11-16: imagen al compartir nueva (opción C de Bruno): un solo título grande sobre las dos portadas al día (con suelo), lema en franja legible y "Twitch · Kick · YouTube · Google Trends"; la hace `pruebas/hacer_compartir.py --opcion C --guardar`. Kick agregado al texto de la vista previa.
 - 2026-11-16: la 6.1 se lanza sola: el despertador de Cloudflare (nuevo horario `41 15 21-24 11 *`, puesto por Claude a pedido de Bruno) del 21 al 24 nov, con respaldo de GitHub a las 18:41 UTC; guarda una sola vez. Recordatorios en el calendario de Bruno el 21 y el 24.
 - 2026-11-16: gráfico de Trends por hora (opción A de Bruno): cada hora con el valor de la medición más nueva que la trae; sin huecos y la última semana en una sola escala.
 - 2026-11-16: Trends más resistente al 429 (pedido de Bruno): guarda la serie de 7 días (~169 puntos) en vez de 24 y reintenta una vez a los 20 s. Falta en la página: serie por hora y el problema de la escala (ver "Trends sin huecos" en `PLAN.md`).
@@ -108,7 +109,6 @@ Bruno ya eligió las palabras de la comparación.
 - 2026-11-16: horas en 12 h o 24 h según el dispositivo de quien visita; en 24 h la cuenta aclara "(8 de la mañana)" (pedido de Bruno).
 - 2026-11-16: un solo plan (pedido de Bruno): `PLAN.md` junta tareas, decisiones y riesgos en corto (de ~68 KB a ~14 KB); los dos planes completos, en `historial/PLAN_2026-11-16.md` y `historial/PLAN_DE_TRABAJO_2026-11-16.md`.
 - 2026-11-16: Kick en la página (opción B de Bruno): líneas de Twitch y Kick en un gráfico, tabla con columna "Plataforma" y récords de Kick.
-- 2026-11-16: sincronización del PC con GitHub (`sincronizar_datos.ps1`, tarea de Windows cada 30 min, sin ventana y con notificación al traer datos). **Apagada por Bruno**: se enciende con doble clic en `sincronizar_interruptor.bat`.
 
 ## Pendiente
 

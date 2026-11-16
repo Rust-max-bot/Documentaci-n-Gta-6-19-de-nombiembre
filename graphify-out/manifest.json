@@ -48,9 +48,9 @@
     "semantic_hash": ""
   },
   "ESTADO_ACTUAL.md": {
-    "mtime": 1794856238.5611694,
-    "seen": 1794856240.4907024,
-    "ast_hash": "56a890e14ace228a3cd23f4826508b42",
+    "mtime": 1794857456.9516351,
+    "seen": 1794857476.4708724,
+    "ast_hash": "d944e19d7263f14fcd1e8ece8b5492f3",
     "semantic_hash": ""
   },
   "GUIA_CLAVES.md": {
@@ -60,9 +60,9 @@
     "semantic_hash": ""
   },
   "PLAN.md": {
-    "mtime": 1794856228.4417317,
-    "seen": 1794856240.4907057,
-    "ast_hash": "e4eb7e96c1b785e47a0e5311c871cf42",
+    "mtime": 1794856242.9914305,
+    "seen": 1794857476.470876,
+    "ast_hash": "602a8a88098b754795c8b9603be7f642",
     "semantic_hash": ""
   },
   "README.md": {
@@ -72,9 +72,9 @@
     "semantic_hash": ""
   },
   "web/index.html": {
-    "mtime": 1794849791.1126418,
-    "seen": 1794849972.8458476,
-    "ast_hash": "204aaa2a9ccbe2e61176a3da25c42918",
+    "mtime": 1794857312.5438576,
+    "seen": 1794857476.4708915,
+    "ast_hash": "40006464882c24ce92c56d8a8e7324cf",
     "semantic_hash": ""
   },
   ".github/workflows/probar-fuentes.yml": {
@@ -144,15 +144,15 @@
     "semantic_hash": ""
   },
   "despertador/worker.js": {
-    "mtime": 1794855965.5691085,
-    "seen": 1794856240.490648,
-    "ast_hash": "2e872d307b7b393d2b4798f6e025d891",
+    "mtime": 1794856242.9934082,
+    "seen": 1794857476.4708328,
+    "ast_hash": "1a994f3c4f2fceae1418c39df23a0dce",
     "semantic_hash": ""
   },
   "despertador/LEEME.md": {
-    "mtime": 1794856228.4417317,
-    "seen": 1794856240.490708,
-    "ast_hash": "649b09a1d41b0708e301a76f05f80951",
+    "mtime": 1794856242.9914305,
+    "seen": 1794857476.4708781,
+    "ast_hash": "fa3357ef8a392e3cff7e6e02a29985f3",
     "semantic_hash": ""
   },
   ".claude/hooks/preparar-nube.sh": {
@@ -192,9 +192,9 @@
     "semantic_hash": ""
   },
   "pruebas/LEEME.md": {
-    "mtime": 1794599818.144967,
-    "seen": 1794781810.5641673,
-    "ast_hash": "b22820e894e8dc20950b04031a58123b",
+    "mtime": 1794857473.1689062,
+    "seen": 1794857476.4708865,
+    "ast_hash": "b4a8f580c896cf94d0ffec56fa566c6f",
     "semantic_hash": ""
   },
   "pruebas/requisitos.txt": {
@@ -228,9 +228,9 @@
     "semantic_hash": ""
   },
   ".github/workflows/trends-extra.yml": {
-    "mtime": 1794856008.3198755,
-    "seen": 1794856240.4906461,
-    "ast_hash": "961072c310d441de78b438ea19a059da",
+    "mtime": 1794856242.9894264,
+    "seen": 1794857476.4708312,
+    "ast_hash": "eff3368c4d5a607a6ade5ab411eb584e",
     "semantic_hash": ""
   },
   ".github/workflows/publicar-pagina.yml": {
@@ -240,9 +240,9 @@
     "semantic_hash": ""
   },
   "web/compartir.jpg": {
-    "mtime": 1794678015.520913,
-    "seen": 1794781810.5641854,
-    "ast_hash": "65ffa16bf5476eabd5dbfb67d08935aa",
+    "mtime": 1794857328.0769532,
+    "seen": 1794857476.470893,
+    "ast_hash": "2af6c4f13ce0b29066fbd343777b8bf2",
     "semantic_hash": ""
   },
   "web/icono.svg": {
@@ -309,6 +309,12 @@
     "mtime": 1794846389.8871405,
     "seen": 1794847527.4687917,
     "ast_hash": "809eec0240dce7219d4014ba8fc16230",
+    "semantic_hash": ""
+  },
+  "pruebas/hacer_compartir.py": {
+    "mtime": 1794857312.5438576,
+    "seen": 1794857476.4708347,
+    "ast_hash": "1fd4906315e5181053a248bedaa8c926",
     "semantic_hash": ""
   }
 }
