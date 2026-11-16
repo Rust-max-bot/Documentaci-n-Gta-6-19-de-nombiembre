@@ -101,6 +101,7 @@ Bruno ya eligió las palabras de la comparación.
 
 ## Últimos cambios
 
+- 2026-11-15: las torres nuevas de 2026 ya no suben ni bajan partidas en dos (los cortes de la animación pasaban por la vela y la torre con grúa).
 - 2026-11-15: torre con hueco y palmera arreglada (opción B de Bruno): el hueco sube para que los hoteles no lo tapen y se quitó la escalera roja en zigzag.
 - 2026-11-15: idea de Bruno anotada en el plan (7.12): que la portada tenga suelo (calle, vereda o arena) y las palmeras no salgan del mar.
 - 2026-11-15: microinteracciones aprobadas por Bruno tras una vista previa: gota con resorte en todos los botones de elegir, enfoque de la cuenta al cambiar de país, "Secciones" que crece hasta ser el menú, hundirse al presionar, flechas en días/páginas/Shorts, controles que no cambian de lugar al tocarlos y barra de desplazamiento estable (`DISENO_VISUAL.md` al día).
