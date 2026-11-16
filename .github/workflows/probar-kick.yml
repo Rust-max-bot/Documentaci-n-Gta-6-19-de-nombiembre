@@ -1,0 +1,23 @@
+# Prueba manual de Kick (tarea 6.6). No guarda nada en el repositorio.
+name: Probar Kick
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  probar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v5       # v5 usa Node.js 24 (la v4 usaba Node.js 20, retirado)
+      - uses: actions/setup-python@v6   # v6 usa Node.js 24 (la v5 usaba Node.js 20, retirado)
+        with:
+          python-version: "3.12"
+      - name: Probar Kick
+        env:
+          KICK_CLIENT_ID: ${{ secrets.KICK_CLIENT_ID }}
+          KICK_CLIENT_SECRET: ${{ secrets.KICK_CLIENT_SECRET }}
+        run: python3 recolector/probar_kick.py
