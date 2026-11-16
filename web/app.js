@@ -519,19 +519,80 @@
   grafico($("g-trends"), "interes", { color: "--a2", unidad: "de 100", tope: 100, nombre: "Interés de búsqueda en Google Trends a lo largo del tiempo",
     serie: serieTrends.length ? serieTrends : null });
 
-  /* ---------- Servidores ---------- */
-  $("servidores").innerHTML = M.length ? SERVICIOS.map(function (s) {
-    var malas = 0, conDato = 0;
-    var tira = M.map(function (m, i) {
-      var e = m.servidores[s[0]], clase = e == null ? "" : (e === "ok" ? "ok" : "mal");
-      if (e != null) { conDato++; if (e !== "ok") malas++; }
-      return '<i class="' + clase + '" style="--i:' + i + '" title="' + dia(m.ts) + " " + hora(m.ts) + " · " + (e == null ? "sin dato" : e === "ok" ? "funcionando" : "con problemas") + '"></i>';
+  /* ---------- Servidores ----------
+     9.1 (Bruno, 2026-11-16): con un cuadro por medición la tira crecía sin fin (101 cuadros el
+     16 nov, ~1.000 el 19 dic) y en el celular se deshacía. Ahora: una línea "Ahora" con el estado
+     de la última medición y, por servicio, dos tiras que no crecen sin fin: un cuadro por día y
+     cada medición de las últimas 24 h (opción C de Bruno; descartadas A, solo 24 h, y B, solo
+     por día). El veredicto de la derecha sigue contando todo. Para ver cómo se ve un problema
+     sin esperar a que pase uno: "?probar-servidores-mal" (solo cambia la pantalla de quien la
+     abre; no toca los datos). */
+  (function () {
+    var cont = $("servidores");
+    if (!M.length) { cont.innerHTML = '<p class="nota">Todavía no hay datos.</p>'; return; }
+    var simular = /[?&]probar-servidores-mal\b/.test(location.search);
+    var n = M.length, fin = M[n - 1].ts, DIA = 864e5;
+    function estado(i, s) {
+      if (simular && s === "playstation" && (i >= n - 2 || (i >= 40 && i < 43))) return "problema";
+      return M[i].servidores[s];
+    }
+    function clase(e) { return e == null ? "" : (e === "ok" ? "ok" : "mal"); }
+    function claveDia(ts) { var o = partes(ts); return o.year + "-" + o.month + "-" + o.day; }
+
+    // Tira de abajo: cada medición de las últimas 24 h (en la semana del lanzamiento, hasta 48).
+    function tiraHoras(s, fina) {
+      var cuadros = [];
+      for (var i = 0; i < n; i++) {
+        if (fin - M[i].ts > DIA) continue;
+        var e = estado(i, s);
+        cuadros.push('<i class="' + clase(e) + '" style="--i:' + cuadros.length + '" title="' + dia(M[i].ts) + " " + hora(M[i].ts) + " · " +
+          (e == null ? "sin dato" : e === "ok" ? "funcionando" : "con problemas") + '"></i>');
+      }
+      return '<div class="tira' + (fina ? " fina" : "") + '">' + cuadros.join("") + "</div>" +
+        '<div class="tira-pie"><span>hace 24 h</span><span>ahora</span></div>';
+    }
+    // Tira de arriba: un cuadro por día de Santiago, rojo si hubo algún problema ese día.
+    function tiraDias(s) {
+      var dias = [], porClave = {};
+      for (var i = 0; i < n; i++) {
+        var k = claveDia(M[i].ts), d = porClave[k];
+        if (!d) { d = porClave[k] = { ts: M[i].ts, conDato: 0, malas: 0 }; dias.push(d); }
+        var e = estado(i, s);
+        if (e != null) { d.conDato++; if (e !== "ok") d.malas++; }
+      }
+      var cuadros = dias.map(function (d, j) {
+        var c = !d.conDato ? "" : (d.malas ? "mal" : "ok");
+        var t = !d.conDato ? "sin datos" : d.malas ? "con problemas en " + d.malas + " de " + d.conDato + " mediciones" : "funcionando en las " + d.conDato + " mediciones";
+        return '<i class="' + c + '" style="--i:' + j + '" title="' + dia(d.ts) + " · " + t + '"></i>';
+      });
+      return '<div class="tira dias">' + cuadros.join("") + "</div>" +
+        '<div class="tira-pie"><span>' + dia(dias[0].ts) + "</span><span>" + (dias.length > 1 ? "hoy" : "") + "</span></div>";
+    }
+
+    // "Ahora": la última medición, solo los servicios que tienen dato automático.
+    var conDato = SERVICIOS.filter(function (s) { return estado(n - 1, s[0]) != null; });
+    var malos = conDato.filter(function (s) { return estado(n - 1, s[0]) !== "ok"; });
+    function lista(xs) { var nombres = xs.map(function (s) { return s[1]; }); return nombres.length > 1 ? nombres.slice(0, -1).join(", ") + " y " + nombres[nombres.length - 1] : nombres[0]; }
+    var ahoraTxt = !conDato.length ? "Sin datos en la última medición"
+      : malos.length ? lista(malos) + (malos.length === 1 ? " tiene" : " tienen") + " problemas"
+      : "Todo funciona";
+    var ahoraSub = !conDato.length ? "" : malos.length
+      ? (conDato.length > malos.length ? lista(conDato.filter(function (s) { return malos.indexOf(s) < 0; })) + " funciona" + (conDato.length - malos.length > 1 ? "n" : "") + " · " : "")
+      : lista(conDato) + (conDato.length > 1 ? " funcionan" : " funciona") + " · ";
+    var html = '<div class="ahora ' + (!conDato.length ? "" : malos.length ? "mal" : "ok") + '" role="status"><i aria-hidden="true"></i><div><b>' + ahoraTxt +
+      "</b><small>" + ahoraSub + "medición de las " + hora(fin) + (claveDia(fin) === claveDia(ahora()) ? "" : " del " + dia(fin)) + "</small></div></div>";
+
+    html += SERVICIOS.map(function (s) {
+      var malas = 0, cd = 0;
+      for (var i = 0; i < n; i++) { var e = estado(i, s[0]); if (e != null) { cd++; if (e !== "ok") malas++; } }
+      var tiras = '<div class="tira-titulo">Por día</div>' + tiraDias(s[0]) + '<div class="tira-titulo">Últimas 24 horas</div>' + tiraHoras(s[0], true);
+      var veredicto = !cd ? '<div class="veredicto">Sin datos<small>' + (s[0] === "rockstar" ? "sus caídas se anotan a mano" : "") + "</small></div>"
+        : malas ? '<div class="veredicto si">Sí, tuvo problemas<small>en ' + malas + " de " + cd + " mediciones</small></div>"
+        : '<div class="veredicto no">No se cayó<small>en ' + cd + " mediciones</small></div>";
+      return '<div class="servicio"><div class="nombre">' + s[1] + '</div><div class="tiras">' + tiras + "</div>" + veredicto + "</div>";
     }).join("");
-    var veredicto = !conDato ? '<div class="veredicto">Sin datos</div>'
-      : malas ? '<div class="veredicto si">Sí, tuvo problemas<small>en ' + malas + (malas === 1 ? " medición" : " mediciones") + "</small></div>"
-      : '<div class="veredicto no">No se cayó<small>en ' + conDato + " mediciones</small></div>";
-    return '<div class="servicio"><div class="nombre">' + s[1] + '</div><div class="tira">' + tira + "</div>" + veredicto + "</div>";
-  }).join("") : '<p class="nota">Todavía no hay datos.</p>';
+    cont.innerHTML = html;
+  })();
 
   /* ---------- Tabla de Twitch y Kick con filtro por día ----------
      Pedido de Bruno (2026-11-16): una columna "Plataforma" aparte de la de espectadores, y una fila

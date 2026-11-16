@@ -52,6 +52,9 @@ YouTube, Google Trends, titulares y Reddit, medidas cada hora antes, durante y d
    Videos más vistos en YouTube (con tira de Shorts) · GTA frente a lo más visto · GTA 6 frente
    a otros lanzamientos (barras) · Titulares (con barras por día y páginas) · Reddit · Álbum de
    momentos (fotos tipo instantánea) · Cápsula del tiempo (dos cintas de casete) · Próximamente.
+   En **¿Se cayeron los servidores?**, arriba una caja "Ahora" (punto y texto en verde si todo
+   funciona, en rojo si algún servicio falla) y, por servicio, dos tiras: un cuadro por día y
+   cada medición de las últimas 24 horas (9.1, opción C). Se prueba con `?probar-servidores-mal`.
 4. **Pie** con la nota de que la página está hecha con Claude a pedido de "Rust" (el nombre
    público de Bruno, el dueño del proyecto) y que no está afiliada a Rockstar ni a Take-Two.
 5. **Botón flotante "☰ Secciones"** abajo a la derecha, que abre un menú para saltar a cada parte.

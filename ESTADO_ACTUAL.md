@@ -100,6 +100,7 @@ Bruno ya eligió las palabras de la comparación.
 
 ## Últimos cambios
 
+- 2026-11-16: 9.1 hecha (opción C de Bruno): "¿Se cayeron los servidores?" con caja "Ahora" (verde o rojo, con la hora de la última medición) y, por servicio, un cuadro por día y cada medición de las últimas 24 h; ya no crece sin fin. Se prueba con `?probar-servidores-mal`.
 - 2026-11-16: tres planes nuevos en `PLAN.md`, en este orden (Bruno): 9.1 servidores más cortos (antes del 19), 9.2 "¿Cuánta gente faltó?" y 9.3 menos alarmas por Google (después del 22). El fallo de las 21:07 UTC fue Noticias 429: la medición se guardó y no se perdió nada.
 - 2026-11-16: Graphify actualizado de 0.9.107 a 0.9.111 (programa en Python 3.14, skill del proyecto y la del usuario); "Trends sin huecos" marcada como hecha en `PLAN.md` (pedido de Bruno).
 - 2026-11-16: página probada en Firefox 159 (pedido de Bruno): sin errores ni desborde a 1280 y 384 px en los dos estilos. Nueva opción `python pruebas/probar_pagina.py --firefox` (necesita `python -m playwright install firefox`); el aviso de Firefox sobre la letra Rajdhani de Google Fonts no cuenta como fallo.
@@ -111,13 +112,12 @@ Bruno ya eligió las palabras de la comparación.
 - 2026-11-16: Trends más resistente al 429 (pedido de Bruno): guarda la serie de 7 días (~169 puntos) en vez de 24 y reintenta una vez a los 20 s. Falta en la página: serie por hora y el problema de la escala (ver "Trends sin huecos" en `PLAN.md`).
 - 2026-11-16: anotada en el plan la API alfa de Google Trends; Bruno envió el formulario él mismo (falta saber si responden).
 - 2026-11-16: titulares como resumen (opción B de Bruno): los 8 medios que más publican y los 6 últimos; la lista completa y el filtro por día quedan tras el botón "Ver los N titulares". El resumen lo deja hecho `generar_web.py` en `datos.js`.
-- 2026-11-16: horas en 12 h o 24 h según el dispositivo de quien visita; en 24 h la cuenta aclara "(8 de la mañana)" (pedido de Bruno).
 
 ## Pendiente
 
 La lista completa y su orden están en `PLAN.md`. Resumen (2026-11-14):
 
-0. **Nuevo (2026-11-16, orden de Bruno):** 9.1 servidores más cortos (antes del 19), 9.2
+0. **Nuevo (2026-11-16, orden de Bruno):** 9.1 servidores más cortos (**hecha**, opción C), 9.2
    "¿Cuánta gente faltó?" (encuestas antes del 19; lo medido, después) y 9.3 menos alarmas por
    Google (después del 22). En la 9.2, economía solo como curiosidad y Trends de frases para
    faltar. Descartados (Bruno): Cloudflare Radar y medir las redes de descarga de las consolas.
