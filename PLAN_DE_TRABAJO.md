@@ -129,7 +129,12 @@ usarla. Ver el aviso 7, sobre la fecha del lanzamiento.)*
     categoría con `GET /public/v2/livestreams?category_id=...` (hasta 1000 por página, con
     `viewer_count` de cada uno; se suman). Comprobado: sin clave, la API responde 401
     "Unauthorized", así que la consulta real con datos queda para cuando Bruno cree la app.
-    Falta saber el nombre exacto de la categoría de GTA 6 en Kick.
+    **Probado de verdad el 2026-11-16** (workflow "Probar Kick", `recolector/probar_kick.py`,
+    ejecución 43792834726): Bruno creó la app y guardó `KICK_CLIENT_ID` y `KICK_CLIENT_SECRET`;
+    la clave temporal sale bien (dura 60 días) y la categoría es **"Grand Theft Auto VI (GTA)",
+    número 13155**. Ese día había 106 directos y 2.238 espectadores sumados. **Falta:** meter
+    Kick en el recolector de cada hora (`fuentes.py`, `recolectar.py`, `validar.py` y los
+    Secrets en `recolectar.yml`) y mostrarlo en la página (opciones con capturas). Instagram sigue sin probar.
   - **Instagram:** parece difícil. La API oficial de Meta solo funciona con una cuenta de
     empresa o creador propia, unida a una página de Facebook, y la búsqueda por hashtag da
     pocas publicaciones y no el total (además, tiene límite de hashtags por semana). Si no

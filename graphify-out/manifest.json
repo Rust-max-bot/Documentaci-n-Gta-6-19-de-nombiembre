@@ -48,9 +48,9 @@
     "semantic_hash": ""
   },
   "ESTADO_ACTUAL.md": {
-    "mtime": 1794795146.905001,
-    "seen": 1794795149.3723614,
-    "ast_hash": "592f0bf1221187d5c690f54ae92d0778",
+    "mtime": 1794796405.8455324,
+    "seen": 1794796408.0737119,
+    "ast_hash": "ad9d08cab17e7ee0a92fc1c57176cdb4",
     "semantic_hash": ""
   },
   "GUIA_CLAVES.md": {
@@ -60,9 +60,9 @@
     "semantic_hash": ""
   },
   "PLAN.md": {
-    "mtime": 1794795134.0061228,
-    "seen": 1794795149.3723648,
-    "ast_hash": "1e348571726a5ff5778da07bfa7f3338",
+    "mtime": 1794795159.7849188,
+    "seen": 1794796408.0737157,
+    "ast_hash": "40b1413e21b9548b6aa4d75c242985f3",
     "semantic_hash": ""
   },
   "README.md": {
@@ -72,9 +72,9 @@
     "semantic_hash": ""
   },
   "web/index.html": {
-    "mtime": 1794794941.6933937,
-    "seen": 1794795149.3723783,
-    "ast_hash": "38a935218595feb2c73c86b4df5071dc",
+    "mtime": 1794795159.7929256,
+    "seen": 1794796408.0737295,
+    "ast_hash": "d9456ec80344960f8a3457453883be46",
     "semantic_hash": ""
   },
   ".github/workflows/probar-fuentes.yml": {
@@ -132,9 +132,9 @@
     "semantic_hash": ""
   },
   "PLAN_DE_TRABAJO.md": {
-    "mtime": 1794795134.009634,
-    "seen": 1794795149.3723662,
-    "ast_hash": "457db5655023f9825e93f9c4f504ad7e",
+    "mtime": 1794796405.8445334,
+    "seen": 1794796408.0737166,
+    "ast_hash": "a4cbebc3340605bab2c303e119c026b1",
     "semantic_hash": ""
   },
   "recolector/LEEME.md": {
@@ -282,9 +282,21 @@
     "semantic_hash": ""
   },
   "DISENO_VISUAL.md": {
-    "mtime": 1794795134.0076275,
-    "seen": 1794795149.3723602,
-    "ast_hash": "e5d1c0b9edd389ecc06775e6277968f0",
+    "mtime": 1794795159.7829204,
+    "seen": 1794796408.0737107,
+    "ast_hash": "5d2f88c93aa945508a8218c5cb3360e3",
+    "semantic_hash": ""
+  },
+  ".github/workflows/probar-kick.yml": {
+    "mtime": 1794796362.3887396,
+    "seen": 1794796408.0736692,
+    "ast_hash": "66d5cbdf8427a6fd6604070fe4f7d557",
+    "semantic_hash": ""
+  },
+  "recolector/probar_kick.py": {
+    "mtime": 1794796362.3612783,
+    "seen": 1794796408.0736926,
+    "ast_hash": "e9751fe4e7d3bf90f2759e42cda6c08f",
     "semantic_hash": ""
   }
 }
