@@ -348,7 +348,10 @@ Resultado final: **una página web** con:
   de Windows ("Recuerdo GTA 6 - sincronizar datos", cada 30 min, a los :15 y :45) traen las
   mediciones de GitHub. Solo avanza (fast-forward); si hay commits del PC sin subir no toca nada;
   aparta y repone los cambios sin guardar (--autostash). Registro en
-  `%LOCALAPPDATA%\recuerdo-gta6\sincronizar.log`. Se quita con `-Quitar`.
+  `%LOCALAPPDATA%\recuerdo-gta6\sincronizar.log`. Se quita con `-Quitar`. Corre sin ventana
+  (`conhost --headless`, para no interrumpir juegos ni documentos) y, para distinguirla de un
+  virus, su autor es "Recuerdo GTA 6 (proyecto de Bruno)" y su descripción empieza con "LEGÍTIMA"
+  (cómo comprobarla, en la cabecera del script).
 - **Portada con suelo (tarea 7.12, opción A de Bruno, 2026-11-15): calle y playa.**
   - Condición de Bruno: el suelo se agrega sin quitar el mar.
   - Bajo los hoteles: vereda, cordón, calle con línea discontinua y arena, con las palmeras

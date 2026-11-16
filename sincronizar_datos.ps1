@@ -11,6 +11,18 @@
 #   - Después rehace web/datos.js para que la página del PC muestre lo último.
 # Lo que hace queda anotado en %LOCALAPPDATA%\recuerdo-gta6\sincronizar.log (fuera del repositorio).
 #
+# Sin ventanas (pedido de Bruno, 2026-11-16): la tarea abre PowerShell con "conhost --headless",
+# así no aparece ninguna ventana ni roba el foco (juegos, documentos).
+#
+# ¿Es legítima o es un virus? (pedido de Bruno) Esta tarea es legítima si cumple todo esto:
+#   - En el Programador de tareas se llama "Recuerdo GTA 6 - sincronizar datos", su autor es
+#     "Recuerdo GTA 6 (proyecto de Bruno)" y su descripción empieza con "LEGÍTIMA".
+#   - Ejecuta conhost.exe -> powershell.exe con ESTE archivo (sincronizar_datos.ps1, dentro de la
+#     carpeta del proyecto) y nada más. No descarga programas: solo usa git con el repositorio
+#     del proyecto en GitHub.
+#   - Cada vez que trae algo lo anota en el registro, con fecha y hora.
+# Si algo con ese nombre ejecuta otro archivo u otra carpeta, NO es esta tarea.
+#
 # Uso:  powershell -ExecutionPolicy Bypass -File sincronizar_datos.ps1            (una vez)
 #       powershell -ExecutionPolicy Bypass -File sincronizar_datos.ps1 -Instalar  (crea la tarea)
 #       powershell -ExecutionPolicy Bypass -File sincronizar_datos.ps1 -Quitar    (borra la tarea)
@@ -28,15 +40,22 @@ if ($Quitar) {
     exit 0
 }
 if ($Instalar) {
-    $accion = New-ScheduledTaskAction -Execute "powershell.exe" `
-        -Argument ('-NoProfile -WindowStyle Hidden -ExecutionPolicy Bypass -File "{0}"' -f $PSCommandPath)
+    # conhost --headless: PowerShell corre sin ventana (no aparece ni un instante).
+    $accion = New-ScheduledTaskAction -Execute "conhost.exe" `
+        -Argument ('--headless powershell.exe -NoProfile -NonInteractive -ExecutionPolicy Bypass -File "{0}"' -f $PSCommandPath)
     # Cada 30 minutos, a los :15 y :45 (las mediciones se guardan a los :07 y, del 17 al 21 nov, a los :37).
     $inicio = (Get-Date).Date.AddMinutes(15)
     $disparo = New-ScheduledTaskTrigger -Once -At $inicio -RepetitionInterval (New-TimeSpan -Minutes 30)
     $ajustes = New-ScheduledTaskSettingsSet -StartWhenAvailable -DontStopIfGoingOnBatteries -AllowStartIfOnBatteries `
         -ExecutionTimeLimit (New-TimeSpan -Minutes 10) -MultipleInstances IgnoreNew
     Register-ScheduledTask -TaskName $TAREA -Action $accion -Trigger $disparo -Settings $ajustes `
-        -Description "Trae de GitHub las mediciones nuevas del proyecto Recuerdo GTA 6 (solo avanza, nunca borra)." -Force | Out-Null
+        -Description ("LEGÍTIMA: tarea creada para el proyecto Recuerdo GTA 6 de Bruno. Cada 30 minutos trae de GitHub " +
+            "las mediciones nuevas (solo avanza, nunca borra) ejecutando sincronizar_datos.ps1 de la carpeta del proyecto, sin ventana. " +
+            "Registro: %LOCALAPPDATA%\recuerdo-gta6\sincronizar.log. Para quitarla: sincronizar_datos.ps1 -Quitar.") -Force | Out-Null
+    # Autor visible en el Programador de tareas, para reconocerla.
+    $t = Get-ScheduledTask -TaskName $TAREA
+    $t.Author = "Recuerdo GTA 6 (proyecto de Bruno)"
+    $t | Set-ScheduledTask | Out-Null
     Write-Output "Tarea '$TAREA' creada: cada 30 minutos. Registro en $log"
     exit 0
 }
