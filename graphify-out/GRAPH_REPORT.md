@@ -1,17 +1,17 @@
-# Graph Report - Documentación Gta 6  (2026-11-15)
+# Graph Report - Documentación Gta 6  (2026-11-16)
 
 ## Corpus Check
-- 46 files · ~71,053 words
+- 46 files · ~71,457 words
 - Verdict: corpus is large enough that graph structure adds value.
 - Unclassified: 10 file(s) not represented in the graph (top: .jsonl 5, (none) 3, .bat 1)
 
 ## Summary
-- 621 nodes · 1046 edges · 34 communities (20 shown, 14 thin omitted)
-- Extraction: 90% EXTRACTED · 10% INFERRED · 0% AMBIGUOUS · INFERRED: 105 edges (avg confidence: 0.87)
+- 628 nodes · 1059 edges · 34 communities (20 shown, 14 thin omitted)
+- Extraction: 90% EXTRACTED · 10% INFERRED · 0% AMBIGUOUS · INFERRED: 107 edges (avg confidence: 0.87)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `7866a905`
+- Built from commit: `89eb634c`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -48,27 +48,27 @@
 
 ## God Nodes (most connected - your core abstractions)
 1. `pintar()` - 26 edges
-2. `Falla` - 24 edges
-3. `pedir()` - 19 edges
-4. `exigir()` - 17 edges
+2. `Falla` - 25 edges
+3. `pedir()` - 20 edges
+4. `exigir()` - 18 edges
 5. `a_iso()` - 14 edges
 6. `Decisiones ya tomadas` - 14 edges
-7. `Plan de trabajo` - 13 edges
-8. `Recolector` - 13 edges
-9. `Plan del proyecto (PLAN.md)` - 13 edges
-10. `pedir_json()` - 12 edges
+7. `es_entero()` - 13 edges
+8. `pedir_json()` - 13 edges
+9. `Plan de trabajo` - 13 edges
+10. `Recolector` - 13 edges
 
 ## Surprising Connections (you probably didn't know these)
-- `8. Dónde está cada cosa (por si quien ayuda puede leer código)` --references--> `fuegos()`  [INFERRED]
-  DISENO_VISUAL.md → web/app.js
 - `Fase 1 — Recolector funcionando (lo más importante)` --references--> `compacto()`  [INFERRED]
   historial/PLAN_DE_TRABAJO_2026-11-13.md → web/app.js
 - `Fase 1 — Recolector funcionando (lo más importante)` --references--> `compacto()`  [INFERRED]
   PLAN_DE_TRABAJO.md → web/app.js
+- `8. Dónde está cada cosa (por si quien ayuda puede leer código)` --references--> `fuegos()`  [INFERRED]
+  DISENO_VISUAL.md → web/app.js
+- `Fase 6 — Ideas nuevas de Bruno: más estadísticas, logros y comparaciones` --references--> `youtube_es()`  [INFERRED]
+  historial/PLAN_DE_TRABAJO_2026-11-14.md → recolector/fuentes.py
 - `Fase 6 — Ideas nuevas de Bruno: más estadísticas, logros y comparaciones` --references--> `twitch_ranking()`  [INFERRED]
   historial/PLAN_DE_TRABAJO_2026-11-13.md → recolector/fuentes.py
-- `Fase 6 — Ideas nuevas de Bruno: más estadísticas, logros y comparaciones` --references--> `twitch_ranking()`  [INFERRED]
-  historial/PLAN_DE_TRABAJO_2026-11-14.md → recolector/fuentes.py
 
 ## Import Cycles
 - None detected.
@@ -89,8 +89,8 @@ Cohesion: 0.05
 Nodes (50): Apagarlo, Comprobar que funciona, Cron Trigger 7,37 * * * * (UTC), Despertador del recolector (Cloudflare), Secreto GITHUB_TOKEN (solo Actions: Read and write, caduca 31 ene 2027), Montar el despertador (pasos en el navegador), Montarlo (lo hace Bruno en el navegador; no hace falta instalar nada), Semana del lanzamiento (SEMANA_INICIO / SEMANA_FIN) (+42 more)
 
 ### Community 1 - "Fuentes de datos (fuentes.py)"
-Cohesion: 0.06
-Nodes (34): Fase 6 — Ideas nuevas de Bruno: más estadísticas, logros y comparaciones, Fase 6 — Ideas nuevas de Bruno: más estadísticas, logros y comparaciones, _cabeceras_twitch(), _datos_video(), _fotos_de_perfil(), _mensaje_youtube(), noticias(), playstation() (+26 more)
+Cohesion: 0.07
+Nodes (33): Fase 6 — Ideas nuevas de Bruno: más estadísticas, logros y comparaciones, Fase 6 — Ideas nuevas de Bruno: más estadísticas, logros y comparaciones, _cabeceras_twitch(), _datos_video(), _fotos_de_perfil(), kick(), _mensaje_youtube(), noticias() (+25 more)
 
 ### Community 2 - "Decisiones ya tomadas"
 Cohesion: 0.05
@@ -109,12 +109,12 @@ Cohesion: 0.13
 Nodes (10): main(), abrir(), preparar_salida(), main(), main(), recorrer(), fecha(), main() (+2 more)
 
 ### Community 6 - "Workflow Recolectar datos"
-Cohesion: 0.09
-Nodes (22): concurrency, cancel-in-progress, group, TWITCH_CLIENT_ID, TWITCH_CLIENT_SECRET, YOUTUBE_API_KEY, jobs, recolectar (+14 more)
+Cohesion: 0.08
+Nodes (24): concurrency, cancel-in-progress, group, KICK_CLIENT_ID, KICK_CLIENT_SECRET, TWITCH_CLIENT_ID, TWITCH_CLIENT_SECRET, YOUTUBE_API_KEY (+16 more)
 
 ### Community 7 - "Workflow Probar fuentes"
 Cohesion: 0.07
-Nodes (30): TWITCH_CLIENT_ID, TWITCH_CLIENT_SECRET, YOUTUBE_API_KEY, solo_trends_extra, jobs, probar, trends_extra, name (+22 more)
+Nodes (32): KICK_CLIENT_ID, KICK_CLIENT_SECRET, TWITCH_CLIENT_ID, TWITCH_CLIENT_SECRET, YOUTUBE_API_KEY, solo_trends_extra, jobs, probar (+24 more)
 
 ### Community 8 - "Código de la página (app.js)"
 Cohesion: 0.06
@@ -122,7 +122,7 @@ Nodes (71): 8. Dónde está cada cosa (por si quien ayuda puede leer código), F
 
 ### Community 9 - "Validaciones (validar.py)"
 Cohesion: 0.12
-Nodes (27): abortar(), comprobar(), comprobar_serie(), main(), paises(), preguntar(), relacionadas(), serie() (+19 more)
+Nodes (28): abortar(), comprobar(), comprobar_serie(), main(), paises(), preguntar(), relacionadas(), serie() (+20 more)
 
 ### Community 10 - "Trabajar con Claude en la nube"
 Cohesion: 0.40
@@ -161,27 +161,27 @@ Cohesion: 0.05
 Nodes (38): concurrency, cancel-in-progress, group, name, url, jobs, preparar, publicar (+30 more)
 
 ### Community 35 - "generar_web.py"
-Cohesion: 0.12
-Nodes (17): abortar(), comprobar(), convertir(), elegir_videos(), escribir(), estado_servidor(), leer_album(), leer_filtro() (+9 more)
+Cohesion: 0.09
+Nodes (19): abortar(), comprobar(), convertir(), elegir_videos(), escribir(), estado_servidor(), leer_album(), leer_filtro() (+11 more)
 
 ## Knowledge Gaps
 - **32 isolated node(s):** `Estado de Rockstar (anotado a mano en web/eventos.js)`, `Fallo del eje de Twitch (compacto() en web/app.js)`, `Reddit (A5)`, `Fase 5 — Búsqueda calmada tras el lanzamiento`, `Aviso legal (proyecto de fans, no afiliado a Rockstar/Take-Two)` (+27 more)
-  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 255 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
+  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 260 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
 - **14 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
 - **Why does `Plan de trabajo` connect `Plan de trabajo` to `Código de la página (app.js)`, `Fuentes de datos (fuentes.py)`?**
-  _High betweenness centrality (0.163) - this node is a cross-community bridge._
+  _High betweenness centrality (0.162) - this node is a cross-community bridge._
 - **What connects `Estado de Rockstar (anotado a mano en web/eventos.js)`, `Fallo del eje de Twitch (compacto() en web/app.js)`, `Reddit (A5)` to the rest of the system?**
   _32 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Despertador y plan de trabajo` be split into smaller, more focused modules?**
   _Cohesion score 0.05117845117845118 - nodes in this community are weakly interconnected._
 - **Why does `Fase 6 — Ideas nuevas de Bruno: más estadísticas, logros y comparaciones` connect `Fuentes de datos (fuentes.py)` to `Plan de trabajo`?**
-  _High betweenness centrality (0.155) - this node is a cross-community bridge._
+  _High betweenness centrality (0.154) - this node is a cross-community bridge._
 - **Should `Fuentes de datos (fuentes.py)` be split into smaller, more focused modules?**
-  _Cohesion score 0.06456140350877193 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.07374254049445865 - nodes in this community are weakly interconnected._
 - **Should `Decisiones ya tomadas` be split into smaller, more focused modules?**
   _Cohesion score 0.05052790346907994 - nodes in this community are weakly interconnected._
 - **Should `Resultado de las pruebas reales de fuentes (12 nov 2026)` be split into smaller, more focused modules?**

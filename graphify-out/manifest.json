@@ -48,9 +48,9 @@
     "semantic_hash": ""
   },
   "ESTADO_ACTUAL.md": {
-    "mtime": 1794796405.8455324,
-    "seen": 1794796408.0737119,
-    "ast_hash": "ad9d08cab17e7ee0a92fc1c57176cdb4",
+    "mtime": 1794801266.0320606,
+    "seen": 1794801268.2892683,
+    "ast_hash": "c0a2d1a5b7b996ec274ca628421c6043",
     "semantic_hash": ""
   },
   "GUIA_CLAVES.md": {
@@ -78,9 +78,9 @@
     "semantic_hash": ""
   },
   ".github/workflows/probar-fuentes.yml": {
-    "mtime": 1794768424.3350625,
-    "seen": 1794781810.5640776,
-    "ast_hash": "9ba20e6874c92c6e25d1831d943db54b",
+    "mtime": 1794801165.236733,
+    "seen": 1794801268.2892246,
+    "ast_hash": "923dcf54e158c201713c046a83ca1ade",
     "semantic_hash": ""
   },
   "recolector/probar_fuentes.py": {
@@ -90,15 +90,15 @@
     "semantic_hash": ""
   },
   ".github/workflows/recolectar.yml": {
-    "mtime": 1794578035.6879783,
-    "seen": 1794781810.564083,
-    "ast_hash": "d8fdbbccb78ef63a922c9d685881f86e",
-    "semantic_hash": "d8fdbbccb78ef63a922c9d685881f86e"
+    "mtime": 1794801150.3420548,
+    "seen": 1794801268.2892306,
+    "ast_hash": "121c64b58845ab1bcd2283da893bf635",
+    "semantic_hash": ""
   },
   "recolector/fuentes.py": {
-    "mtime": 1794768424.3536336,
-    "seen": 1794781810.564102,
-    "ast_hash": "d40709f804c7cc4151018838e1a05dab",
+    "mtime": 1794801150.32162,
+    "seen": 1794801268.2892435,
+    "ast_hash": "b903ba7d5a74ea6e6dea39b067959722",
     "semantic_hash": ""
   },
   "recolector/interruptor.json": {
@@ -108,9 +108,9 @@
     "semantic_hash": "b8c4851586f3fbbdd7b1ac30238e6af6"
   },
   "recolector/recolectar.py": {
-    "mtime": 1794768424.3556347,
-    "seen": 1794781810.5641103,
-    "ast_hash": "e2877547e00ef6349ef5353e2552b29d",
+    "mtime": 1794801150.3246267,
+    "seen": 1794801268.2892506,
+    "ast_hash": "30feec461bef7cd1805ccdaaecda0209",
     "semantic_hash": ""
   },
   "recolector/red.py": {
@@ -126,15 +126,15 @@
     "semantic_hash": ""
   },
   "recolector/validar.py": {
-    "mtime": 1794768424.3566365,
-    "seen": 1794781810.5641186,
-    "ast_hash": "ba88c9417be4568c84832cf8885137f2",
+    "mtime": 1794801150.3236306,
+    "seen": 1794801268.289256,
+    "ast_hash": "df305a3203dcd5e0543e5b73836d58f6",
     "semantic_hash": ""
   },
   "PLAN_DE_TRABAJO.md": {
-    "mtime": 1794796405.8445334,
-    "seen": 1794796408.0737166,
-    "ast_hash": "a4cbebc3340605bab2c303e119c026b1",
+    "mtime": 1794801266.0310552,
+    "seen": 1794801268.2892728,
+    "ast_hash": "ba1148f0acdd748d0914ae8a09b0e911",
     "semantic_hash": ""
   },
   "recolector/LEEME.md": {

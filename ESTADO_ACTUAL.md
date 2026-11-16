@@ -101,7 +101,8 @@ Bruno ya eligió las palabras de la comparación.
 
 ## Últimos cambios
 
-- 2026-11-16: Kick probado (6.6): la app de Bruno funciona, la categoría de GTA 6 es 13155 y se vieron 106 directos con 2.238 espectadores. Falta meterlo en el recolector y la página.
+- 2026-11-16: Kick ya se mide cada hora (fuente `kick`: espectadores y directos de la categoría 13155, más sus 10 canales). Probado en GitHub sin guardar; falta mostrarlo en la página.
+- 2026-11-16: Kick probado (6.6): la app de Bruno funciona, la categoría de GTA 6 es 13155 y se vieron 106 directos con 2.238 espectadores. 
 - 2026-11-15: portada con suelo (7.12, opción A de Bruno): vereda, calle y arena entre los hoteles y el mar, con las palmeras plantadas en la arena; el mar se queda, más angosto. Investigada la API de Kick (6.6): gratis, falta que Bruno cree la app.
 - 2026-11-15: pedidos de Bruno anotados en el plan para después: 6.6 Kick e Instagram, 7.13 sección de memes (requiere investigación) y, en la 7.12, que el suelo se agregue sin quitar el mar.
 - 2026-11-15: las torres nuevas de 2026 ya no suben ni bajan partidas en dos (los cortes de la animación pasaban por la vela y la torre con grúa).
