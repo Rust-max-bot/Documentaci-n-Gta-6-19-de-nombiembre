@@ -118,6 +118,18 @@ usarla. Ver el aviso 7, sobre la fecha del lanzamiento.)*
     registrar una app y pedir una clave). Idea: espectadores en vivo de GTA 6 en Kick, como ya
     se hace con Twitch, y Kick frente a Twitch en la página. La clave iría en los Secrets de
     GitHub.
+    **Investigado el 2026-11-15 (documentación oficial, docs.kick.com):** gratis y sin
+    aprobación (la documentación no menciona costo ni revisión). Pasos de Bruno: cuenta de
+    Kick con verificación en dos pasos activada → kick.com/settings/developer → crear app
+    (da Client ID y Client Secret; la dirección de retorno puede ser cualquiera, no se usa) →
+    guardar los dos en los Secrets de GitHub (`KICK_CLIENT_ID`, `KICK_CLIENT_SECRET`). El
+    programa pide una clave temporal con `POST https://id.kick.com/oauth/token`
+    (`grant_type=client_credentials`), busca el número de la categoría con
+    `GET https://api.kick.com/public/v2/categories?name=...` y lista los directos de esa
+    categoría con `GET /public/v2/livestreams?category_id=...` (hasta 1000 por página, con
+    `viewer_count` de cada uno; se suman). Comprobado: sin clave, la API responde 401
+    "Unauthorized", así que la consulta real con datos queda para cuando Bruno cree la app.
+    Falta saber el nombre exacto de la categoría de GTA 6 en Kick.
   - **Instagram:** parece difícil. La API oficial de Meta solo funciona con una cuenta de
     empresa o creador propia, unida a una página de Facebook, y la búsqueda por hashtag da
     pocas publicaciones y no el total (además, tiene límite de hashtags por semana). Si no
