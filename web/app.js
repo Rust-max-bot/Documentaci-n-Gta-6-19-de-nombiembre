@@ -675,11 +675,47 @@
     aplicar(); pintarFiltro();
     // Si hay más días de los que caben, las barras empiezan mostrando los más nuevos (a la derecha).
     (function () { var barras = $("noticias-filtro").querySelector(".nt-barras"); if (barras) barras.scrollLeft = barras.scrollWidth; })();
-    function tarjeta(n) {
-      var ts = Date.parse(n.t), seguro = /^https?:\/\//.test(n.url || "");
-      return "<li>" + (seguro ? enlace(n.url, limpio(n.titulo)) : "<a>" + limpio(n.titulo) + "</a>") + "<small>" +
+    // Los titulares de Google Noticias terminan en " - Medio": en "Lo último" se quita, porque el
+    // medio ya sale aparte (solo si coincide justo con el medio).
+    function sinMedio(t, m) { t = t || ""; return m && t.slice(-(m.length + 3)) === " - " + m ? t.slice(0, -(m.length + 3)) : t; }
+    function tarjeta(n, recortar) {
+      var ts = Date.parse(n.t), seguro = /^https?:\/\//.test(n.url || ""), t = limpio(recortar ? sinMedio(n.titulo, n.medio) : n.titulo);
+      return "<li>" + (seguro ? enlace(n.url, t) : "<a>" + t + "</a>") + "<small>" +
         limpio(n.medio) + (isNaN(ts) ? "" : " · " + dia(ts) + " " + hora(ts)) + "</small></li>";
     }
+    /* Resumen (opción B de Bruno, 2026-11-16): en vez de la lista de cientos de titulares, los
+       medios que más publican y los 6 últimos. La lista completa queda detrás de un botón.
+       Con datos reales el recolector deja el resumen hecho en datos.js; con los de ejemplo
+       (completos) se calcula aquí. */
+    var medios, nMedios, ultimas;
+    if (D.formato === 2) { medios = D.medios_top || []; nMedios = D.medios_n || medios.length; ultimas = D.noticias_ultimas || []; }
+    else {
+      var cuenta = {};
+      lista.forEach(function (n) { if (n.medio) cuenta[n.medio] = (cuenta[n.medio] || 0) + 1; });
+      medios = Object.keys(cuenta).map(function (m) { return [m, cuenta[m]]; }).sort(function (a, b) { return b[1] - a[1]; }).slice(0, 8);
+      nMedios = Object.keys(cuenta).length; ultimas = lista.slice(0, 6);
+    }
+    $("noticias-resumen").textContent = lista.length
+      ? lista.length + " titulares guardados de " + nMedios + " medios. Quiénes hablan más de GTA 6, y lo último."
+      : "Todavía no hay titulares.";
+    (function () {
+      var mx = medios.length ? medios[0][1] : 1;
+      $("noticias-medios").innerHTML = medios.map(function (m) {
+        return "<div><span>" + limpio(m[0]) + '</span><i style="width:' + (m[1] / mx * 100).toFixed(1) + '%"></i><b>' + num(m[1]) + "</b></div>";
+      }).join("");
+      $("noticias-ultimas").innerHTML = ultimas.map(function (n) { return tarjeta(n, true); }).join("");
+    })();
+    var abierta = false, boton = $("noticias-ver");
+    boton.hidden = !lista.length;
+    function textoBoton() { boton.textContent = abierta ? "Ocultar la lista completa" : "Ver los " + num(lista.length) + " titulares"; boton.setAttribute("aria-expanded", abierta); }
+    textoBoton();
+    boton.addEventListener("click", function () {
+      abierta = !abierta; $("noticias-todas").hidden = !abierta; textoBoton();
+      if (abierta) {
+        pintar();                                    // los titulares de la primera página se piden recién ahora
+        var barras = $("noticias-filtro").querySelector(".nt-barras"); if (barras) barras.scrollLeft = barras.scrollWidth;
+      }
+    });
     // Casillas de números (pedido de Bruno, 2026-11-15): siempre la misma cantidad (k = 7, o 5
     // en el celular) para que las flechas y los números no cambien de lugar al avanzar. La
     // primera, la última y la actual con sus vecinas; "…" en los saltos.
@@ -747,7 +783,7 @@
       p = Math.min(total, Math.max(1, p)); if (p === actual) return;
       actual = p; pintar();
     });
-    pintar();
+    // La primera página de la lista completa se pinta al tocar "Ver los N titulares" (ver arriba).
   })();
 
   /* ---------- Reddit (opción C elegida por Bruno, 2026-11-13) ----------

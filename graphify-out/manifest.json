@@ -18,9 +18,9 @@
     "semantic_hash": ""
   },
   "web/app.js": {
-    "mtime": 1794846289.364028,
-    "seen": 1794846396.1136982,
-    "ast_hash": "ed01a54d5250185a7b92c99f606f2847",
+    "mtime": 1794849810.17155,
+    "seen": 1794849972.8458178,
+    "ast_hash": "3c20765964ffe217e43b8cf2c7760943",
     "semantic_hash": ""
   },
   "web/datos-ejemplo.js": {
@@ -48,9 +48,9 @@
     "semantic_hash": ""
   },
   "ESTADO_ACTUAL.md": {
-    "mtime": 1794847512.0680735,
-    "seen": 1794847527.4687755,
-    "ast_hash": "aebbee1e30ca26a1715125bc0f832521",
+    "mtime": 1794848285.9757445,
+    "seen": 1794849972.8458288,
+    "ast_hash": "680253f0151fed40284d4a06d7c6d0d7",
     "semantic_hash": ""
   },
   "GUIA_CLAVES.md": {
@@ -60,9 +60,9 @@
     "semantic_hash": ""
   },
   "PLAN.md": {
-    "mtime": 1794847487.270991,
-    "seen": 1794847527.4687803,
-    "ast_hash": "90cc942b4d10b44003b25f2f700bfbfe",
+    "mtime": 1794848285.9664993,
+    "seen": 1794849972.8458323,
+    "ast_hash": "739d20ac9a0036b6fee9d7f4e2144bab",
     "semantic_hash": ""
   },
   "README.md": {
@@ -72,9 +72,9 @@
     "semantic_hash": ""
   },
   "web/index.html": {
-    "mtime": 1794845979.929614,
-    "seen": 1794846396.113744,
-    "ast_hash": "7d08360467bec72a9391ed42c5b1d4d6",
+    "mtime": 1794849791.1126418,
+    "seen": 1794849972.8458476,
+    "ast_hash": "204aaa2a9ccbe2e61176a3da25c42918",
     "semantic_hash": ""
   },
   ".github/workflows/probar-fuentes.yml": {
@@ -138,9 +138,9 @@
     "semantic_hash": ""
   },
   "recolector/generar_web.py": {
-    "mtime": 1794847512.0701714,
-    "seen": 1794847527.468751,
-    "ast_hash": "26d448dbfa0081146b03958233c492a6",
+    "mtime": 1794849790.250209,
+    "seen": 1794849972.845803,
+    "ast_hash": "34423368b9961e04c299f2a8d668ff68",
     "semantic_hash": ""
   },
   "despertador/worker.js": {

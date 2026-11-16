@@ -68,6 +68,14 @@ Reddit. El estado vivo (dónde quedamos) está en `ESTADO_ACTUAL.md`; las reglas
       completar y contrastar con fuentes que guardan historial, lo que pase la semana siguiente y
       cifras oficiales (ventas). Límite: Trends sí se recupera; Twitch y YouTube no dan el
       pasado (solo terceros o las visitas actuales). Complementa lo medido, no lo reemplaza.
+- [ ] **Revisar el peso de `datos/` y guardar menos (después del 22 nov, pedido de Bruno, 2026-11-16).**
+      Medido el 16 nov: ~4,6 MB en 97 mediciones, `.git` 41 MB; YouTube es el 72 % (las tres
+      búsquedas repiten títulos y miniaturas), Twitch 16 %, titulares 6 %. Antes del 19 no se toca
+      el recolector. Después: que YouTube guarde solo lo que cambió y, si el repositorio pasa de
+      ~200 MB, un archivo externo (p. ej. Cloudflare R2). Solo afecta a mediciones nuevas.
+- [ ] **País e idioma de los canales** (Bruno, 2026-11-16, sin decidir): Twitch y Kick dan el
+      idioma, no el país; YouTube da el país del canal (`channels.list`, 1 unidad). Hoy se
+      guardan solo 20 canales de Twitch y 10 de Kick. Cambia lo que se guarda: pedir permiso.
 - [ ] **Ventas oficiales de GTA 6:** cuando Take-Two las publique, escribirlas en `gta6` de
       `web/lanzamientos.js` (el punto de "Próximamente" se marca solo).
 
@@ -160,6 +168,7 @@ Cada una, en corto. El porqué y las opciones descartadas, en `historial/PLAN_20
 - Opciones elegidas por Bruno (resumen): portada con calle y playa sin quitar el mar (7.12, A);
   Twitch y Kick en un gráfico y una tabla con columna "Plataforma" (6.6, B); videos en tarjetas
   con pestañas Global / En español y tira de Shorts (6.4 A, 6.5 B); récords en vitrina (6.2 A);
+  titulares como resumen (medios que más publican + lo último; lista completa tras un botón, 2026-11-16, B);
   GTA frente a lo más visto en dos columnas (6.3 A); cápsula en cintas de casete (7.4 C);
   copias por plazo (7.10 B); Próximamente como camino (7.11 C); menú flotante (2.12 B).
 - Muchas visitas: `datos.js` lleva lo necesario al abrir; titulares y Reddit de cada día van en

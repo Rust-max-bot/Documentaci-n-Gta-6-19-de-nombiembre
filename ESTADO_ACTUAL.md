@@ -100,6 +100,7 @@ Bruno ya eligió las palabras de la comparación.
 
 ## Últimos cambios
 
+- 2026-11-16: titulares como resumen (opción B de Bruno): los 8 medios que más publican y los 6 últimos; la lista completa y el filtro por día quedan tras el botón "Ver los N titulares". El resumen lo deja hecho `generar_web.py` en `datos.js`.
 - 2026-11-16: horas en 12 h o 24 h según el dispositivo de quien visita; en 24 h la cuenta aclara "(8 de la mañana)" (pedido de Bruno).
 - 2026-11-16: un solo plan (pedido de Bruno): `PLAN.md` junta tareas, decisiones y riesgos en corto (de ~68 KB a ~14 KB); los dos planes completos, en `historial/PLAN_2026-11-16.md` y `historial/PLAN_DE_TRABAJO_2026-11-16.md`.
 - 2026-11-16: Kick en la página (opción B de Bruno): líneas de Twitch y Kick en un gráfico, tabla con columna "Plataforma" y récords de Kick.
@@ -113,8 +114,6 @@ Bruno ya eligió las palabras de la comparación.
 - 2026-11-15: idea de Bruno anotada en el plan (7.12): que la portada tenga suelo (calle, vereda o arena) y las palmeras no salgan del mar.
 - 2026-11-15: microinteracciones aprobadas por Bruno tras una vista previa: gota con resorte en todos los botones de elegir, enfoque de la cuenta al cambiar de país, "Secciones" que crece hasta ser el menú, hundirse al presionar, flechas en días/páginas/Shorts, controles que no cambian de lugar al tocarlos y barra de desplazamiento estable (`DISENO_VISUAL.md` al día).
 - 2026-11-15: `DISENO_VISUAL.md`, descripción solo de lo visual (estilos, día/atardecer/noche, hora cero, colores, letras) con instrucciones para pedir sugerencias a otra IA (pedido de Bruno).
-- 2026-11-15: arreglos pedidos por Bruno: sin el recuadro azul al tocar botones (celulares) ni contorno al hacer clic (el del teclado sigue); volver a Miami 1986 tarda lo mismo que ir a 2026 (~0,4 s; antes ~1,6 s, las torres bajan durante el barrido); "Short más visto" aparte en el Resumen del día y en su imagen (ahora en 3 columnas, opción elegida por Bruno).
-- 2026-11-15: "Lo que espero de GTA 6 (mi opinión)" en la cápsula del tiempo (7.4), texto de Bruno corregido y aprobado por él, y cápsula rediseñada como cintas de casete con "Leer todo" (opción C); PR #25 para que lo una.
 
 ## Pendiente
 

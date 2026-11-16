@@ -193,10 +193,19 @@
 
   <section class="bloque observar" id="seccion-noticias">
     <h2>Titulares</h2>
-    <div class="nt-filtro" id="noticias-filtro"></div>
-    <p class="nota" id="noticias-cuenta"></p>
-    <ul class="noticias" id="noticias"></ul>
-    <nav class="paginas" id="noticias-paginas" aria-label="Páginas de titulares"></nav>
+    <p class="nota" id="noticias-resumen"></p>
+    <h3 class="sub">Los medios que más publican</h3>
+    <div class="medios-barras" id="noticias-medios"></div>
+    <h3 class="sub">Lo último</h3>
+    <ul class="noticias" id="noticias-ultimas"></ul>
+    <button type="button" class="nt-ver" id="noticias-ver" aria-expanded="false" aria-controls="noticias-todas" hidden></button>
+    <div id="noticias-todas" hidden>
+      <h3 class="sub">Todos los titulares</h3>
+      <div class="nt-filtro" id="noticias-filtro"></div>
+      <p class="nota" id="noticias-cuenta"></p>
+      <ul class="noticias" id="noticias"></ul>
+      <nav class="paginas" id="noticias-paginas" aria-label="Páginas de titulares"></nav>
+    </div>
   </section>
 
   <section class="bloque observar" id="seccion-reddit">

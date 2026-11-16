@@ -23,6 +23,7 @@ import json
 import os
 import re
 import sys
+from collections import Counter
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -37,6 +38,8 @@ ALBUM = RAIZ / "web" / "album"
 # hace falta: la página toma de ahí la hora y el texto.
 NOMBRE_FOTO = re.compile(r"^(\d{4}-\d{2}-\d{2}) (\d{2})[-.:h](\d{2})\s*(.*)\.(jpe?g|png|webp|gif)$", re.IGNORECASE)
 FOTO_PESADA = 2 * 1024 * 1024   # más de 2 MB: se avisa (con muchas visitas, gasta tráfico)
+MEDIOS_TOP = 8        # medios que más publican, en la sección Titulares
+NOTICIAS_ULTIMAS = 6  # titulares completos en datos.js para "Lo último"
 REDDIT_ULTIMAS = 8   # publicaciones de Reddit completas en datos.js (la página muestra las 8 últimas)
 NOMBRE_ARCHIVO = re.compile(r"^\d{4}-\d{2}-\d{2}\.jsonl$")
 VIDEOS = 20         # videos de YouTube que se muestran de cada tipo (videos y Shorts), los más vistos
@@ -320,6 +323,13 @@ def separar_por_dias(d):
         dias.setdefault(dia, {"noticias": [], "reddit": []})["reddit"].append(
             {"t": s, "titulo": p["titulo"], "autor": p["autor"], "url": p["url"]})
     d["formato"] = 2
+    # Resumen de los titulares (opción B de Bruno, 2026-11-16): los medios que más publican y los
+    # últimos titulares. La página los muestra sin tener que bajar los archivos de cada día.
+    conteo = Counter(n["medio"] for n in d["noticias"] if n["medio"])
+    d["medios_top"] = [[m, c] for m, c in conteo.most_common(MEDIOS_TOP)]
+    d["medios_n"] = len(conteo)
+    d["noticias_ultimas"] = [{"t": n["t"], "titulo": n["titulo"], "medio": n["medio"], "url": n["url"]}
+                             for n in reversed(d["noticias"][-NOTICIAS_ULTIMAS:])]
     d["noticias_t"] = [segundos(n["t"]) for n in d.pop("noticias")]
     d["reddit"]["publicaciones_t"] = [segundos(p["t"]) for p in pubs]
     d["reddit"]["ultimas"] = pubs[-REDDIT_ULTIMAS:]

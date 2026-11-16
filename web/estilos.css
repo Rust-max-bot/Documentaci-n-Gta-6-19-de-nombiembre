@@ -406,6 +406,17 @@ td a:hover, td a:focus-visible { color: var(--a1); text-decoration-color: var(--
   .noticias.chicas small { font-size: 11px; }
 }
 
+/* Resumen de los titulares (opción B de Bruno, 2026-11-16: medios que más publican + lo último) */
+.medios-barras { display: grid; gap: 7px; margin: 14px 0 20px; }
+.medios-barras div { display: grid; grid-template-columns: minmax(96px, 150px) 1fr 4ch; align-items: center; gap: 10px; font-weight: 600; font-size: 14px; }
+.medios-barras span { overflow-wrap: anywhere; }
+.medios-barras i { display: block; height: 14px; border-radius: 4px; background: var(--a1); }
+.medios-barras b { text-align: right; font-variant-numeric: tabular-nums; }
+.nt-ver { display: block; margin: 16px auto 0; cursor: pointer; padding: 10px 20px; border-radius: 999px; border: 1px solid var(--a1); background: none; color: var(--texto); font: 700 13px var(--f-texto); letter-spacing: .06em; text-transform: uppercase; }
+.nt-ver[hidden], #noticias-todas[hidden] { display: none; }
+#noticias-todas { margin-top: 8px; }
+@media (max-width: 480px) { .medios-barras div { grid-template-columns: 92px 1fr 4ch; font-size: 13px; } }
+
 /* Filtro por día de los titulares (opción C de Bruno, 2026-11-14: barras por día) */
 .nt-barras { display: flex; align-items: flex-end; gap: 6px; height: 150px; margin: 10px 0 8px; overflow-x: auto; padding-bottom: 2px; }
 .nt-barras button { flex: 1 0 34px; max-width: 64px; height: 100%; display: flex; flex-direction: column; justify-content: flex-end; align-items: center; gap: 4px; border: 0; background: none; cursor: pointer; color: var(--texto); padding: 0; font: 600 12px var(--f-texto); }
