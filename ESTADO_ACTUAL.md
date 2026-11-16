@@ -119,8 +119,8 @@ La lista completa y su orden están en `PLAN.md`. Resumen (2026-11-14):
 
 0. **Nuevo (2026-11-16, orden de Bruno):** 9.1 servidores más cortos (antes del 19), 9.2
    "¿Cuánta gente faltó?" (encuestas antes del 19; lo medido, después) y 9.3 menos alarmas por
-   Google (después del 22); 9.4 tráfico de internet con Cloudflare Radar (sin decidir: falta la
-   clave de Bruno). En la 9.2, economía solo como curiosidad y Trends de frases para faltar.
+   Google (después del 22). En la 9.2, economía solo como curiosidad y Trends de frases para
+   faltar. Descartados (Bruno): Cloudflare Radar y medir las redes de descarga de las consolas.
    Detalle en `PLAN.md`.
 1. **Antes del 19 nov:** unir el PR de "Lo que espero" (7.4). Después del lanzamiento, Bruno
    escribe "Lo que me pareció" en `web/capsula.js`.

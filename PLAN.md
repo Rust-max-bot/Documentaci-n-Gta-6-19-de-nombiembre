@@ -68,12 +68,6 @@ Reddit. El estado vivo (dónde quedamos) está en `ESTADO_ACTUAL.md`; las reglas
       real. (3) Cifras reales que se publiquen. **Economía solo como curiosidad** (Bruno): metro de
       Nueva York por día (data.ny.gov `sayj-mze2`, sin clave, probado) con la advertencia de que
       los jueves varían más (~6 %) que el efecto esperado (~1 %). Sin calculadora de dinero perdido.
-- [ ] **9.4 Tráfico de internet** (Bruno, 2026-11-16, sin decidir). Hay precedente: Warzone (2020) y
-      Assassin's Creed (2024) dieron récords en DE-CIX. **Cloudflare Radar** da tráfico por país y por
-      hora, también de días pasados: se pide una vez después del 22 (12 al 26 nov, varios países) sin tocar el recolector. Probado: la API responde y pide una clave (gratis
-      con la cuenta de Cloudflare de Bruno; va en `.env` y en los Secrets). Límite: solo ve lo que
-      pasa por Cloudflare; las descargas de PlayStation y Xbox usan otras redes. Además, las
-      noticias de récords de DE-CIX y proveedores, con su fuente.
 - [ ] **9.3 Menos alarmas por Google** (Bruno, 2026-11-16; **tercero**, después del 22: toca el
       recolector). Hasta el 16 nov, 6 huecos en 101 mediciones, todos de Google (Trends 429 ×4,
       Noticias 429 y 503) y ninguno perdió datos (la siguiente medición los trae). Posible patrón:
@@ -174,7 +168,9 @@ No se empieza hasta que Bruno avise con una confirmación oficial de la versión
   por hora en una sola escala (opción A); descartados saltarse los :37 y encadenar escalas (B).
 - **Herramientas:** Graphify (mapa del proyecto) y sincronización del PC con GitHub
   (`sincronizar_datos.ps1`).
-- Descartado por Bruno: instalar la página como app en el celular (2026-11-14).
+- Descartado por Bruno: instalar la página como app en el celular (2026-11-14); tráfico de
+  internet con Cloudflare Radar (2026-11-16); medir las redes de descarga de PlayStation y Xbox
+  (CloudFront, Akamai, Fastly: no publican cifras): basta con "¿Se cayeron los servidores?".
 
 ## Decisiones vigentes
 
