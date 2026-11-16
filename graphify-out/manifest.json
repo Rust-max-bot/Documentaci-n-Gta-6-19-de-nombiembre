@@ -42,15 +42,15 @@
     "semantic_hash": "9b31786b637be3c13978bec4c2330752"
   },
   "CLAUDE.md": {
-    "mtime": 1794847512.0670748,
-    "seen": 1794847527.468773,
-    "ast_hash": "3bb40b637fd551bdd9bf2738730c76f9",
+    "mtime": 1794860263.715524,
+    "seen": 1794860265.6889205,
+    "ast_hash": "8fed863541430a0a18b94c63612c3dd8",
     "semantic_hash": ""
   },
   "ESTADO_ACTUAL.md": {
-    "mtime": 1794858842.808156,
-    "seen": 1794858845.1293962,
-    "ast_hash": "887b439f9ff357aac22836fa47f6d81d",
+    "mtime": 1794860263.7165215,
+    "seen": 1794860265.6889234,
+    "ast_hash": "51a56097eca268316170bf9a5d5543e3",
     "semantic_hash": ""
   },
   "GUIA_CLAVES.md": {
@@ -168,9 +168,9 @@
     "semantic_hash": ""
   },
   "pruebas/navegador.py": {
-    "mtime": 1794599818.1459668,
-    "seen": 1794781810.5640929,
-    "ast_hash": "f4ea4278ab504008d5776c007bdea12b",
+    "mtime": 1794860068.0704415,
+    "seen": 1794860265.6888874,
+    "ast_hash": "b4e0ac2c9a373983b78b65facdd55eaf",
     "semantic_hash": ""
   },
   "pruebas/probar_despertador.py": {
@@ -180,9 +180,9 @@
     "semantic_hash": ""
   },
   "pruebas/probar_pagina.py": {
-    "mtime": 1794599818.1459668,
-    "seen": 1794781810.5640976,
-    "ast_hash": "f1f122be00b386bbc6ac9081715637fe",
+    "mtime": 1794860082.5628998,
+    "seen": 1794860265.6888914,
+    "ast_hash": "1cf9186e3d0dd86dc2b3b730aa7dd818",
     "semantic_hash": ""
   },
   "NUBE.md": {
@@ -192,9 +192,9 @@
     "semantic_hash": ""
   },
   "pruebas/LEEME.md": {
-    "mtime": 1794857473.1689062,
-    "seen": 1794857476.4708865,
-    "ast_hash": "b4a8f580c896cf94d0ffec56fa566c6f",
+    "mtime": 1794860263.7145267,
+    "seen": 1794860265.6889396,
+    "ast_hash": "5e18fd924fdd24b66a956ce020727f95",
     "semantic_hash": ""
   },
   "pruebas/requisitos.txt": {

@@ -17,7 +17,17 @@ ANCHOS = (1280, 384)
 CHROMIUM_NUBE = Path("/opt/pw-browsers/chromium")   # navegador que trae la máquina de la nube
 
 
-def abrir(p):
+def abrir(p, firefox=False):
+    """Con firefox=True usa el Firefox de Playwright (pedido de Bruno, 2026-11-16), para ver
+    que la página también funciona con ese motor. El Firefox normal del PC no sirve: Playwright
+    necesita el suyo. Si no está instalado, se dice cómo instalarlo."""
+    if firefox:
+        try:
+            return p.firefox.launch()
+        except Exception as e:
+            if "Executable doesn't exist" not in str(e):
+                raise
+            sys.exit("Falta el Firefox de Playwright. Instalarlo con: python -m playwright install firefox")
     if os.name == "nt":
         return p.chromium.launch(channel="msedge")
     try:

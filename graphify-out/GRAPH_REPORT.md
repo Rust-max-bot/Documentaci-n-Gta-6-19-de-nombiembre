@@ -1,17 +1,17 @@
 # Graph Report - Documentación Gta 6  (2026-11-16)
 
 ## Corpus Check
-- 49 files · ~79,996 words
+- 49 files · ~80,276 words
 - Verdict: corpus is large enough that graph structure adds value.
 - Unclassified: 11 file(s) not represented in the graph (top: .jsonl 5, (none) 3, .bat 2)
 
 ## Summary
-- 672 nodes · 1136 edges · 43 communities (28 shown, 15 thin omitted)
+- 673 nodes · 1138 edges · 43 communities (28 shown, 15 thin omitted)
 - Extraction: 91% EXTRACTED · 9% INFERRED · 0% AMBIGUOUS · INFERRED: 104 edges (avg confidence: 0.87)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `8206395c`
+- Built from commit: `1646abef`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -68,16 +68,16 @@
 10. `Plan del proyecto (PLAN.md)` - 13 edges
 
 ## Surprising Connections (you probably didn't know these)
-- `Fase 1 — Recolector funcionando (lo más importante)` --references--> `compacto()`  [INFERRED]
-  historial/PLAN_DE_TRABAJO_2026-11-13.md → web/app.js
 - `Fase 6 — Ideas nuevas de Bruno: más estadísticas, logros y comparaciones (lo que queda)` --references--> `kick()`  [INFERRED]
   historial/PLAN_DE_TRABAJO_2026-11-16.md → recolector/fuentes.py
-- `Diseño de la página` --references--> `limpio()`  [INFERRED]
-  historial/PLAN_2026-11-16.md → web/app.js
+- `Fase 1 — Recolector funcionando (lo más importante)` --references--> `compacto()`  [INFERRED]
+  historial/PLAN_DE_TRABAJO_2026-11-13.md → web/app.js
 - `8. Dónde está cada cosa (por si quien ayuda puede leer código)` --references--> `fuegos()`  [INFERRED]
   DISENO_VISUAL.md → web/app.js
-- `Diseño de la página` --references--> `youtube()`  [INFERRED]
-  historial/PLAN_2026-11-16.md → recolector/fuentes.py
+- `Diseño de la página` --references--> `limpio()`  [INFERRED]
+  historial/PLAN_2026-11-16.md → web/app.js
+- `Fase 6 — Ideas nuevas de Bruno: más estadísticas, logros y comparaciones` --references--> `twitch_ranking()`  [INFERRED]
+  historial/PLAN_DE_TRABAJO_2026-11-13.md → recolector/fuentes.py
 
 ## Import Cycles
 - None detected.
@@ -176,7 +176,7 @@ Cohesion: 0.17
 Nodes (11): Avisos para Bruno (cosas donde su idea tiene un límite o un fallo), Fase 2 — Mejoras rápidas (lo que queda), Fase 4 — Mejoras largas (lo que queda), Fase 5 — Lo que ya estaba acordado para después del lanzamiento, Fase 6 — Ideas nuevas de Bruno: más estadísticas, logros y comparaciones (lo que queda), Fase 7 — Ideas para que la página sea memorable (lo que queda), Fase 8 — Segundo lanzamiento: GTA 6 en PC (dormida), Fechas que mandan (+3 more)
 
 ### Community 35 - "generar_web.py"
-Cohesion: 0.10
+Cohesion: 0.11
 Nodes (19): abortar(), comprobar(), convertir(), elegir_videos(), escribir(), estado_servidor(), hora_de_medicion(), horas_trends() (+11 more)
 
 ### Community 38 - "Decisiones ya tomadas"
@@ -205,7 +205,7 @@ Nodes (5): Secretos de GitHub TWITCH_CLIENT_ID, TWITCH_CLIENT_SECRET, YOUTUBE_AP
 
 ## Knowledge Gaps
 - **31 isolated node(s):** `Estilos visuales Miami 1986 y Miami 2026`, `Enlaces y miniaturas guardados (tareas 2.1 y 2.2)`, `Series continuas de YouTube (25 más vistos + re-medición)`, `Aviso legal (proyecto de fans, no afiliado a Rockstar/Take-Two)`, `Python 3.14 para Graphify (no desinstalar)` (+26 more)
-  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 289 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
+  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 290 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
 - **15 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
@@ -218,9 +218,9 @@ _Questions this graph is uniquely positioned to answer:_
 - **Should `Despertador y plan de trabajo` be split into smaller, more focused modules?**
   _Cohesion score 0.08817204301075268 - nodes in this community are weakly interconnected._
 - **Why does `limpio()` connect `Código de la página (app.js)` to `fuentes.py`?**
-  _High betweenness centrality (0.106) - this node is a cross-community bridge._
+  _High betweenness centrality (0.107) - this node is a cross-community bridge._
 - **Should `fuentes.py` be split into smaller, more focused modules?**
-  _Cohesion score 0.05847781369379959 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.058519793459552494 - nodes in this community are weakly interconnected._
 - **Should `Worker de Cloudflare despertador-recolector (horario 7,37 * * * *)` be split into smaller, more focused modules?**
   _Cohesion score 0.1286549707602339 - nodes in this community are weakly interconnected._
 - **Should `steps` be split into smaller, more focused modules?**

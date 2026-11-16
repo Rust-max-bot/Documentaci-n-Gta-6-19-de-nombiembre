@@ -59,7 +59,7 @@ a estos archivos, ganan los archivos.
 - **Verificar de verdad:** Playwright a 1280 y 384 px de ancho, en los dos estilos ("Miami
   1986" y "Miami 2026"), sin errores en la consola ni desborde horizontal, y capturas de lo
   nuevo. Los fallos se reportan tal cual. Con `python pruebas/probar_pagina.py` (hace todo
-  eso; `--seccion "#id"` captura una parte de cerca) y, si se toca el despertador,
+  eso; `--seccion "#id"` captura una parte de cerca; `--firefox` repite la prueba en Firefox) y, si se toca el despertador,
   `python pruebas/probar_despertador.py`. Detalle en `pruebas/LEEME.md`.
 - **Seguir las tareas de `PLAN.md` en orden.** Una tarea se marca `[x]` solo cuando está hecha y
   verificada sin errores; si queda a medias, sigue en `[ ]` con el fallo anotado al lado.

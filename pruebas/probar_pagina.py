@@ -11,6 +11,12 @@ a ese sitio, no cuenta como fallo de la página: se avisa aparte con los sitios 
 
 Uso:  python pruebas/probar_pagina.py
       python pruebas/probar_pagina.py --seccion "#videos"   (además, captura de cerca esa parte)
+      python pruebas/probar_pagina.py --firefox   (lo mismo en Firefox; se puede juntar con --seccion)
+
+Con --firefox las capturas llevan "firefox_" delante para no pisar las de Edge. Firefox avisa
+en la consola que la letra Rajdhani de Google Fonts trae un detalle mal hecho ("Glyph bbox was
+incorrect") y lo corrige solo: no se ve en la página, así que ese aviso no cuenta como fallo.
+Hace falta el Firefox de Playwright: python -m playwright install firefox
 
 Antes, para ver los datos reales: python recolector/generar_web.py (si no, salen los de ejemplo).
 Código de salida: 0 todo bien; 1 algún fallo (se dice cuál).
@@ -41,9 +47,12 @@ def recorrer(pg):
 def main():
     preparar_salida()
     seccion = sys.argv[sys.argv.index("--seccion") + 1] if "--seccion" in sys.argv else None
+    firefox = "--firefox" in sys.argv
+    pre = "firefox_" if firefox else ""
     fallos = 0
     with sync_playwright() as p:
-        nav = abrir(p)
+        nav = abrir(p, firefox)
+        print(f"Navegador: {'Firefox' if firefox else 'Edge' if sys.platform == 'win32' else 'Chromium'} {nav.version}")
         for ancho in ANCHOS:
             for tema, boton in ESTILOS:
                 pg = nav.new_page(viewport={"width": ancho, "height": 900})
@@ -61,13 +70,15 @@ def main():
                 errores = [e for e in errores if not any(r in e for r in ERRORES_RED)]
                 # Datos de ejemplo: datos.js no existe y el navegador avisa que no lo encontró. Es normal.
                 errores = [e for e in errores if "ERR_FILE_NOT_FOUND" not in e]
+                # Firefox corrige solo la letra Rajdhani de Google Fonts y lo avisa: no es fallo.
+                errores = [e for e in errores if "Glyph bbox was incorrect" not in e]
                 r = pg.evaluate("""() => ({
                     tema: document.documentElement.dataset.tema,
                     desborde: document.documentElement.scrollWidth - document.documentElement.clientWidth,
                     ejemplo: !document.getElementById('aviso-ejemplo').hidden})""")
                 ok = r["tema"] == tema and r["desborde"] <= 0 and not errores
                 fallos += not ok
-                pg.screenshot(path=str(CAPTURAS / f"pagina_{ancho}_{tema}.png"), full_page=True)
+                pg.screenshot(path=str(CAPTURAS / f"{pre}pagina_{ancho}_{tema}.png"), full_page=True)
                 extra = ""
                 if seccion:
                     el = pg.locator(seccion).first
@@ -75,12 +86,12 @@ def main():
                     pg.wait_for_timeout(2000)   # las partes aparecen y se dibujan al llegar a ellas
                     nombre = "".join(c for c in seccion if c.isalnum()) or "seccion"
                     b, y0 = el.bounding_box(), pg.evaluate("window.scrollY")
-                    pg.screenshot(path=str(CAPTURAS / f"{nombre}_{ancho}_{tema}.png"), full_page=True,
+                    pg.screenshot(path=str(CAPTURAS / f"{pre}{nombre}_{ancho}_{tema}.png"), full_page=True,
                                   clip={"x": b["x"], "y": b["y"] + y0, "width": b["width"], "height": min(b["height"], 1400)})
-                    extra = f" + {nombre}_{ancho}_{tema}.png"
+                    extra = f" + {pre}{nombre}_{ancho}_{tema}.png"
                 print(f"{'OK   ' if ok else 'FALLO'} {ancho}px {boton}: estilo={r['tema']} desborde={r['desborde']}px "
                       f"errores={errores or 'ninguno'} datos={'de EJEMPLO' if r['ejemplo'] else 'reales'} "
-                      f"-> pagina_{ancho}_{tema}.png{extra}")
+                      f"-> {pre}pagina_{ancho}_{tema}.png{extra}")
                 if sin_red:
                     print(f"      aviso: la red de esta máquina no dejó cargar fotos de {', '.join(sorted(sin_red))}")
                 pg.close()
