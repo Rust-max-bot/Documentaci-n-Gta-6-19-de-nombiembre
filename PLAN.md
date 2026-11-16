@@ -65,6 +65,8 @@ Reddit. El estado vivo (dónde quedamos) está en `ESTADO_ACTUAL.md`; las reglas
       la búsqueda por hashtag da pocas publicaciones, no el total, con límite semanal. Si no
       sirve, anotar a mano lo llamativo como evento. Verificar con una consulta real antes de
       afirmar nada.
+      **2026-11-16:** formulario de la app de Meta revisado (caso de uso "Administrar mensajes y
+      contenido en Instagram", sin portfolio, sin requisitos); no se creó: Bruno lo deja para después.
 
 ### Después del lanzamiento
 
