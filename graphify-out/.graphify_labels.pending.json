@@ -14,6 +14,12 @@
   "29": "lanzamientos.js",
   "30": "Diseño visual de la página",
   "31": "steps",
+  "32": "Diseño Miami con dos estilos (Miami 2026 y Miami años 80)",
   "33": "publicar",
-  "35": "generar_web.py"
+  "34": "Visibilidad del repositorio: público (2026-11-12)",
+  "35": "generar_web.py",
+  "36": "Estructura de carpetas (web/, recolector/, datos/, .github/workflows/, despertador/)",
+  "37": "Worker de Cloudflare despertador-recolector (horario 7,37 * * * *)",
+  "38": "Criterios para saber si salió bien",
+  "39": "Dónde quedamos (2026-11-13)"
 }

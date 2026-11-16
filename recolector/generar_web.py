@@ -183,6 +183,13 @@ def convertir(medidas):
                               "canales": [{"nombre": c["nombre"], "login": c["login"], "espectadores": c["espectadores"],
                                            **({"foto": c["foto"]} if c.get("foto") else {})}
                                           for c in tw["canales"][:CANALES]]}
+        # Tarea 6.6: Kick, desde el 16 nov. Las mediciones de antes no traen la clave.
+        kk = m.get("kick")
+        if kk is not None:
+            fila["kick"] = {"error": kk["error"]} if "error" in kk else {
+                "espectadores": kk["espectadores"], "transmisiones": kk["transmisiones"],
+                "canales": [{"canal": c["canal"], "espectadores": c["espectadores"], "idioma": c["idioma"]}
+                            for c in kk["canales"][:5]]}
         interes = None if "error" in tr else ultima_hora_completa(tr)
         fila["trends"] = {"interes": interes} if interes is not None else {"error": tr.get("error", "sin hora completa")}
         fila["servidores"] = {
