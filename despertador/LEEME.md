@@ -27,7 +27,10 @@ valor no se puede ver y no está en el repositorio).
 
 - `worker.js`: el código del Worker. Es la copia de referencia de lo que está en Cloudflare.
 - Nombre del Worker en Cloudflare: `despertador-recolector`.
-- Horario (Cron Trigger, hora UTC): `7,37 * * * *`.
+- Horario (Cron Triggers, hora UTC): `7,37 * * * *` (recolector) y, desde el 2026-11-16,
+  `41 15 21-24 11 *` (lanza `trends-extra.yml`, tarea 6.1, con candado de fechas en el código:
+  solo del 20 al 25 nov 2026). Puesto por Claude desde el navegador de Bruno, a su pedido;
+  versión activa `f6b8af69`, igual a `worker.js` (comprobado con su huella SHA-256).
 - Secreto del Worker: `GITHUB_TOKEN`, una clave de GitHub de grano fino que **solo** tiene
   "Actions: Read and write" sobre este repositorio. Caduca el 31 de enero de 2027: si se
   alarga la recolección más allá de esa fecha, hay que crear otra y cambiar el secreto.

@@ -1,11 +1,22 @@
 # Tarea 6.1: las 5 preguntas extra a Google Trends, UNA sola vez (decisión de Bruno, 2026-11-13:
-# entre el 20 y el 25 nov, fuera del recolector de cada hora). Solo se lanza a mano, con el
-# botón "Run workflow" de GitHub. Guarda un archivo nuevo en datos/trends_extra/.
+# entre el 20 y el 25 nov, fuera del recolector de cada hora). Guarda un archivo nuevo en
+# datos/trends_extra/, UNA sola vez: si ya hay uno, o si es fuera del 20-25 nov 2026, termina en
+# verde sin hacer nada (paso "decidir").
+# Quién lo lanza (decisión de Bruno, 2026-11-16, tras un debate entre dos agentes):
+#   1. el despertador de Cloudflare (despertador/worker.js), del 21 al 24 nov a las 15:41 UTC;
+#   2. de respaldo, el horario de GitHub de abajo, los mismos días a las 18:41 UTC;
+#   3. a mano, con el botón "Run workflow" (recordatorios en el calendario de Bruno el 21 y el 24).
 # Para probar sin guardar: "Probar fuentes" con la casilla de Trends extra marcada.
 name: Trends extra (6.1)
 
 on:
   workflow_dispatch:
+  schedule:
+    - cron: "41 18 21-24 11 *"   # respaldo del despertador (UTC); el candado evita otros años
+
+concurrency:
+  group: trends-extra
+  cancel-in-progress: false      # si coinciden dos, la segunda espera y luego ve el archivo
 
 permissions:
   contents: write
@@ -13,17 +24,37 @@ permissions:
 jobs:
   trends_extra:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 25           # unas 10 consultas con esperas de 60 y 180 s si Google pide esperar
     steps:
       - uses: actions/checkout@v5       # v5 usa Node.js 24 (la v4 usaba Node.js 20, retirado)
+      # ¿Toca hacer las preguntas? Mira main en GitHub (no la copia del checkout, que en una
+      # ejecución en espera puede ser anterior al archivo guardado por otra).
+      - name: Decidir si toca
+        id: decidir
+        run: |
+          hoy=$(date -u +%Y-%m-%d)
+          git fetch -q origin main
+          if [[ "$hoy" < "2026-11-20" || "$hoy" > "2026-11-25" ]]; then
+            echo "Fuera del 20-25 nov 2026 ($hoy): no se hace nada." | tee -a "$GITHUB_STEP_SUMMARY"
+            echo "seguir=no" >> "$GITHUB_OUTPUT"
+          elif git ls-tree -r --name-only origin/main -- datos/trends_extra/ | grep -q '\.json$'; then
+            echo "Ya está guardada: $(git ls-tree -r --name-only origin/main -- datos/trends_extra/ | tr '\n' ' '). No se hace nada." | tee -a "$GITHUB_STEP_SUMMARY"
+            echo "seguir=no" >> "$GITHUB_OUTPUT"
+          else
+            echo "seguir=si" >> "$GITHUB_OUTPUT"
+          fi
+
       - uses: actions/setup-python@v6   # v6 usa Node.js 24 (la v5 usaba Node.js 20, retirado)
+        if: steps.decidir.outputs.seguir == 'si'
         with:
           python-version: "3.12"
 
       - name: Hacer las 5 preguntas a Google Trends
+        if: steps.decidir.outputs.seguir == 'si'
         run: python3 recolector/trends_extra.py
 
       - name: Guardar el resultado en el repositorio
+        if: steps.decidir.outputs.seguir == 'si'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"

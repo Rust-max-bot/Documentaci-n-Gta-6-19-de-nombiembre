@@ -48,7 +48,7 @@ con la ortografía corregida por Claude y aprobado por él; en el PR de la rama
 lanzamiento: la 7.4 sigue en `[ ]`. El recordatorio del 17 nov ya no hace falta.
 
 **El recolector funciona solo.** Lo lanza el despertador de Cloudflare (Worker
-`despertador-recolector`, horario `7,37 * * * *`; el minuto 37 solo mide del 17 nov 00:07 al
+`despertador-recolector`, horario `7,37 * * * *` y, para la 6.1, `41 15 21-24 11 *`; el minuto 37 solo mide del 17 nov 00:07 al
 22 nov 00:07 UTC). Revisado el 2026-11-13: cada hora desde las 02:07 UTC, sin huecos en
 ninguna fuente. GitHub ya no lo lanza por su cuenta (se quitó el `schedule` de
 `recolectar.yml`). **Revisado en Cloudflare el 2026-11-13 (~21:30 UTC):** el código activo
@@ -100,6 +100,7 @@ Bruno ya eligió las palabras de la comparación.
 
 ## Últimos cambios
 
+- 2026-11-16: la 6.1 se lanza sola: el despertador de Cloudflare (nuevo horario `41 15 21-24 11 *`, puesto por Claude a pedido de Bruno) del 21 al 24 nov, con respaldo de GitHub a las 18:41 UTC; guarda una sola vez. Recordatorios en el calendario de Bruno el 21 y el 24.
 - 2026-11-16: gráfico de Trends por hora (opción A de Bruno): cada hora con el valor de la medición más nueva que la trae; sin huecos y la última semana en una sola escala.
 - 2026-11-16: Trends más resistente al 429 (pedido de Bruno): guarda la serie de 7 días (~169 puntos) en vez de 24 y reintenta una vez a los 20 s. Falta en la página: serie por hora y el problema de la escala (ver "Trends sin huecos" en `PLAN.md`).
 - 2026-11-16: anotada en el plan la API alfa de Google Trends; Bruno envió el formulario él mismo (falta saber si responden).
@@ -108,7 +109,6 @@ Bruno ya eligió las palabras de la comparación.
 - 2026-11-16: un solo plan (pedido de Bruno): `PLAN.md` junta tareas, decisiones y riesgos en corto (de ~68 KB a ~14 KB); los dos planes completos, en `historial/PLAN_2026-11-16.md` y `historial/PLAN_DE_TRABAJO_2026-11-16.md`.
 - 2026-11-16: Kick en la página (opción B de Bruno): líneas de Twitch y Kick en un gráfico, tabla con columna "Plataforma" y récords de Kick.
 - 2026-11-16: sincronización del PC con GitHub (`sincronizar_datos.ps1`, tarea de Windows cada 30 min, sin ventana y con notificación al traer datos). **Apagada por Bruno**: se enciende con doble clic en `sincronizar_interruptor.bat`.
-- 2026-11-16: Kick ya se mide cada hora (fuente `kick`: espectadores y directos de la categoría 13155, más sus 10 canales). Probado en GitHub sin guardar; falta mostrarlo en la página.
 
 ## Pendiente
 
@@ -119,7 +119,7 @@ La lista completa y su orden están en `PLAN.md`. Resumen (2026-11-14):
 2. **Fase 4:** 4.3 análisis de datos (necesita varios días de datos).
 3. **Fase 6** (ideas de Bruno): 6.1 más Google Trends, **una sola vez entre el 20 y el 25 nov**,
    fuera del recolector de cada hora (decisión de Bruno, 2026-11-13; ver `PLAN.md`). Programa
-   listo y probado, con las palabras que eligió Bruno; falta ejecutarlo y mostrarlo. **Trends sin huecos** (16 nov): hecho en recolector y página; falta asegurar la 6.1 (20-25 nov). 6.2 y 6.3, hechas. 6.4 videos en español, hecha (pestañas en la página). 6.6 Kick e Instagram (pedido de Bruno; Kick investigada: Bruno crea la app en kick.com/settings/developer y guarda las claves en los Secrets; si se quiere el día del lanzamiento, antes del 19 nov).
+   listo y probado, con las palabras que eligió Bruno; falta ejecutarlo y mostrarlo. **Trends sin huecos** (16 nov): hecho. La 6.1 se lanza sola del 21 al 24 nov (Cloudflare + GitHub); el 21, comprobar que se guardó. 6.2 y 6.3, hechas. 6.4 videos en español, hecha (pestañas en la página). 6.6 Kick e Instagram (pedido de Bruno; Kick investigada: Bruno crea la app en kick.com/settings/developer y guarda las claves en los Secrets; si se quiere el día del lanzamiento, antes del 19 nov).
 4. **Fase 7:** 7.1 rebobinar (después del lanzamiento); 7.13 sección de memes (requiere investigación); 7.3 y 7.5 a 7.11, hechas. Cuando Take-Two publique las ventas, escribirlas en `gta6` de `web/lanzamientos.js`.
    **Fase 8 (GTA 6 en PC):** dormida hasta que Bruno avise con confirmación oficial.
 5. **Fase 5** (después del lanzamiento): búsqueda calmada; clave de Reddit.

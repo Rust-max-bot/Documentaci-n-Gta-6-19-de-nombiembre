@@ -43,8 +43,12 @@ Reddit. El estado vivo (dónde quedamos) está en `ESTADO_ACTUAL.md`; las reglas
       `datos/trends_extra/`. Cinco preguntas: interés por país; búsquedas relacionadas y en
       aumento; hora por hora GTA 6, GTA 5, Minecraft, Fortnite y Marvel Rivals; mes a mes desde
       2013 GTA 6, GTA 5, Ocarina of Time (remake, 5 nov 2026) y Avengers Doomsday; y GTA 6 frente
-      a Doomsday día por día (en la página, solo esa comparación). **Falta:** (1) ejecutarlo
-      cuando Bruno diga; (2) mostrarlo en la página, con opciones y capturas; (3) idea sin
+      a Doomsday día por día (en la página, solo esa comparación). **Se lanza sola** (Bruno, 2026-11-16, tras un
+      debate entre dos agentes): el despertador de Cloudflare el 21, 22, 23 y 24 nov a las 15:41 UTC
+      y, de respaldo, un `schedule` de GitHub a las 18:41 UTC. Guarda solo la primera vez (paso
+      "decidir": si ya hay archivo o es fuera del 20-25 nov 2026, termina en verde), sin ejecuciones
+      dobles y con 25 min de tiempo. Recordatorios en el Google Calendar de Bruno el 21 y el 24 nov
+      (16:30 de Santiago). **Falta:** (1) comprobar el 21 que se guardó; (2) mostrarlo en la página, con opciones y capturas; (3) idea sin
       decidir: repetir lo de Doomsday en enero, después de su estreno (18 dic).
 - [ ] **Trends sin huecos** (pedido de Bruno, 2026-11-16, tras un debate entre dos agentes). Las 4
       fallas hasta el 16 nov fueron 429 y ninguna hora se perdió: la medición siguiente la trae.
@@ -55,8 +59,7 @@ Reddit. El estado vivo (dónde quedamos) está en `ESTADO_ACTUAL.md`; las reglas
       de Trends es por hora (`trends_horas` en `datos.js`), cada hora en su hora real (antes ~1 h tarde)
       y con el valor de la medición más nueva que la trae: tapa los huecos y deja la última semana en
       una sola escala (la escala cambia en cada medición: la hora 14:00 del 16 nov pasó de 88 a 74).
-      Descartada la opción B (encadenar escalas con un cálculo propio). **Falta:** asegurar que la
-      6.1 corra entre el 20 y el 25 nov (programarla o recordatorio; preguntar a Bruno).
+      Descartada la opción B (encadenar escalas con un cálculo propio). La 6.1 quedó asegurada (ver la 6.1).
 - [ ] **6.6 Instagram** (Kick ya está hecho; ver "Lo ya hecho"). Parece difícil: la API de Meta
       solo funciona con una cuenta de empresa o creador propia unida a una página de Facebook, y
       la búsqueda por hashtag da pocas publicaciones, no el total, con límite semanal. Si no

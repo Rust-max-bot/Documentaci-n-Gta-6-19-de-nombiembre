@@ -12,11 +12,20 @@
 // La clave de GitHub va en el secreto GITHUB_TOKEN del Worker. Nunca se escribe aquí.
 // Instrucciones de montaje y prueba: despertador/LEEME.md.
 //
+// Tarea 6.1 (Bruno, 2026-11-16): un segundo horario, "41 15 21-24 11 *", lanza una vez al día
+// del 21 al 24 nov el workflow "Trends extra (6.1)" (trends-extra.yml). Ese workflow guarda
+// solo la primera vez que sale bien: los demás días termina en verde sin hacer nada. GitHub
+// tiene además su propio horario de respaldo a las 18:41 UTC.
+//
 // Este archivo es la copia de referencia: si se cambia el código en Cloudflare, hay que
 // cambiarlo también aquí (y al revés).
 
 const REPO = "Rust-max-bot/Documentaci-n-Gta-6-19-de-nombiembre";
 const WORKFLOW = "recolectar.yml";
+const WORKFLOW_TRENDS = "trends-extra.yml";   // tarea 6.1
+const CRON_TRENDS = "41 15 21-24 11 *";       // debe ser igual al segundo Cron Trigger de Cloudflare
+const TRENDS_INICIO = Date.parse("2026-11-20T00:00:00Z");   // candado: solo en noviembre de 2026
+const TRENDS_FIN = Date.parse("2026-11-26T00:00:00Z");
 
 // Semana del lanzamiento, en UTC: del 17 al 21 de noviembre de 2026, ambos incluidos.
 // El lanzamiento (19 nov, 00:00 de Santiago) es el 19 nov a las 03:00 UTC.
@@ -30,12 +39,12 @@ function tocaMedir(hora) {
   return enPrimeraMitad || enSemana;
 }
 
-async function despertar(env) {
+async function despertar(env, workflow) {
   if (!env.GITHUB_TOKEN) {
     throw new Error("falta el secreto GITHUB_TOKEN en el Worker");
   }
   const r = await fetch(
-    `https://api.github.com/repos/${REPO}/actions/workflows/${WORKFLOW}/dispatches`,
+    `https://api.github.com/repos/${REPO}/actions/workflows/${workflow}/dispatches`,
     {
       method: "POST",
       headers: {
@@ -59,11 +68,20 @@ export default {
   // Lo llama Cloudflare según el horario (Cron Trigger). Si falla, queda marcado como error
   // en el registro del Worker; en GitHub se nota porque falta la medición de ese turno.
   async scheduled(evento, env, ctx) {
+    if (evento.cron === CRON_TRENDS) {          // tarea 6.1
+      if (evento.scheduledTime < TRENDS_INICIO || evento.scheduledTime >= TRENDS_FIN) {
+        console.log("Trends extra fuera del 20-25 nov 2026: no se lanza.");
+        return;
+      }
+      await despertar(env, WORKFLOW_TRENDS);
+      console.log("GitHub aceptó la orden de Trends extra (6.1).");
+      return;
+    }
     if (!tocaMedir(evento.scheduledTime)) {
       console.log("Turno del minuto 37 fuera de la semana del lanzamiento: no se mide.");
       return;
     }
-    await despertar(env);
+    await despertar(env, WORKFLOW);
     console.log("GitHub aceptó la orden de medir.");
   },
 
