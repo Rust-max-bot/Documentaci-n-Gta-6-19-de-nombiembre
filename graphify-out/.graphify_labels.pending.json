@@ -4,6 +4,7 @@
   "3": "Estado actual del proyecto (ESTADO_ACTUAL.md)",
   "4": "steps",
   "8": "app.js",
+  "9": "trends_extra.py",
   "10": "Trabajar con Claude en la nube",
   "21": "preparar-nube.sh",
   "22": "pruebas/LEEME.md",
@@ -34,5 +35,8 @@
   "47": "Estructura de carpetas (web/, recolector/, datos/, .github/workflows/, despertador/)",
   "48": "Guardar claves en GitHub Secrets (TWITCH_CLIENT_ID, TWITCH_CLIENT_SECRET, YOUTUBE_API_KEY)",
   "49": "Plan de trabajo",
-  "50": "pintar"
+  "50": "compacto",
+  "51": "fuegos",
+  "52": "resumen",
+  "53": "pintar"
 }

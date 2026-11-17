@@ -100,7 +100,7 @@ Bruno ya eligió las palabras de la comparación.
 
 ## Últimos cambios
 
-- 2026-11-17: 6.7, primera parte: consulta previa de Trends guardada (`datos/trends_previa/`, desde GitHub; no bloquea la 6.1) y lista en `datos.js`. Opciones A, B y C de cómo mostrar GTA 6 frente a Doomsday, esperando que Bruno elija.
+- 2026-11-17: 6.7 hecha (opción B de Bruno): sección "GTA 6 frente a Avengers: Doomsday" con la consulta previa de Trends (`datos/trends_previa/`, desde GitHub; no bloquea la 6.1). Cuando llegue la 6.1 (21-24 nov), la página la usa sola.
 - 2026-11-17: 6.9 hecha (decisión de Bruno; PR de la rama `claude/project-thread-fwlw7x` hasta que Bruno lo una): Reddit fuera de la página (sección, menú, récord, cuadro del Resumen del día, imagen descargable y textos) y del recolector. Lo guardado sigue en `datos/`. Con 7 cuadros, "Mediciones" ocupa toda la última fila del resumen (igual que ya pasaba los días sin Kick).
 - 2026-11-17: revisado para la hora cero de Nueva Zelanda (18 nov, 11:00 UTC): mediciones cada 30 min, sin fallos salvo Reddit (RSS bloqueado por Reddit desde las 18:37 UTC). Consulta de la 6.1 probada desde el PC sin guardar (Doomsday funciona). Anotadas 6.7 y 6.8 en `PLAN.md`.
 - 2026-11-17: rediseño de la portada (pedido de Bruno, hecho en la rama `rediseno/portada` y aprobado y unido a `main` el mismo día): nueve hoteles distintos, torres con vidrio, tres palmeras distintas, calle con paso de cebra, caseta de salvavidas, nubes, pelícanos y mar nuevos. El dibujo lo escribe `diseno/dibujar_portada.py` (no editar a mano el bloque `PORTADA` de `index.html`). Detalle en `DISENO_VISUAL.md`.
@@ -114,7 +114,7 @@ Bruno ya eligió las palabras de la comparación.
 
 La lista completa y su orden están en `PLAN.md`. Resumen (2026-11-14):
 
-- **(2026-11-17, nuevo):** 6.7 mostrar ya GTA 6 frente a Doomsday (opciones con capturas para Bruno) y 6.8 diseñar la sección de la 6.1 desde el 20 nov. **Reddit:** quitado (6.9, hecha el 17 nov): Reddit bloqueó su RSS público; solo volvería con la clave oficial.
+- **(2026-11-17, nuevo):** 6.8 diseñar la sección de la 6.1 desde el 20 nov. **Reddit:** quitado (6.9, hecha el 17 nov): Reddit bloqueó su RSS público; solo volvería con la clave oficial.
 0. **(2026-11-16, orden de Bruno):** 9.4 optimizar la página (eje y `partes()` hechos; lo
    grande, después del 22), 9.1 servidores más cortos (**hecha**, opción C) y 9.3
    menos alarmas por Google (después del 22). Descartados (Bruno): la 9.2 "¿Cuánta gente

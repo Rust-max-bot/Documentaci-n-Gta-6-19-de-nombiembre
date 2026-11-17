@@ -1004,6 +1004,67 @@
     // La primera página de la lista completa se pinta al tocar "Ver los N titulares" (ver arriba).
   })();
 
+  /* ---------- GTA 6 frente a Avengers: Doomsday (6.7, opción B de Bruno, 2026-11-17) ----------
+     Datos de Google Trends de datos.js (trends_extra): la 6.1 cuando exista o, antes, la consulta
+     previa. A la izquierda, el mejor día de cada uno en los últimos 90 días (los dos en la misma
+     escala); a la derecha, mes a mes desde 2013, con GTA 5 de referencia. Trends no da cantidades:
+     todo va de 0 a 100 dentro de cada pregunta. */
+  (function () {
+    var caja = $("doomsday-caja"), X = D.trends_extra;
+    if (!caja || !X || !X.pelicula || !X.historica) return;
+    $("doomsday").hidden = false;
+    var NS = "http://www.w3.org/2000/svg", P = X.pelicula.puntos, H = X.historica.puntos;
+    var MESES = ["ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", "oct", "nov", "dic"];
+    var fecha = function (s) { var d = new Date(s * 1000); return d.getUTCDate() + " " + MESES[d.getUTCMonth()]; };
+    var maxG = Math.max.apply(null, P.map(function (p) { return p[1]; }));
+    var maxD = Math.max.apply(null, P.map(function (p) { return p[2]; }));
+    var veces = maxD ? Math.round(maxG / maxD) : null;
+    var col = function (nombre) { return X.historica.palabras.indexOf(nombre) + 1; };
+    var iG6 = col("GTA 6"), iG5 = col("GTA 5"), iDo = col("Avengers Doomsday");
+    function el(tag, at, padre) { var e = document.createElementNS(NS, tag); for (var k in at) e.setAttribute(k, at[k]); if (padre) padre.appendChild(e); return e; }
+    function texto(t, at, padre) { var e = el("text", at, padre); e.textContent = t; return e; }
+    function historica(W) {
+      var alto = 240, M = { i: 30, d: W < 480 ? 84 : 96, a: 14, b: 22 }, w = W - M.i - M.d, h = alto - M.a - M.b;
+      var svg = el("svg", { viewBox: "0 0 " + W + " " + alto, class: "dd-svg", role: "img",
+        "aria-label": "Interés en Google mes a mes desde 2013: GTA 6, GTA 5 y Avengers: Doomsday" });
+      var x = function (i) { return M.i + i / (H.length - 1) * w; }, y = function (v) { return M.a + h - v / 100 * h; };
+      [0, 100].forEach(function (v) { el("line", { x1: M.i, x2: M.i + w, y1: y(v), y2: y(v), class: "guia" }, svg); texto(v, { x: M.i - 8, y: y(v) + 4, "text-anchor": "end" }, svg); });
+      [0, Math.floor(H.length / 2), H.length - 1].forEach(function (i) {
+        texto(new Date(H[i][0] * 1000).getUTCFullYear(), { x: x(i), y: alto - 6, "text-anchor": i ? (i === H.length - 1 ? "end" : "middle") : "start" }, svg);
+      });
+      var linea = function (k, cls) { el("path", { d: H.map(function (q, i) { return (i ? "L" : "M") + x(i).toFixed(1) + " " + y(q[k]).toFixed(1); }).join(""), class: cls }, svg); };
+      if (iG5) linea(iG5, "g5");
+      if (iDo) linea(iDo, "d");
+      linea(iG6, "g");
+      var u = H[H.length - 1];
+      if (iG5) {
+        var pico = H.reduce(function (a, q, i) { return q[iG5] > H[a][iG5] ? i : a; }, 0);
+        texto("GTA 5 en " + new Date(H[pico][0] * 1000).getUTCFullYear() + " · " + H[pico][iG5], { x: x(pico) + 8, y: y(H[pico][iG5]) + 4 }, svg);
+      }
+      texto("GTA 6 · " + u[iG6], { x: x(H.length - 1) + 8, y: y(u[iG6]) + 5, class: "et-g" }, svg);
+      if (iDo) texto("Doomsday · " + u[iDo], { x: x(H.length - 1) + 8, y: y(u[iDo]) + 5, class: "et-d" }, svg);
+      return svg;
+    }
+    var frase = veces ? "GTA 6 se buscó <b>" + veces + " veces más</b> que Doomsday en su mejor día."
+      : "En los últimos 90 días, Doomsday no llegó a 1 de 100 frente a GTA 6.";
+    caja.innerHTML = '<p class="dd-frase">' + frase + "</p>" +
+      '<p class="dd-sub">Las barras: el día más alto de cada uno en los últimos 90 días. La línea: mes a mes desde 2013, con GTA 5 de referencia.</p>' +
+      '<div class="dd-duelo"><div><div class="dd-barras" role="img" aria-label="Mejor día en Google: GTA 6 ' + maxG + ', Doomsday ' + maxD + ' de 100">' +
+      '<div class="dd-barra g"><b>' + maxG + '</b><i style="height:' + maxG + '%"></i></div>' +
+      '<div class="dd-barra d"><b>' + maxD + '</b><i style="height:' + Math.max(maxD, 1.5) + '%"></i></div></div>' +
+      '<div class="dd-nom"><span>GTA 6</span><span>Doomsday</span></div></div><div class="dd-hist"></div></div>' +
+      '<p class="dd-nota">Google Trends, todo el mundo. 100 = el punto con más búsquedas de cada consulta; Trends no dice cuántas fueron, y los números de las dos partes no se comparan entre sí. ' +
+      "Consulta del " + fecha(Date.parse(X.t) / 1000) + (X.tarea === "6.1" ? "" : " (previa)") + "; Doomsday se estrena el 18 dic.</p>";
+    var hist = caja.querySelector(".dd-hist"), ancho = 0;
+    function dibujar() {
+      var W = Math.round(Math.min(600, Math.max(320, hist.clientWidth || 600)));
+      if (W === ancho) return;
+      ancho = W; hist.textContent = ""; hist.appendChild(historica(W));
+    }
+    dibujar();
+    window.addEventListener("resize", function () { clearTimeout(dibujar.t); dibujar.t = setTimeout(dibujar, 150); });
+  })();
+
   /* ---------- GTA 6 frente a otros lanzamientos (tarea 7.9, idea 7) ----------
      Los datos de otros juegos están en lanzamientos.js, cada uno con su fuente; el de GTA VI es
      el máximo de Twitch que midió este proyecto. Diseño A de Bruno (2026-11-14): una barra por juego. */
@@ -1099,7 +1160,7 @@
     var P = [
       { titulo: "Ventas oficiales de GTA 6", cuando: "Cuando Take-Two publique la cifra", listo: !!L.gta6, ir: "lanzamientos",
         que: "Cuántas copias vendió en sus primeros días, al lado de los otros juegos grandes." },
-      { titulo: "Más de Google Trends", cuando: "Una vez, entre el 20 y el 25 de noviembre", listo: !!D.trendsExtra,
+      { titulo: "Más de Google Trends", cuando: "Una vez, entre el 20 y el 25 de noviembre", listo: !!(D.trends_extra && D.trends_extra.tarea === "6.1"),
         que: "En qué países se busca más GTA 6, qué más busca la gente y GTA 6 frente a Avengers: Doomsday, día por día." },
       { titulo: "Rebobinar el lanzamiento", cuando: "Después del 19 de noviembre", listo: false,
         que: "Una barra para mover la página hora por hora y revivir el día del lanzamiento." },
@@ -1170,7 +1231,7 @@
   (function () {
     var caja = $("menu"); if (!caja) return;
     var S = [["records", "Récords"], ["seccion-linea", "Línea de tiempo"], ["resumen", "Resumen"], ["seccion-twitch", "Twitch y Kick"],
-      ["seccion-trends", "Trends"], ["seccion-servidores", "Servidores"], ["seccion-videos", "Videos"], ["comparacion", "Comparación"], ["lanzamientos", "Otros lanzamientos"],
+      ["seccion-trends", "Trends"], ["seccion-servidores", "Servidores"], ["seccion-videos", "Videos"], ["comparacion", "Comparación"], ["doomsday", "Doomsday"], ["lanzamientos", "Otros lanzamientos"],
       ["seccion-noticias", "Titulares"], ["album", "Álbum"], ["capsula", "Cápsula"], ["proximamente", "Próximamente"]].filter(function (x) { return $(x[0]); });
     caja.innerHTML = '<button type="button" class="menu-boton" aria-expanded="false" aria-controls="menu-lista"><span aria-hidden="true">☰</span> Secciones</button>' +
       '<div class="menu-lista" id="menu-lista" hidden>' +

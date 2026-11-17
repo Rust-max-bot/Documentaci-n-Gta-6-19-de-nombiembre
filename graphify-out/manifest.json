@@ -18,9 +18,9 @@
     "semantic_hash": ""
   },
   "web/app.js": {
-    "mtime": 1794950978.1151671,
-    "seen": 1794951380.155599,
-    "ast_hash": "79f3c94d94a701405ebce6f6ff473ede",
+    "mtime": 1794952168.2268126,
+    "seen": 1794952299.4873667,
+    "ast_hash": "ffd3c62892fde82cc3de830e72052c9f",
     "semantic_hash": ""
   },
   "web/datos-ejemplo.js": {
@@ -48,9 +48,9 @@
     "semantic_hash": ""
   },
   "ESTADO_ACTUAL.md": {
-    "mtime": 1794951084.1494753,
-    "seen": 1794951380.1556087,
-    "ast_hash": "6b4e57ecb0a223c2e84b0f349e5b7c09",
+    "mtime": 1794952168.2268126,
+    "seen": 1794952299.4873772,
+    "ast_hash": "39cf579f091ac751b72880df3548e4ca",
     "semantic_hash": ""
   },
   "GUIA_CLAVES.md": {
@@ -60,9 +60,9 @@
     "semantic_hash": ""
   },
   "PLAN.md": {
-    "mtime": 1794950978.0876553,
-    "seen": 1794951380.1556122,
-    "ast_hash": "99515f4b0f09fd7f6084c41f0f4fb44b",
+    "mtime": 1794952168.2268126,
+    "seen": 1794952299.4873805,
+    "ast_hash": "2e1287e3563a65ba160667aeb8bbd108",
     "semantic_hash": ""
   },
   "README.md": {
@@ -72,9 +72,9 @@
     "semantic_hash": ""
   },
   "web/index.html": {
-    "mtime": 1794950978.118167,
-    "seen": 1794951380.1556284,
-    "ast_hash": "ce620eb96cfafc8106ffc352b9a6fb82",
+    "mtime": 1794952020.7008712,
+    "seen": 1794952299.4873981,
+    "ast_hash": "8626828c9aaf80071d174dab71d1319d",
     "semantic_hash": ""
   },
   ".github/workflows/probar-fuentes.yml": {
@@ -276,9 +276,9 @@
     "semantic_hash": ""
   },
   "DISENO_VISUAL.md": {
-    "mtime": 1794950978.0866559,
-    "seen": 1794951380.1556077,
-    "ast_hash": "00c1a428d6ab295e928b18400d0fc755",
+    "mtime": 1794952168.2268126,
+    "seen": 1794952299.4873762,
+    "ast_hash": "a5f063300ccd02ef11c9cd938f4e5e8d",
     "semantic_hash": ""
   },
   ".github/workflows/probar-kick.yml": {
@@ -333,6 +333,12 @@
     "mtime": 1794951074.3597136,
     "seen": 1794951380.1555703,
     "ast_hash": "c6675e6612fb57d9c18088abf146405b",
+    "semantic_hash": ""
+  },
+  "datos/trends_previa/2026-11-17T2136Z.json": {
+    "mtime": 1794951596.867719,
+    "seen": 1794952299.487336,
+    "ast_hash": "6662e05f04ba904e50dda7a650806c9c",
     "semantic_hash": ""
   }
 }

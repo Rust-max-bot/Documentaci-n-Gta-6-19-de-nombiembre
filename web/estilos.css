@@ -894,6 +894,32 @@ section[id], .bloque { scroll-margin-top: 16px; }
 .album-grande p { margin: 10px 4px 2px; font-weight: 600; }
 .album-cerrar { position: absolute; top: 8px; right: 8px; width: 36px; height: 36px; border-radius: 50%; border: 0; background: var(--a1); color: #fff; font-size: 18px; cursor: pointer; }
 
+/* ---------- GTA 6 frente a Avengers: Doomsday (6.7, opción B de Bruno, 2026-11-17) ---------- */
+.dd-frase { font: 700 clamp(20px, 2.6vw, 30px)/1.2 var(--f-texto); margin: 0 0 4px; text-wrap: balance; }
+.dd-frase b { color: var(--a1); }
+.dd-sub { color: var(--tenue); margin: 0 0 18px; }
+.dd-nota { color: var(--tenue); font-size: 13px; margin: 14px 0 0; }
+.dd-duelo { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.6fr); gap: 28px; align-items: end; }
+.dd-barras { display: flex; gap: 22px; align-items: flex-end; height: 240px; padding: 0 8px; border-bottom: 1px solid color-mix(in srgb, var(--tenue) 40%, transparent); }
+.dd-barra { flex: 1; display: flex; flex-direction: column; justify-content: flex-end; align-items: center; height: 100%; gap: 6px; }
+.dd-barra i { display: block; width: 100%; max-width: 110px; border-radius: 6px 6px 0 0; background: var(--a1); }
+.dd-barra.d i { background: var(--a2); }
+.dd-barra b { font: 700 28px var(--f-texto); font-variant-numeric: tabular-nums; color: var(--a1); }
+.dd-barra.d b { color: var(--a2); }
+.dd-nom { display: flex; gap: 22px; padding: 0 8px; margin-top: 8px; font-weight: 700; }
+.dd-nom span { flex: 1; text-align: center; }
+.dd-svg { display: block; width: 100%; height: auto; overflow: visible; }
+.dd-svg text { font: 600 12px var(--f-texto); fill: var(--tenue); font-variant-numeric: tabular-nums; }
+.dd-svg .guia { stroke: var(--tenue); stroke-opacity: .2; }
+.dd-svg path { fill: none; stroke-linejoin: round; }
+.dd-svg .g { stroke: var(--a1); stroke-width: 2.5; }
+.dd-svg .g5 { stroke: var(--tenue); stroke-width: 1.6; }
+.dd-svg .d { stroke: var(--a2); stroke-width: 2; }
+.dd-svg .et-g { fill: var(--a1); font-weight: 700; font-size: 13px; }
+.dd-svg .et-d { fill: var(--a2); font-weight: 700; font-size: 13px; }
+:root[data-tema="ochenta"] .dd-frase b, :root[data-tema="ochenta"] .dd-barra b { text-shadow: 0 0 12px currentColor; }
+@media (max-width: 640px) { .dd-duelo { grid-template-columns: 1fr; } .dd-barras { height: 180px; } }
+
 /* ---------- GTA 6 frente a otros lanzamientos (tarea 7.9; diseño A de Bruno: barras) ---------- */
 #lanzamientos h3 { margin: 18px 0 4px; font: 700 18px var(--f-texto); }
 .ln-sub { margin: 0 0 10px; color: var(--tenue); font-size: 14px; }
