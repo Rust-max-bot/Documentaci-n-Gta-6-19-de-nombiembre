@@ -100,6 +100,7 @@ Bruno ya eligió las palabras de la comparación.
 
 ## Últimos cambios
 
+- 2026-11-17: revisado para la hora cero de Nueva Zelanda (18 nov, 11:00 UTC): mediciones cada 30 min, sin fallos salvo Reddit (RSS bloqueado por Reddit desde las 18:37 UTC). Consulta de la 6.1 probada desde el PC sin guardar (Doomsday funciona). Anotadas 6.7 y 6.8 en `PLAN.md`.
 - 2026-11-17: rediseño de la portada (pedido de Bruno, hecho en la rama `rediseno/portada` y aprobado y unido a `main` el mismo día): nueve hoteles distintos, torres con vidrio, tres palmeras distintas, calle con paso de cebra, caseta de salvavidas, nubes, pelícanos y mar nuevos. El dibujo lo escribe `diseno/dibujar_portada.py` (no editar a mano el bloque `PORTADA` de `index.html`). Detalle en `DISENO_VISUAL.md`.
 - 2026-11-17: Impeccable actualizado a 0.1.25 y, de la propuesta de mejoras visuales de Bruno, hechas las tres que elegió: fichas de la portada y menú "Secciones" de vidrio, y borde neón al pasar el mouse en 1986. Lo demás de la propuesta ya existía; el "aparecer al bajar" se descartó (genérico, según Impeccable).
 - 2026-11-17: portada arreglada: con el zoom alejado o en pantallas anchas los edificios ya no se cortan por arriba (se ve la grúa) y las palmeras salen de la arena, no del agua. `web/compartir.jpg` rehecha.
@@ -129,6 +130,7 @@ Bruno ya eligió las palabras de la comparación.
 
 La lista completa y su orden están en `PLAN.md`. Resumen (2026-11-14):
 
+- **(2026-11-17, nuevo):** 6.7 mostrar ya GTA 6 frente a Doomsday (opciones con capturas para Bruno) y 6.8 diseñar la sección de la 6.1 desde el 20 nov. **Reddit no mide desde el 17 nov, 18:37 UTC:** Reddit bloqueó su RSS público; solo se arregla con la clave oficial.
 0. **(2026-11-16, orden de Bruno):** 9.4 optimizar la página (eje y `partes()` hechos; lo
    grande, después del 22), 9.1 servidores más cortos (**hecha**, opción C) y 9.3
    menos alarmas por Google (después del 22). Descartados (Bruno): la 9.2 "¿Cuánta gente

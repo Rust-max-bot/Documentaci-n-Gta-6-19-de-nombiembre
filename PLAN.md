@@ -33,6 +33,17 @@ Reddit. El estado vivo (dónde quedamos) está en `ESTADO_ACTUAL.md`; las reglas
 - [ ] **7.4 Cápsula del tiempo.** "Lo que espero" ya está (texto de Bruno, 2026-11-15; diseño
       de cintas de casete, opción C). **Falta "Lo que me pareció"**, después del lanzamiento, en
       `web/capsula.js`. Lo escribe Bruno: Claude no inventa ese contenido.
+- [ ] **6.7 GTA 6 frente a Doomsday ya, antes del 19** (pedido de Bruno, 2026-11-17). Mostrar en la
+      página, desde ahora, la popularidad de GTA 6 frente a Avengers: Doomsday en Trends (día por
+      día, últimos 90 días), sin esperar a la 6.1. Pasos: (1) guardar una primera consulta con
+      `trends_extra.py` (no toca el recolector de cada hora); (2) opciones con capturas para que
+      Bruno elija cómo se ve; (3) cuando salga la 6.1 (21-24 nov), cambiarla por la nueva, que ya
+      trae los días del lanzamiento. Probada el 17 nov desde el PC, sin guardar: GTA 6 llega a
+      100 y Doomsday a 5 (90 días); mes a mes desde 2013, GTA 6 76 frente al 100 de GTA 5.
+- [ ] **6.8 Diseño de la sección nueva con lo de la 6.1** (pedido de Bruno, 2026-11-17). Desde el
+      20 nov, con los datos ya guardados, diseñar cómo se ve la sección (países, búsquedas en
+      aumento, GTA 6 frente a otros juegos, mes a mes desde 2013, Doomsday): opciones con
+      capturas para Bruno antes de hacerla. Va junto con el punto (2) de la 6.1.
 - [ ] **6.1 Más Google Trends.** Una sola vez, **entre el 20 y el 25 nov** (antes del 26: Trends
       solo da el detalle por hora de 7 días), fuera del recolector de cada hora para no arriesgar
       un bloqueo (429) el día 19. Programa listo y probado sin guardar (13 y 14 nov):
@@ -102,7 +113,9 @@ Reddit. El estado vivo (dónde quedamos) está en `ESTADO_ACTUAL.md`; las reglas
 - [ ] **2.5 TikTok.** Sin acceso oficial para un proyecto personal (la API de investigación es
       solo para instituciones académicas; Creative Center no tiene API y bloquea servidores).
       Probar una consulta real desde el PC y desde GitHub, o anotar lo llamativo a mano.
-- [ ] **Clave de Reddit.** Daría votos y comentarios. Desde nov 2025 se pide con el formulario
+- [ ] **Clave de Reddit.** **Ahora hace falta para seguir midiendo Reddit:** desde el 17 nov,
+      18:37 UTC, Reddit bloquea su RSS público (404/403, también en otros subreddits; antes un
+      429). Lo guardado no se pierde. Daría además votos y comentarios. Desde nov 2025 se pide con el formulario
       de soporte para desarrolladores; tarda ~7 días y no está garantizada.
 - [ ] **IA barata para filtrar videos** (Bruno, 2026-11-15): que lea título, descripción y
       etiquetas para decidir si un video es de GTA 6. No Claude, por el costo. Antes, un plan pequeño.
