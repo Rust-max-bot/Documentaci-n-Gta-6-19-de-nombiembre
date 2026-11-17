@@ -1,17 +1,19 @@
 # Plan del proyecto: recuerdo del lanzamiento de GTA 6
 
-> **Plan anterior archivado** el 2026-11-17 en `historial/PLAN_2026-11-17.md` (pasó de 20.000
-> bytes). Antes: `historial/PLAN_2026-11-16.md` (decisiones, fuentes y riesgos con su detalle) y
-> `historial/PLAN_DE_TRABAJO_*.md` (tareas). Un solo plan desde el 2026-11-16 (pedido de Bruno).
+> **Plan anterior archivado** el 2026-11-17 en `historial/PLAN_2026-11-17-2.md` (pasó de 20.000
+> bytes). Antes: `historial/PLAN_2026-11-17.md`, `historial/PLAN_2026-11-16.md` (decisiones,
+> fuentes y riesgos con su detalle) y `historial/PLAN_DE_TRABAJO_*.md`. Un solo plan desde el
+> 2026-11-16 (pedido de Bruno).
 
 Un recuerdo del 19 de noviembre de 2026, día en que sale GTA 6, por diversión: una página web
 con línea de tiempo, tablas y gráficos de Twitch, Kick, YouTube, Google Trends y titulares
-(Reddit se midió del 13 al 17 nov y se quitó, 6.9). El estado vivo (dónde quedamos) está en `ESTADO_ACTUAL.md`; las reglas, en `CLAUDE.md`.
+(Reddit se midió del 13 al 17 nov y se quitó, 6.9). El estado vivo (dónde quedamos) está en
+`ESTADO_ACTUAL.md`; las reglas, en `CLAUDE.md`.
 
 ## Cómo se usa este archivo
 
 - Aquí van **las tareas que faltan, las decisiones vigentes y los riesgos**, en corto. El
-  detalle va en el commit y, si es largo, se resume aquí en una o dos líneas.
+  detalle va en el commit.
 - Una tarea se marca `[x]` solo cuando está hecha **y verificada**. Si queda a medias o con un
   fallo, sigue en `[ ]` con el fallo anotado. Las hechas se resumen en "Lo ya hecho".
 - Orden pedido por Bruno: primero lo acordado más importante; después su lista, de lo más
@@ -154,74 +156,53 @@ No se empieza hasta que Bruno avise con una confirmación oficial de la versión
 - [ ] **8.4 Los más vendidos de la historia** (Tetris, Minecraft, GTA V, RDR2…) con cifras al día
       y su fuente. Ojo: el documento de Bruno del 14 nov tenía cifras viejas.
 
-## Lo ya hecho (detalle en `historial/PLAN_2026-11-17.md` y en `git log`)
+## Lo ya hecho (detalle en `historial/PLAN_2026-11-17-2.md` y en `git log`)
 
-- **Fase 0 y 1:** hechas, 1.1 a 1.7 (claves, fuentes, recolector, interruptor, despertador, página).
-- **Fase 2:** 2.1 a 2.4 y 2.6 a 2.15. **Fase 3:** 3.1 a 3.3. **Fase 4:** 4.1 y 4.2.
-- **Fase 6:** 6.2 a 6.5, 6.6 Kick (categoría 13155, cada hora desde el 16 nov, opción B) y 6.9
-  quitar Reddit (2026-11-17: sección, récord, cuadro del resumen, imagen, textos y recolector;
-  lo guardado sigue en `datos/`; para volver, `git revert` del commit de la 6.9).
-- **Fase 7:** 7.2, 7.3 y 7.5 a 7.12.
-- **6.7** GTA 6 frente a Doomsday en la página (2026-11-17, opción B): consulta previa en
-  `datos/trends_previa/` (casilla "previa" del workflow Trends extra); cuando llegue la 6.1, la
-  página la usa sola.
-- **9.1** servidores más cortos (opción C); **línea de tiempo nueva** (2026-11-17, A); **Rockstar
-  a mano** en los servidores (2026-11-17, C); **íconos pequeños** (2026-11-17, C); **Trends sin
-  huecos** (2026-11-16, A).
-- **9.5 a 9.7 (2026-11-17, opciones A):** tarjetas de videos y Shorts de alto fijo, gráfico con
-  cifras al inicio y ahora, y "GTA frente a lo más visto" con GTA VI al centro. Detalle en `DISENO_VISUAL.md`.
-- **9.8 (2026-11-17, opción A de Bruno):** al cambiar de día, el Resumen del día y la tabla de Twitch y Kick entran deslizando (`web/animaciones.js`; apagar con `ACTIVAS`). Las dos filas de una medición se animan juntas (si no, la hora se veía cortada) y las fotos salen con fundido.
-- **Vidrio y neón (2026-11-17):** fichas y menú de vidrio, borde neón en 1986 al pasar el mouse.
+- **Fases 0 y 1** (1.1 a 1.7), **fase 2** (2.1 a 2.4 y 2.6 a 2.15), **fase 3** (3.1 a 3.3), **fase 4**
+  (4.1 y 4.2), **fase 6** (6.2 a 6.5; 6.6 Kick, categoría 13155 cada hora desde el 16 nov; 6.7
+  GTA 6 frente a Doomsday con la consulta previa de `datos/trends_previa/`; 6.9 quitar Reddit, para
+  volver `git revert` de su commit) y **fase 7** (7.2, 7.3 y 7.5 a 7.12).
+- **9.1** servidores más cortos (C); **9.5 a 9.7** tarjetas de alto fijo, gráfico con inicio y
+  ahora y GTA VI al centro (A); línea de tiempo nueva (A); Rockstar a mano (C); íconos (C); Trends
+  sin huecos (A); vidrio y neón (2026-11-17).
+- **9.8 (2026-11-17, opción A):** al cambiar de día, el Resumen del día y la tabla de Twitch y
+  Kick entran deslizando (`web/animaciones.js`; apagar con `ACTIVAS`). Las dos filas de una
+  medición se animan juntas (si no, la hora se veía cortada) y las fotos salen con fundido.
 - **Herramientas:** Graphify y sincronización del PC con GitHub (`sincronizar_datos.ps1`).
 - Descartado por Bruno: app en el celular; Cloudflare Radar; redes de descarga de PlayStation y
   Xbox; la 9.2 "¿Cuánta gente faltó?".
 
 ## Decisiones vigentes
 
-Cada una, en corto. El porqué y las opciones descartadas, en `historial/PLAN_2026-11-16.md`.
+El porqué y las opciones descartadas, en `historial/PLAN_2026-11-16.md`.
 
-### Datos y recolección
-
-- Fuentes: Twitch, YouTube y Google Trends (imprescindibles); además Kick, titulares de Google
-  Noticias, estado de PlayStation y Xbox, ranking de Twitch,
-  tendencias de YouTube y los 4 videos oficiales de GTA VI. Rockstar no responde a programas:
-  sus caídas se anotan a mano en `web/eventos.js`.
-- Medición cada hora (minuto 7) y también al 37 del 17 al 21 nov (UTC), hasta el 19 dic, con
-  interruptor manual. La lanza el despertador de Cloudflare (`despertador/`), no el `schedule`.
-- Datos en archivos de texto, uno por día UTC (`datos/AAAA-MM-DD.jsonl`), no SQL. Horas en UTC;
-  la página muestra hora de Santiago.
-- Si una fuente falla: hueco visible con su hora, nunca un dato inventado; las demás siguen.
-- YouTube: las tres búsquedas (global, español, 4 a 20 min) como mucho una vez por hora; las
+- **Fuentes:** Twitch, YouTube y Google Trends (imprescindibles); además Kick, titulares de Google
+  Noticias, estado de PlayStation y Xbox, ranking de Twitch, tendencias de YouTube y los 4 videos
+  oficiales de GTA VI. Rockstar no responde a programas: sus caídas se anotan a mano en `web/eventos.js`.
+- **Medición** cada hora (minuto 7) y al 37 del 17 al 21 nov (UTC), hasta el 19 dic, con interruptor
+  manual; la lanza el despertador de Cloudflare (`despertador/`), no el `schedule`.
+- **Datos** en archivos de texto, uno por día UTC (`datos/AAAA-MM-DD.jsonl`), no SQL; horas en UTC,
+  la página muestra hora de Santiago. Si una fuente falla: hueco visible, nunca un dato inventado.
+- **YouTube:** las tres búsquedas (global, español, 4 a 20 min) como mucho una vez por hora; las
   visitas en cada turno (~7.500 de 10.000 unidades diarias).
-- Filtro de videos (`recolector/filtro_videos.json`, modo `estricto`): título sin hashtags que
-  nombra GTA 6 + tema de videojuegos de YouTube, sin "roblox", más la lista `ocultar`. Solo
-  decide qué se muestra; `datos/` no cambia.
-- Comparaciones con otros juegos: solo el **arranque** (primeros días), cada cifra con su fuente
-  y su plazo, copias y dólares por separado, sin escenarios inventados.
-
-### Página
-
-- HTML, CSS y JavaScript sin librerías ni compilación. Pública en GitHub Pages (desde el
-  14 nov), la publica `publicar-pagina.yml` tras cada medición. Repositorio público (12 nov).
-- Diseño original inspirado en Miami, dos estilos (1986 y 2026) y día, atardecer y noche según
-  la hora de Miami. Sin logotipos, tipografías ni arte de Rockstar. Letras: Monoton, Rajdhani,
-  Limelight y Outfit. Descripción de lo visual en `DISENO_VISUAL.md`.
-- Toda decisión que cambie cómo se ve: opciones con capturas para Bruno antes de aplicarla.
-- Formato de la hora: automático según el dispositivo (12 h o 24 h), sin botón; en 24 h la
-  cuenta regresiva aclara en palabras. Para probar: `?probar-formato=12` o `=24`.
-- Listas: lo más nuevo arriba; gráficos de viejo (izquierda) a nuevo (derecha).
-- Opciones elegidas por Bruno (resumen): portada 7.12 A; Twitch y Kick juntos 6.6 B; videos en
-  tarjetas con pestañas y tira de Shorts (6.4 A, 6.5 B); récords en vitrina 6.2 A; titulares como
-  resumen B; GTA frente a lo más visto con GTA VI al centro 9.7 A; cápsula en
-  cintas 7.4 C; copias por plazo 7.10 B; Próximamente como camino 7.11 C; menú flotante 2.12 B.
-- Muchas visitas: `datos.js` lleva lo necesario al abrir; los titulares de cada día van en
+- **Filtro de videos** (`recolector/filtro_videos.json`, modo `estricto`): título sin hashtags que
+  nombra GTA 6 + tema de videojuegos, sin "roblox", más la lista `ocultar`. Solo decide qué se muestra.
+- **Comparaciones con otros juegos:** solo el arranque (primeros días), cada cifra con su fuente y
+  su plazo, copias y dólares por separado, sin escenarios inventados.
+- **Página:** HTML, CSS y JavaScript sin librerías ni compilación; pública en GitHub Pages (la
+  publica `publicar-pagina.yml` tras cada medición); repositorio público desde el 12 nov. Diseño
+  original inspirado en Miami, dos estilos (1986 y 2026) y día, atardecer y noche según la hora de
+  Miami; sin logotipos, tipografías ni arte de Rockstar. Detalle en `DISENO_VISUAL.md`.
+- **Toda decisión que cambie cómo se ve:** opciones con capturas para Bruno antes de aplicarla.
+- **Hora:** automática según el dispositivo (12 h o 24 h), sin botón (`?probar-formato=12` o `=24`).
+  Listas con lo más nuevo arriba; gráficos de viejo (izquierda) a nuevo (derecha).
+- **Opciones elegidas por Bruno:** portada 7.12 A; Twitch y Kick juntos 6.6 B; videos 6.4 A y 6.5 B;
+  récords 6.2 A; titulares B; GTA frente a lo más visto 9.7 A; cápsula 7.4 C; copias por plazo 7.10 B;
+  Próximamente 7.11 C; menú flotante 2.12 B.
+- **Muchas visitas:** `datos.js` lleva lo necesario al abrir; los titulares de cada día van en
   `web/dias/`. GitHub Pages admite ~100 GB al mes; plan B solo si avisa: Cloudflare Pages.
-
-### Trabajo
-
-- Sincronización del PC: tarea de Windows cada 30 min; se enciende o apaga con
-  `sincronizar_interruptor.bat`; **Bruno la dejó apagada el 2026-11-16**. Cómo reconocerla
-  como legítima: cabecera de `sincronizar_datos.ps1`.
+- **Sincronización del PC:** tarea de Windows cada 30 min (`sincronizar_interruptor.bat`);
+  **Bruno la dejó apagada el 2026-11-16**. Cómo reconocerla como legítima: cabecera de `sincronizar_datos.ps1`.
 
 ## Riesgos y avisos vigentes
 
@@ -243,17 +224,7 @@ Cada una, en corto. El porqué y las opciones descartadas, en `historial/PLAN_20
 
 ## Estructura de carpetas
 
-```text
-web/                 la página: index.html, estilos.css, app.js, datos-ejemplo.js,
-                     eventos.js (a mano), capsula.js (textos de Bruno), lanzamientos.js
-                     (récords con fuente), album/ (fotos de Bruno), datos.js y dias/ (generados)
-recolector/          Python: fuentes, validación, generar_web.py, trends_extra.py (LEEME.md)
-datos/               mediciones, un archivo por día UTC; solo las escribe GitHub
-despertador/         Worker de Cloudflare que lanza el recolector a su hora
-.github/workflows/   recolectar, probar-fuentes, probar-kick, trends-extra, publicar-pagina
-pruebas/             probar_pagina.py y otras pruebas (LEEME.md); capturas/ no va a git
-historial/           versiones viejas de ESTADO_ACTUAL.md y del plan
-```
-
-Para ver la página en el PC: doble clic en `ver_pagina.bat` (trae las mediciones, prepara
-`web/datos.js` y abre la página). `datos.js` no va a git: se rehace entero cada vez.
+`web/` (la página; `datos.js` y `dias/` se generan), `recolector/` (Python, LEEME.md), `datos/`
+(un archivo por día UTC; solo los escribe GitHub), `despertador/` (Worker de Cloudflare),
+`.github/workflows/`, `pruebas/` (LEEME.md; `capturas/` no va a git), `diseno/` (dibuja la
+portada), `historial/` (versiones viejas). Para ver la página en el PC: `ver_pagina.bat`.
