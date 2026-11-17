@@ -171,6 +171,14 @@ vivos, ganan los vivos.
     tomar la versión de `main` y volver a correr `graphify update .`.
   - **Si `graphify` no se puede usar:** trabajar con búsqueda normal. Los avisos automáticos de
     Graphify en `.claude/settings.json` no hacen nada si el programa no existe.
+- **Skills de animación de Emil Kowalski** (instaladas el 2026-11-17, decisión de Bruno, tarea 9.11):
+  `prototype` (arma 3 a 5 versiones distintas de una pieza con un selector para elegir en vivo;
+  usarla para las opciones de diseño que se le presentan a Bruno), `find-animation-opportunities`
+  (qué debería animarse y qué no), `animate`, `choreograph`, `review-animations` y
+  `animation-performance`, en `.claude/skills/<nombre>/`. Origen y versión en el `ORIGEN.txt` de
+  cada una (repositorio `emilkowalski/skills`, MIT). Para actualizarlas, copiar de nuevo esas
+  carpetas del repositorio oficial y cambiar el commit en `ORIGEN.txt`. Ya están fuera del grafo
+  (`.graphifyignore`).
 - La skill Impeccable (diseño) está en `.claude/skills/impeccable/` (versión en
   `scripts/VERSION`). Para actualizarla, copiar `.claude/skills/impeccable/` del repositorio
   oficial `pbakaus/impeccable` encima de la carpeta, o usar `npx impeccable update`.

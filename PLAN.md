@@ -53,11 +53,13 @@ con línea de tiempo, tablas y gráficos de Twitch, Kick, YouTube, Google Trends
       dobles y con 25 min de tiempo. Recordatorios en el Google Calendar de Bruno el 21 y el 24 nov
       (16:30 de Santiago). **Falta:** (1) comprobar el 21 que se guardó; (2) mostrarlo en la página, con opciones y capturas; (3) idea sin
       decidir: repetir lo de Doomsday en enero, después de su estreno (18 dic).
-- [ ] **9.11 Skill de animación y forma de administrarlas** (Bruno, 2026-11-17). (a) Buscar una
-      skill que muestre opciones de animación ya probadas (mirar antes Impeccable `animate` y
-      `make-interfaces-feel-better`). (b) Una forma sencilla de decidir qué elementos animan y
-      cuáles no: ya empezada en la 9.8 con `web/animaciones.js` (un archivo) con una tabla "elemento →
-      animación" y una sola llamada desde la página; se puede enlazar con el "Panel de control".
+- [ ] **9.11 Skill de animación y forma de administrarlas** (Bruno, 2026-11-17). (a) **Hecho
+      (2026-11-17):** instaladas seis skills de `emilkowalski/skills` (MIT): `prototype`,
+      `find-animation-opportunities`, `animate`, `choreograph`, `review-animations` y
+      `animation-performance` (ver `CLAUDE.md`). (b) **Falta:** una forma sencilla de decidir qué
+      elementos animan y cuáles no en TODA la página: hoy `web/animaciones.js` (`ACTIVAS`) cubre
+      solo lo de la 9.8 y la 9.9. Siguiente paso: inventario con `find-animation-opportunities` y,
+      con lo que elija Bruno, sumar el resto a esa tabla. Se puede enlazar con el "Panel de control".
 - [ ] **9.12 Rehacer `web/compartir.jpg`** (Bruno, 2026-11-17: "para después"). La portada
       cambió el 17 nov (hotel "HOTEL", hoja de palmera): `python pruebas/hacer_compartir.py --opcion C --guardar`.
 - [ ] **9.4 Optimizar la página** (Bruno, 2026-11-16). Medido sin cambiar nada (Edge, gzip local;
