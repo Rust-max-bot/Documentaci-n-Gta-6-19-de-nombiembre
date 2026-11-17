@@ -1,17 +1,17 @@
 # Graph Report - Documentación Gta 6  (2026-11-17)
 
 ## Corpus Check
-- 55 files · ~117,980 words
+- 55 files · ~118,447 words
 - Verdict: corpus is large enough that graph structure adds value.
 - Unclassified: 12 file(s) not represented in the graph (top: .jsonl 6, (none) 3, .bat 2)
 
 ## Summary
-- 804 nodes · 1396 edges · 54 communities (37 shown, 17 thin omitted)
+- 807 nodes · 1400 edges · 54 communities (37 shown, 17 thin omitted)
 - Extraction: 92% EXTRACTED · 8% INFERRED · 0% AMBIGUOUS · INFERRED: 115 edges (avg confidence: 0.87)
 - Token cost: 183,861 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `5cf15100`
+- Built from commit: `7ad69b92`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -70,18 +70,18 @@
 2. `pintar()` - 24 edges
 3. `Hoteles` - 23 edges
 4. `pedir()` - 19 edges
-5. `Dibujo` - 17 edges
-6. `exigir()` - 17 edges
+5. `exigir()` - 17 edges
+6. `Dibujo` - 17 edges
 7. `dia()` - 16 edges
 8. `n()` - 14 edges
 9. `Decisiones ya tomadas` - 14 edges
 10. `limpio()` - 13 edges
 
 ## Surprising Connections (you probably didn't know these)
-- `Fase 1 — Recolector funcionando (lo más importante)` --references--> `compacto()`  [INFERRED]
-  historial/PLAN_DE_TRABAJO_2026-11-13.md → web/app.js
 - `Fase 6 — Ideas nuevas de Bruno: más estadísticas, logros y comparaciones (lo que queda)` --references--> `kick()`  [INFERRED]
   historial/PLAN_DE_TRABAJO_2026-11-16.md → recolector/fuentes.py
+- `Fase 1 — Recolector funcionando (lo más importante)` --references--> `compacto()`  [INFERRED]
+  historial/PLAN_DE_TRABAJO_2026-11-13.md → web/app.js
 - `Antes o justo después del lanzamiento` --references--> `partes()`  [INFERRED]
   historial/PLAN_2026-11-17-2.md → web/app.js
 - `Antes o justo después del lanzamiento` --references--> `partes()`  [INFERRED]
@@ -107,7 +107,7 @@ Nodes (28): Apagarlo, Comprobar que funciona, Cron Trigger 7,37 * * * * (UTC), D
 
 ### Community 1 - "fuentes.py"
 Cohesion: 0.06
-Nodes (37): Diseño de la página, Fase 6 — Ideas nuevas de Bruno: más estadísticas, logros y comparaciones, Fase 6 — Ideas nuevas de Bruno: más estadísticas, logros y comparaciones, _cabeceras_twitch(), _datos_video(), _fotos_de_perfil(), kick(), _mensaje_youtube() (+29 more)
+Nodes (38): Diseño de la página, Fase 6 — Ideas nuevas de Bruno: más estadísticas, logros y comparaciones, Fase 6 — Ideas nuevas de Bruno: más estadísticas, logros y comparaciones, _cabeceras_twitch(), _datos_video(), _foto_kick(), _fotos_de_perfil(), kick() (+30 more)
 
 ### Community 2 - "Worker de Cloudflare despertador-recolector (horario 7,37 * * * *)"
 Cohesion: 0.13
@@ -166,8 +166,8 @@ Cohesion: 0.33
 Nodes (5): Cómo usar este archivo, Dónde quedamos, Estado actual del proyecto, Pendiente, Últimos cambios
 
 ### Community 30 - "Diseño visual de la página"
-Cohesion: 0.14
-Nodes (13): 1. Qué es la página, 2. Reglas que cualquier sugerencia tiene que respetar, 3. Estructura de la página, de arriba abajo, 4. Los dos estilos, 4b. Los hoteles de la portada (rediseño del 2026-11-17), 5. Día, atardecer y noche, 6. La "hora cero" (el momento del lanzamiento), 7. Letras, colores y medidas (+5 more)
+Cohesion: 0.13
+Nodes (14): 1. Qué es la página, 2. Reglas que cualquier sugerencia tiene que respetar, 3. Estructura de la página, de arriba abajo, 4. Los dos estilos, 4b. Los hoteles de la portada (rediseño del 2026-11-17), 5. Día, atardecer y noche, 6. La "hora cero" (el momento del lanzamiento), 7. Letras, colores y medidas (+6 more)
 
 ### Community 31 - "steps"
 Cohesion: 0.11
@@ -191,7 +191,7 @@ Nodes (20): abortar(), comprobar(), convertir(), elegir_videos(), escribir(), es
 
 ### Community 36 - "Plan del proyecto: recuerdo del lanzamiento de GTA 6"
 Cohesion: 0.06
-Nodes (34): Antes o justo después del lanzamiento, Cómo se usa este archivo, Datos y recolección, Decisiones vigentes, Después del lanzamiento, Estructura de carpetas, Fase 8 — Segundo lanzamiento: GTA 6 en PC (dormida), Fechas que mandan (+26 more)
+Nodes (35): Antes o justo después del lanzamiento, Cómo se usa este archivo, Datos y recolección, Decisiones vigentes, Después del lanzamiento, Estructura de carpetas, Fase 8 — Segundo lanzamiento: GTA 6 en PC (dormida), Fechas que mandan (+27 more)
 
 ### Community 37 - "dia"
 Cohesion: 0.19
@@ -210,8 +210,8 @@ Cohesion: 0.24
 Nodes (10): Entorno de nube recuerdo-gta6, Workflow Probar fuentes (recolector/probar_fuentes.py), Estado de Rockstar: no funciona (se anota a mano), Fuente estado de servidores (PlayStation y Xbox funcionan), Fuente titulares de Google Noticias (RSS), Fuente Twitch (categoría Grand Theft Auto VI, id 1867279146, helix/streams), Resultado de las pruebas reales de fuentes (12 nov 2026), Gráfico espectadores Twitch (#g-twitch) (+2 more)
 
 ### Community 42 - "pintar"
-Cohesion: 0.20
-Nodes (12): deSantiago(), hace(), lineaDeTiempo(), nombreDia(), num(), paso(), pintar(), pintarFiltro() (+4 more)
+Cohesion: 0.22
+Nodes (11): deSantiago(), hace(), lineaDeTiempo(), nombreDia(), num(), paso(), pintar(), pintarFiltro() (+3 more)
 
 ### Community 43 - "Hoteles"
 Cohesion: 0.07
@@ -251,22 +251,22 @@ Nodes (4): clave(), lideresDe(), resumen(), urlVideo()
 
 ## Knowledge Gaps
 - **31 isolated node(s):** `Estilos visuales Miami 1986 y Miami 2026`, `Enlaces y miniaturas guardados (tareas 2.1 y 2.2)`, `Series continuas de YouTube (25 más vistos + re-medición)`, `Aviso legal (proyecto de fans, no afiliado a Rockstar/Take-Two)`, `Python 3.14 para Graphify (no desinstalar)` (+26 more)
-  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 343 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
+  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 345 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
 - **17 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
 - **Why does `Diseño de la página` connect `fuentes.py` to `Plan del proyecto: recuerdo del lanzamiento de GTA 6`, `limpio`?**
-  _High betweenness centrality (0.163) - this node is a cross-community bridge._
+  _High betweenness centrality (0.164) - this node is a cross-community bridge._
 - **What connects `Estilos visuales Miami 1986 y Miami 2026`, `Enlaces y miniaturas guardados (tareas 2.1 y 2.2)`, `Series continuas de YouTube (25 más vistos + re-medición)` to the rest of the system?**
   _31 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Despertador y plan de trabajo` be split into smaller, more focused modules?**
   _Cohesion score 0.08817204301075268 - nodes in this community are weakly interconnected._
 - **Why does `limpio()` connect `limpio` to `app.js`, `fuentes.py`, `pintar`, `pintar`?**
-  _High betweenness centrality (0.147) - this node is a cross-community bridge._
+  _High betweenness centrality (0.148) - this node is a cross-community bridge._
 - **Should `fuentes.py` be split into smaller, more focused modules?**
-  _Cohesion score 0.05880665519219736 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.056862745098039215 - nodes in this community are weakly interconnected._
 - **Should `Worker de Cloudflare despertador-recolector (horario 7,37 * * * *)` be split into smaller, more focused modules?**
   _Cohesion score 0.1286549707602339 - nodes in this community are weakly interconnected._
 - **Should `steps` be split into smaller, more focused modules?**

@@ -49,6 +49,9 @@ twitch       espectadores (suma de todas las transmisiones de la categoría), tr
              público (login, nombre, espectadores, titulo, idioma, inicio, miniatura y,
              desde el 2026-11-13, foto: la foto de perfil). Si la consulta de fotos falla,
              los canales van sin foto y se anota error_fotos (la medición no se pierde)
+kick         (desde el 2026-11-16) espectadores, transmisiones, completo, canales: los 10 con más
+             público (canal, espectadores, idioma y, desde el 2026-11-17, foto: la foto de perfil, solo
+             si es de files.kick.com)
 youtube      busqueda, unidades gastadas, videos (hasta 50): id, titulo, canal, canal_id,
              publicado, visitas, me_gusta, comentarios, en_vivo, miniatura, puesto (en la
              búsqueda de esa medición; null si ya no sale pero se sigue midiendo). Desde el

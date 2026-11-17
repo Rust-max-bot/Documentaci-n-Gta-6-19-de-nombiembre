@@ -53,9 +53,6 @@ con línea de tiempo, tablas y gráficos de Twitch, Kick, YouTube, Google Trends
       dobles y con 25 min de tiempo. Recordatorios en el Google Calendar de Bruno el 21 y el 24 nov
       (16:30 de Santiago). **Falta:** (1) comprobar el 21 que se guardó; (2) mostrarlo en la página, con opciones y capturas; (3) idea sin
       decidir: repetir lo de Doomsday en enero, después de su estreno (18 dic).
-- [ ] **9.10 Kick sin fotos de perfil** (Bruno, 2026-11-17). En Twitch salen las fotos de los
-      canales; en Kick no (`foto("")` en la tabla; el recolector no guarda la foto de Kick).
-      Ver si la API de Kick la da y mostrarla; si no, un dibujo de reemplazo.
 - [ ] **9.11 Skill de animación y forma de administrarlas** (Bruno, 2026-11-17). (a) Buscar una
       skill que muestre opciones de animación ya probadas (mirar antes Impeccable `animate` y
       `make-interfaces-feel-better`). (b) Una forma sencilla de decidir qué elementos animan y
@@ -167,6 +164,7 @@ No se empieza hasta que Bruno avise con una confirmación oficial de la versión
   Kick entran deslizando (`web/animaciones.js`; apagar con `ACTIVAS`). Las dos filas de una
   medición se animan juntas (si no, la hora se veía cortada) y las fotos salen con fundido.
 - **9.9 (2026-11-17, opciones A):** Titulares y "Ver los N eventos" de la línea de tiempo se abren y cierran con cortina; los botones cambian el texto con fundido y la flecha gira; los filtros de la línea de tiempo llevan la gota rosada y la lista cambia con fundido corto (`web/animaciones.js`, `ACTIVAS`).
+- **9.10 (2026-11-17):** fotos de perfil de Kick en la tabla de Twitch y Kick. La lista de directos de Kick ya trae `broadcaster_user.profile_picture` (verificado: 221 de 221 y, con la función real, 10 de 10 canales guardados); se guarda en `datos/` solo si es de `files.kick.com`, y `datos.js` lleva `fotos_kick` (canal → foto más reciente), así también las mediciones del 16 nov. Las fotos por defecto de Kick no se guardan (la página dibuja su reemplazo). Aparece desde la primera medición que ya guarde fotos (23:37 UTC del 17 nov).
 - **Herramientas:** Graphify y sincronización del PC con GitHub (`sincronizar_datos.ps1`).
 - Descartado por Bruno: app en el celular; Cloudflare Radar; redes de descarga de PlayStation y
   Xbox; la 9.2 "¿Cuánta gente faltó?".
