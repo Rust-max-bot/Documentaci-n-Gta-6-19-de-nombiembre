@@ -100,6 +100,7 @@ Bruno ya eligió las palabras de la comparación.
 
 ## Últimos cambios
 
+- 2026-11-17: hotel "HOTEL" (2.ª corrección, pedido de Bruno): la línea blanca del remate del techo ya no cruza el letrero entre la O y la T, y la hoja de la palmera derecha que colgaba como una antena hasta el techo del hotel es más corta.
 - 2026-11-17: hotel "HOTEL" de la portada corregido (pedido de Bruno, con captura): la marquesina flotaba sobre la puerta (su sombra quedaba tapada por la planta baja) y la planta baja era 2 unidades más angosta que los pisos de arriba. Ahora la marquesina se apoya en el dintel con su sombra visible y la planta baja tiene el ancho del edificio.
 - 2026-11-17: menú "☰ Secciones": ya no asoma la barra de desplazamiento al abrirlo y cerrarlo en el PC (fallo visto por Bruno). Solo aparece si la lista no cabe, en pantallas bajas, y cuando ya terminó de abrirse.
 - 2026-11-17: programada una consulta previa de Trends para el 18 nov a las 11:15 UTC (8:15 de Chile), justo después de la salida en Nueva Zelanda (pedido de Bruno). Va en `datos/trends_previa/`; la sección de Doomsday la toma sola. **El 18, revisar que corrió** (Actions → "Trends extra (6.1)"); si no, lanzarla a mano con la casilla "previa".

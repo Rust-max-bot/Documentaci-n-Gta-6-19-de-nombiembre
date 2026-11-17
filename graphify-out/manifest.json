@@ -48,9 +48,9 @@
     "semantic_hash": ""
   },
   "ESTADO_ACTUAL.md": {
-    "mtime": 1794952999.4444396,
-    "seen": 1794953456.918665,
-    "ast_hash": "d082b632f6fb8a4f1e3e3c8d18297538",
+    "mtime": 1794953465.4394422,
+    "seen": 1794954039.2111151,
+    "ast_hash": "1c890c28ff0e7313c590b4456041eb36",
     "semantic_hash": ""
   },
   "GUIA_CLAVES.md": {
@@ -72,9 +72,9 @@
     "semantic_hash": ""
   },
   "web/index.html": {
-    "mtime": 1794953312.035397,
-    "seen": 1794953456.9187047,
-    "ast_hash": "b273cb8a68ed264c76e8eaa6d6aff5e2",
+    "mtime": 1794953889.217651,
+    "seen": 1794954039.2111373,
+    "ast_hash": "e9dafb328662b61d8824c9929a7b2d78",
     "semantic_hash": ""
   },
   ".github/workflows/probar-fuentes.yml": {
@@ -324,9 +324,9 @@
     "semantic_hash": ""
   },
   "diseno/dibujar_portada.py": {
-    "mtime": 1794953311.8106463,
-    "seen": 1794953456.9185944,
-    "ast_hash": "84645d0a580fc7917164e4f6e38c19fd",
+    "mtime": 1794953888.9296176,
+    "seen": 1794954039.2110748,
+    "ast_hash": "b1dd74e701d485d5081c4a6c4fa0ce63",
     "semantic_hash": ""
   },
   ".impeccable/config.json": {
