@@ -751,7 +751,7 @@
       $("t-twitch").innerHTML = '<thead><tr><th>Hora</th><th>Plataforma</th><th class="n">Espectadores</th><th></th><th>Canal con más público</th></tr></thead><tbody>' +
         (filas || '<tr class="sin-dato"><td colspan="5">Todavía no hay datos.</td></tr>') + "</tbody>";
     }
-    $("filtros-dia").addEventListener("click", function (e) { var d = e.target.dataset.dia; if (d) { elegido = d; pintar(); } });
+    $("filtros-dia").addEventListener("click", function (e) { var d = e.target.dataset.dia; if (d) { var dir = dias.indexOf(d) - dias.indexOf(elegido); elegido = d; pintar(); if (window.ANIM && dir) ANIM.tabla($("t-twitch"), dir); } });
     pintar();
     gota($("filtros-dia"), "gota-sel", "button.activo", true);
   })();
@@ -1620,7 +1620,7 @@
         cuadro("Mediciones", num(r.med), r.med === 1 ? "medición guardada" : "mediciones guardadas", "", r.huecos ? r.huecos + " con algún hueco" : "sin huecos") +
         "</ul>";
     }
-    $("resumen-dias").addEventListener("click", function (e) { var k = e.target.dataset.dia; if (k) { elegido = k; pintar(); } });
+    $("resumen-dias").addEventListener("click", function (e) { var k = e.target.dataset.dia; if (k) { var dir = dias.indexOf(k) - dias.indexOf(elegido); elegido = k; pintar(); if (window.ANIM && dir) ANIM.resumen(caja, dir); } });
     pintar();
     gota($("resumen-dias"), "gota-sel", "button.activo", true);
 

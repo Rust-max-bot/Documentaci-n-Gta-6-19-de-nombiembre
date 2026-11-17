@@ -51,10 +51,6 @@ con línea de tiempo, tablas y gráficos de Twitch, Kick, YouTube, Google Trends
       dobles y con 25 min de tiempo. Recordatorios en el Google Calendar de Bruno el 21 y el 24 nov
       (16:30 de Santiago). **Falta:** (1) comprobar el 21 que se guardó; (2) mostrarlo en la página, con opciones y capturas; (3) idea sin
       decidir: repetir lo de Doomsday en enero, después de su estreno (18 dic).
-- [ ] **9.8 Animaciones al cambiar de día** (Bruno, 2026-11-17). Hoy al tocar un día del "Resumen del
-      día" y de la tabla de "Twitch y Kick" todo cambia de golpe (`pintar()` reescribe el HTML). Que
-      no sea tan directo: entrada de los cuadros/filas, y cifras y horas que cambian con
-      animación. Respetar `QUIETO` (movimiento reducido). Opciones con prototipo antes de aplicar.
 - [ ] **9.9 Titulares: animar mostrar/ocultar** (Bruno, 2026-11-17). Animación al abrir y cerrar
       "Ver los N titulares" (`#noticias-todas`, hoy con `hidden`) y al cambiar el texto del botón.
 - [ ] **9.10 Kick sin fotos de perfil** (Bruno, 2026-11-17). En Twitch salen las fotos de los
@@ -63,7 +59,7 @@ con línea de tiempo, tablas y gráficos de Twitch, Kick, YouTube, Google Trends
 - [ ] **9.11 Skill de animación y forma de administrarlas** (Bruno, 2026-11-17). (a) Buscar una
       skill que muestre opciones de animación ya probadas (mirar antes Impeccable `animate` y
       `make-interfaces-feel-better`). (b) Una forma sencilla de decidir qué elementos animan y
-      cuáles no: idea del prototipo de la 9.8, todo en un archivo con una tabla "elemento →
+      cuáles no: ya empezada en la 9.8 con `web/animaciones.js` (un archivo) con una tabla "elemento →
       animación" y una sola llamada desde la página; se puede enlazar con el "Panel de control".
 - [ ] **9.12 Rehacer `web/compartir.jpg`** (Bruno, 2026-11-17: "para después"). La portada
       cambió el 17 nov (hotel "HOTEL", hoja de palmera): `python pruebas/hacer_compartir.py --opcion C --guardar`.
@@ -174,6 +170,7 @@ No se empieza hasta que Bruno avise con una confirmación oficial de la versión
   huecos** (2026-11-16, A).
 - **9.5 a 9.7 (2026-11-17, opciones A):** tarjetas de videos y Shorts de alto fijo, gráfico con
   cifras al inicio y ahora, y "GTA frente a lo más visto" con GTA VI al centro. Detalle en `DISENO_VISUAL.md`.
+- **9.8 (2026-11-17, opción A de Bruno):** al cambiar de día, el Resumen del día y la tabla de Twitch y Kick entran deslizando (`web/animaciones.js`; apagar con `ACTIVAS`). Las dos filas de una medición se animan juntas (si no, la hora se veía cortada) y las fotos salen con fundido.
 - **Vidrio y neón (2026-11-17):** fichas y menú de vidrio, borde neón en 1986 al pasar el mouse.
 - **Herramientas:** Graphify y sincronización del PC con GitHub (`sincronizar_datos.ps1`).
 - Descartado por Bruno: app en el celular; Cloudflare Radar; redes de descarga de PlayStation y
