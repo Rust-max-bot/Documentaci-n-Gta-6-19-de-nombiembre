@@ -53,8 +53,12 @@ con línea de tiempo, tablas y gráficos de Twitch, Kick, YouTube, Google Trends
       dobles y con 25 min de tiempo. Recordatorios en el Google Calendar de Bruno el 21 y el 24 nov
       (16:30 de Santiago). **Falta:** (1) comprobar el 21 que se guardó; (2) mostrarlo en la página, con opciones y capturas; (3) idea sin
       decidir: repetir lo de Doomsday en enero, después de su estreno (18 dic).
-- [ ] **9.9 Titulares: animar mostrar/ocultar** (Bruno, 2026-11-17). Animación al abrir y cerrar
-      "Ver los N titulares" (`#noticias-todas`, hoy con `hidden`) y al cambiar el texto del botón.
+- [ ] **9.9 Animar mostrar/ocultar y los filtros de la línea de tiempo** (Bruno, 2026-11-17).
+      Animación al abrir y cerrar "Ver los N titulares" (`#noticias-todas`, hoy con `hidden`) y
+      "Ver los N eventos / Ver menos" de la línea de tiempo, al cambiar el texto de esos botones y
+      al elegir un filtro de la línea de tiempo (hoy sin gota deslizante, a diferencia de días y
+      pestañas). **Hecho:** prototipo con 3 opciones por cada grupo (copia de la página en
+      `pruebas/capturas/animaciones2/`, no va a git); espera la elección de Bruno.
 - [ ] **9.10 Kick sin fotos de perfil** (Bruno, 2026-11-17). En Twitch salen las fotos de los
       canales; en Kick no (`foto("")` en la tabla; el recolector no guarda la foto de Kick).
       Ver si la API de Kick la da y mostrarla; si no, un dibujo de reemplazo.
