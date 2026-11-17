@@ -1243,7 +1243,11 @@
        terminó de abrirse. Solo se anima si el estado cambia: antes, cada clic fuera del menú lo
        "cerraba" otra vez y la caja amagaba con abrirse (fallo visto por Bruno). */
     lista.querySelectorAll("a").forEach(function (a, i) { a.style.setProperty("--i", i); });
-    var abierto = false, DUR = 420, relojes = [];
+    var abierto = false, DUR = 420, relojes = [], N = lista.querySelectorAll("a").length;
+    /* La barra de desplazamiento solo aparece si la lista de verdad no cabe (pantalla baja), y
+       solo cuando ya terminó de abrirse. Antes asomaba un momento al abrir y al cerrar, porque las
+       opciones entran y salen corridas unos píxeles hacia abajo (fallo visto por Bruno, 2026-11-17). */
+    function revisarDesborde() { lista.classList.toggle("desborda", abierto && lista.scrollHeight > lista.clientHeight + 1); }
     function limpiar() { relojes.forEach(clearTimeout); relojes = []; }
     function luego(ms, f) { relojes.push(setTimeout(f, ms)); }
     function tam() { var r = caja.getBoundingClientRect(); return { w: r.width, h: r.height }; }
@@ -1259,13 +1263,15 @@
     function abrir(si) {
       if (si === abierto) return;
       abierto = si; boton.setAttribute("aria-expanded", String(si)); limpiar();
-      if (QUIETO.matches) { soltar(); lista.hidden = !si; caja.classList.toggle("abierto", si); caja.classList.toggle("texto", si); return; }
+      lista.classList.remove("desborda");
+      if (QUIETO.matches) { soltar(); lista.hidden = !si; caja.classList.toggle("abierto", si); caja.classList.toggle("texto", si); revisarDesborde(); return; }
       if (si) {
         var desde = caja.style.width ? tam() : medir(false), hasta = medir(true);   // si estaba cerrándose, desde donde iba
         caja.classList.remove("cerrando", "texto", "abierto"); lista.hidden = false; fijar(desde); void caja.offsetWidth;
         caja.classList.add("animando", "abierto"); fijar(hasta);
         luego(DUR * 0.6, function () { caja.classList.add("texto"); });
         luego(DUR + 40, soltar);
+        luego(DUR * 0.6 + N * 14 + 340, revisarDesborde);   // cuando la última opción ya llegó a su lugar
       } else {
         var ahora = tam(), cerrada = medir(false);
         fijar(ahora); caja.classList.add("cerrando"); caja.classList.remove("texto");   // primero se va el texto
@@ -1283,6 +1289,7 @@
       else if (!caja.contains(e.target)) abrir(false);   // tocar fuera la cierra
     });
     document.addEventListener("keydown", function (e) { if (e.key === "Escape" && abierto) { abrir(false); boton.focus(); } });
+    window.addEventListener("resize", function () { if (abierto && !caja.classList.contains("animando")) revisarDesborde(); });
   })();
 
   /* ---------- Cambio de estilo ---------- */

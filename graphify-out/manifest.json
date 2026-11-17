@@ -18,9 +18,9 @@
     "semantic_hash": ""
   },
   "web/app.js": {
-    "mtime": 1794952168.2268126,
-    "seen": 1794952299.4873667,
-    "ast_hash": "ffd3c62892fde82cc3de830e72052c9f",
+    "mtime": 1794952849.5494244,
+    "seen": 1794952999.1132975,
+    "ast_hash": "2ce4f7728d7c5203c5bb732f3d19836b",
     "semantic_hash": ""
   },
   "web/datos-ejemplo.js": {
@@ -48,9 +48,9 @@
     "semantic_hash": ""
   },
   "ESTADO_ACTUAL.md": {
-    "mtime": 1794952168.2268126,
-    "seen": 1794952299.4873772,
-    "ast_hash": "39cf579f091ac751b72880df3548e4ca",
+    "mtime": 1794952676.0016887,
+    "seen": 1794952999.113309,
+    "ast_hash": "d0fe18a6988e89f38fa09f3fd860cea0",
     "semantic_hash": ""
   },
   "GUIA_CLAVES.md": {
@@ -228,9 +228,9 @@
     "semantic_hash": ""
   },
   ".github/workflows/trends-extra.yml": {
-    "mtime": 1794951350.709622,
-    "seen": 1794951380.1555684,
-    "ast_hash": "61fa730d43fcee3d3f66161b78d60f27",
+    "mtime": 1794952649.1760917,
+    "seen": 1794952999.1132615,
+    "ast_hash": "30ae92bda1c59564c1f5a405df66f09d",
     "semantic_hash": ""
   },
   ".github/workflows/publicar-pagina.yml": {

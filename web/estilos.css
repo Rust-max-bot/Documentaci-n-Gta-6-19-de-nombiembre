@@ -1012,6 +1012,9 @@ section[id], .bloque { scroll-margin-top: 16px; }
 .menu.animando.cerrando { transition-timing-function: cubic-bezier(.4, 0, .2, 1); }
 /* Mientras cambia de tamaño, la lista no muestra su barra de desplazamiento. */
 .menu.animando .menu-lista { overflow: hidden; }
+/* Sin barra de desplazamiento salvo que la lista no quepa (app.js pone .desborda cuando ya se abrió). */
+:root .menu .menu-lista { overflow-y: hidden; }
+:root .menu .menu-lista.desborda { overflow-y: auto; }
 :root .menu .menu-lista a { opacity: 0; transform: translateY(6px); transition: opacity .12s, transform .12s; }
 :root .menu.texto .menu-lista a { opacity: 1; transform: none; transition: opacity .2s, transform .28s var(--resorte); transition-delay: calc(var(--i, 0) * 14ms); }
 
