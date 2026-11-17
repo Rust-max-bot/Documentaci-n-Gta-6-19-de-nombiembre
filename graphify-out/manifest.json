@@ -48,9 +48,9 @@
     "semantic_hash": ""
   },
   "ESTADO_ACTUAL.md": {
-    "mtime": 1794938881.870211,
-    "seen": 1794942827.4839885,
-    "ast_hash": "e1cd6ffdc0cdde724c4b97d868d21d04",
+    "mtime": 1794945674.9529765,
+    "seen": 1794945679.685891,
+    "ast_hash": "58152660ad421cab4659450c81200f2d",
     "semantic_hash": ""
   },
   "GUIA_CLAVES.md": {
@@ -72,9 +72,9 @@
     "semantic_hash": ""
   },
   "web/index.html": {
-    "mtime": 1794942396.3325,
-    "seen": 1794942827.4840226,
-    "ast_hash": "d94e17fa38e24c7905752240f78bc47b",
+    "mtime": 1794945666.181873,
+    "seen": 1794945679.6859443,
+    "ast_hash": "626c60a481ecc3dabdef5d3a1797af34",
     "semantic_hash": ""
   },
   ".github/workflows/probar-fuentes.yml": {
@@ -240,8 +240,8 @@
     "semantic_hash": ""
   },
   "web/compartir.jpg": {
-    "mtime": 1794942783.292538,
-    "seen": 1794942827.4840243,
+    "mtime": 1794945666.1770208,
+    "seen": 1794945679.6859472,
     "ast_hash": "cd40d5e6d81f718534a97312153a0785",
     "semantic_hash": ""
   },
@@ -276,9 +276,9 @@
     "semantic_hash": ""
   },
   "DISENO_VISUAL.md": {
-    "mtime": 1794942825.1992226,
-    "seen": 1794942827.4839866,
-    "ast_hash": "3dce5892e10f97d137a97206d167dca1",
+    "mtime": 1794945666.160866,
+    "seen": 1794945679.685888,
+    "ast_hash": "96b42fc2c26d36ed1dc3719ef13bf7ec",
     "semantic_hash": ""
   },
   ".github/workflows/probar-kick.yml": {
@@ -324,9 +324,9 @@
     "semantic_hash": ""
   },
   "diseno/dibujar_portada.py": {
-    "mtime": 1794942396.095107,
-    "seen": 1794942827.48393,
-    "ast_hash": "ecf717abc9b30d43940fa160adc688e7",
+    "mtime": 1794945666.160866,
+    "seen": 1794945679.685808,
+    "ast_hash": "5326c367a9e19d64baca6a969321157e",
     "semantic_hash": ""
   }
 }

@@ -100,7 +100,7 @@ Bruno ya eligió las palabras de la comparación.
 
 ## Últimos cambios
 
-- 2026-11-17: rediseño de la portada hecho en la rama `rediseno/portada`, para que Bruno lo revise (no está en `main`). Detalle en el commit de esa rama y en su `DISENO_VISUAL.md`.
+- 2026-11-17: rediseño de la portada (pedido de Bruno, hecho en la rama `rediseno/portada` y aprobado y unido a `main` el mismo día): nueve hoteles distintos, torres con vidrio, tres palmeras distintas, calle con paso de cebra, caseta de salvavidas, nubes, pelícanos y mar nuevos. El dibujo lo escribe `diseno/dibujar_portada.py` (no editar a mano el bloque `PORTADA` de `index.html`). Detalle en `DISENO_VISUAL.md`.
 - 2026-11-17: Impeccable actualizado a 0.1.25 y, de la propuesta de mejoras visuales de Bruno, hechas las tres que elegió: fichas de la portada y menú "Secciones" de vidrio, y borde neón al pasar el mouse en 1986. Lo demás de la propuesta ya existía; el "aparecer al bajar" se descartó (genérico, según Impeccable).
 - 2026-11-17: portada arreglada: con el zoom alejado o en pantallas anchas los edificios ya no se cortan por arriba (se ve la grúa) y las palmeras salen de la arena, no del agua. `web/compartir.jpg` rehecha.
 - 2026-11-17: hechas 9.5, 9.6 y 9.7 (opciones A de Bruno): los Shorts y los videos ya no cambian de alto ni de lugar al pasar de Global a En español; el gráfico de cada tarjeta muestra las visitas al inicio y las de ahora; "GTA frente a lo más visto" pone a GTA VI al centro (puesto en Twitch y videos en tendencia, con su historial) y ya no deja un hueco bajo Twitch.
@@ -129,7 +129,6 @@ Bruno ya eligió las palabras de la comparación.
 
 La lista completa y su orden están en `PLAN.md`. Resumen (2026-11-14):
 
-- **(2026-11-17, espera a Bruno):** rediseño de la portada en la rama `rediseno/portada` (pedido de Bruno: grandes mejoras, en rama aparte y sin opciones). Nueve hoteles distintos, torres con vidrio, tres palmeras distintas, calle con paso de cebra, caseta de salvavidas, nubes, pelícanos y mar nuevos; probado en Edge y Firefox. Si Bruno lo aprueba, unir la rama a `main` (si choca `graphify-out/`, tomar el de `main` y correr `graphify update .`) y borrar esta línea; si no, borrar la rama.
 0. **(2026-11-16, orden de Bruno):** 9.4 optimizar la página (eje y `partes()` hechos; lo
    grande, después del 22), 9.1 servidores más cortos (**hecha**, opción C) y 9.3
    menos alarmas por Google (después del 22). Descartados (Bruno): la 9.2 "¿Cuánta gente
