@@ -147,6 +147,7 @@ No se empieza hasta que Bruno avise con una confirmación oficial de la versión
   huecos** (2026-11-16, A).
 - **9.5 a 9.7 (2026-11-17, opciones A):** tarjetas de videos y Shorts de alto fijo, gráfico con
   cifras al inicio y ahora, y "GTA frente a lo más visto" con GTA VI al centro. Detalle en `DISENO_VISUAL.md`.
+- **Vidrio y neón (2026-11-17):** fichas y menú de vidrio, borde neón en 1986 al pasar el mouse.
 - **Herramientas:** Graphify y sincronización del PC con GitHub (`sincronizar_datos.ps1`).
 - Descartado por Bruno: app en el celular; Cloudflare Radar; redes de descarga de PlayStation y
   Xbox; la 9.2 "¿Cuánta gente faltó?".
