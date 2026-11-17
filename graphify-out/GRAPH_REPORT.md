@@ -1,7 +1,7 @@
 # Graph Report - Documentación Gta 6  (2026-11-17)
 
 ## Corpus Check
-- 53 files · ~113,263 words
+- 53 files · ~113,339 words
 - Verdict: corpus is large enough that graph structure adds value.
 - Unclassified: 12 file(s) not represented in the graph (top: .jsonl 6, (none) 3, .bat 2)
 
@@ -11,7 +11,7 @@
 - Token cost: 183,861 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `16eb3203`
+- Built from commit: `ff8f8c2f`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -75,13 +75,13 @@
 7. `dia()` - 16 edges
 8. `n()` - 14 edges
 9. `Decisiones ya tomadas` - 14 edges
-10. `limpio()` - 13 edges
+10. `a_iso()` - 13 edges
 
 ## Surprising Connections (you probably didn't know these)
-- `Fase 1 — Recolector funcionando (lo más importante)` --references--> `compacto()`  [INFERRED]
-  historial/PLAN_DE_TRABAJO_2026-11-13.md → web/app.js
 - `Fase 6 — Ideas nuevas de Bruno: más estadísticas, logros y comparaciones (lo que queda)` --references--> `kick()`  [INFERRED]
   historial/PLAN_DE_TRABAJO_2026-11-16.md → recolector/fuentes.py
+- `Fase 1 — Recolector funcionando (lo más importante)` --references--> `compacto()`  [INFERRED]
+  historial/PLAN_DE_TRABAJO_2026-11-13.md → web/app.js
 - `Antes o justo después del lanzamiento` --references--> `partes()`  [INFERRED]
   historial/PLAN_2026-11-17.md → web/app.js
 - `Diseño de la página` --references--> `limpio()`  [INFERRED]

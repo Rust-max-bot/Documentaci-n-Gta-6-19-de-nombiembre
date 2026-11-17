@@ -599,11 +599,12 @@ class Hoteles:
         D.rr("borde_letrero", 853.5, 127, 17, 76, 2)
         for k, letra in enumerate("HOTEL"):
             D.texto(862, 141 + k * 14, letra, 12.5, "var(--trim2)")
-        D.r("acento", 794, 213, 136, 25)
+        D.r("acento", x0, 213, x1 - x0 - 4, 27)     # planta baja del mismo ancho que los pisos (la franja de luz queda a la derecha)
         self.vidriera(rnd, 846, 218, 30, 16)
         self.vidriera(rnd, 884, 218, 42, 16)
         self.puerta(814, 219, 18, 19)
-        D.rr("trim", 804, 210.5, 38, 3.2, 1.6); D.r("trim2", 806, 213.7, 34, 1); D.r("sombra", 807, 214.7, 32, 2.6)
+        # marquesina pegada al dintel de la puerta; su sombra va en "persiana" (la capa "sombra" queda tapada por la planta baja)
+        D.rr("trim", 808, 214.2, 30, 3.4, 1.6); D.r("persiana", 810, 217.6, 26, 2.6)
 
     def mar(self):
         """8. MiMo con balcones corridos en cada piso y letrero "MAR" sobre el techo."""

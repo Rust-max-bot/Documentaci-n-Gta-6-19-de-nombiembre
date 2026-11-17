@@ -100,6 +100,7 @@ Bruno ya eligió las palabras de la comparación.
 
 ## Últimos cambios
 
+- 2026-11-17: hotel "HOTEL" de la portada corregido (pedido de Bruno, con captura): la marquesina flotaba sobre la puerta (su sombra quedaba tapada por la planta baja) y la planta baja era 2 unidades más angosta que los pisos de arriba. Ahora la marquesina se apoya en el dintel con su sombra visible y la planta baja tiene el ancho del edificio.
 - 2026-11-17: menú "☰ Secciones": ya no asoma la barra de desplazamiento al abrirlo y cerrarlo en el PC (fallo visto por Bruno). Solo aparece si la lista no cabe, en pantallas bajas, y cuando ya terminó de abrirse.
 - 2026-11-17: programada una consulta previa de Trends para el 18 nov a las 11:15 UTC (8:15 de Chile), justo después de la salida en Nueva Zelanda (pedido de Bruno). Va en `datos/trends_previa/`; la sección de Doomsday la toma sola. **El 18, revisar que corrió** (Actions → "Trends extra (6.1)"); si no, lanzarla a mano con la casilla "previa".
 - 2026-11-17: 6.7 hecha (opción B de Bruno): sección "GTA 6 frente a Avengers: Doomsday" con la consulta previa de Trends (`datos/trends_previa/`, desde GitHub; no bloquea la 6.1). Cuando llegue la 6.1 (21-24 nov), la página la usa sola.
