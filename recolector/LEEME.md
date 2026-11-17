@@ -141,13 +141,12 @@ guarda nada. Las palabras están en `COMPARAR`, `HISTORICA` (elegidas por Bruno 
 `publicar-pagina.yml` antes de publicar):
 
 - `web/datos.js` (`"formato": 2`): lo que la página necesita al abrir. Es como
-  `web/datos-ejemplo.js`, con tres diferencias para que pese menos (2026-11-14): de los
+  `web/datos-ejemplo.js`, con dos diferencias para que pese menos (2026-11-14): de los
   titulares solo trae sus horas (`noticias_t`, en segundos desde 1970, de la más vieja a la más
-  nueva); de Reddit, las horas (`reddit.publicaciones_t`) y las 8 publicaciones más nuevas
-  (`reddit.ultimas`); y las series de visitas de los videos van como `[segundos, visitas]`.
+  nueva) y las series de visitas de los videos van como `[segundos, visitas]`.
   `dias` dice qué días hay y la huella de cada archivo.
 - `web/dias/AAAA-MM-DD.js`: los titulares (cada uno con su número `i`, su posición en
-  `noticias_t`) y las publicaciones de Reddit completos de un día UTC. La página los carga solo
+  `noticias_t`) completos de un día UTC. La página los carga solo
   cuando tiene que mostrarlos.
 - `web/version.json`: solo la fecha `generado`. La página lo mira cada 2 minutos para saber si
   hay datos nuevos.

@@ -60,7 +60,7 @@ jobs:
           cp -r web/. _sitio/
           test -s _sitio/datos.js   # si no hay datos, mejor no publicar que publicar los de ejemplo
           test -s _sitio/version.json   # la página lo mira para saber si hay datos nuevos
-          test -d _sitio/dias           # titulares y Reddit de cada día (se cargan a pedido)
+          test -d _sitio/dias           # titulares de cada día (se cargan a pedido)
 
       - uses: actions/upload-pages-artifact@v5   # compuesta; usa upload-artifact v7 (Node.js 24)
         with:

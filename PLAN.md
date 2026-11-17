@@ -5,8 +5,8 @@
 > `historial/PLAN_DE_TRABAJO_*.md` (tareas). Un solo plan desde el 2026-11-16 (pedido de Bruno).
 
 Un recuerdo del 19 de noviembre de 2026, día en que sale GTA 6, por diversión: una página web
-con línea de tiempo, tablas y gráficos de Twitch, Kick, YouTube, Google Trends, titulares y
-Reddit. El estado vivo (dónde quedamos) está en `ESTADO_ACTUAL.md`; las reglas, en `CLAUDE.md`.
+con línea de tiempo, tablas y gráficos de Twitch, Kick, YouTube, Google Trends y titulares
+(Reddit se midió del 13 al 17 nov y se quitó, 6.9). El estado vivo (dónde quedamos) está en `ESTADO_ACTUAL.md`; las reglas, en `CLAUDE.md`.
 
 ## Cómo se usa este archivo
 
@@ -33,11 +33,6 @@ Reddit. El estado vivo (dónde quedamos) está en `ESTADO_ACTUAL.md`; las reglas
 - [ ] **7.4 Cápsula del tiempo.** "Lo que espero" ya está (texto de Bruno, 2026-11-15; diseño
       de cintas de casete, opción C). **Falta "Lo que me pareció"**, después del lanzamiento, en
       `web/capsula.js`. Lo escribe Bruno: Claude no inventa ese contenido.
-- [ ] **6.9 Quitar Reddit** (decisión de Bruno, 2026-11-17: el RSS público se acabó, no vale la pena
-      mostrarlo). (1) Sacar de la página la sección Reddit y lo que la nombre (menú "Secciones",
-      `web/app.js`, estilos, archivos de cada día en `web/dias/` que genera `generar_web.py`); (2)
-      que el recolector ya no pida Reddit (`recolector/fuentes.py`, fuente `reddit`), sin borrar
-      lo ya guardado en `datos/`. Si algún día llega la clave oficial, se puede volver a poner.
 - [ ] **6.7 GTA 6 frente a Doomsday ya, antes del 19** (pedido de Bruno, 2026-11-17). Mostrar en la
       página, desde ahora, la popularidad de GTA 6 frente a Avengers: Doomsday en Trends (día por
       día, últimos 90 días), sin esperar a la 6.1. Pasos: (1) guardar una primera consulta con
@@ -118,7 +113,7 @@ Reddit. El estado vivo (dónde quedamos) está en `ESTADO_ACTUAL.md`; las reglas
 - [ ] **2.5 TikTok.** Sin acceso oficial para un proyecto personal (la API de investigación es
       solo para instituciones académicas; Creative Center no tiene API y bloquea servidores).
       Probar una consulta real desde el PC y desde GitHub, o anotar lo llamativo a mano.
-- [ ] **Clave de Reddit** (en pausa por la 6.9). **Haría falta para volver a medir Reddit:** desde el 17 nov,
+- [ ] **Clave de Reddit** (en pausa: Reddit se quitó en la 6.9). **Haría falta para volver a medir Reddit:** desde el 17 nov,
       18:37 UTC, Reddit bloquea su RSS público (404/403, también en otros subreddits; antes un
       429). Lo guardado no se pierde. Daría además votos y comentarios. Desde nov 2025 se pide con el formulario
       de soporte para desarrolladores; tarda ~7 días y no está garantizada.
@@ -158,7 +153,9 @@ No se empieza hasta que Bruno avise con una confirmación oficial de la versión
 
 - **Fase 0 y 1:** hechas, 1.1 a 1.7 (claves, fuentes, recolector, interruptor, despertador, página).
 - **Fase 2:** 2.1 a 2.4 y 2.6 a 2.15. **Fase 3:** 3.1 a 3.3. **Fase 4:** 4.1 y 4.2.
-- **Fase 6:** 6.2 a 6.5 y 6.6 Kick (categoría 13155, cada hora desde el 16 nov, opción B).
+- **Fase 6:** 6.2 a 6.5, 6.6 Kick (categoría 13155, cada hora desde el 16 nov, opción B) y 6.9
+  quitar Reddit (2026-11-17: sección, récord, cuadro del resumen, imagen, textos y recolector;
+  lo guardado sigue en `datos/`; para volver, `git revert` del commit de la 6.9).
 - **Fase 7:** 7.2, 7.3 y 7.5 a 7.12.
 - **9.1** servidores más cortos (opción C); **línea de tiempo nueva** (2026-11-17, A); **Rockstar
   a mano** en los servidores (2026-11-17, C); **íconos pequeños** (2026-11-17, C); **Trends sin
@@ -177,7 +174,7 @@ Cada una, en corto. El porqué y las opciones descartadas, en `historial/PLAN_20
 ### Datos y recolección
 
 - Fuentes: Twitch, YouTube y Google Trends (imprescindibles); además Kick, titulares de Google
-  Noticias, Reddit por RSS (r/GTA6, sin votos), estado de PlayStation y Xbox, ranking de Twitch,
+  Noticias, estado de PlayStation y Xbox, ranking de Twitch,
   tendencias de YouTube y los 4 videos oficiales de GTA VI. Rockstar no responde a programas:
   sus caídas se anotan a mano en `web/eventos.js`.
 - Medición cada hora (minuto 7) y también al 37 del 17 al 21 nov (UTC), hasta el 19 dic, con
@@ -208,7 +205,7 @@ Cada una, en corto. El porqué y las opciones descartadas, en `historial/PLAN_20
   tarjetas con pestañas y tira de Shorts (6.4 A, 6.5 B); récords en vitrina 6.2 A; titulares como
   resumen B; GTA frente a lo más visto con GTA VI al centro 9.7 A; cápsula en
   cintas 7.4 C; copias por plazo 7.10 B; Próximamente como camino 7.11 C; menú flotante 2.12 B.
-- Muchas visitas: `datos.js` lleva lo necesario al abrir; titulares y Reddit de cada día van en
+- Muchas visitas: `datos.js` lleva lo necesario al abrir; los titulares de cada día van en
   `web/dias/`. GitHub Pages admite ~100 GB al mes; plan B solo si avisa: Cloudflare Pages.
 
 ### Trabajo

@@ -9,12 +9,15 @@ inflaría el repositorio. Si algo no cuadra, se detiene y deja web/datos.js como
 
 Datos por días (pedido de Bruno, 2026-11-14: "no puedes siempre cargar todos los datos de todos
 los días"). Lo que más pesa y menos se comprime son los titulares (sus enlaces de Google Noticias
-son muy largos) y las publicaciones de Reddit. Por eso:
+son muy largos). Por eso:
 - web/datos.js lleva todo lo que la página necesita al abrir: las mediciones (para los gráficos,
-  los récords y los resúmenes), los videos y, de los titulares y de Reddit, solo sus horas (para
-  contarlos por día y por hora) y las 8 publicaciones de Reddit más nuevas.
-- web/dias/AAAA-MM-DD.js lleva los titulares y las publicaciones completas de un día (UTC, según
-  la hora de cada titular). La página carga un día solo cuando hace falta mostrarlo.
+  los récords y los resúmenes), los videos y, de los titulares, solo sus horas (para contarlos
+  por día) y los más nuevos.
+- web/dias/AAAA-MM-DD.js lleva los titulares completos de un día (UTC, según la hora de cada
+  titular).
+
+Reddit (tarea 6.9, decisión de Bruno, 2026-11-17): ya no se muestra. Las mediciones viejas lo
+siguen guardando en datos/ (no se borra nada), pero aquí se ignora. La página carga un día solo cuando hace falta mostrarlo.
 - web/version.json solo dice cuándo se generaron los datos: la página lo mira cada 2 minutos para
   saber si hay datos nuevos, en vez de bajar datos.js entero.
 """
@@ -40,7 +43,6 @@ NOMBRE_FOTO = re.compile(r"^(\d{4}-\d{2}-\d{2}) (\d{2})[-.:h](\d{2})\s*(.*)\.(jp
 FOTO_PESADA = 2 * 1024 * 1024   # más de 2 MB: se avisa (con muchas visitas, gasta tráfico)
 MEDIOS_TOP = 8        # medios que más publican, en la sección Titulares
 NOTICIAS_ULTIMAS = 6  # titulares completos en datos.js para "Lo último"
-REDDIT_ULTIMAS = 8   # publicaciones de Reddit completas en datos.js (la página muestra las 8 últimas)
 NOMBRE_ARCHIVO = re.compile(r"^\d{4}-\d{2}-\d{2}\.jsonl$")
 VIDEOS = 20         # videos de YouTube que se muestran de cada tipo (videos y Shorts), los más vistos
 FILTRO = RAIZ / "recolector" / "filtro_videos.json"   # qué videos se muestran (pedido de Bruno, 2026-11-15)
@@ -199,7 +201,6 @@ def estado_servidor(r):
 
 def convertir(medidas):
     mediciones, series, ultimo_video, vistas, noticias = [], {}, {}, set(), []
-    reddit, reddit_vistas, reddit_medidas = [], set(), []
     series_es, ultimo_es = {}, {}   # tarea 6.4: videos de la búsqueda en español
     trailers = {}   # tarea 6.2: serie de visitas de cada video oficial, desde el 13 nov
     horas = horas_trends(medidas)
@@ -261,18 +262,6 @@ def convertir(medidas):
             if n["url"] not in vistas:
                 vistas.add(n["url"])
                 noticias.append({"t": n.get("t") or m["t"], "titulo": n["titulo"], "medio": n.get("medio") or "", "url": n["url"]})
-        rd = m.get("reddit")
-        if rd is not None:
-            # Cada medición dice si Reddit respondió y cuántas publicaciones nuevas trajo: si
-            # trae todas las del RSS (100), puede que se hayan escapado otras entre medición
-            # y medición.
-            reddit_medidas.append({"t": m["t"], "ok": "error" not in rd,
-                                   "nuevas": len(rd.get("nuevas", [])), "en_fuente": rd.get("en_fuente")})
-            for p in rd.get("nuevas", []):
-                if p["id"] not in reddit_vistas:
-                    reddit_vistas.add(p["id"])
-                    reddit.append({"t": p.get("t") or m["t"], "titulo": p["titulo"], "autor": p.get("autor") or "",
-                                   "url": p["url"]})
 
     # Los videos que aparecen en la última medición en que YouTube respondió, de más a menos visto.
     filtro = leer_filtro()
@@ -314,12 +303,10 @@ def convertir(medidas):
                              ultimo_es, series_es, filtro)]
 
     noticias.sort(key=lambda n: n["t"])
-    reddit.sort(key=lambda p: p["t"])
     trends_horas = (serie_trends(horas, hora_de_medicion(medidas[0]["t"]), hora_de_medicion(medidas[-1]["t"]))
                     if medidas else [])
     return {"mediciones": mediciones, "trends_horas": trends_horas, "youtube": youtube, "youtube_es": youtube_es, "noticias": noticias,
             "records_youtube": records_youtube,
-            "reddit": {"comunidad": "r/GTA6", "publicaciones": reddit, "mediciones": reddit_medidas},
             "comparacion": comparacion,
             "trailers": sorted(trailers.values(), key=lambda v: v.get("publicado") or "")}   # todos: la página los muestra por páginas (Bruno, 2026-11-13)
 
@@ -335,7 +322,7 @@ def serie_corta(serie):
 
 
 def separar_por_dias(d):
-    """Saca de d los titulares y las publicaciones de Reddit completos y los reparte por día.
+    """Saca de d los titulares completos y los reparte por día.
 
     En d quedan solo sus horas, en el mismo orden (de la más vieja a la más nueva): la posición
     de cada titular en esa lista es su número "i", que también va en el archivo de su día. Así la
@@ -344,14 +331,8 @@ def separar_por_dias(d):
     for i, n in enumerate(d["noticias"]):
         s = segundos(n["t"])
         dia = datetime.fromtimestamp(s, timezone.utc).strftime("%Y-%m-%d")
-        dias.setdefault(dia, {"noticias": [], "reddit": []})["noticias"].append(
+        dias.setdefault(dia, {"noticias": []})["noticias"].append(
             {"i": i, "t": s, "titulo": n["titulo"], "medio": n["medio"], "url": n["url"]})
-    pubs = d["reddit"]["publicaciones"]
-    for p in pubs:
-        s = segundos(p["t"])
-        dia = datetime.fromtimestamp(s, timezone.utc).strftime("%Y-%m-%d")
-        dias.setdefault(dia, {"noticias": [], "reddit": []})["reddit"].append(
-            {"t": s, "titulo": p["titulo"], "autor": p["autor"], "url": p["url"]})
     d["formato"] = 2
     # Resumen de los titulares (opción B de Bruno, 2026-11-16): los medios que más publican y los
     # últimos titulares. La página los muestra sin tener que bajar los archivos de cada día.
@@ -361,9 +342,6 @@ def separar_por_dias(d):
     d["noticias_ultimas"] = [{"t": n["t"], "titulo": n["titulo"], "medio": n["medio"], "url": n["url"]}
                              for n in reversed(d["noticias"][-NOTICIAS_ULTIMAS:])]
     d["noticias_t"] = [segundos(n["t"]) for n in d.pop("noticias")]
-    d["reddit"]["publicaciones_t"] = [segundos(p["t"]) for p in pubs]
-    d["reddit"]["ultimas"] = pubs[-REDDIT_ULTIMAS:]
-    del d["reddit"]["publicaciones"]
     for v in d["youtube"] + d["youtube_es"] + d["trailers"]:
         v["serie"] = serie_corta(v["serie"])
     archivos = {}
@@ -376,8 +354,8 @@ def separar_por_dias(d):
     # vuelve a pedirlo solo si cambió (lo nuevo llega siempre, y lo viejo no se baja otra vez).
     d["dias"] = {dia: hashlib.sha256(t.encode("utf-8")).hexdigest()[:10] for dia, t in archivos.items()}
     total = sum(len(c["noticias"]) for c in dias.values())
-    if total != len(d["noticias_t"]) or sum(len(c["reddit"]) for c in dias.values()) != len(pubs):
-        abortar("se perdieron titulares o publicaciones al repartirlos por días")
+    if total != len(d["noticias_t"]):
+        abortar("se perdieron titulares al repartirlos por días")
     return archivos
 
 
@@ -459,7 +437,7 @@ def main():
     peso_dias = sum(len(t.encode("utf-8")) for t in archivos.values())
     print(f"web/datos.js listo: {len(d['mediciones'])} mediciones (de {medidas[0]['t']} a {medidas[-1]['t']} UTC), "
           f"{len(d['youtube'])} videos, {len(d['noticias_t'])} titulares, "
-          f"{len(d['reddit']['publicaciones_t'])} publicaciones de Reddit, {len(texto.encode('utf-8')) // 1024} KB; "
+          f"{len(texto.encode('utf-8')) // 1024} KB; "
           f"{len(archivos)} días en web/dias/ ({peso_dias // 1024} KB, se cargan solo si hacen falta).")
 
 

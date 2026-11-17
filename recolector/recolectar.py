@@ -52,7 +52,7 @@ def leer_interruptor():
 
 def leer_estado(carpeta):
     """Lee los archivos más recientes. Si alguno está dañado, aborta: no se añade nada encima."""
-    estado = {"ultima_t": None, "youtube_previos": [], "noticias_vistas": set(), "reddit_vistas": set(),
+    estado = {"ultima_t": None, "youtube_previos": [], "noticias_vistas": set(),
               "youtube_es_previos": [], "youtube_es_busqueda": None, "shorts": {},
               "youtube_busqueda": None, "youtube_largos_previos": [], "youtube_largos_busqueda": None}
     videos_largos = []
@@ -74,8 +74,6 @@ def leer_estado(carpeta):
             ultima = m
             for nota in m.get("noticias", {}).get("nuevas", []):
                 estado["noticias_vistas"].add(nota["url"])
-            for pub in m.get("reddit", {}).get("nuevas", []):
-                estado["reddit_vistas"].add(pub["id"])
             # videos de la última medición en que YouTube respondió (si la última fue hueco)
             videos = m.get("youtube", {}).get("videos") or videos
             # Desde el 15 nov la búsqueda global es como mucho una vez por hora; antes era en cada
@@ -127,8 +125,6 @@ def resumen(nombre, r):
         return f"{len(r['puntos'])} puntos; último {p['t']} = {p['interes']}"
     if nombre == "noticias":
         return f"{len(r['nuevas'])} titulares nuevos de {r['en_fuente']}"
-    if nombre == "reddit":
-        return f"{len(r['nuevas'])} publicaciones nuevas de {r['en_fuente']}"
     if nombre == "twitch_ranking":
         return f"GTA VI en el puesto {r['puesto_gta6']} de {r['leidas']} categorías; GTA V en el {r['puesto_gta5']}"
     if nombre == "youtube_tendencias":

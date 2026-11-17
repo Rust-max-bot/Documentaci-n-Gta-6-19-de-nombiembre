@@ -18,8 +18,7 @@ las que trabaja están en `CLAUDE.md`.
 
 Un proyecto personal, hecho por diversión, que guarda **cómo se vivió el lanzamiento en
 internet**: cuánta gente lo miraba en Twitch, qué videos se subían a YouTube, cuánto se
-buscaba en Google, qué decían los titulares y qué se publicaba en Reddit, antes, durante y
-después del día.
+buscaba en Google y qué decían los titulares, antes, durante y después del día.
 
 El resultado es **una página web** con dos estilos visuales, "Miami 1986" y "Miami 2026", y
 un diseño original inspirado en Miami (no usa logotipos, tipografías ni arte de los juegos).
@@ -35,8 +34,8 @@ la página están en hora de Santiago de Chile.
   botones para elegir). Al llegar la hora cero de Chile hay fuegos artificiales y reflectores.
 - **Fichas** con el máximo de espectadores en Twitch, el máximo en Google Trends y cuántas
   mediciones hay guardadas.
-- **Logros y récords**: lo más alto que se ha medido (espectadores, directos, videos,
-  titulares, Reddit) y las visitas de los 4 videos oficiales de GTA VI.
+- **Logros y récords**: lo más alto que se ha medido (espectadores, directos, videos y
+  titulares) y las visitas de los 4 videos oficiales de GTA VI.
 - **Línea de tiempo**: eventos que el programa detecta solo (récords, cifras redondas, hora
   cero de cada lugar, caídas de servidores) y eventos anotados a mano en `web/eventos.js`.
 - **Resumen del día**: una tarjeta por día con lo más importante, que se puede descargar como
@@ -48,7 +47,6 @@ la página están en hora de Santiago de Chile.
 - **GTA frente a lo más visto**: el puesto de GTA en Twitch y los videos de GTA en
   tendencias de YouTube (Chile y EE. UU.).
 - **Titulares** de Google Noticias, por páginas, con barras por día para filtrarlos.
-- **Reddit (r/GTA6)**: publicaciones por hora y las últimas publicadas.
 - **GTA 6 frente a otros lanzamientos**: espectadores en Twitch el día de la salida de otros
   juegos y otros récords de la saga, cada dato con su fuente.
 - **Álbum de momentos**: capturas y memes del día del lanzamiento, cada uno con su hora.
@@ -63,7 +61,6 @@ la página están en hora de Santiago de Chile.
 | YouTube | Los videos más vistos sobre "GTA 6" (en todo el mundo y en español), las visitas de los 4 videos oficiales, los videos de GTA en tendencias de Chile y EE. UU. y los suscriptores del canal de Rockstar |
 | Google Trends | Interés de búsqueda por hora (es relativo: 100 es el máximo de esos días) |
 | Google Noticias | Titulares sobre el juego |
-| Reddit | Publicaciones nuevas en r/GTA6 (por RSS: sin votos ni comentarios) |
 | PlayStation y Xbox | Si sus servicios en línea tienen problemas |
 
 Se mide **cada hora**, y **cada 30 minutos** del 17 al 21 de noviembre, la semana del
