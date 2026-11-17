@@ -60,9 +60,11 @@ con línea de tiempo, tablas y gráficos de Twitch, Kick, YouTube, Google Trends
 - [ ] **9.10 Kick sin fotos de perfil** (Bruno, 2026-11-17). En Twitch salen las fotos de los
       canales; en Kick no (`foto("")` en la tabla; el recolector no guarda la foto de Kick).
       Ver si la API de Kick la da y mostrarla; si no, un dibujo de reemplazo.
-- [ ] **9.11 Skill de animación** (Bruno, 2026-11-17). Buscar una skill que muestre opciones de
-      animación ya probadas, para no investigar cada vez y presentar mejores opciones. Mirar
-      primero si Impeccable (`animate`) y `make-interfaces-feel-better` ya la cubren.
+- [ ] **9.11 Skill de animación y forma de administrarlas** (Bruno, 2026-11-17). (a) Buscar una
+      skill que muestre opciones de animación ya probadas (mirar antes Impeccable `animate` y
+      `make-interfaces-feel-better`). (b) Una forma sencilla de decidir qué elementos animan y
+      cuáles no: idea del prototipo de la 9.8, todo en un archivo con una tabla "elemento →
+      animación" y una sola llamada desde la página; se puede enlazar con el "Panel de control".
 - [ ] **9.12 Rehacer `web/compartir.jpg`** (Bruno, 2026-11-17: "para después"). La portada
       cambió el 17 nov (hotel "HOTEL", hoja de palmera): `python pruebas/hacer_compartir.py --opcion C --guardar`.
 - [ ] **9.4 Optimizar la página** (Bruno, 2026-11-16). Medido sin cambiar nada (Edge, gzip local;
