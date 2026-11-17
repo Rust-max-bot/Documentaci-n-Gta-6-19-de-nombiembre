@@ -100,6 +100,7 @@ Bruno ya eligió las palabras de la comparación.
 
 ## Últimos cambios
 
+- 2026-11-16: 9.4 optimizar la página, primera tanda (solo medir, sin cambios): eje de horas del gráfico de Twitch encimado a 384 px (ya hoy), `partes()` lenta con muchos datos y `datos.js` de ~1,6 MB el 19 dic. Detalle y próximos pasos en `PLAN.md`.
 - 2026-11-16: 9.2 "¿Cuánta gente faltó?" descartada (decisión de Bruno); queda la 9.3 (después del 22).
 - 2026-11-16: 9.1 hecha (opción C de Bruno): "¿Se cayeron los servidores?" con caja "Ahora" (verde o rojo, con la hora de la última medición) y, por servicio, un cuadro por día y cada medición de las últimas 24 h; ya no crece sin fin. Se prueba con `?probar-servidores-mal`.
 - 2026-11-16: tres planes nuevos en `PLAN.md`, en este orden (Bruno): 9.1 servidores más cortos (antes del 19), 9.2 "¿Cuánta gente faltó?" y 9.3 menos alarmas por Google (después del 22). El fallo de las 21:07 UTC fue Noticias 429: la medición se guardó y no se perdió nada.
@@ -118,10 +119,11 @@ Bruno ya eligió las palabras de la comparación.
 
 La lista completa y su orden están en `PLAN.md`. Resumen (2026-11-14):
 
-0. **Nuevo (2026-11-16, orden de Bruno):** 9.1 servidores más cortos (**hecha**, opción C) y 9.3
+0. **Nuevo (2026-11-16, orden de Bruno):** 9.4 optimizar la página (medida; falta decidir qué
+   arreglar), 9.1 servidores más cortos (**hecha**, opción C) y 9.3
    menos alarmas por Google (después del 22). Descartados (Bruno): la 9.2 "¿Cuánta gente
    faltó?", Cloudflare Radar y medir las redes de descarga de las consolas. Detalle en `PLAN.md`.
-1. **Antes del 19 nov:** unir el PR de "Lo que espero" (7.4). Después del lanzamiento, Bruno
+1. **7.4:** "Lo que espero" ya está en la página (PR #25, unido el 15 nov). Después del lanzamiento, Bruno
    escribe "Lo que me pareció" en `web/capsula.js`.
 2. **Fase 4:** 4.3 análisis de datos (necesita varios días de datos).
 3. **Fase 6** (ideas de Bruno): 6.1 más Google Trends, **una sola vez entre el 20 y el 25 nov**,
