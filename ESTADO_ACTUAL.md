@@ -100,6 +100,7 @@ Bruno ya eligió las palabras de la comparación.
 
 ## Últimos cambios
 
+- 2026-11-17: anotadas en `PLAN.md` cinco tareas pedidas por Bruno, sin hacer aún: 9.8 animaciones al cambiar de día (Resumen del día y tabla de Twitch y Kick), 9.9 animar mostrar/ocultar de Titulares, 9.10 fotos de perfil de Kick, 9.11 buscar una skill de animación y 9.12 rehacer `compartir.jpg` (queda para después).
 - 2026-11-17: hotel "HOTEL" (2.ª corrección, pedido de Bruno): la línea blanca del remate del techo ya no cruza el letrero entre la O y la T, y la hoja de la palmera derecha que colgaba como una antena hasta el techo del hotel es más corta.
 - 2026-11-17: hotel "HOTEL" de la portada corregido (pedido de Bruno, con captura): la marquesina flotaba sobre la puerta (su sombra quedaba tapada por la planta baja) y la planta baja era 2 unidades más angosta que los pisos de arriba. Ahora la marquesina se apoya en el dintel con su sombra visible y la planta baja tiene el ancho del edificio.
 - 2026-11-17: menú "☰ Secciones": ya no asoma la barra de desplazamiento al abrirlo y cerrarlo en el PC (fallo visto por Bruno). Solo aparece si la lista no cabe, en pantallas bajas, y cuando ya terminó de abrirse.
@@ -118,7 +119,7 @@ Bruno ya eligió las palabras de la comparación.
 
 La lista completa y su orden están en `PLAN.md`. Resumen (2026-11-14):
 
-- **(2026-11-17, nuevo):** 6.8 diseñar la sección de la 6.1 desde el 20 nov. **Reddit:** quitado (6.9, hecha el 17 nov): Reddit bloqueó su RSS público; solo volvería con la clave oficial.
+- **(2026-11-17, nuevo):** 9.8 a 9.12 (animaciones, fotos de Kick, skill de animación, `compartir.jpg`; ver `PLAN.md`). 6.8 diseñar la sección de la 6.1 desde el 20 nov. **Reddit:** quitado (6.9, hecha el 17 nov): Reddit bloqueó su RSS público; solo volvería con la clave oficial.
 0. **(2026-11-16, orden de Bruno):** 9.4 optimizar la página (eje y `partes()` hechos; lo
    grande, después del 22), 9.1 servidores más cortos (**hecha**, opción C) y 9.3
    menos alarmas por Google (después del 22). Descartados (Bruno): la 9.2 "¿Cuánta gente

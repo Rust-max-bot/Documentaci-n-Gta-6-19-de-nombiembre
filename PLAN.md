@@ -51,6 +51,20 @@ con línea de tiempo, tablas y gráficos de Twitch, Kick, YouTube, Google Trends
       dobles y con 25 min de tiempo. Recordatorios en el Google Calendar de Bruno el 21 y el 24 nov
       (16:30 de Santiago). **Falta:** (1) comprobar el 21 que se guardó; (2) mostrarlo en la página, con opciones y capturas; (3) idea sin
       decidir: repetir lo de Doomsday en enero, después de su estreno (18 dic).
+- [ ] **9.8 Animaciones al cambiar de día** (Bruno, 2026-11-17). Hoy al tocar un día del "Resumen del
+      día" y de la tabla de "Twitch y Kick" todo cambia de golpe (`pintar()` reescribe el HTML). Que
+      no sea tan directo: entrada de los cuadros/filas, y cifras y horas que cambian con
+      animación. Respetar `QUIETO` (movimiento reducido). Opciones con prototipo antes de aplicar.
+- [ ] **9.9 Titulares: animar mostrar/ocultar** (Bruno, 2026-11-17). Animación al abrir y cerrar
+      "Ver los N titulares" (`#noticias-todas`, hoy con `hidden`) y al cambiar el texto del botón.
+- [ ] **9.10 Kick sin fotos de perfil** (Bruno, 2026-11-17). En Twitch salen las fotos de los
+      canales; en Kick no (`foto("")` en la tabla; el recolector no guarda la foto de Kick).
+      Ver si la API de Kick la da y mostrarla; si no, un dibujo de reemplazo.
+- [ ] **9.11 Skill de animación** (Bruno, 2026-11-17). Buscar una skill que muestre opciones de
+      animación ya probadas, para no investigar cada vez y presentar mejores opciones. Mirar
+      primero si Impeccable (`animate`) y `make-interfaces-feel-better` ya la cubren.
+- [ ] **9.12 Rehacer `web/compartir.jpg`** (Bruno, 2026-11-17: "para después"). La portada
+      cambió el 17 nov (hotel "HOTEL", hoja de palmera): `python pruebas/hacer_compartir.py --opcion C --guardar`.
 - [ ] **9.4 Optimizar la página** (Bruno, 2026-11-16). Medido sin cambiar nada (Edge, gzip local;
       "celular lento" = 384 px, CPU 4×, 1,6 Mbps, 150 ms; ~1.000 mediciones simuladas = 19 dic).
       **Hecho (2026-11-16):** eje de los gráficos sin textos encimados (opción C: fechas y horas
