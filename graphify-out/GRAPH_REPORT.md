@@ -1,25 +1,25 @@
 # Graph Report - Documentación Gta 6  (2026-11-17)
 
 ## Corpus Check
-- 49 files · ~83,961 words
+- 50 files · ~87,845 words
 - Verdict: corpus is large enough that graph structure adds value.
 - Unclassified: 12 file(s) not represented in the graph (top: .jsonl 6, (none) 3, .bat 2)
 
 ## Summary
-- 685 nodes · 1166 edges · 46 communities (30 shown, 16 thin omitted)
-- Extraction: 91% EXTRACTED · 9% INFERRED · 0% AMBIGUOUS · INFERRED: 104 edges (avg confidence: 0.87)
+- 705 nodes · 1196 edges · 49 communities (33 shown, 16 thin omitted)
+- Extraction: 91% EXTRACTED · 9% INFERRED · 0% AMBIGUOUS · INFERRED: 106 edges (avg confidence: 0.87)
 - Token cost: 183,861 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `e16128c3`
+- Built from commit: `6553e082`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
 ## Community Hubs (Navigation)
 - Despertador y plan de trabajo
 - fuentes.py
-- Decisiones ya tomadas
-- Plan del proyecto (PLAN.md)
+- Worker de Cloudflare despertador-recolector (horario 7,37 * * * *)
+- Estado actual del proyecto (ESTADO_ACTUAL.md)
 - steps
 - Generar la página (generar_web.py)
 - Workflow Recolectar datos
@@ -37,7 +37,7 @@
 - Sección titulares
 - preparar-nube.sh
 - pruebas/LEEME.md
-- Plan de trabajo
+- Decisiones ya tomadas
 - Álbum de momentos (tarea 7.7)
 - Plan de trabajo
 - Estado actual del proyecto
@@ -47,40 +47,43 @@
 - publicar
 - Plan de trabajo
 - generar_web.py
-- gota
-- pintar
+- Plan del proyecto: recuerdo del lanzamiento de GTA 6
+- dia
 - limpio
-- pintarLugares
-- dibujar
+- Plan del proyecto (PLAN.md)
+- Resultado de las pruebas reales de fuentes (12 nov 2026)
 - sincronizar_datos.ps1
 - deSantiago
 - fuegos
 - dibujar
 - flechasShorts
+- Diseño Miami con dos estilos (Miami 2026 y Miami años 80)
+- Estructura de carpetas (web/, recolector/, datos/, .github/workflows/, despertador/)
+- Guardar claves en GitHub Secrets (TWITCH_CLIENT_ID, TWITCH_CLIENT_SECRET, YOUTUBE_API_KEY)
 
 ## God Nodes (most connected - your core abstractions)
 1. `Falla` - 26 edges
 2. `pintar()` - 24 edges
 3. `pedir()` - 20 edges
 4. `exigir()` - 18 edges
-5. `dia()` - 14 edges
+5. `dia()` - 16 edges
 6. `a_iso()` - 14 edges
 7. `Decisiones ya tomadas` - 14 edges
-8. `es_entero()` - 13 edges
+8. `limpio()` - 13 edges
 9. `pedir_json()` - 13 edges
-10. `Recolector` - 13 edges
+10. `es_entero()` - 13 edges
 
 ## Surprising Connections (you probably didn't know these)
-- `Fase 6 — Ideas nuevas de Bruno: más estadísticas, logros y comparaciones (lo que queda)` --references--> `kick()`  [INFERRED]
-  historial/PLAN_DE_TRABAJO_2026-11-16.md → recolector/fuentes.py
 - `Fase 1 — Recolector funcionando (lo más importante)` --references--> `compacto()`  [INFERRED]
   historial/PLAN_DE_TRABAJO_2026-11-13.md → web/app.js
+- `Fase 6 — Ideas nuevas de Bruno: más estadísticas, logros y comparaciones (lo que queda)` --references--> `kick()`  [INFERRED]
+  historial/PLAN_DE_TRABAJO_2026-11-16.md → recolector/fuentes.py
+- `Antes o justo después del lanzamiento` --references--> `partes()`  [INFERRED]
+  historial/PLAN_2026-11-17.md → web/app.js
 - `Diseño de la página` --references--> `limpio()`  [INFERRED]
   historial/PLAN_2026-11-16.md → web/app.js
 - `8. Dónde está cada cosa (por si quien ayuda puede leer código)` --references--> `fuegos()`  [INFERRED]
   DISENO_VISUAL.md → web/app.js
-- `Diseño de la página` --references--> `youtube()`  [INFERRED]
-  historial/PLAN_2026-11-16.md → recolector/fuentes.py
 
 ## Import Cycles
 - None detected.
@@ -92,7 +95,7 @@
 - **Garantías de no inventar datos al guardar mediciones** — recolector_leeme_hueco, recolector_leeme_comprobaciones, recolector_leeme_formato_linea_jsonl, recolector_leeme_interruptor [INFERRED 0.85]
 - **Implementación de los dos estilos de Miami** — plan_diseno_miami_dos_estilos, web_index_escena_80, web_index_escena_26, web_index_boton_cambio_estilo, web_index_simbolo_edificios, web_index_simbolo_palmera [INFERRED 0.95]
 
-## Communities (46 total, 16 thin omitted)
+## Communities (49 total, 16 thin omitted)
 
 ### Community 0 - "Despertador y plan de trabajo"
 Cohesion: 0.09
@@ -102,13 +105,13 @@ Nodes (28): Apagarlo, Comprobar que funciona, Cron Trigger 7,37 * * * * (UTC), D
 Cohesion: 0.06
 Nodes (38): Diseño de la página, Fase 6 — Ideas nuevas de Bruno: más estadísticas, logros y comparaciones, Fase 6 — Ideas nuevas de Bruno: más estadísticas, logros y comparaciones, _cabeceras_twitch(), _datos_video(), _fotos_de_perfil(), kick(), _mensaje_youtube() (+30 more)
 
-### Community 2 - "Decisiones ya tomadas"
-Cohesion: 0.05
-Nodes (39): Skill Impeccable (.claude/skills/impeccable/), Dónde quedamos (2026-11-13), Eje del gráfico de Twitch con números redondos, Fase 1 terminada (tareas 1.1 a 1.7), Secreto GITHUB_TOKEN del Worker (caduca 31 ene 2027 o ~1 mar 2027, por verificar), recolector/interruptor.json (apagar, encender o alargar; hasta 19 dic), Listas de la página con lo más nuevo arriba, Pendiente (fase 2 de PLAN_DE_TRABAJO, verificar Worker, hook Impeccable) (+31 more)
+### Community 2 - "Worker de Cloudflare despertador-recolector (horario 7,37 * * * *)"
+Cohesion: 0.13
+Nodes (16): Skill Impeccable (.claude/skills/impeccable/), Dónde quedamos (2026-11-13), Eje del gráfico de Twitch con números redondos, Fase 1 terminada (tareas 1.1 a 1.7), Secreto GITHUB_TOKEN del Worker (caduca 31 ene 2027 o ~1 mar 2027, por verificar), Pendiente (fase 2 de PLAN_DE_TRABAJO, verificar Worker, hook Impeccable), Pendiente de Bruno: borrar referencia del PR #1 y activar correo privado, recolectar.yml sin schedule (solo despertador o manual) (+8 more)
 
-### Community 3 - "Plan del proyecto (PLAN.md)"
-Cohesion: 0.06
-Nodes (36): Entorno de nube recuerdo-gta6, Línea de estado .claude/hooks/estado-git.sh, .gitattributes fuerza LF en los .sh, Instrucciones para Claude (CLAUDE.md), Repositorio GitHub público Rust-max-bot/Documentaci-n-Gta-6-19-de-nombiembre (rama main), Hook Stop .claude/hooks/revisar-guardado.sh, Estado actual del proyecto (ESTADO_ACTUAL.md), Fecha límite: recolector funcionando antes del 18 nov 2026 (+28 more)
+### Community 3 - "Estado actual del proyecto (ESTADO_ACTUAL.md)"
+Cohesion: 0.15
+Nodes (8): Línea de estado .claude/hooks/estado-git.sh, .gitattributes fuerza LF en los .sh, Instrucciones para Claude (CLAUDE.md), Repositorio GitHub público Rust-max-bot/Documentaci-n-Gta-6-19-de-nombiembre (rama main), Hook Stop .claude/hooks/revisar-guardado.sh, Estado actual del proyecto (ESTADO_ACTUAL.md), Reglas en pausa: ninguna; tanda actual: ninguna, Últimos cambios
 
 ### Community 4 - "steps"
 Cohesion: 0.09
@@ -127,8 +130,8 @@ Cohesion: 0.07
 Nodes (32): KICK_CLIENT_ID, KICK_CLIENT_SECRET, TWITCH_CLIENT_ID, TWITCH_CLIENT_SECRET, YOUTUBE_API_KEY, solo_trends_extra, jobs, probar (+24 more)
 
 ### Community 8 - "app.js"
-Cohesion: 0.14
-Nodes (15): abrir(), aplicar(), claveDia(), diaUTC(), estado(), fijar(), isoDe(), limpiar() (+7 more)
+Cohesion: 0.12
+Nodes (20): abrir(), contenido(), diaUTC(), fijar(), filas(), flechaHTML(), horaDeMiami(), ico() (+12 more)
 
 ### Community 9 - "Validaciones (validar.py)"
 Cohesion: 0.12
@@ -142,17 +145,17 @@ Nodes (4): Antes de empezar, Cómo ver lo que hace, Qué escribirle, Trabajar co
 Cohesion: 0.31
 Nodes (8): despertar(), fetch(), scheduled(), SEMANA_FIN, SEMANA_INICIO, tocaMedir(), TRENDS_FIN, TRENDS_INICIO
 
-### Community 24 - "Plan de trabajo"
-Cohesion: 0.20
-Nodes (9): Avisos para Bruno (cosas donde su idea tiene un límite o un fallo), Fase 2 — Mejoras rápidas (lo que queda), Fase 4 — Mejoras largas (lo que queda), Fase 5 — Lo que ya estaba acordado para después del lanzamiento, Fase 7 — Ideas para que la página sea memorable, Fechas que mandan, Lo ya hecho (detalle en el historial), Plan de trabajo (+1 more)
+### Community 24 - "Decisiones ya tomadas"
+Cohesion: 0.15
+Nodes (10): Listas de la página con lo más nuevo arriba, Criterios para saber si salió bien, Decisiones ya tomadas, Eventos de la línea de tiempo: automáticos y escritos a mano, Formato window.DATOS igual a window.DATOS_EJEMPLO, Orden de las listas: lo más nuevo arriba (2026-11-13), Tecnología: Python recolecta, HTML/CSS/JS forman la página, Visibilidad de la página: privada, se abre como archivo en el PC (+2 more)
 
 ### Community 25 - "Álbum de momentos (tarea 7.7)"
 Cohesion: 0.50
 Nodes (3): Cuidado, Cómo subir una foto, Álbum de momentos (tarea 7.7)
 
 ### Community 27 - "Plan de trabajo"
-Cohesion: 0.17
-Nodes (11): Avisos para Bruno (cosas donde su idea tiene un límite o un fallo), Fase 0 — Claves y fuentes, Fase 1 — Recolector funcionando (lo más importante), Fase 2 — Mejoras rápidas, Fase 3 — Mejoras medianas, Fase 4 — Mejoras largas, Fase 5 — Lo que ya estaba acordado para después del lanzamiento, Fase 7 — Ideas para que la página sea memorable (+3 more)
+Cohesion: 0.09
+Nodes (20): Avisos para Bruno (cosas donde su idea tiene un límite o un fallo), Fase 0 — Claves y fuentes, Fase 1 — Recolector funcionando (lo más importante), Fase 2 — Mejoras rápidas, Fase 3 — Mejoras medianas, Fase 4 — Mejoras largas, Fase 5 — Lo que ya estaba acordado para después del lanzamiento, Fase 7 — Ideas para que la página sea memorable (+12 more)
 
 ### Community 28 - "Estado actual del proyecto"
 Cohesion: 0.33
@@ -182,57 +185,69 @@ Nodes (11): Avisos para Bruno (cosas donde su idea tiene un límite o un fallo),
 Cohesion: 0.10
 Nodes (19): abortar(), comprobar(), convertir(), elegir_videos(), escribir(), estado_servidor(), hora_de_medicion(), horas_trends() (+11 more)
 
-### Community 36 - "gota"
-Cohesion: 0.83
-Nodes (4): gota(), actualizar(), botones(), ir()
+### Community 36 - "Plan del proyecto: recuerdo del lanzamiento de GTA 6"
+Cohesion: 0.10
+Nodes (20): Antes o justo después del lanzamiento, Cómo se usa este archivo, Datos y recolección, Decisiones vigentes, Después del lanzamiento, Estructura de carpetas, Fase 8 — Segundo lanzamiento: GTA 6 en PC (dormida), Fechas que mandan (+12 more)
 
-### Community 37 - "pintar"
-Cohesion: 0.18
-Nodes (18): clase(), cuando(), dia(), estadoRev(), filaRockstar(), mover(), hace(), hora() (+10 more)
+### Community 37 - "dia"
+Cohesion: 0.15
+Nodes (20): aplicar(), clase(), claveDia(), cuando(), dia(), estado(), estadoRev(), filaRockstar() (+12 more)
 
 ### Community 38 - "limpio"
-Cohesion: 0.22
-Nodes (14): cinta(), compacto(), enlace(), fila(), foto(), lideresDe(), limpio(), num() (+6 more)
+Cohesion: 0.20
+Nodes (16): armar(), cuenta(), juego(), cinta(), compacto(), enlace(), fila(), foto() (+8 more)
 
-### Community 39 - "pintarLugares"
-Cohesion: 0.25
-Nodes (9): ahora(), cuenta(), horaDeMiami(), momento(), pintarLugares(), poner(), recargar(), revisar() (+1 more)
+### Community 39 - "Plan del proyecto (PLAN.md)"
+Cohesion: 0.16
+Nodes (13): Fecha límite: recolector funcionando antes del 18 nov 2026, Lista de deseos de Bruno (2026-11-12), D6 cortado, Fase 1: en tiempo real (18 al 20 nov), Fase 2: búsqueda calmada (historial, memes, ventas), Fuente Google Trends (método no oficial en tres pasos con cookie), Fuente YouTube (search 100 unidades, videos 1, de 10.000 diarias), Plan del proyecto (PLAN.md), Recuerdo del lanzamiento de GTA 6 (19 nov 2026): página con línea de tiempo y tablas (+5 more)
 
-### Community 40 - "dibujar"
-Cohesion: 0.28
-Nodes (8): clave(), desfase(), grafico(), dibujar(), horaCorta(), partes(), pasoRedondo(), resumen()
+### Community 40 - "Resultado de las pruebas reales de fuentes (12 nov 2026)"
+Cohesion: 0.24
+Nodes (10): Entorno de nube recuerdo-gta6, Workflow Probar fuentes (recolector/probar_fuentes.py), Estado de Rockstar: no funciona (se anota a mano), Fuente estado de servidores (PlayStation y Xbox funcionan), Fuente titulares de Google Noticias (RSS), Fuente Twitch (categoría Grand Theft Auto VI, id 1867279146, helix/streams), Resultado de las pruebas reales de fuentes (12 nov 2026), Gráfico espectadores Twitch (#g-twitch) (+2 more)
 
 ### Community 42 - "deSantiago"
 Cohesion: 0.25
-Nodes (9): contenido(), deSantiago(), filas(), flechaHTML(), ico(), lineaDeTiempo(), lineaNueva(), pasa() (+1 more)
+Nodes (9): ahora(), deSantiago(), desfase(), lineaDeTiempo(), lineaNueva(), pasa(), pintar(), nombreDia() (+1 more)
 
 ### Community 43 - "fuegos"
-Cohesion: 0.29
-Nodes (5): 8. Dónde está cada cosa (por si quien ayuda puede leer código), cuadro(), fuegos(), horaCero(), reflectores()
+Cohesion: 0.18
+Nodes (10): 8. Dónde está cada cosa (por si quien ayuda puede leer código), cuadro(), cuenta(), fuegos(), hace(), horaCero(), pintar(), reflectores() (+2 more)
 
 ### Community 44 - "dibujar"
-Cohesion: 0.38
-Nodes (7): aPantalla(), conLetras(), cuadrosImagen(), dibujar(), recortar(), seleccion(), verPrevia()
+Cohesion: 0.20
+Nodes (12): aPantalla(), clave(), conLetras(), cuadrosImagen(), dibujar(), num(), paso(), recortar() (+4 more)
+
+### Community 46 - "Diseño Miami con dos estilos (Miami 2026 y Miami años 80)"
+Cohesion: 0.24
+Nodes (8): Diseño Miami con dos estilos (Miami 2026 y Miami años 80), Tipografías Google Fonts: Monoton, Rajdhani, Limelight y Outfit, Botón de cambio de estilo (data-poner), Escena Miami actual, Escena Miami años 80, web/index.html (página del recuerdo), Símbolo SVG edificios art déco, Símbolo SVG palmera
+
+### Community 47 - "Estructura de carpetas (web/, recolector/, datos/, .github/workflows/, despertador/)"
+Cohesion: 0.29
+Nodes (5): recolector/interruptor.json (apagar, encender o alargar; hasta 19 dic), ver_pagina.bat (trae mediciones, prepara web/datos.js y abre la página), Estructura de carpetas (web/, recolector/, datos/, .github/workflows/, despertador/), Periodo de un mes hasta el 19 dic 2026 con interruptor manual, web/datos.js generado por recolector/generar_web.py (no va a git)
+
+### Community 48 - "Guardar claves en GitHub Secrets (TWITCH_CLIENT_ID, TWITCH_CLIENT_SECRET, YOUTUBE_API_KEY)"
+Cohesion: 0.43
+Nodes (5): Secretos de GitHub TWITCH_CLIENT_ID, TWITCH_CLIENT_SECRET, YOUTUBE_API_KEY guardados, Clave de Twitch (Client ID y Client Secret, dev.twitch.tv), Clave de API de YouTube Data API v3 (Google Cloud), Guardar claves en GitHub Secrets (TWITCH_CLIENT_ID, TWITCH_CLIENT_SECRET, YOUTUBE_API_KEY), Guía para crear las claves de Twitch y YouTube
 
 ## Knowledge Gaps
 - **31 isolated node(s):** `Estilos visuales Miami 1986 y Miami 2026`, `Enlaces y miniaturas guardados (tareas 2.1 y 2.2)`, `Series continuas de YouTube (25 más vistos + re-medición)`, `Aviso legal (proyecto de fans, no afiliado a Rockstar/Take-Two)`, `Python 3.14 para Graphify (no desinstalar)` (+26 more)
-  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 291 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
+  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 304 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
 - **16 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
 - **Why does `Diseño de la página` connect `fuentes.py` to `Plan del proyecto: recuerdo del lanzamiento de GTA 6`, `limpio`?**
-  _High betweenness centrality (0.132) - this node is a cross-community bridge._
+  _High betweenness centrality (0.144) - this node is a cross-community bridge._
 - **What connects `Estilos visuales Miami 1986 y Miami 2026`, `Enlaces y miniaturas guardados (tareas 2.1 y 2.2)`, `Series continuas de YouTube (25 más vistos + re-medición)` to the rest of the system?**
   _31 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Despertador y plan de trabajo` be split into smaller, more focused modules?**
   _Cohesion score 0.08817204301075268 - nodes in this community are weakly interconnected._
-- **Why does `limpio()` connect `limpio` to `app.js`, `fuentes.py`, `deSantiago`, `pintar`?**
-  _High betweenness centrality (0.115) - this node is a cross-community bridge._
+- **Why does `limpio()` connect `limpio` to `app.js`, `fuentes.py`, `deSantiago`, `fuegos`?**
+  _High betweenness centrality (0.128) - this node is a cross-community bridge._
 - **Should `fuentes.py` be split into smaller, more focused modules?**
   _Cohesion score 0.05823293172690763 - nodes in this community are weakly interconnected._
-- **Should `Decisiones ya tomadas` be split into smaller, more focused modules?**
-  _Cohesion score 0.05052790346907994 - nodes in this community are weakly interconnected._
-- **Should `Plan del proyecto (PLAN.md)` be split into smaller, more focused modules?**
-  _Cohesion score 0.05795918367346939 - nodes in this community are weakly interconnected._
+- **Should `Worker de Cloudflare despertador-recolector (horario 7,37 * * * *)` be split into smaller, more focused modules?**
+  _Cohesion score 0.1286549707602339 - nodes in this community are weakly interconnected._
+- **Should `steps` be split into smaller, more focused modules?**
+  _Cohesion score 0.08695652173913043 - nodes in this community are weakly interconnected._

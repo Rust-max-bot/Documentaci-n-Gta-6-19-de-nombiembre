@@ -28,23 +28,6 @@ Reddit. El estado vivo (dónde quedamos) está en `ESTADO_ACTUAL.md`; las reglas
 
 ## Tareas que faltan
 
-### Mejoras de diseño pedidas (Bruno, 2026-11-17; rápidas, con opciones y capturas)
-
-- [ ] **9.5 Shorts del mismo tamaño en Global y En español.** Hoy las tarjetas de Videos no
-      cambian, pero la tira de Shorts cambia de alto al pasar de una pestaña a otra (según cuánto
-      texto tenga el título). Que tenga un alto fijo que deje caber el título completo (o
-      recortado con "…" y el título entero al pasar el mouse) **y** también su gráfico, como las
-      tarjetas de Videos. Probar con los títulos más largos de las dos pestañas, a 1280 y 384 px.
-- [ ] **9.6 Gráficos de las tarjetas de videos y Shorts, más claros.** La línea rosada de hoy no
-      explica bien cuánto subieron las visitas. Hacerlos más bonitos sin perder la sencillez:
-      por ejemplo, marcar el inicio y el final con su cifra, relleno suave bajo la línea o
-      destacar el "+X" junto al gráfico. Opciones con capturas antes de elegir.
-- [ ] **9.7 Rediseñar "GTA frente a lo más visto".** (a) Más bonito y sin el hueco vacío bajo la
-      columna de Twitch (hoy la de YouTube es mucho más larga). (b) Comparación más clara de cómo
-      les va a **GTA VI y GTA V** frente a lo más visto, **con más énfasis en GTA VI** (Bruno dijo
-      "GTA 6 y GTA 7": se entiende GTA V, que es lo que muestra la sección; confirmar si dudas).
-      Opciones con capturas antes de elegir.
-
 ### Antes o justo después del lanzamiento
 
 - [ ] **7.4 Cápsula del tiempo.** "Lo que espero" ya está (texto de Bruno, 2026-11-15; diseño
@@ -162,6 +145,8 @@ No se empieza hasta que Bruno avise con una confirmación oficial de la versión
 - **9.1** servidores más cortos (opción C); **línea de tiempo nueva** (2026-11-17, A); **Rockstar
   a mano** en los servidores (2026-11-17, C); **íconos pequeños** (2026-11-17, C); **Trends sin
   huecos** (2026-11-16, A).
+- **9.5 a 9.7 (2026-11-17, opciones A):** tarjetas de videos y Shorts de alto fijo, gráfico con
+  cifras al inicio y ahora, y "GTA frente a lo más visto" con GTA VI al centro. Detalle en `DISENO_VISUAL.md`.
 - **Herramientas:** Graphify y sincronización del PC con GitHub (`sincronizar_datos.ps1`).
 - Descartado por Bruno: app en el celular; Cloudflare Radar; redes de descarga de PlayStation y
   Xbox; la 9.2 "¿Cuánta gente faltó?".
@@ -202,7 +187,7 @@ Cada una, en corto. El porqué y las opciones descartadas, en `historial/PLAN_20
 - Listas: lo más nuevo arriba; gráficos de viejo (izquierda) a nuevo (derecha).
 - Opciones elegidas por Bruno (resumen): portada 7.12 A; Twitch y Kick juntos 6.6 B; videos en
   tarjetas con pestañas y tira de Shorts (6.4 A, 6.5 B); récords en vitrina 6.2 A; titulares como
-  resumen B; GTA frente a lo más visto en dos columnas 6.3 A (se rediseña en la 9.7); cápsula en
+  resumen B; GTA frente a lo más visto con GTA VI al centro 9.7 A; cápsula en
   cintas 7.4 C; copias por plazo 7.10 B; Próximamente como camino 7.11 C; menú flotante 2.12 B.
 - Muchas visitas: `datos.js` lleva lo necesario al abrir; titulares y Reddit de cada día van en
   `web/dias/`. GitHub Pages admite ~100 GB al mes; plan B solo si avisa: Cloudflare Pages.

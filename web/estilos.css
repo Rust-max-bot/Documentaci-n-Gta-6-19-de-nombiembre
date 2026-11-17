@@ -393,6 +393,23 @@ td a:hover, td a:focus-visible { color: var(--a1); text-decoration-color: var(--
 .videos.shorts li:hover { transform: none; }
 .videos.shorts .foto { aspect-ratio: 9 / 16; }
 .videos.shorts .v-texto a { font-size: 14px; }
+/* Alto fijo de las tarjetas (9.5, opción A de Bruno, 2026-11-17): título hasta 3 líneas y
+   canal y cifras hasta 2, siempre con ese espacio, así la tira de Shorts y los títulos de cada
+   grupo no cambian de alto ni de lugar al pasar de Global a En español. El título entero sale
+   al pasar el mouse. Gráfico de cada tarjeta (9.6, opción A): línea con relleno, punto al
+   final y las cifras al inicio y ahora. */
+.v-texto > a > span, .v-texto > span { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; overflow: hidden; min-height: calc(3 * 1.3em); }
+.v-texto > small { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; min-height: calc(2 * 1.45em); line-height: 1.45; }
+.g-vis { margin-top: auto; padding-top: 8px; }
+.g-caja { position: relative; }
+.g-vis .mini { display: block; width: 100%; height: 30px; padding: 0; overflow: visible; }
+.mini .area { fill: color-mix(in srgb, var(--a1) 16%, transparent); stroke: none; }
+.g-punto { position: absolute; right: -3px; width: 8px; height: 8px; margin-top: -4px; border-radius: 50%; background: var(--a1); box-shadow: 0 0 0 3px color-mix(in srgb, var(--a1) 25%, transparent); }
+:root[data-tema="ochenta"] .g-punto { box-shadow: 0 0 10px var(--a1); }
+.g-ejes { display: flex; justify-content: space-between; gap: 6px; margin: 5px 0 0; font-size: 11.5px; font-weight: 600; color: var(--tenue); font-variant-numeric: tabular-nums; }
+.g-ejes b { color: var(--texto); }
+.g-ejes span { white-space: nowrap; } .g-ejes i { font-style: normal; }
+.shorts .g-ejes .g-d { display: none; }
 /* Pestañas Global / En español sin cambios de tamaño (pedido de Bruno, 2026-11-16): las dos
    notas y los dos paneles se apilan en la misma celda de una grilla, así la caja siempre mide
    lo del más alto. La pestaña que se va se desvanece en .12 s; la que llega hace entrar sus
@@ -525,10 +542,7 @@ td a:hover, td a:focus-visible { color: var(--a1); text-decoration-color: var(--
    en tendencias de Chile y EE. UU.). */
 .cp-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 34px; }
 .cp-cols .vacio { color: var(--tenue); }
-.cp-puestos { display: flex; flex-wrap: wrap; gap: 8px 26px; margin-bottom: 16px; }
-.cp-puestos small, .cp-tit { display: block; margin: 0 0 6px; font-size: 12px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--tenue); }
-.cp-puestos b { font: 700 clamp(24px, 3vw, 34px)/1.1 var(--f-texto); color: var(--a1); }
-:root[data-tema="ochenta"] .cp-puestos b { color: var(--a2); text-shadow: 0 0 14px rgba(34, 230, 255, .6); }
+.cp-tit { display: block; margin: 0 0 6px; font-size: 12px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--tenue); }
 .cp-tit b { color: var(--texto); letter-spacing: .04em; }
 .cp-barras { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
 .cp-barras li { display: grid; grid-template-columns: 150px 1fr 64px; gap: 10px; align-items: center; font-size: 14px; font-weight: 600; }
@@ -549,9 +563,6 @@ td a:hover, td a:focus-visible { color: var(--a1); text-decoration-color: var(--
 .cp-videos a { color: inherit; text-decoration: none; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
 .cp-videos a:hover, .cp-videos a:focus-visible { color: var(--a1); }
 .cp-videos small { display: block; font-size: 12px; color: var(--tenue); }
-.cp-subs { margin: 16px 0 0; font-weight: 600; color: var(--tenue); }
-.cp-subs b { color: var(--texto); }
-.cp-subs small { font-size: 12px; }
 @media (max-width: 640px) {
   .cp-cols, .cp-paises { grid-template-columns: 1fr; gap: 18px; }
   .cp-barras li { grid-template-columns: 100px 1fr 56px; font-size: 13px; }
@@ -1016,3 +1027,36 @@ h2 .ico, .v-sub .ico { color: var(--a2); stroke-width: 2.2; }
 .l-pie { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-top: 6px; }
 .l-pie a { font-size: 13px; font-weight: 700; color: var(--a2); text-decoration: none; }
 .l-pie a:hover { text-decoration: underline; }
+
+/* GTA frente a lo más visto, rediseño 9.7 (opción A de Bruno, 2026-11-17): recuadro de GTA VI
+   arriba y las dos columnas debajo, con 4 videos por país y "Ver N más". */
+#comparacion-cols { display: block; }
+.cp-cols2 { align-items: start; margin-top: 26px; }
+.cp-videos:not(.abierta) li:nth-child(n+5) { display: none; }
+.cp-cols2 .cp-videos a { -webkit-line-clamp: 2; }
+.cp-cols2 .cp-videos li b { display: flex; flex-direction: column; align-items: flex-start; gap: 3px; }
+.cp-pie { margin: 22px 0 0; padding-top: 12px; border-top: 1px solid color-mix(in srgb, var(--tenue) 22%, transparent); font-size: 13px; font-weight: 600; color: var(--tenue); }
+.cp-pie b { color: var(--texto); }
+.cp-mas { margin-top: 10px; padding: 6px 14px; border-radius: 99px; border: 1px solid color-mix(in srgb, var(--tenue) 45%, transparent); background: none; color: var(--texto); font: 700 12px var(--f-texto, inherit); letter-spacing: .06em; text-transform: uppercase; cursor: pointer; }
+.cp-mas:hover { border-color: var(--a1); color: var(--a1); }
+.cp-chip { display: inline-block; padding: 0 6px; border-radius: 4px; font-style: normal; font-size: 11px; font-weight: 800; color: var(--tenue); border: 1px solid color-mix(in srgb, var(--tenue) 50%, transparent); vertical-align: 1px; }
+.es-seis .cp-chip { color: #fff; background: var(--a1); border-color: var(--a1); }
+.cp-barras li.cinco { color: var(--texto); }
+.cp-barras li.cinco .cp-b i { background: color-mix(in srgb, var(--a2) 75%, transparent); box-shadow: none; }
+.cp-foco { display: grid; grid-template-columns: 1.1fr repeat(3, 1fr); gap: 14px; padding: 18px; border-radius: var(--radio); border: 1px solid color-mix(in srgb, var(--a1) 45%, transparent); background: linear-gradient(120deg, color-mix(in srgb, var(--a1) 12%, transparent), color-mix(in srgb, var(--a2) 8%, transparent)); }
+:root[data-tema="ochenta"] .cp-foco { box-shadow: 0 0 22px color-mix(in srgb, var(--a1) 30%, transparent); }
+.cp-foco small, .cp-dato small { display: block; font-size: 11.5px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--tenue); }
+.cp-foco-tit b { display: block; font: 700 clamp(34px, 4.4vw, 52px)/1 var(--f-titulo, inherit); color: var(--a1); margin: 4px 0 6px; }
+:root[data-tema="ochenta"] .cp-foco-tit b { text-shadow: 0 0 16px var(--a1); }
+.cp-foco-tit span { font-size: 13px; font-weight: 600; color: var(--tenue); }
+.cp-dato { padding-left: 14px; border-left: 1px solid color-mix(in srgb, var(--tenue) 30%, transparent); display: flex; flex-direction: column; }
+.cp-dato > b { font: 700 clamp(26px, 3vw, 34px)/1.1 var(--f-texto, inherit); color: var(--texto); margin: 4px 0 2px; }
+.cp-dato > b i { font-style: normal; font-size: 14px; color: var(--tenue); }
+.cp-dato > span { font-size: 13px; font-weight: 600; color: var(--tenue); }
+.cp-dato .cp-hist { width: 100%; height: 30px; margin-top: 8px; }
+.cp-dato .cp-hist path { vector-effect: non-scaling-stroke; }
+.cp-dato em { font-style: normal; font-size: 11.5px; font-weight: 600; color: var(--tenue); margin-top: 4px; }
+@media (max-width: 760px) {
+  .cp-foco { grid-template-columns: 1fr; }
+  .cp-dato { padding: 12px 0 0; border-left: 0; border-top: 1px solid color-mix(in srgb, var(--tenue) 30%, transparent); }
+}

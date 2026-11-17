@@ -775,8 +775,18 @@
         var a = serie[0].visitas, b = serie[serie.length - 1].visitas, min = a, max = b;
         serie.forEach(function (p) { if (p.visitas < min) min = p.visitas; if (p.visitas > max) max = p.visitas; });
         var camino = serie.map(function (p, i) { return (i ? "L" : "M") + (i / (serie.length - 1 || 1) * 120).toFixed(1) + " " + (28 - (p.visitas - min) / (max - min || 1) * 26).toFixed(1); }).join("");
-        return { v: v, a: a, b: b, camino: camino };
+        var y = function (p) { return 28 - (p.visitas - min) / (max - min || 1) * 26; };
+        var area = camino + "L120 30L0 30Z";
+        return { v: v, a: a, b: b, camino: camino, area: area, fin: y(serie[serie.length - 1]) / 30 * 100, desde: Date.parse(serie[0].t) };
       }).filter(Boolean).sort(function (x, y) { return y.b - x.b; });
+    }
+    /* Gráfico de cada tarjeta (9.6, opción A de Bruno, 2026-11-17): la línea de visitas con
+       relleno suave y un punto al final, y debajo las visitas al inicio (con su día) y las de
+       ahora, para que se entienda cuánto subió. En los Shorts, solo las cifras (no cabe el día). */
+    function grafico(f) {
+      return '<div class="g-vis"><div class="g-caja"><svg class="mini" viewBox="0 0 120 30" preserveAspectRatio="none" aria-hidden="true">' +
+        '<path class="area" d="' + f.area + '"/><path d="' + f.camino + '"/></svg><i class="g-punto" style="top:' + f.fin.toFixed(1) + '%"></i></div>' +
+        '<p class="g-ejes"><span><i class="g-d">' + dia(f.desde) + " · </i>" + compacto(f.a) + '</span><span><i class="g-d">ahora · </i><b>' + compacto(f.b) + "</b></span></p></div>";
     }
     function tarjetas(fs, vacio) {
       return fs.map(function (f) {
@@ -786,10 +796,10 @@
           ? (url ? '<a class="foto" href="' + limpio(url) + '" target="_blank" rel="noopener noreferrer" tabindex="-1" aria-hidden="true">' : '<div class="foto">') +
             '<img src="' + limpio(f.v.miniatura) + '" alt="" loading="lazy" width="320" height="180">' + (url ? "</a>" : "</div>")
           : "";
-        return "<li>" + foto + '<div class="v-texto">' + enlace(url, limpio(f.v.titulo)) +
+        return '<li title="' + limpio(f.v.titulo) + '">' + foto + '<div class="v-texto">' + enlace(url, "<span>" + limpio(f.v.titulo) + "</span>") +
           '<small title="Al inicio: ' + num(f.a) + " · Al final: " + num(f.b) + '">' + limpio(f.v.canal) + " · " + compacto(f.b) +
           ' visitas · <span class="crece">+' + compacto(f.b - f.a) + "</span></small>" +
-          '<svg class="mini" viewBox="0 0 120 30" preserveAspectRatio="none" aria-hidden="true"><path d="' + f.camino + '"/></svg></div></li>';
+          grafico(f) + "</div></li>";
       }).join("") || '<li class="vacio">' + vacio + "</li>";
     }
     var global = D.youtube || [];
@@ -1774,43 +1784,86 @@
     });
   })();
 
-  /* ---------- GTA frente a lo más visto (tarea 6.3; opción A "dos columnas", elegida por Bruno, 2026-11-13) ----------
-     Usa la última medición del ranking de Twitch y de las tendencias de YouTube (se guardan
-     desde el 13 nov). */
+  /* ---------- GTA frente a lo más visto (tarea 6.3; rediseño 9.7, opción A "GTA VI al centro", elegida por Bruno, 2026-11-17) ----------
+     Arriba, un recuadro con GTA VI: su puesto en Twitch y sus videos en tendencia en YouTube,
+     cada uno con una línea de cómo fue cambiando medición a medición (el ranking y las
+     tendencias se guardan desde el 13 nov); GTA V, de referencia. Debajo, las dos columnas de
+     antes (6.3 A): barras de Twitch y listas de YouTube, con cada video marcado VI o V según
+     su título. Usa la última medición. */
   (function () {
     var caja = $("comparacion-cols");
     if (!caja) return;
     var C = D.comparacion || {}, tw = C.twitch, yt = C.youtube;
     if (!tw && !yt) { caja.innerHTML = '<p class="vacio">Sin datos todavía.</p>'; return; }
     var t = Math.max(tw ? Date.parse(tw.t) : 0, yt ? Date.parse(yt.t) : 0);
-    $("comparacion-nota").textContent = "Cómo le va a GTA comparado con todo lo demás en Twitch y YouTube. Última medición: " + dia(t) + ", " + hora(t) + ".";
+    $("comparacion-nota").textContent = "Cómo le va a GTA comparado con todo lo demás en Twitch y YouTube. Última medición: " + dia(t) + ", " + hora(t).replace(/\.$/, "") + ".";
     var GTA = { "1867279146": "GTA VI", "32982": "GTA V" };
-    var html = "";
-    if (tw) {
-      var puesto = function (p) { return p ? "#" + p : "Fuera del top " + tw.leidas; };
-      var tope = Math.max.apply(null, tw.comparadas.map(function (c) { return c.espectadores_top100; })) || 1;
-      html += '<div class="cp-col"><h3 class="sub">Twitch</h3>' +
-        '<div class="cp-puestos"><div><small>GTA VI</small><b>' + puesto(tw.gta6) + '</b></div><div><small>GTA V</small><b>' + puesto(tw.gta5) + "</b></div></div>" +
-        '<ul class="cp-barras">' + tw.comparadas.map(function (c) {
-          return '<li class="' + (GTA[c.id] ? "gta" : "") + '"><span class="cp-nom">' + limpio(GTA[c.id] || c.nombre) + (c.puesto ? " <i>#" + c.puesto + "</i>" : "") + "</span>" +
+    caja.innerHTML = armar();
+    // "Ver N más" de las listas de YouTube (se muestran 4 por país para que no quede un hueco bajo Twitch).
+    caja.addEventListener("click", function (e) {
+      var b = e.target.closest(".cp-mas"); if (!b) return;
+      var ol = b.previousElementSibling, abierta = ol.classList.toggle("abierta");
+      b.textContent = abierta ? "Ver menos" : b.dataset.texto;
+      b.setAttribute("aria-expanded", abierta);
+    });
+
+    function armar() {
+      var VISIBLES = 4;
+      // A qué juego se refiere un video, solo por su título (GTA 6/VI o GTA 5/V).
+      function juego(t) {
+        var seis = /\b(gta\s*-?\s*(6|vi)|grand theft auto\s*(6|vi))\b/i.test(t), cinco = /\b(gta\s*-?\s*(5|v)|grand theft auto\s*(5|v))\b/i.test(t);
+        return seis && cinco ? "VI y V" : seis ? "VI" : cinco ? "V" : "";
+      }
+      function cuenta(r, j) { return yt && yt.regiones[r] ? yt.regiones[r].gta.filter(function (x) { var g = juego(x.titulo); return g === j || g === "VI y V"; }).length : null; }
+      var regiones = yt ? Object.keys(yt.regiones) : [], nombres = { CL: "Chile", US: "EE. UU." };
+      // Historial: puesto de GTA VI en Twitch (fuera del top = abajo) y videos de GTA en tendencia, por medición.
+      var hist = (D.mediciones || []).filter(function (m) { return m.ranking; }).map(function (m) {
+        return { ts: Date.parse(m.t), p: m.ranking.gta6 || m.ranking.leidas + 1, fuera: !m.ranking.gta6, leidas: m.ranking.leidas, tend: m.tendencias || {} };
+      });
+      function linea(valor, invertir, tope) {
+        if (hist.length < 2) return "";
+        var t0 = hist[0].ts, t1 = hist[hist.length - 1].ts;
+        var d = hist.map(function (h, i) { var v = valor(h); var y = invertir ? (v - 1) / (tope - 1) * 26 + 2 : 28 - v / tope * 26; return (i ? "L" : "M") + ((h.ts - t0) / (t1 - t0 || 1) * 120).toFixed(1) + " " + y.toFixed(1); }).join("");
+        return '<svg class="mini cp-hist" viewBox="0 0 120 30" preserveAspectRatio="none" aria-hidden="true"><path class="area" d="' + d + 'L120 30L0 30Z"/><path d="' + d + '"/></svg>';
+      }
+      var primero = hist.length ? hist[0] : null, mejor = null;
+      hist.forEach(function (h) { if (!h.fuera && (!mejor || h.p < mejor.p)) mejor = h; });
+      var puesto = function (p) { return p ? "#" + p : "Fuera del top " + (tw ? tw.leidas : 100); };
+      var out = '<div class="cp-foco"><div class="cp-foco-tit"><small>En el centro</small><b>GTA VI</b><span>frente a todo lo demás; GTA V, de referencia</span></div>';
+      if (tw) out += '<div class="cp-dato"><small>Twitch · puesto</small><b>' + puesto(tw.gta6) + "</b><span>GTA V: " + puesto(tw.gta5) + "</span>" +
+        linea(function (h) { return h.p; }, true, 101) +
+        '<em>' + (primero ? "Desde el " + dia(primero.ts) + ": " + (primero.fuera ? "fuera del top" : "#" + primero.p) + " → " + puesto(tw.gta6) + (mejor ? " · mejor: #" + mejor.p : "") : "") + "</em></div>";
+      regiones.forEach(function (r) {
+        var d = yt.regiones[r];
+        out += '<div class="cp-dato"><small>YouTube ' + (nombres[r] || r) + " · en tendencia</small><b>" + cuenta(r, "VI") + ' <i>de ' + d.en_lista + "</i></b><span>videos de GTA VI · GTA V: " + cuenta(r, "V") + "</span>" +
+          linea(function (h) { return h.tend[r] || 0; }, false, Math.max.apply(null, hist.map(function (h) { return h.tend[r] || 0; }).concat(1)) * 1.15) + "<em>Videos de GTA en tendencia, medición a medición</em></div>";
+      });
+      out += "</div>";
+      out += '<div class="cp-cols cp-cols2">';
+      if (tw) {
+        var tope = Math.max.apply(null, tw.comparadas.map(function (c) { return c.espectadores_top100; })) || 1;
+        out += '<div class="cp-col"><h3 class="sub">Twitch · categorías más vistas</h3><ul class="cp-barras">' + tw.comparadas.map(function (c) {
+          return '<li class="' + (c.id === "32982" ? "gta cinco" : GTA[c.id] ? "gta" : "") + '"><span class="cp-nom">' + limpio(GTA[c.id] || c.nombre) + (c.puesto ? " <i>#" + c.puesto + "</i>" : "") + "</span>" +
             '<span class="cp-b"><i style="width:' + Math.max(1, c.espectadores_top100 / tope * 100).toFixed(1) + '%"></i></span><span class="cp-num">' + compacto(c.espectadores_top100) + "</span></li>";
         }).join("") + "</ul>" +
-        '<p class="cp-nota">Twitch da el orden de las categorías, no el total de espectadores. Cada barra suma el público de las 100 transmisiones más vistas de esa categoría; por eso una barra puede ser más larga que la de un puesto anterior.</p></div>';
-    }
-    if (yt) {
-      var nombres = { CL: "Chile", US: "EE. UU." };
-      html += '<div class="cp-col"><h3 class="sub">YouTube · videos en tendencia</h3><div class="cp-paises">' +
-        Object.keys(yt.regiones).map(function (r) {
+          '<p class="cp-nota">Twitch da el orden de las categorías, no el total de espectadores. Cada barra suma el público de las 100 transmisiones más vistas de esa categoría; por eso una barra puede ser más larga que la de un puesto anterior.</p></div>';
+      }
+      if (yt) {
+        out += '<div class="cp-col"><h3 class="sub">YouTube · videos en tendencia</h3><div class="cp-paises">' + regiones.map(function (r) {
           var d = yt.regiones[r];
+          var lis = d.gta.map(function (x) {
+            var j = juego(x.titulo);
+            return '<li class="' + (j.indexOf("VI") === 0 ? "es-seis" : "") + '"><b>#' + x.puesto + (j ? '<em class="cp-chip">' + j + "</em>" : "") + "</b><span>" + enlace(urlVideo(x.id), limpio(x.titulo)) + "<small>" + limpio(x.canal) + "</small></span></li>";
+          });
+          var resto = lis.length - VISIBLES;
           return '<div><p class="cp-tit">' + (nombres[r] || r) + " <b>" + d.gta.length + " de " + d.en_lista + "</b></p>" +
-            '<ol class="cp-videos">' + (d.gta.length ? d.gta.map(function (x) {
-              return "<li><b>#" + x.puesto + "</b><span>" + enlace(urlVideo(x.id), limpio(x.titulo)) + "<small>" + limpio(x.canal) + "</small></span></li>";
-            }).join("") : '<li class="vacio">Ningún video de GTA en la lista.</li>') + "</ol></div>";
-        }).join("") + "</div>" +
-        (yt.rockstar && yt.rockstar.suscriptores ? '<p class="cp-subs">Canal de Rockstar en YouTube: <b>' + compacto(yt.rockstar.suscriptores) + "</b> suscriptores <small>(YouTube redondea esta cifra)</small></p>" : "") +
-        "</div>";
+            '<ol class="cp-videos">' + (lis.join("") || '<li class="vacio">Ningún video de GTA en la lista.</li>') + "</ol>" +
+            (resto > 0 ? '<button type="button" class="cp-mas" aria-expanded="false" data-texto="Ver ' + resto + ' más">Ver ' + resto + " más</button>" : "") + "</div>";
+        }).join("") + "</div></div>";
+      }
+      out += '</div><p class="cp-pie">' + (yt && yt.rockstar && yt.rockstar.suscriptores ? 'Canal de Rockstar en YouTube: <b>' + compacto(yt.rockstar.suscriptores) + "</b> suscriptores (YouTube redondea esta cifra). " : "") + "VI o V, según lo que dice el título del video.</p>";
+      return out;
     }
-    caja.innerHTML = html;
   })();
 
   /* ---------- Cápsula del tiempo (tarea 7.4; diseño C "casete", elegido por Bruno, 2026-11-15) ----------

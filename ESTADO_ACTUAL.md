@@ -100,6 +100,7 @@ Bruno ya eligió las palabras de la comparación.
 
 ## Últimos cambios
 
+- 2026-11-17: hechas 9.5, 9.6 y 9.7 (opciones A de Bruno): los Shorts y los videos ya no cambian de alto ni de lugar al pasar de Global a En español; el gráfico de cada tarjeta muestra las visitas al inicio y las de ahora; "GTA frente a lo más visto" pone a GTA VI al centro (puesto en Twitch y videos en tendencia, con su historial) y ya no deja un hueco bajo Twitch.
 - 2026-11-17: anotadas en `PLAN.md` tres mejoras de diseño pedidas por Bruno, sin hacer aún: 9.5 Shorts del mismo alto en Global y En español, 9.6 gráficos de las tarjetas más claros y 9.7 rediseño de "GTA frente a lo más visto". `PLAN.md` pasó de 20.000 bytes: el anterior quedó en `historial/PLAN_2026-11-17.md`.
 - 2026-11-17: línea de tiempo rediseñada (opción A de Bruno): agrupada por día, la hora arriba del texto (ya no choca), puntos alineados con el ícono del tipo, filtros por tipo, "Ver los N eventos" (8 a la vista) y enlace a la sección de cada evento.
 - 2026-11-17: Rockstar a mano en "¿Se cayeron los servidores?" (opción C de Bruno): las revisiones que anota la skill `anotar-rockstar` en `web/eventos.js` salen como puntos verdes o rojos sobre una línea punteada, en un recuadro "a mano", con la última revisión y "No se vio caída / Sí, tuvo problemas" contando revisiones. La skill no cambia: la página lee sus dos textos fijos.
@@ -125,9 +126,7 @@ Bruno ya eligió las palabras de la comparación.
 
 La lista completa y su orden están en `PLAN.md`. Resumen (2026-11-14):
 
-0. **Nuevo (2026-11-17, Bruno):** 9.5, 9.6 y 9.7, mejoras de diseño rápidas (Shorts, gráficos de
-   videos y "GTA frente a lo más visto"), con opciones y capturas. Detalle en `PLAN.md`.
-   **(2026-11-16, orden de Bruno):** 9.4 optimizar la página (eje y `partes()` hechos; lo
+0. **(2026-11-16, orden de Bruno):** 9.4 optimizar la página (eje y `partes()` hechos; lo
    grande, después del 22), 9.1 servidores más cortos (**hecha**, opción C) y 9.3
    menos alarmas por Google (después del 22). Descartados (Bruno): la 9.2 "¿Cuánta gente
    faltó?", Cloudflare Radar y medir las redes de descarga de las consolas. Detalle en `PLAN.md`.
