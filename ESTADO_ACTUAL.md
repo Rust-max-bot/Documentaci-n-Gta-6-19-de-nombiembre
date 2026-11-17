@@ -100,6 +100,7 @@ Bruno ya eligió las palabras de la comparación.
 
 ## Últimos cambios
 
+- 2026-11-17: íconos pequeños propios (opción C de Bruno): en los títulos de Twitch y Kick, Trends, servidores, videos, titulares y Reddit, en "Videos" y "Shorts" y en la tabla (solo PC). No son los logotipos de las plataformas (sus reglas de marca no lo permiten). Ese día, las mediciones del minuto 37 funcionan (29 seguidas); Google Noticias dio 429 en 5 de 29 (lo arregla la 9.3, después del 22).
 - 2026-11-16: 9.4, segunda tanda: eje de los gráficos sin textos encimados (opción C de Bruno: fechas y horas cortas según el espacio), `partes()` 12 veces más rápida con muchos datos y `probar_pagina.py` revisa textos encimados. Queda para después del 22: aligerar `datos.js` y las medidas al cargar.
 - 2026-11-16: 9.4 optimizar la página, primera tanda (solo medir, sin cambios): eje de horas del gráfico de Twitch encimado a 384 px (ya hoy), `partes()` lenta con muchos datos y `datos.js` de ~1,6 MB el 19 dic. Detalle y próximos pasos en `PLAN.md`.
 - 2026-11-16: 9.2 "¿Cuánta gente faltó?" descartada (decisión de Bruno); queda la 9.3 (después del 22).

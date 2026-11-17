@@ -162,6 +162,8 @@ Se puede probar abriendo la página con `?probar-hora-cero` al final de la direc
 Los colores de los hoteles (`--h1` a `--h5`), sus bordes (`--trim`) y ventanas (`--vent`)
 cambian con cada estilo y cada momento del día.
 
+**Íconos pequeños (pedido de Bruno, 2026-11-16; opción C, 2026-11-17):** dibujos propios de trazo (símbolos `i-...` en `index.html`), en los títulos de Twitch y Kick (ondas de "en vivo"), Trends (línea que sube), servidores, videos (play en un círculo), titulares (periódico) y Reddit (globo), en los subtítulos "Videos" y "Shorts" (celular vertical) y en la etiqueta de plataforma de la tabla (solo en PC). Línea celeste (`--a2`), con brillo de neón en 1986. **No se usan ni se imitan los logotipos de YouTube, Twitch, Kick, Google ni Reddit:** sus reglas de marca piden permiso y prohíben cambiarles el color. Descartadas: A (línea del color del título) y B (ficha de color).
+
 **Eje de horas de los gráficos (9.4, opción C de Bruno, 2026-11-16):** fechas y, si sobra espacio, horas cortas ("6 p. m." o "18 h"). El paso (3, 6 o 12 h, 1, 2 o 3 días o una semana) se elige según el ancho para que los textos nunca se encimen; `probar_pagina.py` lo revisa. Descartadas: A (hora completa entre fechas) y B (solo fechas).
 
 **Otras animaciones de la parte de abajo:** los gráficos se dibujan como una línea que avanza

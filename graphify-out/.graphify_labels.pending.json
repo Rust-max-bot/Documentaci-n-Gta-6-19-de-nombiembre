@@ -1,7 +1,7 @@
 {
   "1": "fuentes.py",
-  "2": "Worker de Cloudflare despertador-recolector (horario 7,37 * * * *)",
-  "3": "Estado actual del proyecto (ESTADO_ACTUAL.md)",
+  "2": "Decisiones ya tomadas",
+  "3": "Plan del proyecto (PLAN.md)",
   "4": "steps",
   "10": "Trabajar con Claude en la nube",
   "21": "preparar-nube.sh",
@@ -20,11 +20,5 @@
   "34": "Plan de trabajo",
   "35": "generar_web.py",
   "36": "gota",
-  "37": "Decisiones ya tomadas",
-  "38": "Plan del proyecto (PLAN.md)",
-  "39": "Resultado de las pruebas reales de fuentes (12 nov 2026)",
-  "40": "Diseño Miami con dos estilos (Miami 2026 y Miami años 80)",
-  "41": "sincronizar_datos.ps1",
-  "42": "Estructura de carpetas (web/, recolector/, datos/, .github/workflows/, despertador/)",
-  "43": "Guardar claves en GitHub Secrets (TWITCH_CLIENT_ID, TWITCH_CLIENT_SECRET, YOUTUBE_API_KEY)"
+  "41": "sincronizar_datos.ps1"
 }

@@ -954,3 +954,16 @@ section[id], .bloque { scroll-margin-top: 16px; }
 .plataforma.pl-kick { background: var(--kick); color: #06130c; }
 .barra-celda.pl-kick i { background: var(--kick); }
 @media (max-width: 600px) { #t-twitch thead th:nth-child(4), #t-twitch .barra-celda { display: none; } #t-twitch .plataforma { padding: 2px 7px; font-size: 11px; } #t-twitch th, #t-twitch td { padding: 8px 6px; } #t-twitch th { letter-spacing: .04em; font-size: 11px; } #t-twitch .canal { gap: 6px; } #t-twitch .avatar { display: none; } }
+
+/* ---------- Íconos pequeños (pedido de Bruno, 2026-11-16; opción C de Bruno, 2026-11-17) ----------
+   Dibujos propios de trazo (símbolos "i-..." en index.html), no logotipos de las plataformas.
+   Línea de neón celeste: en 1986 con brillo, en 2026 el celeste del estilo sin brillo.
+   Descartadas: A (línea del color del título) y B (ficha de color con el dibujo en blanco). */
+.ico { display: inline-block; flex: none; width: .9em; height: .9em; margin-right: .38em; vertical-align: -.1em;
+  fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; overflow: visible; }
+.v-sub .ico { width: 1.25em; height: 1.25em; margin-right: -3px; }   /* cabe en la fila de Shorts a 384 px */
+.plataforma { white-space: nowrap; }
+.plataforma .ico { width: 1.15em; height: 1.15em; margin-right: .3em; vertical-align: -.22em; }
+@media (max-width: 600px) { .plataforma .ico { display: none; } }   /* en el celular la tabla va justa */
+h2 .ico, .v-sub .ico { color: var(--a2); stroke-width: 2.2; }
+:root[data-tema="ochenta"] h2 .ico, :root[data-tema="ochenta"] .v-sub .ico { filter: drop-shadow(0 0 3px var(--a2)) drop-shadow(0 0 9px var(--a2)); }

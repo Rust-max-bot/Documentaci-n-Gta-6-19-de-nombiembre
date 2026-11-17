@@ -31,6 +31,16 @@
 
 <!-- Dibujos reutilizables: palmera y edificios (originales, hechos para este proyecto) -->
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <!-- Íconos pequeños (pedido de Bruno, 2026-11-16): dibujos propios y genéricos, de trazo. No son
+       ni imitan los logotipos de YouTube, Twitch, Kick, Google ni Reddit (sus reglas de marca no
+       dejan usarlos sin permiso ni cambiarles el color). El nombre de cada plataforma va escrito. -->
+  <symbol id="i-envivo" viewBox="0 0 24 24"><circle cx="12" cy="12" r="2.2" fill="currentColor" stroke="none"/><path d="M8.3 8.3a5.2 5.2 0 0 0 0 7.4M15.7 8.3a5.2 5.2 0 0 1 0 7.4M5.2 5.2a9.6 9.6 0 0 0 0 13.6M18.8 5.2a9.6 9.6 0 0 1 0 13.6"/></symbol>
+  <symbol id="i-video" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M10.2 8.6v6.8l5.6-3.4z" fill="currentColor"/></symbol>
+  <symbol id="i-short" viewBox="0 0 24 24"><rect x="7" y="2.5" width="10" height="19" rx="2.6"/><path d="M11 9.6v4.8l3.8-2.4z" fill="currentColor"/><path d="M10.5 18.6h3"/></symbol>
+  <symbol id="i-tendencia" viewBox="0 0 24 24"><path d="M3 17.5l5.5-5.5 4 4L20.5 8"/><path d="M15 8h5.5v5.5"/></symbol>
+  <symbol id="i-servidor" viewBox="0 0 24 24"><rect x="4" y="3.5" width="16" height="7" rx="1.8"/><rect x="4" y="13.5" width="16" height="7" rx="1.8"/><path d="M7.5 7h.01M7.5 17h.01M11 7h5.5M11 17h5.5"/></symbol>
+  <symbol id="i-titulares" viewBox="0 0 24 24"><path d="M4 5h12.5v14H6a2 2 0 0 1-2-2z"/><path d="M16.5 9H20v8a2 2 0 0 1-3.5 1.3"/><path d="M7 9h6.5M7 12.5h6.5M7 16h4"/></symbol>
+  <symbol id="i-comunidad" viewBox="0 0 24 24"><path d="M4 5h16v10.5H10L5 19.5v-4H4z"/><path d="M8 9.5h8M8 12.5h5"/></symbol>
   <symbol id="palmera" viewBox="-60 0 260 420">
     <path d="M62 420 C64 330 66 230 84 120 L96 122 C82 232 82 330 84 420Z"/>
     <path d="M90 122 Q40 60 -50 96 Q30 84 90 122Z"/>
@@ -146,32 +156,32 @@
   </section>
 
   <section class="bloque observar" id="seccion-twitch">
-    <h2>Espectadores en Twitch y Kick</h2>
+    <h2><svg class="ico" aria-hidden="true"><use href="#i-envivo"/></svg>Espectadores en Twitch y Kick</h2>
     <p class="nota">Personas viendo transmisiones del juego en cada medición. Kick se mide desde el 16 de noviembre.</p>
     <div class="grafico" id="g-twitch"></div>
   </section>
 
   <section class="bloque observar" id="seccion-trends">
-    <h2>Interés en Google Trends</h2>
+    <h2><svg class="ico" aria-hidden="true"><use href="#i-tendencia"/></svg>Interés en Google Trends</h2>
     <p class="nota">Escala de 0 a 100. El 100 es el momento de más búsquedas del periodo.</p>
     <div class="grafico" id="g-trends"></div>
   </section>
 
   <section class="bloque observar" id="seccion-servidores">
-    <h2>¿Se cayeron los servidores?</h2>
+    <h2><svg class="ico" aria-hidden="true"><use href="#i-servidor"/></svg>¿Se cayeron los servidores?</h2>
     <p class="nota">Según las páginas oficiales de estado. Arriba, un cuadro por día (rojo si hubo algún problema); abajo, cada medición de las últimas 24 horas.</p>
     <div id="servidores"></div>
     <p class="leyenda"><i class="c ok"></i> Funcionando <i class="c mal"></i> Con problemas <i class="c nd"></i> Sin dato</p>
   </section>
 
   <section class="bloque observar" id="seccion-tabla">
-    <h2>Twitch y Kick, medición por medición</h2>
+    <h2><svg class="ico" aria-hidden="true"><use href="#i-envivo"/></svg>Twitch y Kick, medición por medición</h2>
     <div class="selector"><button type="button" class="flecha flecha-izq" aria-label="Día más nuevo" title="Día más nuevo"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button><div class="filtros" id="filtros-dia" role="group" aria-label="Qué día ver"></div><button type="button" class="flecha flecha-der" aria-label="Día más viejo" title="Día más viejo"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div>
     <div class="tabla-caja"><table id="t-twitch"></table></div>
   </section>
 
   <section class="bloque observar" id="seccion-videos">
-    <h2>Videos más vistos en YouTube</h2>
+    <h2><svg class="ico" aria-hidden="true"><use href="#i-video"/></svg>Videos más vistos en YouTube</h2>
     <p class="nota" id="videos-nota">Visitas al final del periodo medido y cuánto subieron desde el inicio.</p>
     <div class="selector"><div class="filtros" id="videos-tabs" role="group" aria-label="Qué videos ver"></div></div>
     <div id="videos"></div>
@@ -192,7 +202,7 @@
   </section>
 
   <section class="bloque observar" id="seccion-noticias">
-    <h2>Titulares</h2>
+    <h2><svg class="ico" aria-hidden="true"><use href="#i-titulares"/></svg>Titulares</h2>
     <p class="nota" id="noticias-resumen"></p>
     <h3 class="sub">Los medios que más publican</h3>
     <div class="medios-barras" id="noticias-medios"></div>
@@ -209,7 +219,7 @@
   </section>
 
   <section class="bloque observar" id="seccion-reddit">
-    <h2>Reddit · r/GTA6</h2>
+    <h2><svg class="ico" aria-hidden="true"><use href="#i-comunidad"/></svg>Reddit · r/GTA6</h2>
     <p class="nota">Publicaciones nuevas en r/GTA6 cada hora (hora de Santiago), en las últimas 48 horas. Sube cuando la comunidad se agita. Sin votos ni comentarios: Reddit no los entrega gratis.</p>
     <div class="rd-barras" id="reddit-barras" role="img"></div>
     <div class="rd-eje" id="reddit-eje"></div>

@@ -20,6 +20,8 @@
     el["_t" + clase] = setTimeout(function () { el.classList.remove(clase); }, ms);
   }
   var SVG_FLECHA = '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  // Ícono pequeño propio (símbolos "i-..." de index.html; pedido de Bruno, 2026-11-16).
+  function ico(nombre) { return '<svg class="ico" aria-hidden="true"><use href="#i-' + nombre + '"/></svg>'; }
   function flechaHTML(lado, etiqueta, extra) {
     return '<button type="button" class="flecha flecha-' + lado + '" aria-label="' + etiqueta + '" title="' + etiqueta + '"' + (extra || "") + ">" + SVG_FLECHA + "</button>";
   }
@@ -637,7 +639,7 @@
     ];
     function fila(m, pl, primera, filasHora) {
       var horaTd = primera ? '<td rowspan="' + filasHora + '">' + hora(m.ts) + "</td>" : "";
-      var plTd = '<td><span class="plataforma ' + pl.clase + '">' + pl.nombre + "</span></td>";
+      var plTd = '<td><span class="plataforma ' + pl.clase + '">' + ico("envivo") + pl.nombre + "</span></td>";
       var e = pl.esp(m);
       if (e == null) return '<tr class="sin-dato">' + horaTd + plTd + '<td colspan="3">Sin dato' + (pl.error(m) ? " (" + limpio(pl.error(m)) + ")" : "") + "</td></tr>";
       var c = pl.canal(m);
@@ -712,8 +714,8 @@
       var todas = filas(lista === "es" ? espanol : global);
       var normales = todas.filter(function (f) { return f.v.short !== true; }).slice(0, VIDEOS_VISIBLES);
       var shorts = todas.filter(function (f) { return f.v.short === true; });
-      return '<h3 class="sub v-sub">Videos</h3><ul class="videos">' + tarjetas(normales, "Todavía no hay videos.") + "</ul>" +
-        (shorts.length ? '<h3 class="sub v-sub">Shorts <small>' + shorts.length + " · desliza para ver más</small>" +
+      return '<h3 class="sub v-sub">' + ico("video") + 'Videos</h3><ul class="videos">' + tarjetas(normales, "Todavía no hay videos.") + "</ul>" +
+        (shorts.length ? '<h3 class="sub v-sub">' + ico("short") + 'Shorts <small>' + shorts.length + " · desliza para ver más</small>" +
           '<span class="flechas-shorts">' + flechaHTML("izq", "Ver Shorts anteriores") + flechaHTML("der", "Ver más Shorts") + "</span></h3>" +
           '<ul class="videos shorts" aria-label="Shorts: desliza hacia el lado para ver más">' + tarjetas(shorts, "") + "</ul>" : "");
     }
