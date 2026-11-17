@@ -18,9 +18,9 @@
     "semantic_hash": ""
   },
   "web/app.js": {
-    "mtime": 1794935684.4695442,
-    "seen": 1794935933.1170502,
-    "ast_hash": "4c807fbeff6ea52be7ae0f3dbb8fc515",
+    "mtime": 1794935935.4534009,
+    "seen": 1794936540.8835213,
+    "ast_hash": "610cbdbd5b532b18ca9afc8a925016fd",
     "semantic_hash": ""
   },
   "web/datos-ejemplo.js": {
@@ -48,9 +48,9 @@
     "semantic_hash": ""
   },
   "ESTADO_ACTUAL.md": {
-    "mtime": 1794935834.1661055,
-    "seen": 1794935933.1170683,
-    "ast_hash": "31e0b943996568b411359ea32b43c371",
+    "mtime": 1794936536.9128194,
+    "seen": 1794936540.8835387,
+    "ast_hash": "7ebfad1947280d85fe27be4b4c168fff",
     "semantic_hash": ""
   },
   "GUIA_CLAVES.md": {
@@ -60,9 +60,9 @@
     "semantic_hash": ""
   },
   "PLAN.md": {
-    "mtime": 1794935834.1661055,
-    "seen": 1794935933.1170733,
-    "ast_hash": "acd86c682f2eca4f4f3e485c0e4366c0",
+    "mtime": 1794935935.4450285,
+    "seen": 1794936540.8835447,
+    "ast_hash": "305fcfa31ec8578aaf0c5cc3bccb65e3",
     "semantic_hash": ""
   },
   "README.md": {
@@ -72,9 +72,9 @@
     "semantic_hash": ""
   },
   "web/index.html": {
-    "mtime": 1794932872.133274,
-    "seen": 1794935933.1171005,
-    "ast_hash": "66f2ad64f5d40348c8116d7deec1c2da",
+    "mtime": 1794936234.3707154,
+    "seen": 1794936540.8835711,
+    "ast_hash": "1b517f2ceae2c37a3184267756968a2f",
     "semantic_hash": ""
   },
   ".github/workflows/probar-fuentes.yml": {
@@ -240,9 +240,9 @@
     "semantic_hash": ""
   },
   "web/compartir.jpg": {
-    "mtime": 1794857328.0769532,
-    "seen": 1794932870.106816,
-    "ast_hash": "2af6c4f13ce0b29066fbd343777b8bf2",
+    "mtime": 1794936401.3605607,
+    "seen": 1794936540.8835735,
+    "ast_hash": "b9b483020170e1a426b474e9e37796ce",
     "semantic_hash": ""
   },
   "web/icono.svg": {
@@ -276,9 +276,9 @@
     "semantic_hash": ""
   },
   "DISENO_VISUAL.md": {
-    "mtime": 1794935832.539854,
-    "seen": 1794935933.1170664,
-    "ast_hash": "231632ee810a664023ffdfb5a1cdf2da",
+    "mtime": 1794936536.9108133,
+    "seen": 1794936540.883537,
+    "ast_hash": "ffd2444eb44bce310f37db10bfb13d9e",
     "semantic_hash": ""
   },
   ".github/workflows/probar-kick.yml": {

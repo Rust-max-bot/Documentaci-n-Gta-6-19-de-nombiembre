@@ -75,8 +75,11 @@ body {
 }
 
 /* ---------- Portada ---------- */
+/* En pantallas muy anchas (o con el zoom alejado) la portada crece con el ancho, al menos
+   46vw: si no, los edificios se agrandan con el ancho y la caja los cortaba por arriba (sin
+   grúa ni puntas; arreglo pedido por Bruno, 2026-11-17). */
 .portada {
-  position: relative; min-height: min(92vh, 820px); overflow: hidden;
+  position: relative; min-height: max(min(92vh, 820px), 46vw); overflow: hidden;
   display: flex; flex-direction: column;
 }
 .escena { position: absolute; inset: 0; opacity: 0; transition: opacity .7s; }
@@ -125,11 +128,12 @@ body {
   animation: latir 6s ease-in-out infinite;
 }
 @keyframes latir { 50% { filter: drop-shadow(0 0 95px rgba(255, 120, 80, .9)); } }
-.perfil { position: absolute; left: 0; bottom: 24%; width: 100%; height: 26%; }
+/* overflow visible: lo que el dibujo tenga más arriba de su caja (antenas, grúa) se ve igual. */
+.perfil { position: absolute; left: 0; bottom: 24%; width: 100%; height: 26%; overflow: visible; }
 .escena-80 .perfil { filter: drop-shadow(0 0 7px rgba(255, 46, 151, .8)); }
 /* Torres detrás de los hoteles (tarea 3.3). Misma escala que .perfil: el doble de alto porque
    su dibujo mide 480 de alto en vez de 240, y así la base de las dos capas coincide. */
-.torres { position: absolute; left: 0; bottom: 24%; width: 100%; height: 52%; }
+.torres { position: absolute; left: 0; bottom: 24%; width: 100%; height: 52%; overflow: visible; }
 .escena-80 .torres { filter: drop-shadow(0 0 6px rgba(34, 230, 255, .6)); }
 /* 1986, de noche: torres oscuras con bordes de neón y la torre de niveles iluminada. */
 .escena-80 {
@@ -178,13 +182,15 @@ body {
 }
 @keyframes brillar { to { background-position: 0 0, 0 16px, 0 0; } }
 
-/* Palmeras (en ambas escenas) */
-.palma { position: absolute; bottom: 2%; transform-origin: 50% 100%; animation: mecer 7s ease-in-out infinite alternate; }
+/* Palmeras (en ambas escenas). Plantadas en la arena (pedido de Bruno, 2026-11-17; antes
+   quedaban en el agua): la arena va de 10,6 % a 17 % desde abajo de la portada (ver .orilla),
+   y el dibujo se apoya en el borde de abajo de su caja (preserveAspectRatio del símbolo). */
+.palma { position: absolute; bottom: 11.5%; transform-origin: 50% 100%; animation: mecer 7s ease-in-out infinite alternate; }
 .escena-80 .palma { fill: #0a0118; }
 .escena-26 .palma { fill: #2a1446; }
 .p1 { left: -1%; height: 72%; width: 30vh; }
 .p2 { right: 1%; height: 82%; width: 34vh; animation-delay: -3s; transform: scaleX(-1); }
-.p3 { left: 13%; bottom: 7%; height: 46%; width: 20vh; animation-delay: -5s; opacity: .92; }
+.p3 { left: 13%; bottom: 15%; height: 46%; width: 20vh; animation-delay: -5s; opacity: .92; }
 @keyframes mecer { from { rotate: -1.6deg; } to { rotate: 1.8deg; } }
 
 /* ---------- Suelo entre los hoteles y el mar (tarea 7.12, idea de Bruno, 2026-11-15) ----------

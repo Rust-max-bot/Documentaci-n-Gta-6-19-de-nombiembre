@@ -100,6 +100,7 @@ Bruno ya eligió las palabras de la comparación.
 
 ## Últimos cambios
 
+- 2026-11-17: portada arreglada: con el zoom alejado o en pantallas anchas los edificios ya no se cortan por arriba (se ve la grúa) y las palmeras salen de la arena, no del agua. `web/compartir.jpg` rehecha.
 - 2026-11-17: hechas 9.5, 9.6 y 9.7 (opciones A de Bruno): los Shorts y los videos ya no cambian de alto ni de lugar al pasar de Global a En español; el gráfico de cada tarjeta muestra las visitas al inicio y las de ahora; "GTA frente a lo más visto" pone a GTA VI al centro (puesto en Twitch y videos en tendencia, con su historial) y ya no deja un hueco bajo Twitch.
 - 2026-11-17: anotadas en `PLAN.md` tres mejoras de diseño pedidas por Bruno, sin hacer aún: 9.5 Shorts del mismo alto en Global y En español, 9.6 gráficos de las tarjetas más claros y 9.7 rediseño de "GTA frente a lo más visto". `PLAN.md` pasó de 20.000 bytes: el anterior quedó en `historial/PLAN_2026-11-17.md`.
 - 2026-11-17: línea de tiempo rediseñada (opción A de Bruno): agrupada por día, la hora arriba del texto (ya no choca), puntos alineados con el ícono del tipo, filtros por tipo, "Ver los N eventos" (8 a la vista) y enlace a la sección de cada evento.

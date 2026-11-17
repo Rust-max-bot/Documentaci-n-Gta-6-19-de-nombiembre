@@ -1,7 +1,7 @@
 # Graph Report - Documentación Gta 6  (2026-11-17)
 
 ## Corpus Check
-- 50 files · ~87,845 words
+- 50 files · ~87,940 words
 - Verdict: corpus is large enough that graph structure adds value.
 - Unclassified: 12 file(s) not represented in the graph (top: .jsonl 6, (none) 3, .bat 2)
 
@@ -11,7 +11,7 @@
 - Token cost: 183,861 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `6553e082`
+- Built from commit: `bea53b28`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
