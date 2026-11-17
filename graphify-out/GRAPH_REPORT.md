@@ -1,17 +1,17 @@
-# Graph Report - Documentación Gta 6  (2026-11-17)
+# Graph Report - documentaci-n-gta-6-19-de-nombiembre  (2026-11-17)
 
 ## Corpus Check
-- 49 files · ~83,256 words
+- 49 files · ~83,283 words
 - Verdict: corpus is large enough that graph structure adds value.
 - Unclassified: 12 file(s) not represented in the graph (top: .jsonl 6, (none) 3, .bat 2)
 
 ## Summary
 - 682 nodes · 1160 edges · 45 communities (28 shown, 17 thin omitted)
 - Extraction: 91% EXTRACTED · 9% INFERRED · 0% AMBIGUOUS · INFERRED: 104 edges (avg confidence: 0.87)
-- Token cost: 183,861 input · 0 output
+- Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `02fc4423`
+- Built from commit: `473c187f`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -65,21 +65,21 @@
 5. `dia()` - 14 edges
 6. `a_iso()` - 14 edges
 7. `Decisiones ya tomadas` - 14 edges
-8. `pedir_json()` - 13 edges
-9. `es_entero()` - 13 edges
+8. `es_entero()` - 13 edges
+9. `pedir_json()` - 13 edges
 10. `Recolector` - 13 edges
 
 ## Surprising Connections (you probably didn't know these)
-- `Fase 1 — Recolector funcionando (lo más importante)` --references--> `compacto()`  [INFERRED]
-  historial/PLAN_DE_TRABAJO_2026-11-13.md → web/app.js
 - `Fase 6 — Ideas nuevas de Bruno: más estadísticas, logros y comparaciones (lo que queda)` --references--> `kick()`  [INFERRED]
   historial/PLAN_DE_TRABAJO_2026-11-16.md → recolector/fuentes.py
+- `Fase 1 — Recolector funcionando (lo más importante)` --references--> `compacto()`  [INFERRED]
+  historial/PLAN_DE_TRABAJO_2026-11-13.md → web/app.js
+- `Fase 6 — Ideas nuevas de Bruno: más estadísticas, logros y comparaciones` --references--> `youtube_es()`  [INFERRED]
+  historial/PLAN_DE_TRABAJO_2026-11-14.md → recolector/fuentes.py
 - `Diseño de la página` --references--> `limpio()`  [INFERRED]
   historial/PLAN_2026-11-16.md → web/app.js
 - `8. Dónde está cada cosa (por si quien ayuda puede leer código)` --references--> `fuegos()`  [INFERRED]
   DISENO_VISUAL.md → web/app.js
-- `Fase 6 — Ideas nuevas de Bruno: más estadísticas, logros y comparaciones` --references--> `youtube_es()`  [INFERRED]
-  historial/PLAN_DE_TRABAJO_2026-11-14.md → recolector/fuentes.py
 
 ## Import Cycles
 - None detected.

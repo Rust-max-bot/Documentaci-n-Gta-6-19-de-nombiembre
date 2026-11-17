@@ -13,4 +13,5 @@
 window.EVENTOS = [
   // Rockstar: revisado en su página de estado desde el navegador de Rust (a un programa no le responde).
   { hora: "2026-11-14 14:07", texto: "Rockstar: todos los servicios funcionando (GTA Online, Red Dead Online, inicio de sesión, lanzador y tienda), según su página de estado" },
+  { hora: "2026-11-17 12:41", texto: "Rockstar: todos los servicios funcionando (GTA Online, Red Dead Online, servicios en línea, Cfx y mercado), según su página de estado" },
 ];
