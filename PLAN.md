@@ -40,6 +40,10 @@ con línea de tiempo, tablas y gráficos de Twitch, Kick, YouTube, Google Trends
       Bruno elija cómo se ve; (3) cuando salga la 6.1 (21-24 nov), cambiarla por la nueva, que ya
       trae los días del lanzamiento. Probada el 17 nov desde el PC, sin guardar: GTA 6 llega a
       100 y Doomsday a 5 (90 días); mes a mes desde 2013, GTA 6 76 frente al 100 de GTA 5.
+      **2026-11-17:** (1) hecho: consulta previa guardada desde GitHub en `datos/trends_previa/`
+      (`trends_extra.py --previa`, casilla "previa" del workflow) y en `datos.js` (`trends_extra`).
+      (2) opciones A (línea de 90 días), B (picos + mes a mes desde 2013) y C (100 puntos + línea)
+      mostradas a Bruno; falta que elija.
 - [ ] **6.8 Diseño de la sección nueva con lo de la 6.1** (pedido de Bruno, 2026-11-17). Desde el
       20 nov, con los datos ya guardados, diseñar cómo se ve la sección (países, búsquedas en
       aumento, GTA 6 frente a otros juegos, mes a mes desde 2013, Doomsday): opciones con
