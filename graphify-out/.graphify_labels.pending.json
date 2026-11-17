@@ -1,8 +1,9 @@
 {
-  "1": "Falla",
+  "1": "fuentes.py",
   "2": "Decisiones ya tomadas",
   "3": "Plan del proyecto (PLAN.md)",
   "4": "steps",
+  "8": "app.js",
   "10": "Trabajar con Claude en la nube",
   "21": "preparar-nube.sh",
   "22": "pruebas/LEEME.md",
@@ -20,12 +21,13 @@
   "34": "Plan de trabajo",
   "35": "generar_web.py",
   "36": "gota",
-  "37": "fuentes.py",
-  "38": "trends_extra.py",
-  "39": "probar_fuentes.py",
-  "40": "youtube_es",
+  "37": "pintar",
+  "38": "limpio",
+  "39": "pintarLugares",
+  "40": "dibujar",
   "41": "sincronizar_datos.ps1",
-  "42": "pedir",
-  "43": "json",
-  "44": "_serie_trends"
+  "42": "deSantiago",
+  "43": "fuegos",
+  "44": "dibujar",
+  "45": "flechasShorts"
 }

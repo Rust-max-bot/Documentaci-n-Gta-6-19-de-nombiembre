@@ -156,6 +156,7 @@ No se empieza hasta que Bruno avise con una confirmación oficial de la versión
   lanzamientos, 7.10 copias de los primeros días, 7.11 Próximamente y 7.12 portada con suelo.
 - **9.1 Servidores más cortos (2026-11-16, opción C):** caja "Ahora" y, por servicio, un cuadro
   por día y las mediciones de 24 h (antes, un cuadro por medición sin fin). `?probar-servidores-mal`.
+- **Línea de tiempo nueva (2026-11-17, opción A):** por día, hora arriba, íconos, filtros y "Ver todos".
 - **Rockstar a mano en los servidores (2026-11-17, opción C):** las revisiones de `anotar-rockstar`
   (en `web/eventos.js`) salen como puntos en una línea, en un recuadro "a mano".
 - **Íconos pequeños (2026-11-17, opción C):** dibujos propios (no logotipos) en títulos, "Videos",

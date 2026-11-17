@@ -981,3 +981,38 @@ h2 .ico, .v-sub .ico { color: var(--a2); stroke-width: 2.2; }
 .rev-linea i.mal { background: var(--mal); }
 :root[data-tema="ochenta"] .rev-linea i { box-shadow: 0 0 0 3px var(--panel), 0 0 10px currentColor; color: var(--ok); }
 :root[data-tema="ochenta"] .rev-linea i.mal { color: var(--mal); }
+
+/* ---------- Línea de tiempo nueva (pedido de Bruno, 2026-11-17) ----------
+   La hora va arriba del texto (antes, en una columna angosta, chocaba con él), el punto lleva el
+   ícono del tipo y queda centrado sobre la línea. Filtros por tipo y "Ver todos". Opción A de
+   Bruno (agrupada por día); descartada B (tarjetas a los dos lados de la línea). */
+.linea-filtros { display: flex; flex-wrap: wrap; gap: 8px; margin: 14px 0 16px; }
+.linea-filtros button { padding: 6px 13px; border-radius: 999px; border: 1.5px solid color-mix(in srgb, var(--tenue) 45%, transparent);
+  background: transparent; color: var(--texto); font: 700 13px var(--f-texto); cursor: pointer; transition: background .2s, border-color .2s, color .2s; }
+.linea-filtros button small { margin-left: 3px; color: var(--tenue); font-weight: 700; }
+.linea-filtros button:hover { border-color: var(--a2); }
+.linea-filtros button[aria-pressed="true"] { background: var(--a1); border-color: var(--a1); color: #fff; }
+.linea-filtros button[aria-pressed="true"] small { color: #fff; opacity: .85; }
+.linea-mas { display: block; margin: 14px auto 0; padding: 8px 18px; border-radius: 999px; border: 1.5px solid var(--a2); background: transparent;
+  color: var(--a2); font: 700 14px var(--f-texto); cursor: pointer; }
+.linea-mas[hidden] { display: none; }
+.linea-mas:hover { background: color-mix(in srgb, var(--a2) 14%, transparent); }
+.linea.linea2 { padding: 0; }
+.linea.linea2::before { left: 15px; top: 14px; bottom: 14px; }
+.linea.linea2 li::before { content: none; }
+.linea.linea2 li.l-ev { display: grid; grid-template-columns: 32px minmax(0, 1fr); gap: 14px; align-items: start; padding: 7px 0; }
+.linea.linea2 li.l-dia { display: block; padding: 12px 0 4px; }
+.l-dia span { position: relative; z-index: 1; display: inline-block; padding: 3px 12px; border-radius: 999px; background: var(--a1); color: #fff;
+  font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+.l-nodo { position: relative; z-index: 1; display: grid; place-items: center; width: 32px; height: 32px; border-radius: 50%;
+  background: var(--panel); border: 2.5px solid var(--a2); color: var(--a2); transition: transform .2s; }
+.l-ev.mano .l-nodo { border-color: var(--a1); border-style: dashed; color: var(--a1); }
+:root[data-tema="ochenta"] .l-nodo { box-shadow: 0 0 12px color-mix(in srgb, currentColor 60%, transparent); }
+.l-nodo .ico { width: 16px; height: 16px; margin: 0; vertical-align: 0; }
+.l-ev:hover .l-nodo { transform: scale(1.12); }
+.l-cuerpo { min-width: 0; padding-top: 1px; }
+.l-cuerpo time { display: block; font-size: 13px; font-weight: 700; color: var(--tenue); font-variant-numeric: tabular-nums; }
+.l-cuerpo .que { display: block; font-weight: 600; overflow-wrap: anywhere; }
+.l-pie { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-top: 6px; }
+.l-pie a { font-size: 13px; font-weight: 700; color: var(--a2); text-decoration: none; }
+.l-pie a:hover { text-decoration: underline; }

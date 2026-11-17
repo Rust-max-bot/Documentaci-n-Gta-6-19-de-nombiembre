@@ -100,6 +100,7 @@ Bruno ya eligió las palabras de la comparación.
 
 ## Últimos cambios
 
+- 2026-11-17: línea de tiempo rediseñada (opción A de Bruno): agrupada por día, la hora arriba del texto (ya no choca), puntos alineados con el ícono del tipo, filtros por tipo, "Ver los N eventos" (8 a la vista) y enlace a la sección de cada evento.
 - 2026-11-17: Rockstar a mano en "¿Se cayeron los servidores?" (opción C de Bruno): las revisiones que anota la skill `anotar-rockstar` en `web/eventos.js` salen como puntos verdes o rojos sobre una línea punteada, en un recuadro "a mano", con la última revisión y "No se vio caída / Sí, tuvo problemas" contando revisiones. La skill no cambia: la página lee sus dos textos fijos.
 - 2026-11-17: revisión de seguridad de las cuentas hecha por Bruno (2.15): clave de YouTube restringida a "YouTube Data API v3", ruleset "proteger main" (no se puede borrar ni reescribir `main`; las subidas normales del recolector siguen funcionando) y "Secret scanning" + "Push protection" activados. Comprobado por Claude con la API de GitHub y con la medición de las 15:07 UTC (YouTube trae sus videos).
 - 2026-11-17: íconos pequeños propios (opción C de Bruno): en los títulos de Twitch y Kick, Trends, servidores, videos, titulares y Reddit, en "Videos" y "Shorts" y en la tabla (solo PC). No son los logotipos de las plataformas (sus reglas de marca no lo permiten). Ese día, las mediciones del minuto 37 funcionan (29 seguidas); Google Noticias dio 429 en 5 de 29 (lo arregla la 9.3, después del 22).

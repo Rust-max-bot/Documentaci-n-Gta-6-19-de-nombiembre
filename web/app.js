@@ -403,28 +403,85 @@
     // Hora cero de cada lugar (tarea 7.6), solo cuando ya pasó.
     [["nz", "Medianoche en Nueva Zelanda: GTA 6 ya se puede jugar allí"], ["cl", "Hora cero en Chile: sale GTA 6"],
      ["mia", "Medianoche en Miami: GTA 6 ya se puede jugar allí"]].forEach(function (x) {
-      if (ahora() >= LUGARES[x[0]].ts) ev.push({ ts: LUGARES[x[0]].ts, texto: x[1], auto: true });
+      if (ahora() >= LUGARES[x[0]].ts) ev.push({ ts: LUGARES[x[0]].ts, texto: x[1], auto: true, tipo: "lanzamiento" });
     });
-    if (picoTwitch) ev.push({ ts: picoTwitch.ts, texto: "Máximo de espectadores en Twitch: " + num(picoTwitch.espectadores), auto: true });
-    if (picoTrends) ev.push({ ts: picoTrends.ts, texto: "Máximo de búsquedas en Google Trends (" + picoTrends.interes + " de 100)", auto: true });
+    if (picoTwitch) ev.push({ ts: picoTwitch.ts, texto: "Máximo de espectadores en Twitch: " + num(picoTwitch.espectadores), auto: true, tipo: "envivo" });
+    if (picoTrends) ev.push({ ts: picoTrends.ts, texto: "Máximo de búsquedas en Google Trends (" + picoTrends.interes + " de 100)", auto: true, tipo: "tendencia" });
     SERVICIOS.forEach(function (s) {
       var antes = "ok";
       M.forEach(function (m) {
         var e = m.servidores[s[0]]; if (e == null) return;
-        if (e !== "ok" && antes === "ok") ev.push({ ts: m.ts, texto: s[1] + " empieza a tener problemas", auto: true });
-        if (e === "ok" && antes !== "ok") ev.push({ ts: m.ts, texto: s[1] + " vuelve a funcionar", auto: true });
+        if (e !== "ok" && antes === "ok") ev.push({ ts: m.ts, texto: s[1] + " empieza a tener problemas", auto: true, tipo: "servidor" });
+        if (e === "ok" && antes !== "ok") ev.push({ ts: m.ts, texto: s[1] + " vuelve a funcionar", auto: true, tipo: "servidor" });
         antes = e;
       });
     });
     (D.eventos || []).concat(window.EVENTOS || []).forEach(function (e) {
       var ts = deSantiago(e.hora);
-      if (!isNaN(ts) && e.texto) ev.push({ ts: ts, texto: e.texto, auto: false });
+      if (!isNaN(ts) && e.texto) ev.push({ ts: ts, texto: e.texto, auto: false, tipo: /^\s*Rockstar\s*:/i.test(e.texto) ? "servidor" : "mano" });
     });
     ev.sort(function (a, b) { return b.ts - a.ts; });   // lo más nuevo arriba (pedido de Bruno)
-    $("linea").innerHTML = ev.length ? ev.map(function (e) {
-      return '<li class="' + (e.auto ? "auto" : "mano") + '"><time>' + dia(e.ts) + " · " + hora(e.ts) + '</time><span class="que">' + limpio(e.texto) +
-        '</span><span class="etiqueta">' + (e.auto ? "automático" : "a mano") + "</span></li>";
-    }).join("") : '<li class="vacio">Todavía no hay eventos.</li>';
+    lineaNueva(ev);
+  }
+  var fDiaSemana = new Intl.DateTimeFormat("es-CL", { timeZone: ZONA, weekday: "long" });
+  /* Rediseño (pedido de Bruno, 2026-11-17; opción A, agrupada por día; descartada B, tarjetas a
+     los dos lados de la línea). Antes la fecha iba en una columna angosta y chocaba con el texto,
+     y los puntos no quedaban alineados. Ahora: un rótulo por día, la hora arriba del texto, el
+     ícono del tipo en el punto, filtros por tipo, "Ver los N eventos" (se ven los 8 más nuevos)
+     y un enlace a la sección de la página de cada evento. */
+  function lineaNueva(ev) {
+    var TIPOS = {
+      envivo: ["envivo", "Twitch y Kick", "seccion-twitch", "Ver espectadores"],
+      video: ["video", "YouTube", "seccion-videos", "Ver videos"],
+      short: ["short", "YouTube", "seccion-videos", "Ver Shorts"],
+      tendencia: ["tendencia", "Trends", "seccion-trends", "Ver Trends"],
+      servidor: ["servidor", "Servidores", "seccion-servidores", "Ver servidores"],
+      lanzamiento: ["reloj", "Lanzamiento", "", ""],
+      mano: ["lapiz", "A mano", "", ""]
+    };
+    var FILTROS = [["todo", "Todo"], ["envivo", "Twitch y Kick"], ["youtube", "YouTube"], ["tendencia", "Trends"], ["servidor", "Servidores"], ["lanzamiento", "Lanzamiento"], ["mano", "A mano"]];
+    function pasa(e, f) {
+      return f === "todo" || (f === "youtube" ? e.tipo === "video" || e.tipo === "short" : f === "mano" ? !e.auto : e.tipo === f);
+    }
+    var filtro = "todo", abierta = false, CORTE = 8, caja = $("linea");
+    // Si se dibuja otra vez, se quitan los filtros y el botón anteriores para no repetirlos.
+    [].forEach.call(caja.parentNode.querySelectorAll(".linea-filtros, .linea-mas"), function (x) { x.remove(); });
+    var barra = document.createElement("div");
+    barra.className = "linea-filtros"; barra.setAttribute("role", "group"); barra.setAttribute("aria-label", "Qué eventos ver");
+    caja.parentNode.insertBefore(barra, caja);
+    var mas = document.createElement("button");
+    mas.type = "button"; mas.className = "linea-mas";
+    caja.parentNode.insertBefore(mas, caja.nextSibling);
+    caja.className = "linea linea2";
+    function pintar() {
+      var hay = FILTROS.filter(function (f) { return ev.some(function (e) { return pasa(e, f[0]); }); });
+      barra.innerHTML = hay.map(function (f) {
+        var n = ev.filter(function (e) { return pasa(e, f[0]); }).length;
+        return '<button type="button" data-f="' + f[0] + '" aria-pressed="' + (f[0] === filtro) + '">' + f[1] + " <small>" + n + "</small></button>";
+      }).join("");
+      var lista = ev.filter(function (e) { return pasa(e, filtro); }), vista = abierta ? lista : lista.slice(0, CORTE);
+      var html = "", diaAntes = "";
+      vista.forEach(function (e) {
+        var d = dia(e.ts);
+        if (d !== diaAntes) { html += '<li class="l-dia"><span>' + fDiaSemana.format(new Date(e.ts)) + " " + d + "</span></li>"; diaAntes = d; }
+        var t = TIPOS[e.tipo] || TIPOS.mano;
+        html += '<li class="l-ev ' + (e.auto ? "auto" : "mano") + '">' +
+          '<span class="l-nodo" title="' + t[1] + '">' + ico(t[0]) + "</span>" +
+          '<div class="l-cuerpo"><time>' + hora(e.ts) + "</time>" + '<span class="que">' + limpio(e.texto) + "</span>" +
+          '<span class="l-pie"><span class="etiqueta">' + (e.auto ? "automático" : "a mano") + "</span>" +
+          (t[2] ? '<a href="#' + t[2] + '">' + t[3] + " →</a>" : "") + "</span></div></li>";
+      });
+      caja.innerHTML = html || '<li class="vacio">Todavía no hay eventos.</li>';
+      mas.hidden = lista.length <= CORTE;
+      mas.textContent = abierta ? "Ver menos" : "Ver los " + lista.length + " eventos";
+      mas.setAttribute("aria-expanded", abierta);
+    }
+    barra.addEventListener("click", function (e) {
+      var b = e.target.closest("button"); if (!b || b.dataset.f === filtro) return;
+      filtro = b.dataset.f; abierta = false; pintar();
+    });
+    mas.addEventListener("click", function () { abierta = !abierta; pintar(); });
+    pintar();
   }
 
   /* ---------- Gráficos de línea (SVG hecho a mano) ---------- */
@@ -1434,15 +1491,15 @@
     var pasados = 0;
     esp.forEach(function (e) {
       while (pasados < HITOS.length && e.valor >= HITOS[pasados]) {
-        if (filas.length && e.ts > filas[0].ts) eventosExtra.push({ ts: e.ts, texto: "Twitch pasa los " + num(HITOS[pasados]) + " espectadores a la vez", auto: true });
+        if (filas.length && e.ts > filas[0].ts) eventosExtra.push({ ts: e.ts, texto: "Twitch pasa los " + num(HITOS[pasados]) + " espectadores a la vez", auto: true, tipo: "envivo" });
         pasados++;
       }
     });
     lideres.slice(1).forEach(function (l) {
-      eventosExtra.push({ ts: l.ts, texto: "Nuevo video más visto en YouTube: " + l.que, auto: true });
+      eventosExtra.push({ ts: l.ts, texto: "Nuevo video más visto en YouTube: " + l.que, auto: true, tipo: "video" });
     });
     lideresShort.slice(1).forEach(function (l) {
-      eventosExtra.push({ ts: l.ts, texto: "Nuevo Short más visto en YouTube: " + l.que, auto: true });
+      eventosExtra.push({ ts: l.ts, texto: "Nuevo Short más visto en YouTube: " + l.que, auto: true, tipo: "short" });
     });
 
     // Tráilers oficiales de GTA VI (se miden desde el 13 nov).
@@ -1453,7 +1510,7 @@
       t.serie.forEach(function (p, i) {
         if (!i) return;
         var antes = Math.floor(t.serie[i - 1].visitas / 1e7), ahoraM = Math.floor(p.visitas / 1e7);
-        if (ahoraM > antes) eventosExtra.push({ ts: Date.parse(p.t), texto: "El " + nombre + " de GTA VI pasa los " + num(ahoraM * 10) + " millones de visitas", auto: true });
+        if (ahoraM > antes) eventosExtra.push({ ts: Date.parse(p.t), texto: "El " + nombre + " de GTA VI pasa los " + num(ahoraM * 10) + " millones de visitas", auto: true, tipo: "video" });
       });
     });
     $("records-trailers").innerHTML = tr.length ? tr.map(function (t) {
