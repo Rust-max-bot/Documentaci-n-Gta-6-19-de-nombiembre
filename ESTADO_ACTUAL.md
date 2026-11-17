@@ -100,6 +100,7 @@ Bruno ya eligió las palabras de la comparación.
 
 ## Últimos cambios
 
+- 2026-11-16: 9.4, segunda tanda: eje de los gráficos sin textos encimados (opción C de Bruno: fechas y horas cortas según el espacio), `partes()` 12 veces más rápida con muchos datos y `probar_pagina.py` revisa textos encimados. Queda para después del 22: aligerar `datos.js` y las medidas al cargar.
 - 2026-11-16: 9.4 optimizar la página, primera tanda (solo medir, sin cambios): eje de horas del gráfico de Twitch encimado a 384 px (ya hoy), `partes()` lenta con muchos datos y `datos.js` de ~1,6 MB el 19 dic. Detalle y próximos pasos en `PLAN.md`.
 - 2026-11-16: 9.2 "¿Cuánta gente faltó?" descartada (decisión de Bruno); queda la 9.3 (después del 22).
 - 2026-11-16: 9.1 hecha (opción C de Bruno): "¿Se cayeron los servidores?" con caja "Ahora" (verde o rojo, con la hora de la última medición) y, por servicio, un cuadro por día y cada medición de las últimas 24 h; ya no crece sin fin. Se prueba con `?probar-servidores-mal`.
@@ -119,8 +120,8 @@ Bruno ya eligió las palabras de la comparación.
 
 La lista completa y su orden están en `PLAN.md`. Resumen (2026-11-14):
 
-0. **Nuevo (2026-11-16, orden de Bruno):** 9.4 optimizar la página (medida; falta decidir qué
-   arreglar), 9.1 servidores más cortos (**hecha**, opción C) y 9.3
+0. **Nuevo (2026-11-16, orden de Bruno):** 9.4 optimizar la página (eje y `partes()` hechos; lo
+   grande, después del 22), 9.1 servidores más cortos (**hecha**, opción C) y 9.3
    menos alarmas por Google (después del 22). Descartados (Bruno): la 9.2 "¿Cuánta gente
    faltó?", Cloudflare Radar y medir las redes de descarga de las consolas. Detalle en `PLAN.md`.
 1. **7.4:** "Lo que espero" ya está en la página (PR #25, unido el 15 nov). Después del lanzamiento, Bruno

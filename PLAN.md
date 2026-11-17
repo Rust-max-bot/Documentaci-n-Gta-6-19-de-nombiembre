@@ -50,17 +50,14 @@ Reddit. El estado vivo (dónde quedamos) está en `ESTADO_ACTUAL.md`; las reglas
       dobles y con 25 min de tiempo. Recordatorios en el Google Calendar de Bruno el 21 y el 24 nov
       (16:30 de Santiago). **Falta:** (1) comprobar el 21 que se guardó; (2) mostrarlo en la página, con opciones y capturas; (3) idea sin
       decidir: repetir lo de Doomsday en enero, después de su estreno (18 dic).
-- [ ] **9.4 Optimizar la página** (Bruno, 2026-11-16). Medición hecha sin cambiar nada (Edge,
-      servidor local con gzip; "celular lento" = 384 px, CPU 4× más lenta, 1,6 Mbps y 150 ms;
-      página con ~1.000 mediciones simuladas, repitiendo las reales, como estará el 19 dic).
-      Sin errores. Hallazgos: (1) **eje de horas del gráfico de Twitch y Kick encimado** ya hoy
-      a 384 px e ilegible a 1280 px con un mes de datos (marcas fijas cada 6 o 12 h); arreglo
-      visible: opciones y capturas. (2) `partes()` de `web/app.js` crece con los datos (84 → 480
-      ms en el celular lento): guardar lo ya calculado, invisible. (3) `datos.js` pasará de 182
-      KB a ~1,6 MB (~320 KB comprimido): carga en el celular lento de 3,7 a 5,5 s; partirlo o
-      aligerarlo, después del 22. (4) ~750 ms fijos al cargar leyendo medidas de la página
-      (`gota`, `estado` de los Shorts): mover después del primer dibujo, después del 19. (5)
-      "Personalizar" 61 → 460 ms con más datos. `probar_pagina.py` no detecta textos encimados.
+- [ ] **9.4 Optimizar la página** (Bruno, 2026-11-16). Medido sin cambiar nada (Edge, gzip local;
+      "celular lento" = 384 px, CPU 4×, 1,6 Mbps, 150 ms; ~1.000 mediciones simuladas = 19 dic).
+      **Hecho (2026-11-16):** eje de los gráficos sin textos encimados (opción C: fechas y horas
+      cortas según el espacio); `partes()` guarda lo ya calculado (480 → 40 ms; "Personalizar"
+      460 → 30 ms); `probar_pagina.py` revisa textos encimados en los ejes. **Falta, después del
+      22:** (a) `datos.js` pasará de 182 KB a ~1,6 MB (~320 KB comprimido; carga en el celular
+      lento de 3,7 a 5,5 s): partirlo o aligerarlo. (b) ~750 ms fijos al cargar leyendo medidas
+      de la página (`gota`, `estado` de los Shorts): moverlo después del primer dibujo.
 - [ ] **9.3 Menos alarmas por Google** (Bruno, 2026-11-16; después del 22: toca el
       recolector). Hasta el 16 nov, 6 huecos en 101 mediciones, todos de Google (Trends 429 ×4,
       Noticias 429 y 503) y ninguno perdió datos (la siguiente medición los trae). Posible patrón:

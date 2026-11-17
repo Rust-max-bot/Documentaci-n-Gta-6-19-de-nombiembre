@@ -162,6 +162,8 @@ Se puede probar abriendo la página con `?probar-hora-cero` al final de la direc
 Los colores de los hoteles (`--h1` a `--h5`), sus bordes (`--trim`) y ventanas (`--vent`)
 cambian con cada estilo y cada momento del día.
 
+**Eje de horas de los gráficos (9.4, opción C de Bruno, 2026-11-16):** fechas y, si sobra espacio, horas cortas ("6 p. m." o "18 h"). El paso (3, 6 o 12 h, 1, 2 o 3 días o una semana) se elige según el ancho para que los textos nunca se encimen; `probar_pagina.py` lo revisa. Descartadas: A (hora completa entre fechas) y B (solo fechas).
+
 **Otras animaciones de la parte de abajo:** los gráficos se dibujan como una línea que avanza
 (2,2 s) al aparecer en pantalla; las barras crecen; un punto verde "late" junto a "Última
 medición hace X min"; "¡Nuevo récord!" marca los récords recientes.

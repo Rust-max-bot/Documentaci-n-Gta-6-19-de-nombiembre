@@ -150,6 +150,8 @@
   if (formatoPrueba) en12 = formatoPrueba[1] === "12";
   var fHora12 = new Intl.DateTimeFormat("es-CL", { timeZone: ZONA, hour: "numeric", minute: "2-digit", hourCycle: "h12" });
   function hora(ts) { return (en12 ? fHora12 : fHora).format(new Date(ts)); }
+  // Hora corta para el eje de los gráficos (9.4, opción C de Bruno): "6 p. m." o "18 h".
+  function horaCorta(ts) { var h = partes(ts).hour; return en12 ? (h % 12 || 12) + (h < 12 ? " a. m." : " p. m.") : h + " h"; }
   // "de la mañana", "de la tarde"…: aclara una hora de 24 h en palabras.
   function momento(ts) {
     var h = partes(ts).hour, h12 = h % 12 || 12;
@@ -158,7 +160,17 @@
     return h12 + (h < 6 ? " de la madrugada" : h < 12 ? " de la mañana" : h < 20 ? " de la tarde" : " de la noche");
   }
   function dia(ts) { return fDia.format(new Date(ts)).replace(".", ""); }
-  function partes(ts) { var o = {}; fPartes.formatToParts(new Date(ts)).forEach(function (p) { o[p.type] = +p.value; }); return o; }
+  /* 9.4 (Bruno, 2026-11-16): formatToParts es lento y se llama miles de veces (servidores, tabla,
+     ejes...). Se guarda lo ya calculado por minuto (las partes no usan los segundos); con ~1.000
+     mediciones bajó de ~480 a ~40 ms en un celular lento simulado (y "Personalizar", de 460 a 30 ms). Quien la llama solo lee el objeto. */
+  var memoPartes = new Map();
+  function partes(ts) {
+    var n = typeof ts === "number" ? ts : +new Date(ts), clave = Math.floor(n / 60000), o = memoPartes.get(clave);
+    if (o) return o;
+    o = {}; fPartes.formatToParts(new Date(n)).forEach(function (p) { o[p.type] = +p.value; });
+    if (memoPartes.size > 50000) memoPartes.clear();
+    memoPartes.set(clave, o); return o;
+  }
   function desfase(ts) { var o = partes(ts); return Date.UTC(o.year, o.month - 1, o.day, o.hour, o.minute) - Math.floor(ts / 60000) * 60000; }
   /* Convierte "2026-11-19 02:10" (hora de Santiago) a un instante exacto */
   function deSantiago(texto) {
@@ -436,14 +448,26 @@
         s += '<line class="guia" x1="' + mi + '" x2="' + (ancho - md) + '" y1="' + y + '" y2="' + y + '"/>';
         s += '<g class="eje"><text x="' + (mi - 8) + '" y="' + (y + 4) + '" text-anchor="end">' + compacto(v) + "</text></g>";
       }
-      var cada = (ancho < 640 ? 12 : 6) * 3600000;  // marcas de hora
-      var p0 = partes(t0), marca = Date.UTC(p0.year, p0.month - 1, p0.day, 0, 0); marca -= desfase(marca);
-      for (; marca <= t1; marca += cada) {
-        if (marca < t0) continue;
-        var x = X(marca), medianoche = partes(marca).hour === 0;
-        if (medianoche) s += '<line class="dia" x1="' + x + '" x2="' + x + '" y1="' + ma + '" y2="' + (alto - mb) + '"/>';
-        s += '<g class="eje"><text x="' + x + '" y="' + (alto - 12) + '" text-anchor="middle">' + (medianoche ? dia(marca) : hora(marca)) + "</text></g>";
+      var p0 = partes(t0), inicio = Date.UTC(p0.year, p0.month - 1, p0.day, 0, 0); inicio -= desfase(inicio);
+      var porHora = (ancho - mi - md) / Math.max(1, (t1 - t0) / 3600000);   // px por hora
+      /* Marcas del eje (9.4, opción C de Bruno, 2026-11-16; descartadas A, hora completa, y B, solo
+         fechas). Antes eran fijas cada 6 o 12 h y se encimaban (ya a 384 px con 4 días). Ahora se
+         usa el paso más chico que deja espacio al texto: horas cortas (~44 px) o fechas (~52 px). */
+      var pasos = [3, 6, 12, 24, 48, 72, 168], cada = pasos[pasos.length - 1], marcas = [], marca;
+      for (var q = 0; q < pasos.length; q++) if (pasos[q] * porHora >= (pasos[q] < 24 ? 44 : 52)) { cada = pasos[q]; break; }
+      cada *= 3600000;
+      for (marca = inicio; marca <= t1; marca += cada) if (marca >= t0) marcas.push(marca);
+      var todasRayas = porHora * 24 >= 14;         // rayas de medianoche: todas si caben, si no solo las con fecha
+      if (todasRayas) {
+        for (marca = inicio; marca <= t1; marca += 864e5) if (marca >= t0)
+          s += '<line class="dia" x1="' + X(marca) + '" x2="' + X(marca) + '" y1="' + ma + '" y2="' + (alto - mb) + '"/>';
       }
+      marcas.forEach(function (marca) {
+        var x = X(marca), medianoche = partes(marca).hour === 0;
+        if (medianoche && !todasRayas) s += '<line class="dia" x1="' + x + '" x2="' + x + '" y1="' + ma + '" y2="' + (alto - mb) + '"/>';
+        var texto = medianoche ? dia(marca) : horaCorta(marca);
+        s += '<g class="eje"><text x="' + x + '" y="' + (alto - 12) + '" text-anchor="middle">' + texto + "</text></g>";
+      });
       if (SALIDA > t0 && SALIDA < t1) {            // marca del lanzamiento
         var xs = X(SALIDA);
         s += '<line class="salida" x1="' + xs + '" x2="' + xs + '" y1="' + (ma - 8) + '" y2="' + (alto - mb) + '"/>';

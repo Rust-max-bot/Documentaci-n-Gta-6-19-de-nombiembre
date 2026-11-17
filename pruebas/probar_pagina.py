@@ -1,7 +1,8 @@
 """Prueba de la página (regla "verificar de verdad" de CLAUDE.md).
 
 Abre web/index.html a 1280 y 384 px en los dos estilos ("Miami 1986" y "Miami 2026") y
-comprueba: sin errores en la consola, sin desborde horizontal y el estilo puesto. Antes de la
+comprueba: sin errores en la consola, sin desborde horizontal, el estilo puesto y que los textos
+de los ejes de los gráficos no se encimen (9.4, 2026-11-16). Antes de la
 captura baja por toda la página, como una persona, para que los gráficos se dibujen y las
 fotos carguen (si no, salen vacíos en la captura). Guarda una captura de cada caso en
 pruebas/capturas/.
@@ -12,6 +13,7 @@ a ese sitio, no cuenta como fallo de la página: se avisa aparte con los sitios 
 Uso:  python pruebas/probar_pagina.py
       python pruebas/probar_pagina.py --seccion "#videos"   (además, captura de cerca esa parte)
       python pruebas/probar_pagina.py --firefox   (lo mismo en Firefox; se puede juntar con --seccion)
+      python pruebas/probar_pagina.py --param "probar-formato=24"   (abre la página con ese parámetro)
 
 Con --firefox las capturas llevan "firefox_" delante para no pisar las de Edge. Firefox avisa
 en la consola que la letra Rajdhani de Google Fonts trae un detalle mal hecho ("Glyph bbox was
@@ -32,6 +34,23 @@ ERRORES_RED = ("ERR_TUNNEL_CONNECTION_FAILED", "ERR_PROXY", "ERR_NAME_NOT_RESOLV
                "ERR_INTERNET_DISCONNECTED", "ERR_CONNECTION_", "ERR_NETWORK_")
 
 
+# Textos de los ejes de los gráficos que se tocan entre sí (con 2 px de aire). Los de una misma
+# fila (misma "y") se ordenan de izquierda a derecha y se compara cada uno con el siguiente.
+ENCIMADOS = """() => {
+  const malos = [];
+  document.querySelectorAll('.grafico svg, svg').forEach(svg => {
+    const filas = {};
+    svg.querySelectorAll('g.eje text').forEach(t => { const y = t.getAttribute('y'); (filas[y] = filas[y] || []).push(t); });
+    Object.values(filas).forEach(f => {
+      const r = f.map(t => [t.getBoundingClientRect(), t.textContent]).filter(x => x[0].width).sort((a, b) => a[0].left - b[0].left);
+      for (let i = 1; i < r.length; i++)
+        if (r[i][0].left < r[i - 1][0].right + 2) malos.push(r[i - 1][1] + ' / ' + r[i][1]);
+    });
+  });
+  return malos;
+}"""
+
+
 def recorrer(pg):
     """Baja por la página de pantalla en pantalla y vuelve arriba."""
     alto = pg.evaluate("document.documentElement.scrollHeight")
@@ -49,6 +68,7 @@ def main():
     seccion = sys.argv[sys.argv.index("--seccion") + 1] if "--seccion" in sys.argv else None
     firefox = "--firefox" in sys.argv
     pre = "firefox_" if firefox else ""
+    param = "?" + sys.argv[sys.argv.index("--param") + 1] if "--param" in sys.argv else ""
     fallos = 0
     with sync_playwright() as p:
         nav = abrir(p, firefox)
@@ -61,7 +81,7 @@ def main():
                       if r.url.startswith("http") and any(e in (r.failure or "") for e in ERRORES_RED) else None)
                 pg.on("console", lambda m: errores.append(m.text) if m.type in ("error", "warning") else None)
                 pg.on("pageerror", lambda e: errores.append(str(e)))
-                pg.goto(PAGINA.as_uri())
+                pg.goto(PAGINA.as_uri() + param)
                 pg.wait_for_load_state("networkidle")
                 pg.get_by_role("button", name=boton).click()
                 pg.wait_for_timeout(1200)
@@ -76,7 +96,8 @@ def main():
                     tema: document.documentElement.dataset.tema,
                     desborde: document.documentElement.scrollWidth - document.documentElement.clientWidth,
                     ejemplo: !document.getElementById('aviso-ejemplo').hidden})""")
-                ok = r["tema"] == tema and r["desborde"] <= 0 and not errores
+                encimados = pg.evaluate(ENCIMADOS)
+                ok = r["tema"] == tema and r["desborde"] <= 0 and not errores and not encimados
                 fallos += not ok
                 pg.screenshot(path=str(CAPTURAS / f"{pre}pagina_{ancho}_{tema}.png"), full_page=True)
                 extra = ""
@@ -90,7 +111,8 @@ def main():
                                   clip={"x": b["x"], "y": b["y"] + y0, "width": b["width"], "height": min(b["height"], 1400)})
                     extra = f" + {pre}{nombre}_{ancho}_{tema}.png"
                 print(f"{'OK   ' if ok else 'FALLO'} {ancho}px {boton}: estilo={r['tema']} desborde={r['desborde']}px "
-                      f"errores={errores or 'ninguno'} datos={'de EJEMPLO' if r['ejemplo'] else 'reales'} "
+                      f"errores={errores or 'ninguno'} "
+                      f"ejes encimados={len(encimados) and (str(len(encimados)) + ' (' + encimados[0] + '...)') or 'ninguno'} datos={'de EJEMPLO' if r['ejemplo'] else 'reales'} "
                       f"-> {pre}pagina_{ancho}_{tema}.png{extra}")
                 if sin_red:
                     print(f"      aviso: la red de esta máquina no dejó cargar fotos de {', '.join(sorted(sin_red))}")
