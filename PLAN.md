@@ -233,9 +233,10 @@ Cada una, en corto. El porqué y las opciones descartadas, en `historial/PLAN_20
    a 35 MB en el mes. GitHub lo admite.
 5. **Las ejecuciones programadas solo corren desde `main`** y las claves nunca van en archivos
    del repositorio: van en los Secrets de GitHub (Twitch, YouTube y Kick).
-6. **Pendiente en las cuentas de Bruno** (de la revisión de seguridad): clave de YouTube
-   restringida a "YouTube Data API v3", regla en GitHub para que `main` no se pueda borrar ni
-   reescribir, y "Secret scanning" + "Push protection" activados.
+6. **Seguridad de las cuentas (hecho por Bruno, 2026-11-17):** clave de YouTube restringida a
+   "YouTube Data API v3"; ruleset "proteger main" (solo `deletion` y `non_fast_forward`: no
+   pedir pull request ni historial lineal, o el recolector no podría subir datos); "Secret
+   scanning" + "Push protection" activados. Para un `--force` autorizado, desactivar el ruleset.
 
 ## Estructura de carpetas
 
