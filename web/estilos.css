@@ -967,3 +967,17 @@ section[id], .bloque { scroll-margin-top: 16px; }
 @media (max-width: 600px) { .plataforma .ico { display: none; } }   /* en el celular la tabla va justa */
 h2 .ico, .v-sub .ico { color: var(--a2); stroke-width: 2.2; }
 :root[data-tema="ochenta"] h2 .ico, :root[data-tema="ochenta"] .v-sub .ico { filter: drop-shadow(0 0 3px var(--a2)) drop-shadow(0 0 9px var(--a2)); }
+
+/* ---------- Rockstar revisado a mano en "¿Se cayeron los servidores?" (pedido de Bruno, 2026-11-17) ----------
+   Se distingue de lo medido solo: recuadro punteado, etiqueta "a mano" y puntos sueltos sobre una
+   línea punteada (opción C de Bruno; descartadas A, cuadros huecos por día, y B, fichas). */
+.servicio.a-mano { margin: 4px 0; padding: 10px 12px; border: 1.5px dashed color-mix(in srgb, var(--tenue) 55%, transparent); border-radius: 12px; }
+.servicio .nombre small { display: inline-block; margin-left: 8px; padding: 1px 7px; border-radius: 999px; border: 1px dashed var(--tenue);
+  color: var(--tenue); font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; vertical-align: 2px; }
+.rev-nada, .rev-ultima { margin: 6px 0 0; font-size: 13px; color: var(--tenue); font-weight: 600; }
+.rev-linea { position: relative; height: 22px; margin: 0 7px; }
+.rev-linea::before { content: ""; position: absolute; left: -7px; right: -7px; top: 50%; border-top: 2px dashed color-mix(in srgb, var(--tenue) 50%, transparent); }
+.rev-linea i { position: absolute; top: 50%; width: 14px; height: 14px; margin: -7px 0 0 -7px; border-radius: 50%; background: var(--ok); box-shadow: 0 0 0 3px var(--panel); }
+.rev-linea i.mal { background: var(--mal); }
+:root[data-tema="ochenta"] .rev-linea i { box-shadow: 0 0 0 3px var(--panel), 0 0 10px currentColor; color: var(--ok); }
+:root[data-tema="ochenta"] .rev-linea i.mal { color: var(--mal); }

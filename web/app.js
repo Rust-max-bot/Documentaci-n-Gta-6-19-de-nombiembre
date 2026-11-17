@@ -608,7 +608,48 @@
     var html = '<div class="ahora ' + (!conDato.length ? "" : malos.length ? "mal" : "ok") + '" role="status"><i aria-hidden="true"></i><div><b>' + ahoraTxt +
       "</b><small>" + ahoraSub + "medición de las " + hora(fin) + (claveDia(fin) === claveDia(ahora()) ? "" : " del " + dia(fin)) + "</small></div></div>";
 
+    /* Rockstar, revisado a mano (pedido de Bruno, 2026-11-17). Su página de estado no le responde
+       al recolector: la revisa la skill "anotar-rockstar" en el Chrome de Bruno y la anota en
+       web/eventos.js con uno de dos textos fijos ("Rockstar: todos los servicios funcionando…" o
+       "Rockstar: problemas en…"). Aquí se leen esos eventos y se muestran como puntos sobre una
+       línea punteada (opción C de Bruno; descartadas A, cuadros huecos por día, y B, fichas), en
+       un recuadro punteado con la etiqueta "a mano", para que no se confunda con lo medido solo.
+       "?probar-rockstar" suma revisiones INVENTADAS (solo en la pantalla de quien la abre, para
+       ver cómo se ve con varias y con un problema; no son datos). */
+    var revisiones = (window.EVENTOS || []).map(function (e) {
+      var ts = deSantiago(e.hora), t = e.texto || "";
+      if (isNaN(ts) || !/^\s*Rockstar\s*:/i.test(t)) return null;
+      var ok = /todos los servicios funcionando|operativ|vuelve a funcionar|resuelt/i.test(t);
+      return { ts: ts, ok: ok, texto: t.replace(/^\s*Rockstar\s*:\s*/i, "") };
+    }).filter(Boolean);
+    if (/[?&]probar-rockstar(?:&|$)/.test(location.search)) {   // INVENTADAS, solo para ver el diseño
+      [0.15, 0.4, 0.55, 0.8].forEach(function (f, j) {
+        revisiones.push({ ts: M[0].ts + (fin - M[0].ts) * f, ok: j !== 2, texto: j !== 2 ? "todos los servicios funcionando (ejemplo)" : "problemas en GTA Online (PS5) (ejemplo)" });
+      });
+    }
+    revisiones.sort(function (a, b) { return a.ts - b.ts; });
+    function estadoRev(r) { return r.ok ? "funcionando" : "con problemas"; }
+    function filaRockstar(nombre) {
+      var ult = revisiones[revisiones.length - 1], malasR = revisiones.filter(function (r) { return !r.ok; }).length;
+      var etiqueta = '<div class="tira-titulo">Revisado a mano · solo cuando alguien mira</div>';
+      var cuerpo;
+      if (!revisiones.length) cuerpo = etiqueta + '<p class="rev-nada">Todavía no hay revisiones.</p>';
+      else {   // puntos sobre una línea punteada que cubre todo el periodo
+        var t0 = M[0].ts, largo = Math.max(1, fin - t0);
+        cuerpo = etiqueta + '<div class="rev-linea">' + revisiones.map(function (r, j) {
+          var x = Math.min(100, Math.max(0, (r.ts - t0) / largo * 100));
+          return '<i class="' + (r.ok ? "ok" : "mal") + '" style="left:' + x.toFixed(2) + "%;--i:" + j + '" title="' + dia(r.ts) + " " + hora(r.ts) + " · " + estadoRev(r) + '"></i>';
+        }).join("") + '</div><div class="tira-pie"><span>' + dia(t0) + "</span><span>hoy</span></div>";
+      }
+      if (ult) cuerpo += '<p class="rev-ultima">Última revisión: ' + dia(ult.ts) + ", " + hora(ult.ts) + " · " + estadoRev(ult) + "</p>";
+      var veredicto = !revisiones.length ? '<div class="veredicto">Sin revisiones<small>se anotan a mano</small></div>'
+        : malasR ? '<div class="veredicto si">Sí, tuvo problemas<small>en ' + malasR + " de " + revisiones.length + (revisiones.length > 1 ? " revisiones" : " revisión") + " a mano</small></div>"
+        : '<div class="veredicto no">No se vio caída<small>en ' + revisiones.length + (revisiones.length > 1 ? " revisiones" : " revisión") + " a mano</small></div>";
+      return '<div class="servicio a-mano"><div class="nombre">' + nombre + '<small>a mano</small></div><div class="tiras">' + cuerpo + "</div>" + veredicto + "</div>";
+    }
+
     html += SERVICIOS.map(function (s) {
+      if (s[0] === "rockstar") return filaRockstar(s[1]);
       var malas = 0, cd = 0;
       for (var i = 0; i < n; i++) { var e = estado(i, s[0]); if (e != null) { cd++; if (e !== "ok") malas++; } }
       var tiras = '<div class="tira-titulo">Por día</div>' + tiraDias(s[0]) + '<div class="tira-titulo">Últimas 24 horas</div>' + tiraHoras(s[0], true);

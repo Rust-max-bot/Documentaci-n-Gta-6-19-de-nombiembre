@@ -1,5 +1,5 @@
 {
-  "1": "fuentes.py",
+  "1": "Falla",
   "2": "Decisiones ya tomadas",
   "3": "Plan del proyecto (PLAN.md)",
   "4": "steps",
@@ -20,5 +20,12 @@
   "34": "Plan de trabajo",
   "35": "generar_web.py",
   "36": "gota",
-  "41": "sincronizar_datos.ps1"
+  "37": "fuentes.py",
+  "38": "trends_extra.py",
+  "39": "probar_fuentes.py",
+  "40": "youtube_es",
+  "41": "sincronizar_datos.ps1",
+  "42": "pedir",
+  "43": "json",
+  "44": "_serie_trends"
 }
