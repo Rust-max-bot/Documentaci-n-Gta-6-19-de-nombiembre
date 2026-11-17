@@ -19,8 +19,13 @@
     resumen: true,      // Resumen del día al cambiar de día
     tabla: true,        // tabla de Twitch y Kick al cambiar de día
     lista: true,        // línea de tiempo al elegir un filtro (fundido corto)
-    despliegue: true    // abrir/cerrar Titulares y "Ver los N eventos" de la línea de tiempo
+    despliegue: true,   // abrir/cerrar Titulares y "Ver los N eventos" de la línea de tiempo
+    portada: true       // movimiento continuo de la portada: estrellas, sol, nubes, aves, mar, palmeras, espuma
+                        // y neón del título (9.11 b). En false se PAUSAN (quedan quietas, no desaparecen):
+                        // freno si la página va lenta. Para probar sin cambiar esto: ?sin-anim=portada
   };
+  var PRUEBA = /[?&]sin-anim=portada(?:&|$)/.test(location.search);
+  document.documentElement.classList.toggle("sin-anim-portada", !ACTIVAS.portada || PRUEBA);
   var QUIETO = window.matchMedia("(prefers-reduced-motion: reduce)");
   var EASE = "cubic-bezier(.2,.8,.2,1)";
 
@@ -117,7 +122,7 @@
 
     /* Línea de tiempo al elegir un filtro: la gota rosada se desliza (gota() de app.js) y la lista cambia
        con un fundido corto, sin cascada (se usa mucho). */
-    lista: function (caja) {
+    lista: function (caja) {   // también la lista de Titulares al cambiar de página o de día (9.11 b)
       if (!ACTIVAS.lista || QUIETO.matches || !caja) return;
       caja.animate([{ opacity: 0, transform: "translateY(6px)" }, { opacity: 1, transform: "none" }], { duration: 180, easing: "ease-out" });
     }

@@ -894,7 +894,7 @@
     $("noticias-filtro").addEventListener("click", function (e) {
       var b = e.target.closest("[data-dia]"); if (!b) return;
       var barras = $("noticias-filtro").querySelector(".nt-barras"), x = barras ? barras.scrollLeft : 0;
-      filtro = filtro === b.dataset.dia ? "" : b.dataset.dia; aplicar(); pintarFiltro(); pintar();
+      filtro = filtro === b.dataset.dia ? "" : b.dataset.dia; aplicar(); pintarFiltro(); fundir = true; pintar();
       barras = $("noticias-filtro").querySelector(".nt-barras"); if (barras) barras.scrollLeft = x;   // no saltar al tocar
     });
     aplicar(); pintarFiltro();
@@ -969,6 +969,7 @@
     }
     gota(casillas, "gota-sel", "button.activo");
     if ("ResizeObserver" in window) new ResizeObserver(function () { pintarPaginas(); }).observe(nav.parentNode);
+    var fundir = false;   // true solo cuando la persona cambia de página o de día
     function pintar() {
       var desde = (actual - 1) * POR_PAGINA, hasta = Math.min(todas.length, desde + POR_PAGINA);
       var turno = ++pintando, trozo = todas.slice(desde, hasta);
@@ -994,6 +995,9 @@
       } else {
         ul.style.minHeight = "";
         ul.innerHTML = trozo.map(tarjeta).join("") || "<li>Todavía no hay titulares.</li>";
+        // Fundido corto al cambiar de página o de día (9.11 b). Va aquí, con los titulares de verdad, y no
+        // en el aviso "Cargando titulares…" (si el día no estaba cargado, pintar() corre dos veces).
+        if (fundir) { fundir = false; ANIM.lista(ul); }
       }
       $("noticias-cuenta").textContent = todas.length
         ? todas.length + (filtro ? " titulares del " + nombreDia(filtro) : " titulares, del más nuevo al más viejo") + " · mostrando " + (desde + 1) + " a " + hasta +
@@ -1006,7 +1010,7 @@
       var b = e.target.closest("button"); if (!b || b.disabled) return;
       var p = b.dataset.paso ? actual + +b.dataset.paso : +b.dataset.pagina;
       p = Math.min(total, Math.max(1, p)); if (p === actual) return;
-      actual = p; pintar();
+      actual = p; fundir = true; pintar();
     });
     // La primera página de la lista completa se pinta al tocar "Ver los N titulares" (ver arriba).
   })();

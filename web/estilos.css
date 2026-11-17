@@ -521,6 +521,11 @@ td a:hover, td a:focus-visible { color: var(--a1); text-decoration-color: var(--
 .medios-barras b { text-align: right; font-variant-numeric: tabular-nums; }
 .nt-ver { display: block; margin: 16px auto 0; cursor: pointer; padding: 10px 20px; border-radius: 999px; border: 1px solid var(--a1); background: none; color: var(--texto); font: 700 13px var(--f-texto); letter-spacing: .06em; text-transform: uppercase; }
 .nt-ver[hidden] { display: none; }
+/* Interruptor "portada" de web/animaciones.js (9.11 b): pausa el movimiento continuo de la portada.
+   Las torres que suben al cambiar de estilo y la cortina no se tocan. */
+:root.sin-anim-portada :is(.estrellas, .sol80, .sol26, .nube, .aves, .mar, .palma),
+:root.sin-anim-portada .calle-playa::after,
+:root.sin-anim-portada[data-tema="ochenta"] h1 { animation-play-state: paused !important; }
 /* Lista completa de titulares: se abre y cierra con una cortina (9.9, opción A). Sin display:none para poder
    animar: cerrada no ocupa lugar (0fr), no se ve y no se puede enfocar (visibility). Se puede interrumpir. */
 .despliegue { display: grid; grid-template-rows: 0fr; opacity: 0; transform: translateY(-8px); visibility: hidden;

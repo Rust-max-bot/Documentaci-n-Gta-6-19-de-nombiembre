@@ -18,9 +18,9 @@
     "semantic_hash": ""
   },
   "web/app.js": {
-    "mtime": 1794956486.5592926,
-    "seen": 1794956701.1534092,
-    "ast_hash": "8a07ead6954a6b1574f27ca6ce1baebf",
+    "mtime": 1794957551.2722654,
+    "seen": 1794957771.0522785,
+    "ast_hash": "ca2d45a861faca63c51c4ccbeb7fa45b",
     "semantic_hash": ""
   },
   "web/datos-ejemplo.js": {
@@ -42,15 +42,15 @@
     "semantic_hash": "9b31786b637be3c13978bec4c2330752"
   },
   "CLAUDE.md": {
-    "mtime": 1794861573.831504,
-    "seen": 1794951380.1556065,
-    "ast_hash": "b9c210fb36cd26d777e115730948c612",
+    "mtime": 1794957205.5249758,
+    "seen": 1794957771.0522902,
+    "ast_hash": "06a9a2795e2467cec48553afe8f73d02",
     "semantic_hash": ""
   },
   "ESTADO_ACTUAL.md": {
-    "mtime": 1794956326.5932777,
-    "seen": 1794956701.1534252,
-    "ast_hash": "5ea4377e0288d343dbf09e38bc8696ba",
+    "mtime": 1794957205.5264814,
+    "seen": 1794957771.0522943,
+    "ast_hash": "629118cdfcfdd5f1f302e06ea36533b4",
     "semantic_hash": ""
   },
   "GUIA_CLAVES.md": {
@@ -60,9 +60,9 @@
     "semantic_hash": ""
   },
   "PLAN.md": {
-    "mtime": 1794956326.592273,
-    "seen": 1794956701.153432,
-    "ast_hash": "164b0cef50cb3d95d360848158b63688",
+    "mtime": 1794957205.5264814,
+    "seen": 1794957771.052299,
+    "ast_hash": "ebc0ca2cb16c65c4b8bdc4195da18074",
     "semantic_hash": ""
   },
   "README.md": {
@@ -132,9 +132,9 @@
     "semantic_hash": ""
   },
   "recolector/LEEME.md": {
-    "mtime": 1794950978.108167,
-    "seen": 1794951380.1556263,
-    "ast_hash": "8e453707a60316cc64ce0b3bab1dfa41",
+    "mtime": 1794956717.0499268,
+    "seen": 1794957771.0523245,
+    "ast_hash": "9175c97cb0b772d9395fe970c1a2416d",
     "semantic_hash": ""
   },
   "recolector/generar_web.py": {
@@ -342,9 +342,9 @@
     "semantic_hash": ""
   },
   "web/animaciones.js": {
-    "mtime": 1794956085.1763096,
-    "seen": 1794956313.6204545,
-    "ast_hash": "5c9e77ab087920104192b08b896433c2",
+    "mtime": 1794957551.263817,
+    "seen": 1794957771.0522764,
+    "ast_hash": "f73e06d5da4e93b3253faeef734e15c2",
     "semantic_hash": ""
   },
   "historial/PLAN_2026-11-17-2.md": {
