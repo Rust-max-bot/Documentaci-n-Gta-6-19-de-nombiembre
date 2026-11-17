@@ -209,7 +209,7 @@
   /* Foto de perfil del canal de Twitch (se guarda desde el 13 nov; las mediciones de antes no
      la tienen y muestran un círculo vacío para que los nombres queden alineados). */
   function foto(url) {
-    return /^https:\/\/static-cdn\.jtvnw\.net\//.test(url || "")
+    return /^https:\/\/(static-cdn\.jtvnw\.net|files\.kick\.com)\//.test(url || "")
       ? '<img class="avatar" src="' + limpio(url) + '" alt="" loading="lazy" width="28" height="28">'
       : '<i class="avatar" aria-hidden="true"></i>';
   }
@@ -737,7 +737,7 @@
         canal: function (m) { return m.canal && { nombre: m.canal.nombre, espectadores: m.canal.espectadores, url: urlCanal(m.canal.login), foto: foto(m.canal.foto) }; },
         hay: function () { return true; } },
       { nombre: "Kick", clase: "pl-kick", esp: function (m) { return m.kickEsp; }, error: function (m) { return m.errorKick; },
-        canal: function (m) { return m.kickCanal && { nombre: m.kickCanal.canal, espectadores: m.kickCanal.espectadores, url: urlKick(m.kickCanal.canal), foto: foto("") }; },
+        canal: function (m) { return m.kickCanal && { nombre: m.kickCanal.canal, espectadores: m.kickCanal.espectadores, url: urlKick(m.kickCanal.canal), foto: foto((D.fotos_kick || {})[m.kickCanal.canal]) }; },
         hay: function (m) { return m.kickEsp != null || m.errorKick; } }   // antes del 16 nov no se medía
     ];
     function fila(m, pl, primera, filasHora) {

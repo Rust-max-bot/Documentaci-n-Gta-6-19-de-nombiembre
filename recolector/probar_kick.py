@@ -69,6 +69,12 @@ def main():
         if not cursor:
             break
     print(f"Directos en vivo ahora: {directos}; espectadores sumados: {total}")
+    # 9.10: la función real del recolector (sin guardar nada) y su validación.
+    import fuentes, validar
+    res = fuentes.kick({})
+    validar._kick(res)
+    con = [c for c in res["canales"] if c.get("foto")]
+    print(f"fuentes.kick(): {len(res['canales'])} canales guardados, {len(con)} con foto de files.kick.com; validación: bien")
 
 
 if __name__ == "__main__":

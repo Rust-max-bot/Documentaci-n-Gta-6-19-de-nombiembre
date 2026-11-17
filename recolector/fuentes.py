@@ -596,6 +596,15 @@ def youtube_trailers(estado):
     return {"unidades": 1, "pedidos": len(YOUTUBE_TRAILERS), "videos": videos}
 
 
+KICK_FOTOS = "https://files.kick.com/"
+
+
+def _foto_kick(directo):
+    """{"foto": url} si el directo trae una foto de perfil de files.kick.com; si no, {}."""
+    url = (directo.get("broadcaster_user") or {}).get("profile_picture")
+    return {"foto": url} if isinstance(url, str) and url.startswith(KICK_FOTOS) and len(url) <= 300 else {}
+
+
 def kick(estado):
     """Tarea 6.6: espectadores de GTA VI en Kick (API oficial, clave temporal de la app de Bruno).
     Suma el público de todos los directos de la categoría y guarda los de más público."""
@@ -623,8 +632,12 @@ def kick(estado):
             completo = True
             break
     directos.sort(key=lambda x: x.get("viewer_count", 0), reverse=True)
+    # Tarea 9.10: la lista de directos ya trae la foto de perfil (broadcaster_user.profile_picture;
+    # verificado el 2026-11-17: 221 de 221 directos). Solo se guarda si es de files.kick.com: las fotos
+    # por defecto de Kick están en kick.com y la página ya dibuja su propio reemplazo.
     canales = [{"canal": (x.get("channel") or {}).get("slug", ""), "espectadores": x.get("viewer_count", 0),
-                "idioma": x.get("language_code", "")} for x in directos[:KICK_CANALES]]
+                "idioma": x.get("language_code", ""),
+                **_foto_kick(x)} for x in directos[:KICK_CANALES]]
     return {"categoria": KICK_CATEGORIA, "espectadores": sum(x.get("viewer_count", 0) for x in directos),
             "transmisiones": len(directos), "completo": completo, "canales": canales}
 

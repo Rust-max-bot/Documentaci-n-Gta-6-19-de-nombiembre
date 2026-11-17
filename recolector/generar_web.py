@@ -305,7 +305,14 @@ def convertir(medidas):
     noticias.sort(key=lambda n: n["t"])
     trends_horas = (serie_trends(horas, hora_de_medicion(medidas[0]["t"]), hora_de_medicion(medidas[-1]["t"]))
                     if medidas else [])
-    return {"mediciones": mediciones, "trends_horas": trends_horas, "youtube": youtube, "youtube_es": youtube_es, "noticias": noticias,
+    # Tarea 9.10: foto de perfil de cada canal de Kick (la más reciente). Un solo diccionario en vez de una
+    # foto por medición: pesa poco y las mediciones del 16 nov, que no la guardaron, también la usan.
+    fotos_kick = {}
+    for m in medidas:
+        for c in (m.get("kick") or {}).get("canales") or []:
+            if str(c.get("foto") or "").startswith("https://files.kick.com/"):
+                fotos_kick[c["canal"]] = c["foto"]
+    return {"mediciones": mediciones, "fotos_kick": fotos_kick, "trends_horas": trends_horas, "youtube": youtube, "youtube_es": youtube_es, "noticias": noticias,
             "records_youtube": records_youtube,
             "comparacion": comparacion,
             "trailers": sorted(trailers.values(), key=lambda v: v.get("publicado") or "")}   # todos: la página los muestra por páginas (Bruno, 2026-11-13)

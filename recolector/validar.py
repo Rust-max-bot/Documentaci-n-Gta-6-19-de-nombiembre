@@ -65,6 +65,8 @@ def _kick(r):
         exigir(isinstance(c.get("canal"), str) and c["canal"], "Kick: canal sin nombre")
         exigir(es_entero(c.get("espectadores")), "Kick: espectadores de un canal inválidos")
         exigir(isinstance(c.get("idioma"), str), "Kick: idioma inválido")
+        exigir("foto" not in c or (isinstance(c["foto"], str) and c["foto"].startswith("https://files.kick.com/")),
+               "Kick: foto de perfil con dirección inesperada")
     exigir(sum(c["espectadores"] for c in canales) <= r["espectadores"], "Kick: los canales suman más que el total")
 
 
