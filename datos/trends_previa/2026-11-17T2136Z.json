@@ -1,0 +1,4818 @@
+{
+ "v": 1,
+ "t": "2026-11-17T21:36:51Z",
+ "origen": "github",
+ "ejecucion": "44181621727",
+ "tarea": "6.7",
+ "nota": "Interés de 0 a 100 dentro de cada pregunta: no se comparan entre preguntas.",
+ "paises": {
+  "palabra": "GTA 6",
+  "rango": "now 7-d",
+  "lista": [
+   {
+    "codigo": "GB",
+    "pais": "Reino Unido",
+    "interes": 100
+   },
+   {
+    "codigo": "DE",
+    "pais": "Alemania",
+    "interes": 95
+   },
+   {
+    "codigo": "FR",
+    "pais": "Francia",
+    "interes": 90
+   },
+   {
+    "codigo": "NL",
+    "pais": "Países Bajos",
+    "interes": 86
+   },
+   {
+    "codigo": "US",
+    "pais": "Estados Unidos",
+    "interes": 83
+   },
+   {
+    "codigo": "NO",
+    "pais": "Noruega",
+    "interes": 81
+   },
+   {
+    "codigo": "AU",
+    "pais": "Australia",
+    "interes": 80
+   },
+   {
+    "codigo": "NZ",
+    "pais": "Nueva Zelanda",
+    "interes": 77
+   },
+   {
+    "codigo": "DK",
+    "pais": "Dinamarca",
+    "interes": 76
+   },
+   {
+    "codigo": "IE",
+    "pais": "Irlanda",
+    "interes": 74
+   },
+   {
+    "codigo": "CH",
+    "pais": "Suiza",
+    "interes": 73
+   },
+   {
+    "codigo": "PL",
+    "pais": "Polonia",
+    "interes": 72
+   },
+   {
+    "codigo": "CA",
+    "pais": "Canadá",
+    "interes": 71
+   },
+   {
+    "codigo": "BE",
+    "pais": "Bélgica",
+    "interes": 69
+   },
+   {
+    "codigo": "AT",
+    "pais": "Austria",
+    "interes": 68
+   },
+   {
+    "codigo": "FI",
+    "pais": "Finlandia",
+    "interes": 68
+   },
+   {
+    "codigo": "SE",
+    "pais": "Suecia",
+    "interes": 67
+   },
+   {
+    "codigo": "CZ",
+    "pais": "Chequia",
+    "interes": 59
+   },
+   {
+    "codigo": "LT",
+    "pais": "Lituania",
+    "interes": 58
+   },
+   {
+    "codigo": "PT",
+    "pais": "Portugal",
+    "interes": 54
+   },
+   {
+    "codigo": "RO",
+    "pais": "Rumanía",
+    "interes": 54
+   },
+   {
+    "codigo": "HU",
+    "pais": "Hungría",
+    "interes": 53
+   },
+   {
+    "codigo": "CL",
+    "pais": "Chile",
+    "interes": 53
+   },
+   {
+    "codigo": "SK",
+    "pais": "Eslovaquia",
+    "interes": 47
+   },
+   {
+    "codigo": "MX",
+    "pais": "México",
+    "interes": 46
+   },
+   {
+    "codigo": "BR",
+    "pais": "Brasil",
+    "interes": 46
+   },
+   {
+    "codigo": "ES",
+    "pais": "España",
+    "interes": 45
+   },
+   {
+    "codigo": "IT",
+    "pais": "Italia",
+    "interes": 44
+   },
+   {
+    "codigo": "HR",
+    "pais": "Croacia",
+    "interes": 43
+   },
+   {
+    "codigo": "CR",
+    "pais": "Costa Rica",
+    "interes": 39
+   },
+   {
+    "codigo": "RS",
+    "pais": "Serbia",
+    "interes": 37
+   },
+   {
+    "codigo": "AE",
+    "pais": "Emiratos Árabes Unidos",
+    "interes": 36
+   },
+   {
+    "codigo": "IL",
+    "pais": "Israel",
+    "interes": 35
+   },
+   {
+    "codigo": "BG",
+    "pais": "Bulgaria",
+    "interes": 34
+   },
+   {
+    "codigo": "ZA",
+    "pais": "Sudáfrica",
+    "interes": 34
+   },
+   {
+    "codigo": "CO",
+    "pais": "Colombia",
+    "interes": 34
+   },
+   {
+    "codigo": "DO",
+    "pais": "República Dominicana",
+    "interes": 33
+   },
+   {
+    "codigo": "TR",
+    "pais": "Turquía",
+    "interes": 32
+   },
+   {
+    "codigo": "GR",
+    "pais": "Grecia",
+    "interes": 31
+   },
+   {
+    "codigo": "AR",
+    "pais": "Argentina",
+    "interes": 31
+   },
+   {
+    "codigo": "PK",
+    "pais": "Pakistán",
+    "interes": 27
+   },
+   {
+    "codigo": "SG",
+    "pais": "Singapur",
+    "interes": 26
+   },
+   {
+    "codigo": "MA",
+    "pais": "Marruecos",
+    "interes": 26
+   },
+   {
+    "codigo": "PE",
+    "pais": "Perú",
+    "interes": 24
+   },
+   {
+    "codigo": "VE",
+    "pais": "Venezuela",
+    "interes": 22
+   },
+   {
+    "codigo": "EC",
+    "pais": "Ecuador",
+    "interes": 22
+   },
+   {
+    "codigo": "HK",
+    "pais": "Hong Kong",
+    "interes": 20
+   },
+   {
+    "codigo": "DZ",
+    "pais": "Argelia",
+    "interes": 19
+   },
+   {
+    "codigo": "PH",
+    "pais": "Filipinas",
+    "interes": 19
+   },
+   {
+    "codigo": "MY",
+    "pais": "Malasia",
+    "interes": 18
+   },
+   {
+    "codigo": "IN",
+    "pais": "India",
+    "interes": 15
+   },
+   {
+    "codigo": "RU",
+    "pais": "Rusia",
+    "interes": 15
+   },
+   {
+    "codigo": "SA",
+    "pais": "Arabia Saudí",
+    "interes": 14
+   },
+   {
+    "codigo": "EG",
+    "pais": "Egipto",
+    "interes": 14
+   },
+   {
+    "codigo": "NG",
+    "pais": "Nigeria",
+    "interes": 13
+   },
+   {
+    "codigo": "UA",
+    "pais": "Ucrania",
+    "interes": 11
+   },
+   {
+    "codigo": "BD",
+    "pais": "Bangladés",
+    "interes": 10
+   },
+   {
+    "codigo": "ID",
+    "pais": "Indonesia",
+    "interes": 7
+   },
+   {
+    "codigo": "TH",
+    "pais": "Tailandia",
+    "interes": 7
+   },
+   {
+    "codigo": "VN",
+    "pais": "Vietnam",
+    "interes": 5
+   },
+   {
+    "codigo": "IR",
+    "pais": "Irán",
+    "interes": 4
+   },
+   {
+    "codigo": "JP",
+    "pais": "Japón",
+    "interes": 1
+   }
+  ]
+ },
+ "relacionadas": {
+  "palabra": "GTA 6",
+  "rango": "now 7-d",
+  "mas_buscadas": [
+   {
+    "busqueda": "gta 6 release",
+    "valor": "100"
+   },
+   {
+    "busqueda": "gta 6 release date",
+    "valor": "72"
+   },
+   {
+    "busqueda": "ps5 gta 6",
+    "valor": "67"
+   },
+   {
+    "busqueda": "ps5",
+    "valor": "67"
+   },
+   {
+    "busqueda": "gta 6 xbox",
+    "valor": "58"
+   },
+   {
+    "busqueda": "xbox",
+    "valor": "58"
+   },
+   {
+    "busqueda": "gta 6 pc",
+    "valor": "37"
+   },
+   {
+    "busqueda": "when gta 6 come out",
+    "valor": "31"
+   },
+   {
+    "busqueda": "when does gta 6 come out",
+    "valor": "25"
+   },
+   {
+    "busqueda": "gta 6 online",
+    "valor": "22"
+   },
+   {
+    "busqueda": "is gta 6 out",
+    "valor": "21"
+   },
+   {
+    "busqueda": "gta 6 ultimate edition",
+    "valor": "20"
+   },
+   {
+    "busqueda": "what is gta 6",
+    "valor": "18"
+   },
+   {
+    "busqueda": "playstation",
+    "valor": "15"
+   },
+   {
+    "busqueda": "gta 6 price",
+    "valor": "15"
+   },
+   {
+    "busqueda": "gta6",
+    "valor": "14"
+   },
+   {
+    "busqueda": "gta 6 pre order",
+    "valor": "13"
+   },
+   {
+    "busqueda": "gta 6 xbox one",
+    "valor": "13"
+   },
+   {
+    "busqueda": "xbox one",
+    "valor": "12"
+   },
+   {
+    "busqueda": "gta 6 map",
+    "valor": "11"
+   },
+   {
+    "busqueda": "how much is gta 6",
+    "valor": "10"
+   },
+   {
+    "busqueda": "xbox series s gta 6",
+    "valor": "10"
+   },
+   {
+    "busqueda": "xbox series s",
+    "valor": "10"
+   },
+   {
+    "busqueda": "when is gta 6 coming out",
+    "valor": "10"
+   },
+   {
+    "busqueda": "gta 6 lucia",
+    "valor": "10"
+   }
+  ],
+  "en_aumento": [
+   {
+    "busqueda": "gta 6 metacritic",
+    "valor": "+300 %"
+   },
+   {
+    "busqueda": "gta 6 review embargo",
+    "valor": "+200 %"
+   },
+   {
+    "busqueda": "what time does gta 6 come out",
+    "valor": "+200 %"
+   },
+   {
+    "busqueda": "can you play gta 6 on xbox one",
+    "valor": "+180 %"
+   },
+   {
+    "busqueda": "xbox cloud gaming",
+    "valor": "+180 %"
+   },
+   {
+    "busqueda": "gta 6 xbox one",
+    "valor": "+160 %"
+   },
+   {
+    "busqueda": "gta 6 release date and time",
+    "valor": "+160 %"
+   },
+   {
+    "busqueda": "xbox one",
+    "valor": "+140 %"
+   },
+   {
+    "busqueda": "gta 6 reviews",
+    "valor": "+130 %"
+   },
+   {
+    "busqueda": "gta 6 poster",
+    "valor": "+110 %"
+   },
+   {
+    "busqueda": "gta 6 review",
+    "valor": "+100 %"
+   },
+   {
+    "busqueda": "gta 6 countdown",
+    "valor": "+90 %"
+   },
+   {
+    "busqueda": "gta 6 release time",
+    "valor": "+80 %"
+   },
+   {
+    "busqueda": "gta 6 fiyat",
+    "valor": "+80 %"
+   },
+   {
+    "busqueda": "gta 6 lucia",
+    "valor": "+70 %"
+   },
+   {
+    "busqueda": "gta 6 radio stations",
+    "valor": "+70 %"
+   },
+   {
+    "busqueda": "gta 6 ps4",
+    "valor": "+50 %"
+   },
+   {
+    "busqueda": "gta 6 release date in india",
+    "valor": "+50 %"
+   },
+   {
+    "busqueda": "gta 6 carrefour",
+    "valor": "+50 %"
+   },
+   {
+    "busqueda": "gta 6 cd",
+    "valor": "+40 %"
+   }
+  ]
+ },
+ "comparacion": {
+  "palabras": [
+   "GTA 6",
+   "GTA 5",
+   "Minecraft",
+   "Fortnite",
+   "Marvel Rivals"
+  ],
+  "rango": "now 7-d",
+  "puntos": [
+   {
+    "t": "2026-11-10T21:00:00Z",
+    "interes": {
+     "GTA 6": 47,
+     "GTA 5": 7,
+     "Minecraft": 26,
+     "Fortnite": 22,
+     "Marvel Rivals": 4
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-10T22:00:00Z",
+    "interes": {
+     "GTA 6": 49,
+     "GTA 5": 7,
+     "Minecraft": 29,
+     "Fortnite": 22,
+     "Marvel Rivals": 3
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-10T23:00:00Z",
+    "interes": {
+     "GTA 6": 45,
+     "GTA 5": 7,
+     "Minecraft": 30,
+     "Fortnite": 23,
+     "Marvel Rivals": 3
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-11T00:00:00Z",
+    "interes": {
+     "GTA 6": 41,
+     "GTA 5": 6,
+     "Minecraft": 27,
+     "Fortnite": 24,
+     "Marvel Rivals": 3
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-11T01:00:00Z",
+    "interes": {
+     "GTA 6": 37,
+     "GTA 5": 6,
+     "Minecraft": 27,
+     "Fortnite": 22,
+     "Marvel Rivals": 2
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-11T02:00:00Z",
+    "interes": {
+     "GTA 6": 35,
+     "GTA 5": 6,
+     "Minecraft": 27,
+     "Fortnite": 20,
+     "Marvel Rivals": 2
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-11T03:00:00Z",
+    "interes": {
+     "GTA 6": 32,
+     "GTA 5": 5,
+     "Minecraft": 25,
+     "Fortnite": 19,
+     "Marvel Rivals": 2
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-11T04:00:00Z",
+    "interes": {
+     "GTA 6": 28,
+     "GTA 5": 6,
+     "Minecraft": 24,
+     "Fortnite": 16,
+     "Marvel Rivals": 2
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-11T05:00:00Z",
+    "interes": {
+     "GTA 6": 28,
+     "GTA 5": 5,
+     "Minecraft": 22,
+     "Fortnite": 14,
+     "Marvel Rivals": 2
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-11T06:00:00Z",
+    "interes": {
+     "GTA 6": 25,
+     "GTA 5": 5,
+     "Minecraft": 20,
+     "Fortnite": 12,
+     "Marvel Rivals": 1
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-11T07:00:00Z",
+    "interes": {
+     "GTA 6": 25,
+     "GTA 5": 4,
+     "Minecraft": 16,
+     "Fortnite": 10,
+     "Marvel Rivals": 1
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-11T08:00:00Z",
+    "interes": {
+     "GTA 6": 26,
+     "GTA 5": 4,
+     "Minecraft": 16,
+     "Fortnite": 9,
+     "Marvel Rivals": 1
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-11T09:00:00Z",
+    "interes": {
+     "GTA 6": 25,
+     "GTA 5": 4,
+     "Minecraft": 17,
+     "Fortnite": 9,
+     "Marvel Rivals": 1
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-11T10:00:00Z",
+    "interes": {
+     "GTA 6": 26,
+     "GTA 5": 5,
+     "Minecraft": 17,
+     "Fortnite": 9,
+     "Marvel Rivals": 1
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-11T11:00:00Z",
+    "interes": {
+     "GTA 6": 27,
+     "GTA 5": 4,
+     "Minecraft": 18,
+     "Fortnite": 9,
+     "Marvel Rivals": 1
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-11T12:00:00Z",
+    "interes": {
+     "GTA 6": 28,
+     "GTA 5": 4,
+     "Minecraft": 18,
+     "Fortnite": 9,
+     "Marvel Rivals": 1
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-11T13:00:00Z",
+    "interes": {
+     "GTA 6": 29,
+     "GTA 5": 5,
+     "Minecraft": 19,
+     "Fortnite": 11,
+     "Marvel Rivals": 1
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-11T14:00:00Z",
+    "interes": {
+     "GTA 6": 28,
+     "GTA 5": 5,
+     "Minecraft": 20,
+     "Fortnite": 12,
+     "Marvel Rivals": 1
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-11T15:00:00Z",
+    "interes": {
+     "GTA 6": 30,
+     "GTA 5": 5,
+     "Minecraft": 21,
+     "Fortnite": 13,
+     "Marvel Rivals": 1
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-11T16:00:00Z",
+    "interes": {
+     "GTA 6": 32,
+     "GTA 5": 6,
+     "Minecraft": 23,
+     "Fortnite": 14,
+     "Marvel Rivals": 1
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-11T17:00:00Z",
+    "interes": {
+     "GTA 6": 34,
+     "GTA 5": 6,
+     "Minecraft": 23,
+     "Fortnite": 16,
+     "Marvel Rivals": 1
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-11T18:00:00Z",
+    "interes": {
+     "GTA 6": 37,
+     "GTA 5": 6,
+     "Minecraft": 24,
+     "Fortnite": 17,
+     "Marvel Rivals": 1
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-11T19:00:00Z",
+    "interes": {
+     "GTA 6": 40,
+     "GTA 5": 7,
+     "Minecraft": 25,
+     "Fortnite": 18,
+     "Marvel Rivals": 1
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-11T20:00:00Z",
+    "interes": {
+     "GTA 6": 40,
+     "GTA 5": 7,
+     "Minecraft": 27,
+     "Fortnite": 19,
+     "Marvel Rivals": 1
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-11T21:00:00Z",
+    "interes": {
+     "GTA 6": 42,
+     "GTA 5": 7,
+     "Minecraft": 27,
+     "Fortnite": 20,
+     "Marvel Rivals": 2
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-11T22:00:00Z",
+    "interes": {
+     "GTA 6": 42,
+     "GTA 5": 7,
+     "Minecraft": 27,
+     "Fortnite": 21,
+     "Marvel Rivals": 2
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-11T23:00:00Z",
+    "interes": {
+     "GTA 6": 39,
+     "GTA 5": 7,
+     "Minecraft": 28,
+     "Fortnite": 21,
+     "Marvel Rivals": 2
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-12T00:00:00Z",
+    "interes": {
+     "GTA 6": 36,
+     "GTA 5": 7,
+     "Minecraft": 28,
+     "Fortnite": 23,
+     "Marvel Rivals": 2
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-12T01:00:00Z",
+    "interes": {
+     "GTA 6": 34,
+     "GTA 5": 6,
+     "Minecraft": 26,
+     "Fortnite": 21,
+     "Marvel Rivals": 2
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-12T02:00:00Z",
+    "interes": {
+     "GTA 6": 32,
+     "GTA 5": 6,
+     "Minecraft": 25,
+     "Fortnite": 19,
+     "Marvel Rivals": 2
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-12T03:00:00Z",
+    "interes": {
+     "GTA 6": 30,
+     "GTA 5": 6,
+     "Minecraft": 25,
+     "Fortnite": 17,
+     "Marvel Rivals": 2
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-12T04:00:00Z",
+    "interes": {
+     "GTA 6": 27,
+     "GTA 5": 5,
+     "Minecraft": 23,
+     "Fortnite": 15,
+     "Marvel Rivals": 2
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-12T05:00:00Z",
+    "interes": {
+     "GTA 6": 27,
+     "GTA 5": 5,
+     "Minecraft": 20,
+     "Fortnite": 13,
+     "Marvel Rivals": 1
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-12T06:00:00Z",
+    "interes": {
+     "GTA 6": 25,
+     "GTA 5": 5,
+     "Minecraft": 18,
+     "Fortnite": 11,
+     "Marvel Rivals": 1
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-12T07:00:00Z",
+    "interes": {
+     "GTA 6": 24,
+     "GTA 5": 4,
+     "Minecraft": 16,
+     "Fortnite": 10,
+     "Marvel Rivals": 1
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-12T08:00:00Z",
+    "interes": {
+     "GTA 6": 25,
+     "GTA 5": 4,
+     "Minecraft": 15,
+     "Fortnite": 13,
+     "Marvel Rivals": 1
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-12T09:00:00Z",
+    "interes": {
+     "GTA 6": 25,
+     "GTA 5": 4,
+     "Minecraft": 15,
+     "Fortnite": 14,
+     "Marvel Rivals": 1
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-12T10:00:00Z",
+    "interes": {
+     "GTA 6": 29,
+     "GTA 5": 4,
+     "Minecraft": 16,
+     "Fortnite": 15,
+     "Marvel Rivals": 1
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-12T11:00:00Z",
+    "interes": {
+     "GTA 6": 31,
+     "GTA 5": 5,
+     "Minecraft": 17,
+     "Fortnite": 10,
+     "Marvel Rivals": 1
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-12T12:00:00Z",
+    "interes": {
+     "GTA 6": 32,
+     "GTA 5": 5,
+     "Minecraft": 17,
+     "Fortnite": 10,
+     "Marvel Rivals": 1
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-12T13:00:00Z",
+    "interes": {
+     "GTA 6": 32,
+     "GTA 5": 5,
+     "Minecraft": 18,
+     "Fortnite": 11,
+     "Marvel Rivals": 1
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-12T14:00:00Z",
+    "interes": {
+     "GTA 6": 33,
+     "GTA 5": 5,
+     "Minecraft": 18,
+     "Fortnite": 13,
+     "Marvel Rivals": 1
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-12T15:00:00Z",
+    "interes": {
+     "GTA 6": 37,
+     "GTA 5": 6,
+     "Minecraft": 20,
+     "Fortnite": 14,
+     "Marvel Rivals": 1
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-12T16:00:00Z",
+    "interes": {
+     "GTA 6": 40,
+     "GTA 5": 6,
+     "Minecraft": 21,
+     "Fortnite": 15,
+     "Marvel Rivals": 1
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-12T17:00:00Z",
+    "interes": {
+     "GTA 6": 42,
+     "GTA 5": 6,
+     "Minecraft": 21,
+     "Fortnite": 17,
+     "Marvel Rivals": 1
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-12T18:00:00Z",
+    "interes": {
+     "GTA 6": 44,
+     "GTA 5": 7,
+     "Minecraft": 22,
+     "Fortnite": 17,
+     "Marvel Rivals": 1
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-12T19:00:00Z",
+    "interes": {
+     "GTA 6": 46,
+     "GTA 5": 7,
+     "Minecraft": 23,
+     "Fortnite": 17,
+     "Marvel Rivals": 1
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-12T20:00:00Z",
+    "interes": {
+     "GTA 6": 48,
+     "GTA 5": 7,
+     "Minecraft": 23,
+     "Fortnite": 19,
+     "Marvel Rivals": 1
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-12T21:00:00Z",
+    "interes": {
+     "GTA 6": 48,
+     "GTA 5": 7,
+     "Minecraft": 24,
+     "Fortnite": 21,
+     "Marvel Rivals": 1
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-12T22:00:00Z",
+    "interes": {
+     "GTA 6": 49,
+     "GTA 5": 8,
+     "Minecraft": 26,
+     "Fortnite": 20,
+     "Marvel Rivals": 2
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-12T23:00:00Z",
+    "interes": {
+     "GTA 6": 47,
+     "GTA 5": 8,
+     "Minecraft": 27,
+     "Fortnite": 21,
+     "Marvel Rivals": 2
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-13T00:00:00Z",
+    "interes": {
+     "GTA 6": 43,
+     "GTA 5": 7,
+     "Minecraft": 24,
+     "Fortnite": 25,
+     "Marvel Rivals": 2
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-13T01:00:00Z",
+    "interes": {
+     "GTA 6": 41,
+     "GTA 5": 6,
+     "Minecraft": 26,
+     "Fortnite": 22,
+     "Marvel Rivals": 2
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-13T02:00:00Z",
+    "interes": {
+     "GTA 6": 35,
+     "GTA 5": 6,
+     "Minecraft": 25,
+     "Fortnite": 19,
+     "Marvel Rivals": 2
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-13T03:00:00Z",
+    "interes": {
+     "GTA 6": 35,
+     "GTA 5": 6,
+     "Minecraft": 23,
+     "Fortnite": 18,
+     "Marvel Rivals": 2
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-13T04:00:00Z",
+    "interes": {
+     "GTA 6": 31,
+     "GTA 5": 6,
+     "Minecraft": 23,
+     "Fortnite": 16,
+     "Marvel Rivals": 2
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-13T05:00:00Z",
+    "interes": {
+     "GTA 6": 30,
+     "GTA 5": 5,
+     "Minecraft": 21,
+     "Fortnite": 13,
+     "Marvel Rivals": 1
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-13T06:00:00Z",
+    "interes": {
+     "GTA 6": 29,
+     "GTA 5": 5,
+     "Minecraft": 18,
+     "Fortnite": 11,
+     "Marvel Rivals": 1
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-13T07:00:00Z",
+    "interes": {
+     "GTA 6": 28,
+     "GTA 5": 5,
+     "Minecraft": 16,
+     "Fortnite": 10,
+     "Marvel Rivals": 1
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-13T08:00:00Z",
+    "interes": {
+     "GTA 6": 29,
+     "GTA 5": 5,
+     "Minecraft": 16,
+     "Fortnite": 9,
+     "Marvel Rivals": 1
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-13T09:00:00Z",
+    "interes": {
+     "GTA 6": 28,
+     "GTA 5": 5,
+     "Minecraft": 15,
+     "Fortnite": 8,
+     "Marvel Rivals": 1
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-13T10:00:00Z",
+    "interes": {
+     "GTA 6": 30,
+     "GTA 5": 5,
+     "Minecraft": 16,
+     "Fortnite": 8,
+     "Marvel Rivals": 1
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-13T11:00:00Z",
+    "interes": {
+     "GTA 6": 29,
+     "GTA 5": 5,
+     "Minecraft": 17,
+     "Fortnite": 8,
+     "Marvel Rivals": 1
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-13T12:00:00Z",
+    "interes": {
+     "GTA 6": 32,
+     "GTA 5": 5,
+     "Minecraft": 21,
+     "Fortnite": 9,
+     "Marvel Rivals": 1
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-13T13:00:00Z",
+    "interes": {
+     "GTA 6": 33,
+     "GTA 5": 5,
+     "Minecraft": 20,
+     "Fortnite": 10,
+     "Marvel Rivals": 1
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-13T14:00:00Z",
+    "interes": {
+     "GTA 6": 32,
+     "GTA 5": 6,
+     "Minecraft": 22,
+     "Fortnite": 11,
+     "Marvel Rivals": 1
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-13T15:00:00Z",
+    "interes": {
+     "GTA 6": 34,
+     "GTA 5": 6,
+     "Minecraft": 23,
+     "Fortnite": 13,
+     "Marvel Rivals": 1
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-13T16:00:00Z",
+    "interes": {
+     "GTA 6": 38,
+     "GTA 5": 7,
+     "Minecraft": 24,
+     "Fortnite": 14,
+     "Marvel Rivals": 1
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-13T17:00:00Z",
+    "interes": {
+     "GTA 6": 40,
+     "GTA 5": 7,
+     "Minecraft": 24,
+     "Fortnite": 16,
+     "Marvel Rivals": 1
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-13T18:00:00Z",
+    "interes": {
+     "GTA 6": 42,
+     "GTA 5": 8,
+     "Minecraft": 26,
+     "Fortnite": 17,
+     "Marvel Rivals": 2
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-13T19:00:00Z",
+    "interes": {
+     "GTA 6": 44,
+     "GTA 5": 8,
+     "Minecraft": 27,
+     "Fortnite": 18,
+     "Marvel Rivals": 2
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-13T20:00:00Z",
+    "interes": {
+     "GTA 6": 47,
+     "GTA 5": 9,
+     "Minecraft": 28,
+     "Fortnite": 21,
+     "Marvel Rivals": 2
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-13T21:00:00Z",
+    "interes": {
+     "GTA 6": 46,
+     "GTA 5": 8,
+     "Minecraft": 28,
+     "Fortnite": 20,
+     "Marvel Rivals": 2
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-13T22:00:00Z",
+    "interes": {
+     "GTA 6": 44,
+     "GTA 5": 9,
+     "Minecraft": 28,
+     "Fortnite": 21,
+     "Marvel Rivals": 2
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-13T23:00:00Z",
+    "interes": {
+     "GTA 6": 45,
+     "GTA 5": 8,
+     "Minecraft": 29,
+     "Fortnite": 23,
+     "Marvel Rivals": 2
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-14T00:00:00Z",
+    "interes": {
+     "GTA 6": 41,
+     "GTA 5": 8,
+     "Minecraft": 29,
+     "Fortnite": 27,
+     "Marvel Rivals": 2
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-14T01:00:00Z",
+    "interes": {
+     "GTA 6": 39,
+     "GTA 5": 8,
+     "Minecraft": 30,
+     "Fortnite": 24,
+     "Marvel Rivals": 2
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-14T02:00:00Z",
+    "interes": {
+     "GTA 6": 38,
+     "GTA 5": 7,
+     "Minecraft": 32,
+     "Fortnite": 21,
+     "Marvel Rivals": 2
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-14T03:00:00Z",
+    "interes": {
+     "GTA 6": 32,
+     "GTA 5": 7,
+     "Minecraft": 30,
+     "Fortnite": 21,
+     "Marvel Rivals": 2
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-14T04:00:00Z",
+    "interes": {
+     "GTA 6": 32,
+     "GTA 5": 7,
+     "Minecraft": 31,
+     "Fortnite": 19,
+     "Marvel Rivals": 2
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-14T05:00:00Z",
+    "interes": {
+     "GTA 6": 28,
+     "GTA 5": 7,
+     "Minecraft": 29,
+     "Fortnite": 17,
+     "Marvel Rivals": 2
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-14T06:00:00Z",
+    "interes": {
+     "GTA 6": 27,
+     "GTA 5": 6,
+     "Minecraft": 27,
+     "Fortnite": 15,
+     "Marvel Rivals": 2
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-14T07:00:00Z",
+    "interes": {
+     "GTA 6": 27,
+     "GTA 5": 6,
+     "Minecraft": 24,
+     "Fortnite": 13,
+     "Marvel Rivals": 1
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-14T08:00:00Z",
+    "interes": {
+     "GTA 6": 30,
+     "GTA 5": 6,
+     "Minecraft": 23,
+     "Fortnite": 13,
+     "Marvel Rivals": 1
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-14T09:00:00Z",
+    "interes": {
+     "GTA 6": 31,
+     "GTA 5": 7,
+     "Minecraft": 24,
+     "Fortnite": 12,
+     "Marvel Rivals": 1
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-14T10:00:00Z",
+    "interes": {
+     "GTA 6": 30,
+     "GTA 5": 7,
+     "Minecraft": 25,
+     "Fortnite": 13,
+     "Marvel Rivals": 1
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-14T11:00:00Z",
+    "interes": {
+     "GTA 6": 32,
+     "GTA 5": 7,
+     "Minecraft": 24,
+     "Fortnite": 13,
+     "Marvel Rivals": 1
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-14T12:00:00Z",
+    "interes": {
+     "GTA 6": 32,
+     "GTA 5": 7,
+     "Minecraft": 23,
+     "Fortnite": 14,
+     "Marvel Rivals": 1
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-14T13:00:00Z",
+    "interes": {
+     "GTA 6": 33,
+     "GTA 5": 7,
+     "Minecraft": 26,
+     "Fortnite": 14,
+     "Marvel Rivals": 1
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-14T14:00:00Z",
+    "interes": {
+     "GTA 6": 36,
+     "GTA 5": 7,
+     "Minecraft": 28,
+     "Fortnite": 16,
+     "Marvel Rivals": 1
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-14T15:00:00Z",
+    "interes": {
+     "GTA 6": 36,
+     "GTA 5": 8,
+     "Minecraft": 28,
+     "Fortnite": 19,
+     "Marvel Rivals": 1
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-14T16:00:00Z",
+    "interes": {
+     "GTA 6": 38,
+     "GTA 5": 8,
+     "Minecraft": 28,
+     "Fortnite": 20,
+     "Marvel Rivals": 1
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-14T17:00:00Z",
+    "interes": {
+     "GTA 6": 42,
+     "GTA 5": 9,
+     "Minecraft": 29,
+     "Fortnite": 24,
+     "Marvel Rivals": 1
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-14T18:00:00Z",
+    "interes": {
+     "GTA 6": 44,
+     "GTA 5": 9,
+     "Minecraft": 30,
+     "Fortnite": 32,
+     "Marvel Rivals": 1
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-14T19:00:00Z",
+    "interes": {
+     "GTA 6": 44,
+     "GTA 5": 9,
+     "Minecraft": 30,
+     "Fortnite": 39,
+     "Marvel Rivals": 1
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-14T20:00:00Z",
+    "interes": {
+     "GTA 6": 43,
+     "GTA 5": 10,
+     "Minecraft": 33,
+     "Fortnite": 35,
+     "Marvel Rivals": 1
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-14T21:00:00Z",
+    "interes": {
+     "GTA 6": 45,
+     "GTA 5": 10,
+     "Minecraft": 33,
+     "Fortnite": 35,
+     "Marvel Rivals": 1
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-14T22:00:00Z",
+    "interes": {
+     "GTA 6": 45,
+     "GTA 5": 9,
+     "Minecraft": 34,
+     "Fortnite": 30,
+     "Marvel Rivals": 2
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-14T23:00:00Z",
+    "interes": {
+     "GTA 6": 46,
+     "GTA 5": 10,
+     "Minecraft": 36,
+     "Fortnite": 35,
+     "Marvel Rivals": 2
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-15T00:00:00Z",
+    "interes": {
+     "GTA 6": 42,
+     "GTA 5": 9,
+     "Minecraft": 35,
+     "Fortnite": 34,
+     "Marvel Rivals": 2
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-15T01:00:00Z",
+    "interes": {
+     "GTA 6": 38,
+     "GTA 5": 8,
+     "Minecraft": 32,
+     "Fortnite": 32,
+     "Marvel Rivals": 2
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-15T02:00:00Z",
+    "interes": {
+     "GTA 6": 37,
+     "GTA 5": 8,
+     "Minecraft": 32,
+     "Fortnite": 31,
+     "Marvel Rivals": 2
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-15T03:00:00Z",
+    "interes": {
+     "GTA 6": 33,
+     "GTA 5": 8,
+     "Minecraft": 34,
+     "Fortnite": 27,
+     "Marvel Rivals": 2
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-15T04:00:00Z",
+    "interes": {
+     "GTA 6": 31,
+     "GTA 5": 8,
+     "Minecraft": 35,
+     "Fortnite": 24,
+     "Marvel Rivals": 2
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-15T05:00:00Z",
+    "interes": {
+     "GTA 6": 28,
+     "GTA 5": 8,
+     "Minecraft": 32,
+     "Fortnite": 18,
+     "Marvel Rivals": 1
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-15T06:00:00Z",
+    "interes": {
+     "GTA 6": 28,
+     "GTA 5": 7,
+     "Minecraft": 29,
+     "Fortnite": 15,
+     "Marvel Rivals": 1
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-15T07:00:00Z",
+    "interes": {
+     "GTA 6": 27,
+     "GTA 5": 7,
+     "Minecraft": 26,
+     "Fortnite": 13,
+     "Marvel Rivals": 1
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-15T08:00:00Z",
+    "interes": {
+     "GTA 6": 29,
+     "GTA 5": 7,
+     "Minecraft": 25,
+     "Fortnite": 12,
+     "Marvel Rivals": 1
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-15T09:00:00Z",
+    "interes": {
+     "GTA 6": 28,
+     "GTA 5": 7,
+     "Minecraft": 26,
+     "Fortnite": 12,
+     "Marvel Rivals": 1
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-15T10:00:00Z",
+    "interes": {
+     "GTA 6": 31,
+     "GTA 5": 7,
+     "Minecraft": 25,
+     "Fortnite": 12,
+     "Marvel Rivals": 1
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-15T11:00:00Z",
+    "interes": {
+     "GTA 6": 34,
+     "GTA 5": 8,
+     "Minecraft": 26,
+     "Fortnite": 12,
+     "Marvel Rivals": 1
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-15T12:00:00Z",
+    "interes": {
+     "GTA 6": 34,
+     "GTA 5": 8,
+     "Minecraft": 28,
+     "Fortnite": 13,
+     "Marvel Rivals": 1
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-15T13:00:00Z",
+    "interes": {
+     "GTA 6": 35,
+     "GTA 5": 8,
+     "Minecraft": 28,
+     "Fortnite": 14,
+     "Marvel Rivals": 1
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-15T14:00:00Z",
+    "interes": {
+     "GTA 6": 35,
+     "GTA 5": 8,
+     "Minecraft": 27,
+     "Fortnite": 19,
+     "Marvel Rivals": 1
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-15T15:00:00Z",
+    "interes": {
+     "GTA 6": 40,
+     "GTA 5": 9,
+     "Minecraft": 28,
+     "Fortnite": 21,
+     "Marvel Rivals": 1
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-15T16:00:00Z",
+    "interes": {
+     "GTA 6": 42,
+     "GTA 5": 9,
+     "Minecraft": 30,
+     "Fortnite": 22,
+     "Marvel Rivals": 1
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-15T17:00:00Z",
+    "interes": {
+     "GTA 6": 43,
+     "GTA 5": 10,
+     "Minecraft": 30,
+     "Fortnite": 21,
+     "Marvel Rivals": 1
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-15T18:00:00Z",
+    "interes": {
+     "GTA 6": 52,
+     "GTA 5": 11,
+     "Minecraft": 31,
+     "Fortnite": 23,
+     "Marvel Rivals": 1
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-15T19:00:00Z",
+    "interes": {
+     "GTA 6": 49,
+     "GTA 5": 10,
+     "Minecraft": 31,
+     "Fortnite": 23,
+     "Marvel Rivals": 1
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-15T20:00:00Z",
+    "interes": {
+     "GTA 6": 51,
+     "GTA 5": 11,
+     "Minecraft": 32,
+     "Fortnite": 23,
+     "Marvel Rivals": 1
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-15T21:00:00Z",
+    "interes": {
+     "GTA 6": 50,
+     "GTA 5": 10,
+     "Minecraft": 30,
+     "Fortnite": 23,
+     "Marvel Rivals": 1
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-15T22:00:00Z",
+    "interes": {
+     "GTA 6": 54,
+     "GTA 5": 11,
+     "Minecraft": 33,
+     "Fortnite": 24,
+     "Marvel Rivals": 1
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-15T23:00:00Z",
+    "interes": {
+     "GTA 6": 50,
+     "GTA 5": 10,
+     "Minecraft": 31,
+     "Fortnite": 24,
+     "Marvel Rivals": 2
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-16T00:00:00Z",
+    "interes": {
+     "GTA 6": 50,
+     "GTA 5": 9,
+     "Minecraft": 30,
+     "Fortnite": 27,
+     "Marvel Rivals": 1
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-16T01:00:00Z",
+    "interes": {
+     "GTA 6": 45,
+     "GTA 5": 9,
+     "Minecraft": 29,
+     "Fortnite": 23,
+     "Marvel Rivals": 1
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-16T02:00:00Z",
+    "interes": {
+     "GTA 6": 45,
+     "GTA 5": 9,
+     "Minecraft": 28,
+     "Fortnite": 22,
+     "Marvel Rivals": 1
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-16T03:00:00Z",
+    "interes": {
+     "GTA 6": 40,
+     "GTA 5": 7,
+     "Minecraft": 26,
+     "Fortnite": 19,
+     "Marvel Rivals": 1
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-16T04:00:00Z",
+    "interes": {
+     "GTA 6": 37,
+     "GTA 5": 7,
+     "Minecraft": 24,
+     "Fortnite": 16,
+     "Marvel Rivals": 1
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-16T05:00:00Z",
+    "interes": {
+     "GTA 6": 35,
+     "GTA 5": 6,
+     "Minecraft": 22,
+     "Fortnite": 15,
+     "Marvel Rivals": 1
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-16T06:00:00Z",
+    "interes": {
+     "GTA 6": 34,
+     "GTA 5": 6,
+     "Minecraft": 18,
+     "Fortnite": 12,
+     "Marvel Rivals": 1
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-16T07:00:00Z",
+    "interes": {
+     "GTA 6": 31,
+     "GTA 5": 6,
+     "Minecraft": 16,
+     "Fortnite": 11,
+     "Marvel Rivals": 1
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-16T08:00:00Z",
+    "interes": {
+     "GTA 6": 33,
+     "GTA 5": 6,
+     "Minecraft": 16,
+     "Fortnite": 9,
+     "Marvel Rivals": 1
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-16T09:00:00Z",
+    "interes": {
+     "GTA 6": 35,
+     "GTA 5": 6,
+     "Minecraft": 15,
+     "Fortnite": 9,
+     "Marvel Rivals": 0
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-16T10:00:00Z",
+    "interes": {
+     "GTA 6": 36,
+     "GTA 5": 6,
+     "Minecraft": 15,
+     "Fortnite": 8,
+     "Marvel Rivals": 0
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-16T11:00:00Z",
+    "interes": {
+     "GTA 6": 39,
+     "GTA 5": 6,
+     "Minecraft": 16,
+     "Fortnite": 9,
+     "Marvel Rivals": 0
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-16T12:00:00Z",
+    "interes": {
+     "GTA 6": 38,
+     "GTA 5": 6,
+     "Minecraft": 17,
+     "Fortnite": 9,
+     "Marvel Rivals": 0
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-16T13:00:00Z",
+    "interes": {
+     "GTA 6": 43,
+     "GTA 5": 7,
+     "Minecraft": 17,
+     "Fortnite": 9,
+     "Marvel Rivals": 0
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-16T14:00:00Z",
+    "interes": {
+     "GTA 6": 44,
+     "GTA 5": 7,
+     "Minecraft": 19,
+     "Fortnite": 11,
+     "Marvel Rivals": 1
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-16T15:00:00Z",
+    "interes": {
+     "GTA 6": 48,
+     "GTA 5": 8,
+     "Minecraft": 20,
+     "Fortnite": 13,
+     "Marvel Rivals": 1
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-16T16:00:00Z",
+    "interes": {
+     "GTA 6": 50,
+     "GTA 5": 8,
+     "Minecraft": 21,
+     "Fortnite": 13,
+     "Marvel Rivals": 1
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-16T17:00:00Z",
+    "interes": {
+     "GTA 6": 56,
+     "GTA 5": 9,
+     "Minecraft": 22,
+     "Fortnite": 15,
+     "Marvel Rivals": 1
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-16T18:00:00Z",
+    "interes": {
+     "GTA 6": 60,
+     "GTA 5": 10,
+     "Minecraft": 24,
+     "Fortnite": 16,
+     "Marvel Rivals": 1
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-16T19:00:00Z",
+    "interes": {
+     "GTA 6": 63,
+     "GTA 5": 10,
+     "Minecraft": 25,
+     "Fortnite": 17,
+     "Marvel Rivals": 1
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-16T20:00:00Z",
+    "interes": {
+     "GTA 6": 64,
+     "GTA 5": 10,
+     "Minecraft": 25,
+     "Fortnite": 18,
+     "Marvel Rivals": 1
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-16T21:00:00Z",
+    "interes": {
+     "GTA 6": 66,
+     "GTA 5": 11,
+     "Minecraft": 25,
+     "Fortnite": 19,
+     "Marvel Rivals": 1
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-16T22:00:00Z",
+    "interes": {
+     "GTA 6": 71,
+     "GTA 5": 10,
+     "Minecraft": 27,
+     "Fortnite": 20,
+     "Marvel Rivals": 1
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-16T23:00:00Z",
+    "interes": {
+     "GTA 6": 67,
+     "GTA 5": 11,
+     "Minecraft": 27,
+     "Fortnite": 20,
+     "Marvel Rivals": 1
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-17T00:00:00Z",
+    "interes": {
+     "GTA 6": 65,
+     "GTA 5": 10,
+     "Minecraft": 27,
+     "Fortnite": 24,
+     "Marvel Rivals": 1
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-17T01:00:00Z",
+    "interes": {
+     "GTA 6": 64,
+     "GTA 5": 10,
+     "Minecraft": 26,
+     "Fortnite": 20,
+     "Marvel Rivals": 1
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-17T02:00:00Z",
+    "interes": {
+     "GTA 6": 58,
+     "GTA 5": 9,
+     "Minecraft": 25,
+     "Fortnite": 19,
+     "Marvel Rivals": 1
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-17T03:00:00Z",
+    "interes": {
+     "GTA 6": 56,
+     "GTA 5": 9,
+     "Minecraft": 23,
+     "Fortnite": 16,
+     "Marvel Rivals": 1
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-17T04:00:00Z",
+    "interes": {
+     "GTA 6": 52,
+     "GTA 5": 8,
+     "Minecraft": 23,
+     "Fortnite": 15,
+     "Marvel Rivals": 1
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-17T05:00:00Z",
+    "interes": {
+     "GTA 6": 48,
+     "GTA 5": 7,
+     "Minecraft": 19,
+     "Fortnite": 12,
+     "Marvel Rivals": 1
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-17T06:00:00Z",
+    "interes": {
+     "GTA 6": 46,
+     "GTA 5": 6,
+     "Minecraft": 17,
+     "Fortnite": 11,
+     "Marvel Rivals": 1
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-17T07:00:00Z",
+    "interes": {
+     "GTA 6": 43,
+     "GTA 5": 6,
+     "Minecraft": 16,
+     "Fortnite": 9,
+     "Marvel Rivals": 1
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-17T08:00:00Z",
+    "interes": {
+     "GTA 6": 45,
+     "GTA 5": 6,
+     "Minecraft": 15,
+     "Fortnite": 9,
+     "Marvel Rivals": 0
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-17T09:00:00Z",
+    "interes": {
+     "GTA 6": 47,
+     "GTA 5": 6,
+     "Minecraft": 15,
+     "Fortnite": 8,
+     "Marvel Rivals": 0
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-17T10:00:00Z",
+    "interes": {
+     "GTA 6": 47,
+     "GTA 5": 7,
+     "Minecraft": 15,
+     "Fortnite": 8,
+     "Marvel Rivals": 0
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-17T11:00:00Z",
+    "interes": {
+     "GTA 6": 49,
+     "GTA 5": 7,
+     "Minecraft": 16,
+     "Fortnite": 8,
+     "Marvel Rivals": 0
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-17T12:00:00Z",
+    "interes": {
+     "GTA 6": 55,
+     "GTA 5": 7,
+     "Minecraft": 17,
+     "Fortnite": 8,
+     "Marvel Rivals": 0
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-17T13:00:00Z",
+    "interes": {
+     "GTA 6": 57,
+     "GTA 5": 8,
+     "Minecraft": 17,
+     "Fortnite": 9,
+     "Marvel Rivals": 0
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-17T14:00:00Z",
+    "interes": {
+     "GTA 6": 62,
+     "GTA 5": 8,
+     "Minecraft": 19,
+     "Fortnite": 10,
+     "Marvel Rivals": 0
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-17T15:00:00Z",
+    "interes": {
+     "GTA 6": 67,
+     "GTA 5": 9,
+     "Minecraft": 19,
+     "Fortnite": 11,
+     "Marvel Rivals": 1
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-17T16:00:00Z",
+    "interes": {
+     "GTA 6": 69,
+     "GTA 5": 10,
+     "Minecraft": 20,
+     "Fortnite": 12,
+     "Marvel Rivals": 1
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-17T17:00:00Z",
+    "interes": {
+     "GTA 6": 84,
+     "GTA 5": 10,
+     "Minecraft": 21,
+     "Fortnite": 13,
+     "Marvel Rivals": 1
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-17T18:00:00Z",
+    "interes": {
+     "GTA 6": 87,
+     "GTA 5": 11,
+     "Minecraft": 23,
+     "Fortnite": 14,
+     "Marvel Rivals": 1
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-17T19:00:00Z",
+    "interes": {
+     "GTA 6": 94,
+     "GTA 5": 12,
+     "Minecraft": 24,
+     "Fortnite": 15,
+     "Marvel Rivals": 1
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-17T20:00:00Z",
+    "interes": {
+     "GTA 6": 98,
+     "GTA 5": 13,
+     "Minecraft": 22,
+     "Fortnite": 15,
+     "Marvel Rivals": 1
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-17T21:00:00Z",
+    "interes": {
+     "GTA 6": 100,
+     "GTA 5": 13,
+     "Minecraft": 24,
+     "Fortnite": 16,
+     "Marvel Rivals": 1
+    },
+    "parcial": true
+   }
+  ]
+ },
+ "historica": {
+  "palabras": [
+   "GTA 6",
+   "GTA 5",
+   "Ocarina of Time",
+   "Avengers Doomsday"
+  ],
+  "rango": "2013-01-01 2026-11-17",
+  "puntos": [
+   {
+    "t": "2013-01-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 0,
+     "GTA 5": 7,
+     "Ocarina of Time": 1,
+     "Avengers Doomsday": 0
+    },
+    "parcial": false
+   },
+   {
+    "t": "2013-02-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 0,
+     "GTA 5": 6,
+     "Ocarina of Time": 1,
+     "Avengers Doomsday": 0
+    },
+    "parcial": false
+   },
+   {
+    "t": "2013-03-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 0,
+     "GTA 5": 5,
+     "Ocarina of Time": 1,
+     "Avengers Doomsday": 0
+    },
+    "parcial": false
+   },
+   {
+    "t": "2013-04-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 0,
+     "GTA 5": 5,
+     "Ocarina of Time": 1,
+     "Avengers Doomsday": 0
+    },
+    "parcial": false
+   },
+   {
+    "t": "2013-05-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 0,
+     "GTA 5": 7,
+     "Ocarina of Time": 1,
+     "Avengers Doomsday": 0
+    },
+    "parcial": false
+   },
+   {
+    "t": "2013-06-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 0,
+     "GTA 5": 6,
+     "Ocarina of Time": 1,
+     "Avengers Doomsday": 0
+    },
+    "parcial": false
+   },
+   {
+    "t": "2013-07-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 0,
+     "GTA 5": 10,
+     "Ocarina of Time": 1,
+     "Avengers Doomsday": 0
+    },
+    "parcial": false
+   },
+   {
+    "t": "2013-08-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 0,
+     "GTA 5": 14,
+     "Ocarina of Time": 1,
+     "Avengers Doomsday": 0
+    },
+    "parcial": false
+   },
+   {
+    "t": "2013-09-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 1,
+     "GTA 5": 100,
+     "Ocarina of Time": 1,
+     "Avengers Doomsday": 0
+    },
+    "parcial": false
+   },
+   {
+    "t": "2013-10-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 1,
+     "GTA 5": 86,
+     "Ocarina of Time": 1,
+     "Avengers Doomsday": 0
+    },
+    "parcial": false
+   },
+   {
+    "t": "2013-11-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 1,
+     "GTA 5": 46,
+     "Ocarina of Time": 1,
+     "Avengers Doomsday": 0
+    },
+    "parcial": false
+   },
+   {
+    "t": "2013-12-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 1,
+     "GTA 5": 48,
+     "Ocarina of Time": 1,
+     "Avengers Doomsday": 0
+    },
+    "parcial": false
+   },
+   {
+    "t": "2014-01-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 1,
+     "GTA 5": 41,
+     "Ocarina of Time": 1,
+     "Avengers Doomsday": 0
+    },
+    "parcial": false
+   },
+   {
+    "t": "2014-02-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 1,
+     "GTA 5": 32,
+     "Ocarina of Time": 1,
+     "Avengers Doomsday": 0
+    },
+    "parcial": false
+   },
+   {
+    "t": "2014-03-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 1,
+     "GTA 5": 29,
+     "Ocarina of Time": 1,
+     "Avengers Doomsday": 0
+    },
+    "parcial": false
+   },
+   {
+    "t": "2014-04-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 1,
+     "GTA 5": 27,
+     "Ocarina of Time": 1,
+     "Avengers Doomsday": 0
+    },
+    "parcial": false
+   },
+   {
+    "t": "2014-05-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 1,
+     "GTA 5": 25,
+     "Ocarina of Time": 1,
+     "Avengers Doomsday": 0
+    },
+    "parcial": false
+   },
+   {
+    "t": "2014-06-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 1,
+     "GTA 5": 26,
+     "Ocarina of Time": 1,
+     "Avengers Doomsday": 0
+    },
+    "parcial": false
+   },
+   {
+    "t": "2014-07-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 1,
+     "GTA 5": 28,
+     "Ocarina of Time": 1,
+     "Avengers Doomsday": 0
+    },
+    "parcial": false
+   },
+   {
+    "t": "2014-08-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 1,
+     "GTA 5": 27,
+     "Ocarina of Time": 1,
+     "Avengers Doomsday": 0
+    },
+    "parcial": false
+   },
+   {
+    "t": "2014-09-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 1,
+     "GTA 5": 21,
+     "Ocarina of Time": 1,
+     "Avengers Doomsday": 0
+    },
+    "parcial": false
+   },
+   {
+    "t": "2014-10-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 1,
+     "GTA 5": 20,
+     "Ocarina of Time": 1,
+     "Avengers Doomsday": 0
+    },
+    "parcial": false
+   },
+   {
+    "t": "2014-11-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 1,
+     "GTA 5": 30,
+     "Ocarina of Time": 1,
+     "Avengers Doomsday": 0
+    },
+    "parcial": false
+   },
+   {
+    "t": "2014-12-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 1,
+     "GTA 5": 36,
+     "Ocarina of Time": 1,
+     "Avengers Doomsday": 0
+    },
+    "parcial": false
+   },
+   {
+    "t": "2015-01-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 1,
+     "GTA 5": 34,
+     "Ocarina of Time": 1,
+     "Avengers Doomsday": 0
+    },
+    "parcial": false
+   },
+   {
+    "t": "2015-02-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 1,
+     "GTA 5": 28,
+     "Ocarina of Time": 1,
+     "Avengers Doomsday": 0
+    },
+    "parcial": false
+   },
+   {
+    "t": "2015-03-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 1,
+     "GTA 5": 30,
+     "Ocarina of Time": 1,
+     "Avengers Doomsday": 0
+    },
+    "parcial": false
+   },
+   {
+    "t": "2015-04-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 1,
+     "GTA 5": 48,
+     "Ocarina of Time": 1,
+     "Avengers Doomsday": 0
+    },
+    "parcial": false
+   },
+   {
+    "t": "2015-05-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 1,
+     "GTA 5": 36,
+     "Ocarina of Time": 1,
+     "Avengers Doomsday": 0
+    },
+    "parcial": false
+   },
+   {
+    "t": "2015-06-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 1,
+     "GTA 5": 32,
+     "Ocarina of Time": 1,
+     "Avengers Doomsday": 0
+    },
+    "parcial": false
+   },
+   {
+    "t": "2015-07-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 1,
+     "GTA 5": 34,
+     "Ocarina of Time": 1,
+     "Avengers Doomsday": 0
+    },
+    "parcial": false
+   },
+   {
+    "t": "2015-08-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 1,
+     "GTA 5": 30,
+     "Ocarina of Time": 1,
+     "Avengers Doomsday": 0
+    },
+    "parcial": false
+   },
+   {
+    "t": "2015-09-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 1,
+     "GTA 5": 25,
+     "Ocarina of Time": 1,
+     "Avengers Doomsday": 0
+    },
+    "parcial": false
+   },
+   {
+    "t": "2015-10-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 1,
+     "GTA 5": 25,
+     "Ocarina of Time": 1,
+     "Avengers Doomsday": 0
+    },
+    "parcial": false
+   },
+   {
+    "t": "2015-11-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 1,
+     "GTA 5": 23,
+     "Ocarina of Time": 1,
+     "Avengers Doomsday": 0
+    },
+    "parcial": false
+   },
+   {
+    "t": "2015-12-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 1,
+     "GTA 5": 31,
+     "Ocarina of Time": 1,
+     "Avengers Doomsday": 0
+    },
+    "parcial": false
+   },
+   {
+    "t": "2016-01-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 1,
+     "GTA 5": 30,
+     "Ocarina of Time": 1,
+     "Avengers Doomsday": 0
+    },
+    "parcial": false
+   },
+   {
+    "t": "2016-02-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 1,
+     "GTA 5": 26,
+     "Ocarina of Time": 1,
+     "Avengers Doomsday": 0
+    },
+    "parcial": false
+   },
+   {
+    "t": "2016-03-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 1,
+     "GTA 5": 24,
+     "Ocarina of Time": 1,
+     "Avengers Doomsday": 0
+    },
+    "parcial": false
+   },
+   {
+    "t": "2016-04-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 1,
+     "GTA 5": 22,
+     "Ocarina of Time": 1,
+     "Avengers Doomsday": 0
+    },
+    "parcial": false
+   },
+   {
+    "t": "2016-05-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 1,
+     "GTA 5": 22,
+     "Ocarina of Time": 1,
+     "Avengers Doomsday": 0
+    },
+    "parcial": false
+   },
+   {
+    "t": "2016-06-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 1,
+     "GTA 5": 27,
+     "Ocarina of Time": 1,
+     "Avengers Doomsday": 0
+    },
+    "parcial": false
+   },
+   {
+    "t": "2016-07-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 1,
+     "GTA 5": 25,
+     "Ocarina of Time": 1,
+     "Avengers Doomsday": 0
+    },
+    "parcial": false
+   },
+   {
+    "t": "2016-08-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 1,
+     "GTA 5": 23,
+     "Ocarina of Time": 1,
+     "Avengers Doomsday": 0
+    },
+    "parcial": false
+   },
+   {
+    "t": "2016-09-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 1,
+     "GTA 5": 20,
+     "Ocarina of Time": 1,
+     "Avengers Doomsday": 0
+    },
+    "parcial": false
+   },
+   {
+    "t": "2016-10-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 1,
+     "GTA 5": 20,
+     "Ocarina of Time": 1,
+     "Avengers Doomsday": 0
+    },
+    "parcial": false
+   },
+   {
+    "t": "2016-11-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 1,
+     "GTA 5": 20,
+     "Ocarina of Time": 1,
+     "Avengers Doomsday": 0
+    },
+    "parcial": false
+   },
+   {
+    "t": "2016-12-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 1,
+     "GTA 5": 28,
+     "Ocarina of Time": 1,
+     "Avengers Doomsday": 0
+    },
+    "parcial": false
+   },
+   {
+    "t": "2017-01-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 1,
+     "GTA 5": 27,
+     "Ocarina of Time": 1,
+     "Avengers Doomsday": 0
+    },
+    "parcial": false
+   },
+   {
+    "t": "2017-02-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 1,
+     "GTA 5": 23,
+     "Ocarina of Time": 1,
+     "Avengers Doomsday": 0
+    },
+    "parcial": false
+   },
+   {
+    "t": "2017-03-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 1,
+     "GTA 5": 20,
+     "Ocarina of Time": 1,
+     "Avengers Doomsday": 0
+    },
+    "parcial": false
+   },
+   {
+    "t": "2017-04-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 1,
+     "GTA 5": 21,
+     "Ocarina of Time": 1,
+     "Avengers Doomsday": 0
+    },
+    "parcial": false
+   },
+   {
+    "t": "2017-05-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 1,
+     "GTA 5": 19,
+     "Ocarina of Time": 1,
+     "Avengers Doomsday": 0
+    },
+    "parcial": false
+   },
+   {
+    "t": "2017-06-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 1,
+     "GTA 5": 22,
+     "Ocarina of Time": 1,
+     "Avengers Doomsday": 0
+    },
+    "parcial": false
+   },
+   {
+    "t": "2017-07-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 1,
+     "GTA 5": 22,
+     "Ocarina of Time": 1,
+     "Avengers Doomsday": 0
+    },
+    "parcial": false
+   },
+   {
+    "t": "2017-08-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 1,
+     "GTA 5": 21,
+     "Ocarina of Time": 1,
+     "Avengers Doomsday": 0
+    },
+    "parcial": false
+   },
+   {
+    "t": "2017-09-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 1,
+     "GTA 5": 17,
+     "Ocarina of Time": 1,
+     "Avengers Doomsday": 0
+    },
+    "parcial": false
+   },
+   {
+    "t": "2017-10-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 1,
+     "GTA 5": 16,
+     "Ocarina of Time": 1,
+     "Avengers Doomsday": 0
+    },
+    "parcial": false
+   },
+   {
+    "t": "2017-11-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 1,
+     "GTA 5": 16,
+     "Ocarina of Time": 1,
+     "Avengers Doomsday": 0
+    },
+    "parcial": false
+   },
+   {
+    "t": "2017-12-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 1,
+     "GTA 5": 23,
+     "Ocarina of Time": 1,
+     "Avengers Doomsday": 0
+    },
+    "parcial": false
+   },
+   {
+    "t": "2018-01-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 1,
+     "GTA 5": 21,
+     "Ocarina of Time": 1,
+     "Avengers Doomsday": 0
+    },
+    "parcial": false
+   },
+   {
+    "t": "2018-02-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 1,
+     "GTA 5": 16,
+     "Ocarina of Time": 1,
+     "Avengers Doomsday": 0
+    },
+    "parcial": false
+   },
+   {
+    "t": "2018-03-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 1,
+     "GTA 5": 15,
+     "Ocarina of Time": 1,
+     "Avengers Doomsday": 0
+    },
+    "parcial": false
+   },
+   {
+    "t": "2018-04-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 1,
+     "GTA 5": 13,
+     "Ocarina of Time": 1,
+     "Avengers Doomsday": 0
+    },
+    "parcial": false
+   },
+   {
+    "t": "2018-05-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 1,
+     "GTA 5": 13,
+     "Ocarina of Time": 0,
+     "Avengers Doomsday": 0
+    },
+    "parcial": false
+   },
+   {
+    "t": "2018-06-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 1,
+     "GTA 5": 14,
+     "Ocarina of Time": 1,
+     "Avengers Doomsday": 0
+    },
+    "parcial": false
+   },
+   {
+    "t": "2018-07-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 1,
+     "GTA 5": 16,
+     "Ocarina of Time": 1,
+     "Avengers Doomsday": 0
+    },
+    "parcial": false
+   },
+   {
+    "t": "2018-08-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 1,
+     "GTA 5": 15,
+     "Ocarina of Time": 1,
+     "Avengers Doomsday": 0
+    },
+    "parcial": false
+   },
+   {
+    "t": "2018-09-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 1,
+     "GTA 5": 12,
+     "Ocarina of Time": 0,
+     "Avengers Doomsday": 0
+    },
+    "parcial": false
+   },
+   {
+    "t": "2018-10-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 1,
+     "GTA 5": 11,
+     "Ocarina of Time": 0,
+     "Avengers Doomsday": 0
+    },
+    "parcial": false
+   },
+   {
+    "t": "2018-11-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 1,
+     "GTA 5": 11,
+     "Ocarina of Time": 0,
+     "Avengers Doomsday": 0
+    },
+    "parcial": false
+   },
+   {
+    "t": "2018-12-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 1,
+     "GTA 5": 14,
+     "Ocarina of Time": 1,
+     "Avengers Doomsday": 0
+    },
+    "parcial": false
+   },
+   {
+    "t": "2019-01-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 1,
+     "GTA 5": 13,
+     "Ocarina of Time": 1,
+     "Avengers Doomsday": 0
+    },
+    "parcial": false
+   },
+   {
+    "t": "2019-02-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 1,
+     "GTA 5": 11,
+     "Ocarina of Time": 0,
+     "Avengers Doomsday": 0
+    },
+    "parcial": false
+   },
+   {
+    "t": "2019-03-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 1,
+     "GTA 5": 12,
+     "Ocarina of Time": 0,
+     "Avengers Doomsday": 0
+    },
+    "parcial": false
+   },
+   {
+    "t": "2019-04-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 1,
+     "GTA 5": 11,
+     "Ocarina of Time": 0,
+     "Avengers Doomsday": 0
+    },
+    "parcial": false
+   },
+   {
+    "t": "2019-05-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 1,
+     "GTA 5": 11,
+     "Ocarina of Time": 0,
+     "Avengers Doomsday": 0
+    },
+    "parcial": false
+   },
+   {
+    "t": "2019-06-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 1,
+     "GTA 5": 13,
+     "Ocarina of Time": 1,
+     "Avengers Doomsday": 0
+    },
+    "parcial": false
+   },
+   {
+    "t": "2019-07-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 1,
+     "GTA 5": 16,
+     "Ocarina of Time": 0,
+     "Avengers Doomsday": 0
+    },
+    "parcial": false
+   },
+   {
+    "t": "2019-08-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 1,
+     "GTA 5": 15,
+     "Ocarina of Time": 0,
+     "Avengers Doomsday": 0
+    },
+    "parcial": false
+   },
+   {
+    "t": "2019-09-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 1,
+     "GTA 5": 12,
+     "Ocarina of Time": 0,
+     "Avengers Doomsday": 0
+    },
+    "parcial": false
+   },
+   {
+    "t": "2019-10-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 1,
+     "GTA 5": 10,
+     "Ocarina of Time": 0,
+     "Avengers Doomsday": 0
+    },
+    "parcial": false
+   },
+   {
+    "t": "2019-11-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 1,
+     "GTA 5": 12,
+     "Ocarina of Time": 0,
+     "Avengers Doomsday": 0
+    },
+    "parcial": false
+   },
+   {
+    "t": "2019-12-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 1,
+     "GTA 5": 17,
+     "Ocarina of Time": 0,
+     "Avengers Doomsday": 0
+    },
+    "parcial": false
+   },
+   {
+    "t": "2020-01-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 1,
+     "GTA 5": 18,
+     "Ocarina of Time": 0,
+     "Avengers Doomsday": 0
+    },
+    "parcial": false
+   },
+   {
+    "t": "2020-02-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 1,
+     "GTA 5": 16,
+     "Ocarina of Time": 0,
+     "Avengers Doomsday": 0
+    },
+    "parcial": false
+   },
+   {
+    "t": "2020-03-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 2,
+     "GTA 5": 19,
+     "Ocarina of Time": 1,
+     "Avengers Doomsday": 0
+    },
+    "parcial": false
+   },
+   {
+    "t": "2020-04-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 2,
+     "GTA 5": 27,
+     "Ocarina of Time": 1,
+     "Avengers Doomsday": 0
+    },
+    "parcial": false
+   },
+   {
+    "t": "2020-05-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 2,
+     "GTA 5": 33,
+     "Ocarina of Time": 1,
+     "Avengers Doomsday": 0
+    },
+    "parcial": false
+   },
+   {
+    "t": "2020-06-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 1,
+     "GTA 5": 20,
+     "Ocarina of Time": 0,
+     "Avengers Doomsday": 0
+    },
+    "parcial": false
+   },
+   {
+    "t": "2020-07-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 1,
+     "GTA 5": 16,
+     "Ocarina of Time": 0,
+     "Avengers Doomsday": 0
+    },
+    "parcial": false
+   },
+   {
+    "t": "2020-08-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 1,
+     "GTA 5": 15,
+     "Ocarina of Time": 0,
+     "Avengers Doomsday": 0
+    },
+    "parcial": false
+   },
+   {
+    "t": "2020-09-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 1,
+     "GTA 5": 12,
+     "Ocarina of Time": 0,
+     "Avengers Doomsday": 0
+    },
+    "parcial": false
+   },
+   {
+    "t": "2020-10-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 1,
+     "GTA 5": 12,
+     "Ocarina of Time": 0,
+     "Avengers Doomsday": 0
+    },
+    "parcial": false
+   },
+   {
+    "t": "2020-11-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 1,
+     "GTA 5": 13,
+     "Ocarina of Time": 0,
+     "Avengers Doomsday": 0
+    },
+    "parcial": false
+   },
+   {
+    "t": "2020-12-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 1,
+     "GTA 5": 18,
+     "Ocarina of Time": 0,
+     "Avengers Doomsday": 0
+    },
+    "parcial": false
+   },
+   {
+    "t": "2021-01-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 2,
+     "GTA 5": 19,
+     "Ocarina of Time": 0,
+     "Avengers Doomsday": 0
+    },
+    "parcial": false
+   },
+   {
+    "t": "2021-02-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 1,
+     "GTA 5": 15,
+     "Ocarina of Time": 0,
+     "Avengers Doomsday": 0
+    },
+    "parcial": false
+   },
+   {
+    "t": "2021-03-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 1,
+     "GTA 5": 13,
+     "Ocarina of Time": 0,
+     "Avengers Doomsday": 0
+    },
+    "parcial": false
+   },
+   {
+    "t": "2021-04-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 1,
+     "GTA 5": 14,
+     "Ocarina of Time": 0,
+     "Avengers Doomsday": 0
+    },
+    "parcial": false
+   },
+   {
+    "t": "2021-05-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 1,
+     "GTA 5": 14,
+     "Ocarina of Time": 0,
+     "Avengers Doomsday": 0
+    },
+    "parcial": false
+   },
+   {
+    "t": "2021-06-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 1,
+     "GTA 5": 14,
+     "Ocarina of Time": 0,
+     "Avengers Doomsday": 0
+    },
+    "parcial": false
+   },
+   {
+    "t": "2021-07-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 1,
+     "GTA 5": 17,
+     "Ocarina of Time": 0,
+     "Avengers Doomsday": 0
+    },
+    "parcial": false
+   },
+   {
+    "t": "2021-08-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 1,
+     "GTA 5": 15,
+     "Ocarina of Time": 0,
+     "Avengers Doomsday": 0
+    },
+    "parcial": false
+   },
+   {
+    "t": "2021-09-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 1,
+     "GTA 5": 11,
+     "Ocarina of Time": 0,
+     "Avengers Doomsday": 0
+    },
+    "parcial": false
+   },
+   {
+    "t": "2021-10-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 1,
+     "GTA 5": 10,
+     "Ocarina of Time": 0,
+     "Avengers Doomsday": 0
+    },
+    "parcial": false
+   },
+   {
+    "t": "2021-11-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 1,
+     "GTA 5": 11,
+     "Ocarina of Time": 0,
+     "Avengers Doomsday": 0
+    },
+    "parcial": false
+   },
+   {
+    "t": "2021-12-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 1,
+     "GTA 5": 14,
+     "Ocarina of Time": 0,
+     "Avengers Doomsday": 0
+    },
+    "parcial": false
+   },
+   {
+    "t": "2022-01-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 1,
+     "GTA 5": 16,
+     "Ocarina of Time": 0,
+     "Avengers Doomsday": 0
+    },
+    "parcial": false
+   },
+   {
+    "t": "2022-02-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 2,
+     "GTA 5": 13,
+     "Ocarina of Time": 0,
+     "Avengers Doomsday": 0
+    },
+    "parcial": false
+   },
+   {
+    "t": "2022-03-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 1,
+     "GTA 5": 13,
+     "Ocarina of Time": 0,
+     "Avengers Doomsday": 0
+    },
+    "parcial": false
+   },
+   {
+    "t": "2022-04-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 1,
+     "GTA 5": 13,
+     "Ocarina of Time": 0,
+     "Avengers Doomsday": 0
+    },
+    "parcial": false
+   },
+   {
+    "t": "2022-05-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 1,
+     "GTA 5": 11,
+     "Ocarina of Time": 0,
+     "Avengers Doomsday": 0
+    },
+    "parcial": false
+   },
+   {
+    "t": "2022-06-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 1,
+     "GTA 5": 13,
+     "Ocarina of Time": 0,
+     "Avengers Doomsday": 0
+    },
+    "parcial": false
+   },
+   {
+    "t": "2022-07-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 1,
+     "GTA 5": 15,
+     "Ocarina of Time": 0,
+     "Avengers Doomsday": 0
+    },
+    "parcial": false
+   },
+   {
+    "t": "2022-08-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 1,
+     "GTA 5": 14,
+     "Ocarina of Time": 0,
+     "Avengers Doomsday": 0
+    },
+    "parcial": false
+   },
+   {
+    "t": "2022-09-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 5,
+     "GTA 5": 11,
+     "Ocarina of Time": 0,
+     "Avengers Doomsday": 0
+    },
+    "parcial": false
+   },
+   {
+    "t": "2022-10-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 1,
+     "GTA 5": 11,
+     "Ocarina of Time": 0,
+     "Avengers Doomsday": 0
+    },
+    "parcial": false
+   },
+   {
+    "t": "2022-11-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 1,
+     "GTA 5": 11,
+     "Ocarina of Time": 0,
+     "Avengers Doomsday": 0
+    },
+    "parcial": false
+   },
+   {
+    "t": "2022-12-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 1,
+     "GTA 5": 13,
+     "Ocarina of Time": 0,
+     "Avengers Doomsday": 0
+    },
+    "parcial": false
+   },
+   {
+    "t": "2023-01-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 1,
+     "GTA 5": 13,
+     "Ocarina of Time": 0,
+     "Avengers Doomsday": 0
+    },
+    "parcial": false
+   },
+   {
+    "t": "2023-02-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 1,
+     "GTA 5": 12,
+     "Ocarina of Time": 0,
+     "Avengers Doomsday": 0
+    },
+    "parcial": false
+   },
+   {
+    "t": "2023-03-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 2,
+     "GTA 5": 11,
+     "Ocarina of Time": 0,
+     "Avengers Doomsday": 0
+    },
+    "parcial": false
+   },
+   {
+    "t": "2023-04-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 2,
+     "GTA 5": 12,
+     "Ocarina of Time": 0,
+     "Avengers Doomsday": 0
+    },
+    "parcial": false
+   },
+   {
+    "t": "2023-05-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 2,
+     "GTA 5": 11,
+     "Ocarina of Time": 1,
+     "Avengers Doomsday": 0
+    },
+    "parcial": false
+   },
+   {
+    "t": "2023-06-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 2,
+     "GTA 5": 13,
+     "Ocarina of Time": 1,
+     "Avengers Doomsday": 0
+    },
+    "parcial": false
+   },
+   {
+    "t": "2023-07-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 2,
+     "GTA 5": 14,
+     "Ocarina of Time": 0,
+     "Avengers Doomsday": 0
+    },
+    "parcial": false
+   },
+   {
+    "t": "2023-08-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 2,
+     "GTA 5": 13,
+     "Ocarina of Time": 0,
+     "Avengers Doomsday": 0
+    },
+    "parcial": false
+   },
+   {
+    "t": "2023-09-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 2,
+     "GTA 5": 11,
+     "Ocarina of Time": 0,
+     "Avengers Doomsday": 0
+    },
+    "parcial": false
+   },
+   {
+    "t": "2023-10-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 5,
+     "GTA 5": 10,
+     "Ocarina of Time": 0,
+     "Avengers Doomsday": 0
+    },
+    "parcial": false
+   },
+   {
+    "t": "2023-11-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 6,
+     "GTA 5": 10,
+     "Ocarina of Time": 0,
+     "Avengers Doomsday": 0
+    },
+    "parcial": false
+   },
+   {
+    "t": "2023-12-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 14,
+     "GTA 5": 18,
+     "Ocarina of Time": 0,
+     "Avengers Doomsday": 0
+    },
+    "parcial": false
+   },
+   {
+    "t": "2024-01-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 2,
+     "GTA 5": 14,
+     "Ocarina of Time": 0,
+     "Avengers Doomsday": 0
+    },
+    "parcial": false
+   },
+   {
+    "t": "2024-02-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 2,
+     "GTA 5": 10,
+     "Ocarina of Time": 0,
+     "Avengers Doomsday": 0
+    },
+    "parcial": false
+   },
+   {
+    "t": "2024-03-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 2,
+     "GTA 5": 9,
+     "Ocarina of Time": 0,
+     "Avengers Doomsday": 0
+    },
+    "parcial": false
+   },
+   {
+    "t": "2024-04-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 2,
+     "GTA 5": 9,
+     "Ocarina of Time": 0,
+     "Avengers Doomsday": 0
+    },
+    "parcial": false
+   },
+   {
+    "t": "2024-05-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 2,
+     "GTA 5": 8,
+     "Ocarina of Time": 0,
+     "Avengers Doomsday": 0
+    },
+    "parcial": false
+   },
+   {
+    "t": "2024-06-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 2,
+     "GTA 5": 10,
+     "Ocarina of Time": 0,
+     "Avengers Doomsday": 0
+    },
+    "parcial": false
+   },
+   {
+    "t": "2024-07-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 2,
+     "GTA 5": 10,
+     "Ocarina of Time": 0,
+     "Avengers Doomsday": 1
+    },
+    "parcial": false
+   },
+   {
+    "t": "2024-08-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 2,
+     "GTA 5": 10,
+     "Ocarina of Time": 0,
+     "Avengers Doomsday": 1
+    },
+    "parcial": false
+   },
+   {
+    "t": "2024-09-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 2,
+     "GTA 5": 9,
+     "Ocarina of Time": 0,
+     "Avengers Doomsday": 0
+    },
+    "parcial": false
+   },
+   {
+    "t": "2024-10-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 2,
+     "GTA 5": 8,
+     "Ocarina of Time": 0,
+     "Avengers Doomsday": 0
+    },
+    "parcial": false
+   },
+   {
+    "t": "2024-11-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 3,
+     "GTA 5": 8,
+     "Ocarina of Time": 0,
+     "Avengers Doomsday": 0
+    },
+    "parcial": false
+   },
+   {
+    "t": "2024-12-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 4,
+     "GTA 5": 11,
+     "Ocarina of Time": 0,
+     "Avengers Doomsday": 0
+    },
+    "parcial": false
+   },
+   {
+    "t": "2025-01-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 5,
+     "GTA 5": 11,
+     "Ocarina of Time": 0,
+     "Avengers Doomsday": 0
+    },
+    "parcial": false
+   },
+   {
+    "t": "2025-02-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 5,
+     "GTA 5": 10,
+     "Ocarina of Time": 0,
+     "Avengers Doomsday": 0
+    },
+    "parcial": false
+   },
+   {
+    "t": "2025-03-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 4,
+     "GTA 5": 11,
+     "Ocarina of Time": 0,
+     "Avengers Doomsday": 1
+    },
+    "parcial": false
+   },
+   {
+    "t": "2025-04-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 3,
+     "GTA 5": 9,
+     "Ocarina of Time": 0,
+     "Avengers Doomsday": 1
+    },
+    "parcial": false
+   },
+   {
+    "t": "2025-05-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 11,
+     "GTA 5": 12,
+     "Ocarina of Time": 0,
+     "Avengers Doomsday": 1
+    },
+    "parcial": false
+   },
+   {
+    "t": "2025-06-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 3,
+     "GTA 5": 10,
+     "Ocarina of Time": 0,
+     "Avengers Doomsday": 0
+    },
+    "parcial": false
+   },
+   {
+    "t": "2025-07-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 3,
+     "GTA 5": 9,
+     "Ocarina of Time": 0,
+     "Avengers Doomsday": 1
+    },
+    "parcial": false
+   },
+   {
+    "t": "2025-08-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 3,
+     "GTA 5": 9,
+     "Ocarina of Time": 0,
+     "Avengers Doomsday": 1
+    },
+    "parcial": false
+   },
+   {
+    "t": "2025-09-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 4,
+     "GTA 5": 8,
+     "Ocarina of Time": 0,
+     "Avengers Doomsday": 1
+    },
+    "parcial": false
+   },
+   {
+    "t": "2025-10-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 3,
+     "GTA 5": 8,
+     "Ocarina of Time": 0,
+     "Avengers Doomsday": 1
+    },
+    "parcial": false
+   },
+   {
+    "t": "2025-11-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 6,
+     "GTA 5": 10,
+     "Ocarina of Time": 0,
+     "Avengers Doomsday": 1
+    },
+    "parcial": false
+   },
+   {
+    "t": "2025-12-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 4,
+     "GTA 5": 14,
+     "Ocarina of Time": 0,
+     "Avengers Doomsday": 3
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-01-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 4,
+     "GTA 5": 13,
+     "Ocarina of Time": 1,
+     "Avengers Doomsday": 2
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-02-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 4,
+     "GTA 5": 10,
+     "Ocarina of Time": 1,
+     "Avengers Doomsday": 1
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-03-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 4,
+     "GTA 5": 9,
+     "Ocarina of Time": 1,
+     "Avengers Doomsday": 1
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-04-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 5,
+     "GTA 5": 9,
+     "Ocarina of Time": 1,
+     "Avengers Doomsday": 2
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-05-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 9,
+     "GTA 5": 9,
+     "Ocarina of Time": 1,
+     "Avengers Doomsday": 1
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-06-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 22,
+     "GTA 5": 11,
+     "Ocarina of Time": 2,
+     "Avengers Doomsday": 1
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-07-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 10,
+     "GTA 5": 12,
+     "Ocarina of Time": 1,
+     "Avengers Doomsday": 4
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-08-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 21,
+     "GTA 5": 11,
+     "Ocarina of Time": 1,
+     "Avengers Doomsday": 6
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-09-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 16,
+     "GTA 5": 12,
+     "Ocarina of Time": 4,
+     "Avengers Doomsday": 3
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-10-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 18,
+     "GTA 5": 9,
+     "Ocarina of Time": 2,
+     "Avengers Doomsday": 4
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 76,
+     "GTA 5": 16,
+     "Ocarina of Time": 24,
+     "Avengers Doomsday": 5
+    },
+    "parcial": true
+   }
+  ]
+ },
+ "pelicula": {
+  "palabras": [
+   "GTA 6",
+   "Avengers Doomsday"
+  ],
+  "rango": "today 3-m",
+  "puntos": [
+   {
+    "t": "2026-08-17T00:00:00Z",
+    "interes": {
+     "GTA 6": 6,
+     "Avengers Doomsday": 4
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-08-18T00:00:00Z",
+    "interes": {
+     "GTA 6": 10,
+     "Avengers Doomsday": 4
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-08-19T00:00:00Z",
+    "interes": {
+     "GTA 6": 18,
+     "Avengers Doomsday": 4
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-08-20T00:00:00Z",
+    "interes": {
+     "GTA 6": 15,
+     "Avengers Doomsday": 3
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-08-21T00:00:00Z",
+    "interes": {
+     "GTA 6": 15,
+     "Avengers Doomsday": 2
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-08-22T00:00:00Z",
+    "interes": {
+     "GTA 6": 15,
+     "Avengers Doomsday": 3
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-08-23T00:00:00Z",
+    "interes": {
+     "GTA 6": 17,
+     "Avengers Doomsday": 3
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-08-24T00:00:00Z",
+    "interes": {
+     "GTA 6": 17,
+     "Avengers Doomsday": 2
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-08-25T00:00:00Z",
+    "interes": {
+     "GTA 6": 15,
+     "Avengers Doomsday": 2
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-08-26T00:00:00Z",
+    "interes": {
+     "GTA 6": 19,
+     "Avengers Doomsday": 2
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-08-27T00:00:00Z",
+    "interes": {
+     "GTA 6": 43,
+     "Avengers Doomsday": 2
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-08-28T00:00:00Z",
+    "interes": {
+     "GTA 6": 51,
+     "Avengers Doomsday": 2
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-08-29T00:00:00Z",
+    "interes": {
+     "GTA 6": 31,
+     "Avengers Doomsday": 2
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-08-30T00:00:00Z",
+    "interes": {
+     "GTA 6": 24,
+     "Avengers Doomsday": 2
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-08-31T00:00:00Z",
+    "interes": {
+     "GTA 6": 19,
+     "Avengers Doomsday": 2
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-09-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 15,
+     "Avengers Doomsday": 2
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-09-02T00:00:00Z",
+    "interes": {
+     "GTA 6": 13,
+     "Avengers Doomsday": 2
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-09-03T00:00:00Z",
+    "interes": {
+     "GTA 6": 13,
+     "Avengers Doomsday": 1
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-09-04T00:00:00Z",
+    "interes": {
+     "GTA 6": 13,
+     "Avengers Doomsday": 2
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-09-05T00:00:00Z",
+    "interes": {
+     "GTA 6": 11,
+     "Avengers Doomsday": 2
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-09-06T00:00:00Z",
+    "interes": {
+     "GTA 6": 11,
+     "Avengers Doomsday": 2
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-09-07T00:00:00Z",
+    "interes": {
+     "GTA 6": 10,
+     "Avengers Doomsday": 2
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-09-08T00:00:00Z",
+    "interes": {
+     "GTA 6": 9,
+     "Avengers Doomsday": 1
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-09-09T00:00:00Z",
+    "interes": {
+     "GTA 6": 8,
+     "Avengers Doomsday": 1
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-09-10T00:00:00Z",
+    "interes": {
+     "GTA 6": 12,
+     "Avengers Doomsday": 1
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-09-11T00:00:00Z",
+    "interes": {
+     "GTA 6": 8,
+     "Avengers Doomsday": 1
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-09-12T00:00:00Z",
+    "interes": {
+     "GTA 6": 7,
+     "Avengers Doomsday": 1
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-09-13T00:00:00Z",
+    "interes": {
+     "GTA 6": 7,
+     "Avengers Doomsday": 1
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-09-14T00:00:00Z",
+    "interes": {
+     "GTA 6": 7,
+     "Avengers Doomsday": 1
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-09-15T00:00:00Z",
+    "interes": {
+     "GTA 6": 6,
+     "Avengers Doomsday": 1
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-09-16T00:00:00Z",
+    "interes": {
+     "GTA 6": 6,
+     "Avengers Doomsday": 1
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-09-17T00:00:00Z",
+    "interes": {
+     "GTA 6": 7,
+     "Avengers Doomsday": 1
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-09-18T00:00:00Z",
+    "interes": {
+     "GTA 6": 7,
+     "Avengers Doomsday": 1
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-09-19T00:00:00Z",
+    "interes": {
+     "GTA 6": 6,
+     "Avengers Doomsday": 1
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-09-20T00:00:00Z",
+    "interes": {
+     "GTA 6": 6,
+     "Avengers Doomsday": 2
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-09-21T00:00:00Z",
+    "interes": {
+     "GTA 6": 5,
+     "Avengers Doomsday": 2
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-09-22T00:00:00Z",
+    "interes": {
+     "GTA 6": 6,
+     "Avengers Doomsday": 2
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-09-23T00:00:00Z",
+    "interes": {
+     "GTA 6": 6,
+     "Avengers Doomsday": 2
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-09-24T00:00:00Z",
+    "interes": {
+     "GTA 6": 8,
+     "Avengers Doomsday": 2
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-09-25T00:00:00Z",
+    "interes": {
+     "GTA 6": 8,
+     "Avengers Doomsday": 3
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-09-26T00:00:00Z",
+    "interes": {
+     "GTA 6": 7,
+     "Avengers Doomsday": 4
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-09-27T00:00:00Z",
+    "interes": {
+     "GTA 6": 7,
+     "Avengers Doomsday": 3
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-09-28T00:00:00Z",
+    "interes": {
+     "GTA 6": 6,
+     "Avengers Doomsday": 5
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-09-29T00:00:00Z",
+    "interes": {
+     "GTA 6": 7,
+     "Avengers Doomsday": 3
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-09-30T00:00:00Z",
+    "interes": {
+     "GTA 6": 6,
+     "Avengers Doomsday": 2
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-10-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 6,
+     "Avengers Doomsday": 2
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-10-02T00:00:00Z",
+    "interes": {
+     "GTA 6": 6,
+     "Avengers Doomsday": 2
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-10-03T00:00:00Z",
+    "interes": {
+     "GTA 6": 7,
+     "Avengers Doomsday": 2
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-10-04T00:00:00Z",
+    "interes": {
+     "GTA 6": 6,
+     "Avengers Doomsday": 3
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-10-05T00:00:00Z",
+    "interes": {
+     "GTA 6": 7,
+     "Avengers Doomsday": 2
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-10-06T00:00:00Z",
+    "interes": {
+     "GTA 6": 6,
+     "Avengers Doomsday": 2
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-10-07T00:00:00Z",
+    "interes": {
+     "GTA 6": 7,
+     "Avengers Doomsday": 2
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-10-08T00:00:00Z",
+    "interes": {
+     "GTA 6": 11,
+     "Avengers Doomsday": 2
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-10-09T00:00:00Z",
+    "interes": {
+     "GTA 6": 11,
+     "Avengers Doomsday": 2
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-10-10T00:00:00Z",
+    "interes": {
+     "GTA 6": 10,
+     "Avengers Doomsday": 2
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-10-11T00:00:00Z",
+    "interes": {
+     "GTA 6": 11,
+     "Avengers Doomsday": 2
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-10-12T00:00:00Z",
+    "interes": {
+     "GTA 6": 12,
+     "Avengers Doomsday": 2
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-10-13T00:00:00Z",
+    "interes": {
+     "GTA 6": 10,
+     "Avengers Doomsday": 2
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-10-14T00:00:00Z",
+    "interes": {
+     "GTA 6": 10,
+     "Avengers Doomsday": 2
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-10-15T00:00:00Z",
+    "interes": {
+     "GTA 6": 12,
+     "Avengers Doomsday": 2
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-10-16T00:00:00Z",
+    "interes": {
+     "GTA 6": 11,
+     "Avengers Doomsday": 2
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-10-17T00:00:00Z",
+    "interes": {
+     "GTA 6": 10,
+     "Avengers Doomsday": 2
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-10-18T00:00:00Z",
+    "interes": {
+     "GTA 6": 10,
+     "Avengers Doomsday": 2
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-10-19T00:00:00Z",
+    "interes": {
+     "GTA 6": 11,
+     "Avengers Doomsday": 2
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-10-20T00:00:00Z",
+    "interes": {
+     "GTA 6": 10,
+     "Avengers Doomsday": 2
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-10-21T00:00:00Z",
+    "interes": {
+     "GTA 6": 9,
+     "Avengers Doomsday": 1
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-10-22T00:00:00Z",
+    "interes": {
+     "GTA 6": 9,
+     "Avengers Doomsday": 1
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-10-23T00:00:00Z",
+    "interes": {
+     "GTA 6": 10,
+     "Avengers Doomsday": 4
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-10-24T00:00:00Z",
+    "interes": {
+     "GTA 6": 9,
+     "Avengers Doomsday": 5
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-10-25T00:00:00Z",
+    "interes": {
+     "GTA 6": 10,
+     "Avengers Doomsday": 3
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-10-26T00:00:00Z",
+    "interes": {
+     "GTA 6": 10,
+     "Avengers Doomsday": 2
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-10-27T00:00:00Z",
+    "interes": {
+     "GTA 6": 11,
+     "Avengers Doomsday": 2
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-10-28T00:00:00Z",
+    "interes": {
+     "GTA 6": 12,
+     "Avengers Doomsday": 2
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-10-29T00:00:00Z",
+    "interes": {
+     "GTA 6": 13,
+     "Avengers Doomsday": 2
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-10-30T00:00:00Z",
+    "interes": {
+     "GTA 6": 12,
+     "Avengers Doomsday": 2
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-10-31T00:00:00Z",
+    "interes": {
+     "GTA 6": 12,
+     "Avengers Doomsday": 2
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-01T00:00:00Z",
+    "interes": {
+     "GTA 6": 16,
+     "Avengers Doomsday": 2
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-02T00:00:00Z",
+    "interes": {
+     "GTA 6": 18,
+     "Avengers Doomsday": 2
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-03T00:00:00Z",
+    "interes": {
+     "GTA 6": 20,
+     "Avengers Doomsday": 2
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-04T00:00:00Z",
+    "interes": {
+     "GTA 6": 19,
+     "Avengers Doomsday": 2
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-05T00:00:00Z",
+    "interes": {
+     "GTA 6": 22,
+     "Avengers Doomsday": 2
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-06T00:00:00Z",
+    "interes": {
+     "GTA 6": 24,
+     "Avengers Doomsday": 2
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-07T00:00:00Z",
+    "interes": {
+     "GTA 6": 23,
+     "Avengers Doomsday": 2
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-08T00:00:00Z",
+    "interes": {
+     "GTA 6": 27,
+     "Avengers Doomsday": 2
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-09T00:00:00Z",
+    "interes": {
+     "GTA 6": 41,
+     "Avengers Doomsday": 2
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-10T00:00:00Z",
+    "interes": {
+     "GTA 6": 60,
+     "Avengers Doomsday": 2
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-11T00:00:00Z",
+    "interes": {
+     "GTA 6": 52,
+     "Avengers Doomsday": 4
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-12T00:00:00Z",
+    "interes": {
+     "GTA 6": 59,
+     "Avengers Doomsday": 4
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-13T00:00:00Z",
+    "interes": {
+     "GTA 6": 59,
+     "Avengers Doomsday": 4
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-14T00:00:00Z",
+    "interes": {
+     "GTA 6": 61,
+     "Avengers Doomsday": 4
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-15T00:00:00Z",
+    "interes": {
+     "GTA 6": 68,
+     "Avengers Doomsday": 4
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-16T00:00:00Z",
+    "interes": {
+     "GTA 6": 79,
+     "Avengers Doomsday": 5
+    },
+    "parcial": false
+   },
+   {
+    "t": "2026-11-17T00:00:00Z",
+    "interes": {
+     "GTA 6": 100,
+     "Avengers Doomsday": 5
+    },
+    "parcial": true
+   }
+  ]
+ },
+ "consultas": 9
+}
