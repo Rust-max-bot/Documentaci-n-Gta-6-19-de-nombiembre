@@ -119,6 +119,13 @@ La luz viene de arriba a la derecha: cornisas, toldos y balcones echan sombra ha
 borde izquierdo de cada edificio va más oscuro y el derecho más claro. Las ventanas apagadas
 tienen un reflejo en la esquina; algunas encendidas tienen la cortina a medio bajar.
 
+### Animaciones al cambiar de día y al abrir listas (2026-11-17, opciones A de Bruno)
+
+- **Cambiar de día** (Resumen del día y tabla de Twitch y Kick): el contenido entra deslizando desde el lado del día elegido, casi todo junto; las dos filas de una medición (Twitch y Kick) entran a la vez.
+- **Abrir y cerrar** "Ver los N titulares" y "Ver los N eventos": cortina que se puede interrumpir; el texto del botón cambia con fundido y la flecha gira. Cerrar es más rápido y suave que abrir.
+- **Filtros de la línea de tiempo:** la gota rosada se desliza al elegido y la lista cambia con un fundido de 180 ms, sin cascada.
+- Todo está en `web/animaciones.js` (se apaga con `ACTIVAS`) y respeta "reducir movimiento".
+
 ### Cambio de un estilo a otro
 
 - El interruptor es una píldora con un fondo de color que se desliza al lado elegido

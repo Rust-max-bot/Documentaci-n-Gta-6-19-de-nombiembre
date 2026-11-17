@@ -520,8 +520,20 @@ td a:hover, td a:focus-visible { color: var(--a1); text-decoration-color: var(--
 .medios-barras i { display: block; height: 14px; border-radius: 4px; background: var(--a1); }
 .medios-barras b { text-align: right; font-variant-numeric: tabular-nums; }
 .nt-ver { display: block; margin: 16px auto 0; cursor: pointer; padding: 10px 20px; border-radius: 999px; border: 1px solid var(--a1); background: none; color: var(--texto); font: 700 13px var(--f-texto); letter-spacing: .06em; text-transform: uppercase; }
-.nt-ver[hidden], #noticias-todas[hidden] { display: none; }
-#noticias-todas { margin-top: 8px; }
+.nt-ver[hidden] { display: none; }
+/* Lista completa de titulares: se abre y cierra con una cortina (9.9, opción A). Sin display:none para poder
+   animar: cerrada no ocupa lugar (0fr), no se ve y no se puede enfocar (visibility). Se puede interrumpir. */
+.despliegue { display: grid; grid-template-rows: 0fr; opacity: 0; transform: translateY(-8px); visibility: hidden;
+  transition: grid-template-rows .3s cubic-bezier(.2, .8, .2, 1), opacity .14s ease-out, transform .3s ease-out, visibility 0s .3s; }
+.despliegue.abierto { grid-template-rows: 1fr; opacity: 1; transform: none; visibility: visible;
+  transition: grid-template-rows .34s cubic-bezier(.2, .8, .2, 1), opacity .12s ease-out, transform .34s cubic-bezier(.2, .8, .2, 1), visibility 0s; }
+.despliegue-int { overflow: hidden; min-height: 0; }
+.despliegue-int > :first-child { margin-top: 8px; }
+/* Botones "Ver los N…" / "Ver menos": texto y flecha que gira. */
+.nt-ver:not([hidden]), .linea-mas:not([hidden]) { display: flex; align-items: center; gap: 8px; width: fit-content; }
+.nt-ver .chev, .linea-mas .chev { width: 14px; height: 14px; flex: none; transition: transform .3s cubic-bezier(.2, .8, .2, 1); }
+.nt-ver[aria-expanded="true"] .chev, .linea-mas[aria-expanded="true"] .chev { transform: rotate(180deg); }
+@media (prefers-reduced-motion: reduce) { .despliegue, .despliegue.abierto, .nt-ver .chev, .linea-mas .chev { transition: none; } }
 @media (max-width: 480px) { .medios-barras div { grid-template-columns: 92px 1fr 4ch; font-size: 13px; } }
 
 /* Filtro por día de los titulares (opción C de Bruno, 2026-11-14: barras por día) */
@@ -1126,7 +1138,10 @@ h2 .ico, .v-sub .ico { color: var(--a2); stroke-width: 2.2; }
   background: transparent; color: var(--texto); font: 700 13px var(--f-texto); cursor: pointer; transition: background .2s, border-color .2s, color .2s; }
 .linea-filtros button small { margin-left: 3px; color: var(--tenue); font-weight: 700; }
 .linea-filtros button:hover { border-color: var(--a2); }
-.linea-filtros button[aria-pressed="true"] { background: var(--a1); border-color: var(--a1); color: #fff; }
+.linea-filtros { position: relative; }
+.linea-filtros button { position: relative; z-index: 1; }
+/* El elegido lleva la gota rosada que se desliza (gota-sel, la misma de los días y las pestañas). */
+.linea-filtros button[aria-pressed="true"] { background: none; border-color: transparent; color: #fff; }
 .linea-filtros button[aria-pressed="true"] small { color: #fff; opacity: .85; }
 .linea-mas { display: block; margin: 14px auto 0; padding: 8px 18px; border-radius: 999px; border: 1.5px solid var(--a2); background: transparent;
   color: var(--a2); font: 700 14px var(--f-texto); cursor: pointer; }

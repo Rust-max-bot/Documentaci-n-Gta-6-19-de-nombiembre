@@ -53,12 +53,6 @@ con línea de tiempo, tablas y gráficos de Twitch, Kick, YouTube, Google Trends
       dobles y con 25 min de tiempo. Recordatorios en el Google Calendar de Bruno el 21 y el 24 nov
       (16:30 de Santiago). **Falta:** (1) comprobar el 21 que se guardó; (2) mostrarlo en la página, con opciones y capturas; (3) idea sin
       decidir: repetir lo de Doomsday en enero, después de su estreno (18 dic).
-- [ ] **9.9 Animar mostrar/ocultar y los filtros de la línea de tiempo** (Bruno, 2026-11-17).
-      Animación al abrir y cerrar "Ver los N titulares" (`#noticias-todas`, hoy con `hidden`) y
-      "Ver los N eventos / Ver menos" de la línea de tiempo, al cambiar el texto de esos botones y
-      al elegir un filtro de la línea de tiempo (hoy sin gota deslizante, a diferencia de días y
-      pestañas). **Hecho:** prototipo con 3 opciones por cada grupo (copia de la página en
-      `pruebas/capturas/animaciones2/`, no va a git); espera la elección de Bruno.
 - [ ] **9.10 Kick sin fotos de perfil** (Bruno, 2026-11-17). En Twitch salen las fotos de los
       canales; en Kick no (`foto("")` en la tabla; el recolector no guarda la foto de Kick).
       Ver si la API de Kick la da y mostrarla; si no, un dibujo de reemplazo.
@@ -172,6 +166,7 @@ No se empieza hasta que Bruno avise con una confirmación oficial de la versión
 - **9.8 (2026-11-17, opción A):** al cambiar de día, el Resumen del día y la tabla de Twitch y
   Kick entran deslizando (`web/animaciones.js`; apagar con `ACTIVAS`). Las dos filas de una
   medición se animan juntas (si no, la hora se veía cortada) y las fotos salen con fundido.
+- **9.9 (2026-11-17, opciones A):** Titulares y "Ver los N eventos" de la línea de tiempo se abren y cierran con cortina; los botones cambian el texto con fundido y la flecha gira; los filtros de la línea de tiempo llevan la gota rosada y la lista cambia con fundido corto (`web/animaciones.js`, `ACTIVAS`).
 - **Herramientas:** Graphify y sincronización del PC con GitHub (`sincronizar_datos.ps1`).
 - Descartado por Bruno: app en el celular; Cloudflare Radar; redes de descarga de PlayStation y
   Xbox; la 9.2 "¿Cuánta gente faltó?".

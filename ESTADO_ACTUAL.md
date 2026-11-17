@@ -100,6 +100,7 @@ Bruno ya eligió las palabras de la comparación.
 
 ## Últimos cambios
 
+- 2026-11-17: 9.9 hecha (opciones A de Bruno): cortina al abrir y cerrar Titulares y "Ver los N eventos" de la línea de tiempo (interrumpible, respeta "reducir movimiento"), texto de esos botones con fundido y flecha que gira, y filtros de la línea de tiempo con la gota rosada y fundido corto de la lista. Todo en `web/animaciones.js` (+ `.despliegue` en `estilos.css`). Verificado a 1280 y 384 px, en los dos estilos y con movimiento reducido: sin errores ni desborde.
 - 2026-11-17: `PLAN.md` archivado en `historial/PLAN_2026-11-17-2.md` (pasó de 20.000 bytes); el nuevo conserva todas las tareas pendientes con su texto, las decisiones y los riesgos vigentes.
 - 2026-11-17: 9.8 hecha (opción A de Bruno): animación al cambiar de día en el Resumen del día y en la tabla de Twitch y Kick (`web/animaciones.js`, apagable con `ACTIVAS`; respeta "reducir movimiento"). Arreglado lo que Bruno notó: cuadros que tardaban (ahora entran casi juntos), hora cortada en la tabla (las filas de Twitch y Kick de una medición se animan juntas) y fotos que saltaban (fundido). Medido: sin desborde a 384 px ni errores de consola.
 - 2026-11-17: anotadas en `PLAN.md` cinco tareas pedidas por Bruno, sin hacer aún: 9.8 animaciones al cambiar de día (Resumen del día y tabla de Twitch y Kick), 9.9 animar mostrar/ocultar de Titulares, 9.10 fotos de perfil de Kick, 9.11 buscar una skill de animación y 9.12 rehacer `compartir.jpg` (queda para después).
@@ -121,7 +122,7 @@ Bruno ya eligió las palabras de la comparación.
 
 La lista completa y su orden están en `PLAN.md`. Resumen (2026-11-14):
 
-- **(2026-11-17, nuevo):** 9.9 a 9.12 (animar Titulares, fotos de Kick, skill de animación, `compartir.jpg`; ver `PLAN.md`). 6.8 diseñar la sección de la 6.1 desde el 20 nov. **Reddit:** quitado (6.9, hecha el 17 nov): Reddit bloqueó su RSS público; solo volvería con la clave oficial.
+- **(2026-11-17, nuevo):** 9.10 a 9.12 (fotos de Kick, skill de animación, `compartir.jpg`; ver `PLAN.md`). 6.8 diseñar la sección de la 6.1 desde el 20 nov. **Reddit:** quitado (6.9, hecha el 17 nov): Reddit bloqueó su RSS público; solo volvería con la clave oficial.
 0. **(2026-11-16, orden de Bruno):** 9.4 optimizar la página (eje y `partes()` hechos; lo
    grande, después del 22), 9.1 servidores más cortos (**hecha**, opción C) y 9.3
    menos alarmas por Google (después del 22). Descartados (Bruno): la 9.2 "¿Cuánta gente

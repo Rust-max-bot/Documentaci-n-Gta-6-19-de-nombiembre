@@ -451,6 +451,7 @@
     mas.type = "button"; mas.className = "linea-mas";
     caja.parentNode.insertBefore(mas, caja.nextSibling);
     caja.className = "linea linea2";
+    gota(barra, "gota-sel", 'button[aria-pressed="true"]');   // la gota rosada, como en los días y las pestañas
     function pintar() {
       var hay = FILTROS.filter(function (f) { return ev.some(function (e) { return pasa(e, f[0]); }); });
       barra.innerHTML = hay.map(function (f) {
@@ -471,14 +472,20 @@
       });
       caja.innerHTML = html || '<li class="vacio">Todavía no hay eventos.</li>';
       mas.hidden = lista.length <= CORTE;
-      mas.textContent = abierta ? "Ver menos" : "Ver los " + lista.length + " eventos";
+      mas.dataset.n = lista.length;
+      ANIM.boton(mas, abierta ? "Ver menos" : "Ver los " + lista.length + " eventos");
       mas.setAttribute("aria-expanded", abierta);
     }
     barra.addEventListener("click", function (e) {
       var b = e.target.closest("button"); if (!b || b.dataset.f === filtro) return;
-      filtro = b.dataset.f; abierta = false; pintar();
+      filtro = b.dataset.f; abierta = false; pintar(); ANIM.lista(caja);
     });
-    mas.addEventListener("click", function () { abierta = !abierta; pintar(); });
+    mas.addEventListener("click", function () {
+      var abrir = !abierta;   // el botón cambia al tocarlo; la lista, cuando termina de animarse
+      mas.setAttribute("aria-expanded", abrir);
+      ANIM.boton(mas, abrir ? "Ver menos" : "Ver los " + (mas.dataset.n || "") + " eventos");
+      ANIM.alturaLinea(caja, function () { abierta = abrir; pintar(); }, abrir);
+    });
     pintar();
   }
 
@@ -925,10 +932,10 @@
     })();
     var abierta = false, boton = $("noticias-ver");
     boton.hidden = !lista.length;
-    function textoBoton() { boton.textContent = abierta ? "Ocultar la lista completa" : "Ver los " + num(lista.length) + " titulares"; boton.setAttribute("aria-expanded", abierta); }
+    function textoBoton() { ANIM.boton(boton, abierta ? "Ocultar la lista completa" : "Ver los " + num(lista.length) + " titulares"); boton.setAttribute("aria-expanded", abierta); }
     textoBoton();
     boton.addEventListener("click", function () {
-      abierta = !abierta; $("noticias-todas").hidden = !abierta; textoBoton();
+      abierta = !abierta; ANIM.desplegar($("noticias-todas"), abierta); textoBoton();
       if (abierta) {
         pintar();                                    // los titulares de la primera página se piden recién ahora
         var barras = $("noticias-filtro").querySelector(".nt-barras"); if (barras) barras.scrollLeft = barras.scrollWidth;
