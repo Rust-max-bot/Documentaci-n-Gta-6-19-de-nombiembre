@@ -45,7 +45,7 @@ def main():
         return
     cat = exactas[0]
     print("\nCategoría elegida:", cat["id"], cat["name"])
-    total, directos, cursor = 0, 0, ""
+    total, directos, cursor, ejemplo = 0, 0, "", False
     for _ in range(5):
         url = f"{API}/v2/livestreams?category_id={cat['id']}&limit=1000" + (f"&cursor={cursor}" if cursor else "")
         cod, txt = pedir(url, cab)
@@ -55,6 +55,16 @@ def main():
         r = json.loads(txt)
         for d in r.get("data", []):
             directos += 1; total += d.get("viewer_count", 0)
+        if directos and not ejemplo:   # 9.10: ¿viene la foto de perfil? (solo se muestran nombres de campos y la foto, que es pública)
+            d = r["data"][0]; ejemplo = True
+            print("Campos de cada directo:", sorted(d.keys()))
+            bu = d.get("broadcaster_user") or {}
+            print("Campos de broadcaster_user:", sorted(bu.keys()))
+            print("Foto de perfil de ejemplo:", bu.get("profile_picture"))
+            con = sum(1 for x in r["data"] if (x.get("broadcaster_user") or {}).get("profile_picture"))
+            print(f"Directos de esta página con foto: {con} de {len(r['data'])}")
+            hosts = sorted({urllib.parse.urlparse((x.get('broadcaster_user') or {}).get('profile_picture') or '').netloc for x in r['data']})
+            print("Sitios de las fotos:", hosts)
         cursor = (r.get("pagination") or {}).get("next_cursor") or ""
         if not cursor:
             break
