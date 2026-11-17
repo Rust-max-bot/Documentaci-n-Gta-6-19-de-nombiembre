@@ -7,10 +7,18 @@
 #   2. de respaldo, el horario de GitHub de abajo, los mismos días a las 18:41 UTC;
 #   3. a mano, con el botón "Run workflow" (recordatorios en el calendario de Bruno el 21 y el 24).
 # Para probar sin guardar: "Probar fuentes" con la casilla de Trends extra marcada.
+# Con la casilla "previa" (tarea 6.7, Bruno, 2026-11-17): las mismas preguntas, a mano y en
+# cualquier fecha, guardadas en datos/trends_previa/ (cada vez un archivo nuevo). No cuenta como
+# la 6.1: el paso "decidir" de la 6.1 solo mira datos/trends_extra/.
 name: Trends extra (6.1)
 
 on:
   workflow_dispatch:
+    inputs:
+      previa:
+        description: "Consulta previa (6.7): guardar en datos/trends_previa/, en cualquier fecha"
+        type: boolean
+        default: false
   schedule:
     - cron: "41 18 21-24 11 *"   # respaldo del despertador (UTC); el candado evita otros años
 
@@ -34,7 +42,10 @@ jobs:
         run: |
           hoy=$(date -u +%Y-%m-%d)
           git fetch -q origin main
-          if [[ "$hoy" < "2026-11-20" || "$hoy" > "2026-11-25" ]]; then
+          if [[ "${{ inputs.previa }}" == "true" ]]; then
+            echo "Consulta previa (6.7): se guarda en datos/trends_previa/." | tee -a "$GITHUB_STEP_SUMMARY"
+            echo "seguir=si" >> "$GITHUB_OUTPUT"
+          elif [[ "$hoy" < "2026-11-20" || "$hoy" > "2026-11-25" ]]; then
             echo "Fuera del 20-25 nov 2026 ($hoy): no se hace nada." | tee -a "$GITHUB_STEP_SUMMARY"
             echo "seguir=no" >> "$GITHUB_OUTPUT"
           elif git ls-tree -r --name-only origin/main -- datos/trends_extra/ | grep -q '\.json$'; then
@@ -51,19 +62,20 @@ jobs:
 
       - name: Hacer las 5 preguntas a Google Trends
         if: steps.decidir.outputs.seguir == 'si'
-        run: python3 recolector/trends_extra.py
+        run: python3 recolector/trends_extra.py ${{ inputs.previa && '--previa' || '' }}
 
       - name: Guardar el resultado en el repositorio
         if: steps.decidir.outputs.seguir == 'si'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add datos/trends_extra/
+          if [[ "${{ inputs.previa }}" == "true" ]]; then git add datos/trends_previa/; else git add datos/trends_extra/; fi
           if git diff --cached --quiet; then
             echo "::error::No hay archivo nuevo que guardar."
             exit 1
           fi
-          git commit -q -m "Trends extra (6.1) $(date -u +%Y-%m-%dT%H:%MZ)"
+          if [[ "${{ inputs.previa }}" == "true" ]]; then tarea="Trends previa (6.7)"; else tarea="Trends extra (6.1)"; fi
+          git commit -q -m "$tarea $(date -u +%Y-%m-%dT%H:%MZ)"
           for intento in 1 2 3 4 5; do
             if git push -q; then exit 0; fi
             echo "El push falló (intento $intento); se traen los cambios y se reintenta."

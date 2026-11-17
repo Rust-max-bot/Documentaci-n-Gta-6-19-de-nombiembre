@@ -359,6 +359,33 @@ def separar_por_dias(d):
     return archivos
 
 
+def leer_trends_extra(carpeta):
+    """Preguntas extra a Trends (6.1 y 6.7). Usa la más nueva de datos/trends_extra/ (la 6.1, con
+    los días del lanzamiento) y, mientras no exista, la más nueva de datos/trends_previa/ (la
+    consulta previa de la 6.7, pedido de Bruno, 2026-11-17). Cada serie va como
+    [[segundos, v1, v2, ...], ...] en el orden de "palabras". None si no hay ninguna."""
+    for sub in ("trends_extra", "trends_previa"):
+        archivos = sorted((carpeta / sub).glob("*.json"))
+        if archivos:
+            break
+    else:
+        return None
+    r = json.loads(archivos[-1].read_text(encoding="utf-8"))
+    sal = {"t": r["t"], "tarea": r.get("tarea", "6.1"), "archivo": f"{sub}/{archivos[-1].name}"}
+    for nombre in ("pelicula", "historica", "comparacion"):
+        s = r[nombre]
+        palabras = s["palabras"]
+        puntos = [[segundos(x["t"])] + [x["interes"][k] for k in palabras] for x in s["puntos"]]
+        if not puntos or any(not (0 <= v <= 100) for x in puntos for v in x[1:]):
+            abortar(f"{sub}: la serie {nombre} está vacía o tiene valores fuera de 0-100")
+        sal[nombre] = {"palabras": palabras, "rango": s["rango"], "puntos": puntos}
+    sal["paises"] = [[p["pais"], p["interes"]] for p in r["paises"]["lista"][:15]]
+    rel = r["relacionadas"]
+    sal["en_aumento"] = [[k["busqueda"], k["valor"]] for k in rel["en_aumento"][:10]]
+    sal["mas_buscadas"] = [k["busqueda"] for k in rel["mas_buscadas"][:10]]
+    return sal
+
+
 def leer_album():
     """Lista las fotos de web/album/ con su hora (texto de Santiago) y su texto. Las que no
     siguen el formato del nombre se avisan y no se muestran (no se toca ningún archivo)."""
@@ -420,6 +447,7 @@ def main():
     comprobar(d, medidas)
     archivos = separar_por_dias(d)
     d["album"] = leer_album()
+    d["trends_extra"] = leer_trends_extra(carpeta)
     d["generado"] = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
     d["eventos"] = []   # los eventos a mano están en web/eventos.js
     texto = ("/* DATOS REALES generados por recolector/generar_web.py a partir de datos/.\n"

@@ -17,6 +17,9 @@ Hace 5 preguntas a Trends, con una pausa entre una y otra:
                   Bruno, 2026-11-14: en la página va solo esta comparación directa).
 
 Guarda UN archivo nuevo: datos/trends_extra/AAAA-MM-DDTHHMMZ.json (hora UTC de la ejecución).
+Con --previa (tarea 6.7, pedido de Bruno, 2026-11-17: ver GTA 6 frente a Doomsday antes del 19)
+hace las mismas preguntas pero guarda en datos/trends_previa/: así no cuenta como la 6.1, que
+sigue lanzándose sola del 21 al 24 nov (su paso "decidir" solo mira datos/trends_extra/).
 Nunca sobrescribe uno que ya exista. Si algo no cuadra, se detiene sin escribir nada.
 Como el recolector, en datos/ solo escribe desde GitHub; en el PC o para probar:
     python recolector/trends_extra.py --carpeta <carpeta temporal>
@@ -41,6 +44,7 @@ from validar import Invalida, es_entero, es_iso, exigir  # noqa: E402
 
 RAIZ = Path(__file__).resolve().parent.parent
 DATOS = RAIZ / "datos" / "trends_extra"
+PREVIA = RAIZ / "datos" / "trends_previa"
 VERSION = 1
 
 PALABRA = "GTA 6"
@@ -196,11 +200,11 @@ def main():
     en_github = os.environ.get("GITHUB_ACTIONS") == "true"
     if "--carpeta" in sys.argv:
         carpeta = Path(sys.argv[sys.argv.index("--carpeta") + 1]).resolve()
-        if carpeta == DATOS.resolve() or DATOS.resolve() in carpeta.parents or carpeta == DATOS.parent.resolve():
+        if DATOS.parent.resolve() in (carpeta, *carpeta.parents):
             abortar("--carpeta no puede ser datos/: para probar, usa una carpeta temporal")
         origen = "prueba"
     elif en_github:
-        carpeta, origen = DATOS, "github"
+        carpeta, origen = (PREVIA if "--previa" in sys.argv else DATOS), "github"
     else:
         abortar("en el PC usa --carpeta <carpeta temporal>; datos/ solo lo escribe GitHub")
 
@@ -215,7 +219,7 @@ def main():
         abortar(f"{type(e).__name__}: {e}. No se guardó nada.")
 
     salida = {"v": VERSION, "t": a_iso(ahora), "origen": origen, "ejecucion": os.environ.get("GITHUB_RUN_ID"),
-              "tarea": "6.1", "nota": "Interés de 0 a 100 dentro de cada pregunta: no se comparan entre preguntas.", **r}
+              "tarea": "6.7" if "--previa" in sys.argv else "6.1", "nota": "Interés de 0 a 100 dentro de cada pregunta: no se comparan entre preguntas.", **r}
     carpeta.mkdir(parents=True, exist_ok=True)
     archivo.write_text(json.dumps(salida, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
 

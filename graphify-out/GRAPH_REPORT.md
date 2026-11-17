@@ -1,17 +1,17 @@
-# Graph Report - Documentaci-n-Gta-6-19-de-nombiembre  (2026-11-17)
+# Graph Report - Documentación Gta 6  (2026-11-17)
 
 ## Corpus Check
-- 51 files · ~101,868 words
+- 52 files · ~102,275 words
 - Verdict: corpus is large enough that graph structure adds value.
 - Unclassified: 12 file(s) not represented in the graph (top: .jsonl 6, (none) 3, .bat 2)
 
 ## Summary
-- 773 nodes · 1355 edges · 51 communities (35 shown, 16 thin omitted)
+- 780 nodes · 1366 edges · 50 communities (34 shown, 16 thin omitted)
 - Extraction: 92% EXTRACTED · 8% INFERRED · 0% AMBIGUOUS · INFERRED: 112 edges (avg confidence: 0.87)
-- Token cost: 0 input · 0 output
+- Token cost: 183,861 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `11bff5e9`
+- Built from commit: `87b437e6`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -25,7 +25,6 @@
 - Workflow Recolectar datos
 - Workflow Probar fuentes
 - app.js
-- Validaciones (validar.py)
 - Trabajar con Claude en la nube
 - Worker del despertador
 - Graphify
@@ -97,15 +96,15 @@
 - **Garantías de no inventar datos al guardar mediciones** — recolector_leeme_hueco, recolector_leeme_comprobaciones, recolector_leeme_formato_linea_jsonl, recolector_leeme_interruptor [INFERRED 0.85]
 - **Implementación de los dos estilos de Miami** — plan_diseno_miami_dos_estilos, web_index_escena_80, web_index_escena_26, web_index_boton_cambio_estilo, web_index_simbolo_edificios, web_index_simbolo_palmera [INFERRED 0.95]
 
-## Communities (51 total, 16 thin omitted)
+## Communities (50 total, 16 thin omitted)
 
 ### Community 0 - "Despertador y plan de trabajo"
 Cohesion: 0.09
 Nodes (28): Apagarlo, Comprobar que funciona, Cron Trigger 7,37 * * * * (UTC), Despertador del recolector (Cloudflare), Secreto GITHUB_TOKEN (solo Actions: Read and write, caduca 31 ene 2027), Montar el despertador (pasos en el navegador), Montarlo (lo hace Bruno en el navegador; no hace falta instalar nada), Semana del lanzamiento (SEMANA_INICIO / SEMANA_FIN) (+20 more)
 
 ### Community 1 - "fuentes.py"
-Cohesion: 0.06
-Nodes (37): Diseño de la página, Fase 6 — Ideas nuevas de Bruno: más estadísticas, logros y comparaciones, Fase 6 — Ideas nuevas de Bruno: más estadísticas, logros y comparaciones, _cabeceras_twitch(), _datos_video(), _fotos_de_perfil(), kick(), _mensaje_youtube() (+29 more)
+Cohesion: 0.05
+Nodes (45): Diseño de la página, Fase 6 — Ideas nuevas de Bruno: más estadísticas, logros y comparaciones, Fase 6 — Ideas nuevas de Bruno: más estadísticas, logros y comparaciones, _cabeceras_twitch(), _datos_video(), _fotos_de_perfil(), kick(), _mensaje_youtube() (+37 more)
 
 ### Community 2 - "Worker de Cloudflare despertador-recolector (horario 7,37 * * * *)"
 Cohesion: 0.13
@@ -116,12 +115,12 @@ Cohesion: 0.15
 Nodes (8): Línea de estado .claude/hooks/estado-git.sh, .gitattributes fuerza LF en los .sh, Instrucciones para Claude (CLAUDE.md), Repositorio GitHub público Rust-max-bot/Documentaci-n-Gta-6-19-de-nombiembre (rama main), Hook Stop .claude/hooks/revisar-guardado.sh, Estado actual del proyecto (ESTADO_ACTUAL.md), Reglas en pausa: ninguna; tanda actual: ninguna, Últimos cambios
 
 ### Community 4 - "steps"
-Cohesion: 0.09
-Nodes (22): concurrency, cancel-in-progress, group, jobs, trends_extra, name, on, schedule (+14 more)
+Cohesion: 0.07
+Nodes (27): concurrency, cancel-in-progress, group, previa, jobs, trends_extra, name, on (+19 more)
 
 ### Community 5 - "Generar la página (generar_web.py)"
-Cohesion: 0.16
-Nodes (10): escena(), hacer(), main(), titulo(), main(), abrir(), preparar_salida(), main() (+2 more)
+Cohesion: 0.11
+Nodes (14): escena(), hacer(), main(), titulo(), main(), abrir(), preparar_salida(), main() (+6 more)
 
 ### Community 6 - "Workflow Recolectar datos"
 Cohesion: 0.08
@@ -134,10 +133,6 @@ Nodes (32): KICK_CLIENT_ID, KICK_CLIENT_SECRET, TWITCH_CLIENT_ID, TWITCH_CLIENT_
 ### Community 8 - "app.js"
 Cohesion: 0.11
 Nodes (24): abrir(), ahora(), cuenta(), diaUTC(), fijar(), horaCero(), horaDeMiami(), isoDe() (+16 more)
-
-### Community 9 - "Validaciones (validar.py)"
-Cohesion: 0.12
-Nodes (27): abortar(), comprobar(), comprobar_serie(), main(), paises(), preguntar(), relacionadas(), serie() (+19 more)
 
 ### Community 10 - "Trabajar con Claude en la nube"
 Cohesion: 0.40
@@ -184,8 +179,8 @@ Cohesion: 0.17
 Nodes (11): Avisos para Bruno (cosas donde su idea tiene un límite o un fallo), Fase 2 — Mejoras rápidas (lo que queda), Fase 4 — Mejoras largas (lo que queda), Fase 5 — Lo que ya estaba acordado para después del lanzamiento, Fase 6 — Ideas nuevas de Bruno: más estadísticas, logros y comparaciones (lo que queda), Fase 7 — Ideas para que la página sea memorable (lo que queda), Fase 8 — Segundo lanzamiento: GTA 6 en PC (dormida), Fechas que mandan (+3 more)
 
 ### Community 35 - "generar_web.py"
-Cohesion: 0.08
-Nodes (23): abortar(), comprobar(), convertir(), elegir_videos(), escribir(), estado_servidor(), hora_de_medicion(), horas_trends() (+15 more)
+Cohesion: 0.07
+Nodes (39): abortar(), comprobar(), convertir(), elegir_videos(), escribir(), estado_servidor(), hora_de_medicion(), horas_trends() (+31 more)
 
 ### Community 36 - "Plan del proyecto: recuerdo del lanzamiento de GTA 6"
 Cohesion: 0.11
@@ -241,23 +236,23 @@ Nodes (7): contenido(), filas(), flechaHTML(), ico(), lineaNueva(), pasa(), pint
 
 ## Knowledge Gaps
 - **31 isolated node(s):** `Estilos visuales Miami 1986 y Miami 2026`, `Enlaces y miniaturas guardados (tareas 2.1 y 2.2)`, `Series continuas de YouTube (25 más vistos + re-medición)`, `Aviso legal (proyecto de fans, no afiliado a Rockstar/Take-Two)`, `Python 3.14 para Graphify (no desinstalar)` (+26 more)
-  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 325 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
+  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 328 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
 - **16 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
 - **Why does `Diseño de la página` connect `fuentes.py` to `Plan del proyecto: recuerdo del lanzamiento de GTA 6`, `limpio`?**
-  _High betweenness centrality (0.155) - this node is a cross-community bridge._
+  _High betweenness centrality (0.153) - this node is a cross-community bridge._
 - **What connects `Estilos visuales Miami 1986 y Miami 2026`, `Enlaces y miniaturas guardados (tareas 2.1 y 2.2)`, `Series continuas de YouTube (25 más vistos + re-medición)` to the rest of the system?**
   _31 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Despertador y plan de trabajo` be split into smaller, more focused modules?**
   _Cohesion score 0.08817204301075268 - nodes in this community are weakly interconnected._
 - **Why does `limpio()` connect `limpio` to `app.js`, `fuentes.py`, `pintar`, `pintar`?**
-  _High betweenness centrality (0.137) - this node is a cross-community bridge._
+  _High betweenness centrality (0.136) - this node is a cross-community bridge._
 - **Should `fuentes.py` be split into smaller, more focused modules?**
-  _Cohesion score 0.05880665519219736 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.050505050505050504 - nodes in this community are weakly interconnected._
 - **Should `Worker de Cloudflare despertador-recolector (horario 7,37 * * * *)` be split into smaller, more focused modules?**
   _Cohesion score 0.1286549707602339 - nodes in this community are weakly interconnected._
 - **Should `steps` be split into smaller, more focused modules?**
-  _Cohesion score 0.08695652173913043 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.07142857142857142 - nodes in this community are weakly interconnected._
