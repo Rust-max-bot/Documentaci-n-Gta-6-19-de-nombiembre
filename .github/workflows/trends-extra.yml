@@ -9,6 +9,8 @@
 # Para probar sin guardar: "Probar fuentes" con la casilla de Trends extra marcada.
 # Con la casilla "previa" (tarea 6.7, Bruno, 2026-11-17): las mismas preguntas, a mano y en
 # cualquier fecha, guardadas en datos/trends_previa/ (cada vez un archivo nuevo). No cuenta como
+# la 6.1. Una previa programada (Bruno, 2026-11-17): el 18 nov a las 11:15 UTC (8:15 de Chile),
+# justo después de la salida en Nueva Zelanda (11:00 UTC); GitHub puede atrasarla unos minutos.
 # la 6.1: el paso "decidir" de la 6.1 solo mira datos/trends_extra/.
 name: Trends extra (6.1)
 
@@ -21,6 +23,7 @@ on:
         default: false
   schedule:
     - cron: "41 18 21-24 11 *"   # respaldo del despertador (UTC); el candado evita otros años
+    - cron: "15 11 18 11 *"      # previa tras la salida en Nueva Zelanda (solo vale el 18 nov 2026)
 
 concurrency:
   group: trends-extra
@@ -42,9 +45,17 @@ jobs:
         run: |
           hoy=$(date -u +%Y-%m-%d)
           git fetch -q origin main
-          if [[ "${{ inputs.previa }}" == "true" ]]; then
+          if [[ "${{ github.event.schedule }}" == "15 11 18 11 *" ]]; then
+            if [[ "$hoy" == "2026-11-18" ]]; then
+              echo "Consulta previa programada (salida en Nueva Zelanda): se guarda en datos/trends_previa/." | tee -a "$GITHUB_STEP_SUMMARY"
+              echo "seguir=si" >> "$GITHUB_OUTPUT"; echo "previa=si" >> "$GITHUB_OUTPUT"
+            else
+              echo "La previa programada solo vale el 18 nov 2026 ($hoy): no se hace nada." | tee -a "$GITHUB_STEP_SUMMARY"
+              echo "seguir=no" >> "$GITHUB_OUTPUT"
+            fi
+          elif [[ "${{ inputs.previa }}" == "true" ]]; then
             echo "Consulta previa (6.7): se guarda en datos/trends_previa/." | tee -a "$GITHUB_STEP_SUMMARY"
-            echo "seguir=si" >> "$GITHUB_OUTPUT"
+            echo "seguir=si" >> "$GITHUB_OUTPUT"; echo "previa=si" >> "$GITHUB_OUTPUT"
           elif [[ "$hoy" < "2026-11-20" || "$hoy" > "2026-11-25" ]]; then
             echo "Fuera del 20-25 nov 2026 ($hoy): no se hace nada." | tee -a "$GITHUB_STEP_SUMMARY"
             echo "seguir=no" >> "$GITHUB_OUTPUT"
@@ -62,19 +73,19 @@ jobs:
 
       - name: Hacer las 5 preguntas a Google Trends
         if: steps.decidir.outputs.seguir == 'si'
-        run: python3 recolector/trends_extra.py ${{ inputs.previa && '--previa' || '' }}
+        run: python3 recolector/trends_extra.py ${{ steps.decidir.outputs.previa == 'si' && '--previa' || '' }}
 
       - name: Guardar el resultado en el repositorio
         if: steps.decidir.outputs.seguir == 'si'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          if [[ "${{ inputs.previa }}" == "true" ]]; then git add datos/trends_previa/; else git add datos/trends_extra/; fi
+          if [[ "${{ steps.decidir.outputs.previa }}" == "si" ]]; then git add datos/trends_previa/; else git add datos/trends_extra/; fi
           if git diff --cached --quiet; then
             echo "::error::No hay archivo nuevo que guardar."
             exit 1
           fi
-          if [[ "${{ inputs.previa }}" == "true" ]]; then tarea="Trends previa (6.7)"; else tarea="Trends extra (6.1)"; fi
+          if [[ "${{ steps.decidir.outputs.previa }}" == "si" ]]; then tarea="Trends previa (6.7)"; else tarea="Trends extra (6.1)"; fi
           git commit -q -m "$tarea $(date -u +%Y-%m-%dT%H:%MZ)"
           for intento in 1 2 3 4 5; do
             if git push -q; then exit 0; fi

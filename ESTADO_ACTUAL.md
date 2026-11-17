@@ -100,6 +100,7 @@ Bruno ya eligió las palabras de la comparación.
 
 ## Últimos cambios
 
+- 2026-11-17: programada una consulta previa de Trends para el 18 nov a las 11:15 UTC (8:15 de Chile), justo después de la salida en Nueva Zelanda (pedido de Bruno). Va en `datos/trends_previa/`; la sección de Doomsday la toma sola. **El 18, revisar que corrió** (Actions → "Trends extra (6.1)"); si no, lanzarla a mano con la casilla "previa".
 - 2026-11-17: 6.7 hecha (opción B de Bruno): sección "GTA 6 frente a Avengers: Doomsday" con la consulta previa de Trends (`datos/trends_previa/`, desde GitHub; no bloquea la 6.1). Cuando llegue la 6.1 (21-24 nov), la página la usa sola.
 - 2026-11-17: 6.9 hecha (decisión de Bruno; PR de la rama `claude/project-thread-fwlw7x` hasta que Bruno lo una): Reddit fuera de la página (sección, menú, récord, cuadro del Resumen del día, imagen descargable y textos) y del recolector. Lo guardado sigue en `datos/`. Con 7 cuadros, "Mediciones" ocupa toda la última fila del resumen (igual que ya pasaba los días sin Kick).
 - 2026-11-17: revisado para la hora cero de Nueva Zelanda (18 nov, 11:00 UTC): mediciones cada 30 min, sin fallos salvo Reddit (RSS bloqueado por Reddit desde las 18:37 UTC). Consulta de la 6.1 probada desde el PC sin guardar (Doomsday funciona). Anotadas 6.7 y 6.8 en `PLAN.md`.
