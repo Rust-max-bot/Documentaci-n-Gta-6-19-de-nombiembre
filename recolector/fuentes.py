@@ -55,7 +55,6 @@ TRENDS_ESPERA_429 = 20            # segundos antes del reintento
 TRENDS_REINTENTA_ANTES_DE = 40    # solo se reintenta si el primer intento tardó menos que esto (s)
 TRENDS_ESPERA_CONSULTA = 20       # segundos máximos por consulta (pedir() usa 30 por defecto)
 NOTICIAS_RSS = "https://news.google.com/rss/search?q=%22GTA+6%22&hl=es-419&gl=CL&ceid=CL:es-419"
-REDDIT_RSS = "https://www.reddit.com/r/GTA6/new/.rss?limit=100"
 # Tarea 6.3 (Bruno, 2026-11-13): GTA comparado con lo más visto. Se guarda desde antes del
 # lanzamiento porque el ranking de un momento no se puede pedir después.
 TWITCH_GTA5 = "32982"             # "Grand Theft Auto V"; el nombre se comprueba en la prueba real
@@ -74,10 +73,6 @@ YOUTUBE_TRAILERS = (
     "rz1B4B2yBZY",   # Grand Theft Auto VI Launch Trailer (15 oct 2026)
 )
 ES_GTA = re.compile(r"\bGTA|grand theft auto|rockstar games", re.I)   # "GTA 6", "GTA6", "GTAV"
-# Reddit bloquea su JSON sin clave desde GitHub (403, probado el 2026-11-13); el RSS sí
-# responde, pero sin votos ni comentarios. Bruno eligió el RSS (2026-11-13).
-REDDIT_ESPERA_429 = 20           # segundos antes del segundo intento si Reddit responde 429
-REDDIT_UA = "linux:recuerdo-gta6:v0.1 (proyecto personal, solo lectura)"
 RECORTE_ORIGINAL = 30000          # caracteres de la respuesta original que se guardan si hay problemas
 
 
@@ -456,41 +451,9 @@ def noticias(estado):
     return {"en_fuente": len(items), "nuevas": nuevas}
 
 
-def reddit(estado):
-    """Publicaciones nuevas de r/GTA6 (RSS en formato Atom): título, autor, fecha y enlace."""
-    cod, txt = pedir(REDDIT_RSS, {"User-Agent": REDDIT_UA})
-    if cod == 429:
-        # "Demasiadas consultas": los servidores de GitHub se comparten y Reddit cuenta las
-        # consultas por dirección. Se espera un poco y se intenta una sola vez más.
-        time.sleep(REDDIT_ESPERA_429)
-        cod, txt = pedir(REDDIT_RSS, {"User-Agent": REDDIT_UA})
-    if cod != 200:
-        raise Falla(f"Reddit: código {cod}")
-    atom = "{http://www.w3.org/2005/Atom}"
-    try:
-        entradas = ET.fromstring(txt).findall(atom + "entry")
-    except ET.ParseError:
-        raise Falla("Reddit: la respuesta no es un RSS válido") from None
-    if not entradas:
-        raise Falla("Reddit no devolvió publicaciones")
-    nuevas = []
-    for e in entradas:
-        pid = (e.findtext(atom + "id") or "").strip()
-        if not pid or pid in estado["reddit_vistas"]:
-            continue   # solo se guardan las publicaciones que no estaban en mediciones anteriores
-        enlace = e.find(atom + "link")
-        try:
-            fecha = a_iso(datetime.fromisoformat(e.findtext(atom + "published") or ""))
-        except ValueError:
-            fecha = None
-        nuevas.append({
-            "id": pid,
-            "titulo": (e.findtext(atom + "title") or "").strip(),
-            "autor": (e.findtext(f"{atom}author/{atom}name") or "").strip() or None,
-            "url": enlace.get("href") if enlace is not None else None,
-            "t": fecha,
-        })
-    return {"comunidad": "r/GTA6", "en_fuente": len(entradas), "nuevas": nuevas}
+# Reddit (r/GTA6 por RSS) se quitó el 2026-11-17 (tarea 6.9, decisión de Bruno): desde ese día
+# a las 18:37 UTC Reddit bloquea su RSS público. Lo ya guardado sigue en datos/. Si llega la
+# clave oficial, la función vieja está en git (commit anterior a "6.9: quitar Reddit").
 
 
 def twitch_ranking(estado):
@@ -673,7 +636,6 @@ FUENTES = {
     "youtube_es": youtube_es,
     "youtube_largos": youtube_largos,
     "noticias": noticias,
-    "reddit": reddit,
     "twitch_ranking": twitch_ranking,
     "youtube_tendencias": youtube_tendencias,
     "youtube_trailers": youtube_trailers,

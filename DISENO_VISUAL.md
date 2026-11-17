@@ -11,7 +11,7 @@
 
 Un recuerdo del lanzamiento de GTA 6 (19 de noviembre de 2026) hecho por diversión: una sola
 página web con una portada animada de Miami y, debajo, tarjetas con cifras de Twitch,
-YouTube, Google Trends, titulares y Reddit, medidas cada hora antes, durante y después del día.
+YouTube, Google Trends y titulares, medidas cada hora antes, durante y después del día.
 
 - **Dónde verla:** <https://rust-max-bot.github.io/Documentaci-n-Gta-6-19-de-nombiembre/>
 - **Público:** quien quiera recordar cómo se vivió el lanzamiento en internet. Se ve sobre
@@ -50,7 +50,7 @@ YouTube, Google Trends, titulares y Reddit, medidas cada hora antes, durante y d
    Línea de tiempo · Resumen del día · Espectadores en Twitch (gráfico) · Interés en Google
    Trends (gráfico) · ¿Se cayeron los servidores? · Twitch, medición por medición (tabla) ·
    Videos más vistos en YouTube (con tira de Shorts) · GTA frente a lo más visto · GTA 6 frente
-   a otros lanzamientos (barras) · Titulares (con barras por día y páginas) · Reddit · Álbum de
+   a otros lanzamientos (barras) · Titulares (con barras por día y páginas) · Álbum de
    momentos (fotos tipo instantánea) · Cápsula del tiempo (dos cintas de casete) · Próximamente.
    En **¿Se cayeron los servidores?**, arriba una caja "Ahora" (punto y texto en verde si todo
    funciona, en rojo si algún servicio falla) y, por servicio, dos tiras: un cuadro por día y
@@ -193,7 +193,7 @@ cambian con cada estilo y cada momento del día.
 
 **GTA frente a lo más visto (9.7, opción A de Bruno, 2026-11-17):** arriba, un recuadro con "GTA VI" en grande (rosa, con brillo en 1986), su puesto en Twitch y sus videos en tendencia en YouTube Chile y EE. UU., cada uno con una línea de cómo fue cambiando desde el 13 nov; GTA V en pequeño, de referencia. Debajo, las barras de Twitch (GTA VI en rosa, GTA V en celeste) y las listas de YouTube con 4 videos por país, "Ver N más" y una etiqueta VI o V según el título. Descartada: B (tabla de duelo VI contra V).
 
-**Íconos pequeños (pedido de Bruno, 2026-11-16; opción C, 2026-11-17):** dibujos propios de trazo (símbolos `i-...` en `index.html`), en los títulos de Twitch y Kick (ondas de "en vivo"), Trends (línea que sube), servidores, videos (play en un círculo), titulares (periódico) y Reddit (globo), en los subtítulos "Videos" y "Shorts" (celular vertical) y en la etiqueta de plataforma de la tabla (solo en PC). Línea celeste (`--a2`), con brillo de neón en 1986. **No se usan ni se imitan los logotipos de YouTube, Twitch, Kick, Google ni Reddit:** sus reglas de marca piden permiso y prohíben cambiarles el color. Descartadas: A (línea del color del título) y B (ficha de color).
+**Íconos pequeños (pedido de Bruno, 2026-11-16; opción C, 2026-11-17):** dibujos propios de trazo (símbolos `i-...` en `index.html`), en los títulos de Twitch y Kick (ondas de "en vivo"), Trends (línea que sube), servidores, videos (play en un círculo), titulares (periódico), en los subtítulos "Videos" y "Shorts" (celular vertical) y en la etiqueta de plataforma de la tabla (solo en PC). Línea celeste (`--a2`), con brillo de neón en 1986. **No se usan ni se imitan los logotipos de YouTube, Twitch, Kick ni Google:** sus reglas de marca piden permiso y prohíben cambiarles el color. Descartadas: A (línea del color del título) y B (ficha de color). El globo de Reddit se quitó con la sección (6.9, 2026-11-17).
 
 **Eje de horas de los gráficos (9.4, opción C de Bruno, 2026-11-16):** fechas y, si sobra espacio, horas cortas ("6 p. m." o "18 h"). El paso (3, 6 o 12 h, 1, 2 o 3 días o una semana) se elige según el ancho para que los textos nunca se encimen; `probar_pagina.py` lo revisa. Descartadas: A (hora completa entre fechas) y B (solo fechas).
 

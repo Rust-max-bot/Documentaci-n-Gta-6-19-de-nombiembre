@@ -208,10 +208,8 @@ def _():
 # prueba. Resultado en historial/PLAN_2026-11-16.md, "Videos de YouTube en español".
 
 
-# Reddit (tarea 3.2) no se prueba aquí: Reddit responde 429 ("demasiadas consultas") a la
-# segunda consulta seguida desde la misma máquina, y entonces fallaría la prueba del
-# recolector, que viene después en el mismo workflow. Resultados del 2026-11-13 (historial/PLAN_2026-11-16.md,
-# "Reddit"): el JSON sin clave da 403; el RSS con ?limit=100 da 200 con 100 publicaciones.
+# Reddit ya no se mide (tarea 6.9, 2026-11-17: Reddit bloqueó su RSS público). Pruebas viejas
+# en historial/PLAN_2026-11-16.md, "Reddit".
 
 print("\n=== RESUMEN ===")
 for n, ok in resultados.items():

@@ -5,7 +5,7 @@
 
   var ZONA = "America/Santiago";
   var SALIDA = Date.UTC(2026, 10, 19, 3, 0);   // 19 nov 2026, 00:00 en Santiago
-  var D = window.DATOS || window.DATOS_EJEMPLO || { mediciones: [], youtube: [], noticias: [], reddit: {}, eventos: [] };
+  var D = window.DATOS || window.DATOS_EJEMPLO || { mediciones: [], youtube: [], noticias: [], eventos: [] };
   var $ = function (id) { return document.getElementById(id); };
 
   /* ---------- Microinteracciones (pedido de Bruno, 2026-11-15; probadas antes en una vista previa) ----------
@@ -90,7 +90,7 @@
   })();
 
   /* ---------- Datos por días (formato 2, pedido de Bruno, 2026-11-14) ----------
-     datos.js trae de los titulares y de Reddit solo sus horas (en segundos), y las series de
+     datos.js trae de los titulares solo sus horas (en segundos), y las series de
      visitas de los videos en forma corta ([segundos, visitas]). Aquí se dejan como antes para el
      resto de la página. Los titulares completos de cada día se cargan aparte, solo cuando hacen
      falta (ver "Días cargados a pedido"). Los datos de ejemplo vienen completos. */
@@ -98,8 +98,6 @@
   function diaUTC(seg) { return isoDe(seg).slice(0, 10); }
   if (D.formato === 2) {
     D.noticias = (D.noticias_t || []).map(function (seg, i) { return { t: isoDe(seg), i: i }; });
-    D.reddit = D.reddit || {};
-    D.reddit.publicaciones = (D.reddit.publicaciones_t || []).map(function (seg) { return { t: isoDe(seg) }; });
     [D.youtube, D.youtube_es, D.trailers].forEach(function (lista) {
       (lista || []).forEach(function (v) {
         v.serie = (v.serie || []).map(function (p) { return Array.isArray(p) ? { t: isoDe(p[0]), visitas: p[1] } : p; });
@@ -108,8 +106,8 @@
   }
 
   /* ---------- Días cargados a pedido ----------
-     Cada web/dias/AAAA-MM-DD.js (día UTC) llama a window.DATOS_DIA con los titulares y las
-     publicaciones de ese día. Se piden con una etiqueta <script> (funciona también abriendo la
+     Cada web/dias/AAAA-MM-DD.js (día UTC) llama a window.DATOS_DIA con los titulares de ese
+     día. Se piden con una etiqueta <script> (funciona también abriendo la
      página como archivo en el PC) y con la huella del archivo en la dirección: si el día no
      cambió, el navegador usa el que ya tiene guardado. */
   var DIAS = (function () {
@@ -120,7 +118,7 @@
     };
     function uno(dia) {
       if (cargados[dia]) return Promise.resolve(cargados[dia]);
-      if (!(D.dias || {})[dia]) return Promise.resolve({ noticias: [], reddit: [] });
+      if (!(D.dias || {})[dia]) return Promise.resolve({ noticias: [] });
       if (!promesas[dia]) promesas[dia] = new Promise(function (listo, fallo) {
         var s = document.createElement("script");
         avisar[dia] = listo;
@@ -1006,45 +1004,6 @@
     // La primera página de la lista completa se pinta al tocar "Ver los N titulares" (ver arriba).
   })();
 
-  /* ---------- Reddit (opción C elegida por Bruno, 2026-11-13) ----------
-     Barras: publicaciones nuevas de r/GTA6 por hora, según la hora en que se publicaron.
-     El RSS no trae votos ni comentarios, así que contar publicaciones es la forma de ver si la
-     comunidad se agita. El recolector lee como máximo 100 por medición: si en una hora hay
-     más, la barra se queda corta. Las horas anteriores a la primera publicación guardada
-     salen como "sin dato". */
-  (function () {
-    var R = D.reddit || {}, pubs = (R.publicaciones || []).filter(function (p) { return !isNaN(Date.parse(p.t)); });
-    var todas = pubs.slice().sort(function (a, b) { return Date.parse(b.t) - Date.parse(a.t); });
-    var HORA = 3600e3, HORAS = 48;
-    var ref = Date.parse(D.generado) || (todas.length ? Date.parse(todas[0].t) : Date.now());
-    var fin = Math.ceil(ref / HORA) * HORA, ini = fin - HORAS * HORA;
-    var desde = todas.length ? Date.parse(todas[todas.length - 1].t) : fin;
-    var cajas = [];
-    for (var t = ini; t < fin; t += HORA) cajas.push({ t: t, n: 0, nd: t + HORA <= desde });
-    todas.forEach(function (p) {
-      var i = Math.floor((Date.parse(p.t) - ini) / HORA);
-      if (i >= 0 && i < cajas.length) cajas[i].n++;
-    });
-    var max = Math.max.apply(null, cajas.map(function (c) { return c.nd ? 0 : c.n; }));
-    $("reddit-barras").setAttribute("aria-label", "Publicaciones por hora en r/GTA6, máximo " + max + " en una hora");
-    $("reddit-barras").innerHTML = cajas.map(function (c) {
-      var alto = c.nd ? 3 : (max ? Math.max(1.5, c.n / max * 100) : 1.5);
-      var texto = dia(c.t) + " " + hora(c.t) + ": " + (c.nd ? "sin dato" : c.n + (c.n === 1 ? " publicación" : " publicaciones"));
-      return '<div class="b' + (c.nd ? " nd" : "") + '" title="' + texto + '"><i style="height:' + alto + '%"></i></div>';
-    }).join("");
-    $("reddit-eje").innerHTML = "<span>" + dia(ini) + " " + hora(ini) + "</span><span>" + dia(ini + HORAS / 2 * HORA) + " " +
-      hora(ini + HORAS / 2 * HORA) + "</span><span>" + dia(fin) + " " + hora(fin) + "</span>";
-    $("reddit-leyenda").innerHTML = todas.length
-      ? '<i class="c nd"></i> Sin dato (antes de la primera publicación guardada) · máximo: ' + max + " en una hora · " + todas.length + " publicaciones guardadas"
-      : "Todavía no hay publicaciones guardadas.";
-    var ultimas = R.ultimas ? R.ultimas.slice().sort(function (a, b) { return Date.parse(b.t) - Date.parse(a.t); }) : todas;
-    $("reddit-ultimas").innerHTML = ultimas.slice(0, 8).map(function (p) {
-      var autor = (p.autor || "").replace(/^\/u\//, "u/");
-      return "<li>" + (/^https:\/\/www\.reddit\.com\//.test(p.url || "") ? enlace(p.url, limpio(p.titulo)) : "<a>" + limpio(p.titulo) + "</a>") +
-        "<small>" + limpio(autor) + " · " + dia(Date.parse(p.t)) + " " + hora(Date.parse(p.t)) + "</small></li>";
-    }).join("");
-  })();
-
   /* ---------- GTA 6 frente a otros lanzamientos (tarea 7.9, idea 7) ----------
      Los datos de otros juegos están en lanzamientos.js, cada uno con su fuente; el de GTA VI es
      el máximo de Twitch que midió este proyecto. Diseño A de Bruno (2026-11-14): una barra por juego. */
@@ -1212,7 +1171,7 @@
     var caja = $("menu"); if (!caja) return;
     var S = [["records", "Récords"], ["seccion-linea", "Línea de tiempo"], ["resumen", "Resumen"], ["seccion-twitch", "Twitch y Kick"],
       ["seccion-trends", "Trends"], ["seccion-servidores", "Servidores"], ["seccion-videos", "Videos"], ["comparacion", "Comparación"], ["lanzamientos", "Otros lanzamientos"],
-      ["seccion-noticias", "Titulares"], ["seccion-reddit", "Reddit"], ["album", "Álbum"], ["capsula", "Cápsula"], ["proximamente", "Próximamente"]].filter(function (x) { return $(x[0]); });
+      ["seccion-noticias", "Titulares"], ["album", "Álbum"], ["capsula", "Cápsula"], ["proximamente", "Próximamente"]].filter(function (x) { return $(x[0]); });
     caja.innerHTML = '<button type="button" class="menu-boton" aria-expanded="false" aria-controls="menu-lista"><span aria-hidden="true">☰</span> Secciones</button>' +
       '<div class="menu-lista" id="menu-lista" hidden>' +
       S.map(function (x) { return '<a href="#' + x[0] + '" data-ir="' + x[0] + '">' + x[1] + "</a>"; }).join("") +
@@ -1467,7 +1426,6 @@
       });
     });
     var fClave = function (ts) { var o = partes(ts); return o.year + "-" + o.month + "-" + o.day; };
-    var fClaveHora = function (ts) { return fClave(ts) + " " + partes(ts).hour; };
     var R = [
       { nombre: "Más espectadores en Twitch", h: historia(esp), fmt: num, uni: "espectadores a la vez" },
       { nombre: "Directo con más público en Twitch", h: historia(canal), fmt: num, uni: "espectadores en un solo directo" },
@@ -1478,8 +1436,7 @@
       { nombre: "Video más visto", h: lideres, fmt: compacto, uni: "visitas", prev: "Récords anteriores", aviso: true },
       { nombre: "Short más visto", h: lideresShort, fmt: compacto, uni: "visitas", prev: "Récords anteriores", aviso: true },
       { nombre: "Video que más creció en una hora", h: historia(crece), fmt: num, uni: "visitas en una hora" },
-      { nombre: "Día con más titulares", h: historiaConteo(D.noticias || [], fClave, dia), fmt: num, uni: "titulares", solo: "dia" },
-      { nombre: "Hora con más publicaciones en r/GTA6", h: historiaConteo((D.reddit || {}).publicaciones || [], fClaveHora, function (ts) { return dia(ts) + " · " + hora(ts).slice(0, 2) + ":00"; }), fmt: num, uni: "publicaciones", solo: "hora" }
+      { nombre: "Día con más titulares", h: historiaConteo(D.noticias || [], fClave, dia), fmt: num, uni: "titulares", solo: "dia" }
     ];
     function cuando(r, e) { return r.solo ? e.que : dia(e.ts) + " · " + hora(e.ts); }
     function quien(r, e) { return r.solo || !e.que ? "" : enlace(e.url, limpio(e.que)); }
@@ -1565,7 +1522,6 @@
         });
       });
       r.titulares = (D.noticias || []).filter(function (n) { var ts = Date.parse(n.t); return !isNaN(ts) && clave(ts) === k; }).length;
-      r.reddit = ((D.reddit || {}).publicaciones || []).filter(function (p) { var ts = Date.parse(p.t); return !isNaN(ts) && clave(ts) === k; }).length;
       return r;
     }
     function cuadro(nombre, valor, uni, que, cuando) {
@@ -1593,7 +1549,6 @@
         (r.tr ? cuadro("Interés en Google Trends", r.tr.interes, "de 100, lo más alto del día", "", "a las " + hora(r.tr.ts))
           : cuadro("Interés en Google Trends", "—", "sin dato ese día")) +
         cuadro("Titulares", num(r.titulares), r.titulares === 1 ? "titular publicado ese día" : "titulares publicados ese día") +
-        cuadro("Publicaciones en r/GTA6", num(r.reddit), r.reddit === 1 ? "publicación guardada" : "publicaciones guardadas") +
         cuadro("Mediciones", num(r.med), r.med === 1 ? "medición guardada" : "mediciones guardadas", "", r.huecos ? r.huecos + " con algún hueco" : "sin huecos") +
         "</ul>";
     }
@@ -1702,7 +1657,7 @@
       // Pie
       ctx.textAlign = "center"; ctx.font = "600 " + Math.round(22 * u) + "px " + fTxt;
       ctx.fillStyle = ochenta ? tenue : "#1b1440";
-      ctx.fillText(recortar(ctx, "Datos de Twitch, Kick, YouTube, Google Trends, Google Noticias y Reddit · hora de Chile", W - 80 * u), W / 2, H - 62 * u);
+      ctx.fillText(recortar(ctx, "Datos de Twitch, Kick, YouTube, Google Trends y Google Noticias · hora de Chile", W - 80 * u), W / 2, H - 62 * u);
       ctx.fillText("rust-max-bot.github.io/Documentaci-n-Gta-6-19-de-nombiembre", W / 2, H - 30 * u);
       return lienzo;
     }
@@ -1716,13 +1671,12 @@
         { id: "short", nombre: "SHORT MÁS VISTO", valor: r.sh ? compacto(r.sh.visitas) : "—", uni: r.sh ? "visitas" : "sin dato", extra: r.sh ? r.sh.titulo : "" },
         { id: "trends", nombre: "GOOGLE TRENDS", valor: r.tr ? String(r.tr.interes) : "—", uni: r.tr ? "de 100, lo más alto" : "sin dato", extra: "" },
         { id: "titulares", nombre: "TITULARES", valor: num(r.titulares), uni: "publicados ese día", extra: "" },
-        { id: "reddit", nombre: "REDDIT r/GTA6", valor: num(r.reddit), uni: "publicaciones", extra: "" },
         { id: "mediciones", nombre: "MEDICIONES", valor: num(r.med), uni: r.huecos ? r.huecos + " con algún hueco" : "sin huecos", extra: "" }
       ];
       return q.filter(function (c) { return c.hay !== false; });
     }
     var NOMBRES = { twitch: "Twitch", kick: "Kick", video: "Video más visto", short: "Short más visto", trends: "Google Trends",
-      titulares: "Titulares", reddit: "Reddit", mediciones: "Mediciones" };
+      titulares: "Titulares", mediciones: "Mediciones" };
     var quitados = {};   // lo que la persona desmarcó (se recuerda mientras la página esté abierta)
     function seleccion(r) {
       var sel = {};
