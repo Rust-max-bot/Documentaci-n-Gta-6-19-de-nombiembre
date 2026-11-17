@@ -144,4 +144,4 @@ La lista completa y su orden están en `PLAN.md`. Resumen (2026-11-14):
      `claude/project-thread-odgsms`, `revision/resumen-imagen` (capturas de opciones ya
      elegidas; la nube no puede borrar ramas) y, cuando se una su último PR,
      `claude/project-thread-yceo71`.
-8. **Opcional:** el hook de Impeccable (`npx impeccable install` en el PC).
+8. **Para después (Bruno, 2026-11-17):** configurar Impeccable para que revise lo que importa en este proyecto. Mientras tanto, su revisión automática queda **apagada** (`.impeccable/config.json`, `hook.enabled: false`): sus avisos chocaban con decisiones de Bruno (neón de 1986, brillos, rebotes). Se puede correr a mano con `impeccable detect`.
