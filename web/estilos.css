@@ -166,30 +166,50 @@ body {
   animation: flotar 12s ease-in-out infinite alternate;
 }
 @keyframes flotar { to { transform: translate(-30px, 18px) scale(1.08); } }
-.nube { position: absolute; height: 46px; border-radius: 40px; background: rgba(255,255,255,.75); filter: blur(10px); animation: pasar linear infinite; }
-.n1 { width: 260px; top: 16%; left: -280px; animation-duration: 70s; }
-.n2 { width: 180px; top: 30%; left: -200px; animation-duration: 95s; animation-delay: -40s; }
-.n3 { width: 340px; top: 44%; left: -360px; animation-duration: 120s; animation-delay: -75s; opacity: .7; }
+/* Nubes (rediseño, 2026-11-17): cúmulos dibujados, con base plana y la panza teñida por la luz
+   del momento (rosada al atardecer, gris azulada de día), en vez de píldoras desenfocadas. */
+.nube { position: absolute; aspect-ratio: 300 / 80; background: var(--nube-a) center / 100% 100% no-repeat; filter: blur(.6px); animation: pasar linear infinite; }
+.n1 { width: 280px; top: 15%; left: -300px; animation-duration: 70s; }
+.n2 { width: 190px; top: 29%; left: -210px; animation-duration: 95s; animation-delay: -40s; background-image: var(--nube-b); }
+.n3 { width: 360px; top: 43%; left: -380px; animation-duration: 120s; animation-delay: -75s; opacity: .75; }
+.escena-26 {
+  --nube-a: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 80'%3E%3ClinearGradient id='g' x1='0' y1='0' x2='0' y2='1'%3E%3Cstop offset='0' stop-color='%23fff7f2'/%3E%3Cstop offset='.55' stop-color='%23ffdbe6'/%3E%3Cstop offset='1' stop-color='%23ff9fbf'/%3E%3C/linearGradient%3E%3Cpath fill='url(%23g)' d='M22 74Q6 74 9 62Q12 51 29 54Q30 36 53 38Q63 19 89 26Q104 6 133 17Q151 4 174 19Q198 12 208 33Q230 27 240 44Q264 39 270 56Q293 55 292 66Q291 74 278 74Z'/%3E%3C/svg%3E");
+  --nube-b: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 80'%3E%3ClinearGradient id='g' x1='0' y1='0' x2='0' y2='1'%3E%3Cstop offset='0' stop-color='%23fff7f2'/%3E%3Cstop offset='.55' stop-color='%23ffdbe6'/%3E%3Cstop offset='1' stop-color='%23ff9fbf'/%3E%3C/linearGradient%3E%3Cpath fill='url(%23g)' d='M30 74Q10 73 16 60Q22 50 40 54Q46 30 76 34Q92 12 122 24Q146 8 168 28Q192 22 200 42Q226 40 232 58Q256 56 262 66Q264 74 250 74Z'/%3E%3C/svg%3E");
+}
 @keyframes pasar { to { transform: translateX(calc(100vw + 400px)); } }
+/* Bandada de pelícanos que cruza despacio (solo 2026; de noche no se ve). */
+.aves { position: absolute; top: 9%; left: -140px; width: 120px; aspect-ratio: 120 / 40; background: var(--ave);
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 40'%3E%3Cg fill='none' stroke='%23000' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 22Q10 15 16 21Q22 15 28 22'/%3E%3Cpath d='M36 14Q41 8 46 13Q51 8 56 14'/%3E%3Cpath d='M64 24Q69 18 74 23Q79 18 84 24'/%3E%3Cpath d='M92 10Q96 6 100 10Q104 6 108 10'/%3E%3C/g%3E%3C/svg%3E") center / contain no-repeat;
+          mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 40'%3E%3Cg fill='none' stroke='%23000' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 22Q10 15 16 21Q22 15 28 22'/%3E%3Cpath d='M36 14Q41 8 46 13Q51 8 56 14'/%3E%3Cpath d='M64 24Q69 18 74 23Q79 18 84 24'/%3E%3Cpath d='M92 10Q96 6 100 10Q104 6 108 10'/%3E%3C/g%3E%3C/svg%3E") center / contain no-repeat;
+  animation: aves-volar 80s linear -30s infinite; }
+@keyframes aves-volar { 0% { transform: translate(0, 0); } 50% { transform: translate(calc(50vw + 70px), -14px); } 100% { transform: translate(calc(100vw + 280px), 6px); } }
+/* Mar (rediseño, 2026-11-17): profundidad, olas cortas de distinto largo que derivan despacio y
+   el reflejo del sol (o de la luna) justo debajo de él. */
 .mar {
   position: absolute; left: 0; right: 0; bottom: 0; height: 24%;
   background:
-    radial-gradient(ellipse 26% 90% at 72% 0, rgba(255, 190, 110, .8), transparent 70%),
-    repeating-linear-gradient(180deg, rgba(255,255,255,.22) 0 2px, transparent 2px 16px),
-    linear-gradient(#0db3cf, #04365f);
-  background-size: 100% 100%, 100% 16px, 100% 100%;
-  animation: brillar 2.4s linear infinite;
+    radial-gradient(ellipse 7% 100% at var(--mar-sol-x) 0, var(--mar-reflejo), transparent 75%),
+    var(--mar-olas) 0 0 / 240px 26px repeat,
+    linear-gradient(var(--mar1), var(--mar2) 45%, var(--mar3));
+  animation: olas-mar 16s linear infinite;
 }
-@keyframes brillar { to { background-position: 0 0, 0 16px, 0 0; } }
+@keyframes olas-mar { to { background-position: 0 0, -240px 0, 0 0; } }
+.escena-26 {
+  --mar1: #0db3cf; --mar2: #0a7fae; --mar3: #04365f; --mar-reflejo: rgba(255, 214, 140, .85); --mar-sol-x: calc(68% + min(20vw, 170px));
+  --mar-olas: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 240 26'%3E%3Cg fill='none' stroke='%23fff' stroke-linecap='round'%3E%3Cpath stroke-opacity='.42' stroke-width='1.6' d='M8 5h30M120 7h46M190 15h24M62 20h18'/%3E%3Cpath stroke-opacity='.24' stroke-width='1.2' d='M70 11h16M150 21h30M14 16h12M210 4h20'/%3E%3C/g%3E%3C/svg%3E");
+}
 
 /* Palmeras (en ambas escenas). Plantadas en la arena (pedido de Bruno, 2026-11-17; antes
    quedaban en el agua): la arena va de 10,6 % a 17 % desde abajo de la portada (ver .orilla),
    y el dibujo se apoya en el borde de abajo de su caja (preserveAspectRatio del símbolo). */
-.palma { position: absolute; bottom: 11.5%; transform-origin: 50% 100%; animation: mecer 7s ease-in-out infinite alternate; }
-.escena-80 .palma { fill: #0a0118; }
-.escena-26 .palma { fill: #2a1446; }
+/* Rediseño (2026-11-17): tres palmeras distintas (palmera-a, -b y -c) en vez de una copiada y
+   espejada; la de la derecha ya se inclina sola hacia la izquierda. Tronco con anillos, hojas con
+   folíolos y sombra en la arena (dibujada debajo de la base, por eso overflow visible). */
+.palma { position: absolute; bottom: 11.5%; transform-origin: 50% 100%; overflow: visible; fill: var(--palma); animation: mecer 7s ease-in-out infinite alternate; }
+.escena-80 { --palma: #0a0118; }
+.escena-26 { --palma: #2a1446; }
 .p1 { left: -1%; height: 72%; width: 30vh; }
-.p2 { right: 1%; height: 82%; width: 34vh; animation-delay: -3s; transform: scaleX(-1); }
+.p2 { right: 1%; height: 82%; width: 34vh; animation-delay: -3s; }
 .p3 { left: 13%; bottom: 15%; height: 46%; width: 20vh; animation-delay: -5s; opacity: .92; }
 @keyframes mecer { from { rotate: -1.6deg; } to { rotate: 1.8deg; } }
 
@@ -199,22 +219,74 @@ body {
    Condición de Bruno: el mar se queda. Ocupa la parte de arriba de la franja del mar (24 % de
    abajo), así que la portada no crece. */
 .orilla { position: absolute; left: 0; right: 0; bottom: 0; height: 24%; pointer-events: none; }
-.escena-26 { --vereda: #f6b9b4; --bordillo: #fff1e4; --calle: #5b4a88; --raya: #ffe08a; --arena: #ffd6a0; --arena2: #f1ae7a; --espuma: rgba(255, 255, 255, .92); --brillo-suelo: none; }
-.escena-80 { --vereda: #2b0a5a; --bordillo: #ff2e97; --calle: #0d0221; --raya: #22e6ff; --arena: #3a0d6a; --arena2: #1e0640; --espuma: #ff2e97; --brillo-suelo: drop-shadow(0 0 5px rgba(255, 46, 151, .8)); }
-[data-hora="dia"] .escena-26 { --vereda: #ffd8cc; --bordillo: #ffffff; --calle: #6c7a9a; --raya: #ffffff; --arena: #ffe9bf; --arena2: #ffd08c; }
-[data-hora="noche"] .escena-26 { --vereda: #3c2b66; --bordillo: #7ff6ff; --calle: #151030; --raya: #ffd98a; --arena: #6c5678; --arena2: #3f3157; --espuma: rgba(190, 230, 255, .65); }
-[data-hora="dia"] .escena-80 { --vereda: #ffc4ec; --bordillo: #ff2e97; --calle: #3a2a7a; --raya: #fff07a; --arena: #ffe0b0; --arena2: #ffb8a0; --espuma: #ffffff; --brillo-suelo: none; }
+/* Rediseño (2026-11-17): el suelo es un corte de calle de verdad, no franjas planas. De arriba
+   abajo: sombra de los hoteles sobre la vereda, juntas de las baldosas, cara del cordón (más
+   oscura que su borde de arriba), líneas de orilla de la calzada, asfalto que se aclara hacia
+   quien mira, arena seca con grano fino que se oscurece y se moja cerca del agua, y espuma
+   irregular (máscara con burbujas) en vez de una fila de círculos iguales. Mismas medidas que
+   antes: vereda 0-15 %, cordón 15-19 %, calle 19-50 %, cordón 50-52 %, arena 52-100 %. */
 .calle-playa {
   position: absolute; left: 0; right: 0; top: 0; height: 56%; filter: var(--brillo-suelo);
-  background: linear-gradient(var(--vereda) 0 15%, var(--bordillo) 15% 19%, var(--calle) 19% 50%, var(--bordillo) 50% 52%, var(--arena) 52%, var(--arena2) 100%);
+  background:
+    linear-gradient(var(--sombra-suelo), transparent 9%),
+    repeating-linear-gradient(90deg, var(--junta) 0 1px, transparent 1px 46px) 0 0 / 100% 15% no-repeat,
+    linear-gradient(transparent 17.4%, var(--bordillo-cara) 17.4% 19%, transparent 19% 21.6%, var(--borde-calle) 21.6% 22.6%,
+      transparent 22.6% 46.8%, var(--borde-calle) 46.8% 47.8%, transparent 47.8% 51%, var(--bordillo-cara) 51% 52%, transparent 52%),
+    linear-gradient(var(--vereda) 0 15%, var(--bordillo) 15% 19%, var(--calle) 19%, var(--calle2) 50%, var(--bordillo) 50% 52%, transparent 52%),
+    radial-gradient(circle, var(--grano) 0 .7px, transparent 1px) 3px 2px / 11px 7px,
+    radial-gradient(circle, var(--grano) 0 .6px, transparent .9px) 0 0 / 17px 9px,
+    linear-gradient(var(--arena) 52%, var(--arena2) 84%, var(--arena-mojada) 92%, var(--arena-mojada) 100%);
 }
-.calle-playa::before { content: ""; position: absolute; left: 0; right: 0; top: 33%; height: 3%; min-height: 2px; background: repeating-linear-gradient(90deg, var(--raya) 0 34px, transparent 34px 72px); }
+.calle-playa::before { content: ""; position: absolute; left: 0; right: 0; top: 33.4%; height: 2.6%; min-height: 2px; background: repeating-linear-gradient(90deg, var(--raya) 0 34px, transparent 34px 72px); }
 .calle-playa::after {
-  content: ""; position: absolute; left: 0; right: 0; top: 100%; height: 12px;
-  background: linear-gradient(var(--espuma) 0 3px, transparent 3px), radial-gradient(circle at 50% 0, var(--espuma) 0 7px, transparent 8px) 0 0 / 22px 10px repeat-x;
+  content: ""; position: absolute; left: -16px; right: -16px; top: calc(100% - 3px); height: 15px;
+  background: var(--espuma);
+  --espuma-forma: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 160 15'%3E%3Cpath d='M0 3Q10 0 20 3T40 3Q52 1 61 4T80 3Q92 0 101 3T121 4Q132 1 141 3T160 3V6Q150 10 141 7Q131 12 121 8Q111 11 101 7Q89 10 80 7Q70 12 61 8Q50 10 40 7Q30 11 20 8Q10 10 0 7Z'/%3E%3Ccircle cx='27' cy='11.5' r='1.3'/%3E%3Ccircle cx='74' cy='12.5' r='1'/%3E%3Ccircle cx='112' cy='12' r='1.4'/%3E%3Ccircle cx='150' cy='11' r='1'/%3E%3C/svg%3E");
+  -webkit-mask: var(--espuma-forma) 0 0 / 160px 15px repeat-x; mask: var(--espuma-forma) 0 0 / 160px 15px repeat-x;
   animation: espuma 3.2s ease-in-out infinite alternate;
 }
 @keyframes espuma { to { transform: translate(-8px, 3px); } }
+/* Paso de cebra hacia la loggia de arcos del hotel del centro: barras paralelas a la calle. */
+.paso { position: absolute; left: 50%; top: 19%; height: 31%; width: clamp(44px, 5.5%, 84px); translate: -50% 0;
+  background: repeating-linear-gradient(transparent 0 2px, var(--cebra) 2px 5px, transparent 5px 7px), linear-gradient(var(--calle), var(--calle2)); }
+/* Caseta de salvavidas y sombrillas, paradas en la arena (su base cae al 50 % de la orilla). */
+.cosa { position: absolute; bottom: 47%; width: auto; overflow: visible; filter: var(--brillo-cosas); }
+.caseta { left: 69%; height: 38%; aspect-ratio: 70 / 80; }
+.sombrilla { height: 23%; aspect-ratio: 40 / 44; }
+.s1 { left: 25%; bottom: 46%; }
+.s2 { left: 59%; bottom: 45%; height: 21%; transform: scaleX(-1); }
+/* En el celular la palmera de la derecha planta su tronco cerca del 65 %: la caseta va a su derecha. */
+@media (max-width: 720px) { .caseta { left: 72%; } .s1 { left: 35%; } .s2 { display: none; } }
+
+/* Colores del suelo, la playa y los dibujos nuevos de la portada, por estilo (los de cada
+   momento del día están en "Día, atardecer y noche"). */
+.escena-26 {
+  --vereda: #f6b9b4; --junta: rgba(150, 60, 90, .2); --bordillo: #fff1e4; --bordillo-cara: #e2a39b;
+  --calle: #4f3f80; --calle2: #63549a; --borde-calle: rgba(255, 255, 255, .5); --raya: #ffe08a; --cebra: rgba(255, 255, 255, .88);
+  --arena: #ffd6a0; --arena2: #f4b47e; --arena-mojada: #d9967a; --grano: rgba(150, 80, 50, .22);
+  --espuma: rgba(255, 255, 255, .92); --sombra-suelo: rgba(90, 40, 110, .3); --brillo-suelo: none; --brillo-cosas: none;
+  --hs: rgba(70, 20, 90, .2); --hl: rgba(255, 240, 220, .34); --reflejo: rgba(255, 255, 255, .26);
+  --poste: #3a2a6a; --farol: #fff1c4; --farol-halo: rgba(255, 220, 150, .22);
+  --palma-anillo: rgba(255, 170, 150, .24); --palma-sombra: rgba(110, 40, 70, .26);
+  --torre-brillo: rgba(255, 232, 246, .3); --torre-luz: rgba(255, 228, 170, .75); --torre-lejos: #b9a6e6; --aviso: #ff4d6d;
+  --t80-sombra: rgba(40, 20, 90, .22); --t80-acento: #ff9ec1;
+  --caseta1: #ffd36e; --caseta2: #ff5d8f; --caseta-borde: #fff6ec; --caseta-poste: #fff6ec; --caseta-vidrio: #25205e;
+  --sombrilla1: #ff5d8f; --sombrilla2: #fff6ec;
+  --ave: rgba(60, 20, 80, .55);
+}
+.escena-80 {
+  --vereda: #2b0a5a; --junta: rgba(255, 46, 151, .32); --bordillo: #ff2e97; --bordillo-cara: #8a0f62;
+  --calle: #0d0221; --calle2: #1c0742; --borde-calle: rgba(34, 230, 255, .45); --raya: #22e6ff; --cebra: rgba(34, 230, 255, .75);
+  --arena: #3a0d6a; --arena2: #2a0858; --arena-mojada: #1e0640; --grano: rgba(255, 46, 151, .22);
+  --espuma: #ff2e97; --sombra-suelo: rgba(0, 0, 0, .35); --brillo-suelo: drop-shadow(0 0 5px rgba(255, 46, 151, .8));
+  --brillo-cosas: drop-shadow(0 0 4px rgba(34, 230, 255, .7));
+  --hs: rgba(0, 0, 0, .4); --hl: rgba(255, 46, 151, .16); --reflejo: rgba(34, 230, 255, .24);
+  --poste: #0a0118; --farol: #ffd98a; --farol-halo: rgba(255, 46, 151, .32);
+  --palma-anillo: rgba(255, 46, 151, .38); --palma-sombra: rgba(0, 0, 0, .45);
+  --t80-sombra: rgba(0, 0, 0, .35); --t80-acento: #ff2e97; --aviso: #ff2e97;
+  --caseta1: #2a0c58; --caseta2: #ff2e97; --caseta-borde: #22e6ff; --caseta-poste: #22e6ff; --caseta-vidrio: #ffd98a;
+  --sombrilla1: #ff2e97; --sombrilla2: #2a0c58;
+}
 
 /* Barra superior y botón de cambio de estilo */
 .barra { position: relative; z-index: 3; display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 18px clamp(16px, 4vw, 48px); flex-wrap: wrap; }
@@ -649,7 +721,17 @@ td a:hover, td a:focus-visible { color: var(--a1); text-decoration-color: var(--
 [data-hora="dia"] .escena-80 .torres { filter: none; }
 [data-hora="dia"] .escena-80 { --t80-cuerpo: #2f6fd6; --t80-linea: rgba(255,255,255,.4); --t80-borde: #fff; --t80-ventana: #bfe9ff; --t80-palma: #1d5a4a;
   --t80-luz1: #f2f0ff; --t80-luz2: #e3e0fa; --t80-luz3: #d4d0f2; --t80-franja: rgba(60,40,120,.35); }
-[data-hora="dia"] .escena-80 .palma { fill: #2a0a5a; }
+[data-hora="dia"] .escena-80 { --palma: #2a0a5a; --palma-anillo: rgba(255, 196, 236, .35); --palma-sombra: rgba(42, 10, 90, .22);
+  --vereda: #ffc4ec; --junta: rgba(179, 18, 127, .22); --bordillo: #ff2e97; --bordillo-cara: #b3127f; --calle: #2e2068; --calle2: #3f2f86;
+  --borde-calle: rgba(255, 255, 255, .5); --raya: #fff07a; --cebra: rgba(255, 255, 255, .9);
+  --arena: #ffe0b0; --arena2: #ffc2a4; --arena-mojada: #f19a9e; --grano: rgba(179, 18, 127, .16); --espuma: #ffffff;
+  --sombra-suelo: rgba(42, 10, 90, .22); --brillo-suelo: none; --brillo-cosas: none;
+  --hs: rgba(42, 10, 90, .16); --hl: rgba(255, 255, 255, .34); --reflejo: rgba(255, 255, 255, .4);
+  --poste: #2a0a5a; --farol: #ffffff; --farol-halo: transparent;
+  --t80-sombra: rgba(20, 30, 90, .2); --t80-acento: #ffe45c; --aviso: #ff2e97;
+  --caseta1: #fff3fb; --caseta2: #ff2e97; --caseta-borde: #2a0a5a; --caseta-poste: #2a0a5a; --caseta-vidrio: #3a2a7a;
+  --sombrilla1: #00b8e6; --sombrilla2: #fff07a; }
+[data-hora="noche"] .escena-80 { --hs: rgba(0, 0, 0, .45); --reflejo: rgba(255, 255, 255, .12); --farol: #fff3c0; --farol-halo: rgba(255, 214, 120, .38); }
 [data-hora="dia"] .escena-80 .suelo { background: #3b0f73; }
 [data-hora="dia"] .escena-80 .suelo::after { background: linear-gradient(#3b0f73 0%, rgba(59,15,115,.8) 14%, transparent 42%); }
 :root[data-tema="ochenta"][data-hora="dia"] h1 { text-shadow: 0 0 6px #fff, 0 0 18px #ff2e97, 0 4px 0 #b3127f, 0 0 40px #b3127f; }
@@ -670,8 +752,18 @@ td a:hover, td a:focus-visible { color: var(--a1); text-decoration-color: var(--
   --torre: #8cc4e0; --torre-sombra: #6fa8c9; --torre-linea: rgba(255,255,255,.35); --grua: #3f7194;
   --t80-cuerpo: #2f78c0; --t80-ventana: #bfe9ff; --t80-palma: #1d5a4a; --t80-luz1: #f4f8fb; --t80-luz2: #e7eef3; --t80-luz3: #dae4ec; --t80-franja: rgba(60,90,120,.35); }
 [data-hora="dia"] .escena-26 .sol26 { left: 62%; top: 8%; width: min(26vw, 220px); background: radial-gradient(circle, #fffef0 0 26%, rgba(255,246,190,.85) 40%, rgba(255,230,150,0) 70%); }
-[data-hora="dia"] .escena-26 .palma { fill: #0f5a4a; }
-[data-hora="dia"] .mar { background: radial-gradient(ellipse 26% 90% at 62% 0, rgba(255,255,255,.55), transparent 70%), repeating-linear-gradient(180deg, rgba(255,255,255,.25) 0 2px, transparent 2px 16px), linear-gradient(#19d0e0, #0a6f9a); background-size: 100% 100%, 100% 16px, 100% 100%; }
+[data-hora="dia"] .escena-26 { --palma: #0f5a4a; --palma-anillo: rgba(200, 255, 225, .22); --palma-sombra: rgba(130, 90, 40, .24);
+  --vereda: #ffd8cc; --junta: rgba(170, 90, 90, .2); --bordillo: #ffffff; --bordillo-cara: #e6c0b4; --calle: #5d6a8a; --calle2: #707e9e;
+  --borde-calle: rgba(255, 255, 255, .7); --raya: #ffffff; --cebra: #ffffff;
+  --arena: #ffe9bf; --arena2: #ffd497; --arena-mojada: #e4b37e; --grano: rgba(170, 120, 60, .2);
+  --sombra-suelo: rgba(60, 60, 110, .16);
+  --hs: rgba(40, 50, 110, .15); --hl: rgba(255, 255, 255, .4); --reflejo: rgba(255, 255, 255, .38);
+  --poste: #2f4a6a; --farol: #f2f6ff; --farol-halo: transparent;
+  --torre-brillo: rgba(255, 255, 255, .45); --torre-luz: transparent; --torre-lejos: #b6dcee; --aviso: #e8344e;
+  --t80-sombra: rgba(20, 50, 90, .18); --t80-acento: #ffd23f;
+  --caseta1: #ffe066; --caseta2: #33c7f0; --caseta-borde: #ffffff; --caseta-poste: #ffffff; --caseta-vidrio: #1d4f8a;
+  --sombrilla1: #ff6fa3; --sombrilla2: #ffffff; --ave: rgba(30, 50, 90, .5);
+  --mar1: #19d0e0; --mar2: #0d9cc0; --mar3: #0a6f9a; --mar-reflejo: rgba(255, 255, 255, .6); --mar-sol-x: calc(62% + min(13vw, 110px)); }
 
 /* ===== 2026 NOCHE: cielo azul noche, luna, estrellas, ventanas y torres encendidas, neón en los hoteles ===== */
 :root[data-tema="actual"][data-hora="noche"] { --h1: #0b8f74; --h2: #b8336a; --h3: #b8902a; --h4: #1f7fb8; --h5: #b8603a; --trim: #7ff6ff; --trim2: #ff7ad1; --acento: #ff2e97; --vent: #ffd98a; --luz: #ffe9b0; }
@@ -684,8 +776,24 @@ td a:hover, td a:focus-visible { color: var(--a1); text-decoration-color: var(--
 [data-hora="noche"] .escena-26 .sol26 { left: 80%; top: 13%; width: min(12vw, 92px); animation: none;
   background: radial-gradient(circle at 40% 40%, #ffffff 0 40%, #e6ecff 58%, rgba(200,210,255,.5) 64%, rgba(200,210,255,0) 72%); }
 [data-hora="noche"] .escena-26 .nube { opacity: 0; }
-[data-hora="noche"] .escena-26 .palma { fill: #050516; }
-[data-hora="noche"] .mar { background: radial-gradient(ellipse 8% 90% at 83.5% 0, rgba(230,236,255,.45), transparent 70%), repeating-linear-gradient(180deg, rgba(127,246,255,.12) 0 2px, transparent 2px 16px), linear-gradient(#073a66, #010d1f); background-size: 100% 100%, 100% 16px, 100% 100%; }
+[data-hora="noche"] .escena-26 { --palma: #050516; --palma-anillo: rgba(127, 246, 255, .16); --palma-sombra: rgba(0, 0, 0, .35);
+  --vereda: #3c2b66; --junta: rgba(127, 246, 255, .14); --bordillo: #7ff6ff; --bordillo-cara: #2c6f88; --calle: #120d2a; --calle2: #1d1744;
+  --borde-calle: rgba(127, 246, 255, .32); --raya: #ffd98a; --cebra: rgba(230, 236, 255, .55);
+  --arena: #6c5678; --arena2: #504064; --arena-mojada: #352948; --grano: rgba(255, 255, 255, .07);
+  --espuma: rgba(190, 230, 255, .65); --sombra-suelo: rgba(0, 0, 0, .3);
+  --hs: rgba(0, 0, 20, .35); --hl: rgba(127, 246, 255, .1); --reflejo: rgba(255, 255, 255, .1);
+  --poste: #0d0a2a; --farol: #fff2c0; --farol-halo: rgba(255, 214, 120, .34);
+  --torre-brillo: rgba(127, 246, 255, .08); --torre-luz: #ffd98a; --torre-lejos: #1a1f4a; --aviso: #ff3b3b;
+  --t80-sombra: rgba(0, 0, 0, .3); --t80-acento: #ff4fa0;
+  --caseta1: #6a5420; --caseta2: #8a2a55; --caseta-borde: #7ff6ff; --caseta-poste: #4a4a7a; --caseta-vidrio: #ffd98a;
+  --sombrilla1: #5a2450; --sombrilla2: #34305c;
+  --mar1: #073a66; --mar2: #04274a; --mar3: #010d1f; --mar-reflejo: rgba(230, 236, 255, .45); --mar-sol-x: calc(80% + min(6vw, 46px));
+  --mar-olas: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 240 26'%3E%3Cg fill='none' stroke='%237ff6ff' stroke-linecap='round'%3E%3Cpath stroke-opacity='.2' stroke-width='1.6' d='M8 5h30M120 7h46M190 15h24M62 20h18'/%3E%3Cpath stroke-opacity='.1' stroke-width='1.2' d='M70 11h16M150 21h30M14 16h12M210 4h20'/%3E%3C/g%3E%3C/svg%3E"); }
+[data-hora="noche"] .escena-26 .aves { opacity: 0; }
+[data-hora="dia"] .escena-26 {
+  --nube-a: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 80'%3E%3ClinearGradient id='g' x1='0' y1='0' x2='0' y2='1'%3E%3Cstop offset='0' stop-color='%23ffffff'/%3E%3Cstop offset='.6' stop-color='%23f2f7ff'/%3E%3Cstop offset='1' stop-color='%23c9dcf2'/%3E%3C/linearGradient%3E%3Cpath fill='url(%23g)' d='M22 74Q6 74 9 62Q12 51 29 54Q30 36 53 38Q63 19 89 26Q104 6 133 17Q151 4 174 19Q198 12 208 33Q230 27 240 44Q264 39 270 56Q293 55 292 66Q291 74 278 74Z'/%3E%3C/svg%3E");
+  --nube-b: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 80'%3E%3ClinearGradient id='g' x1='0' y1='0' x2='0' y2='1'%3E%3Cstop offset='0' stop-color='%23ffffff'/%3E%3Cstop offset='.6' stop-color='%23f2f7ff'/%3E%3Cstop offset='1' stop-color='%23c9dcf2'/%3E%3C/linearGradient%3E%3Cpath fill='url(%23g)' d='M30 74Q10 73 16 60Q22 50 40 54Q46 30 76 34Q92 12 122 24Q146 8 168 28Q192 22 200 42Q226 40 232 58Q256 56 262 66Q264 74 250 74Z'/%3E%3C/svg%3E");
+}
 .escena-26 .estrellas { display: none; }
 [data-hora="noche"] .escena-26 .estrellas { display: block; }
 :root[data-tema="actual"][data-hora="noche"] .lema { color: #fff; text-shadow: 0 2px 10px rgba(0,0,0,.5); }
@@ -697,7 +805,7 @@ td a:hover, td a:focus-visible { color: var(--a1); text-decoration-color: var(--
 .horas button:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
 .horas button[aria-pressed="true"] { color: #fff; background: rgba(255,255,255,.22); box-shadow: inset 0 0 0 1px rgba(255,255,255,.5); }
 .barra .ajustes { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; justify-content: flex-end; }
-@media (max-width: 600px) { [data-hora="noche"] .escena-26 .sol26 { left: 5%; top: 64px; width: 40px; } }
+@media (max-width: 600px) { [data-hora="noche"] .escena-26 .sol26 { left: 5%; top: 64px; width: 40px; } [data-hora="noche"] .escena-26 { --mar-sol-x: calc(5% + 20px); } }
 
 /* ---------- Hora cero (tarea 7.2) ---------- */
 .cuenta-nota { flex-basis: 100%; margin: 4px 0 0; font-size: 13px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; }

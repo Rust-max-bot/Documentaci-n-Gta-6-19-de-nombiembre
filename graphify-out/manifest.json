@@ -48,9 +48,9 @@
     "semantic_hash": ""
   },
   "ESTADO_ACTUAL.md": {
-    "mtime": 1794936536.9128194,
-    "seen": 1794936540.8835387,
-    "ast_hash": "7ebfad1947280d85fe27be4b4c168fff",
+    "mtime": 1794938881.870211,
+    "seen": 1794942827.4839885,
+    "ast_hash": "e1cd6ffdc0cdde724c4b97d868d21d04",
     "semantic_hash": ""
   },
   "GUIA_CLAVES.md": {
@@ -60,9 +60,9 @@
     "semantic_hash": ""
   },
   "PLAN.md": {
-    "mtime": 1794935935.4450285,
-    "seen": 1794936540.8835447,
-    "ast_hash": "305fcfa31ec8578aaf0c5cc3bccb65e3",
+    "mtime": 1794938881.871232,
+    "seen": 1794942827.483994,
+    "ast_hash": "f9ce42221e2f6d7e29ef74f08df9d7ab",
     "semantic_hash": ""
   },
   "README.md": {
@@ -72,9 +72,9 @@
     "semantic_hash": ""
   },
   "web/index.html": {
-    "mtime": 1794936234.3707154,
-    "seen": 1794936540.8835711,
-    "ast_hash": "1b517f2ceae2c37a3184267756968a2f",
+    "mtime": 1794942396.3325,
+    "seen": 1794942827.4840226,
+    "ast_hash": "d94e17fa38e24c7905752240f78bc47b",
     "semantic_hash": ""
   },
   ".github/workflows/probar-fuentes.yml": {
@@ -240,9 +240,9 @@
     "semantic_hash": ""
   },
   "web/compartir.jpg": {
-    "mtime": 1794936401.3605607,
-    "seen": 1794936540.8835735,
-    "ast_hash": "b9b483020170e1a426b474e9e37796ce",
+    "mtime": 1794942783.292538,
+    "seen": 1794942827.4840243,
+    "ast_hash": "cd40d5e6d81f718534a97312153a0785",
     "semantic_hash": ""
   },
   "web/icono.svg": {
@@ -276,9 +276,9 @@
     "semantic_hash": ""
   },
   "DISENO_VISUAL.md": {
-    "mtime": 1794936536.9108133,
-    "seen": 1794936540.883537,
-    "ast_hash": "ffd2444eb44bce310f37db10bfb13d9e",
+    "mtime": 1794942825.1992226,
+    "seen": 1794942827.4839866,
+    "ast_hash": "3dce5892e10f97d137a97206d167dca1",
     "semantic_hash": ""
   },
   ".github/workflows/probar-kick.yml": {
@@ -321,6 +321,12 @@
     "mtime": 1794932872.1213703,
     "seen": 1794935933.117083,
     "ast_hash": "10f6be7e580e6a67a307531ca0877db9",
+    "semantic_hash": ""
+  },
+  "diseno/dibujar_portada.py": {
+    "mtime": 1794942396.095107,
+    "seen": 1794942827.48393,
+    "ast_hash": "ecf717abc9b30d43940fa160adc688e7",
     "semantic_hash": ""
   }
 }

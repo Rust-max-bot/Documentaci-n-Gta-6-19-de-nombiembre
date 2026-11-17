@@ -72,11 +72,11 @@ televisor antiguo.
 | --- | --- |
 | Cielo | Degradado de violeta muy oscuro a magenta, rosa y naranja en el horizonte. Estrellas pequeñas que titilan (4 s). |
 | Sol | Grande, en el centro, amarillo → naranja → rosa → magenta, **cortado en franjas horizontales** que se ensanchan hacia abajo. Brillo rosa que "late" (6 s). |
-| Torres de fondo | Siluetas oscuras con bordes cian de neón (una con fachada hueca y palmera dentro; otra de tres niveles con luces). |
-| Hoteles | Fila de hoteles art déco (dibujo compartido con 2026) con brillo rosa alrededor. |
-| Calle y playa (7.12) | Bajo los hoteles, en neón: vereda violeta, cordón rosa, calle oscura con línea discontinua cian y arena violeta, con las palmeras plantadas en ella; un borde de espuma rosa da paso a la rejilla. |
+| Torres de fondo | Siluetas oscuras con bordes cian de neón (una con fachada hueca y palmera dentro, balcones rosados y luz roja de aviso; otra de tres niveles con luces). |
+| Hoteles | Los mismos nueve hoteles de 2026 (ver sección 4b), oscuros y con todo el neón encendido: tubos cian, cornisas y letreros rosados, brillo rosa alrededor. |
+| Calle y playa (7.12) | Bajo los hoteles, en neón: vereda violeta con juntas rosadas, cordón rosa, calle oscura con líneas cian y paso de cebra, arena violeta con caseta de salvavidas y sombrillas de neón; una espuma rosa irregular da paso a la rejilla. |
 | Suelo | **Rejilla de neón** en perspectiva que avanza hacia quien mira: líneas cian hacia el horizonte y líneas rosas de lado a lado. Se dibuja en un `<canvas>` (una casilla cada 1,6 s). Borde cian brillante en el horizonte. |
-| Palmeras | Tres siluetas negro-violeta que se mecen (7 s). En el celular se oculta la más chica. |
+| Palmeras | Tres palmeras distintas, negro-violeta con anillos rosados en el tronco, que se mecen (7 s). En el celular se oculta la más chica. |
 | Encima de todo | **Líneas de televisor antiguo** (rayas horizontales finas) sobre toda la página. |
 | Título | Letra **Monoton** (rayada, de neón), blanca con halo rosa y un parpadeo de tubo de neón cada 5 s. El lema en **Rajdhani**, cian, en mayúsculas y espaciado. |
 | Cuenta regresiva | Números amarillos con halo. |
@@ -89,16 +89,35 @@ Paleta llamada "Atardecer encendido" (elegida por Bruno).
 
 | Elemento | Cómo se ve |
 | --- | --- |
-| Cielo | Degradado azul eléctrico → violeta → rosa → naranja → amarillo. Tres **nubes** blancas difusas cruzan despacio (70 a 120 s). |
+| Cielo | Degradado azul eléctrico → violeta → rosa → naranja → amarillo. Tres **nubes** dibujadas (cúmulos de base plana, panza rosada) cruzan despacio (70 a 120 s) y una bandada de cuatro pelícanos cruza arriba (80 s). |
 | Sol | Disco blanco-amarillo difuso a la derecha que flota suavemente (12 s). |
-| Torres de fondo | Torres modernas en lila suave, "a lo lejos": una en forma de vela, cubos en obra con **grúa**, una con estructura curva por fuera, una torcida, una de balcones ondulados y terrazas verdes. **Suben una por una con un pequeño rebote** al pasar de 1986 a 2026. |
-| Hoteles | La misma fila art déco, en colores vivos: verde menta, rosa, amarillo, celeste y naranja, con bordes blancos. |
-| Calle y playa (7.12) | Bajo los hoteles: vereda rosada, cordón claro, calle violeta con línea discontinua amarilla y arena dorada, con las palmeras plantadas en ella; una espuma blanca que se mueve marca dónde empieza el mar. De día, colores más claros; de noche, calle casi negra, cordón cian y arena lila. |
-| Mar | Debajo de la arena (más angosto desde la 7.12): **agua** turquesa → azul profundo, con líneas de oleaje que se mueven (2,4 s) y el reflejo del sol en el agua. |
-| Palmeras | Las mismas tres, en violeta oscuro. |
+| Torres de fondo | Torres modernas de vidrio en lila suave, "a lo lejos", con pisos, montantes, un reflejo diagonal y algunas ventanas encendidas: una en forma de vela con espina blanca, una de techo en bisel, cubos apilados con jardineras, cubos en obra con **grúa** de celosía, una con estructura curva por fuera, una torcida (cada piso corrido), una de balcones ondulados, una de terrazas escalonadas con árboles y otras más lejanas y pálidas. **Suben una por una con un pequeño rebote** al pasar de 1986 a 2026. |
+| Hoteles | Nueve hoteles distintos (ver sección 4b), en colores vivos: verde menta, rosa, amarillo, celeste y naranja, con bordes blancos, sombras suaves y farolas en la vereda. |
+| Calle y playa (7.12) | Bajo los hoteles: vereda rosada con juntas y la sombra de los hoteles, cordón con cara oscura, calle violeta con líneas de orilla, línea discontinua amarilla y **paso de cebra** hacia el hotel de los arcos; arena dorada con grano fino que se oscurece y se moja cerca del agua, **caseta de salvavidas** sobre pilotes y dos sombrillas; espuma blanca irregular con burbujas. De día, colores más claros; de noche, calle casi negra, cordón cian y arena lila. |
+| Mar | Debajo de la arena (más angosto desde la 7.12): **agua** turquesa → azul profundo, con olas cortas de distinto largo que derivan despacio (16 s) y el reflejo del sol (o de la luna) justo debajo de él. |
+| Palmeras | Las mismas tres, en violeta oscuro (verdes de día), con sombra en la arena. |
 | Título | Letra **Limelight** (art déco), blanca con sombra rosa sólida debajo; las tres partes del título suben al cargar, una tras otra. Lema en **Outfit**, azul marino. |
 | Fondo de la página | Degradado melocotón → rosa → celeste claro. |
 | Tarjetas de abajo | Crema (#fffaf4), sombra suave, esquinas redondeadas (16 px). Títulos en Limelight azul marino. Cifras en rosa fuerte (#ff2e63) y turquesa. |
+
+### 4b. Los hoteles de la portada (rediseño del 2026-11-17)
+
+Nueve hoteles propios, cada uno con su idea (ninguno copia un edificio real ni arte de
+Rockstar; los letreros son nombres inventados). De izquierda a derecha:
+
+1. **Streamline:** esquina curva, tres cornisas corridas, ventanas en banda y torre central escalonada.
+2. **"CORAL":** vertical, con pilastras, corona en zigurat y letrero de bandera.
+3. **MiMo:** losa volada, celosía de bloques calados, balcones con baranda, toldos a rayas y un sol rayado en la torre.
+4. **El más alto:** rascacielos déco con retranqueos, aleta central con tubos de neón y frisos en zigzag.
+5. **Loggia de arcos:** ventanas con cejas y mástil con banderín; el paso de cebra lleva a él.
+6. **Ojos de buey:** simétrico, con balcones curvos en las esquinas.
+7. **"HOTEL":** tres líneas de carrera, columna de bloques de vidrio en la esquina y letrero en la aleta.
+8. **"MAR":** balcones corridos en cada piso y letrero sobre el techo.
+9. **Zigzag:** alas simétricas, friso en zigzag de neón y torre con vitral vertical.
+
+La luz viene de arriba a la derecha: cornisas, toldos y balcones echan sombra hacia abajo, el
+borde izquierdo de cada edificio va más oscuro y el derecho más claro. Las ventanas apagadas
+tienen un reflejo en la esquina; algunas encendidas tienen la cortina a medio bajar.
 
 ### Cambio de un estilo a otro
 
@@ -203,10 +222,10 @@ Resorte con leve sobrepaso: `cubic-bezier(.22, 1.15, .36, 1)`.
 | Qué | Dónde |
 | --- | --- |
 | Colores de cada estilo | `web/estilos.css`, al principio (`:root[data-tema=...]`) |
-| Portada, escenas 1986 y 2026, palmeras | `web/estilos.css`, secciones "Portada", "Escena 1986", "Escena 2026", "Palmeras" |
+| Portada, escenas 1986 y 2026, palmeras, suelo y colores de los dibujos | `web/estilos.css`, secciones "Portada", "Escena 1986", "Escena 2026", "Palmeras", "Suelo entre los hoteles y el mar" |
 | Día, atardecer y noche | `web/estilos.css`, sección "Día, atardecer y noche (tarea 4.1)" |
 | Hora cero (fuegos, reflectores) | `web/estilos.css`, sección "Hora cero"; dibujo de los fuegos en `web/app.js` (`fuegos()`) |
-| Dibujos de palmera, hoteles y torres (SVG) | `web/index.html`, al principio (`<symbol id="palmera">`, `edificios`, `torres80`, `torres26`) |
+| Dibujos de palmeras, hoteles, torres, caseta y sombrilla (SVG) | `web/index.html`, al principio, entre `PORTADA:INICIO` y `PORTADA:FIN` (`palmera-a`, `-b`, `-c`, `edificios`, `torres80`, `torres26`, `caseta`, `sombrilla`). **No se editan a mano:** los escribe `python diseno/dibujar_portada.py`. |
 | Rejilla del suelo de 1986 | `web/app.js`, "Suelo de Miami 1986" |
 | Cambio de estilo (barrido, torres) | `web/app.js`, "Cambio de estilo" |
 | Microinteracciones (gota, flechas, sin saltos, menú) | `web/estilos.css`, al final; `web/app.js`, "Microinteracciones" |
