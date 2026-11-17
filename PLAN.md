@@ -33,6 +33,11 @@ Reddit. El estado vivo (dónde quedamos) está en `ESTADO_ACTUAL.md`; las reglas
 - [ ] **7.4 Cápsula del tiempo.** "Lo que espero" ya está (texto de Bruno, 2026-11-15; diseño
       de cintas de casete, opción C). **Falta "Lo que me pareció"**, después del lanzamiento, en
       `web/capsula.js`. Lo escribe Bruno: Claude no inventa ese contenido.
+- [ ] **6.9 Quitar Reddit** (decisión de Bruno, 2026-11-17: el RSS público se acabó, no vale la pena
+      mostrarlo). (1) Sacar de la página la sección Reddit y lo que la nombre (menú "Secciones",
+      `web/app.js`, estilos, archivos de cada día en `web/dias/` que genera `generar_web.py`); (2)
+      que el recolector ya no pida Reddit (`recolector/fuentes.py`, fuente `reddit`), sin borrar
+      lo ya guardado en `datos/`. Si algún día llega la clave oficial, se puede volver a poner.
 - [ ] **6.7 GTA 6 frente a Doomsday ya, antes del 19** (pedido de Bruno, 2026-11-17). Mostrar en la
       página, desde ahora, la popularidad de GTA 6 frente a Avengers: Doomsday en Trends (día por
       día, últimos 90 días), sin esperar a la 6.1. Pasos: (1) guardar una primera consulta con
@@ -113,7 +118,7 @@ Reddit. El estado vivo (dónde quedamos) está en `ESTADO_ACTUAL.md`; las reglas
 - [ ] **2.5 TikTok.** Sin acceso oficial para un proyecto personal (la API de investigación es
       solo para instituciones académicas; Creative Center no tiene API y bloquea servidores).
       Probar una consulta real desde el PC y desde GitHub, o anotar lo llamativo a mano.
-- [ ] **Clave de Reddit.** **Ahora hace falta para seguir midiendo Reddit:** desde el 17 nov,
+- [ ] **Clave de Reddit** (en pausa por la 6.9). **Haría falta para volver a medir Reddit:** desde el 17 nov,
       18:37 UTC, Reddit bloquea su RSS público (404/403, también en otros subreddits; antes un
       429). Lo guardado no se pierde. Daría además votos y comentarios. Desde nov 2025 se pide con el formulario
       de soporte para desarrolladores; tarda ~7 días y no está garantizada.

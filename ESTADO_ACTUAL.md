@@ -130,7 +130,7 @@ Bruno ya eligió las palabras de la comparación.
 
 La lista completa y su orden están en `PLAN.md`. Resumen (2026-11-14):
 
-- **(2026-11-17, nuevo):** 6.7 mostrar ya GTA 6 frente a Doomsday (opciones con capturas para Bruno) y 6.8 diseñar la sección de la 6.1 desde el 20 nov. **Reddit no mide desde el 17 nov, 18:37 UTC:** Reddit bloqueó su RSS público; solo se arregla con la clave oficial.
+- **(2026-11-17, nuevo):** 6.7 mostrar ya GTA 6 frente a Doomsday (opciones con capturas para Bruno) y 6.8 diseñar la sección de la 6.1 desde el 20 nov. **Reddit no mide desde el 17 nov, 18:37 UTC:** Reddit bloqueó su RSS público; solo se arregla con la clave oficial. Bruno decidió quitarlo (6.9): sacar la sección de la página y que el recolector ya no lo pida.
 0. **(2026-11-16, orden de Bruno):** 9.4 optimizar la página (eje y `partes()` hechos; lo
    grande, después del 22), 9.1 servidores más cortos (**hecha**, opción C) y 9.3
    menos alarmas por Google (después del 22). Descartados (Bruno): la 9.2 "¿Cuánta gente
