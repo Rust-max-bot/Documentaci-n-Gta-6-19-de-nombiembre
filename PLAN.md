@@ -132,18 +132,23 @@ con línea de tiempo, tablas y gráficos de Twitch, Kick, YouTube, Google Trends
       etiquetas para decidir si un video es de GTA 6. No Claude, por el costo. Idea (18 nov, para
       después): Gemini, que puede ver el video. Antes, un plan pequeño.
 - [ ] **Panel de control para clasificar videos** (Bruno, 2026-11-15; entrevista en curso desde el
-      18 nov; después del lanzamiento). Decidido: Bruno marca videos y Shorts con uno o varios
-      **motivos** ("no trata de GTA", "hecho con IA", "dudoso") y **el visitante elige qué tipos ver** (la primera vez, los tres ocultos; después, la página recuerda su elección en ese navegador) en todas las listas y récords de YouTube. El panel abre con
-      los videos nuevos sin revisar, deja ver y filtrar los que ya salen en la página, y toda
-      marca se puede deshacer. Botón **"Publicar"** que guarda y sube a GitHub (se ve en la
-      siguiente publicación); si falla, plan de contingencia: queda guardado en el PC y lo sube
-      una sesión de Claude; el
-      filtro automático (título sin hashtags, tema de videojuegos, `excluir_palabras`) se queda
-      siempre; nada se borra de `datos/`. Ejemplo: Short `_LVLtceZy3I` ("Lamine Yamal x GTA 6",
-      IA): pasa porque el título nombra GTA 6 y YouTube le puso temas de videojuegos. Solo Bruno
-      lo usa: panel **solo en su PC**, sin celular (decidido 18 nov; no hace falta repo nuevo: en el público solo él escribe). Falta:
-      dónde se guardan, si la lista puede ser pública (la página la necesita) y
-      cómo se ve el selector (con capturas).
+      18 nov; después del lanzamiento). Decidido el 18 nov:
+      - **Panel solo en el PC de Bruno** (sin celular; no hace falta repo nuevo: en el público solo
+        él escribe). Abre con los videos nuevos sin revisar; deja ver y filtrar los que ya salen
+        y también **los que el filtro automático descartó**, para rescatarlos (p. ej. los que
+        solo nombran GTA 6 en hashtags). Toda marca se puede deshacer. Nada se borra de `datos/`.
+      - Marcas con uno o varios **motivos**: "no trata de GTA", "hecho con IA", "dudoso".
+      - **Configuraciones guardadas:** "desde cero" (sin filtro), "filtro automático" (el de hoy:
+        título sin hashtags, tema de videojuegos, sin "roblox") y "el de Rust" (el automático
+        corregido por Bruno, que manda en los dos sentidos); Bruno puede guardar otras.
+      - Botón **"Publicar"** que guarda y sube a GitHub (se ve en la siguiente publicación). Si
+        falla: queda guardado en el PC y lo sube una sesión de Claude.
+      - **El visitante** elige la configuración y qué motivos ver, en todas las listas y récords
+        de YouTube (la primera vez, "el de Rust" con los tres motivos ocultos; después, su
+        navegador recuerda la elección). La lista de marcas es pública (la página la necesita).
+      - Ejemplo: Short `_LVLtceZy3I` ("Lamine Yamal x GTA 6", IA) pasa el filtro automático
+        porque el título nombra GTA 6 y YouTube le puso temas de videojuegos.
+      Falta: dónde se guardan las marcas y cómo se ve el selector (opciones con capturas).
 - [ ] **API alfa de Google Trends** (idea de Bruno, 2026-11-16; para después, sin apuro). Google
       abrió una prueba alfa de una API oficial de Trends (developers.google.com/search/apis/trends):
       se pide con un formulario y solo la dan a un grupo limitado; no se sabe si aceptarán a Bruno.
