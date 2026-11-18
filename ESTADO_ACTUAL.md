@@ -40,16 +40,11 @@ Desde la nube no se abre `github.io` ni cargan las fotos de YouTube y Twitch (re
 
 **Fase 10, panel de control de videos (18 nov, en curso, sin código):** entrevista hecha y
 plan en `PANEL_VIDEOS.md`; revisado por dos agentes (a favor y en contra) y sus arreglos
-técnicos ya escritos ahí. Decidido: Tendencias también usa las marcas. **Preguntas que faltan
-hacerle a Bruno, de a una y en este orden** (anotar cada respuesta en `PANEL_VIDEOS.md`):
-1. La lista `ocultar` de `filtro_videos.json`: ¿pasarla a las marcas nuevas y quitarla?
-2. Límite de rescatar: solo videos de la última medición (50) para las listas; los más viejos,
-   solo para los récords. ¿Le parece bien?
-3. Qué es cada configuración: ¿las marcas valen también en "desde cero"? ¿Una configuración
-   guardada por Bruno lleva sus propias marcas o solo otro filtro base?
-4. Peso de la página: el selector del visitante obliga a mandar más videos (`datos.js` pesa
-   358 KB, podría duplicarse). ¿Se acepta, o se limita lo que se puede elegir?
-Después: resumen final y, cuando Bruno lo pida, la tanda 10.1.
+técnicos ya escritos ahí. **Todas las preguntas respondidas** (18 nov): Tendencias usa las
+marcas; `ocultar` se quita; rescatar solo llega a las listas si el video está en la última
+medición; configuración y motivos son perillas separadas; los descartados van en un archivo
+aparte cargado a pedido. Detalle en `PANEL_VIDEOS.md`. Falta: la tanda 10.1 cuando Bruno la
+pida (después del lanzamiento).
 
 **Avisos vigentes:**
 - **El 21 nov:** comprobar que la 6.1 se guardó (se lanza sola del 21 al 24 nov).

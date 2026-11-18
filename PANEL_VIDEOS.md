@@ -76,9 +76,21 @@ puede estar en Global y no en Tendencias, o al revés, así que el panel debe mo
 de Tendencias para poder marcarlos. Ojo al construirlo: Tendencias guarda conteos por región en
 el historial; si filtrar cambia esos conteos, hay que recalcularlos (revisar en la 10.1).
 
-**Por decidir con Bruno** (antes de la 10.1): qué pasa con `ocultar`; el límite de rescatar (solo videos de la última medición
-para las listas; del historial, solo para récords); qué es exactamente cada configuración (¿las
-marcas valen en "desde cero"?); y cómo no inflar `datos.js` con el selector del visitante.
+**Decidido (Bruno, 18 nov, últimas preguntas):**
+
+- **`ocultar` se quita** de `filtro_videos.json` y de `generar_web.py` en la 10.1 (estaba
+  vacía): para esconder videos sueltos queda un solo sistema, las marcas. El filtro automático
+  (`modo` y `excluir_palabras`) no se toca.
+- **Límite de rescatar:** se puede rescatar cualquier video, pero solo sale en una lista si
+  está entre los 50 de la última medición; uno más viejo solo cuenta para los récords.
+- **Configuraciones y marcas son dos perillas separadas:** la configuración elige el filtro
+  base y las casillas de motivos qué marcas se esconden. Las marcas valen también en "desde
+  cero" si el visitante deja los motivos marcados ("desde cero" sin motivos = todo). Una
+  configuración guardada por Bruno es **solo otro filtro base**: las marcas son una sola lista
+  que vale en todas.
+- **Peso:** `datos.js` sigue llevando solo "el de Rust". Los descartados van en un archivo
+  aparte que la página carga solo si el visitante cambia de configuración o de motivos (sin
+  librerías; debe funcionar también abriendo la página como archivo con `ver_pagina.bat`).
 
 ## Partes (cada una termina usable y verificada, nunca a medias)
 
