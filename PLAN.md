@@ -122,6 +122,15 @@ Entrevista con Bruno del 2026-11-18. Lo decidido y el detalle de cada parte, en
 GTA", "hecho con IA", "dudoso") o rescatarlos; el visitante elige configuración y motivos.
 Cada parte termina usable y verificada; se hacen en orden.
 
+**Revisión de cada parte** (Bruno, 2026-11-18; él no es ingeniero y no tiene Codex):
+`/code-review` al terminar cada tanda; en la 10.2, además `/security-review` (servidor local
+que publica). Como segunda opinión, en vez de Codex, un **agente revisor nuevo** que no vio
+cómo se hizo: recibe solo el código, `PANEL_VIDEOS.md` y la orden de buscar fallos (no de
+aprobar), con otro modelo de Claude (por ejemplo Sonnet) para que no piense igual; cada fallo
+que diga se comprueba de verdad antes de aceptarlo o descartarlo. Diseño: `impeccable` antes
+de mostrar opciones. Al final de cada tanda, una **lista corta de comprobaciones visibles**
+para que Bruno las haga él (por ejemplo: marcar un video, "Publicar" y ver que desaparece).
+
 - [ ] **10.1 Marcas en la página, sin panel** (archivo de marcas + `generar_web.py`).
 - [ ] **10.2 Panel para marcar y publicar** (antes, opciones del aspecto con capturas).
 - [ ] **10.3 Rescatar descartados y configuraciones guardadas.**
