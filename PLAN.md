@@ -48,7 +48,7 @@ con línea de tiempo, tablas y gráficos de Twitch, Kick, YouTube, Google Trends
       2013 GTA 6, GTA 5, Ocarina of Time (remake, 5 nov 2026) y Avengers Doomsday; y GTA 6 frente
       a Doomsday día por día (en la página, solo esa comparación). **Se lanza sola** (Bruno, 2026-11-16, tras un
       debate entre dos agentes): el despertador de Cloudflare el 21, 22, 23 y 24 nov a las 15:41 UTC
-      y, de respaldo, un `schedule` de GitHub a las 18:41 UTC. Guarda solo la primera vez (paso
+      y, de respaldo, un `schedule` de GitHub a las 18:41, 20:41 y 22:41 UTC (GitHub se salta horarios: 18 nov). Guarda solo la primera vez (paso
       "decidir": si ya hay archivo o es fuera del 20-25 nov 2026, termina en verde), sin ejecuciones
       dobles y con 25 min de tiempo. Recordatorios en el Google Calendar de Bruno el 21 y el 24 nov
       (16:30 de Santiago). **Falta:** (1) comprobar el 21 que se guardó; (2) mostrarlo en la página, con opciones y capturas; (3) idea sin
@@ -87,7 +87,8 @@ con línea de tiempo, tablas y gráficos de Twitch, Kick, YouTube, Google Trends
 - [ ] **7.1 Rebobinar el lanzamiento.** Una barra para mover la página hora por hora y revivir
       el 19 nov: números, gráfico y titulares de esa hora. Los datos ya quedan guardados.
 - [ ] **4.3 Análisis de datos (A3).** Datos interesantes: popularidad, visitas, cuánto dura el
-      interés, antes y después. Necesita varios días de datos reales.
+      interés, antes y después. Necesita varios días de datos reales. **Sin IA** (Bruno, 2026-11-18): un
+      programa normal, como `generar_web.py`, que corre solo con cada medición. En unos días.
 - [ ] **7.13 Sección de memes** (pedido de Bruno, 2026-11-15; investigar antes de hacer nada).
       Va con la "búsqueda calmada". A investigar: de dónde salen (imágenes de Reddit ya
       guardadas, Know Your Meme, o memes que Bruno suba como en el álbum); derechos de autor (la

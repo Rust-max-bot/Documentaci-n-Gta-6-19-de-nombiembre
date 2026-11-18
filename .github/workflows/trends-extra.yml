@@ -1,29 +1,31 @@
 # Tarea 6.1: las 5 preguntas extra a Google Trends, UNA sola vez (decisión de Bruno, 2026-11-13:
 # entre el 20 y el 25 nov, fuera del recolector de cada hora). Guarda un archivo nuevo en
 # datos/trends_extra/, UNA sola vez: si ya hay uno, o si es fuera del 20-25 nov 2026, termina en
-# verde sin hacer nada (paso "decidir").
+# verde sin hacer nada (paso "decidir"; a mano fuera de esas fechas, en rojo: ver abajo).
 # Quién lo lanza (decisión de Bruno, 2026-11-16, tras un debate entre dos agentes):
 #   1. el despertador de Cloudflare (despertador/worker.js), del 21 al 24 nov a las 15:41 UTC;
-#   2. de respaldo, el horario de GitHub de abajo, los mismos días a las 18:41 UTC;
+#   2. de respaldo, el horario de GitHub de abajo, los mismos días a las 18:41, 20:41 y 22:41 UTC
+#      (tres horas porque GitHub no garantiza sus horarios: el 18 nov se saltó la previa de las
+#      11:15 sin dejar rastro; el paso "decidir" evita guardar dos veces);
 #   3. a mano, con el botón "Run workflow" (recordatorios en el calendario de Bruno el 21 y el 24).
 # Para probar sin guardar: "Probar fuentes" con la casilla de Trends extra marcada.
 # Con la casilla "previa" (tarea 6.7, Bruno, 2026-11-17): las mismas preguntas, a mano y en
 # cualquier fecha, guardadas en datos/trends_previa/ (cada vez un archivo nuevo). No cuenta como
-# la 6.1. Una previa programada (Bruno, 2026-11-17): el 18 nov a las 11:15 UTC (8:15 de Chile),
-# justo después de la salida en Nueva Zelanda (11:00 UTC); GitHub puede atrasarla unos minutos.
-# la 6.1: el paso "decidir" de la 6.1 solo mira datos/trends_extra/.
+# la 6.1: el paso "decidir" de la 6.1 solo mira datos/trends_extra/. (La previa programada del
+# 18 nov a las 11:15 UTC se quitó: GitHub no la lanzó y se hizo a mano a las 12:57.)
+# Lanzado a mano fuera del 20-25 nov SIN la casilla "previa", termina en ROJO con el aviso de
+# marcarla (el 18 nov terminó en verde sin hacer nada y parecía que había funcionado).
 name: Trends extra (6.1)
 
 on:
   workflow_dispatch:
     inputs:
       previa:
-        description: "Consulta previa (6.7): guardar en datos/trends_previa/, en cualquier fecha"
+        description: "Consulta previa (6.7): guardar en datos/trends_previa/, en cualquier fecha (fuera del 20-25 nov, marcarla)"
         type: boolean
         default: false
   schedule:
-    - cron: "41 18 21-24 11 *"   # respaldo del despertador (UTC); el candado evita otros años
-    - cron: "15 11 18 11 *"      # previa tras la salida en Nueva Zelanda (solo vale el 18 nov 2026)
+    - cron: "41 18,20,22 21-24 11 *"   # respaldo del despertador (UTC); el candado evita otros años
 
 concurrency:
   group: trends-extra
@@ -45,20 +47,18 @@ jobs:
         run: |
           hoy=$(date -u +%Y-%m-%d)
           git fetch -q origin main
-          if [[ "${{ github.event.schedule }}" == "15 11 18 11 *" ]]; then
-            if [[ "$hoy" == "2026-11-18" ]]; then
-              echo "Consulta previa programada (salida en Nueva Zelanda): se guarda en datos/trends_previa/." | tee -a "$GITHUB_STEP_SUMMARY"
-              echo "seguir=si" >> "$GITHUB_OUTPUT"; echo "previa=si" >> "$GITHUB_OUTPUT"
-            else
-              echo "La previa programada solo vale el 18 nov 2026 ($hoy): no se hace nada." | tee -a "$GITHUB_STEP_SUMMARY"
-              echo "seguir=no" >> "$GITHUB_OUTPUT"
-            fi
-          elif [[ "${{ inputs.previa }}" == "true" ]]; then
+          if [[ "${{ inputs.previa }}" == "true" ]]; then
             echo "Consulta previa (6.7): se guarda en datos/trends_previa/." | tee -a "$GITHUB_STEP_SUMMARY"
             echo "seguir=si" >> "$GITHUB_OUTPUT"; echo "previa=si" >> "$GITHUB_OUTPUT"
           elif [[ "$hoy" < "2026-11-20" || "$hoy" > "2026-11-25" ]]; then
             echo "Fuera del 20-25 nov 2026 ($hoy): no se hace nada." | tee -a "$GITHUB_STEP_SUMMARY"
             echo "seguir=no" >> "$GITHUB_OUTPUT"
+            # A mano, solo puede ser una persona (el despertador tiene su propio candado de
+            # fechas): en rojo, para que no parezca que se guardó algo.
+            if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
+              echo "::error::Fuera del 20-25 nov no se guarda la 6.1. Para una consulta previa, vuelve a lanzarlo marcando la casilla \"previa\"."
+              exit 1
+            fi
           elif git ls-tree -r --name-only origin/main -- datos/trends_extra/ | grep -q '\.json$'; then
             echo "Ya está guardada: $(git ls-tree -r --name-only origin/main -- datos/trends_extra/ | tr '\n' ' '). No se hace nada." | tee -a "$GITHUB_STEP_SUMMARY"
             echo "seguir=no" >> "$GITHUB_OUTPUT"
