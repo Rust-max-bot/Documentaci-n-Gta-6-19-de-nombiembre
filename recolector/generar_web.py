@@ -71,12 +71,13 @@ def leer_filtro(conocidos):
     if not (isinstance(palabras, list) and all(isinstance(x, str) and x.strip() for x in palabras)):
         abortar(f"{FILTRO.name}: 'excluir_palabras' debe ser una lista de palabras")
     try:
-        marcados = marcas.leer()
+        todo = marcas.leer_todo()
     except marcas.MarcasMal as e:
         abortar(f"{marcas.ARCHIVO.name}: {e}")
-    for codigo in marcas.desconocidos(marcados, conocidos):
-        print(f"AVISO: {marcas.ARCHIVO.name}: el video {codigo!r} no aparece en las búsquedas de YouTube de estas mediciones: no esconde nada (¿código mal copiado?)")
-    return {"modo": f["modo"], "palabras": [x.strip().lower() for x in palabras], "marcados": set(marcados)}
+    for codigo in marcas.desconocidos(list(todo["marcados"]) + list(todo["rescatados"]), conocidos):
+        print(f"AVISO: {marcas.ARCHIVO.name}: el video {codigo!r} no aparece en las búsquedas de YouTube de estas mediciones: no cambia nada (¿código mal copiado?)")
+    return {"modo": f["modo"], "palabras": [x.strip().lower() for x in palabras],
+            "marcados": set(todo["marcados"]), "rescatados": set(todo["rescatados"])}
 
 
 def gta_visibles(region, filtro):
@@ -88,6 +89,8 @@ def gta_visibles(region, filtro):
 def pasa_filtro(v, filtro):
     if v["id"] in filtro["marcados"]:   # "el de Rust": los que Bruno marcó a mano no se muestran
         return False
+    if v["id"] in filtro.get("rescatados", ()):   # 10.3: los que Bruno rescató se muestran aunque el filtro no los deje
+        return True
     titulo = v.get("titulo", "")
     if any(p in titulo.lower() for p in filtro["palabras"]):
         return False
@@ -218,12 +221,14 @@ def videos_conocidos(medidas):
     return ids
 
 
-def convertir(medidas, marcados=None):
-    """marcados: solo para el panel de videos (10.2), que necesita ver la página "como si" las
-    marcas fueran otras. None = las de recolector/marcas_videos.json."""
+def convertir(medidas, marcados=None, rescatados=None):
+    """marcados y rescatados: solo para el panel de videos (10.2 y 10.3), que necesita ver la
+    página "como si" fueran otros. None = los de recolector/marcas_videos.json."""
     filtro = leer_filtro(videos_conocidos(medidas))
     if marcados is not None:
         filtro["marcados"] = set(marcados)
+    if rescatados is not None:
+        filtro["rescatados"] = set(rescatados)
     mediciones, series, ultimo_video, vistas, noticias = [], {}, {}, set(), []
     series_es, ultimo_es = {}, {}   # tarea 6.4: videos de la búsqueda en español
     trailers = {}   # tarea 6.2: serie de visitas de cada video oficial, desde el 13 nov

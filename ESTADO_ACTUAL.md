@@ -49,7 +49,9 @@ aparte cargado a pedido. Detalle en `PANEL_VIDEOS.md`. **10.1 hecha en la rama
 unirla (al unirla, la página se publica sola). **10.2 hecha en la rama `panel-videos-10-2`**
 (sale de la de la 10.1, también sin unir): panel de videos en forma "Tabla" (`panel_videos.bat`).
 **Publicar solo funciona desde `main`:** falta que Bruno decida cuándo unir las ramas (sugerido:
-después del 19). Siguiente: 10.3, cuando Bruno la pida.
+después del 19). **10.3 hecha en la rama `panel-videos-10-3`** (sobre la 10.2, sin unir):
+rescatar descartados y configuraciones propias. Unir solo `panel-videos-10-3` trae las tres.
+Siguiente: 10.4 (selector del visitante, antes opciones con capturas), cuando Bruno la pida.
 
 **Avisos vigentes:**
 - **El 21 nov:** comprobar que la 6.1 se guardó (se lanza sola del 21 al 24 nov).
@@ -72,6 +74,7 @@ lanzamiento (revisión completa y menos alarmas por Google). Antes: 9.12 y más 
 ## Últimos cambios
 
 - 2026-11-17: estado anterior archivado en historial/ESTADO_2026-11-17.md
+- 2026-11-18: 10.3 (rama `panel-videos-10-3`): el panel muestra los descartados para rescatarlos (la página los deja pasar) y guarda configuraciones propias (nombre, modo, palabras; "Restablecer" = las del filtro automático, decisión de Bruno). Pruebas: `probar_marcas.py`, `probar_panel.py` y `probar_pagina.py`, todo bien. Revisada con `/code-review` y un agente revisor (Sonnet); arreglos hechos.
 - 2026-11-18: 10.2 (rama `panel-videos-10-2`): panel de videos local (`panel_videos.bat`, forma "Tabla" elegida por Bruno): marcar con motivos, "Está bien" (clave `revisados`), deshacer, borrador en el PC y "Publicar" (solo el archivo de marcas, solo desde `main`). `probar_panel.py` y `probar_marcas.py`: todo bien. Revisada con `/security-review`, `/code-review` y un agente revisor (Sonnet); sus arreglos, hechos.
 - 2026-11-18: 10.1 (rama `panel-videos-10-1`): marcas de videos en `recolector/marcas_videos.json`, validadas por `recolector/marcas.py`; `generar_web.py` saca los marcados de Global, Español, récords y Tendencias; `ocultar` quitada. Prueba nueva `pruebas/probar_marcas.py` (todo bien) y `probar_pagina.py` a 1280 y 384 px en los dos estilos (todo bien). Revisada con `/code-review` y un agente revisor (Sonnet); sus arreglos, hechos.
 - 2026-11-18: Kick en "GTA frente a lo más visto" (pedido de Bruno, sin opciones de diseño): puesto de GTA VI en el recuadro y barras de categorías bajo las de Twitch. Fuente nueva `kick_ranking`: Kick no tiene ranking, así que lee todos sus directos (~12.500, 13 páginas) y suma el público por categoría. Probada en GitHub sin guardar en una rama de prueba (ya borrada); el recolector no se detuvo. Se ve desde la primera medición con el cambio. Si falla, `git revert` de su commit.

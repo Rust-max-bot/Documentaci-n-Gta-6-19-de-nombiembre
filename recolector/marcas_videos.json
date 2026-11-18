@@ -1,7 +1,10 @@
 {
   "videos": {
     "_LVLtceZy3I": {
-      "motivos": ["no_gta", "ia"],
+      "motivos": [
+        "no_gta",
+        "ia"
+      ],
       "fecha": "2026-11-18",
       "titulo": "Lamine Yamal x GTA 6 👑🐐👑"
     }
@@ -10,6 +13,7 @@
     "Videos de YouTube que Bruno marcó a mano (Fase 10, pedido de Bruno, 2026-11-18). Un video marcado no se muestra en ninguna lista ni récord de YouTube de la página (Global, Español, Tendencias, 'Video/Short más visto'). Los tráilers oficiales no se marcan. No borra nada de datos/.",
     "Cada video va por su código de 11 letras (lo que sigue a 'v=' o a 'shorts/' en el enlace).",
     "motivos: uno o varios de \"no_gta\" (no trata de GTA), \"ia\" (hecho con IA) y \"dudoso\".",
+    "revisados (10.2): videos que Bruno miró y están bien; solo los usa el panel. rescatados (10.3): videos que el filtro automático descartaba y Bruno devuelve a la página (solo salen en una lista si están en la última medición; si no, cuentan para los récords). configuraciones (10.3): filtros propios de Bruno (nombre, modo y palabras excluidas) que la página usará en la 10.4.",
     "fecha: el día en que se marcó (AAAA-MM-DD). titulo: opcional, solo para que se entienda al leer el archivo.",
     "Para deshacer una marca, borrar su entrada. Si el archivo queda mal escrito, la página no se publica hasta corregirlo (lo revisa recolector/marcas.py)."
   ]

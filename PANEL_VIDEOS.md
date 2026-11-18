@@ -134,6 +134,22 @@ el historial; si filtrar cambia esos conteos, hay que recalcularlos (revisar en 
 3. **10.3 Rescatar y configuraciones.** El panel muestra también los descartados (recalculados
    desde `datos/`) para rescatarlos, y guarda configuraciones con sus botones de restablecer.
    Al terminar: "el de Rust" corrige en los dos sentidos.
+   **Hecha (18 nov, rama `panel-videos-10-3`, sobre la de la 10.2).** Decidido por Bruno ese día:
+   una configuración propia = **nombre + modo + palabras excluidas**; **"Restablecer"** vuelve el
+   modo y las palabras a los del filtro automático (nunca toca marcas ni rescates; las tres fijas
+   no se pueden cambiar).
+   - En `marcas_videos.json`: `rescatados` {código: fecha} y `configuraciones` {clave: {nombre,
+     modo, excluir_palabras}}; `marcas.py` los valida (un video no puede estar rescatado y
+     marcado o revisado; nombres únicos; claves `[a-z0-9-]`, distintas de las fijas
+     `desde-cero`, `automatico`, `rust`).
+   - `generar_web.py`: `pasa_filtro` deja pasar los rescatados (Global, Español y récords;
+     Tendencias no cambia: no guarda sus descartados).
+   - Panel: pestañas "Rescatados" y "Descartados", lugar "En la página" / "Todos"; un descartado
+     que no sale en ninguna parte solo tiene "Rescatar"; uno que sale en Tendencias o Español se
+     puede marcar. Nota en cada descartado: si está en la última medición, en mediciones viejas
+     (récords) o medido solo antes del 15 nov (rescatarlo no cambia nada).
+   - Botón "Configuraciones": las fijas descritas y las propias editables.
+   - Revisada con `/code-review` y un agente revisor (Sonnet); sus arreglos, hechos y con prueba.
 4. **10.4 Selector del visitante.** Antes, opciones con capturas. Configuración y motivos en la
    página, recordados en el navegador. Revisar cuánto crece `web/datos.js` con "desde cero"
    (lleva más videos). Al terminar: el visitante elige qué ver.

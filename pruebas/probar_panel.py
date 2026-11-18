@@ -227,6 +227,19 @@ with tempfile.TemporaryDirectory() as t:
     git(copia, "reset", "--quiet", "--hard", "HEAD~1")
     shutil.rmtree(otra, ignore_errors=True)
 
+print("2b. Lista del panel con los datos reales (10.3)")
+import lista  # noqa: E402
+import generar_web  # noqa: E402
+if (RAIZ / "datos").exists():
+    todos = lista.armar(generar_web.leer_mediciones(RAIZ / "datos"))
+    mixtos = [v for v in todos if "descartado" in v["lugares"] and len(v["lugares"]) > 1]
+    puros = [v for v in todos if v["lugares"] == ["descartado"]]
+    comprobar(puros and all(v["fuera"] for v in puros), f"los descartados que no salen en ninguna parte quedan 'fuera' ({len(puros)})")
+    comprobar(all(not v["fuera"] for v in mixtos),
+              f"un descartado de Global que igual sale en Tendencias o Español no queda 'fuera': se puede marcar ({len(mixtos)})")
+    comprobar(all(v.get("sin_efecto") == (not v["reciente"] and v["short"] is None) for v in puros + mixtos),
+              "los medidos solo antes del 15 nov (sin tipo) se avisan como 'rescatarlo no cambia nada'")
+
 print("3. El panel en el navegador (Playwright, con un GitHub falso)")
 try:
     from playwright.sync_api import sync_playwright
@@ -302,7 +315,40 @@ elif sync_playwright:
                     comprobar(pg.locator("#publicar").is_disabled(), "después de publicar no quedan cambios pendientes")
                     pg.wait_for_timeout(800)
                     comprobar(publicar.leer_borrador(copia) is None, "después de publicar no revive ningún borrador")
-                    base_pub = {"videos": subido["videos"], "revisados": subido.get("revisados", {})}
+                    # 10.3: rescatar un descartado y crear una configuración propia.
+                    pg.locator('.pestanas button[data-v="descartado"]').click()
+                    n_desc = pg.locator(".tabla tr").count()
+                    comprobar(n_desc > 0, f"la pestaña 'Descartados' muestra los que el filtro deja fuera ({n_desc})")
+                    fila_d = pg.locator(".tabla tr").first
+                    comprobar(fila_d.locator('button[data-a="no_gta"]').count() == 0 and fila_d.locator('button[data-a="rescatar"]').count() == 1,
+                              "un descartado solo tiene el botón 'Rescatar'")
+                    fila_d.locator('button[data-a="rescatar"]').click()
+                    pg.locator("#ver-confs").click()
+                    pg.locator('button[data-c-a="nueva"]').click()
+                    caja = pg.locator(".conf").first
+                    caja.locator('input[data-c="nombre"]').fill("Con Roblox")
+                    caja.locator('input[data-c="nombre"]').dispatch_event("change")
+                    caja.locator('input[data-c="excluir_palabras"]').fill("fortnite, Fortnite, minecraft")
+                    caja.locator('input[data-c="excluir_palabras"]').dispatch_event("change")
+                    pg.wait_for_timeout(800)
+                    conf_b = list((publicar.leer_borrador(copia) or {}).get("configuraciones", {}).values())
+                    comprobar(conf_b and conf_b[0]["nombre"] == "Con Roblox" and conf_b[0]["excluir_palabras"] == ["fortnite", "minecraft"],
+                              "la configuración nueva se guarda en el borrador (sin palabras repetidas)")
+                    pg.screenshot(path=str(RAIZ / "pruebas" / "capturas" / "panel_configuraciones_1280.png"))
+                    pg.locator('.conf button[data-c-a="restablecer"]').click()
+                    pg.wait_for_timeout(800)
+                    auto = json.loads((RAIZ / "recolector" / "filtro_videos.json").read_text(encoding="utf-8"))
+                    conf_b = list(publicar.leer_borrador(copia)["configuraciones"].values())[0]
+                    comprobar(conf_b["excluir_palabras"] == auto["excluir_palabras"] and conf_b["modo"] == auto["modo"] and conf_b["nombre"] == "Con Roblox",
+                              "'Restablecer' vuelve el modo y las palabras a los del filtro automático (el nombre se queda)")
+                    pg.locator("#publicar").click()
+                    pg.wait_for_selector(".aviso.ok, .aviso.mal", timeout=60000)
+                    subido = json.loads(git(remoto, "show", "main:recolector/marcas_videos.json"))
+                    comprobar(len(subido.get("rescatados", {})) == 1 and len(subido.get("configuraciones", {})) == 1 and marcado in subido["videos"],
+                              f"'Publicar' sube el rescate y la configuración, sin perder la marca de antes ({pg.locator('.aviso').first.inner_text()[:50]})")
+                    pg.locator("#ver-confs").click()
+                    base_pub = {"videos": subido["videos"], "revisados": subido.get("revisados", {}),
+                                "rescatados": subido.get("rescatados", {}), "configuraciones": subido.get("configuraciones", {})}
                 if ancho == 384:
                     comprobar(pg.locator("#publicar").inner_text() == "Publicar (1)",
                               f"borrador viejo + otra marca publicada: solo cuenta el cambio propio ({pg.locator('#publicar').inner_text()})")
