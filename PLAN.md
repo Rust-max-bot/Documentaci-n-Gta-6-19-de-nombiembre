@@ -139,7 +139,7 @@ con línea de tiempo, tablas y gráficos de Twitch, Kick, YouTube, Google Trends
       filtro automático (título sin hashtags, tema de videojuegos, `excluir_palabras`) se queda
       siempre; nada se borra de `datos/`. Ejemplo: Short `_LVLtceZy3I` ("Lamine Yamal x GTA 6",
       IA): pasa porque el título nombra GTA 6 y YouTube le puso temas de videojuegos. Solo Bruno
-      lo usa: panel en su PC (no hace falta repo nuevo: en el público solo él escribe). Falta:
+      lo usa: panel **solo en su PC**, sin celular (decidido 18 nov; no hace falta repo nuevo: en el público solo él escribe). Falta:
       dónde se guardan, si la lista puede ser pública (la página la necesita) y
       cómo se ve el selector (con capturas).
 - [ ] **API alfa de Google Trends** (idea de Bruno, 2026-11-16; para después, sin apuro). Google
