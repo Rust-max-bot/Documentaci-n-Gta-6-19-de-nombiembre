@@ -38,22 +38,11 @@ primera medición con el cambio; su "+N desde…" empieza ese día.
 `web/version.json` los genera `recolector/generar_web.py`: no se editan a mano ni van a git.
 Desde la nube no se abre `github.io` ni cargan las fotos de YouTube y Twitch (red bloqueada).
 
-**Fase 10, panel de control de videos (18 nov, en curso, sin código):** entrevista hecha y
-plan en `PANEL_VIDEOS.md`; revisado por dos agentes (a favor y en contra) y sus arreglos
-técnicos ya escritos ahí. **Todas las preguntas respondidas** (18 nov): Tendencias usa las
-marcas; `ocultar` se quita; rescatar solo llega a las listas si el video está en la última
-medición; configuración y motivos son perillas separadas; los descartados van en un archivo
-aparte cargado a pedido. Detalle en `PANEL_VIDEOS.md`. **10.1 hecha en la rama
-`panel-videos-10-1`** (pedido de Bruno: en otra rama), **sin unir a `main`**: el video
-`_LVLtceZy3I` ya no sale en ninguna lista ni récord. Se ve en la página cuando Bruno decida
-unirla (al unirla, la página se publica sola). **10.2 hecha en la rama `panel-videos-10-2`**
-(sale de la de la 10.1, también sin unir): panel de videos en forma "Tabla" (`panel_videos.bat`).
-**Publicar solo funciona desde `main`:** falta que Bruno decida cuándo unir las ramas (sugerido:
-después del 19). **10.3 hecha en la rama `panel-videos-10-3`** (sobre la 10.2, sin unir):
-rescatar descartados y configuraciones propias. Unir solo `panel-videos-10-3` trae las tres.
-**10.4 hecha en la rama `panel-videos-10-4`** (sobre la 10.3): selector de videos del
-visitante ("Botón con panel"). **Fase 10 completa; unir solo `panel-videos-10-4` trae todo.**
-Falta que Bruno decida cuándo unirla a `main` (sugerido: después del 19).
+**Fase 10, panel de control de videos: terminada y unida a `main` (18 nov, pedido de Bruno).**
+Las cuatro partes (10.1 marcas, 10.2 panel, 10.3 rescatar y configuraciones, 10.4 selector del
+visitante) están en la página publicada. Para marcar videos: doble clic en `panel_videos.bat`
+(solo en el PC, con `main`). Detalle en `PANEL_VIDEOS.md`. Las ramas `panel-videos-10-1` a
+`-10-4` ya no hacen falta (Bruno puede borrarlas en GitHub).
 
 **Avisos vigentes:**
 - **El 21 nov:** comprobar que la 6.1 se guardó (se lanza sola del 21 al 24 nov).
@@ -76,6 +65,7 @@ lanzamiento (revisión completa y menos alarmas por Google). Antes: 9.12 y más 
 ## Últimos cambios
 
 - 2026-11-17: estado anterior archivado en historial/ESTADO_2026-11-17.md
+- 2026-11-18: Fase 10 unida a `main` (pedido de Bruno). Antes de subir, con `main` al día: `probar_marcas.py`, `probar_selector.py`, `probar_pagina.py` y `probar_panel.py`, todo bien.
 - 2026-11-18: 10.4 (rama `panel-videos-10-4`): selector de videos del visitante en la página ("Botón con panel", Bruno): configuración y motivos, recordados en el navegador; `web/videos-extra.js` solo se carga si hace falta (`datos.js` no crece). Pruebas: `probar_selector.py`, `probar_pagina.py` (Edge y Firefox), `probar_marcas.py`, `probar_panel.py`: todo bien.
 - 2026-11-18: 10.3 (rama `panel-videos-10-3`): el panel muestra los descartados para rescatarlos (la página los deja pasar) y guarda configuraciones propias (nombre, modo, palabras; "Restablecer" = las del filtro automático, decisión de Bruno). Pruebas: `probar_marcas.py`, `probar_panel.py` y `probar_pagina.py`, todo bien. Revisada con `/code-review` y un agente revisor (Sonnet); arreglos hechos.
 - 2026-11-18: 10.2 (rama `panel-videos-10-2`): panel de videos local (`panel_videos.bat`, forma "Tabla" elegida por Bruno): marcar con motivos, "Está bien" (clave `revisados`), deshacer, borrador en el PC y "Publicar" (solo el archivo de marcas, solo desde `main`). `probar_panel.py` y `probar_marcas.py`: todo bien. Revisada con `/security-review`, `/code-review` y un agente revisor (Sonnet); sus arreglos, hechos.
