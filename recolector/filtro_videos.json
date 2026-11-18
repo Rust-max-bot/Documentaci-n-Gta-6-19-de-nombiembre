@@ -1,12 +1,11 @@
 {
   "modo": "estricto",
   "excluir_palabras": ["roblox"],
-  "ocultar": [],
   "ayuda": [
     "Qué videos de YouTube muestra la página (pedido de Bruno, 2026-11-15). No borra nada de datos/: solo decide qué se muestra.",
-    "modo: \"estricto\" = el título, sin contar los hashtags, nombra GTA 6 / GTA VI / Grand Theft Auto VI, y YouTube le puso un tema de videojuegos; \"titulo\" = solo lo del título; \"ninguno\" = todos los videos, como antes del 15 nov.",
+    "modo: \"estricto\" = el título, sin contar los hashtags, nombra GTA 6 / GTA VI / Grand Theft Auto VI, y YouTube le puso un tema de videojuegos; \"titulo\" = solo lo del título; \"ninguno\" = todos los videos, como antes del 15 nov, salvo los marcados en marcas_videos.json.",
     "excluir_palabras: si el título (con hashtags) tiene una de estas palabras, el video no se muestra. Para que vuelvan los de Roblox, quitar \"roblox\".",
-    "ocultar: videos que Bruno no quiere ver, aunque pasen el filtro. Vale el código del video (por ejemplo \"O7kmRo93sUo\") o su enlace de YouTube.",
+    "Para esconder un video suelto que el filtro deja pasar, se marca en recolector/marcas_videos.json (Fase 10, 2026-11-18; antes era la lista 'ocultar', que se quitó).",
     "Se cambia desde la web de GitHub (editar este archivo en main): se nota en la siguiente publicación de la página."
   ]
 }

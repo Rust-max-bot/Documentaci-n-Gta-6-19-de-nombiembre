@@ -174,7 +174,9 @@ Qué toma de cada medición:
   Bruno, 2026-11-15): hasta 20 videos normales y 20 Shorts, con la serie de visitas de cada
   uno. "Global" junta la búsqueda por visitas y la de 4 a 20 minutos. El filtro: título sin
   hashtags que nombra GTA 6, tema de videojuegos según YouTube, sin las palabras de
-  `excluir_palabras` y sin los videos de `ocultar`. Con `"modo": "ninguno"` se muestran todos.
+  `excluir_palabras` y sin los videos que Bruno marcó en `marcas_videos.json` (Fase 10, revisado
+  por `marcas.py`; la lista `ocultar` se quitó el 18 nov). Con `"modo": "ninguno"` solo se
+  quitan los marcados. Las marcas también sacan videos de Tendencias (lista y conteo por región).
 - Noticias: todos los titulares guardados (la página los muestra por páginas de 12).
 
 ## Comprobaciones
