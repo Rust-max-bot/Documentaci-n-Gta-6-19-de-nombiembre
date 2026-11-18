@@ -56,7 +56,7 @@ con línea de tiempo, tablas y gráficos de Twitch, Kick, YouTube, Google Trends
 - [ ] **9.11 Skill de animación y forma de administrarlas** (Bruno, 2026-11-17). (a) **Hecho
       (2026-11-17):** instaladas seis skills de `emilkowalski/skills` (MIT): `prototype`,
       `find-animation-opportunities`, `animate`, `choreograph`, `review-animations` y
-      `animation-performance` (ver `CLAUDE.md`). (b) **Hecho en parte (2026-11-17, tras un debate entre dos agentes):** interruptor `portada` en `ACTIVAS` (pausa el movimiento continuo; con CPU 4× pasa de 19-38 cuadros largos a 0; probar con `?sin-anim=portada`) y fundido de Titulares al cambiar de página o de día. **Después del 22, con la 9.4:** "Personalizar" y "Ver N más" con cortina y la tabla por grupos completa; la Cápsula y el Álbum, cuando haya fotos. **Falta además:** una forma sencilla de decidir qué
+      `animation-performance` (ver `CLAUDE.md`). (b) **Hecho en parte (2026-11-17, tras un debate entre dos agentes):** interruptor `portada` en `ACTIVAS` (pausa el movimiento continuo; con CPU 4× pasa de 19-38 cuadros largos a 0; probar con `?sin-anim=portada`) y fundido de Titulares al cambiar de página o de día. **Después del 22, con la 9.4:** "Personalizar" y "Ver N más" con cortina y la tabla por grupos completa; la Cápsula y el Álbum, cuando haya fotos. Portada optimizada sin quitar movimiento (2026-11-17, ver `ESTADO_ACTUAL.md`). **Falta además:** una forma sencilla de decidir qué
       elementos animan y cuáles no en TODA la página: hoy `web/animaciones.js` (`ACTIVAS`) cubre
       solo lo de la 9.8 y la 9.9. Siguiente paso: inventario con `find-animation-opportunities` y,
       con lo que elija Bruno, sumar el resto a esa tabla. Se puede enlazar con el "Panel de control".

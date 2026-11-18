@@ -186,14 +186,17 @@ body {
 /* Mar (rediseño, 2026-11-17): profundidad, olas cortas de distinto largo que derivan despacio y
    el reflejo del sol (o de la luna) justo debajo de él. */
 .mar {
-  position: absolute; left: 0; right: 0; bottom: 0; height: 24%;
-  background:
-    radial-gradient(ellipse 7% 100% at var(--mar-sol-x) 0, var(--mar-reflejo), transparent 75%),
-    var(--mar-olas) 0 0 / 240px 26px repeat,
-    linear-gradient(var(--mar1), var(--mar2) 45%, var(--mar3));
-  animation: olas-mar 16s linear infinite;
+  position: absolute; left: 0; right: 0; bottom: 0; height: 24%; overflow: hidden;
+  background: linear-gradient(var(--mar1), var(--mar2) 45%, var(--mar3));
 }
-@keyframes olas-mar { to { background-position: 0 0, -240px 0, 0 0; } }
+/* Optimización (2026-11-17): las olas van en su propia capa, 240 px más ancha, y se mueven con
+   transform (la tarjeta gráfica solo la desplaza). Antes se animaba background-position, que obliga a
+   volver a pintar todo el mar en cada cuadro. El reflejo del sol, quieto, va encima. */
+.mar::before { content: ""; position: absolute; top: 0; bottom: 0; left: 0; width: calc(100% + 240px);
+  background: var(--mar-olas) 0 0 / 240px 26px repeat; animation: olas-mar 16s linear infinite; }
+.mar::after { content: ""; position: absolute; inset: 0;
+  background: radial-gradient(ellipse 7% 100% at var(--mar-sol-x) 0, var(--mar-reflejo), transparent 75%); }
+@keyframes olas-mar { to { transform: translateX(-240px); } }
 .escena-26 {
   --mar1: #0db3cf; --mar2: #0a7fae; --mar3: #04365f; --mar-reflejo: rgba(255, 214, 140, .85); --mar-sol-x: calc(68% + min(20vw, 170px));
   --mar-olas: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 240 26'%3E%3Cg fill='none' stroke='%23fff' stroke-linecap='round'%3E%3Cpath stroke-opacity='.42' stroke-width='1.6' d='M8 5h30M120 7h46M190 15h24M62 20h18'/%3E%3Cpath stroke-opacity='.24' stroke-width='1.2' d='M70 11h16M150 21h30M14 16h12M210 4h20'/%3E%3C/g%3E%3C/svg%3E");
@@ -523,9 +526,23 @@ td a:hover, td a:focus-visible { color: var(--a1); text-decoration-color: var(--
 .nt-ver[hidden] { display: none; }
 /* Interruptor "portada" de web/animaciones.js (9.11 b): pausa el movimiento continuo de la portada.
    Las torres que suben al cambiar de estilo y la cortina no se tocan. */
-:root.sin-anim-portada :is(.estrellas, .sol80, .sol26, .nube, .aves, .mar, .palma),
-:root.sin-anim-portada .calle-playa::after,
+:root.sin-anim-portada :is(.estrellas, .sol80, .sol26, .nube, .aves, .palma),
+:root.sin-anim-portada .mar::before, :root.sin-anim-portada .calle-playa::after,
 :root.sin-anim-portada[data-tema="ochenta"] h1 { animation-play-state: paused !important; }
+/* Optimización de la portada (2026-11-17, medida con CPU 4x): sin quitar nada de lo que se ve,
+   (1) la escena del otro estilo (opacidad 0) ya no se anima: antes seguía moviéndose sin verse;
+   (2) cuando la portada sale de la pantalla (.portada-fuera, lo pone animaciones.js), su movimiento se pausa;
+   (3) palmeras y espuma en su propia capa: girar o desplazar un dibujo grande se repintaba cada cuadro.
+   Las torres que suben o bajan al cambiar de estilo no están en estas listas: siguen igual. */
+:root[data-tema="ochenta"] .escena-26 :is(.estrellas, .sol26, .nube, .aves, .palma),
+:root[data-tema="ochenta"] .escena-26 .mar::before,
+:root[data-tema="ochenta"] .escena-26 .calle-playa::after,
+:root[data-tema="actual"] .escena-80 :is(.estrellas, .sol80, .palma),
+:root[data-tema="actual"] .escena-80 .calle-playa::after,
+:root.portada-fuera :is(.estrellas, .sol80, .sol26, .nube, .aves, .palma),
+:root.portada-fuera .mar::before, :root.portada-fuera .calle-playa::after,
+:root.portada-fuera[data-tema="ochenta"] h1 { animation-play-state: paused; }
+.palma, .calle-playa::after { will-change: transform; }
 /* Lista completa de titulares: se abre y cierra con una cortina (9.9, opción A). Sin display:none para poder
    animar: cerrada no ocupa lugar (0fr), no se ve y no se puede enfocar (visibility). Se puede interrumpir. */
 .despliegue { display: grid; grid-template-rows: 0fr; opacity: 0; transform: translateY(-8px); visibility: hidden;
@@ -845,9 +862,13 @@ td a:hover, td a:focus-visible { color: var(--a1); text-decoration-color: var(--
 .en-vivo { margin: 0 0 12px; text-align: center; font-size: 13px; font-weight: 700; letter-spacing: .06em; }
 .en-vivo span, .en-vivo button { display: inline-flex; align-items: center; gap: 8px; padding: 6px 14px; border-radius: 999px; background: var(--panel); box-shadow: var(--sombra); color: var(--texto); font: inherit; letter-spacing: inherit; border: 0; }
 .en-vivo button { cursor: pointer; outline: 2px solid var(--a1); }
-.en-vivo i { width: 8px; height: 8px; border-radius: 50%; background: #2bd96b; box-shadow: 0 0 0 0 rgba(43, 217, 107, .6); animation: latido 2s infinite; }
-@keyframes latido { 70% { box-shadow: 0 0 0 8px rgba(43, 217, 107, 0); } 100% { box-shadow: 0 0 0 0 rgba(43, 217, 107, 0); } }
-@media (prefers-reduced-motion: reduce) { .en-vivo i { animation: none; } }
+.en-vivo i { position: relative; width: 8px; height: 8px; border-radius: 50%; background: #2bd96b; }
+/* El latido es un anillo que crece y se desvanece (transform y opacity: solo lo mueve la tarjeta gráfica).
+   Optimización (2026-11-17): antes se animaba box-shadow, que obligaba a repintar en cada cuadro; medido con
+   CPU 4x, ese puntito solo causaba ~95 de ~180 cuadros largos en 3 s. Se ve igual. */
+.en-vivo i::after { content: ""; position: absolute; inset: 0; border-radius: 50%; background: rgba(43, 217, 107, .6); animation: latido 2s ease-out infinite; }
+@keyframes latido { 0% { transform: scale(1); opacity: 1; } 70%, 100% { transform: scale(3); opacity: 0; } }
+@media (prefers-reduced-motion: reduce) { .en-vivo i::after { animation: none; opacity: 0; } }
 
 /* ---------- Menú de secciones: botón flotante abajo a la derecha (opción B, 2026-11-14) ---------- */
 section[id], .bloque { scroll-margin-top: 16px; }

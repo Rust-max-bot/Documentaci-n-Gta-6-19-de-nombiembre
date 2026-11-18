@@ -26,6 +26,14 @@
   };
   var PRUEBA = /[?&]sin-anim=portada(?:&|$)/.test(location.search);
   document.documentElement.classList.toggle("sin-anim-portada", !ACTIVAS.portada || PRUEBA);
+  // Optimización (2026-11-17): cuando la portada sale de la pantalla, su movimiento se pausa (estilos.css,
+  // ".portada-fuera"); vuelve al subir. Nadie lo ve y así no gasta mientras se leen las secciones de abajo.
+  var portada = document.querySelector(".portada");
+  if (portada && "IntersectionObserver" in window) {
+    new IntersectionObserver(function (e) {
+      document.documentElement.classList.toggle("portada-fuera", !e[e.length - 1].isIntersecting);
+    }).observe(portada);
+  }
   var QUIETO = window.matchMedia("(prefers-reduced-motion: reduce)");
   var EASE = "cubic-bezier(.2,.8,.2,1)";
 
