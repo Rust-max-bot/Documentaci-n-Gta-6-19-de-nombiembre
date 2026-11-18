@@ -137,6 +137,10 @@ con línea de tiempo, tablas y gráficos de Twitch, Kick, YouTube, Google Trends
         él escribe). Abre con los videos nuevos sin revisar; deja ver y filtrar los que ya salen
         y también **los que el filtro automático descartó**, para rescatarlos (p. ej. los que
         solo nombran GTA 6 en hashtags). Toda marca se puede deshacer. Nada se borra de `datos/`.
+      - **Cómo funciona:** doble clic en un `.bat` (como `ver_pagina.bat`) abre el panel en el
+        navegador, solo en el PC. Al abrir hace `git pull`; "Publicar" guarda las marcas en un
+        archivo propio de `recolector/`, hace commit, `pull --rebase` y push (no choca con
+        `datos/`). Por internet, descartado (Bruno, 18 nov): habría que protegerlo con su cuenta.
       - Marcas con uno o varios **motivos**: "no trata de GTA", "hecho con IA", "dudoso".
       - **Configuraciones guardadas:** "desde cero" (sin filtro), "filtro automático" (el de hoy:
         título sin hashtags, tema de videojuegos, sin "roblox") y "el de Rust" (el automático
@@ -148,7 +152,7 @@ con línea de tiempo, tablas y gráficos de Twitch, Kick, YouTube, Google Trends
         navegador recuerda la elección). La lista de marcas es pública (la página la necesita).
       - Ejemplo: Short `_LVLtceZy3I` ("Lamine Yamal x GTA 6", IA) pasa el filtro automático
         porque el título nombra GTA 6 y YouTube le puso temas de videojuegos.
-      Falta: dónde se guardan las marcas y cómo se ve el selector (opciones con capturas).
+      Falta: cómo se ve el selector (opciones con capturas).
 - [ ] **API alfa de Google Trends** (idea de Bruno, 2026-11-16; para después, sin apuro). Google
       abrió una prueba alfa de una API oficial de Trends (developers.google.com/search/apis/trends):
       se pide con un formulario y solo la dan a un grupo limitado; no se sabe si aceptarán a Bruno.
