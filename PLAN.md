@@ -131,11 +131,10 @@ que diga se comprueba de verdad antes de aceptarlo o descartarlo. Diseño: `impe
 de mostrar opciones. Al final de cada tanda, una **lista corta de comprobaciones visibles**
 para que Bruno las haga él (por ejemplo: marcar un video, "Publicar" y ver que desaparece).
 
-- **Hechas el 18 nov (sin unir a `main`):** 10.1 marcas en la página, 10.2 panel para marcar y
-  publicar (forma "Tabla") y 10.3 rescatar y configuraciones propias (nombre + modo + palabras;
-  "Restablecer" = las del filtro automático). Ramas encadenadas: unir `panel-videos-10-3` trae
-  las tres; "Publicar" solo funciona desde `main`. Detalle en `PANEL_VIDEOS.md`.
-- [ ] **10.4 Selector del visitante** (antes, opciones con capturas).
+- **Hechas el 18 nov, las cuatro (sin unir a `main`):** 10.1 marcas, 10.2 panel ("Tabla"), 10.3
+  rescatar y configuraciones propias, 10.4 selector del visitante ("Botón con panel"; rescates en
+  "el de Rust" y las propias). Unir `panel-videos-10-4` trae todo; "Publicar" del panel solo
+  funciona desde `main`. Detalle en `PANEL_VIDEOS.md`.
 
 ### Ideas para después, sin fecha
 
@@ -192,7 +191,7 @@ No se empieza hasta que Bruno avise con una confirmación oficial de la versión
   `datos/trends_previa/`); 6.9 quitar Reddit (para volver, `git revert`).
 - **Fase 7:** 7.2, 7.3 y 7.5 a 7.12. **Fase 9:** 9.1, 9.5 a 9.10 y 9.12; tres horas cero con aviso
   de cada salida (C); Kick en "GTA frente a lo más visto" (fuente `kick_ranking`, 18 nov).
-- **Fase 10:** 10.1 a 10.3 (en ramas, sin unir; falta 10.4).
+- **Fase 10:** 10.1 a 10.4 (en ramas encadenadas, sin unir a `main`).
 - **Herramientas:** Graphify y sincronización del PC con GitHub (`sincronizar_datos.ps1`).
 - Descartado por Bruno: app en el celular; Cloudflare Radar; redes de descarga de PlayStation y
   Xbox; la 9.2 "¿Cuánta gente faltó?"; "qué tan popular es GTA 6 en YouTube".

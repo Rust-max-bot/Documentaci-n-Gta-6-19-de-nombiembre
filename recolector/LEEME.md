@@ -178,6 +178,8 @@ Qué toma de cada medición:
   por `marcas.py`; la lista `ocultar` se quitó el 18 nov). Con `"modo": "ninguno"` solo se
   quitan los marcados. Las marcas también sacan videos de Tendencias (lista y conteo por región).
 - Noticias: todos los titulares guardados (la página los muestra por páginas de 12).
+- `web/videos-extra.js` (Fase 10, 10.4): lo que necesita el selector de videos del visitante;
+  la página solo lo carga si el visitante elige otra cosa que "el de Rust". No va a git.
 
 ## Comprobaciones
 

@@ -48,9 +48,9 @@
     "semantic_hash": ""
   },
   "ESTADO_ACTUAL.md": {
-    "mtime": 1795036086.8943393,
-    "seen": 1795036221.4864378,
-    "ast_hash": "6bb763c58dbd340d0e5bec3eef3c1708",
+    "mtime": 1795038460.7252977,
+    "seen": 1795038770.4219966,
+    "ast_hash": "b36f02243707ddbba1e66f3e02064542",
     "semantic_hash": ""
   },
   "GUIA_CLAVES.md": {
@@ -60,9 +60,9 @@
     "semantic_hash": ""
   },
   "PLAN.md": {
-    "mtime": 1795036086.8923233,
-    "seen": 1795036221.486443,
-    "ast_hash": "42adb92d234ce3b5f6a3db5df08f71ee",
+    "mtime": 1795038473.610714,
+    "seen": 1795038770.4220064,
+    "ast_hash": "e98cd900b8e5f6a0bac81bf1fbc1fddc",
     "semantic_hash": ""
   },
   "README.md": {
@@ -72,9 +72,9 @@
     "semantic_hash": ""
   },
   "web/index.html": {
-    "mtime": 1795010957.4760127,
-    "seen": 1795032230.5981436,
-    "ast_hash": "0db86d0185b72744de21bc2dd52646a7",
+    "mtime": 1795036704.0762942,
+    "seen": 1795038770.4220462,
+    "ast_hash": "d84c5d93f3f35f12904229d34063adc4",
     "semantic_hash": ""
   },
   ".github/workflows/probar-fuentes.yml": {
@@ -132,15 +132,15 @@
     "semantic_hash": ""
   },
   "recolector/LEEME.md": {
-    "mtime": 1795031741.229851,
-    "seen": 1795032230.5981405,
-    "ast_hash": "5abf0b986104cb03b763fc79de37281c",
+    "mtime": 1795038460.7252977,
+    "seen": 1795038770.4220424,
+    "ast_hash": "1dd1750ab8bd761c19cb82c7eaf3143f",
     "semantic_hash": ""
   },
   "recolector/generar_web.py": {
-    "mtime": 1795035393.7212803,
-    "seen": 1795036221.4864054,
-    "ast_hash": "4de34303699f1d9c707c37ebe1eae727",
+    "mtime": 1795038323.153601,
+    "seen": 1795038770.4219465,
+    "ast_hash": "6a4d241d561e9b82467bc27f382aeb9b",
     "semantic_hash": ""
   },
   "despertador/worker.js": {
@@ -192,9 +192,9 @@
     "semantic_hash": ""
   },
   "pruebas/LEEME.md": {
-    "mtime": 1795034005.258182,
-    "seen": 1795034133.7742786,
-    "ast_hash": "d239c1a09033f6ecae88b716b77457e3",
+    "mtime": 1795038460.7240882,
+    "seen": 1795038770.4220386,
+    "ast_hash": "e56ff0fbdb6d3ae5478d10d8dda856c4",
     "semantic_hash": ""
   },
   "pruebas/requisitos.txt": {
@@ -390,9 +390,9 @@
     "semantic_hash": ""
   },
   "PANEL_VIDEOS.md": {
-    "mtime": 1795036086.8909879,
-    "seen": 1795036221.4864416,
-    "ast_hash": "417a5183f6a8fbe5855b6b3da06c7c67",
+    "mtime": 1795038460.7240882,
+    "seen": 1795038770.4220045,
+    "ast_hash": "a247a1219dcd14c2ca66e82c3d067c36",
     "semantic_hash": ""
   },
   "historial/PLAN_2026-11-18-2.md": {
@@ -435,6 +435,24 @@
     "mtime": 1795035559.8597126,
     "seen": 1795036221.4864616,
     "ast_hash": "1a6ab043bafb1841cd12d4620dc83d8d",
+    "semantic_hash": ""
+  },
+  "pruebas/probar_selector.py": {
+    "mtime": 1795038612.5600462,
+    "seen": 1795038770.4219375,
+    "ast_hash": "732edfa88015055fa5ac64371c8fdd11",
+    "semantic_hash": ""
+  },
+  "web/filtro-videos.js": {
+    "mtime": 1795038591.6912892,
+    "seen": 1795038770.4219863,
+    "ast_hash": "16e4cead26352fbeb56fcc25f8f69fcb",
+    "semantic_hash": ""
+  },
+  "historial/PLAN_2026-11-18-3.md": {
+    "mtime": 1795036086.8923233,
+    "seen": 1795038770.422025,
+    "ast_hash": "42adb92d234ce3b5f6a3db5df08f71ee",
     "semantic_hash": ""
   }
 }

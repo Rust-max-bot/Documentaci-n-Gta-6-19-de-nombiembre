@@ -51,7 +51,9 @@ unirla (al unirla, la página se publica sola). **10.2 hecha en la rama `panel-v
 **Publicar solo funciona desde `main`:** falta que Bruno decida cuándo unir las ramas (sugerido:
 después del 19). **10.3 hecha en la rama `panel-videos-10-3`** (sobre la 10.2, sin unir):
 rescatar descartados y configuraciones propias. Unir solo `panel-videos-10-3` trae las tres.
-Siguiente: 10.4 (selector del visitante, antes opciones con capturas), cuando Bruno la pida.
+**10.4 hecha en la rama `panel-videos-10-4`** (sobre la 10.3): selector de videos del
+visitante ("Botón con panel"). **Fase 10 completa; unir solo `panel-videos-10-4` trae todo.**
+Falta que Bruno decida cuándo unirla a `main` (sugerido: después del 19).
 
 **Avisos vigentes:**
 - **El 21 nov:** comprobar que la 6.1 se guardó (se lanza sola del 21 al 24 nov).
@@ -74,6 +76,7 @@ lanzamiento (revisión completa y menos alarmas por Google). Antes: 9.12 y más 
 ## Últimos cambios
 
 - 2026-11-17: estado anterior archivado en historial/ESTADO_2026-11-17.md
+- 2026-11-18: 10.4 (rama `panel-videos-10-4`): selector de videos del visitante en la página ("Botón con panel", Bruno): configuración y motivos, recordados en el navegador; `web/videos-extra.js` solo se carga si hace falta (`datos.js` no crece). Pruebas: `probar_selector.py`, `probar_pagina.py` (Edge y Firefox), `probar_marcas.py`, `probar_panel.py`: todo bien.
 - 2026-11-18: 10.3 (rama `panel-videos-10-3`): el panel muestra los descartados para rescatarlos (la página los deja pasar) y guarda configuraciones propias (nombre, modo, palabras; "Restablecer" = las del filtro automático, decisión de Bruno). Pruebas: `probar_marcas.py`, `probar_panel.py` y `probar_pagina.py`, todo bien. Revisada con `/code-review` y un agente revisor (Sonnet); arreglos hechos.
 - 2026-11-18: 10.2 (rama `panel-videos-10-2`): panel de videos local (`panel_videos.bat`, forma "Tabla" elegida por Bruno): marcar con motivos, "Está bien" (clave `revisados`), deshacer, borrador en el PC y "Publicar" (solo el archivo de marcas, solo desde `main`). `probar_panel.py` y `probar_marcas.py`: todo bien. Revisada con `/security-review`, `/code-review` y un agente revisor (Sonnet); sus arreglos, hechos.
 - 2026-11-18: 10.1 (rama `panel-videos-10-1`): marcas de videos en `recolector/marcas_videos.json`, validadas por `recolector/marcas.py`; `generar_web.py` saca los marcados de Global, Español, récords y Tendencias; `ocultar` quitada. Prueba nueva `pruebas/probar_marcas.py` (todo bien) y `probar_pagina.py` a 1280 y 384 px en los dos estilos (todo bien). Revisada con `/code-review` y un agente revisor (Sonnet); sus arreglos, hechos.

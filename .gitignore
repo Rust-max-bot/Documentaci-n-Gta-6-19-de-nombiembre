@@ -30,6 +30,7 @@ pruebas/capturas/
 # Graphify: guarda la ruta de la carpeta del PC (scan_root); el repositorio es público
 graphify-out/.graphify_build_state.json
 web/version.json
+web/videos-extra.js
 web/dias/
 
 # Panel de videos (Fase 10): el borrador de marcas sin publicar se queda en el PC

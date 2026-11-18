@@ -22,6 +22,7 @@ siguen guardando en datos/ (no se borra nada), pero aquí se ignora. La página 
   saber si hay datos nuevos, en vez de bajar datos.js entero.
 """
 import hashlib
+import itertools
 import json
 import os
 import re
@@ -37,6 +38,7 @@ DATOS = RAIZ / "datos"
 SALIDA = RAIZ / "web" / "datos.js"
 DIAS = RAIZ / "web" / "dias"
 VERSION = RAIZ / "web" / "version.json"
+EXTRA = RAIZ / "web" / "videos-extra.js"   # selector del visitante (10.4): se carga solo si hace falta
 ALBUM = RAIZ / "web" / "album"
 # Álbum de momentos (tarea 7.7): Bruno sube capturas a web/album/ con nombres como
 # "2026-11-19 02-10 Se caen los servidores.jpg" (hora de Santiago). El nombre es todo lo que
@@ -77,7 +79,8 @@ def leer_filtro(conocidos):
     for codigo in marcas.desconocidos(list(todo["marcados"]) + list(todo["rescatados"]), conocidos):
         print(f"AVISO: {marcas.ARCHIVO.name}: el video {codigo!r} no aparece en las búsquedas de YouTube de estas mediciones: no cambia nada (¿código mal copiado?)")
     return {"modo": f["modo"], "palabras": [x.strip().lower() for x in palabras],
-            "marcados": set(todo["marcados"]), "rescatados": set(todo["rescatados"])}
+            "marcados": set(todo["marcados"]), "rescatados": set(todo["rescatados"]),
+            "_todo": todo}   # lo leído y validado, para videos_extra() (no se lee dos veces)
 
 
 def gta_visibles(region, filtro):
@@ -91,6 +94,18 @@ def pasa_filtro(v, filtro):
         return False
     if v["id"] in filtro.get("rescatados", ()):   # 10.3: los que Bruno rescató se muestran aunque el filtro no los deje
         return True
+    # El resto solo depende del registro del video y del modo/palabras: videos_extra() lo guarda
+    # (por objeto, no por código: Global y Español traen registros distintos del mismo video).
+    cache = filtro.get("_cache")
+    if cache is None:
+        return pasa_filtro_base(v, filtro)
+    k = id(v)
+    if k not in cache:
+        cache[k] = pasa_filtro_base(v, filtro)
+    return cache[k]
+
+
+def pasa_filtro_base(v, filtro):
     titulo = v.get("titulo", "")
     if any(p in titulo.lower() for p in filtro["palabras"]):
         return False
@@ -141,6 +156,83 @@ def records_videos(medidas, ultimos, filtro):
             else:
                 lista.append({"t": m["t"], "id": v["id"], "titulo": u["titulo"], "visitas": v["visitas"]})
     return h
+
+
+# Todas las combinaciones de motivos que el visitante puede ocultar (con 3 motivos, 8).
+COMBOS = [tuple(c) for n in range(len(marcas.MOTIVOS) + 1) for c in itertools.combinations(sorted(marcas.MOTIVOS), n)]
+
+
+def configuraciones_visitante(filtro, todo):
+    """Las configuraciones que puede elegir el visitante (10.4): las tres fijas y las propias de
+    Bruno. Los rescates valen en "el de Rust" y en las propias, no en "filtro automático" (que
+    queda puro) ni hacen falta en "desde cero" (Bruno, 2026-11-18)."""
+    resc = set(todo["rescatados"])
+    confs = {
+        "desde-cero": {"nombre": marcas.FIJAS["desde-cero"], "modo": "ninguno", "palabras": [], "rescatados": set()},
+        "automatico": {"nombre": marcas.FIJAS["automatico"], "modo": filtro["modo"], "palabras": filtro["palabras"], "rescatados": set()},
+        "rust": {"nombre": marcas.FIJAS["rust"], "modo": filtro["modo"], "palabras": filtro["palabras"], "rescatados": resc},
+    }
+    for k, c in todo["configuraciones"].items():
+        confs[k] = {"nombre": c["nombre"], "modo": c["modo"], "palabras": [p.strip().lower() for p in c["excluir_palabras"]],
+                    "rescatados": resc}
+    # El texto que ve el visitante en el selector.
+    confs["desde-cero"]["desc"] = "Todos los videos que trae YouTube, sin filtro."
+    # Se arma con el filtro de verdad (si Bruno cambia filtro_videos.json, el texto cambia solo).
+    que = {"estricto": "Solo los que nombran GTA 6 en el título y YouTube marca como videojuegos",
+           "titulo": "Solo los que nombran GTA 6 en el título", "ninguno": "Todos los videos"}[filtro["modo"]]
+    confs["automatico"]["desc"] = que + (", sin los que dicen " + ", ".join(filtro["palabras"]) if filtro["palabras"] else "") + "."
+    confs["rust"]["desc"] = "El automático, corregido a mano por Rust (videos rescatados y marcados)."
+    modos = {"estricto": "GTA 6 en el título y tema de videojuegos", "titulo": "GTA 6 en el título", "ninguno": "sin filtro"}
+    for k in todo["configuraciones"]:
+        c = confs[k]
+        c["desc"] = "Configuración de Rust: " + modos[c["modo"]] + (", sin " + ", ".join(c["palabras"]) if c["palabras"] else "") + ", con sus rescates."
+    return confs
+
+
+def videos_extra(medidas, pools, ultimos, ultimo_video, filtro, ya=None):
+    """Lo que necesita el selector del visitante (10.4), en web/videos-extra.js, que la página solo
+    carga si el visitante elige otra cosa que "el de Rust" con los tres motivos ocultos (así
+    datos.js no crece). pools: {"global": [...], "es": [...]}, los candidatos de la última medición
+    ya armados como en datos.js. ultimos: {"global": ultimo_video, "es": ultimo_es}: cada lista se
+    filtra con su propio registro del video (Global y Español pueden traer temas distintos). Para no repetir la lógica del filtro en la
+    página, aquí se calcula qué videos pasa cada configuración y los récords de cada combinación."""
+    todo = filtro["_todo"]
+    motivos_de = todo["marcados"]
+    confs = configuraciones_visitante(filtro, todo)
+    pasa, records = {}, {}
+    for k, c in confs.items():
+        base = {"modo": c["modo"], "palabras": c["palabras"], "marcados": set(), "rescatados": c["rescatados"], "_cache": {}}
+        pasa[k] = {n: [v["id"] for v in lista if pasa_filtro(ultimos[n][v["id"]], base)] for n, lista in pools.items()}
+        records[k] = {}
+        for combo in COMBOS:
+            f = dict(base, marcados={i for i, ms in motivos_de.items() if set(ms) & set(combo)})
+            records[k][",".join(combo)] = records_videos(medidas, ultimo_video, f)
+    # Tendencias: los marcados que sí estaban en la lista, por medición y región, con sus motivos.
+    tend_hist, tend_ultima = [], {}
+    ult_yt = next((m for m in reversed(medidas) if "error" not in m.get("youtube_tendencias", {"error": 1})), None)
+    for i, m in enumerate(medidas):
+        yt = m.get("youtube_tendencias") or {}
+        if "error" in yt or not yt.get("regiones"):
+            continue
+        por_region = {r: [motivos_de[v["id"]] for v in d["gta"] if v["id"] in motivos_de] for r, d in yt["regiones"].items()}
+        por_region = {r: x for r, x in por_region.items() if x}
+        if por_region:
+            tend_hist.append([i, por_region])
+        if m is ult_yt:
+            tend_ultima = {r: [dict(v, motivos=motivos_de[v["id"]]) for v in d["gta"] if v["id"] in motivos_de]
+                           for r, d in yt["regiones"].items()}
+    return {
+        "confs": {k: {"nombre": c["nombre"], "desc": c["desc"], "propia": k not in marcas.FIJAS} for k, c in confs.items()},
+        "motivos": marcas.MOTIVOS,
+        # La serie de visitas solo va si datos.js no la trae ya (la página la toma de ahí): pesa la mitad.
+        "pools": {n: [{k: (serie_corta(x) if k == "serie" else x) for k, x in v.items()
+                       if not (k == "serie" and v["id"] in (ya or {}).get(n, ()))} for v in lista] for n, lista in pools.items()},
+        "pasa": pasa,
+        "marcados": motivos_de,
+        "records": records,
+        "tendencias": {"historial": tend_hist, "ultima": tend_ultima},
+        "videos_por_tipo": VIDEOS,
+    }
 
 
 def abortar(mensaje):
@@ -221,10 +313,11 @@ def videos_conocidos(medidas):
     return ids
 
 
-def convertir(medidas, marcados=None, rescatados=None):
+def convertir(medidas, marcados=None, rescatados=None, extra=False):
     """marcados y rescatados: solo para el panel de videos (10.2 y 10.3), que necesita ver la
     página "como si" fueran otros. None = los de recolector/marcas_videos.json."""
     filtro = leer_filtro(videos_conocidos(medidas))
+    # extra=True (solo main): arma también web/videos-extra.js para el selector del visitante (10.4).
     if marcados is not None:
         filtro["marcados"] = set(marcados)
     if rescatados is not None:
@@ -342,6 +435,18 @@ def convertir(medidas, marcados=None, rescatados=None):
     } for v in elegir_videos([v for v in ultima_es if re.match(r"es\b", ultimo_es.get(v["id"], {}).get("idioma") or "", re.I)],
                              ultimo_es, series_es, filtro)]
 
+    resultado_extra = None
+    if extra:
+        def armado(v, ult, ser):
+            u = ult[v["id"]]
+            return {"id": v["id"], "titulo": u["titulo"], "canal": u["canal"], "miniatura": u.get("miniatura", ""),
+                    **({"idioma": u.get("idioma")} if ult is ultimo_es else {}), **marca_short(u), "serie": ser[v["id"]]}
+        pool_es = [v for v in ultima_es if re.match(r"es\b", ultimo_es.get(v["id"], {}).get("idioma") or "", re.I) and v["id"] in series_es]
+        pools = {"global": [armado(v, ultimo_video, series) for v in ultima_yt if v["id"] in series],
+                 "es": [armado(v, ultimo_es, series_es) for v in pool_es]}
+        resultado_extra = videos_extra(medidas, pools, {"global": ultimo_video, "es": ultimo_es}, ultimo_video, filtro,
+                                       ya={"global": {v["id"] for v in youtube}, "es": {v["id"] for v in youtube_es}})
+
     noticias.sort(key=lambda n: n["t"])
     trends_horas = (serie_trends(horas, hora_de_medicion(medidas[0]["t"]), hora_de_medicion(medidas[-1]["t"]))
                     if medidas else [])
@@ -353,7 +458,7 @@ def convertir(medidas, marcados=None, rescatados=None):
             if str(c.get("foto") or "").startswith("https://files.kick.com/"):
                 fotos_kick[c["canal"]] = c["foto"]
     return {"mediciones": mediciones, "fotos_kick": fotos_kick, "trends_horas": trends_horas, "youtube": youtube, "youtube_es": youtube_es, "noticias": noticias,
-            "records_youtube": records_youtube,
+            "records_youtube": records_youtube, **({"_extra": resultado_extra} if extra else {}),
             "comparacion": comparacion,
             "trailers": sorted(trailers.values(), key=lambda v: v.get("publicado") or "")}   # todos: la página los muestra por páginas (Bruno, 2026-11-13)
 
@@ -483,6 +588,38 @@ def comprobar(d, medidas):
             abortar(f"la serie del video {v['id']} está desordenada")
 
 
+def elegir_con_extra(extra, conf, combo):
+    """Lo mismo que hará la página (web/filtro-videos.js) con videos-extra.js: qué videos ve el
+    visitante con una configuración y unos motivos ocultos. Se usa para comprobar que la elección
+    por defecto da exactamente lo de datos.js."""
+    ocultos = set(combo)
+    salida = {}
+    for n, lista in extra["pools"].items():
+        pasa = set(extra["pasa"][conf][n])
+        sel = [v for v in lista if v["id"] in pasa and not (set(extra["marcados"].get(v["id"], ())) & ocultos)]
+        normales = [v for v in sel if v.get("short") is not True][:extra["videos_por_tipo"]]
+        shorts = [v for v in sel if v.get("short") is True][:extra["videos_por_tipo"]]
+        salida[n] = [v["id"] for v in normales + shorts]
+    return salida
+
+
+def comprobar_extra(extra, d):
+    """La elección por defecto ("el de Rust", los tres motivos ocultos) debe dar lo mismo que
+    datos.js; si no, la lógica del selector no cuadra y mejor no publicar."""
+    todos = ",".join(sorted(marcas.MOTIVOS))
+    e = elegir_con_extra(extra, "rust", todos.split(","))
+    if e["global"] != [v["id"] for v in d["youtube"]] or e["es"] != [v["id"] for v in d["youtube_es"]]:
+        abortar("videos-extra.js: 'el de Rust' con los tres motivos ocultos no da las mismas listas que datos.js")
+    if set(extra["records"]["rust"]) != {",".join(c) for c in COMBOS}:
+        abortar("videos-extra.js: faltan combinaciones de motivos en los récords")
+    for i, por_region in extra["tendencias"]["historial"]:
+        t = d["mediciones"][i].get("tendencias") if i < len(d["mediciones"]) else None
+        if not isinstance(t, dict) or "error" in t or any(r not in t for r in por_region):
+            abortar(f"videos-extra.js: la medición {i} de Tendencias no cuadra con datos.js")
+    if extra["records"]["rust"][todos] != d["records_youtube"]:
+        abortar("videos-extra.js: 'el de Rust' con los tres motivos ocultos no da los mismos récords que datos.js")
+
+
 def main():
     if hasattr(sys.stdout, "reconfigure"):
         sys.stdout.reconfigure(encoding="utf-8")
@@ -490,8 +627,14 @@ def main():
     medidas = leer_mediciones(carpeta)
     if not medidas:
         abortar(f"no hay mediciones en {carpeta}")
-    d = convertir(medidas)
+    d = convertir(medidas, extra=True)
+    extra = d.pop("_extra")
+    # Lo poco que el selector necesita al abrir (nombres de las configuraciones y de los motivos);
+    # el resto va en web/videos-extra.js, que solo se carga si el visitante cambia la elección.
+    d["filtro_videos"] = {"confs": {k: {"nombre": c["nombre"], "desc": c["desc"]} for k, c in extra["confs"].items()},
+                          "motivos": extra["motivos"]}
     comprobar(d, medidas)
+    comprobar_extra(extra, d)
     archivos = separar_por_dias(d)
     d["album"] = leer_album()
     d["trends_extra"] = leer_trends_extra(carpeta)
@@ -507,13 +650,20 @@ def main():
     for viejo in DIAS.glob("*.js"):
         if viejo.stem not in archivos:   # un día que ya no existe (por ejemplo, otra carpeta de datos)
             viejo.unlink()
+    extra["generado"] = d["generado"]
+    texto_extra = ("/* DATOS REALES para el selector de videos del visitante (Fase 10, tarea 10.4), generados por\n"
+                   "   recolector/generar_web.py. La página solo lo carga si el visitante cambia la elección.\n"
+                   "   No editar a mano ni subir a git. */\n"
+                   "window.VIDEOS_EXTRA = " + json.dumps(extra, ensure_ascii=False, separators=(",", ":")) + ";\n")
+    escribir(EXTRA, texto_extra)
     escribir(SALIDA, texto)
     escribir(VERSION, json.dumps({"generado": d["generado"]}) + "\n")
     peso_dias = sum(len(t.encode("utf-8")) for t in archivos.values())
     print(f"web/datos.js listo: {len(d['mediciones'])} mediciones (de {medidas[0]['t']} a {medidas[-1]['t']} UTC), "
           f"{len(d['youtube'])} videos, {len(d['noticias_t'])} titulares, "
           f"{len(texto.encode('utf-8')) // 1024} KB; "
-          f"{len(archivos)} días en web/dias/ ({peso_dias // 1024} KB, se cargan solo si hacen falta).")
+          f"{len(archivos)} días en web/dias/ ({peso_dias // 1024} KB, se cargan solo si hacen falta); "
+          f"web/videos-extra.js {len(texto_extra.encode('utf-8')) // 1024} KB (solo si el visitante cambia el filtro).")
 
 
 if __name__ == "__main__":
