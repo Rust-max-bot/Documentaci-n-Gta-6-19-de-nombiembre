@@ -70,8 +70,13 @@ los descartados (186 mediciones, 701 videos distintos al 18 nov). Las listas sal
 en una hora" y el resumen del día se calculan en el navegador con lo que llega en `datos.js`
 (358 KB hoy, ~108 KB de YouTube).
 
-**Por decidir con Bruno** (antes de la 10.1): si Tendencias se filtra (los tráilers no: son
-oficiales); qué pasa con `ocultar`; el límite de rescatar (solo videos de la última medición
+**Decidido (Bruno, 18 nov): Tendencias también usa las marcas** (los tráilers no: son
+oficiales). Como la marca va en el código del video, vale en la lista donde salga: un video
+puede estar en Global y no en Tendencias, o al revés, así que el panel debe mostrar también los
+de Tendencias para poder marcarlos. Ojo al construirlo: Tendencias guarda conteos por región en
+el historial; si filtrar cambia esos conteos, hay que recalcularlos (revisar en la 10.1).
+
+**Por decidir con Bruno** (antes de la 10.1): qué pasa con `ocultar`; el límite de rescatar (solo videos de la última medición
 para las listas; del historial, solo para récords); qué es exactamente cada configuración (¿las
 marcas valen en "desde cero"?); y cómo no inflar `datos.js` con el selector del visitante.
 
