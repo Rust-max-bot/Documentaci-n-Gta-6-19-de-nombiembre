@@ -112,6 +112,25 @@ el historial; si filtrar cambia esos conteos, hay que recalcularlos (revisar en 
    deshacer y "Publicar" (con su plan de contingencia), sobre los videos que hoy pasan el
    filtro. Antes, opciones del aspecto del panel con capturas. Al terminar: Bruno clasifica
    sin tocar archivos.
+   **Hecha (18 nov, rama `panel-videos-10-2`, sobre la de la 10.1):** forma **"Tabla"**
+   (elegida por Bruno entre Tabla, Galería y Uno a uno). `panel_videos.bat` → `panel/servidor.py`
+   (clave al azar, solo 127.0.0.1, Host/Origin/JSON); `panel/lista.py` (la lista);
+   `panel/publicar.py` (borrador en `panel/borrador.json`, ignorado, y "Publicar"); interfaz en
+   `panel/index.html`, `panel.js`, `panel.css`. Prueba: `pruebas/probar_panel.py` (GitHub falso).
+   - **Decisión de Claude (Bruno puede cambiarla):** "Está bien" se guarda en
+     `marcas_videos.json`, clave `revisados` (la página la ignora; el panel la usa para "sin
+     revisar"). `marcas.py` la valida: un video no puede estar marcado y revisado a la vez.
+   - La lista se "congela" al elegir un filtro: un video marcado no desaparece hasta cambiar de
+     filtro (si no, no se le podía poner un segundo motivo).
+   - "Publicar" se niega fuera de `main`, con otros commits sin subir (también vacíos o merges)
+     o con otros archivos cambiados sin guardar (también el de marcas, si se editó a mano). Tras
+     juntar con GitHub, vuelve a validar. Si el envío falla, el botón pasa a "Subir lo pendiente".
+   - El borrador guarda su "base": si mientras tanto se publicó otra marca, al abrir se juntan
+     por video en vez de pisarla.
+   - Revisada con `/security-review` (sin fallos), `/code-review` y un agente revisor (Sonnet);
+     todos sus arreglos, hechos y con prueba. Queda sin hacer (menor): con `--raiz` (solo lo usan
+     las pruebas) el filtro y las marcas se leen de la carpeta del programa.
+   - **Para publicar de verdad, el PC debe estar en `main`:** hay que unir antes las ramas.
 3. **10.3 Rescatar y configuraciones.** El panel muestra también los descartados (recalculados
    desde `datos/`) para rescatarlos, y guarda configuraciones con sus botones de restablecer.
    Al terminar: "el de Rust" corrige en los dos sentidos.

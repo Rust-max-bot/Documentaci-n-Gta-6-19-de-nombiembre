@@ -218,8 +218,12 @@ def videos_conocidos(medidas):
     return ids
 
 
-def convertir(medidas):
+def convertir(medidas, marcados=None):
+    """marcados: solo para el panel de videos (10.2), que necesita ver la página "como si" las
+    marcas fueran otras. None = las de recolector/marcas_videos.json."""
     filtro = leer_filtro(videos_conocidos(medidas))
+    if marcados is not None:
+        filtro["marcados"] = set(marcados)
     mediciones, series, ultimo_video, vistas, noticias = [], {}, {}, set(), []
     series_es, ultimo_es = {}, {}   # tarea 6.4: videos de la búsqueda en español
     trailers = {}   # tarea 6.2: serie de visitas de cada video oficial, desde el 13 nov

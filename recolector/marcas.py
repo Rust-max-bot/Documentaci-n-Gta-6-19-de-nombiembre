@@ -12,7 +12,11 @@ Esta es la ÚNICA validación de marcas: la usan generar_web.py y, más adelante
 Formato del archivo:
     {"videos": {"<código de 11 letras>": {"motivos": ["no_gta", "ia"], "fecha": "AAAA-MM-DD",
                                            "titulo": "opcional, solo para leerlo"}},
+     "revisados": {"<código>": "AAAA-MM-DD"},
      "ayuda": ["...", ...]}
+
+"revisados" (10.2): videos que Bruno miró en el panel y están bien (sin marca). Solo le sirven
+al panel para el filtro "sin revisar"; la página los ignora. Un video no puede estar en las dos.
 """
 import json
 import re
@@ -29,12 +33,30 @@ MOTIVOS = {
 }
 CODIGO = re.compile(r"^[A-Za-z0-9_-]{11}$")
 FECHA = re.compile(r"^\d{4}-\d{2}-\d{2}$")
-CLAVES_ARCHIVO = {"videos", "ayuda"}
+CLAVES_ARCHIVO = {"videos", "revisados", "ayuda"}
 CLAVES_VIDEO = {"motivos", "fecha", "titulo"}
 
 
 class MarcasMal(ValueError):
     """El archivo de marcas no cuadra. El mensaje dice qué y dónde."""
+
+
+def _fecha(fecha, donde):
+    if not (isinstance(fecha, str) and FECHA.fullmatch(fecha)):
+        raise MarcasMal(f"{donde}: 'fecha' debe ser AAAA-MM-DD (el día en que se marcó)")
+    try:
+        dia = date.fromisoformat(fecha)
+    except ValueError:
+        raise MarcasMal(f"{donde}: la fecha {fecha!r} no existe") from None
+    if dia > date.today() + timedelta(days=1):   # un día de margen por la diferencia con UTC
+        raise MarcasMal(f"{donde}: la fecha {fecha} todavía no llega")
+
+
+def _codigo(codigo, donde, conocidos):
+    if not CODIGO.fullmatch(codigo):
+        raise MarcasMal(f"{donde}: el código de un video de YouTube tiene 11 letras, números, '-' o '_'")
+    if conocidos is not None and codigo not in conocidos:
+        raise MarcasMal(f"{donde}: no aparece en las búsquedas de YouTube de datos/ (¿código mal copiado? Los tráilers oficiales no se marcan)")
 
 
 def validar(datos, conocidos=None):
@@ -57,8 +79,7 @@ def validar(datos, conocidos=None):
     salida = {}
     for codigo, marca in videos.items():
         donde = f"video {codigo!r}"
-        if not CODIGO.fullmatch(codigo):
-            raise MarcasMal(f"{donde}: el código de un video de YouTube tiene 11 letras, números, '-' o '_'")
+        _codigo(codigo, donde, conocidos)
         if not isinstance(marca, dict):
             raise MarcasMal(f"{donde}: la marca debe ser un objeto con 'motivos' y 'fecha'")
         sobra = set(marca) - CLAVES_VIDEO
@@ -72,20 +93,19 @@ def validar(datos, conocidos=None):
                 raise MarcasMal(f"{donde}: motivo desconocido {m!r} (valen: {', '.join(MOTIVOS)})")
         if len(set(motivos)) != len(motivos):
             raise MarcasMal(f"{donde}: un motivo está repetido")
-        fecha = marca.get("fecha")
-        if not (isinstance(fecha, str) and FECHA.fullmatch(fecha)):
-            raise MarcasMal(f"{donde}: 'fecha' debe ser AAAA-MM-DD (el día en que se marcó)")
-        try:
-            dia = date.fromisoformat(fecha)
-        except ValueError:
-            raise MarcasMal(f"{donde}: la fecha {fecha!r} no existe") from None
-        if dia > date.today() + timedelta(days=1):   # un día de margen por la diferencia con UTC
-            raise MarcasMal(f"{donde}: la fecha {fecha} todavía no llega")
+        _fecha(marca.get("fecha"), donde)
         if "titulo" in marca and not isinstance(marca["titulo"], str):
             raise MarcasMal(f"{donde}: 'titulo' debe ser un texto")
-        if conocidos is not None and codigo not in conocidos:
-            raise MarcasMal(f"{donde}: no aparece en las búsquedas de YouTube de datos/ (¿código mal copiado? Los tráilers oficiales no se marcan)")
         salida[codigo] = list(motivos)
+    revisados = datos.get("revisados", {})
+    if not isinstance(revisados, dict):
+        raise MarcasMal("'revisados' debe ser un objeto {código: fecha}")
+    for codigo, fecha in revisados.items():
+        donde = f"revisado {codigo!r}"
+        _codigo(codigo, donde, conocidos)
+        _fecha(fecha, donde)
+        if codigo in salida:
+            raise MarcasMal(f"{donde}: está a la vez marcado y revisado como bien; tiene que ser uno de los dos")
     return salida
 
 
