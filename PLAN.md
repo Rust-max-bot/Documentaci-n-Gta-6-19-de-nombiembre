@@ -130,11 +130,17 @@ con línea de tiempo, tablas y gráficos de Twitch, Kick, YouTube, Google Trends
       cuentan (nota de "Espectadores en Twitch y Kick"). **Para el análisis (4.3), Bruno quiere
       datos lo menos contaminados posible:** Twitch y Kick (por categoría del juego).
 - [ ] **IA barata para filtrar videos** (Bruno, 2026-11-15): que lea título, descripción y
-      etiquetas para decidir si un video es de GTA 6. No Claude, por el costo. Antes, un plan pequeño.
-- [ ] **Panel de control** (Bruno, 2026-11-15, trabajo extra): ajustar la página y marcar cada
-      video como "es de GTA 6" o "no" (va a `ocultar` de `recolector/filtro_videos.json`; nada se
-      borra de `datos/`). Riesgo: la página es pública y sin servidor, un panel en ella lo podría
-      usar cualquiera. Opciones: panel solo en el PC de Bruno, o que guarde en GitHub con su cuenta.
+      etiquetas para decidir si un video es de GTA 6. No Claude, por el costo. Idea (18 nov, para
+      después): Gemini, que puede ver el video. Antes, un plan pequeño.
+- [ ] **Panel de control para clasificar videos** (Bruno, 2026-11-15; entrevista en curso desde el
+      18 nov; después del lanzamiento). Decidido: Bruno marca videos y Shorts con un **motivo**
+      (p. ej. "no es de GTA", "IA de mala calidad") y **el visitante elige qué tipos ver**; el
+      filtro automático (título sin hashtags, tema de videojuegos, `excluir_palabras`) se queda
+      siempre; nada se borra de `datos/`. Ejemplo: Short `_LVLtceZy3I` ("Lamine Yamal x GTA 6",
+      IA): pasa porque el título nombra GTA 6 y YouTube le puso temas de videojuegos. Solo Bruno
+      lo usa: panel en su PC (no hace falta repo nuevo: en el público solo él escribe). Falta:
+      motivos exactos, dónde se guardan, si la lista puede ser pública (la página la necesita) y
+      cómo se ve el selector (con capturas).
 - [ ] **API alfa de Google Trends** (idea de Bruno, 2026-11-16; para después, sin apuro). Google
       abrió una prueba alfa de una API oficial de Trends (developers.google.com/search/apis/trends):
       se pide con un formulario y solo la dan a un grupo limitado; no se sabe si aceptarán a Bruno.
