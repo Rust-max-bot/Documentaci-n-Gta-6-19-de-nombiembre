@@ -370,9 +370,10 @@
     var fallos = M.filter(function (m) { return m.espectadores == null || m.interes == null; }).length;
     var f = [
       ["Máximo en Twitch", picoTwitch ? picoTwitch.espectadores : null, picoTwitch ? "espectadores · " + dia(picoTwitch.ts) + " " + hora(picoTwitch.ts) : "sin datos todavía"],
+      // Opción C de Bruno (2026-11-17): Kick en la franja y los huecos como una línea de "Mediciones guardadas".
+      ["Máximo en Kick", picoKick ? picoKick.kickEsp : null, picoKick ? "espectadores · " + dia(picoKick.ts) + " " + hora(picoKick.ts) : "sin datos todavía"],
       ["Máximo en Google Trends", picoTrends ? picoTrends.interes : null, picoTrends ? "de 100 · " + dia(picoTrends.ts) + " " + hora(picoTrends.ts) : "sin datos todavía"],
-      ["Mediciones guardadas", M.length, M.length ? "del " + dia(M[0].ts) + " al " + dia(M[M.length - 1].ts) : "sin datos todavía"],
-      ["Mediciones con huecos", fallos, "alguna fuente no respondió"]
+      ["Mediciones guardadas", M.length, M.length ? "del " + dia(M[0].ts) + " al " + dia(M[M.length - 1].ts) + " · " + num(fallos) + " con huecos" : "sin datos todavía"]
     ];
     $("fichas").innerHTML = f.map(function (x) {
       return '<div class="ficha"><small>' + x[0] + '</small><b data-hasta="' + (x[1] == null ? "" : x[1]) + '">' + (x[1] == null ? "—" : "0") + "</b><span>" + x[2] + "</span></div>";
