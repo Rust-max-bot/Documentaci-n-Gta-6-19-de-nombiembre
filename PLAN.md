@@ -169,7 +169,7 @@ No se empieza hasta que Bruno avise con una confirmación oficial de la versión
 - **9.10 (2026-11-17):** fotos de perfil de Kick en la tabla de Twitch y Kick. La lista de directos de Kick ya trae `broadcaster_user.profile_picture` (verificado: 221 de 221 y, con la función real, 10 de 10 canales guardados); se guarda en `datos/` solo si es de `files.kick.com`, y `datos.js` lleva `fotos_kick` (canal → foto más reciente), así también las mediciones del 16 nov. Las fotos por defecto de Kick no se guardan (la página dibuja su reemplazo). Verificado en datos reales: desde la medición de las 23:07 UTC del 17 nov ya se guardan. Las mediciones anteriores solo la tienen si ese canal vuelve a estar entre los 10 primeros.
 - **Herramientas:** Graphify y sincronización del PC con GitHub (`sincronizar_datos.ps1`).
 - Descartado por Bruno: app en el celular; Cloudflare Radar; redes de descarga de PlayStation y
-  Xbox; la 9.2 "¿Cuánta gente faltó?".
+  Xbox; la 9.2 "¿Cuánta gente faltó?"; "qué tan popular es GTA 6 en YouTube" (posición en tendencias, 2026-11-17).
 
 ## Decisiones vigentes
 
