@@ -133,7 +133,7 @@ con línea de tiempo, tablas y gráficos de Twitch, Kick, YouTube, Google Trends
       después): Gemini, que puede ver el video. Antes, un plan pequeño.
 - [ ] **Panel de control para clasificar videos** (Bruno, 2026-11-15; entrevista en curso desde el
       18 nov; después del lanzamiento). Decidido: Bruno marca videos y Shorts con uno o varios
-      **motivos** ("no trata de GTA", "hecho con IA", "dudoso") y **el visitante elige qué tipos ver** (al entrar, los tres ocultos) en todas las listas y récords de YouTube. El panel abre con
+      **motivos** ("no trata de GTA", "hecho con IA", "dudoso") y **el visitante elige qué tipos ver** (la primera vez, los tres ocultos; después, la página recuerda su elección en ese navegador) en todas las listas y récords de YouTube. El panel abre con
       los videos nuevos sin revisar, deja ver y filtrar los que ya salen en la página, y toda
       marca se puede deshacer. Botón **"Publicar"** que guarda y sube a GitHub (se ve en la
       siguiente publicación); si falla, plan de contingencia: queda guardado en el PC y lo sube
