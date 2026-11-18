@@ -120,6 +120,15 @@ con línea de tiempo, tablas y gráficos de Twitch, Kick, YouTube, Google Trends
       18:37 UTC, Reddit bloquea su RSS público (404/403, también en otros subreddits; antes un
       429). Lo guardado no se pierde. Daría además votos y comentarios. Desde nov 2025 se pide con el formulario
       de soporte para desarrolladores; tarda ~7 días y no está garantizada.
+- [ ] **Directos de YouTube: poco probable** (Bruno, 2026-11-18; vio ~1,7 millones de personas
+      en directos de GTA 6, pero no se pueden contar limpio). Se haría con `search.list` en vivo
+      (100 unidades, 50 directos como mucho) + `concurrentViewers` de `videos.list`. Motivos para
+      no hacerlo: YouTube no tiene categoría de juego en su API (solo búsqueda por palabras: cifra
+      incompleta y mezclada con otros temas), canales que ocultan sus espectadores, y la cuota
+      (ya se usan ~7.500 de 10.000 al día). YouTube Analytics solo da historial del canal propio:
+      el pasado no se recupera. Sin probar con una consulta real. La página explica por qué no se
+      cuentan (nota de "Espectadores en Twitch y Kick"). **Para el análisis (4.3), Bruno quiere
+      datos lo menos contaminados posible:** Twitch y Kick (por categoría del juego).
 - [ ] **IA barata para filtrar videos** (Bruno, 2026-11-15): que lea título, descripción y
       etiquetas para decidir si un video es de GTA 6. No Claude, por el costo. Antes, un plan pequeño.
 - [ ] **Panel de control** (Bruno, 2026-11-15, trabajo extra): ajustar la página y marcar cada
