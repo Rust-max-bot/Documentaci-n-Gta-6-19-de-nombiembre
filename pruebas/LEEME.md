@@ -15,6 +15,7 @@ Windows).
 | `hacer_compartir.py` | Hace `web/compartir.jpg` (la imagen al compartir el enlace, 1200×630) con la portada real: `--opcion C --guardar` es la elegida por Bruno (2026-11-16). Sin `--guardar`, solo deja la vista previa en `capturas/`. Volver a correrlo si cambia la portada. |
 | `probar_marcas.py` | Fase 10: revisa que `recolector/marcas.py` rechace archivos de marcas mal escritos y que, con los datos reales, el video marcado `_LVLtceZy3I` no salga en Global, Español, récords ni Tendencias (y que sin marcas sí salga). No toca `datos/` ni `web/`. |
 | `probar_panel.py` | Fase 10: el panel de videos con un GitHub falso (nunca el real): seguridad del servidor (clave, Host, Origin, JSON), "Publicar" (solo sube el archivo de marcas, se junta con mediciones nuevas, se niega fuera de `main` o con otros cambios sin subir, conserva el borrador si falla) y el panel en Edge a 1280 y 384 px. |
+| `probar_selector.py` | Fase 10: el selector de videos del visitante en la página (antes, `generar_web.py`): con la elección de siempre no descarga `videos-extra.js`; "Desde cero" sin ocultar nada trae el video marcado; "Volver a lo de siempre"; elecciones rotas; series de visitas; 1280 y 384 px en los dos estilos. |
 | `probar_despertador.py` | Prueba `despertador/worker.js` con horas simuladas y un GitHub falso (no llama a nadie): minuto 7 siempre, minuto 37 solo del 17 al 21 nov. |
 | `medir_parpadeo.py` | Mide si una parte animada parpadea (40 capturas seguidas). Por defecto, el suelo de Miami 1986. Sirve para comparar antes y después de un cambio. |
 

@@ -1286,3 +1286,30 @@ h2 .ico, .v-sub .ico { color: var(--a2); stroke-width: 2.2; }
     box-shadow: 0 0 0 1px var(--a1), 0 0 18px color-mix(in srgb, var(--a1) 60%, transparent);
   }
 }
+
+/* ---------- Selector de videos del visitante (Fase 10, tarea 10.4; forma "Botón con panel",
+   elegida por Bruno el 2026-11-18). Lo arma web/filtro-videos.js. ---------- */
+.fv { margin: 0 0 6px; }
+.fv-boton { cursor: pointer; display: inline-flex; flex-wrap: wrap; gap: 6px; align-items: center; max-width: 100%; padding: 8px 16px; border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--tenue) 60%, transparent); background: none; color: var(--tenue); font: 700 14px var(--f-texto); text-align: left; }
+.fv-boton b { color: var(--texto); }
+.fv-boton:hover, .fv-boton[aria-expanded="true"] { border-color: var(--a1); color: var(--texto); }
+.fv-boton:focus-visible, .fv-panel button:focus-visible { outline: 2px solid var(--a2); outline-offset: 2px; }
+.fv-aviso { margin: 8px 0 0; color: var(--mal); font: 600 14px var(--f-texto); }
+.fv-panel { margin-top: 10px; padding: 16px; border-radius: 18px; border: 1px solid color-mix(in srgb, var(--tenue) 35%, transparent);
+  background: color-mix(in srgb, var(--panel) 92%, transparent); display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); gap: 18px; }
+.fv-panel[hidden] { display: none; }
+.fv-panel fieldset { border: 0; margin: 0; padding: 0; min-width: 0; }
+.fv-panel legend { margin: 0 0 8px; padding: 0; font: 700 12px var(--f-texto); letter-spacing: .14em; text-transform: uppercase; color: var(--tenue); }
+.fv-op { display: flex; gap: 10px; align-items: flex-start; padding: 8px 10px; border-radius: 12px; cursor: pointer; color: var(--texto); font: 700 15px var(--f-texto); }
+.fv-op input { margin-top: 4px; accent-color: var(--a1); }
+.fv-op small { display: block; color: var(--tenue); font-weight: 500; font-size: 13px; }
+.fv-op:has(input:checked) { background: color-mix(in srgb, var(--a1) 16%, transparent); }
+.fv-casilla { display: flex; align-items: center; gap: 10px; padding: 6px 0; color: var(--texto); font: 600 15px var(--f-texto); cursor: pointer; }
+.fv-casilla input { accent-color: var(--a1); }
+.fv-pie { grid-column: 1 / -1; display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+.fv-pie small { color: var(--tenue); font: 500 13px var(--f-texto); }
+.fv-aplicar { cursor: pointer; padding: 7px 16px; border-radius: 999px; border: 0; background: var(--a2); color: #04121a; font: 800 13px var(--f-texto); letter-spacing: .06em; text-transform: uppercase; }
+.fv-volver { cursor: pointer; background: none; border: 0; padding: 10px 2px; min-height: 40px; color: var(--tenue); text-decoration: underline; font: 600 13px var(--f-texto); }
+.fv-aplicar:active, .fv-boton:active { transform: scale(.97); }
+@media (max-width: 640px) { .fv-panel { grid-template-columns: 1fr; padding: 14px; } }

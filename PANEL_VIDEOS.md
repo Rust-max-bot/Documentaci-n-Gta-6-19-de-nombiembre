@@ -153,6 +153,22 @@ el historial; si filtrar cambia esos conteos, hay que recalcularlos (revisar en 
 4. **10.4 Selector del visitante.** Antes, opciones con capturas. Configuración y motivos en la
    página, recordados en el navegador. Revisar cuánto crece `web/datos.js` con "desde cero"
    (lleva más videos). Al terminar: el visitante elige qué ver.
+   **Hecha (18 nov, rama `panel-videos-10-4`, sobre la 10.3).** Forma **"Botón con panel"**
+   (Bruno, entre Barra, Botón con panel y Explicación). Decidido por Bruno: los rescates valen en
+   "el de Rust" y en las propias, **no** en "filtro automático" (queda puro); un marcado se oculta
+   si cualquiera de sus motivos está oculto.
+   - `datos.js` no crece (solo nombres y descripciones, `filtro_videos`). Lo demás va en
+     `web/videos-extra.js` (162 KB, no va a git), que solo se carga si la elección no es la de
+     siempre: qué videos pasa cada configuración y los récords de cada combinación de motivos
+     ya calculados en `generar_web.py` (la página no repite la lógica del filtro).
+     `generar_web.py` aborta si la elección de siempre no da lo mismo que `datos.js`.
+   - `web/filtro-videos.js` (antes de `app.js`): lee la elección del navegador, carga
+     `videos-extra.js` y cambia las listas, récords y Tendencias antes de dibujar; "Aplicar"
+     recarga la página. Si `datos.js` y `videos-extra.js` no son de la misma publicación (caché
+     de GitHub Pages), lo pide de nuevo una vez; si no, avisa y muestra lo de siempre.
+   - Con datos de ejemplo (sin `datos.js`) el selector no aparece.
+   - Prueba: `pruebas/probar_selector.py` (Edge, 1280 y 384 px, dos estilos). Revisada con
+     `/code-review` y un agente revisor (Sonnet).
 
 Cada parte se prueba con `python pruebas/probar_pagina.py` (si toca la página) y con una prueba
 propia del panel o del archivo de marcas, y se guarda y sube antes de empezar la siguiente.
