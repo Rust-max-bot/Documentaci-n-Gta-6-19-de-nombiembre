@@ -1,9 +1,9 @@
 # Plan del proyecto: recuerdo del lanzamiento de GTA 6
 
-> **Plan anterior archivado** el 2026-11-18 en `historial/PLAN_2026-11-18-2.md` (pasó de 20.000
-> bytes; tiene las decisiones y los riesgos con más detalle). Antes: `historial/PLAN_2026-11-18.md`,
-> `historial/PLAN_2026-11-17-2.md`, `historial/PLAN_2026-11-17.md`, `historial/PLAN_2026-11-16.md`
-> y `historial/PLAN_DE_TRABAJO_*.md`. Un solo plan desde el 2026-11-16 (pedido de Bruno).
+> **Plan anterior archivado** el 2026-11-18 en `historial/PLAN_2026-11-18-3.md` (pasó de 20.000
+> bytes; tiene las decisiones y los riesgos con más detalle). Antes: `historial/PLAN_2026-11-18-2.md`,
+> `PLAN_2026-11-18.md`, `PLAN_2026-11-17-2.md`, `PLAN_2026-11-17.md`, `PLAN_2026-11-16.md` y
+> `PLAN_DE_TRABAJO_*.md`. Un solo plan desde el 2026-11-16 (pedido de Bruno).
 
 Un recuerdo del 19 de noviembre de 2026, día en que sale GTA 6, por diversión: una página web
 con línea de tiempo, tablas y gráficos de Twitch, Kick, YouTube, Google Trends y titulares
@@ -131,13 +131,10 @@ que diga se comprueba de verdad antes de aceptarlo o descartarlo. Diseño: `impe
 de mostrar opciones. Al final de cada tanda, una **lista corta de comprobaciones visibles**
 para que Bruno las haga él (por ejemplo: marcar un video, "Publicar" y ver que desaparece).
 
-- [x] **10.1 Marcas en la página, sin panel** (archivo de marcas + `generar_web.py`). Hecha el
-      18 nov en la rama `panel-videos-10-1`; se ve en la página cuando se una a `main`.
-- [x] **10.2 Panel para marcar y publicar** (forma "Tabla", elegida por Bruno). Hecha el 18 nov
-      en la rama `panel-videos-10-2` (sobre la de la 10.1); publica solo desde `main`: hay que unirlas.
-- [x] **10.3 Rescatar descartados y configuraciones guardadas.** Hecha el 18 nov en la rama
-      `panel-videos-10-3` (sobre la de la 10.2). Configuración propia = nombre + modo + palabras;
-      "Restablecer" = volver a las del filtro automático (Bruno).
+- **Hechas el 18 nov (sin unir a `main`):** 10.1 marcas en la página, 10.2 panel para marcar y
+  publicar (forma "Tabla") y 10.3 rescatar y configuraciones propias (nombre + modo + palabras;
+  "Restablecer" = las del filtro automático). Ramas encadenadas: unir `panel-videos-10-3` trae
+  las tres; "Publicar" solo funciona desde `main`. Detalle en `PANEL_VIDEOS.md`.
 - [ ] **10.4 Selector del visitante** (antes, opciones con capturas).
 
 ### Ideas para después, sin fecha
@@ -187,7 +184,7 @@ No se empieza hasta que Bruno avise con una confirmación oficial de la versión
 - [ ] **8.4 Los más vendidos de la historia** (Tetris, Minecraft, GTA V, RDR2…) con cifras al día
       y su fuente. Ojo: el documento de Bruno del 14 nov tenía cifras viejas.
 
-## Lo ya hecho (detalle en `historial/PLAN_2026-11-18-2.md`, los anteriores y `git log`)
+## Lo ya hecho (detalle en `historial/PLAN_2026-11-18-3.md`, los anteriores y `git log`)
 
 - **Fases 0 y 1:** hechas (1.1 a 1.7). **Fase 2:** 2.1 a 2.4 y 2.6 a 2.15 (falta 2.5). **Fase 3:**
   hecha (3.1 a 3.3). **Fase 4:** 4.1 y 4.2 (falta 4.3).
@@ -195,13 +192,14 @@ No se empieza hasta que Bruno avise con una confirmación oficial de la versión
   `datos/trends_previa/`); 6.9 quitar Reddit (para volver, `git revert`).
 - **Fase 7:** 7.2, 7.3 y 7.5 a 7.12. **Fase 9:** 9.1, 9.5 a 9.10 y 9.12; tres horas cero con aviso
   de cada salida (C); Kick en "GTA frente a lo más visto" (fuente `kick_ranking`, 18 nov).
+- **Fase 10:** 10.1 a 10.3 (en ramas, sin unir; falta 10.4).
 - **Herramientas:** Graphify y sincronización del PC con GitHub (`sincronizar_datos.ps1`).
 - Descartado por Bruno: app en el celular; Cloudflare Radar; redes de descarga de PlayStation y
   Xbox; la 9.2 "¿Cuánta gente faltó?"; "qué tan popular es GTA 6 en YouTube".
 
 ## Decisiones vigentes
 
-El porqué y las opciones descartadas, en `historial/PLAN_2026-11-18-2.md` y `historial/PLAN_2026-11-16.md`.
+El porqué y las opciones descartadas, en `historial/PLAN_2026-11-18-3.md` y `historial/PLAN_2026-11-16.md`.
 
 - **Fuentes:** Twitch, YouTube y Google Trends (imprescindibles); además Kick, Google Noticias,
   PlayStation y Xbox, ranking de Twitch y Kick, tendencias de YouTube y los 7 videos oficiales de
@@ -213,8 +211,8 @@ El porqué y las opciones descartadas, en `historial/PLAN_2026-11-18-2.md` y `hi
 - **YouTube:** las tres búsquedas como mucho una vez por hora; visitas en cada turno (~7.500 de
   10.000 unidades diarias).
 - **Filtro de videos** (`recolector/filtro_videos.json`, modo `estricto`): título sin hashtags que
-  nombra GTA 6 + tema de videojuegos, sin "roblox", menos los videos marcados en
-  `recolector/marcas_videos.json` (10.1; `ocultar` se quitó). Solo decide qué se muestra.
+  nombra GTA 6 + tema de videojuegos, sin "roblox"; Bruno lo corrige en
+  `recolector/marcas_videos.json` (marcados y rescatados, Fase 10). Solo decide qué se muestra.
 - **Comparaciones con otros juegos:** solo el arranque, cada cifra con su fuente y plazo, sin
   escenarios inventados.
 - **Página:** HTML, CSS y JavaScript sin librerías ni compilación, en GitHub Pages
