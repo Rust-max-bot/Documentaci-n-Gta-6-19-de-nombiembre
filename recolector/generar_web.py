@@ -30,6 +30,8 @@ from collections import Counter
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
+import marcas   # recolector/marcas.py: marcas de videos de Bruno (Fase 10)
+
 RAIZ = Path(__file__).resolve().parent.parent
 DATOS = RAIZ / "datos"
 SALIDA = RAIZ / "web" / "datos.js"
@@ -51,34 +53,40 @@ CANALES = 3         # canales de Twitch por medición
 
 # Filtro "¿de verdad es de GTA 6?" (pedido de Bruno, 2026-11-15; pruebas en historial/PLAN_2026-11-16.md).
 NOMBRA_GTA6 = re.compile(r"\bgta\s*-?\s*(6|vi)\b|\bgta(6|vi)\b|\bgrand\s+theft\s+auto\s*-?\s*(6|vi)\b", re.IGNORECASE)
-CODIGO_VIDEO = re.compile(r"(?:v=|youtu\.be/|shorts/)?([\w-]{11})$")
 
 
-def leer_filtro():
-    """Lee recolector/filtro_videos.json. Si está mal escrito, aborta: mejor no publicar que
-    publicar con un filtro que no es el que Bruno eligió."""
+def leer_filtro(conocidos):
+    """Lee recolector/filtro_videos.json y las marcas de recolector/marcas_videos.json. Si algo
+    está mal escrito, aborta: mejor no publicar que publicar con un filtro que no es el que Bruno
+    eligió. conocidos: los códigos de video que aparecen en datos/ (para revisar las marcas)."""
     try:
         f = json.loads(FILTRO.read_text(encoding="utf-8"))
     except (OSError, ValueError) as e:
         abortar(f"no se pudo leer {FILTRO.name}: {e}")
     if f.get("modo") not in ("estricto", "titulo", "ninguno"):
         abortar(f"{FILTRO.name}: 'modo' debe ser estricto, titulo o ninguno")
-    palabras, ocultar = f.get("excluir_palabras", []), f.get("ocultar", [])
+    if "ocultar" in f:   # se quitó el 2026-11-18 (Fase 10): que no se ignore en silencio
+        abortar(f"{FILTRO.name}: 'ocultar' ya no existe; los videos sueltos se marcan en {marcas.ARCHIVO.name}")
+    palabras = f.get("excluir_palabras", [])
     if not (isinstance(palabras, list) and all(isinstance(x, str) and x.strip() for x in palabras)):
         abortar(f"{FILTRO.name}: 'excluir_palabras' debe ser una lista de palabras")
-    if not (isinstance(ocultar, list) and all(isinstance(x, str) for x in ocultar)):
-        abortar(f"{FILTRO.name}: 'ocultar' debe ser una lista de videos")
-    codigos = set()
-    for x in ocultar:
-        r = CODIGO_VIDEO.search(x.strip().split("&")[0].rstrip("/"))
-        if not r:
-            abortar(f"{FILTRO.name}: no se entiende el video a ocultar {x!r}")
-        codigos.add(r.group(1))
-    return {"modo": f["modo"], "palabras": [x.strip().lower() for x in palabras], "ocultar": codigos}
+    try:
+        marcados = marcas.leer()
+    except marcas.MarcasMal as e:
+        abortar(f"{marcas.ARCHIVO.name}: {e}")
+    for codigo in marcas.desconocidos(marcados, conocidos):
+        print(f"AVISO: {marcas.ARCHIVO.name}: el video {codigo!r} no aparece en las búsquedas de YouTube de estas mediciones: no esconde nada (¿código mal copiado?)")
+    return {"modo": f["modo"], "palabras": [x.strip().lower() for x in palabras], "marcados": set(marcados)}
+
+
+def gta_visibles(region, filtro):
+    """Los videos de GTA de una región de Tendencias, sin los que Bruno marcó (Fase 10). Lo usan
+    el conteo de cada medición y la lista de la última: así los dos siempre cuadran."""
+    return [v for v in region["gta"] if v["id"] not in filtro["marcados"]]
 
 
 def pasa_filtro(v, filtro):
-    if v["id"] in filtro["ocultar"]:
+    if v["id"] in filtro["marcados"]:   # "el de Rust": los que Bruno marcó a mano no se muestran
         return False
     titulo = v.get("titulo", "")
     if any(p in titulo.lower() for p in filtro["palabras"]):
@@ -199,7 +207,19 @@ def estado_servidor(r):
     return "ok" if r["ok"] else "problemas"
 
 
+def videos_conocidos(medidas):
+    """Todos los códigos de video que aparecen en alguna búsqueda de YouTube de datos/."""
+    ids = set()
+    for m in medidas:
+        for clave in ("youtube", "youtube_largos", "youtube_es"):
+            ids.update(v["id"] for v in (m.get(clave) or {}).get("videos", []))
+        for d in ((m.get("youtube_tendencias") or {}).get("regiones") or {}).values():
+            ids.update(v["id"] for v in d.get("gta", []))
+    return ids
+
+
 def convertir(medidas):
+    filtro = leer_filtro(videos_conocidos(medidas))
     mediciones, series, ultimo_video, vistas, noticias = [], {}, {}, set(), []
     series_es, ultimo_es = {}, {}   # tarea 6.4: videos de la búsqueda en español
     trailers = {}   # tarea 6.2: serie de visitas de cada video oficial, desde el 13 nov
@@ -240,9 +260,9 @@ def convertir(medidas):
             fila["ranking_kick"] = {"error": kr["error"]} if "error" in kr else {
                 "gta6": kr["puesto_gta6"], "gta5": kr["puesto_gta5"], "categorias": kr["categorias"]}
         yt = m.get("youtube_tendencias")
-        if yt is not None:
+        if yt is not None:   # sin los videos que Bruno marcó (Fase 10): se recuenta en cada medición
             fila["tendencias"] = {"error": yt["error"]} if "error" in yt else {
-                r: len(d["gta"]) for r, d in yt["regiones"].items()}
+                r: len(gta_visibles(d, filtro)) for r, d in yt["regiones"].items()}
         mediciones.append(fila)
 
         # "Global" junta la búsqueda por visitas y, desde el 15 nov, la de videos de 4 a 20 minutos
@@ -268,7 +288,6 @@ def convertir(medidas):
                 noticias.append({"t": n.get("t") or m["t"], "titulo": n["titulo"], "medio": n.get("medio") or "", "url": n["url"]})
 
     # Los videos que aparecen en la última medición en que YouTube respondió, de más a menos visto.
-    filtro = leer_filtro()
     ultima_yt = next((m["youtube"]["videos"] for m in reversed(medidas) if m.get("youtube", {}).get("videos")), [])
     ultima_lg = next((m["youtube_largos"]["videos"] for m in reversed(medidas) if m.get("youtube_largos", {}).get("videos")), [])
     vistos = {v["id"] for v in ultima_yt}
@@ -300,7 +319,10 @@ def convertir(medidas):
                                      "gta6": rk["puesto_gta6"], "gta5": rk["puesto_gta5"], "leidas": rk["leidas"]}
         if ult_yt:
             yt = ult_yt["youtube_tendencias"]
-            comparacion["youtube"] = {"t": ult_yt["t"], "regiones": yt["regiones"], "rockstar": yt["rockstar"]}
+            # Sin los videos que Bruno marcó (Fase 10). "primero" (el n.º 1 de la lista, sea del juego
+            # que sea) no se toca: la página no lo muestra hoy. Si un día lo muestra, filtrarlo también.
+            regiones = {r: {**d, "gta": gta_visibles(d, filtro)} for r, d in yt["regiones"].items()}
+            comparacion["youtube"] = {"t": ult_yt["t"], "regiones": regiones, "rockstar": yt["rockstar"]}
 
     ultima_es = next((m["youtube_es"]["videos"] for m in reversed(medidas) if m.get("youtube_es", {}).get("videos")), [])
     youtube_es = [{

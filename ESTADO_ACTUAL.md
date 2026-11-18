@@ -43,8 +43,10 @@ plan en `PANEL_VIDEOS.md`; revisado por dos agentes (a favor y en contra) y sus 
 técnicos ya escritos ahí. **Todas las preguntas respondidas** (18 nov): Tendencias usa las
 marcas; `ocultar` se quita; rescatar solo llega a las listas si el video está en la última
 medición; configuración y motivos son perillas separadas; los descartados van en un archivo
-aparte cargado a pedido. Detalle en `PANEL_VIDEOS.md`. Falta: la tanda 10.1 cuando Bruno la
-pida (después del lanzamiento).
+aparte cargado a pedido. Detalle en `PANEL_VIDEOS.md`. **10.1 hecha en la rama
+`panel-videos-10-1`** (pedido de Bruno: en otra rama), **sin unir a `main`**: el video
+`_LVLtceZy3I` ya no sale en ninguna lista ni récord. Se ve en la página cuando Bruno decida
+unirla (al unirla, la página se publica sola). Siguiente: 10.2, cuando Bruno la pida.
 
 **Avisos vigentes:**
 - **El 21 nov:** comprobar que la 6.1 se guardó (se lanza sola del 21 al 24 nov).
@@ -67,6 +69,7 @@ lanzamiento (revisión completa y menos alarmas por Google). Antes: 9.12 y más 
 ## Últimos cambios
 
 - 2026-11-17: estado anterior archivado en historial/ESTADO_2026-11-17.md
+- 2026-11-18: 10.1 (rama `panel-videos-10-1`): marcas de videos en `recolector/marcas_videos.json`, validadas por `recolector/marcas.py`; `generar_web.py` saca los marcados de Global, Español, récords y Tendencias; `ocultar` quitada. Prueba nueva `pruebas/probar_marcas.py` (todo bien) y `probar_pagina.py` a 1280 y 384 px en los dos estilos (todo bien). Revisada con `/code-review` y un agente revisor (Sonnet); sus arreglos, hechos.
 - 2026-11-18: Kick en "GTA frente a lo más visto" (pedido de Bruno, sin opciones de diseño): puesto de GTA VI en el recuadro y barras de categorías bajo las de Twitch. Fuente nueva `kick_ranking`: Kick no tiene ranking, así que lee todos sus directos (~12.500, 13 páginas) y suma el público por categoría. Probada en GitHub sin guardar en una rama de prueba (ya borrada); el recolector no se detuvo. Se ve desde la primera medición con el cambio. Si falla, `git revert` de su commit.
 - 2026-11-18: directos de YouTube descartados por ahora (Bruno: datos poco limpios; motivos en `PLAN.md`). La página lo explica en la nota de "Espectadores en Twitch y Kick". Probado a 1280 y 384 px en los dos estilos: todo bien.
 - 2026-11-18: la previa de Trends de las 11:15 UTC no corrió (GitHub no lanzó el horario: no hay ninguna ejecución "schedule"; GitHub no garantiza sus horarios). Un lanzamiento a mano a las 12:53 sin la casilla "previa" terminó en verde sin hacer nada ("fuera del 20-25 nov"). Lanzada a mano con "previa" a las 12:57 UTC: guardada en `datos/trends_previa/2026-11-18T1257Z.json`, con las 5 preguntas. Reparado: lanzado a mano fuera del 20-25 nov sin "previa" ahora sale en rojo con el aviso de marcarla; el respaldo de la 6.1 pasa a tres horas (18:41, 20:41 y 22:41 UTC); quitado el horario de la previa del 18.

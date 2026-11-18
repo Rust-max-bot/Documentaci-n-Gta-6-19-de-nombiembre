@@ -28,6 +28,9 @@ on:
     paths:
       - "web/**"
       - "recolector/generar_web.py"
+      - "recolector/marcas.py"            # Fase 10: las marcas de Bruno se publican al subirlas,
+      - "recolector/marcas_videos.json"   # sin esperar a la siguiente medición
+      - "recolector/filtro_videos.json"
       - ".github/workflows/publicar-pagina.yml"
   workflow_dispatch:
 

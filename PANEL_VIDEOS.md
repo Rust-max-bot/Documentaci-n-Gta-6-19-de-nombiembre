@@ -98,6 +98,16 @@ el historial; si filtrar cambia esos conteos, hay que recalcularlos (revisar en 
    algo no cuadra; `generar_web.py` aplica "el de Rust" en todas las listas y récords. Se
    estrena marcando `_LVLtceZy3I`. Al terminar: la página ya muestra la lista corregida (el
    archivo se edita a mano o con Claude, como hoy `ocultar`).
+   **Hecha (18 nov, rama `panel-videos-10-1`):** `recolector/marcas_videos.json` (motivos
+   `no_gta`, `ia`, `dudoso` y la fecha), validado solo por `recolector/marcas.py`; prueba en
+   `pruebas/probar_marcas.py`. Saca los marcados de Global, Español, récords y Tendencias (lista
+   y conteo por región, recalculado desde `datos/`). Un archivo mal escrito aborta la
+   publicación; un código que no está en `datos/` solo avisa en `generar_web.py` (para no frenar
+   la publicación de cada hora), pero el panel debe rechazarlo (`validar(..., conocidos)`).
+   El n.º 1 general de cada lista de Tendencias (`primero`) no se filtra: la página no lo
+   muestra; si algún día lo muestra, filtrarlo. Revisada con `/code-review` y un agente revisor
+   (Sonnet): sin fugas del video marcado; sus arreglos (prueba independiente del archivo real,
+   claves repetidas, fechas futuras, una sola función para Tendencias) ya están hechos.
 2. **10.2 Panel para marcar y publicar.** El `.bat`, la lista única con filtros, los motivos,
    deshacer y "Publicar" (con su plan de contingencia), sobre los videos que hoy pasan el
    filtro. Antes, opciones del aspecto del panel con capturas. Al terminar: Bruno clasifica

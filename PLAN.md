@@ -131,7 +131,8 @@ que diga se comprueba de verdad antes de aceptarlo o descartarlo. Diseño: `impe
 de mostrar opciones. Al final de cada tanda, una **lista corta de comprobaciones visibles**
 para que Bruno las haga él (por ejemplo: marcar un video, "Publicar" y ver que desaparece).
 
-- [ ] **10.1 Marcas en la página, sin panel** (archivo de marcas + `generar_web.py`).
+- [x] **10.1 Marcas en la página, sin panel** (archivo de marcas + `generar_web.py`). Hecha el
+      18 nov en la rama `panel-videos-10-1`; se ve en la página cuando se una a `main`.
 - [ ] **10.2 Panel para marcar y publicar** (antes, opciones del aspecto con capturas).
 - [ ] **10.3 Rescatar descartados y configuraciones guardadas.**
 - [ ] **10.4 Selector del visitante** (antes, opciones con capturas).
@@ -209,7 +210,8 @@ El porqué y las opciones descartadas, en `historial/PLAN_2026-11-18-2.md` y `hi
 - **YouTube:** las tres búsquedas como mucho una vez por hora; visitas en cada turno (~7.500 de
   10.000 unidades diarias).
 - **Filtro de videos** (`recolector/filtro_videos.json`, modo `estricto`): título sin hashtags que
-  nombra GTA 6 + tema de videojuegos, sin "roblox", más la lista `ocultar`. Solo decide qué se muestra.
+  nombra GTA 6 + tema de videojuegos, sin "roblox", menos los videos marcados en
+  `recolector/marcas_videos.json` (10.1; `ocultar` se quitó). Solo decide qué se muestra.
 - **Comparaciones con otros juegos:** solo el arranque, cada cifra con su fuente y plazo, sin
   escenarios inventados.
 - **Página:** HTML, CSS y JavaScript sin librerías ni compilación, en GitHub Pages
