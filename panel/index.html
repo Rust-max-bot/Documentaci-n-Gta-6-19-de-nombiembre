@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Panel de videos</title>
-<!-- Panel de videos (Fase 10, tarea 10.2; forma "Tabla", elegida por Bruno el 2026-11-18).
+<!-- Panel de videos (Fase 10, tareas 10.2 y 10.3; forma "Tabla", elegida por Bruno el 2026-11-18).
      Solo funciona abierto por panel_videos.bat: lo sirve panel/servidor.py en este PC. -->
 <link rel="stylesheet" href="panel.css">
 </head>
@@ -13,16 +13,24 @@
   <h1>Panel de videos<small id="resumen">cargando…</small></h1>
   <div class="filtros">
     <span class="pestanas" id="estados" role="group" aria-label="Estado"></span>
-    <select id="lugar" aria-label="Dónde sale"><option value="">Todos los lugares</option></select>
+    <select id="lugar" aria-label="Dónde sale">
+      <option value="pagina">En la página</option>
+      <option value="">Todos, también descartados</option>
+    </select>
     <select id="tipo" aria-label="Tipo">
       <option value="">Videos y Shorts</option>
       <option value="video">Solo videos</option>
       <option value="short">Solo Shorts</option>
     </select>
+    <button type="button" class="descartar" id="ver-confs" aria-expanded="false" aria-controls="confs">Configuraciones</button>
     <button type="button" class="descartar" id="descartar" disabled>Deshacer todo</button>
     <button type="button" class="publicar" id="publicar" disabled>Publicar</button>
   </div>
 </header>
+<section id="confs" class="confs" hidden aria-label="Configuraciones">
+  <h2>Configuraciones</h2>
+  <div id="confs-cuerpo"></div>
+</section>
 <div id="avisos" aria-live="polite"></div>
 <main id="lista"><p class="vacio">Cargando los videos…</p></main>
 <script src="panel.js"></script>

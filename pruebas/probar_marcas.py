@@ -152,6 +152,39 @@ otro = {"videos": {"NOESTAxxxxx": {"motivos": ["dudoso"], "fecha": "2026-11-18"}
 comprobar(not aborta(lambda: con_marcas(otro, lambda: generar_web.convertir([falsa]))),
           "un código que no está en los datos solo avisa: no frena la publicación de cada hora")
 
+print("4. Rescatar y configuraciones (10.3)")
+rechaza({"videos": {MARCADO: bien}, "rescatados": {MARCADO: "2026-11-18"}}, "un video marcado y rescatado a la vez")
+rechaza({"videos": {}, "revisados": {MARCADO: "2026-11-18"}, "rescatados": {MARCADO: "2026-11-18"}}, "un video revisado y rescatado a la vez")
+rechaza({"videos": {}, "rescatados": {MARCADO: "ayer"}}, "un rescate con fecha mal escrita")
+conf = {"nombre": "Con Roblox", "modo": "estricto", "excluir_palabras": []}
+rechaza({"videos": {}, "configuraciones": {"Con Roblox": conf}}, "una configuración con clave en mayúsculas o espacios")
+rechaza({"videos": {}, "configuraciones": {"rust": conf}}, "una configuración propia con la clave de una fija")
+rechaza({"videos": {}, "configuraciones": {"a": conf, "b": dict(conf)}}, "dos configuraciones con el mismo nombre")
+rechaza({"videos": {}, "configuraciones": {"a": {**conf, "nombre": "el de rust"}}}, "una configuración con el nombre de una fija")
+rechaza({"videos": {}, "configuraciones": {"a": {**conf, "modo": "raro"}}}, "una configuración con un modo desconocido")
+rechaza({"videos": {}, "configuraciones": {"a": {**conf, "excluir_palabras": ["x", "X"]}}}, "una palabra excluida repetida")
+rechaza({"videos": {}, "configuraciones": {"a": {**conf, "extra": 1}}}, "una configuración con claves de más")
+try:
+    t_ = marcas.validar_todo({"videos": {}, "rescatados": {MARCADO: "2026-11-18"}, "configuraciones": {"con-roblox": conf}})
+    comprobar(t_["rescatados"] == {MARCADO: "2026-11-18"} and "con-roblox" in t_["configuraciones"], "acepta un rescate y una configuración bien escritos")
+except marcas.MarcasMal as e:
+    comprobar(False, f"acepta un rescate y una configuración bien escritos ({e})")
+
+def vid(i, titulo, visitas, short=False):
+    return {"id": i, "titulo": titulo, "canal": "x", "visitas": visitas, "short": short, "temas": ["Video_game_culture"]}
+vieja = {"v": 1, "t": "2026-11-17T12:07:00Z", "twitch": {"error": "prueba"},
+         "youtube": {"videos": [vid("VIEJOdescar", "Un video sin el nombre del juego", 9_000_000), vid("BUENOvideo1", "GTA 6 gameplay", 100)]}}
+nueva = {"v": 1, "t": "2026-11-18T12:07:00Z", "twitch": {"error": "prueba"},
+         "youtube": {"videos": [vid("BUENOvideo1", "GTA 6 gameplay", 200), vid("NUEVOdescar", "Otro sin nombrarlo #gta6", 150)]}}
+solo_rescate = lambda ids: {"videos": {}, "rescatados": {i: "2026-11-18" for i in ids}}
+sin_r = con_marcas(SIN_MARCAS, lambda: generar_web.convertir([vieja, nueva]))
+con_r = con_marcas(solo_rescate(["NUEVOdescar", "VIEJOdescar"]), lambda: generar_web.convertir([vieja, nueva]))
+comprobar(ids(sin_r["youtube"]) == ["BUENOvideo1"], "sin rescates, el filtro deja fuera los dos videos que no nombran GTA 6 en el título")
+comprobar(set(ids(con_r["youtube"])) == {"BUENOvideo1", "NUEVOdescar"}, "rescatado y en la última medición: sale en la lista")
+comprobar("VIEJOdescar" not in ids(con_r["youtube"]), "rescatado pero solo en una medición vieja: no sale en la lista")
+comprobar("VIEJOdescar" in ids(con_r["records_youtube"]["video"]) and "VIEJOdescar" not in ids(sin_r["records_youtube"]["video"]),
+          "rescatado pero solo en una medición vieja: sí cuenta para el récord")
+
 print()
 if fallos:
     print(f"FALLARON {len(fallos)}:")

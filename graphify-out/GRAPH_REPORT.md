@@ -1,17 +1,17 @@
 # Graph Report - Documentación Gta 6  (2026-11-18)
 
 ## Corpus Check
-- 68 files · ~150,047 words
+- 68 files · ~153,030 words
 - Verdict: corpus is large enough that graph structure adds value.
 - Unclassified: 15 file(s) not represented in the graph (top: .jsonl 7, (none) 3, .bat 3)
 
 ## Summary
-- 976 nodes · 1729 edges · 69 communities (53 shown, 16 thin omitted)
-- Extraction: 92% EXTRACTED · 8% INFERRED · 0% AMBIGUOUS · INFERRED: 130 edges (avg confidence: 0.88)
+- 996 nodes · 1775 edges · 69 communities (53 shown, 16 thin omitted)
+- Extraction: 93% EXTRACTED · 7% INFERRED · 0% AMBIGUOUS · INFERRED: 131 edges (avg confidence: 0.88)
 - Token cost: 183,861 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `d1efc836`
+- Built from commit: `6f7196e4`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -21,7 +21,7 @@
 - Worker de Cloudflare despertador-recolector (horario 7,37 * * * *)
 - Estado actual del proyecto (ESTADO_ACTUAL.md)
 - steps
-- sys
+- hacer_compartir.py
 - Workflow Recolectar datos
 - Workflow Probar fuentes
 - app.js
@@ -65,14 +65,14 @@
 - num
 - Plan del proyecto: recuerdo del lanzamiento de GTA 6
 - tiraHoras
-- Panel de control de videos (Fase 10)
+- trends_extra.py
 - panel.js
-- servidor.py
-- probar_panel.py
+- youtube_es
+- json
 - publicar.py
-- probar_marcas.py
-- hacer_compartir.py
-- revisar.py
+- marcas.py
+- preguntar
+- youtube_tendencias
 - Plan del proyecto: recuerdo del lanzamiento de GTA 6
 - Plan del proyecto: recuerdo del lanzamiento de GTA 6
 - Tareas que faltan
@@ -102,8 +102,8 @@
   historial/ESTADO_2026-11-17.md → web/app.js
 - `Fase 1 — Recolector funcionando (lo más importante)` --references--> `compacto()`  [INFERRED]
   historial/PLAN_DE_TRABAJO_2026-11-13.md → web/app.js
-- `8. Dónde está cada cosa (por si quien ayuda puede leer código)` --references--> `fuegos()`  [INFERRED]
-  DISENO_VISUAL.md → web/app.js
+- `Partes (cada una termina usable y verificada, nunca a medias)` --references--> `pasa_filtro()`  [INFERRED]
+  PANEL_VIDEOS.md → recolector/generar_web.py
 
 ## Import Cycles
 - None detected.
@@ -122,8 +122,8 @@ Cohesion: 0.09
 Nodes (28): Apagarlo, Comprobar que funciona, Cron Trigger 7,37 * * * * (UTC), Despertador del recolector (Cloudflare), Secreto GITHUB_TOKEN (solo Actions: Read and write, caduca 31 ene 2027), Montar el despertador (pasos en el navegador), Montarlo (lo hace Bruno en el navegador; no hace falta instalar nada), Semana del lanzamiento (SEMANA_INICIO / SEMANA_FIN) (+20 more)
 
 ### Community 1 - "fuentes.py"
-Cohesion: 0.06
-Nodes (41): Dónde quedamos, Diseño de la página, Fase 6 — Ideas nuevas de Bruno: más estadísticas, logros y comparaciones, Fase 6 — Ideas nuevas de Bruno: más estadísticas, logros y comparaciones, _cabeceras_kick(), _cabeceras_twitch(), _datos_video(), _foto_kick() (+33 more)
+Cohesion: 0.12
+Nodes (16): _cabeceras_kick(), _cabeceras_twitch(), _foto_kick(), _fotos_de_perfil(), kick(), kick_ranking(), noticias(), playstation() (+8 more)
 
 ### Community 2 - "Worker de Cloudflare despertador-recolector (horario 7,37 * * * *)"
 Cohesion: 0.13
@@ -137,9 +137,9 @@ Nodes (8): Línea de estado .claude/hooks/estado-git.sh, .gitattributes fuerza L
 Cohesion: 0.07
 Nodes (27): concurrency, cancel-in-progress, group, previa, jobs, trends_extra, name, on (+19 more)
 
-### Community 5 - "sys"
-Cohesion: 0.24
-Nodes (6): main(), abrir(), preparar_salida(), main(), main(), recorrer()
+### Community 5 - "hacer_compartir.py"
+Cohesion: 0.11
+Nodes (14): escena(), hacer(), main(), titulo(), main(), abrir(), preparar_salida(), main() (+6 more)
 
 ### Community 6 - "Workflow Recolectar datos"
 Cohesion: 0.08
@@ -154,8 +154,8 @@ Cohesion: 0.11
 Nodes (22): abrir(), contenido(), el(), fijar(), filas(), flechaHTML(), historica(), horaCero() (+14 more)
 
 ### Community 9 - "trends_extra.py"
-Cohesion: 0.12
-Nodes (28): abortar(), comprobar(), comprobar_serie(), main(), paises(), preguntar(), relacionadas(), serie() (+20 more)
+Cohesion: 0.21
+Nodes (20): comprobar(), comprobar_serie(), a_fecha(), es_entero(), es_iso(), exigir(), Invalida, _kick() (+12 more)
 
 ### Community 10 - "Trabajar con Claude en la nube"
 Cohesion: 0.40
@@ -207,7 +207,7 @@ Nodes (11): Avisos para Bruno (cosas donde su idea tiene un límite o un fallo),
 
 ### Community 35 - "generar_web.py"
 Cohesion: 0.06
-Nodes (31): armar(), leer_todo(), abortar(), comprobar(), convertir(), elegir_videos(), escribir(), estado_servidor() (+23 more)
+Nodes (30): armar(), leer_todo(), Decisiones (Bruno, 2026-11-18), Panel de control de videos (Fase 10), Para después, Para qué sirve, Partes (cada una termina usable y verificada, nunca a medias), Requisitos técnicos (revisión a favor y en contra, 2026-11-18) (+22 more)
 
 ### Community 36 - "Plan del proyecto: recuerdo del lanzamiento de GTA 6"
 Cohesion: 0.18
@@ -269,37 +269,37 @@ Nodes (10): Cómo se usa este archivo, Datos y recolección, Decisiones vigentes
 Cohesion: 0.33
 Nodes (6): aplicar(), clase(), claveDia(), estado(), tiraDias(), tiraHoras()
 
-### Community 53 - "Panel de control de videos (Fase 10)"
-Cohesion: 0.29
-Nodes (6): Decisiones (Bruno, 2026-11-18), Panel de control de videos (Fase 10), Para después, Para qué sirve, Partes (cada una termina usable y verificada, nunca a medias), Requisitos técnicos (revisión a favor y en contra, 2026-11-18)
+### Community 53 - "trends_extra.py"
+Cohesion: 0.14
+Nodes (7): pedir(), prueba(), main(), a_iso(), abortar(), main(), serie()
 
 ### Community 54 - "panel.js"
-Cohesion: 0.18
-Nodes (25): api(), aviso(), bien(), cambiado(), cambios(), cargar(), copia(), cuenta() (+17 more)
+Cohesion: 0.13
+Nodes (32): api(), aviso(), bien(), cambiado(), cambios(), cargar(), confsCambiadas(), copia() (+24 more)
 
-### Community 55 - "servidor.py"
-Cohesion: 0.17
-Nodes (3): arrancar(), main(), Panel
+### Community 55 - "youtube_es"
+Cohesion: 0.16
+Nodes (11): Dónde quedamos, Diseño de la página, _datos_video(), _mensaje_youtube(), _preguntar_short(), _segundos(), _toca_buscar(), youtube() (+3 more)
 
-### Community 57 - "probar_panel.py"
-Cohesion: 0.21
-Nodes (4): git(), otra_copia(), pedir(), repositorio_falso()
+### Community 57 - "json"
+Cohesion: 0.24
+Nodes (7): descartados(), abortar(), leer_estado(), leer_interruptor(), main(), mensaje_seguro(), resumen()
 
 ### Community 58 - "publicar.py"
-Cohesion: 0.13
-Nodes (20): conocidos(), contenido_completo(), descartar_borrador(), git(), guardar_borrador(), leer_borrador(), NoSePudo, por_subir() (+12 more)
+Cohesion: 0.06
+Nodes (27): conocidos(), contenido_completo(), descartar_borrador(), git(), guardar_borrador(), leer_borrador(), NoSePudo, por_subir() (+19 more)
 
-### Community 59 - "probar_marcas.py"
-Cohesion: 0.22
-Nodes (4): comprobar(), con_archivo(), con_marcas(), rechaza()
+### Community 59 - "marcas.py"
+Cohesion: 0.09
+Nodes (14): comprobar(), con_archivo(), con_marcas(), rechaza(), _codigo(), _configuraciones(), desconocidos(), _fecha() (+6 more)
 
-### Community 60 - "hacer_compartir.py"
-Cohesion: 0.33
-Nodes (4): escena(), hacer(), main(), titulo()
+### Community 60 - "preguntar"
+Cohesion: 0.25
+Nodes (5): paises(), preguntar(), relacionadas(), Trends, widget()
 
-### Community 61 - "revisar.py"
+### Community 61 - "youtube_tendencias"
 Cohesion: 0.29
-Nodes (4): fecha(), main(), revisar_turnos(), turnos()
+Nodes (4): Fase 6 — Ideas nuevas de Bruno: más estadísticas, logros y comparaciones, Fase 6 — Ideas nuevas de Bruno: más estadísticas, logros y comparaciones, twitch_ranking(), youtube_tendencias()
 
 ### Community 62 - "Plan del proyecto: recuerdo del lanzamiento de GTA 6"
 Cohesion: 0.25
@@ -331,23 +331,23 @@ Nodes (4): gota(), actualizar(), botones(), ir()
 
 ## Knowledge Gaps
 - **31 isolated node(s):** `Estilos visuales Miami 1986 y Miami 2026`, `Enlaces y miniaturas guardados (tareas 2.1 y 2.2)`, `Series continuas de YouTube (25 más vistos + re-medición)`, `Aviso legal (proyecto de fans, no afiliado a Rockstar/Take-Two)`, `Python 3.14 para Graphify (no desinstalar)` (+26 more)
-  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 412 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
+  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 420 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
 - **16 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `Diseño de la página` connect `fuentes.py` to `Plan del proyecto: recuerdo del lanzamiento de GTA 6`, `limpio`?**
-  _High betweenness centrality (0.155) - this node is a cross-community bridge._
+- **Why does `Diseño de la página` connect `youtube_es` to `Plan del proyecto: recuerdo del lanzamiento de GTA 6`, `limpio`?**
+  _High betweenness centrality (0.154) - this node is a cross-community bridge._
 - **What connects `Estilos visuales Miami 1986 y Miami 2026`, `Enlaces y miniaturas guardados (tareas 2.1 y 2.2)`, `Series continuas de YouTube (25 más vistos + re-medición)` to the rest of the system?**
   _31 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Despertador y plan de trabajo` be split into smaller, more focused modules?**
   _Cohesion score 0.08817204301075268 - nodes in this community are weakly interconnected._
-- **Why does `limpio()` connect `limpio` to `app.js`, `fuentes.py`, `num`, `pintar`?**
-  _High betweenness centrality (0.140) - this node is a cross-community bridge._
+- **Why does `limpio()` connect `limpio` to `app.js`, `num`, `pintar`, `youtube_es`?**
+  _High betweenness centrality (0.139) - this node is a cross-community bridge._
 - **Should `fuentes.py` be split into smaller, more focused modules?**
-  _Cohesion score 0.05506549051055867 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.12096774193548387 - nodes in this community are weakly interconnected._
+- **Why does `youtube_es()` connect `youtube_es` to `fuentes.py`, `trends_extra.py`, `youtube_tendencias`, `json`?**
+  _High betweenness centrality (0.052) - this node is a cross-community bridge._
 - **Should `Worker de Cloudflare despertador-recolector (horario 7,37 * * * *)` be split into smaller, more focused modules?**
   _Cohesion score 0.1286549707602339 - nodes in this community are weakly interconnected._
-- **Should `steps` be split into smaller, more focused modules?**
-  _Cohesion score 0.07142857142857142 - nodes in this community are weakly interconnected._

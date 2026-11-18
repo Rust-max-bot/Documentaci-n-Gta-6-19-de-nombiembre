@@ -135,7 +135,9 @@ para que Bruno las haga él (por ejemplo: marcar un video, "Publicar" y ver que 
       18 nov en la rama `panel-videos-10-1`; se ve en la página cuando se una a `main`.
 - [x] **10.2 Panel para marcar y publicar** (forma "Tabla", elegida por Bruno). Hecha el 18 nov
       en la rama `panel-videos-10-2` (sobre la de la 10.1); publica solo desde `main`: hay que unirlas.
-- [ ] **10.3 Rescatar descartados y configuraciones guardadas.**
+- [x] **10.3 Rescatar descartados y configuraciones guardadas.** Hecha el 18 nov en la rama
+      `panel-videos-10-3` (sobre la de la 10.2). Configuración propia = nombre + modo + palabras;
+      "Restablecer" = volver a las del filtro automático (Bruno).
 - [ ] **10.4 Selector del visitante** (antes, opciones con capturas).
 
 ### Ideas para después, sin fecha

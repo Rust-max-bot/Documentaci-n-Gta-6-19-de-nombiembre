@@ -17,6 +17,10 @@ Formato del archivo:
 
 "revisados" (10.2): videos que Bruno miró en el panel y están bien (sin marca). Solo le sirven
 al panel para el filtro "sin revisar"; la página los ignora. Un video no puede estar en las dos.
+"rescatados" (10.3): {código: fecha}, videos que el filtro automático descartaba y Bruno devuelve
+a la página (solo salen en una lista si están en la última medición; si no, cuentan para los
+récords). "configuraciones" (10.3): {clave: {"nombre", "modo", "excluir_palabras"}}, filtros
+base propios de Bruno; la página los usará en la 10.4 (selector del visitante).
 """
 import json
 import re
@@ -33,7 +37,11 @@ MOTIVOS = {
 }
 CODIGO = re.compile(r"^[A-Za-z0-9_-]{11}$")
 FECHA = re.compile(r"^\d{4}-\d{2}-\d{2}$")
-CLAVES_ARCHIVO = {"videos", "revisados", "ayuda"}
+CLAVES_ARCHIVO = {"videos", "revisados", "rescatados", "configuraciones", "ayuda"}
+MODOS = ("estricto", "titulo", "ninguno")   # los mismos de filtro_videos.json
+CLAVE_CONF = re.compile(r"[a-z0-9-]{1,30}")
+# Las tres configuraciones fijas (Bruno, 2026-11-18). Sus claves no se pueden usar para las propias.
+FIJAS = {"desde-cero": "Desde cero", "automatico": "Filtro automático", "rust": "El de Rust"}
 CLAVES_VIDEO = {"motivos", "fecha", "titulo"}
 
 
@@ -59,8 +67,9 @@ def _codigo(codigo, donde, conocidos):
         raise MarcasMal(f"{donde}: no aparece en las búsquedas de YouTube de datos/ (¿código mal copiado? Los tráilers oficiales no se marcan)")
 
 
-def validar(datos, conocidos=None):
-    """Revisa el contenido ya leído del archivo. Devuelve {código: [motivos]}.
+def validar_todo(datos, conocidos=None):
+    """Revisa el contenido ya leído del archivo. Devuelve {"marcados": {código: [motivos]},
+    "revisados", "rescatados", "configuraciones"}.
 
     conocidos: si se da, los códigos de video que existen en datos/. Un código que no está ahí
     casi seguro es un error al copiarlo (y no ocultaría nada), así que también aborta. El panel
@@ -106,7 +115,52 @@ def validar(datos, conocidos=None):
         _fecha(fecha, donde)
         if codigo in salida:
             raise MarcasMal(f"{donde}: está a la vez marcado y revisado como bien; tiene que ser uno de los dos")
-    return salida
+    rescatados = datos.get("rescatados", {})
+    if not isinstance(rescatados, dict):
+        raise MarcasMal("'rescatados' debe ser un objeto {código: fecha}")
+    for codigo, fecha in rescatados.items():
+        donde = f"rescatado {codigo!r}"
+        _codigo(codigo, donde, conocidos)
+        _fecha(fecha, donde)
+        if codigo in salida or codigo in revisados:
+            raise MarcasMal(f"{donde}: un video rescatado no puede estar también marcado o revisado")
+    configuraciones = _configuraciones(datos.get("configuraciones", {}))
+    return {"marcados": salida, "revisados": dict(revisados), "rescatados": dict(rescatados),
+            "configuraciones": configuraciones}
+
+
+def _configuraciones(confs):
+    """Configuraciones propias de Bruno (10.3): solo otro filtro base, con nombre, modo y
+    palabras excluidas. Las tres fijas ("desde cero", "filtro automático", "el de Rust") no se
+    guardan aquí: son parte del programa."""
+    if not isinstance(confs, dict):
+        raise MarcasMal("'configuraciones' debe ser un objeto {clave: configuración}")
+    nombres = set()
+    for clave, c in confs.items():
+        donde = f"configuración {clave!r}"
+        if not CLAVE_CONF.fullmatch(clave) or clave in FIJAS:
+            raise MarcasMal(f"{donde}: la clave debe tener de 1 a 30 letras minúsculas, números o '-', y no ser una de las fijas")
+        if not isinstance(c, dict) or set(c) != {"nombre", "modo", "excluir_palabras"}:
+            raise MarcasMal(f"{donde}: debe tener exactamente 'nombre', 'modo' y 'excluir_palabras'")
+        nombre = c["nombre"]
+        if not (isinstance(nombre, str) and 1 <= len(nombre.strip()) <= 40) or nombre != nombre.strip():
+            raise MarcasMal(f"{donde}: el nombre debe tener de 1 a 40 letras, sin espacios al principio ni al final")
+        if nombre.lower() in nombres or nombre.lower() in {n.lower() for n in FIJAS.values()}:
+            raise MarcasMal(f"{donde}: ya hay una configuración que se llama {nombre!r}")
+        nombres.add(nombre.lower())
+        if c["modo"] not in MODOS:
+            raise MarcasMal(f"{donde}: el modo debe ser uno de {', '.join(MODOS)}")
+        p = c["excluir_palabras"]
+        if not (isinstance(p, list) and len(p) <= 30 and all(isinstance(x, str) and 1 <= len(x.strip()) <= 40 for x in p)):
+            raise MarcasMal(f"{donde}: 'excluir_palabras' debe ser una lista de hasta 30 palabras")
+        if len({x.strip().lower() for x in p}) != len(p):
+            raise MarcasMal(f"{donde}: una palabra excluida está repetida")
+    return {k: dict(v) for k, v in confs.items()}
+
+
+def validar(datos, conocidos=None):
+    """Como validar_todo(), pero devuelve solo {código: [motivos]} de los marcados."""
+    return validar_todo(datos, conocidos)["marcados"]
 
 
 def sin_repetidos(pares):
@@ -124,13 +178,19 @@ def desconocidos(marcados, conocidos):
     return sorted(set(marcados) - set(conocidos))
 
 
-def leer(ruta=None, conocidos=None):
-    """Lee y valida el archivo (por defecto, ARCHIVO). Si no existe, no hay marcas (no es un error)."""
+def leer_todo(ruta=None, conocidos=None):
+    """Como leer(), pero devuelve todo lo validado (marcados, revisados, rescatados, configuraciones)."""
     ruta = Path(ruta or ARCHIVO)
     if not ruta.exists():
-        return {}
+        return {"marcados": {}, "revisados": {}, "rescatados": {}, "configuraciones": {}}
     try:
         datos = json.loads(ruta.read_text(encoding="utf-8"), object_pairs_hook=sin_repetidos)
     except (OSError, ValueError) as e:
         raise MarcasMal(f"no se pudo leer {ruta.name}: {e}") from None
-    return validar(datos, conocidos)
+    return validar_todo(datos, conocidos)
+
+
+def leer(ruta=None, conocidos=None):
+    """Lee y valida el archivo (por defecto, ARCHIVO). Devuelve {código: [motivos]} de los
+    marcados. Si no existe, no hay marcas (no es un error)."""
+    return leer_todo(ruta, conocidos)["marcados"]

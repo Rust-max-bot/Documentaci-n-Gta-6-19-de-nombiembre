@@ -72,8 +72,9 @@ def contenido_completo(raiz, estado):
         except ValueError:
             pass
     salida = {"videos": estado.get("videos", {})}
-    if estado.get("revisados"):
-        salida["revisados"] = estado["revisados"]
+    for clave in ("revisados", "rescatados", "configuraciones"):   # vacías no se escriben
+        if estado.get(clave):
+            salida[clave] = estado[clave]
     salida["ayuda"] = ayuda
     return salida
 
@@ -141,6 +142,7 @@ def publicar(raiz, estado, conocidos):
         raise NoSePudo("el PC tiene otros archivos cambiados sin guardar (" + ", ".join(sucios[:4]) +
                        "): guárdalos antes o pídeselo a Claude. Tu borrador sigue guardado.")
     n, m = len(contenido["videos"]), len(contenido.get("revisados", {}))
+    k_, c_ = len(contenido.get("rescatados", {})), len(contenido.get("configuraciones", {}))
     en_head = git(raiz, "show", f"HEAD:{relativo}", permitir_fallo=True)
     # Se compara con lo guardado en git (no con el disco): así un archivo escrito pero sin commit
     # no pasa por "ya publicado".
@@ -152,7 +154,7 @@ def publicar(raiz, estado, conocidos):
         try:
             git(raiz, "add", "--", relativo)
             git(raiz, "commit", "--quiet", "-m",
-                f"Marcas de videos: {n} marcados, {m} revisados (panel, {date.today().isoformat()})\n\n"
+                f"Marcas de videos: {n} marcados, {m} revisados, {k_} rescatados, {c_} configuraciones (panel, {date.today().isoformat()})\n\n"
                 "Hecho desde el panel de videos (Fase 10). Solo cambia recolector/marcas_videos.json.",
                 "--", relativo)
         except NoSePudo as e:   # el archivo vuelve a como estaba; lo marcado sigue en el borrador
@@ -181,4 +183,4 @@ def publicar(raiz, estado, conocidos):
     descartar_borrador(raiz)
     if not cambio:
         return "Se terminó de subir a GitHub lo que había quedado pendiente. La página se actualiza en unos minutos."
-    return f"Publicado: {n} marcados y {m} revisados. La página se actualiza en unos minutos."
+    return f"Publicado: {n} marcados, {m} revisados, {k_} rescatados y {c_} configuraciones propias. La página se actualiza en unos minutos."
