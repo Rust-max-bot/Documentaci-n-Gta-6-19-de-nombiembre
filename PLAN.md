@@ -135,7 +135,9 @@ con línea de tiempo, tablas y gráficos de Twitch, Kick, YouTube, Google Trends
       18 nov; después del lanzamiento). Decidido: Bruno marca videos y Shorts con uno o varios
       **motivos** ("no trata de GTA", "hecho con IA", "dudoso") y **el visitante elige qué tipos ver** (al entrar, los tres ocultos) en todas las listas y récords de YouTube. El panel abre con
       los videos nuevos sin revisar, deja ver y filtrar los que ya salen en la página, y toda
-      marca se puede deshacer; el
+      marca se puede deshacer. Botón **"Publicar"** que guarda y sube a GitHub (se ve en la
+      siguiente publicación); si falla, plan de contingencia: queda guardado en el PC y lo sube
+      una sesión de Claude; el
       filtro automático (título sin hashtags, tema de videojuegos, `excluir_palabras`) se queda
       siempre; nada se borra de `datos/`. Ejemplo: Short `_LVLtceZy3I` ("Lamine Yamal x GTA 6",
       IA): pasa porque el título nombra GTA 6 y YouTube le puso temas de videojuegos. Solo Bruno
