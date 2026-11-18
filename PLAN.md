@@ -134,7 +134,7 @@ con línea de tiempo, tablas y gráficos de Twitch, Kick, YouTube, Google Trends
       después): Gemini, que puede ver el video. Antes, un plan pequeño.
 - [ ] **Panel de control para clasificar videos** (Bruno, 2026-11-15; entrevista en curso desde el
       18 nov; después del lanzamiento). Decidido: Bruno marca videos y Shorts con uno o varios
-      **motivos** ("no trata de GTA", "hecho con IA", "dudoso") y **el visitante elige qué tipos ver** (al entrar, los tres ocultos); el
+      **motivos** ("no trata de GTA", "hecho con IA", "dudoso") y **el visitante elige qué tipos ver** (al entrar, los tres ocultos) en todas las listas y récords de YouTube; el
       filtro automático (título sin hashtags, tema de videojuegos, `excluir_palabras`) se queda
       siempre; nada se borra de `datos/`. Ejemplo: Short `_LVLtceZy3I` ("Lamine Yamal x GTA 6",
       IA): pasa porque el título nombra GTA 6 y YouTube le puso temas de videojuegos. Solo Bruno
