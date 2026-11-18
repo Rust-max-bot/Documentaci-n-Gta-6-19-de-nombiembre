@@ -144,7 +144,7 @@ con línea de tiempo, tablas y gráficos de Twitch, Kick, YouTube, Google Trends
       - Botón **"Publicar"** que guarda y sube a GitHub (se ve en la siguiente publicación). Si
         falla: queda guardado en el PC y lo sube una sesión de Claude.
       - **El visitante** elige la configuración y qué motivos ver, en todas las listas y récords
-        de YouTube (la primera vez, "el de Rust" con los tres motivos ocultos; después, su
+        de YouTube (la primera vez, "el de Rust" con los tres motivos ocultos, confirmado por Bruno; después, su
         navegador recuerda la elección). La lista de marcas es pública (la página la necesita).
       - Ejemplo: Short `_LVLtceZy3I` ("Lamine Yamal x GTA 6", IA) pasa el filtro automático
         porque el título nombra GTA 6 y YouTube le puso temas de videojuegos.
