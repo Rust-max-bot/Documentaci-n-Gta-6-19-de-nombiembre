@@ -18,9 +18,9 @@
     "semantic_hash": ""
   },
   "web/app.js": {
-    "mtime": 1794965354.1452193,
-    "seen": 1794965741.7991476,
-    "ast_hash": "a3b7c5b1d846b8078d8de2e52f160ab9",
+    "mtime": 1795010610.4836009,
+    "seen": 1795010938.9870088,
+    "ast_hash": "348624451088ab0b60df8857e76edb83",
     "semantic_hash": ""
   },
   "web/datos-ejemplo.js": {
@@ -48,9 +48,9 @@
     "semantic_hash": ""
   },
   "ESTADO_ACTUAL.md": {
-    "mtime": 1794965738.766896,
-    "seen": 1794965741.7991588,
-    "ast_hash": "cd3c5bb77b18e7f950fa97514bf54f04",
+    "mtime": 1795009722.4848,
+    "seen": 1795010938.9870605,
+    "ast_hash": "862295df8bff4ecf591425902f394682",
     "semantic_hash": ""
   },
   "GUIA_CLAVES.md": {
@@ -60,9 +60,9 @@
     "semantic_hash": ""
   },
   "PLAN.md": {
-    "mtime": 1794965738.766259,
-    "seen": 1794965741.7991626,
-    "ast_hash": "bf161d3a384b8d0ed2ba5b62fa1c6a09",
+    "mtime": 1795009557.7915034,
+    "seen": 1795010938.9870658,
+    "ast_hash": "7ef08b20bc9280dbd9b69218dcd45b48",
     "semantic_hash": ""
   },
   "README.md": {
@@ -72,15 +72,15 @@
     "semantic_hash": ""
   },
   "web/index.html": {
-    "mtime": 1794965195.1158726,
-    "seen": 1794965741.7991827,
-    "ast_hash": "94fbb6dfa558a86e96af56d9b1a3bc72",
+    "mtime": 1795010610.4720078,
+    "seen": 1795010938.9870987,
+    "ast_hash": "a68a05d1b63a3c018433d1db58ed9679",
     "semantic_hash": ""
   },
   ".github/workflows/probar-fuentes.yml": {
-    "mtime": 1794801269.88113,
-    "seen": 1794951380.1555605,
-    "ast_hash": "b892325bc60e34ae6af7ee8ea5ec6ddd",
+    "mtime": 1795010802.0589082,
+    "seen": 1795010938.9869459,
+    "ast_hash": "bb331609cf943a02f5f5d1524c052547",
     "semantic_hash": ""
   },
   "recolector/probar_fuentes.py": {
@@ -96,9 +96,9 @@
     "semantic_hash": ""
   },
   "recolector/fuentes.py": {
-    "mtime": 1794964199.7808053,
-    "seen": 1794964237.2001734,
-    "ast_hash": "df85b7be4425387b563466e2f1cbcbcd",
+    "mtime": 1795010802.0176601,
+    "seen": 1795010938.9869838,
+    "ast_hash": "faf37832dafecc63611a8b06dd405f9a",
     "semantic_hash": ""
   },
   "recolector/interruptor.json": {
@@ -108,9 +108,9 @@
     "semantic_hash": "b8c4851586f3fbbdd7b1ac30238e6af6"
   },
   "recolector/recolectar.py": {
-    "mtime": 1794964199.7820356,
-    "seen": 1794964237.2001805,
-    "ast_hash": "18d73f167773be033c4489d8878d58be",
+    "mtime": 1795010802.0191667,
+    "seen": 1795010938.9869943,
+    "ast_hash": "1cb2f87a9ea042e124c0d7f754f4c74d",
     "semantic_hash": ""
   },
   "recolector/red.py": {
@@ -126,21 +126,21 @@
     "semantic_hash": ""
   },
   "recolector/validar.py": {
-    "mtime": 1794956486.555576,
-    "seen": 1794956701.153403,
-    "ast_hash": "6592bc93728eeceb1b36dbe7f748c7c2",
+    "mtime": 1795010802.021259,
+    "seen": 1795010938.9870028,
+    "ast_hash": "a48d12e6b601d23d5d0cec4a41b69ce9",
     "semantic_hash": ""
   },
   "recolector/LEEME.md": {
-    "mtime": 1794964235.1097674,
-    "seen": 1794964237.2002218,
-    "ast_hash": "43d1105d9abd03762bfd5b78586cc2d4",
+    "mtime": 1795010610.4694934,
+    "seen": 1795010938.9870949,
+    "ast_hash": "8f268380a4a0244212bc724ebae420d0",
     "semantic_hash": ""
   },
   "recolector/generar_web.py": {
-    "mtime": 1794956486.555576,
-    "seen": 1794956701.1533847,
-    "ast_hash": "934340743ba2529bb1cc05e0ebb363d7",
+    "mtime": 1795010610.4710023,
+    "seen": 1795010938.9869854,
+    "ast_hash": "de2a71b840f01760108530788d1381c0",
     "semantic_hash": ""
   },
   "despertador/worker.js": {
@@ -228,9 +228,9 @@
     "semantic_hash": ""
   },
   ".github/workflows/trends-extra.yml": {
-    "mtime": 1794952649.1760917,
-    "seen": 1794952999.1132615,
-    "ast_hash": "30ae92bda1c59564c1f5a405df66f09d",
+    "mtime": 1795007277.8251958,
+    "seen": 1795010938.9869564,
+    "ast_hash": "918dcba525428c2f20c0bc5f4c249d75",
     "semantic_hash": ""
   },
   ".github/workflows/publicar-pagina.yml": {
@@ -357,6 +357,18 @@
     "mtime": 1794962539.0596004,
     "seen": 1794963114.8773522,
     "ast_hash": "a861aea0b56fea4bba240690f57d4896",
+    "semantic_hash": ""
+  },
+  "datos/trends_previa/2026-11-18T1257Z.json": {
+    "mtime": 1795006832.6289196,
+    "seen": 1795010938.9869637,
+    "ast_hash": "fd451db69de5b393f4ea52159f1a8ef9",
+    "semantic_hash": ""
+  },
+  "historial/PLAN_2026-11-18.md": {
+    "mtime": 1795007277.829015,
+    "seen": 1795010938.987083,
+    "ast_hash": "157ad05e0cf3f61b81752132602b4788",
     "semantic_hash": ""
   }
 }

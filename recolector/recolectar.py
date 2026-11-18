@@ -130,6 +130,10 @@ def resumen(nombre, r):
         return f"{len(r['nuevas'])} titulares nuevos de {r['en_fuente']}"
     if nombre == "twitch_ranking":
         return f"GTA VI en el puesto {r['puesto_gta6']} de {r['leidas']} categorías; GTA V en el {r['puesto_gta5']}"
+    if nombre == "kick_ranking":
+        falta = "" if r["completo"] else ", INCOMPLETO"
+        return (f"GTA VI en el puesto {r['puesto_gta6']} de {r['categorias']} categorías de Kick; GTA V en el "
+                f"{r['puesto_gta5']} ({r['directos']} directos, {r['paginas']} páginas{falta})")
     if nombre == "youtube_tendencias":
         gta = ", ".join(f"{reg}: {len(d['gta'])}" for reg, d in r["regiones"].items())
         return f"videos de GTA en tendencias ({gta}); Rockstar: {r['rockstar']['suscriptores']} suscriptores"

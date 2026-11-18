@@ -235,6 +235,10 @@ def convertir(medidas):
         if rk is not None:
             fila["ranking"] = {"error": rk["error"]} if "error" in rk else {
                 "gta6": rk["puesto_gta6"], "gta5": rk["puesto_gta5"], "leidas": rk["leidas"]}
+        kr = m.get("kick_ranking")   # desde el 18 nov (pedido de Bruno)
+        if kr is not None:
+            fila["ranking_kick"] = {"error": kr["error"]} if "error" in kr else {
+                "gta6": kr["puesto_gta6"], "gta5": kr["puesto_gta5"], "categorias": kr["categorias"]}
         yt = m.get("youtube_tendencias")
         if yt is not None:
             fila["tendencias"] = {"error": yt["error"]} if "error" in yt else {
@@ -282,9 +286,14 @@ def convertir(medidas):
     # Lo último de la 6.3, para las tarjetas de comparación (la medición más nueva sin hueco).
     ult_rk = next((m for m in reversed(medidas) if "error" not in m.get("twitch_ranking", {"error": 1})), None)
     ult_yt = next((m for m in reversed(medidas) if "error" not in m.get("youtube_tendencias", {"error": 1})), None)
+    ult_kr = next((m for m in reversed(medidas) if "error" not in m.get("kick_ranking", {"error": 1})), None)
     comparacion = None
-    if ult_rk or ult_yt:
+    if ult_rk or ult_yt or ult_kr:
         comparacion = {}
+        if ult_kr:
+            kr = ult_kr["kick_ranking"]
+            comparacion["kick"] = {"t": ult_kr["t"], "comparadas": kr["comparadas"], "gta6": kr["puesto_gta6"],
+                                   "gta5": kr["puesto_gta5"], "categorias": kr["categorias"], "completo": kr["completo"]}
         if ult_rk:
             rk = ult_rk["twitch_ranking"]
             comparacion["twitch"] = {"t": ult_rk["t"], "top": rk["top"], "comparadas": rk["comparadas"],

@@ -1897,15 +1897,17 @@
      cada uno con una línea de cómo fue cambiando medición a medición (el ranking y las
      tendencias se guardan desde el 13 nov); GTA V, de referencia. Debajo, las dos columnas de
      antes (6.3 A): barras de Twitch y listas de YouTube, con cada video marcado VI o V según
-     su título. Usa la última medición. */
+     su título. Usa la última medición.
+     Kick (pedido de Bruno, 2026-11-18): su puesto en el recuadro y sus barras bajo las de Twitch,
+     con el mismo estilo. Kick no tiene ranking: se suma el público de todos sus directos. */
   (function () {
     var caja = $("comparacion-cols");
     if (!caja) return;
-    var C = D.comparacion || {}, tw = C.twitch, yt = C.youtube;
-    if (!tw && !yt) { caja.innerHTML = '<p class="vacio">Sin datos todavía.</p>'; return; }
-    var t = Math.max(tw ? Date.parse(tw.t) : 0, yt ? Date.parse(yt.t) : 0);
-    $("comparacion-nota").textContent = "Cómo le va a GTA comparado con todo lo demás en Twitch y YouTube. Última medición: " + dia(t) + ", " + hora(t).replace(/\.$/, "") + ".";
-    var GTA = { "1867279146": "GTA VI", "32982": "GTA V" };
+    var C = D.comparacion || {}, tw = C.twitch, yt = C.youtube, kk = C.kick;
+    if (!tw && !yt && !kk) { caja.innerHTML = '<p class="vacio">Sin datos todavía.</p>'; return; }
+    var t = Math.max(tw ? Date.parse(tw.t) : 0, yt ? Date.parse(yt.t) : 0, kk ? Date.parse(kk.t) : 0);
+    $("comparacion-nota").textContent = "Cómo le va a GTA comparado con todo lo demás en Twitch, Kick y YouTube. Última medición: " + dia(t) + ", " + hora(t).replace(/\.$/, "") + ".";
+    var GTA = { "1867279146": "GTA VI", "32982": "GTA V" }, GTA_KICK = { 13155: "GTA VI", 8: "GTA V" };
     caja.innerHTML = armar();
     // "Ver N más" de las listas de YouTube (se muestran 4 por país para que no quede un hueco bajo Twitch).
     caja.addEventListener("click", function (e) {
@@ -1928,19 +1930,31 @@
       var hist = (D.mediciones || []).filter(function (m) { return m.ranking; }).map(function (m) {
         return { ts: Date.parse(m.t), p: m.ranking.gta6 || m.ranking.leidas + 1, fuera: !m.ranking.gta6, leidas: m.ranking.leidas, tend: m.tendencias || {} };
       });
-      function linea(valor, invertir, tope) {
-        if (hist.length < 2) return "";
-        var t0 = hist[0].ts, t1 = hist[hist.length - 1].ts;
-        var d = hist.map(function (h, i) { var v = valor(h); var y = invertir ? (v - 1) / (tope - 1) * 26 + 2 : 28 - v / tope * 26; return (i ? "L" : "M") + ((h.ts - t0) / (t1 - t0 || 1) * 120).toFixed(1) + " " + y.toFixed(1); }).join("");
+      // Lo mismo para Kick (desde el 18 nov): su ranking cuenta todas las categorías, nunca queda "fuera".
+      var histK = (D.mediciones || []).filter(function (m) { return m.ranking_kick && m.ranking_kick.gta6; }).map(function (m) {
+        return { ts: Date.parse(m.t), p: m.ranking_kick.gta6 };
+      });
+      function linea(valor, invertir, tope, lista) {
+        lista = lista || hist;
+        if (lista.length < 2) return "";
+        var t0 = lista[0].ts, t1 = lista[lista.length - 1].ts;
+        var d = lista.map(function (h, i) { var v = valor(h); var y = invertir ? (v - 1) / (tope - 1) * 26 + 2 : 28 - v / tope * 26; return (i ? "L" : "M") + ((h.ts - t0) / (t1 - t0 || 1) * 120).toFixed(1) + " " + y.toFixed(1); }).join("");
         return '<svg class="mini cp-hist" viewBox="0 0 120 30" preserveAspectRatio="none" aria-hidden="true"><path class="area" d="' + d + 'L120 30L0 30Z"/><path d="' + d + '"/></svg>';
       }
       var primero = hist.length ? hist[0] : null, mejor = null;
       hist.forEach(function (h) { if (!h.fuera && (!mejor || h.p < mejor.p)) mejor = h; });
       var puesto = function (p) { return p ? "#" + p : "Fuera del top " + (tw ? tw.leidas : 100); };
-      var out = '<div class="cp-foco"><div class="cp-foco-tit"><small>En el centro</small><b>GTA VI</b><span>frente a todo lo demás; GTA V, de referencia</span></div>';
+      var out = '<div class="cp-foco' + (kk ? " con-kick" : "") + '"><div class="cp-foco-tit"><small>En el centro</small><b>GTA VI</b><span>frente a todo lo demás; GTA V, de referencia</span></div>';
       if (tw) out += '<div class="cp-dato"><small>Twitch · puesto</small><b>' + puesto(tw.gta6) + "</b><span>GTA V: " + puesto(tw.gta5) + "</span>" +
         linea(function (h) { return h.p; }, true, 101) +
         '<em>' + (primero ? "Desde el " + dia(primero.ts) + ": " + (primero.fuera ? "fuera del top" : "#" + primero.p) + " → " + puesto(tw.gta6) + (mejor ? " · mejor: #" + mejor.p : "") : "") + "</em></div>";
+      if (kk) {
+        var pK = function (p) { return p ? "#" + p : "Sin directos"; }, k0 = histK[0], mejorK = null;
+        histK.forEach(function (h) { if (!mejorK || h.p < mejorK.p) mejorK = h; });
+        out += '<div class="cp-dato"><small>Kick · puesto</small><b>' + pK(kk.gta6) + "</b><span>GTA V: " + pK(kk.gta5) + "</span>" +
+          linea(function (h) { return h.p; }, true, Math.max.apply(null, histK.map(function (h) { return h.p; }).concat(10)), histK) +
+          "<em>" + (k0 ? "Desde el " + dia(k0.ts) + ": #" + k0.p + " → " + pK(kk.gta6) + (mejorK ? " · mejor: #" + mejorK.p : "") : "Entre " + kk.categorias + " categorías con directos") + "</em></div>";
+      }
       regiones.forEach(function (r) {
         var d = yt.regiones[r];
         out += '<div class="cp-dato"><small>YouTube ' + (nombres[r] || r) + " · en tendencia</small><b>" + cuenta(r, "VI") + ' <i>de ' + d.en_lista + "</i></b><span>videos de GTA VI · GTA V: " + cuenta(r, "V") + "</span>" +
@@ -1954,7 +1968,19 @@
           return '<li class="' + (c.id === "32982" ? "gta cinco" : GTA[c.id] ? "gta" : "") + '"><span class="cp-nom">' + limpio(GTA[c.id] || c.nombre) + (c.puesto ? " <i>#" + c.puesto + "</i>" : "") + "</span>" +
             '<span class="cp-b"><i style="width:' + Math.max(1, c.espectadores_top100 / tope * 100).toFixed(1) + '%"></i></span><span class="cp-num">' + compacto(c.espectadores_top100) + "</span></li>";
         }).join("") + "</ul>" +
-          '<p class="cp-nota">Twitch da el orden de las categorías, no el total de espectadores. Cada barra suma el público de las 100 transmisiones más vistas de esa categoría; por eso una barra puede ser más larga que la de un puesto anterior.</p></div>';
+          '<p class="cp-nota">Twitch da el orden de las categorías, no el total de espectadores. Cada barra suma el público de las 100 transmisiones más vistas de esa categoría; por eso una barra puede ser más larga que la de un puesto anterior.</p>' +
+          barrasKick() + "</div>";
+      } else if (kk) out += '<div class="cp-col">' + barrasKick() + "</div>";
+      // Kick, con el mismo estilo que Twitch: aquí cada barra es el público total de la categoría.
+      function barrasKick() {
+        if (!kk) return "";
+        var topeK = Math.max.apply(null, kk.comparadas.map(function (c) { return c.espectadores; })) || 1;
+        return '<h3 class="sub cp-sub-kick">Kick · categorías más vistas</h3><ul class="cp-barras">' + kk.comparadas.map(function (c) {
+          return '<li class="' + (c.id === 8 ? "gta cinco" : GTA_KICK[c.id] ? "gta" : "") + '"><span class="cp-nom">' + limpio(GTA_KICK[c.id] || c.nombre) + " <i>#" + c.puesto + "</i></span>" +
+            '<span class="cp-b"><i style="width:' + Math.max(1, c.espectadores / topeK * 100).toFixed(1) + '%"></i></span><span class="cp-num">' + compacto(c.espectadores) + "</span></li>";
+        }).join("") + "</ul>" +
+          '<p class="cp-nota">Kick no publica un ranking: se suma el público de todos sus directos en vivo, categoría por categoría' +
+          (kk.completo ? "" : " (esta vez no se alcanzaron a leer todos)") + ".</p>";
       }
       if (yt) {
         out += '<div class="cp-col"><h3 class="sub">YouTube · videos en tendencia</h3><div class="cp-paises">' + regiones.map(function (r) {

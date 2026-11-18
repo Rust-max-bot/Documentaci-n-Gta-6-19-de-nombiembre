@@ -1245,8 +1245,16 @@ h2 .ico, .v-sub .ico { color: var(--a2); stroke-width: 2.2; }
 .cp-dato .cp-hist { width: 100%; height: 30px; margin-top: 8px; }
 .cp-dato .cp-hist path { vector-effect: non-scaling-stroke; }
 .cp-dato em { font-style: normal; font-size: 11.5px; font-weight: 600; color: var(--tenue); margin-top: 4px; }
+/* Con Kick (2026-11-18) el recuadro tiene un dato más. */
+.cp-foco.con-kick { grid-template-columns: 1.1fr repeat(4, 1fr); }
+.cp-sub-kick { margin-top: 30px; }
+@media (max-width: 1000px) {
+  .cp-foco.con-kick { grid-template-columns: repeat(2, 1fr); }
+  .cp-foco.con-kick .cp-foco-tit { grid-column: 1 / -1; }
+  .cp-foco.con-kick .cp-dato:nth-child(2n) { border-left: 0; padding-left: 0; }
+}
 @media (max-width: 760px) {
-  .cp-foco { grid-template-columns: 1fr; }
+  .cp-foco, .cp-foco.con-kick { grid-template-columns: 1fr; }
   .cp-dato { padding: 12px 0 0; border-left: 0; border-top: 1px solid color-mix(in srgb, var(--tenue) 30%, transparent); }
 }
 

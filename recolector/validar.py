@@ -182,6 +182,26 @@ def _youtube_trailers(r):
         for campo in ("visitas", "me_gusta", "comentarios"):
             exigir(v.get(campo) is None or es_entero(v[campo]), f"Tráilers de YouTube: '{campo}' inválido")
 
+def _kick_ranking(r):
+    for campo in ("directos", "paginas", "categorias"):
+        exigir(es_entero(r.get(campo), 1), f"Ranking de Kick: '{campo}' inválido")
+    exigir(isinstance(r.get("completo"), bool), "Ranking de Kick: falta 'completo'")
+    for campo in ("puesto_gta6", "puesto_gta5"):
+        exigir(r.get(campo) is None or (es_entero(r[campo], 1) and r[campo] <= r["categorias"]),
+               f"Ranking de Kick: '{campo}' inválido")
+    comparadas = r.get("comparadas")
+    exigir(isinstance(comparadas, list) and 0 < len(comparadas) <= 7, "Ranking de Kick: lista 'comparadas' inválida")
+    ids = [c.get("id") for c in comparadas]
+    exigir(len(set(ids)) == len(ids), "Ranking de Kick: categorías repetidas")
+    for c in comparadas:
+        exigir(es_entero(c.get("id"), 1), "Ranking de Kick: id de categoría inválido")
+        exigir(isinstance(c.get("nombre"), str), "Ranking de Kick: categoría sin nombre")
+        exigir(es_entero(c.get("puesto"), 1) and c["puesto"] <= r["categorias"], "Ranking de Kick: puesto inválido")
+        exigir(es_entero(c.get("espectadores")), "Ranking de Kick: espectadores inválidos")
+        exigir(es_entero(c.get("directos"), 1) and c["directos"] <= r["directos"], "Ranking de Kick: directos inválidos")
+    puestos = [c["puesto"] for c in comparadas]
+    exigir(puestos[:5] == sorted(puestos[:5]), "Ranking de Kick: puestos desordenados")
+
 
 def _servidor(r):
     exigir(isinstance(r.get("ok"), bool), "Servidores: falta 'ok'")
@@ -196,6 +216,7 @@ CHEQUEOS = {
     "trends": _trends,
     "noticias": _noticias,
     "twitch_ranking": _twitch_ranking,
+    "kick_ranking": _kick_ranking,
     "youtube_tendencias": _youtube_tendencias,
     "youtube_trailers": _youtube_trailers,
     "playstation": _servidor,

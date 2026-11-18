@@ -28,6 +28,9 @@ TWITCH_CATEGORIA = "1867279146"   # "Grand Theft Auto VI", verificado el 2026-11
 KICK_CATEGORIA = 13155            # "Grand Theft Auto VI (GTA)" en Kick, verificado el 2026-11-16 (tarea 6.6)
 KICK_PAGINAS_MAX = 5              # 1.000 directos por página
 KICK_CANALES = 10                 # canales con más público que se guardan en cada medición
+KICK_GTA5 = 8                     # "Grand Theft Auto V (GTA)" en Kick, verificado el 2026-11-18
+KICK_RANKING_PAGINAS_MAX = 30     # ranking de Kick: lee TODOS los directos (11.081 el 18 nov = 12 páginas)
+KICK_COMPARAR = 5                 # categorías de Kick que se guardan para comparar, además de GTA VI y GTA V
 TWITCH_CANALES = 20               # canales con más público que se guardan en cada medición
 TWITCH_PAGINAS_MAX = 60           # 100 transmisiones por página: hasta 6.000 transmisiones
 YOUTUBE_BUSQUEDA = "GTA 6"
@@ -621,9 +624,8 @@ def _foto_kick(directo):
     return {"foto": url} if isinstance(url, str) and url.startswith(KICK_FOTOS) and len(url) <= 300 else {}
 
 
-def kick(estado):
-    """Tarea 6.6: espectadores de GTA VI en Kick (API oficial, clave temporal de la app de Bruno).
-    Suma el público de todos los directos de la categoría y guarda los de más público."""
+def _cabeceras_kick():
+    """Cabeceras con una clave temporal de la app de Bruno en Kick (nunca se guarda ni se imprime)."""
     cid = os.environ.get("KICK_CLIENT_ID", "")
     sec = os.environ.get("KICK_CLIENT_SECRET", "")
     if not cid or not sec:
@@ -633,9 +635,15 @@ def kick(estado):
     if cod != 200:
         raise Falla(f"clave temporal de Kick: código {cod}")
     try:
-        cab = {"Authorization": "Bearer " + json.loads(txt)["access_token"], "Accept": "application/json"}
+        return {"Authorization": "Bearer " + json.loads(txt)["access_token"], "Accept": "application/json"}
     except (ValueError, KeyError):
         raise Falla("clave temporal de Kick: respuesta inesperada") from None
+
+
+def kick(estado):
+    """Tarea 6.6: espectadores de GTA VI en Kick (API oficial, clave temporal de la app de Bruno).
+    Suma el público de todos los directos de la categoría y guarda los de más público."""
+    cab = _cabeceras_kick()
     directos, cursor, completo = [], "", False
     for _ in range(KICK_PAGINAS_MAX):
         url = f"https://api.kick.com/public/v2/livestreams?category_id={KICK_CATEGORIA}&limit=1000"
@@ -658,6 +666,48 @@ def kick(estado):
             "transmisiones": len(directos), "completo": completo, "canales": canales}
 
 
+def kick_ranking(estado):
+    """GTA frente a lo más visto en Kick (pedido de Bruno, 2026-11-18). Kick no tiene una lista
+    de categorías más vistas (verificado el 18 nov: /categories no trae espectadores), pero su
+    lista de directos sí trae la categoría de cada uno: se leen TODOS los directos en vivo de
+    Kick y se suma el público por categoría. A diferencia de Twitch, es la cifra completa de
+    cada categoría, no una aproximación. Si no alcanzan las páginas, "completo" es False."""
+    cab = _cabeceras_kick()
+    vistos, cursor, completo, paginas = {}, "", False, 0
+    for _ in range(KICK_RANKING_PAGINAS_MAX):
+        url = "https://api.kick.com/public/v2/livestreams?limit=1000"
+        if cursor:
+            url += "&cursor=" + urllib.parse.quote(cursor)
+        d = pedir_json(url, "directos de Kick (ranking)", cab)
+        paginas += 1
+        for x in d.get("data") or []:
+            vistos.setdefault(x.get("id"), x)   # por si un directo se repite entre páginas
+        cursor = (d.get("pagination") or {}).get("next_cursor") or ""
+        if not cursor or not d.get("data"):
+            completo = True
+            break
+    suma, cuantos, nombres = {}, {}, {}
+    for x in vistos.values():
+        c = x.get("category") or {}
+        if not isinstance(c.get("id"), int):
+            continue
+        suma[c["id"]] = suma.get(c["id"], 0) + (x.get("viewer_count") or 0)
+        cuantos[c["id"]] = cuantos.get(c["id"], 0) + 1
+        nombres[c["id"]] = str(c.get("name") or "")[:80]
+    if not suma:
+        raise Falla("Kick no devolvió directos con categoría")
+    orden = sorted(suma, key=lambda i: suma[i], reverse=True)
+    puesto = {i: n + 1 for n, i in enumerate(orden)}
+    ids = orden[:KICK_COMPARAR]
+    for extra in (KICK_CATEGORIA, KICK_GTA5):
+        if extra not in ids and extra in suma:
+            ids.append(extra)
+    return {"directos": len(vistos), "paginas": paginas, "completo": completo, "categorias": len(suma),
+            "puesto_gta6": puesto.get(KICK_CATEGORIA), "puesto_gta5": puesto.get(KICK_GTA5),
+            "comparadas": [{"id": i, "nombre": nombres[i], "puesto": puesto[i], "espectadores": suma[i],
+                            "directos": cuantos[i]} for i in ids]}
+
+
 FUENTES = {
     "twitch": twitch,
     "kick": kick,
@@ -666,6 +716,7 @@ FUENTES = {
     "youtube_largos": youtube_largos,
     "noticias": noticias,
     "twitch_ranking": twitch_ranking,
+    "kick_ranking": kick_ranking,
     "youtube_tendencias": youtube_tendencias,
     "youtube_trailers": youtube_trailers,
     "playstation": playstation,

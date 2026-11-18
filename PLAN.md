@@ -169,7 +169,8 @@ No se empieza hasta que Bruno avise con una confirmación oficial de la versión
   Doomsday con la consulta previa de `datos/trends_previa/` (previas del 17 y del 18 nov, esta a
   mano porque GitHub se saltó su horario); 6.9 quitar Reddit (para volver, `git revert`).
 - **Fase 7:** 7.2, 7.3 y 7.5 a 7.12. **Fase 9:** 9.1, 9.5 a 9.10 y 9.12; tres horas cero
-  (Nueva Zelanda, Chile y Miami) con aviso de cada salida (C).
+  (Nueva Zelanda, Chile y Miami) con aviso de cada salida (C). Kick en "GTA frente a lo más
+  visto" (18 nov, Bruno: sin preguntar el diseño): fuente `kick_ranking`, suma de todos los directos.
 - **Herramientas:** Graphify y sincronización del PC con GitHub (`sincronizar_datos.ps1`).
 - Descartado por Bruno: app en el celular; Cloudflare Radar; redes de descarga de PlayStation y
   Xbox; la 9.2 "¿Cuánta gente faltó?"; "qué tan popular es GTA 6 en YouTube".
@@ -179,7 +180,7 @@ No se empieza hasta que Bruno avise con una confirmación oficial de la versión
 El porqué y las opciones descartadas, en `historial/PLAN_2026-11-16.md`.
 
 - **Fuentes:** Twitch, YouTube y Google Trends (imprescindibles); además Kick, titulares de Google
-  Noticias, estado de PlayStation y Xbox, ranking de Twitch, tendencias de YouTube y los 7 videos
+  Noticias, estado de PlayStation y Xbox, ranking de Twitch y de Kick (este desde el 18 nov), tendencias de YouTube y los 7 videos
   oficiales de GTA VI. Rockstar no responde a programas: sus caídas se anotan a mano en `web/eventos.js`.
 - **Medición** cada hora (minuto 7) y al 37 del 17 al 21 nov (UTC), hasta el 19 dic, con interruptor
   manual; la lanza el despertador de Cloudflare (`despertador/`), no el `schedule`.

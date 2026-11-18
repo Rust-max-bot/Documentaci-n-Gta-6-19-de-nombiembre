@@ -74,6 +74,11 @@ twitch_ranking   (desde el 13 nov, tarea 6.3) leidas (categorías leídas, 100),
              espectadores_top100, transmisiones_top100}. Twitch da el orden del ranking, no
              el número: los espectadores son la suma de las 100 transmisiones con más público
              de cada categoría (la misma aproximación para todas)
+kick_ranking     (desde el 18 nov, pedido de Bruno) directos (todos los directos en vivo de Kick
+             que se leyeron), paginas, completo, categorias (cuántas tenían directos),
+             puesto_gta6 y puesto_gta5, comparadas: las 5 primeras + GTA VI + GTA V {id,
+             nombre, puesto, espectadores, directos}. Kick no tiene ranking de categorías: se
+             suma el público de TODOS sus directos por categoría (cifra completa, no aproximada)
 youtube_tendencias   (desde el 13 nov, tarea 6.3) unidades (3), regiones: {CL, US} con
              en_lista, primero {puesto, id, titulo, canal, visitas} y gta (los de la lista
              cuyo título dice GTA, Grand Theft Auto o Rockstar Games), rockstar: id, nombre,
