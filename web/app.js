@@ -258,7 +258,6 @@
   if (fechaPrueba && !isNaN(Date.parse(fechaPrueba[1]))) adelanto = Date.parse(fechaPrueba[1]) - Date.now();
   function ahora() { return Date.now() + adelanto; }
   var FIESTA = 24 * 3600000;     // la animación se ve al llegar a 0 o al abrir la página ese primer día
-  var celebrado = false;
   /* Hora cero en cada lugar (tarea 7.6, idea de Bruno). Rockstar confirmó que el juego se abre a
      medianoche del 19 nov en la hora de cada país. Horas de noviembre: Nueva Zelanda UTC+13,
      Chile UTC-3, Miami UTC-5. Que Nueva Zelanda sea la primera es una deducción por su huso. */
@@ -304,38 +303,113 @@
     pintarLugares(); cuenta();
     if (!QUIETO.matches) repetir($("cuenta"), "enfoca", 220);   // los números se enfocan (microinteracciones)
   });
+  /* Tres horas cero (pedido de Bruno, 2026-11-17): antes solo se celebraba la de Chile. Ahora la
+     fiesta llega en cuanto sale en cada lugar (Nueva Zelanda, Chile y Miami), para todos los que
+     tengan la página abierta, mire el lugar que se mire. Al abrir la página se celebra solo el
+     último lugar donde ya salió, si fue hace menos de un día. */
+  var ORDEN = ["nz", "cl", "mia"];
+  var celebradoEn = null;   // último lugar ya celebrado en esta visita
+  function ultimoLugar(t) { var u = null; ORDEN.forEach(function (k) { if (t >= LUGARES[k].ts) u = k; }); return u; }
   function cuenta() {
-    var t = ahora(), caja = $("cuenta"), falta = LUGARES[lugar].ts - t;
-    // La fiesta de la hora cero sigue siendo la de Chile, mire el lugar que se mire.
-    if (!celebrado && t >= SALIDA && t - SALIDA < FIESTA) { celebrado = true; horaCero(); }
+    var t = ahora(), caja = $("cuenta"), falta = LUGARES[lugar].ts - t, u = ultimoLugar(t);
+    if (u && u !== celebradoEn) { celebradoEn = u; horaCero(u, t - LUGARES[u].ts < FIESTA); }
     if (falta <= 0) pintar(caja, Math.floor(-falta / 1000), "desde");
     else pintar(caja, Math.floor(falta / 1000), "falta");
     pintarLugares();
+    pintarAviso(t);
   }
-  function horaCero() {
+  function horaCero(k, conFiesta) {
     var lema = document.querySelector(".lema"), portada = document.querySelector(".portada");
-    lema.textContent = "¡Ya salió GTA 6!";
-    lema.classList.add("ya-salio");
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches || recargaSola) return;   // tras una recarga automática, sin repetir la fiesta
+    // Hasta que salga en Chile, el lema aclara que es en Nueva Zelanda.
+    lema.textContent = k === "nz" ? "¡Ya salió GTA 6 en Nueva Zelanda!" : "¡Ya salió GTA 6!";
+    lema.classList.remove("ya-salio"); void lema.offsetWidth; lema.classList.add("ya-salio");   // la entrada vuelve a empezar
+    if (!conFiesta || window.matchMedia("(prefers-reduced-motion: reduce)").matches || recargaSola) return;   // tras una recarga automática, sin repetir la fiesta
+    // Si todavía dura la fiesta anterior (por ejemplo, se abrió la página un minuto antes de la
+    // hora cero de Chile y se estaba celebrando la de Nueva Zelanda), empieza una nueva desde cero.
+    portada.querySelectorAll(".fuegos, .reflectores").forEach(function (n) { n.remove(); });
+    clearTimeout(finFiesta);
     // Fuegos artificiales y reflectores a la vez (elección de Bruno, 2026-11-13: opciones A y C).
     portada.classList.add("fiesta");
     fuegos(portada);
     reflectores(portada);
-    setTimeout(function () { portada.classList.remove("fiesta"); }, 22000);
+    finFiesta = setTimeout(function () { portada.classList.remove("fiesta"); }, 22000);
   }
+  var finFiesta = null;
+  /* Aviso de las horas cero (pedido de Bruno, 2026-11-17): desde un día antes de la salida en
+     Nueva Zelanda hasta un día después de la de Miami. Cambia solo al llegar cada hora cero y
+     vuelve a aparecer aunque se haya cerrado. */
+  var avisoCerrado = null, flotar = function () {};   // flotar: lo define el bloque de abajo
+  function quedan(ms) {
+    var m = Math.max(1, Math.ceil(ms / 60000)), h = Math.floor(m / 60);
+    return (h ? h + " h " : "") + (m % 60) + " min";
+  }
+  function pintarAviso(t) {
+    var caja = $("aviso-lanz"); if (!caja) return;
+    var nz = LUGARES.nz.ts, cl = LUGARES.cl.ts, mia = LUGARES.mia.ts, etapa, titulo, texto;
+    if (t < nz - FIESTA || t >= mia + FIESTA) etapa = null;
+    else if (t < nz) { etapa = "antes"; titulo = "GTA 6 sale primero en Nueva Zelanda";
+      texto = "A las " + hora(nz) + " de Chile (" + dia(nz) + ") · faltan " + quedan(nz - t); }
+    else if (t < cl) { etapa = "nz"; titulo = "¡GTA 6 ya salió en Nueva Zelanda!";
+      texto = "Es uno de los primeros lugares del mundo · en Chile faltan " + quedan(cl - t); }
+    else if (t < mia) { etapa = "cl"; titulo = "¡GTA 6 ya salió en Chile!";
+      texto = "Antes salió en Nueva Zelanda · en Miami faltan " + quedan(mia - t); }
+    else { etapa = "mia"; titulo = "¡GTA 6 ya salió también en Miami!";
+      texto = "Ya se juega en Nueva Zelanda, Chile y Miami"; }
+    if (!etapa || etapa === avisoCerrado) { caja.hidden = true; flotar(false); return; }
+    if (caja.dataset.etapa !== etapa) {
+      caja.dataset.etapa = etapa;
+      caja.classList.toggle("celebra", etapa !== "antes");
+      caja.querySelector("strong").textContent = titulo;
+      caja.classList.remove("entra"); void caja.offsetWidth; caja.classList.add("entra");
+    }
+    var sp = caja.querySelector(".aviso-lanz-texto span");
+    if (sp.textContent !== texto) sp.textContent = texto;
+    caja.hidden = false;
+    // Si aparece (o vuelve a aparecer) con la portada ya fuera de la vista, flota de una vez.
+    if (!caja.classList.contains("flota") && $("aviso-sitio").getBoundingClientRect().bottom <= 0) flotar(true);
+  }
+  (function () {
+    var caja = $("aviso-lanz"); if (!caja) return;
+    caja.querySelector(".aviso-lanz-cerrar").addEventListener("click", function () { avisoCerrado = caja.dataset.etapa; caja.hidden = true; ponerFlota(false); });
+    // Opción C de Bruno, "que te siga, por si acaso": si la portada sale de la vista al bajar, el
+    // aviso flota arriba al centro. Su sitio guarda el alto para que la portada no salte.
+    var sitio = $("aviso-sitio");
+    flotar = ponerFlota;
+    function ponerFlota(si) {
+      if (!sitio || si === caja.classList.contains("flota")) return;
+      // Al flotar pasa al final de <body>: dentro de la portada quedaría debajo del contenido
+      // (la portada y <main> tienen su propia capa), aunque esté fija arriba.
+      if (si) { sitio.style.height = caja.offsetHeight + 14 + "px"; caja.classList.add("flota", "baja"); document.body.appendChild(caja); }
+      else { caja.classList.remove("flota", "baja"); sitio.appendChild(caja); sitio.style.height = ""; }
+    }
+    if (sitio && "IntersectionObserver" in window) {
+      new IntersectionObserver(function (e) {
+        ponerFlota(!e[0].isIntersecting && e[0].boundingClientRect.bottom <= 0 && !caja.hidden);
+      }).observe(sitio);
+    }
+  })();
   // Fuegos artificiales dibujados en un lienzo encima del cielo, con los colores del estilo.
   function fuegos(portada) {
     var lienzo = document.createElement("canvas"), cx = lienzo.getContext("2d");
     lienzo.className = "fuegos"; portada.appendChild(lienzo);
     // De noche y al atardecer, los colores del estilo sumados como luz. De día, con el cielo claro,
     // esa suma casi no se ve: se usan colores fuertes pintados encima y chispas más gruesas.
-    var dia = document.documentElement.dataset.hora === "dia";
-    var css = getComputedStyle(document.documentElement), colores = dia ? ["#ff2e97", "#6a2bd9", "#ff6a00", "#e0006e"]
-      : ["--a1", "--a2", "--a3"].map(function (n) { return css.getPropertyValue(n).trim(); }).concat("#ffffff");
+    // Estilo y hora se leen en cada estallido (pedido de Bruno, 2026-11-17): si se cambia de Miami
+    // 1986 a 2026 o de día a noche en plena fiesta, los fuegos siguen con los colores nuevos.
+    var dia, colores;
+    function leerEstilo() {
+      dia = document.documentElement.dataset.hora === "dia";
+      var css = getComputedStyle(document.documentElement);
+      colores = dia ? ["#ff2e97", "#6a2bd9", "#ff6a00", "#e0006e"]
+        : ["--a1", "--a2", "--a3"].map(function (n) { return css.getPropertyValue(n).trim(); }).concat("#ffffff");
+    }
+    leerEstilo();
     var w, h, chispas = [], inicio = performance.now();
     function medir() { w = lienzo.width = portada.clientWidth; h = lienzo.height = portada.clientHeight; }
     medir();
     function estallar() {
+      leerEstilo();
+      if (portada.clientWidth !== w || portada.clientHeight !== h) medir();   // la portada cambió de tamaño
       var x = w * (.15 + Math.random() * .7), y = h * (.12 + Math.random() * .35), c = colores[Math.floor(Math.random() * colores.length)];
       for (var k = 0; k < 70; k++) { var a = Math.random() * 6.283, v = 1.5 + Math.random() * 4.5; chispas.push({ x: x, y: y, vx: Math.cos(a) * v, vy: Math.sin(a) * v, vida: 1, c: c }); }
     }

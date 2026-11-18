@@ -124,6 +124,15 @@
   <div class="titular">
     <h1><span>19</span><i>·</i><span>NOV</span><i>·</i><span>2026</span></h1>
     <p class="lema">El día que salió GTA 6</p>
+    <!-- Aviso de cada hora cero (Nueva Zelanda, Chile y Miami; opción C de Bruno, que sigue al bajar).
+         Lo escribe app.js. El "sitio" guarda su lugar mientras flota arriba. -->
+    <div class="aviso-sitio" id="aviso-sitio">
+      <div class="aviso-lanz" id="aviso-lanz" role="status" aria-live="polite" hidden>
+        <span class="aviso-lanz-icono" aria-hidden="true"></span>
+        <p class="aviso-lanz-texto"><strong></strong><span></span></p>
+        <button type="button" class="aviso-lanz-cerrar" aria-label="Cerrar el aviso">×</button>
+      </div>
+    </div>
     <!-- Hora cero en cada lugar (tarea 7.6): el juego se abre a medianoche de cada país -->
     <div class="lugares" id="lugares" role="group" aria-label="Cuenta regresiva de qué lugar">
       <button type="button" data-lugar="nz" aria-pressed="false">Nueva Zelanda</button>

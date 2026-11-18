@@ -859,6 +859,30 @@ td a:hover, td a:focus-visible { color: var(--a1); text-decoration-color: var(--
 .fiesta .escena { --vent: var(--luz); --t80-ventana: var(--luz); }
 
 /* ---------- Actualización sola: "Última medición hace X min" ---------- */
+/* Aviso de las horas cero (pedido de Bruno, 2026-11-17; opción C "píldora", que además lo sigue
+   al bajar): Nueva Zelanda, Chile y Miami. Lo escribe app.js (pintarAviso). En la portada va bajo
+   el lema; si se baja y sale de la vista, flota arriba al centro (.flota). */
+.aviso-lanz[hidden] { display: none; }
+.aviso-lanz { display: flex; align-items: center; gap: 12px; width: fit-content; max-width: 100%; margin: 0 auto 14px;
+  padding: 6px 6px 6px 8px; border-radius: 999px; background: var(--panel); box-shadow: var(--sombra);
+  color: var(--texto); font-family: var(--f-texto); text-align: left; }
+.aviso-lanz-texto { margin: 0; flex: 1; min-width: 0; line-height: 1.3; }
+.aviso-lanz-texto strong { display: block; font-size: 14px; font-weight: 700; }
+.aviso-lanz-texto span { display: block; font-size: 12px; font-weight: 600; color: var(--tenue); font-variant-numeric: tabular-nums; }
+.aviso-lanz-icono { flex: none; position: relative; width: 28px; height: 28px; border-radius: 50%; background: linear-gradient(135deg, var(--a1), var(--a2)); display: grid; place-items: center; }
+.aviso-lanz-icono::before { content: "★"; color: #fff; font-size: 15px; line-height: 1; }
+.aviso-lanz:not(.celebra) .aviso-lanz-icono::after { content: ""; position: absolute; inset: 0; border-radius: 50%; border: 2px solid var(--a1); animation: aviso-lanz-onda 2.2s ease-out infinite; }
+@keyframes aviso-lanz-onda { from { transform: scale(1); opacity: .8; } to { transform: scale(1.7); opacity: 0; } }
+.aviso-lanz-cerrar { flex: none; width: 32px; height: 32px; border: 0; border-radius: 50%; background: transparent; color: var(--tenue); font: 700 22px/1 var(--f-texto); cursor: pointer; }
+.aviso-lanz-cerrar:hover, .aviso-lanz-cerrar:focus-visible { color: var(--a1); background: color-mix(in srgb, var(--a1) 12%, transparent); }
+.aviso-lanz.flota { position: fixed; top: 12px; left: 50%; z-index: 45; width: max-content; max-width: calc(100% - 32px); margin: 0;
+  translate: -50% 0; box-shadow: var(--sombra), 0 0 0 2px color-mix(in srgb, var(--a1) 55%, transparent); }
+/* Entrada: al aparecer, al llegar cada hora cero y al empezar a flotar */
+.aviso-lanz.entra { animation: aviso-lanz-entra .6s cubic-bezier(.16, 1, .3, 1) both; }
+.aviso-lanz.flota.baja { animation: aviso-lanz-baja .45s cubic-bezier(.16, 1, .3, 1) both; }
+@keyframes aviso-lanz-entra { from { transform: translateY(14px) scale(.96); opacity: 0; } to { transform: none; opacity: 1; } }
+@keyframes aviso-lanz-baja { from { transform: translateY(-140%); opacity: 0; } to { transform: none; opacity: 1; } }
+@media (prefers-reduced-motion: reduce) { .aviso-lanz.entra, .aviso-lanz.flota.baja, .aviso-lanz-icono::after { animation: none !important; } }
 .en-vivo { margin: 0 0 12px; text-align: center; font-size: 13px; font-weight: 700; letter-spacing: .06em; }
 .en-vivo span, .en-vivo button { display: inline-flex; align-items: center; gap: 8px; padding: 6px 14px; border-radius: 999px; background: var(--panel); box-shadow: var(--sombra); color: var(--texto); font: inherit; letter-spacing: inherit; border: 0; }
 .en-vivo button { cursor: pointer; outline: 2px solid var(--a1); }
