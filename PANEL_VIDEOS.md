@@ -36,6 +36,45 @@ lo nombran en hashtags quedan fuera. El panel deja que Bruno corrija las dos cos
   YouTube. La primera vez: "el de Rust" con los tres motivos ocultos. Su navegador recuerda la
   elección. Las marcas son públicas (la página las necesita), pero nadie más puede cambiarlas.
 
+## Requisitos técnicos (revisión a favor y en contra, 2026-11-18)
+
+Salen de dos agentes que revisaron el plan contra el código (uno a favor, uno en contra);
+Claude comprobó los puntos graves.
+
+- **Publicar de verdad:** `publicar-pagina.yml` hoy solo se lanza con cambios en `web/**`,
+  `recolector/generar_web.py` y el propio workflow (líneas 26-31). Añadir el archivo de marcas
+  (y `recolector/filtro_videos.json`) a esos `paths` en la 10.1; si no, las marcas solo se ven
+  con la siguiente medición, y nunca si la medición está apagada.
+- **Servidor local protegido** (10.2): una página abierta como archivo no puede guardar ni
+  correr git, así que el `.bat` arranca un servidor en Python **solo con la librería estándar**,
+  que escucha **solo en 127.0.0.1**, con una **clave al azar** en la URL que abre el `.bat`,
+  revisa las cabeceras `Origin` y `Host`, acepta solo JSON y se cierra con su ventana. Así
+  ninguna otra página web abierta puede ordenarle "publicar" (CSRF).
+- **El panel no va en `web/`** (se publica entera): carpeta propia `panel/`, sin librerías.
+- **Borrador fuera del repositorio** (o en un archivo ignorado por git): así las marcas sin
+  publicar no ensucian el repo, no frenan el hook `Stop` ni la sincronización del PC.
+  "Publicar" copia el borrador al archivo de marcas y hace `git commit -- <ese archivo>` (solo
+  ese), `pull --rebase --autostash` (si choca, `rebase --abort` y avisar) y push. Al abrir,
+  `git pull --ff-only`. Los commits heredan el correo anónimo ya configurado en el repo.
+- **Una sola validación** de marcas, en un módulo que usan `generar_web.py` y el panel; el panel
+  la corre antes del commit, para que un archivo mal escrito no frene la publicación.
+- **Pruebas propias:** una de `generar_web.py` que compruebe que `_LVLtceZy3I` sale de las
+  listas y de los récords (10.1); una de Playwright para el panel (10.2); el selector del
+  visitante, con `probar_pagina.py` a 1280 y 384 px (10.4). Marcas de ejemplo en
+  `web/datos-ejemplo.js` con `ejemplo: true`.
+- **Graphify:** `graphify update .` al programar el panel, no en cada "Publicar".
+
+**Lo que se sabe de los datos:** cada medición guarda los 50 videos que da YouTube, también
+los descartados (186 mediciones, 701 videos distintos al 18 nov). Las listas salen solo de la
+última medición; los récords "Video/Short más visto", de todo el historial de Global; "creció
+en una hora" y el resumen del día se calculan en el navegador con lo que llega en `datos.js`
+(358 KB hoy, ~108 KB de YouTube).
+
+**Por decidir con Bruno** (antes de la 10.1): si Tendencias se filtra (los tráilers no: son
+oficiales); qué pasa con `ocultar`; el límite de rescatar (solo videos de la última medición
+para las listas; del historial, solo para récords); qué es exactamente cada configuración (¿las
+marcas valen en "desde cero"?); y cómo no inflar `datos.js` con el selector del visitante.
+
 ## Partes (cada una termina usable y verificada, nunca a medias)
 
 1. **10.1 Marcas en la página, sin panel.** Archivo de marcas con validaciones que abortan si
