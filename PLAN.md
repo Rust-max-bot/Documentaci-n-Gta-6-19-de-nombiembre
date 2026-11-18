@@ -133,7 +133,8 @@ para que Bruno las haga él (por ejemplo: marcar un video, "Publicar" y ver que 
 
 - [x] **10.1 Marcas en la página, sin panel** (archivo de marcas + `generar_web.py`). Hecha el
       18 nov en la rama `panel-videos-10-1`; se ve en la página cuando se una a `main`.
-- [ ] **10.2 Panel para marcar y publicar** (antes, opciones del aspecto con capturas).
+- [x] **10.2 Panel para marcar y publicar** (forma "Tabla", elegida por Bruno). Hecha el 18 nov
+      en la rama `panel-videos-10-2` (sobre la de la 10.1); publica solo desde `main`: hay que unirlas.
 - [ ] **10.3 Rescatar descartados y configuraciones guardadas.**
 - [ ] **10.4 Selector del visitante** (antes, opciones con capturas).
 

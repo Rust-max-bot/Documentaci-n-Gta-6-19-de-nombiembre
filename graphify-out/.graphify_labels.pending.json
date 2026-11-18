@@ -3,6 +3,7 @@
   "2": "Worker de Cloudflare despertador-recolector (horario 7,37 * * * *)",
   "3": "Estado actual del proyecto (ESTADO_ACTUAL.md)",
   "4": "steps",
+  "5": "sys",
   "8": "app.js",
   "9": "trends_extra.py",
   "10": "Trabajar con Claude en la nube",
@@ -39,6 +40,19 @@
   "51": "Plan del proyecto: recuerdo del lanzamiento de GTA 6",
   "52": "tiraHoras",
   "53": "Panel de control de videos (Fase 10)",
+  "54": "panel.js",
+  "55": "servidor.py",
   "56": "animaciones.js",
-  "58": "Exception"
+  "57": "probar_panel.py",
+  "58": "publicar.py",
+  "59": "probar_marcas.py",
+  "60": "hacer_compartir.py",
+  "61": "revisar.py",
+  "62": "Plan del proyecto: recuerdo del lanzamiento de GTA 6",
+  "63": "Plan del proyecto: recuerdo del lanzamiento de GTA 6",
+  "64": "Tareas que faltan",
+  "65": "Tareas que faltan",
+  "66": "Tareas que faltan",
+  "67": "Tareas que faltan",
+  "68": "gota"
 }
