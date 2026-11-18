@@ -89,6 +89,11 @@ con línea de tiempo, tablas y gráficos de Twitch, Kick, YouTube, Google Trends
 - [ ] **4.3 Análisis de datos (A3).** Datos interesantes: popularidad, visitas, cuánto dura el
       interés, antes y después. Necesita varios días de datos reales. **Sin IA** (Bruno, 2026-11-18): un
       programa normal, como `generar_web.py`, que corre solo con cada medición. En unos días.
+      **Filtro de videos sin dolores de cabeza** (Bruno, 2026-11-18): (1) partir siempre de los
+      datos crudos de `datos/`, nunca de lo que muestra la página; el filtro es un paso aparte;
+      (2) cada resultado dice con qué configuración y marcas de qué fecha se sacó; (3) lo
+      importante de YouTube se calcula con todos los videos y con "el de Rust" (si difieren
+      mucho, eso es un dato); (4) lo principal, con Twitch y Kick por categoría.
 - [ ] **7.13 Sección de memes** (pedido de Bruno, 2026-11-15; investigar antes de hacer nada).
       Va con la "búsqueda calmada". A investigar: de dónde salen (imágenes de Reddit ya
       guardadas, Know Your Meme, o memes que Bruno suba como en el álbum); derechos de autor (la
