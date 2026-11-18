@@ -71,6 +71,12 @@ YOUTUBE_TRAILERS = (
     "VQRLujxTm3c",   # Grand Theft Auto VI Trailer 2 (6 may 2025)
     "tJbzMqJGH4k",   # Grand Theft Auto VI: An Extended Look (28 ago 2026)
     "rz1B4B2yBZY",   # Grand Theft Auto VI Launch Trailer (15 oct 2026)
+    # Añadidos el 2026-11-17 (pedido de Bruno: "más tráilers, solo oficiales"). Son los demás
+    # videos de GTA VI de la pestaña "Videos" del canal principal @RockstarGames (no Shorts ni
+    # canales regionales), comprobados en su página pública: dueño, duración y que no son Shorts.
+    "EiQEBYDox_k",   # Grand Theft Auto VI: Official Cover Art Reveal (jun 2026, 0:33)
+    "qq76pQsI1iw",   # Grand Theft Auto VI: An Extended Look Coming August 27 (6 ago 2026, 0:26)
+    "_yl5ELcmugI",   # Grand Theft Auto VI: Pre-Load Now (10 nov 2026, 0:30)
 )
 ES_GTA = re.compile(r"\bGTA|grand theft auto|rockstar games", re.I)   # "GTA 6", "GTA6", "GTAV"
 RECORTE_ORIGINAL = 30000          # caracteres de la respuesta original que se guardan si hay problemas

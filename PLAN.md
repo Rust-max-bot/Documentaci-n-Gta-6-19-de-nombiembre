@@ -60,8 +60,6 @@ con línea de tiempo, tablas y gráficos de Twitch, Kick, YouTube, Google Trends
       elementos animan y cuáles no en TODA la página: hoy `web/animaciones.js` (`ACTIVAS`) cubre
       solo lo de la 9.8 y la 9.9. Siguiente paso: inventario con `find-animation-opportunities` y,
       con lo que elija Bruno, sumar el resto a esa tabla. Se puede enlazar con el "Panel de control".
-- [ ] **9.12 Rehacer `web/compartir.jpg`** (Bruno, 2026-11-17: "para después"). La portada
-      cambió el 17 nov (hotel "HOTEL", hoja de palmera): `python pruebas/hacer_compartir.py --opcion C --guardar`.
 - [ ] **9.4 Optimizar la página** (Bruno, 2026-11-16). Medido sin cambiar nada (Edge, gzip local;
       "celular lento" = 384 px, CPU 4×, 1,6 Mbps, 150 ms; ~1.000 mediciones simuladas = 19 dic).
       **Hecho (2026-11-16):** eje de los gráficos sin textos encimados (opción C: fechas y horas
@@ -167,6 +165,7 @@ No se empieza hasta que Bruno avise con una confirmación oficial de la versión
   medición se animan juntas (si no, la hora se veía cortada) y las fotos salen con fundido.
 - **9.9 (2026-11-17, opciones A):** Titulares y "Ver los N eventos" de la línea de tiempo se abren y cierran con cortina; los botones cambian el texto con fundido y la flecha gira; los filtros de la línea de tiempo llevan la gota rosada y la lista cambia con fundido corto (`web/animaciones.js`, `ACTIVAS`).
 - **9.10 (2026-11-17):** fotos de perfil de Kick en la tabla de Twitch y Kick. La lista de directos de Kick ya trae `broadcaster_user.profile_picture` (verificado: 221 de 221 y, con la función real, 10 de 10 canales guardados); se guarda en `datos/` solo si es de `files.kick.com`, y `datos.js` lleva `fotos_kick` (canal → foto más reciente), así también las mediciones del 16 nov. Las fotos por defecto de Kick no se guardan (la página dibuja su reemplazo). Verificado en datos reales: desde la medición de las 23:07 UTC del 17 nov ya se guardan. Las mediciones anteriores solo la tienen si ese canal vuelve a estar entre los 10 primeros.
+- **9.12 (2026-11-17):** `web/compartir.jpg` rehecha con la portada nueva (opción C). **Tráilers (2026-11-17, Bruno: "solo oficiales"):** `YOUTUBE_TRAILERS` pasa de 4 a 7 videos (portada del juego, anuncio del Extended Look y "Pre-Load Now"), los de la pestaña "Videos" de @RockstarGames, sin Shorts ni canales regionales.
 - **Herramientas:** Graphify y sincronización del PC con GitHub (`sincronizar_datos.ps1`).
 - Descartado por Bruno: app en el celular; Cloudflare Radar; redes de descarga de PlayStation y
   Xbox; la 9.2 "¿Cuánta gente faltó?"; "qué tan popular es GTA 6 en YouTube" (posición en tendencias, 2026-11-17).
