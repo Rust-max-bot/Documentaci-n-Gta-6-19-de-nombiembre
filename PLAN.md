@@ -1,9 +1,10 @@
 # Plan del proyecto: recuerdo del lanzamiento de GTA 6
 
-> **Plan anterior archivado** el 2026-11-17 en `historial/PLAN_2026-11-17-2.md` (pasó de 20.000
-> bytes). Antes: `historial/PLAN_2026-11-17.md`, `historial/PLAN_2026-11-16.md` (decisiones,
-> fuentes y riesgos con su detalle) y `historial/PLAN_DE_TRABAJO_*.md`. Un solo plan desde el
-> 2026-11-16 (pedido de Bruno).
+> **Plan anterior archivado** el 2026-11-18 en `historial/PLAN_2026-11-18.md` (pasó de 20.000
+> bytes; tiene el detalle de lo ya hecho de la 9.8 a la 9.12 y las tres horas cero). Antes:
+> `historial/PLAN_2026-11-17-2.md`, `historial/PLAN_2026-11-17.md`, `historial/PLAN_2026-11-16.md`
+> (decisiones, fuentes y riesgos con su detalle) y `historial/PLAN_DE_TRABAJO_*.md`. Un solo plan
+> desde el 2026-11-16 (pedido de Bruno).
 
 Un recuerdo del 19 de noviembre de 2026, día en que sale GTA 6, por diversión: una página web
 con línea de tiempo, tablas y gráficos de Twitch, Kick, YouTube, Google Trends y titulares
@@ -151,32 +152,25 @@ No se empieza hasta que Bruno avise con una confirmación oficial de la versión
 - [ ] **8.4 Los más vendidos de la historia** (Tetris, Minecraft, GTA V, RDR2…) con cifras al día
       y su fuente. Ojo: el documento de Bruno del 14 nov tenía cifras viejas.
 
-## Lo ya hecho (detalle en `historial/PLAN_2026-11-17-2.md` y en `git log`)
+## Lo ya hecho (detalle en `historial/PLAN_2026-11-18.md`, los anteriores y `git log`)
 
-- **Fases 0 y 1** (1.1 a 1.7), **fase 2** (2.1 a 2.4 y 2.6 a 2.15), **fase 3** (3.1 a 3.3), **fase 4**
-  (4.1 y 4.2), **fase 6** (6.2 a 6.5; 6.6 Kick, categoría 13155 cada hora desde el 16 nov; 6.7
-  GTA 6 frente a Doomsday con la consulta previa de `datos/trends_previa/`; 6.9 quitar Reddit, para
-  volver `git revert` de su commit) y **fase 7** (7.2, 7.3 y 7.5 a 7.12).
-- **9.1** servidores más cortos (C); **9.5 a 9.7** tarjetas de alto fijo, gráfico con inicio y
-  ahora y GTA VI al centro (A); línea de tiempo nueva (A); Rockstar a mano (C); íconos (C); Trends
-  sin huecos (A); vidrio y neón (2026-11-17).
-- **9.8 (2026-11-17, opción A):** al cambiar de día, el Resumen del día y la tabla de Twitch y
-  Kick entran deslizando (`web/animaciones.js`; apagar con `ACTIVAS`). Las dos filas de una
-  medición se animan juntas (si no, la hora se veía cortada) y las fotos salen con fundido.
-- **9.9 (2026-11-17, opciones A):** Titulares y "Ver los N eventos" de la línea de tiempo se abren y cierran con cortina; los botones cambian el texto con fundido y la flecha gira; los filtros de la línea de tiempo llevan la gota rosada y la lista cambia con fundido corto (`web/animaciones.js`, `ACTIVAS`).
-- **9.10 (2026-11-17):** fotos de perfil de Kick en la tabla de Twitch y Kick. La lista de directos de Kick ya trae `broadcaster_user.profile_picture` (verificado: 221 de 221 y, con la función real, 10 de 10 canales guardados); se guarda en `datos/` solo si es de `files.kick.com`, y `datos.js` lleva `fotos_kick` (canal → foto más reciente), así también las mediciones del 16 nov. Las fotos por defecto de Kick no se guardan (la página dibuja su reemplazo). Verificado en datos reales: desde la medición de las 23:07 UTC del 17 nov ya se guardan. Las mediciones anteriores solo la tienen si ese canal vuelve a estar entre los 10 primeros.
-- **9.12 (2026-11-17):** `web/compartir.jpg` rehecha con la portada nueva (opción C). **Tráilers (2026-11-17, Bruno: "solo oficiales"):** `YOUTUBE_TRAILERS` pasa de 4 a 7 videos (portada del juego, anuncio del Extended Look y "Pre-Load Now"), los de la pestaña "Videos" de @RockstarGames, sin Shorts ni canales regionales.
-- **Tres horas cero (2026-11-17, Bruno):** la fiesta y el lema se lanzan al salir en Nueva Zelanda, Chile y Miami (antes, solo Chile), y siguen bien si se cambia de estilo o de hora en plena fiesta. Aviso de cada salida: opción **C** (píldora bajo el lema) **que sigue al bajar**, desde 24 h antes de Nueva Zelanda hasta 24 h después de Miami.
+- **Fases 0 y 1:** hechas (1.1 a 1.7). **Fase 2:** 2.1 a 2.4 y 2.6 a 2.15 (falta 2.5). **Fase 3:**
+  hecha (3.1 a 3.3). **Fase 4:** 4.1 y 4.2 (falta 4.3).
+- **Fase 6:** 6.2 a 6.5; 6.6 Kick (categoría 13155 cada hora desde el 16 nov); 6.7 GTA 6 frente a
+  Doomsday con la consulta previa de `datos/trends_previa/` (previas del 17 y del 18 nov, esta a
+  mano porque GitHub se saltó su horario); 6.9 quitar Reddit (para volver, `git revert`).
+- **Fase 7:** 7.2, 7.3 y 7.5 a 7.12. **Fase 9:** 9.1, 9.5 a 9.10 y 9.12; tres horas cero
+  (Nueva Zelanda, Chile y Miami) con aviso de cada salida (C).
 - **Herramientas:** Graphify y sincronización del PC con GitHub (`sincronizar_datos.ps1`).
 - Descartado por Bruno: app en el celular; Cloudflare Radar; redes de descarga de PlayStation y
-  Xbox; la 9.2 "¿Cuánta gente faltó?"; "qué tan popular es GTA 6 en YouTube" (posición en tendencias, 2026-11-17).
+  Xbox; la 9.2 "¿Cuánta gente faltó?"; "qué tan popular es GTA 6 en YouTube".
 
 ## Decisiones vigentes
 
 El porqué y las opciones descartadas, en `historial/PLAN_2026-11-16.md`.
 
 - **Fuentes:** Twitch, YouTube y Google Trends (imprescindibles); además Kick, titulares de Google
-  Noticias, estado de PlayStation y Xbox, ranking de Twitch, tendencias de YouTube y los 4 videos
+  Noticias, estado de PlayStation y Xbox, ranking de Twitch, tendencias de YouTube y los 7 videos
   oficiales de GTA VI. Rockstar no responde a programas: sus caídas se anotan a mano en `web/eventos.js`.
 - **Medición** cada hora (minuto 7) y al 37 del 17 al 21 nov (UTC), hasta el 19 dic, con interruptor
   manual; la lanza el despertador de Cloudflare (`despertador/`), no el `schedule`.
