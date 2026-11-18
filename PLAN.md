@@ -131,28 +131,26 @@ con línea de tiempo, tablas y gráficos de Twitch, Kick, YouTube, Google Trends
 - [ ] **IA barata para filtrar videos** (Bruno, 2026-11-15): que lea título, descripción y
       etiquetas para decidir si un video es de GTA 6. No Claude, por el costo. Idea (18 nov, para
       después): Gemini, que puede ver el video. Antes, un plan pequeño.
-- [ ] **Panel de control para clasificar videos** (Bruno, 2026-11-15; entrevista en curso desde el
-      18 nov; después del lanzamiento). Decidido el 18 nov:
-      - **Panel solo en el PC de Bruno** (sin celular; no hace falta repo nuevo: en el público solo
-        él escribe). Abre con los videos nuevos sin revisar; deja ver y filtrar los que ya salen
-        y también **los que el filtro automático descartó**, para rescatarlos (p. ej. los que
-        solo nombran GTA 6 en hashtags). Toda marca se puede deshacer. Nada se borra de `datos/`.
-      - **Cómo funciona:** doble clic en un `.bat` (como `ver_pagina.bat`) abre el panel en el
-        navegador, solo en el PC. Al abrir hace `git pull`; "Publicar" guarda las marcas en un
-        archivo propio de `recolector/`, hace commit, `pull --rebase` y push (no choca con
-        `datos/`). Por internet, descartado (Bruno, 18 nov): habría que protegerlo con su cuenta.
-      - Marcas con uno o varios **motivos**: "no trata de GTA", "hecho con IA", "dudoso".
-      - **Configuraciones guardadas:** "desde cero" (sin filtro), "filtro automático" (el de hoy:
-        título sin hashtags, tema de videojuegos, sin "roblox") y "el de Rust" (el automático
-        corregido por Bruno, que manda en los dos sentidos); Bruno puede guardar otras.
-      - Botón **"Publicar"** que guarda y sube a GitHub (se ve en la siguiente publicación). Si
-        falla: queda guardado en el PC y lo sube una sesión de Claude.
-      - **El visitante** elige la configuración y qué motivos ver, en todas las listas y récords
-        de YouTube (la primera vez, "el de Rust" con los tres motivos ocultos, confirmado por Bruno; después, su
-        navegador recuerda la elección). La lista de marcas es pública (la página la necesita).
+- [ ] **Panel de control para clasificar videos** (Bruno, 2026-11-15; entrevista hecha el 18 nov;
+      después del lanzamiento). Decidido:
+      - **Local, solo en el PC de Bruno:** un `.bat` lo abre en el navegador; al abrir, `git pull`;
+        botón **"Publicar"**: guarda las marcas en un archivo propio de `recolector/`, commit,
+        `pull --rebase` y push (si falla, queda en el PC y lo sube una sesión de Claude). Por
+        internet, descartado. No hace falta repo nuevo. Nada se borra de `datos/`.
+      - **Una sola lista** (no una pestaña por sección): cada video una vez, con etiquetas de dónde
+        sale (Global, Español, Tendencias, récords, descartado) y filtros por lugar, video/Short y
+        estado (sin revisar, marcado, rescatado). Abre en "sin revisar".
+      - **La marca va en el video** (su código), así vale en todas las listas a la vez. Uno o
+        varios **motivos**: "no trata de GTA", "hecho con IA", "dudoso". Se puede **rescatar** lo
+        que el filtro descartó (p. ej. solo #GTA6). Toda marca se puede deshacer.
+      - **Configuraciones:** "desde cero" (sin filtro), "filtro automático" (el de hoy) y "el de
+        Rust" (el automático corregido por Bruno en los dos sentidos); Bruno puede guardar otras.
+      - **El visitante** elige configuración y motivos, en todas las listas y récords de YouTube;
+        la primera vez, "el de Rust" con los tres motivos ocultos; su navegador lo recuerda. Las
+        marcas son públicas (la página las necesita).
       - Ejemplo: Short `_LVLtceZy3I` ("Lamine Yamal x GTA 6", IA) pasa el filtro automático
         porque el título nombra GTA 6 y YouTube le puso temas de videojuegos.
-      Falta: cómo se ve el selector (opciones con capturas).
+      Falta: cómo se ven el panel y el selector de la página (opciones con capturas).
 - [ ] **API alfa de Google Trends** (idea de Bruno, 2026-11-16; para después, sin apuro). Google
       abrió una prueba alfa de una API oficial de Trends (developers.google.com/search/apis/trends):
       se pide con un formulario y solo la dan a un grupo limitado; no se sabe si aceptarán a Bruno.
