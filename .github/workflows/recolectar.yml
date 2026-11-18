@@ -52,6 +52,12 @@ jobs:
           done
           exit 1
 
+      # Tarea 9.3 (2026-11-17): un 429/503 suelto de Google (Noticias o Trends) solo deja un aviso
+      # amarillo y la ejecución sale en verde; si se repite en la medición siguiente, pasa a rojo.
+      - name: Aviso suave si solo falló Google una vez
+        if: steps.medir.outputs.avisos != ''
+        run: echo "::warning::Hueco pasajero de Google (429/503) en ${{ steps.medir.outputs.avisos }}. La siguiente medición lo trae."
+
       # La medición ya quedó guardada con el hueco anotado; esto solo hace que GitHub avise.
       - name: Avisar si alguna fuente falló
         if: steps.medir.outputs.fallos != ''

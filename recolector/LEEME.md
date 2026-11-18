@@ -97,6 +97,8 @@ youtube_trailers     (desde el 13 nov, tarea 6.2) unidades (1), pedidos (cuánto
 
 - **Hueco:** si una fuente falla, en su lugar va `{"error": "mensaje"}`. Nunca se inventa un
   dato. GitHub marca la ejecución en rojo y avisa por correo, pero la medición se guarda.
+  Excepción (9.3): un 429/503 suelto de Google (Noticias o Trends) deja solo un aviso amarillo y
+  la ejecución en verde; si se repite en la medición siguiente, vuelve a ser rojo.
 - **Google Trends es relativo:** 100 es el máximo de los últimos 7 días, así que el mismo
   punto puede valer distinto en mediciones distintas.
 - **YouTube:** tres búsquedas de "GTA 6" de los últimos 7 días (la global por visitas, la de

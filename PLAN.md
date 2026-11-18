@@ -68,13 +68,12 @@ con línea de tiempo, tablas y gráficos de Twitch, Kick, YouTube, Google Trends
       22:** (a) `datos.js` pasará de 182 KB a ~1,6 MB (~320 KB comprimido; carga en el celular
       lento de 3,7 a 5,5 s): partirlo o aligerarlo. (b) ~750 ms fijos al cargar leyendo medidas
       de la página (`gota`, `estado` de los Shorts): moverlo después del primer dibujo.
-- [ ] **9.3 Menos alarmas por Google** (Bruno, 2026-11-16; después del 22: toca el
-      recolector). Hasta el 16 nov, 6 huecos en 101 mediciones, todos de Google (Trends 429 ×4,
-      Noticias 429 y 503) y ninguno perdió datos (la siguiente medición los trae). Posible patrón:
-      14:07 y 21:07 UTC fallaron dos veces cada una (pocos casos). Plan: resumen de huecos por fuente,
-      hora, día y código en `recolector/revisar.py` (el registro ya está en `datos/`); un reintento
-      a los 20 s para Noticias, como Reddit; y aviso amarillo (no rojo) si solo falla Google con
-      429/503, dejando el rojo para claves caducadas o fallos varias horas seguidas.
+- [ ] **9.3 Menos alarmas por Google** (Bruno, 2026-11-16). **Hecho el 17 nov** (Bruno pidió
+      "menos fallos" para el lanzamiento): Noticias reintenta una vez a los 20 s si Google da 429/503,
+      y un 429/503 suelto de Noticias o Trends deja aviso amarillo con la ejecución en verde (rojo si
+      se repite en la medición siguiente o si falla otra cosa). Del 17 nov: 10 de 30 ejecuciones en
+      rojo, todas por Google o Reddit, sin perder datos. Probado en GitHub sin guardar. **Falta
+      (después del 22):** resumen de huecos por fuente, hora, día y código en `recolector/revisar.py`.
 - [ ] **6.6 Instagram** (Kick ya está hecho; ver "Lo ya hecho"). Parece difícil: la API de Meta
       solo funciona con una cuenta de empresa o creador propia unida a una página de Facebook, y
       la búsqueda por hashtag da pocas publicaciones, no el total, con límite semanal. Si no

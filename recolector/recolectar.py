@@ -30,6 +30,7 @@ SANTIAGO = timezone(timedelta(hours=-3))
 NOMBRE_ARCHIVO = re.compile(r"^\d{4}-\d{2}-\d{2}\.jsonl$")
 DIAS_DE_ESTADO = 3                # archivos recientes que se leen para no repetir titulares
 TAMANO_MAX_FUENTE = 100_000       # caracteres; si una fuente entrega más, se guarda como hueco
+GOOGLE_PASAJERO = ("noticias", "trends")   # fuentes de Google cuyo 429/503 suelto es solo aviso (9.3)
 SECRETOS = ("TWITCH_CLIENT_ID", "TWITCH_CLIENT_SECRET", "YOUTUBE_API_KEY", "KICK_CLIENT_ID", "KICK_CLIENT_SECRET")
 
 
@@ -54,7 +55,8 @@ def leer_estado(carpeta):
     """Lee los archivos más recientes. Si alguno está dañado, aborta: no se añade nada encima."""
     estado = {"ultima_t": None, "youtube_previos": [], "noticias_vistas": set(),
               "youtube_es_previos": [], "youtube_es_busqueda": None, "shorts": {},
-              "youtube_busqueda": None, "youtube_largos_previos": [], "youtube_largos_busqueda": None}
+              "youtube_busqueda": None, "youtube_largos_previos": [], "youtube_largos_busqueda": None,
+              "fallos_previos": set()}
     videos_largos = []
     videos_es = []
     archivos = sorted(p for p in carpeta.glob("*.jsonl"))
@@ -95,6 +97,7 @@ def leer_estado(carpeta):
                     estado["shorts"][v["id"]] = v["short"]
     if ultima:
         estado["ultima_t"] = ultima["t"]
+        estado["fallos_previos"] = {k for k, v in ultima.items() if isinstance(v, dict) and "error" in v}
         estado["youtube_previos"] = [v["id"] for v in sorted(videos, key=lambda v: v.get("visitas") or 0, reverse=True)]
         estado["youtube_es_previos"] = [v["id"] for v in sorted(videos_es, key=lambda v: v.get("visitas") or 0, reverse=True)]
         estado["youtube_largos_previos"] = [v["id"] for v in sorted(videos_largos, key=lambda v: v.get("visitas") or 0, reverse=True)]
@@ -197,9 +200,18 @@ def main():
     print(f"Guardado en {archivo.name}: {len(linea.encode('utf-8'))} bytes, {m['duracion_s']} s."
           + (f" Fuentes con hueco: {', '.join(fallos)}." if fallos else " Todas las fuentes respondieron."))
 
+    # Tarea 9.3: aviso amarillo (no rojo) si el hueco es solo de Google con un código pasajero
+    # (429 "demasiadas peticiones" o 503) y esa fuente sí respondió en la medición anterior: la
+    # siguiente medición lo trae. Rojo para todo lo demás (claves caducadas, fallos seguidos…).
+    leves = [n for n in fallos if n in GOOGLE_PASAJERO and n not in estado["fallos_previos"]
+             and re.search(r"código (429|503)\b", m[n]["error"])]
+    graves = [n for n in fallos if n not in leves]
+    if leves:
+        print(f"Aviso: hueco pasajero de Google en {', '.join(leves)} (la siguiente medición lo trae).")
     if os.environ.get("GITHUB_OUTPUT"):
         with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as fh:
-            fh.write(f"fallos={','.join(fallos)}\n")
+            fh.write(f"fallos={','.join(graves)}\n")
+            fh.write(f"avisos={','.join(leves)}\n")
     return 0
 
 

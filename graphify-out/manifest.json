@@ -48,9 +48,9 @@
     "semantic_hash": ""
   },
   "ESTADO_ACTUAL.md": {
-    "mtime": 1794963107.4226153,
-    "seen": 1794963114.8773432,
-    "ast_hash": "7b8e6d489ce8058c4c85fe3d43f74181",
+    "mtime": 1794964216.6980581,
+    "seen": 1794964237.200201,
+    "ast_hash": "9d39755d0b309878526c0ddcaa385b2d",
     "semantic_hash": ""
   },
   "GUIA_CLAVES.md": {
@@ -60,9 +60,9 @@
     "semantic_hash": ""
   },
   "PLAN.md": {
-    "mtime": 1794963072.3702831,
-    "seen": 1794963114.8773468,
-    "ast_hash": "fbb90ac3515a28e0d25d9931865d4be4",
+    "mtime": 1794964216.6980581,
+    "seen": 1794964237.2002044,
+    "ast_hash": "81f3d8a028511ce4f33927eff5587a7f",
     "semantic_hash": ""
   },
   "README.md": {
@@ -90,15 +90,15 @@
     "semantic_hash": ""
   },
   ".github/workflows/recolectar.yml": {
-    "mtime": 1794801269.8821378,
-    "seen": 1794951380.155567,
-    "ast_hash": "cab70090523a034c96e3cc21016721a7",
+    "mtime": 1794964199.779805,
+    "seen": 1794964237.200154,
+    "ast_hash": "71a81323467dca3692fbd594a150be4a",
     "semantic_hash": ""
   },
   "recolector/fuentes.py": {
-    "mtime": 1794962898.8866086,
-    "seen": 1794963114.8773146,
-    "ast_hash": "825eac282f793f5874131bca04dd008d",
+    "mtime": 1794964199.7808053,
+    "seen": 1794964237.2001734,
+    "ast_hash": "df85b7be4425387b563466e2f1cbcbcd",
     "semantic_hash": ""
   },
   "recolector/interruptor.json": {
@@ -108,9 +108,9 @@
     "semantic_hash": "b8c4851586f3fbbdd7b1ac30238e6af6"
   },
   "recolector/recolectar.py": {
-    "mtime": 1794950978.112171,
-    "seen": 1794951380.1555912,
-    "ast_hash": "646b2438fc83714f8c4cf3ab816e1f99",
+    "mtime": 1794964199.7820356,
+    "seen": 1794964237.2001805,
+    "ast_hash": "18d73f167773be033c4489d8878d58be",
     "semantic_hash": ""
   },
   "recolector/red.py": {
@@ -132,9 +132,9 @@
     "semantic_hash": ""
   },
   "recolector/LEEME.md": {
-    "mtime": 1794956717.0499268,
-    "seen": 1794957771.0523245,
-    "ast_hash": "9175c97cb0b772d9395fe970c1a2416d",
+    "mtime": 1794964235.1097674,
+    "seen": 1794964237.2002218,
+    "ast_hash": "43d1105d9abd03762bfd5b78586cc2d4",
     "semantic_hash": ""
   },
   "recolector/generar_web.py": {

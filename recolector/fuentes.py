@@ -55,6 +55,10 @@ TRENDS_ESPERA_429 = 20            # segundos antes del reintento
 TRENDS_REINTENTA_ANTES_DE = 40    # solo se reintenta si el primer intento tardó menos que esto (s)
 TRENDS_ESPERA_CONSULTA = 20       # segundos máximos por consulta (pedir() usa 30 por defecto)
 NOTICIAS_RSS = "https://news.google.com/rss/search?q=%22GTA+6%22&hl=es-419&gl=CL&ceid=CL:es-419"
+# Tarea 9.3 (Bruno, 2026-11-17: "que haya menos fallos"): Google Noticias responde a veces 429 o 503
+# a las máquinas de GitHub (8 huecos del 16 al 17 nov). Un solo reintento, como en Trends.
+NOTICIAS_ESPERA = 20              # segundos antes del reintento
+NOTICIAS_REINTENTA = (429, 503)   # códigos pasajeros que vale la pena reintentar
 # Tarea 6.3 (Bruno, 2026-11-13): GTA comparado con lo más visto. Se guarda desde antes del
 # lanzamiento porque el ranking de un momento no se puede pedir después.
 TWITCH_GTA5 = "32982"             # "Grand Theft Auto V"; el nombre se comprueba en la prueba real
@@ -429,6 +433,12 @@ def trends(estado):
 
 def noticias(estado):
     cod, txt = pedir(NOTICIAS_RSS)
+    if cod in NOTICIAS_REINTENTA:
+        time.sleep(NOTICIAS_ESPERA)
+        cod2, txt = pedir(NOTICIAS_RSS)
+        if cod2 != 200:
+            raise Falla(f"Google Noticias: código {cod2} tras 2 intentos (antes {cod})")
+        cod = cod2
     if cod != 200:
         raise Falla(f"Google Noticias: código {cod}")
     try:

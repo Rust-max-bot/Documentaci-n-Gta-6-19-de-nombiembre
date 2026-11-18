@@ -42,8 +42,10 @@ Desde la nube no se abre `github.io` ni cargan las fotos de YouTube y Twitch (re
 - **El 18 nov:** revisar que corrió la consulta previa de Trends de las 11:15 UTC (Actions →
   "Trends extra (6.1)"); si no, lanzarla a mano con la casilla "previa".
 - **El 21 nov:** comprobar que la 6.1 se guardó (se lanza sola del 21 al 24 nov).
-- `recolector/` se tocó el 17 nov (9.10, fotos de Kick; tráilers): si algo raro pasa, `git revert`
-  de ese commit.
+- `recolector/` se tocó el 17 nov (9.10 fotos de Kick, tráilers y 9.3 menos alarmas): si algo
+  raro pasa, `git revert` del commit que corresponda.
+- Un aviso **amarillo** en "Recolectar datos" es un fallo suelto de Google: no hace falta hacer
+  nada. **Rojo** sí merece mirar.
 - Freno de emergencia de la portada para el 19 si va lenta: `portada: false` en `ACTIVAS` de
   `web/animaciones.js`.
 - Álbum (7.7): vacío hasta que Bruno suba fotos a `web/album/` (guía en `web/album/LEEME.md`).
@@ -53,12 +55,13 @@ Desde la nube no se abre `github.io` ni cargan las fotos de YouTube y Twitch (re
 **Fecha límite:** lanzamiento el 19 de noviembre de 2026, 00:00 de Santiago.
 
 **Reglas en pausa:** ninguna. "Paso a paso con permiso" está activa **por tandas** (ver
-`CLAUDE.md`). Última tanda (17 nov, pedida por Bruno, **terminada**): 9.12 `compartir.jpg` y más
-tráilers oficiales en "Logros y récords".
+`CLAUDE.md`). Última tanda (17 nov, pedida por Bruno, **terminada**): dejar todo listo para el
+lanzamiento (revisión completa y menos alarmas por Google). Antes: 9.12 y más tráilers.
 
 ## Últimos cambios
 
 - 2026-11-17: estado anterior archivado en historial/ESTADO_2026-11-17.md
+- 2026-11-17: revisión para el lanzamiento (pedido de Bruno): pruebas de la página en Edge y Firefox, con hora cero y con la fecha simulada después de cada salida (Nueva Zelanda, Chile, Miami), y del despertador: todo bien. 9.3 en parte: Noticias reintenta una vez si Google da 429/503, y un fallo suelto de Google (Noticias o Trends) ya no pone la ejecución en rojo, solo un aviso amarillo (rojo si se repite o si falla otra fuente). Probado en GitHub sin guardar: todas las fuentes respondieron.
 - 2026-11-17: 9.12 hecha: `web/compartir.jpg` rehecha con la portada actual (opción C). Más tráilers en "Logros y récords" (Bruno: "solo oficiales"): `YOUTUBE_TRAILERS` de `recolector/fuentes.py` pasa de 4 a 7 con "Official Cover Art Reveal" (`EiQEBYDox_k`), "An Extended Look Coming August 27" (`qq76pQsI1iw`) y "Pre-Load Now" (`_yl5ELcmugI`): todos los videos de GTA VI de la pestaña "Videos" de @RockstarGames, sin Shorts (versiones verticales) ni canales regionales.
 
 ## Pendiente
@@ -69,7 +72,7 @@ La lista completa y su orden están en `PLAN.md`. Resumen (2026-11-17):
   22). 6.8 diseñar la sección de la 6.1 desde el 20 nov. **Reddit:** quitado (6.9): solo
   volvería con la clave oficial.
 0. **(2026-11-16, orden de Bruno):** 9.4 optimizar la página (eje y `partes()` hechos; lo
-   grande, después del 22) y 9.3 menos alarmas por Google (después del 22). Descartados
+   grande, después del 22) y lo que falta de la 9.3 (resumen de huecos en `revisar.py`, después del 22). Descartados
    (Bruno): la 9.2 "¿Cuánta gente faltó?", Cloudflare Radar, redes de descarga de las consolas y
    "qué tan popular es GTA 6 en YouTube". Detalle en `PLAN.md`.
 1. **7.4:** "Lo que espero" ya está en la página. Después del lanzamiento, Bruno escribe "Lo que
