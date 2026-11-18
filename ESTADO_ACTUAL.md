@@ -88,6 +88,8 @@ La lista completa y su orden están en `PLAN.md`. Resumen (2026-11-17):
    `web/lanzamientos.js`. **Fase 8 (GTA 6 en PC):** dormida hasta que Bruno avise con
    confirmación oficial.
 5. **Fase 5** (después del lanzamiento): búsqueda calmada.
+   **Fase 10** (después del lanzamiento): panel de control de videos, en 4 partes
+   (entrevista hecha el 18 nov; detalle en `PANEL_VIDEOS.md`).
 6. **Ideas sueltas:** 2.5 TikTok (sin acceso fácil); D6 (Bruno pidió ignorarla por ahora).
 7. **Bruno:**
    - si quiere, borrar en GitHub la ejecución fallida 43541223135 de "Publicar página" (falló

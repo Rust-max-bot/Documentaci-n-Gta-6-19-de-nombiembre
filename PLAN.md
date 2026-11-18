@@ -110,6 +110,18 @@ con línea de tiempo, tablas y gráficos de Twitch, Kick, YouTube, Google Trends
 - [ ] **Ventas oficiales de GTA 6:** cuando Take-Two las publique, escribirlas en `gta6` de
       `web/lanzamientos.js` (el punto de "Próximamente" se marca solo).
 
+### Fase 10 — Panel de control de videos (después del lanzamiento)
+
+Entrevista con Bruno del 2026-11-18. Lo decidido y el detalle de cada parte, en
+`PANEL_VIDEOS.md`. Panel local en el PC de Bruno para marcar videos con motivos ("no trata de
+GTA", "hecho con IA", "dudoso") o rescatarlos; el visitante elige configuración y motivos.
+Cada parte termina usable y verificada; se hacen en orden.
+
+- [ ] **10.1 Marcas en la página, sin panel** (archivo de marcas + `generar_web.py`).
+- [ ] **10.2 Panel para marcar y publicar** (antes, opciones del aspecto con capturas).
+- [ ] **10.3 Rescatar descartados y configuraciones guardadas.**
+- [ ] **10.4 Selector del visitante** (antes, opciones con capturas).
+
 ### Ideas para después, sin fecha
 
 - [ ] **2.5 TikTok.** Sin acceso oficial para un proyecto personal (la API de investigación es
@@ -131,26 +143,6 @@ con línea de tiempo, tablas y gráficos de Twitch, Kick, YouTube, Google Trends
 - [ ] **IA barata para filtrar videos** (Bruno, 2026-11-15): que lea título, descripción y
       etiquetas para decidir si un video es de GTA 6. No Claude, por el costo. Idea (18 nov, para
       después): Gemini, que puede ver el video. Antes, un plan pequeño.
-- [ ] **Panel de control para clasificar videos** (Bruno, 2026-11-15; entrevista hecha el 18 nov;
-      después del lanzamiento). Decidido:
-      - **Local, solo en el PC de Bruno:** un `.bat` lo abre en el navegador; al abrir, `git pull`;
-        botón **"Publicar"**: guarda las marcas en un archivo propio de `recolector/`, commit,
-        `pull --rebase` y push (si falla, queda en el PC y lo sube una sesión de Claude). Por
-        internet, descartado. No hace falta repo nuevo. Nada se borra de `datos/`.
-      - **Una sola lista** (no una pestaña por sección): cada video una vez, con etiquetas de dónde
-        sale (Global, Español, Tendencias, récords, descartado) y filtros por lugar, video/Short y
-        estado (sin revisar, marcado, rescatado). Abre en "sin revisar".
-      - **La marca va en el video** (su código), así vale en todas las listas a la vez. Uno o
-        varios **motivos**: "no trata de GTA", "hecho con IA", "dudoso". Se puede **rescatar** lo
-        que el filtro descartó (p. ej. solo #GTA6). Toda marca se puede deshacer.
-      - **Configuraciones:** "desde cero" (sin filtro), "filtro automático" (el de hoy) y "el de
-        Rust" (el automático corregido por Bruno en los dos sentidos); Bruno puede guardar otras.
-      - **El visitante** elige configuración y motivos, en todas las listas y récords de YouTube;
-        la primera vez, "el de Rust" con los tres motivos ocultos; su navegador lo recuerda. Las
-        marcas son públicas (la página las necesita).
-      - Ejemplo: Short `_LVLtceZy3I` ("Lamine Yamal x GTA 6", IA) pasa el filtro automático
-        porque el título nombra GTA 6 y YouTube le puso temas de videojuegos.
-      Falta: cómo se ven el panel y el selector de la página (opciones con capturas).
 - [ ] **API alfa de Google Trends** (idea de Bruno, 2026-11-16; para después, sin apuro). Google
       abrió una prueba alfa de una API oficial de Trends (developers.google.com/search/apis/trends):
       se pide con un formulario y solo la dan a un grupo limitado; no se sabe si aceptarán a Bruno.
@@ -236,4 +228,4 @@ El porqué y las opciones descartadas, en `historial/PLAN_2026-11-18-2.md` y `hi
 `web/` (la página; `datos.js` y `dias/` se generan), `recolector/` (Python, LEEME.md), `datos/`
 (un archivo por día UTC; solo los escribe GitHub), `despertador/` (Worker de Cloudflare),
 `.github/workflows/`, `pruebas/` (LEEME.md; `capturas/` no va a git), `diseno/` (dibuja la
-portada), `historial/` (versiones viejas). Para ver la página en el PC: `ver_pagina.bat`.
+portada), `historial/` (versiones viejas); `PANEL_VIDEOS.md`, la Fase 10. Para ver la página en el PC: `ver_pagina.bat`.
