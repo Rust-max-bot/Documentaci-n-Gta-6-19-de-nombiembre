@@ -70,11 +70,13 @@ las reglas, en `CLAUDE.md`.
       sirvió** (la traza mostró que el costo solo pasó a otras funciones): revertido; sí `aria-pressed`
       solo si cambia. (C) + cielo (Bruno, 20 nov): `web/inicio.js` en el `<head>` pone el estilo
       guardado y día/atardecer/noche antes del primer dibujo (la fórmula del sol se mudó ahí;
-      app.js la usa); sin costo medido en el primer dibujo. `content-visibility` en `.bloque`:
-      ~7 % menos CPU al arrancar (perfil, 3 de 3), el tiempo total queda dentro del ruido; con él
-      la recarga automática vuelve a la sección (en `main` queda ~2.000 px más arriba: fallo que
-      ya existía). `probar_saltos.py` nuevo. Falta: abogado del diablo y unir a `main`.
-      Descartado: `defer` (rompe `filtro-videos.js:116`), partir mediciones, mover fotos.
+      app.js la usa; respaldo si no llega). Abogado del diablo (2.ª vuelta): fórmula idéntica
+      (105.120 horas comparadas). Medido junto a `main`: página armada ~5,3 → ~3,7 s; primer
+      dibujo +0,1 a 0,15 s. **Listo para unir a `main` cuando Bruno lo pruebe.**
+      **Fallo que ya existía, sin arreglar:** la recarga automática no vuelve a la misma altura
+      (Titulares queda 1.700 a 4.600 px más arriba; `app.js` ~L1330 compite con el navegador).
+      Descartado: `defer` (rompe `filtro-videos.js:116`), partir mediciones, mover fotos y
+      `content-visibility` (~7 % de CPU; rompía los enlaces #sección en Edge y copiar todo en Firefox).
 - [ ] **9.3 Menos alarmas por Google** (Bruno, 2026-11-16). **Hecho el 17 nov** (Bruno pidió
       "menos fallos" para el lanzamiento): Noticias reintenta una vez a los 20 s si Google da 429/503,
       y un 429/503 suelto de Noticias o Trends deja aviso amarillo con la ejecución en verde (rojo si

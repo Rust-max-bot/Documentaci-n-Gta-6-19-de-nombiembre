@@ -1,14 +1,15 @@
 """Revisa que la página no salte al moverse por ella (tarea 9.4, 2026-11-20).
 
-Hace falta desde que las secciones usan `content-visibility: auto` (el navegador no calcula el
-diseño de lo que no se ve): hasta que se ve, una sección ocupa un alto estimado, y si el
-estimado es malo la página puede saltar o el menú caer en otro lugar.
+Nació para probar `content-visibility` (que el navegador no calcule lo que no se ve), que se
+descartó: rompía los enlaces con #sección en Edge y el copiar todo en Firefox. Queda como
+prueba de que ningún cambio futuro haga saltar la página.
 
 A 1280 y 384 px, en los dos estilos:
   1. Menú "☰ Secciones": va a cada sección y mira que quede arriba de la pantalla (entre -5 y
      90 px) y que siga ahí un segundo después (que no salte).
-  2. Recarga sola: baja hasta "Titulares", hace lo mismo que la recarga automática (guarda la
-     altura y recarga) y mira que vuelva a la misma sección.
+  2. Enlace a una sección: abre index.html#seccion-noticias y mira que quede arriba.
+     (La recarga automática no se prueba aquí: el navegador vuelve solo a la altura donde
+     estaba y tapa lo que hace la página. Ese fallo está anotado en PLAN.md, 9.4.)
   3. Subir de a poco desde el final: mira que lo que está en pantalla no se corra más de 40 px de
      golpe al aparecer las secciones de arriba.
 
@@ -50,18 +51,13 @@ def menu(pg, url, estilo):
     return fallos
 
 
-def recarga(pg, url, estilo):
-    preparar(pg, url, estilo)
-    pg.evaluate("document.getElementById('seccion-noticias').scrollIntoView({block: 'start'})")
-    pg.wait_for_timeout(1500)
-    antes = pg.evaluate("document.getElementById('seccion-noticias').getBoundingClientRect().top")
-    pg.evaluate("sessionStorage.setItem('gta6-scroll', String(window.scrollY)); sessionStorage.setItem('gta6-recarga', '1')")
-    pg.reload()
-    pg.wait_for_timeout(2500)
-    despues = pg.evaluate("document.getElementById('seccion-noticias').getBoundingClientRect().top")
-    if abs(despues - antes) > 60:
-        return [f"recarga sola: Titulares estaba a {antes:.0f} px y volvió a {despues:.0f} px"]
-    return []
+def ancla(pg, url, estilo):
+    """Abrir un enlace a una sección (index.html#seccion-noticias) tiene que dejarla arriba."""
+    pg.add_init_script(f'try{{localStorage.setItem("tema","{estilo}")}}catch(e){{}}')
+    pg.goto(url + "#seccion-noticias")
+    pg.wait_for_timeout(3500)
+    top = pg.evaluate("document.getElementById('seccion-noticias').getBoundingClientRect().top")
+    return [] if -5 <= top <= 90 else [f"enlace #seccion-noticias: la sección quedó a {top:.0f} px"]
 
 
 def subir(pg, url, estilo):
@@ -98,7 +94,7 @@ def main():
         for ancho in ANCHOS:
             for estilo, nombre in ESTILOS:
                 fallos = []
-                for prueba in (menu, recarga, subir):
+                for prueba in (menu, ancla, subir):
                     ctx = nav.new_context(viewport={"width": ancho, "height": 800})
                     fallos += prueba(ctx.new_page(), url, estilo)
                     ctx.close()

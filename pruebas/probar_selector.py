@@ -56,11 +56,6 @@ with sync_playwright() as p:
             comprobar(not estado[0], "con la elección de siempre no se descarga videos-extra.js")
             comprobar(MARCADO not in estado[1], "con la elección de siempre, el video marcado no sale")
             boton = pg.locator(".fv-boton")
-            # Se lee con la sección a la vista, como la vería quien visita: desde la 9.4 el
-            # navegador no prepara las secciones lejanas (content-visibility) y su texto visible
-            # (inner_text) sale vacío hasta que se acercan.
-            boton.scroll_into_view_if_needed()
-            pg.wait_for_timeout(300)
             comprobar("El de Rust" in boton.inner_text(), f"el botón dice qué filtro se usa ({boton.inner_text()!r})")
             boton.click()
             comprobar(pg.locator("#fv-panel").is_visible() and boton.get_attribute("aria-expanded") == "true", "el botón abre el panel")
@@ -82,8 +77,6 @@ with sync_playwright() as p:
             comprobar(estado[0] and not estado[2], "al elegir otra cosa, se carga videos-extra.js sin avisos")
             comprobar(estado[3] == {"conf": "desde-cero", "ocultos": []}, "la elección queda guardada en el navegador")
             comprobar(MARCADO in estado[1], "'Desde cero' sin ocultar nada trae de vuelta el video marcado")
-            pg.locator(".fv-boton").scroll_into_view_if_needed()
-            pg.wait_for_timeout(300)
             comprobar("Desde cero" in pg.locator(".fv-boton").inner_text() and "sin ocultar nada" in pg.locator(".fv-boton").inner_text(),
                       "el botón dice la elección nueva")
             pg.locator(".fv-boton").click()

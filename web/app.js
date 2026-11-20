@@ -1441,7 +1441,10 @@
      botones, que fijan otra hora hasta recargar la página. */
   (function () {
     // La fórmula del sol está en inicio.js, que pone el cielo antes del primer dibujo (9.4).
-    var raiz = document.documentElement, fijada = null, horaDeMiami = window.INICIO.horaDeMiami;
+    // Respaldo si inicio.js no llegó (p. ej. un index.html viejo guardado en el navegador justo
+    // después de publicar): el cielo queda como esté, pero el resto de la página sigue andando.
+    var raiz = document.documentElement, fijada = null;
+    var horaDeMiami = (window.INICIO && window.INICIO.horaDeMiami) || function () { return raiz.dataset.hora || "atardecer"; };
     var botones = document.querySelectorAll(".horas button");
     function poner(h) {
       raiz.dataset.hora = h;

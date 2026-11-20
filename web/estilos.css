@@ -352,10 +352,6 @@ main { max-width: 1160px; margin: -86px auto 0; padding: 0 16px 40px; position: 
 :root[data-tema="actual"] .ficha:nth-child(even) b { color: var(--a2); }
 
 .bloque { margin: 0 0 44px; padding: clamp(18px, 3vw, 34px); border-radius: var(--radio); background: var(--panel); box-shadow: var(--sombra); }
-/* 9.4 (2026-11-20): el navegador no calcula el diseño de una sección hasta que está cerca de la
-   pantalla. Mientras tanto ocupa un alto estimado (900 px); "auto" hace que, una vez vista,
-   recuerde su alto real. Revisar saltos con pruebas/probar_saltos.py. */
-.bloque { content-visibility: auto; contain-intrinsic-size: auto 900px; }
 h2 { margin: 0 0 6px; font-family: var(--f-sub); font-weight: 700; font-size: clamp(24px, 3.2vw, 34px); line-height: 1.15; text-wrap: balance; }
 :root[data-tema="ochenta"] h2 { color: #fff; letter-spacing: .08em; text-transform: uppercase; text-shadow: 0 0 14px var(--a1); }
 :root[data-tema="actual"] h2 { font-weight: 400; color: #1b1440; }

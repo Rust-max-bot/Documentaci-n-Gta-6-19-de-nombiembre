@@ -5,7 +5,7 @@ miran los números. No cambia nada de web/ ni de datos/: copia web/ a pruebas/ca
 (que no se sube a git) y la sirve desde ahí con compresión gzip, como GitHub Pages.
 
 Cómo se mide (celular lento, el mismo de la medición del 16 nov en PLAN.md): 384 px de ancho,
-CPU 4 veces más lenta, red de 1,6 Mbps con 150 ms de demora. Se abre la página 3 veces (sin
+CPU 4 veces más lenta, red de 1,6 Mbps con 150 ms de demora. Se abre la página 5 veces (sin
 nada guardado en el navegador) y se da la mediana (entre paréntesis, la más rápida y la más
 lenta) de:
   - datos.js: lo que pesa sin comprimir y lo que viaja comprimido;
