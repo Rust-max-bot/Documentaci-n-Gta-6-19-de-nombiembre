@@ -70,8 +70,10 @@ las reglas, en `CLAUDE.md`.
       sirvió** (la traza mostró que el costo solo pasó a otras funciones): revertido; sí `aria-pressed`
       solo si cambia. (C) + cielo (Bruno, 20 nov): `web/inicio.js` en el `<head>` pone el estilo
       guardado y día/atardecer/noche antes del primer dibujo (la fórmula del sol se mudó ahí;
-      app.js la usa); sin costo medido en el primer dibujo. Sigue: `content-visibility` en las
-      secciones (prueba rápida: bloqueo 1,4 → 1,0 s), revisar saltos y menú, abogado del diablo.
+      app.js la usa); sin costo medido en el primer dibujo. `content-visibility` en `.bloque`:
+      ~7 % menos CPU al arrancar (perfil, 3 de 3), el tiempo total queda dentro del ruido; con él
+      la recarga automática vuelve a la sección (en `main` queda ~2.000 px más arriba: fallo que
+      ya existía). `probar_saltos.py` nuevo. Falta: abogado del diablo y unir a `main`.
       Descartado: `defer` (rompe `filtro-videos.js:116`), partir mediciones, mover fotos.
 - [ ] **9.3 Menos alarmas por Google** (Bruno, 2026-11-16). **Hecho el 17 nov** (Bruno pidió
       "menos fallos" para el lanzamiento): Noticias reintenta una vez a los 20 s si Google da 429/503,

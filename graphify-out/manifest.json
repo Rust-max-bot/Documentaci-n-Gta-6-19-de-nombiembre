@@ -60,9 +60,9 @@
     "semantic_hash": ""
   },
   "PLAN.md": {
-    "mtime": 1795204359.7887986,
-    "seen": 1795204364.6449661,
-    "ast_hash": "1eebbc3fbf3b515490d4fa16d44f6040",
+    "mtime": 1795207372.566372,
+    "seen": 1795207375.9248369,
+    "ast_hash": "23acf02fd05db1903714d6a71ae9afa4",
     "semantic_hash": ""
   },
   "README.md": {
@@ -192,9 +192,9 @@
     "semantic_hash": ""
   },
   "pruebas/LEEME.md": {
-    "mtime": 1795198500.9360778,
-    "seen": 1795199283.1951256,
-    "ast_hash": "45ca6693d381b55d8946f90fd5a9983c",
+    "mtime": 1795207372.5643642,
+    "seen": 1795207375.9248722,
+    "ast_hash": "7632b723f7e191805b8c72b652568121",
     "semantic_hash": ""
   },
   "pruebas/requisitos.txt": {
@@ -438,9 +438,9 @@
     "semantic_hash": ""
   },
   "pruebas/probar_selector.py": {
-    "mtime": 1795039528.913151,
-    "seen": 1795194183.631563,
-    "ast_hash": "732edfa88015055fa5ac64371c8fdd11",
+    "mtime": 1795206976.5041504,
+    "seen": 1795207375.9247634,
+    "ast_hash": "13452bfff9acc00230b06812b442c2ef",
     "semantic_hash": ""
   },
   "web/filtro-videos.js": {
@@ -456,9 +456,9 @@
     "semantic_hash": ""
   },
   "pruebas/medir_carga.py": {
-    "mtime": 1795198709.2733183,
-    "seen": 1795199283.195049,
-    "ast_hash": "eff60109bc9d032a5073bdd2ab36645b",
+    "mtime": 1795206297.9782534,
+    "seen": 1795207375.9247448,
+    "ast_hash": "78f8f68a4cea038dbff218c47ce5d215",
     "semantic_hash": ""
   },
   "historial/PLAN_2026-11-20.md": {
@@ -471,6 +471,12 @@
     "mtime": 1795204074.816454,
     "seen": 1795204364.6449504,
     "ast_hash": "c0d8a7ab9198444d1431d8018be23470",
+    "semantic_hash": ""
+  },
+  "pruebas/probar_saltos.py": {
+    "mtime": 1795204411.894605,
+    "seen": 1795207375.9247613,
+    "ast_hash": "569fba9a498d0f1165cdba076f80e636",
     "semantic_hash": ""
   }
 }

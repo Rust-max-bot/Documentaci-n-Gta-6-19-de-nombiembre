@@ -57,6 +57,9 @@ try {
 
 class Servidor(http.server.SimpleHTTPRequestHandler):
     """Sirve la copia de web/ comprimiendo con gzip lo que GitHub Pages también comprime."""
+    # HTTP/1.1 (conexiones que se reusan, como un servidor de verdad). Con el HTTP/1.0 de
+    # siempre, 1 de cada 5 cargas se quedaba ~19 s esperando una conexión y ensuciaba la mediana.
+    protocol_version = "HTTP/1.1"
 
     def send_head(self):
         ruta = self.translate_path(self.path.split("?")[0])
