@@ -1,32 +1,29 @@
 # Plan del proyecto: recuerdo del lanzamiento de GTA 6
 
-> **Plan anterior archivado** el 2026-11-18 en `historial/PLAN_2026-11-18-3.md` (pasó de 20.000
-> bytes; tiene las decisiones y los riesgos con más detalle). Antes: `historial/PLAN_2026-11-18-2.md`,
-> `PLAN_2026-11-18.md`, `PLAN_2026-11-17-2.md`, `PLAN_2026-11-17.md`, `PLAN_2026-11-16.md` y
-> `PLAN_DE_TRABAJO_*.md`. Un solo plan desde el 2026-11-16 (pedido de Bruno).
+> **Plan anterior archivado** el 2026-11-20 en `historial/PLAN_2026-11-20.md` (pasó de 20.000
+> bytes; tiene el detalle de la Fase 10, la estructura de carpetas y las medidas viejas de la
+> 9.4). Antes: `historial/PLAN_2026-11-18-3.md` y los anteriores. Un solo plan desde el
+> 2026-11-16 (pedido de Bruno).
 
-Un recuerdo del 19 de noviembre de 2026, día en que sale GTA 6, por diversión: una página web
+Un recuerdo del 19 de noviembre de 2026, día en que salió GTA 6, por diversión: una página web
 con línea de tiempo, tablas y gráficos de Twitch, Kick, YouTube, Google Trends y titulares
-(Reddit se midió del 13 al 17 nov y se quitó, 6.9). El estado vivo (dónde quedamos) está en
-`ESTADO_ACTUAL.md`; las reglas, en `CLAUDE.md`.
+(Reddit se midió del 13 al 17 nov y se quitó, 6.9). El estado vivo está en `ESTADO_ACTUAL.md`;
+las reglas, en `CLAUDE.md`.
 
 ## Cómo se usa este archivo
 
 - Aquí van **las tareas que faltan, las decisiones vigentes y los riesgos**, en corto. El
-  detalle va en el commit.
-- Una tarea se marca `[x]` solo cuando está hecha **y verificada**. Si queda a medias o con un
-  fallo, sigue en `[ ]` con el fallo anotado. Las hechas se resumen en "Lo ya hecho".
-- Orden pedido por Bruno: primero lo acordado más importante; después su lista, de lo más
-  sencillo a lo más largo. Códigos `A1`…`A8` y `D1`…`D6`: puntos de las listas originales de Bruno.
+  detalle va en el commit. Una tarea se marca `[x]` solo hecha **y verificada**; si queda a
+  medias, sigue en `[ ]` con el fallo anotado. Códigos `A1`…`A8` y `D1`…`D6`: listas de Bruno.
 - Si pasa de 20.000 bytes, se archiva en `historial/` (ver `CLAUDE.md`).
 
 ## Fechas que mandan
 
-- **19 de noviembre de 2026, 00:00 de Santiago:** lanzamiento. El recolector ya funciona solo
-  (desde el 13 nov) y mide también al minuto 37 del 17 al 21 nov (UTC).
-- **Entre el 20 y el 25 nov:** 6.1, una sola vez (se lanza sola, ver la tarea).
+- **19 nov 2026, 00:00 de Santiago:** lanzamiento (ya pasó). Medición al minuto 37 hasta el
+  22 nov 00:07 UTC.
+- **Entre el 20 y el 25 nov:** 6.1, una sola vez (se lanza sola del 21 al 24, ver la tarea).
 - **19 dic 2026:** fin de la medición por defecto (`recolector/interruptor.json`). La clave de
-  GitHub del despertador de Cloudflare caduca después (31 ene 2027, o ~1 mar según Bruno).
+  GitHub del despertador de Cloudflare caduca el 31 ene 2027.
 
 ## Tareas que faltan
 
@@ -60,23 +57,20 @@ con línea de tiempo, tablas y gráficos de Twitch, Kick, YouTube, Google Trends
       elementos animan y cuáles no en TODA la página: hoy `web/animaciones.js` (`ACTIVAS`) cubre
       solo lo de la 9.8 y la 9.9. Siguiente paso: inventario con `find-animation-opportunities` y,
       con lo que elija Bruno, sumar el resto a esa tabla. Se puede enlazar con el "Panel de control".
-- [ ] **9.4 Optimizar la página** (Bruno, 2026-11-16). Medido sin cambiar nada (Edge, gzip local;
-      "celular lento" = 384 px, CPU 4×, 1,6 Mbps, 150 ms; ~1.000 mediciones simuladas = 19 dic).
-      **Hecho (2026-11-16):** eje de los gráficos sin textos encimados (opción C: fechas y horas
-      cortas según el espacio); `partes()` guarda lo ya calculado (480 → 40 ms; "Personalizar"
-      460 → 30 ms); `probar_pagina.py` revisa textos encimados en los ejes. **Falta, después del
-      22:** (a) `datos.js` pasará de 182 KB a ~1,6 MB (~320 KB comprimido; carga en el celular
-      lento de 3,7 a 5,5 s): partirlo o aligerarlo. (b) ~750 ms fijos al cargar leyendo medidas
-      de la página (`gota`, `estado` de los Shorts): moverlo después del primer dibujo.
+- [ ] **9.4 Optimizar la página** (Bruno, 2026-11-16). **Hecho (16 nov):** eje de los gráficos sin
+      textos encimados (opción C), `partes()` con memoria, `probar_pagina.py` revisa los ejes.
       **Preparado el 20 nov en la rama `optimizar-9-4`** (Bruno, con abogado del diablo):
-      `pruebas/medir_carga.py`. Hoy carga en 4,7 s y con 1.000 mediciones en 4,9 s (datos.js casi
-      no influye). Lo lento es que los 8 `<script>` bajan uno tras otro (también en GitHub Pages)
-      y ~1,7 s de CPU al arrancar. Plan corregido, **espera la decisión de Bruno:** (1) `preload`
-      de los scripts en el `<head>` (`defer` no: rompe el `document.write` de
-      `filtro-videos.js:116`); (2) quitar lecturas de medidas repetidas solo si una traza lo
-      justifica; (3) aplicar el estilo y el lugar guardados en el `<head>`, para que no se vea
-      Miami 1986 unos segundos (cambio visible: con permiso); (4) no partir las mediciones ni
-      mover las fotos de Twitch (casi sin ganancia).
+      `pruebas/medir_carga.py` (celular lento: 384 px, CPU 4×, 1,6 Mbps, 150 ms). Hoy carga en
+      4,7 s y con 1.000 mediciones simuladas en 4,9 s (datos.js casi no influye). Lo lento: los 8
+      `<script>` bajan uno tras otro (también en GitHub Pages) y ~1,7 s de CPU al arrancar
+      (`gota`/`actualizar` y `estado` de los Shorts fuerzan el diseño). Plan corregido, **espera
+      la decisión de Bruno:** (1) `preload` de los scripts en el `<head>` (`defer` no: rompe el
+      `document.write` de `filtro-videos.js:116`); (2) quitar lecturas de medidas repetidas solo si
+      una traza lo justifica; (3) aplicar el estilo y el lugar guardados en el `<head>`, para que
+      no se vea Miami 1986 unos segundos (cambio visible: con permiso); (4) no partir las
+      mediciones ni mover las fotos de Twitch (casi sin ganancia). Verificar con
+      `probar_pagina.py` **y** `probar_selector.py`. Otro detalle visto: `cuenta()` reescribe
+      `aria-pressed` cada segundo y fuerza el diseño (gasta batería).
 - [ ] **9.3 Menos alarmas por Google** (Bruno, 2026-11-16). **Hecho el 17 nov** (Bruno pidió
       "menos fallos" para el lanzamiento): Noticias reintenta una vez a los 20 s si Google da 429/503,
       y un 429/503 suelto de Noticias o Trends deja aviso amarillo con la ejecución en verde (rojo si
@@ -124,26 +118,10 @@ con línea de tiempo, tablas y gráficos de Twitch, Kick, YouTube, Google Trends
 - [ ] **Ventas oficiales de GTA 6:** cuando Take-Two las publique, escribirlas en `gta6` de
       `web/lanzamientos.js` (el punto de "Próximamente" se marca solo).
 
-### Fase 10 — Panel de control de videos (después del lanzamiento)
+### Fase 10 — Panel de control de videos
 
-Entrevista con Bruno del 2026-11-18. Lo decidido y el detalle de cada parte, en
-`PANEL_VIDEOS.md`. Panel local en el PC de Bruno para marcar videos con motivos ("no trata de
-GTA", "hecho con IA", "dudoso") o rescatarlos; el visitante elige configuración y motivos.
-Cada parte termina usable y verificada; se hacen en orden.
-
-**Revisión de cada parte** (Bruno, 2026-11-18; él no es ingeniero y no tiene Codex):
-`/code-review` al terminar cada tanda; en la 10.2, además `/security-review` (servidor local
-que publica). Como segunda opinión, en vez de Codex, un **agente revisor nuevo** que no vio
-cómo se hizo: recibe solo el código, `PANEL_VIDEOS.md` y la orden de buscar fallos (no de
-aprobar), con otro modelo de Claude (por ejemplo Sonnet) para que no piense igual; cada fallo
-que diga se comprueba de verdad antes de aceptarlo o descartarlo. Diseño: `impeccable` antes
-de mostrar opciones. Al final de cada tanda, una **lista corta de comprobaciones visibles**
-para que Bruno las haga él (por ejemplo: marcar un video, "Publicar" y ver que desaparece).
-
-- **Hechas el 18 nov, las cuatro (unidas a `main` el mismo día):** 10.1 marcas, 10.2 panel ("Tabla"), 10.3
-  rescatar y configuraciones propias, 10.4 selector del visitante ("Botón con panel"; rescates en
-  "el de Rust" y las propias). "Publicar" del panel solo funciona desde `main`. Detalle en
-  `PANEL_VIDEOS.md`.
+Hecha (10.1 a 10.4, unidas a `main` el 18 nov). Detalle en `PANEL_VIDEOS.md` y en
+`historial/PLAN_2026-11-20.md` (cómo se revisó cada parte).
 
 ### Ideas para después, sin fecha
 
@@ -192,16 +170,13 @@ No se empieza hasta que Bruno avise con una confirmación oficial de la versión
 - [ ] **8.4 Los más vendidos de la historia** (Tetris, Minecraft, GTA V, RDR2…) con cifras al día
       y su fuente. Ojo: el documento de Bruno del 14 nov tenía cifras viejas.
 
-## Lo ya hecho (detalle en `historial/PLAN_2026-11-18-3.md`, los anteriores y `git log`)
+## Lo ya hecho (detalle en `historial/` y `git log`)
 
-- **Fases 0 y 1:** hechas (1.1 a 1.7). **Fase 2:** 2.1 a 2.4 y 2.6 a 2.15 (falta 2.5). **Fase 3:**
-  hecha (3.1 a 3.3). **Fase 4:** 4.1 y 4.2 (falta 4.3).
-- **Fase 6:** 6.2 a 6.5; 6.6 Kick; 6.7 GTA 6 frente a Doomsday (previas del 17 y 18 nov en
-  `datos/trends_previa/`); 6.9 quitar Reddit (para volver, `git revert`).
-- **Fase 7:** 7.2, 7.3 y 7.5 a 7.12. **Fase 9:** 9.1, 9.5 a 9.10 y 9.12; tres horas cero con aviso
-  de cada salida (C); Kick en "GTA frente a lo más visto" (fuente `kick_ranking`, 18 nov).
-- **Fase 10:** 10.1 a 10.4, unidas a `main` el 18 nov.
-- **Herramientas:** Graphify y sincronización del PC con GitHub (`sincronizar_datos.ps1`).
+- **Fases 0, 1 y 3:** hechas. **Fase 2:** 2.1 a 2.4 y 2.6 a 2.15 (falta 2.5). **Fase 4:** 4.1 y
+  4.2 (falta 4.3). **Fase 6:** 6.2 a 6.5, 6.6 Kick, 6.7 Doomsday, 6.9 quitar Reddit.
+- **Fase 7:** 7.2, 7.3 y 7.5 a 7.12. **Fase 9:** 9.1, 9.5 a 9.10 y 9.12. **Fase 10:** hecha.
+- **20 nov:** tres rayas de lanzamiento (Nueva Zelanda, Chile y Miami) en los gráficos de Twitch
+  y Trends; README al día.
 - Descartado por Bruno: app en el celular; Cloudflare Radar; redes de descarga de PlayStation y
   Xbox; la 9.2 "¿Cuánta gente faltó?"; "qué tan popular es GTA 6 en YouTube".
 
@@ -247,10 +222,6 @@ El porqué y las opciones descartadas, en `historial/PLAN_2026-11-18-3.md` y `hi
 6. **Seguridad (Bruno, 2026-11-17):** clave de YouTube restringida; ruleset "proteger main"
    (solo `deletion` y `non_fast_forward`); "Secret scanning" y "Push protection" activados. Para
    un `--force` autorizado, desactivar el ruleset.
-
-## Estructura de carpetas
-
-`web/` (la página; `datos.js` y `dias/` se generan), `recolector/` (Python, LEEME.md), `datos/`
-(un archivo por día UTC; solo los escribe GitHub), `despertador/` (Worker de Cloudflare),
-`.github/workflows/`, `pruebas/` (LEEME.md; `capturas/` no va a git), `diseno/` (dibuja la
-portada), `historial/` (versiones viejas); `PANEL_VIDEOS.md`, la Fase 10. Para ver la página en el PC: `ver_pagina.bat`.
+7. **Cloudflare Observability cobra por GB desde el 1 dic 2026** (correo del 20 nov): el plan
+   gratuito da 0,5 GB/día; el despertador escribe una línea por turno (muy por debajo). Si se
+   llegara al límite, solo se pausan los registros, no el despertador. Registros: 7 días.
