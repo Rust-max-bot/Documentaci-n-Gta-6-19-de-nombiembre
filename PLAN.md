@@ -68,9 +68,10 @@ las reglas, en `CLAUDE.md`.
       `main`:** (A) `preload` de 7 scripts en el `<head>` (sin datos.js: atrasaba el primer
       dibujo 0,3 s); página armada 4,34 → ~3,1 s. (B) quitar las lecturas de `gota`/Shorts **no
       sirvió** (la traza mostró que el costo solo pasó a otras funciones): revertido; sí `aria-pressed`
-      solo si cambia. (C) estilo guardado aplicado en el `<head>` (script con huella en la CSP).
-      Pendiente sin decidir: el sol/cielo también parpadea (atardecer → día o noche) hasta app.js,
-      y `content-visibility` para no calcular el diseño de lo que no se ve (idea, con riesgos).
+      solo si cambia. (C) + cielo (Bruno, 20 nov): `web/inicio.js` en el `<head>` pone el estilo
+      guardado y día/atardecer/noche antes del primer dibujo (la fórmula del sol se mudó ahí;
+      app.js la usa); sin costo medido en el primer dibujo. Sigue: `content-visibility` en las
+      secciones (prueba rápida: bloqueo 1,4 → 1,0 s), revisar saltos y menú, abogado del diablo.
       Descartado: `defer` (rompe `filtro-videos.js:116`), partir mediciones, mover fotos.
 - [ ] **9.3 Menos alarmas por Google** (Bruno, 2026-11-16). **Hecho el 17 nov** (Bruno pidió
       "menos fallos" para el lanzamiento): Noticias reintenta una vez a los 20 s si Google da 429/503,

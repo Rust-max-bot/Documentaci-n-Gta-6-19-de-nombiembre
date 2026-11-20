@@ -1437,33 +1437,11 @@
   })();
 
   /* ---------- Día, atardecer y noche según la hora real de Miami (tarea 4.1) ----------
-     La salida y la puesta del sol se calculan para cada día con la fórmula aproximada del
-     almanaque náutico (error de un par de minutos), así sirve todo el año y no depende del
-     horario de verano. Atardecer: desde 1 h antes de la puesta hasta 30 min después, y la media
-     hora alrededor de la salida. Los botones fijan otra hora hasta recargar la página. */
+     El cálculo está en inicio.js (pone el primer cielo); aquí se revisa cada minuto y van los
+     botones, que fijan otra hora hasta recargar la página. */
   (function () {
-    var raiz = document.documentElement, LAT = 25.7617, LON = -80.1918, fijada = null;
-    var RAD = Math.PI / 180;
-    // Hora UTC (en horas, 0-24) a la que sale (sale=true) o se pone el sol en Miami ese día.
-    function sol(fecha, sale) {
-      var n = Math.floor((fecha - Date.UTC(fecha.getUTCFullYear(), 0, 0)) / 86400000);
-      var t = n + ((sale ? 6 : 18) - LON / 15) / 24, M = 0.9856 * t - 3.289;
-      var L = (M + 1.916 * Math.sin(M * RAD) + 0.020 * Math.sin(2 * M * RAD) + 282.634 + 360) % 360;
-      var RA = (Math.atan(0.91764 * Math.tan(L * RAD)) / RAD + 360) % 360;
-      RA = (RA + Math.floor(L / 90) * 90 - Math.floor(RA / 90) * 90) / 15;
-      var sd = 0.39782 * Math.sin(L * RAD), cd = Math.cos(Math.asin(sd));
-      var ch = (Math.cos(90.833 * RAD) - sd * Math.sin(LAT * RAD)) / (cd * Math.cos(LAT * RAD));
-      var H = (sale ? 360 - Math.acos(ch) / RAD : Math.acos(ch) / RAD) / 15;
-      return ((H + RA - 0.06571 * t - 6.622 - LON / 15) % 24 + 24) % 24;
-    }
-    function horaDeMiami(ms) {
-      // El día de Miami empieza 5 h después que el de UTC: se mira la fecha que hay allí.
-      var dia = new Date(ms - 5 * 3600000), base = Date.UTC(dia.getUTCFullYear(), dia.getUTCMonth(), dia.getUTCDate());
-      var sale = base + sol(dia, true) * 3600000, pone = base + sol(dia, false) * 3600000;
-      if (pone < sale) pone += 86400000;   // en verano la puesta cae después de medianoche UTC
-      if (Math.abs(ms - sale) <= 30 * 60000 || (ms >= pone - 3600000 && ms <= pone + 30 * 60000)) return "atardecer";
-      return ms > sale && ms < pone ? "dia" : "noche";
-    }
+    // La fórmula del sol está en inicio.js, que pone el cielo antes del primer dibujo (9.4).
+    var raiz = document.documentElement, fijada = null, horaDeMiami = window.INICIO.horaDeMiami;
     var botones = document.querySelectorAll(".horas button");
     function poner(h) {
       raiz.dataset.hora = h;

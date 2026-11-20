@@ -6,15 +6,9 @@
 <!-- Política de seguridad (revisión del 2026-11-14): la página solo ejecuta sus propios archivos
      .js, y solo carga letras de Google Fonts y fotos de YouTube y Twitch. Si algún día un texto
      de las fuentes (un titular, el título de un video) colara código, el navegador no lo ejecutaría. -->
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-X+BxiIGZzr+SZ/hlsukTv99F/L3SF33PsRkroaJFRWc='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https://i.ytimg.com https://static-cdn.jtvnw.net https://files.kick.com; connect-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https://i.ytimg.com https://static-cdn.jtvnw.net https://files.kick.com; connect-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <title>19·NOV·2026 — El día de GTA 6</title>
-<!-- Estilo guardado antes del primer dibujo (9.4, paso C, Bruno, 2026-11-20): sin esto, quien
-     eligió "Miami 2026" veía Miami 1986 hasta que llegaba app.js. Es el único código dentro del
-     HTML: la política de seguridad lo permite por su huella (sha256 en script-src). Si se cambia
-     una sola letra, hay que recalcular la huella o el navegador no lo ejecuta (y lo avisa en la
-     consola, que probar_pagina.py revisa). -->
-<script>try{var t=localStorage.getItem("tema");if(t==="ochenta"||t==="actual")document.documentElement.dataset.tema=t}catch(e){}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Limelight&family=Monoton&family=Outfit:wght@400;500;600;700&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
@@ -32,6 +26,9 @@
 <link rel="preload" as="script" href="animaciones.js">
 <link rel="preload" as="script" href="filtro-videos.js">
 <link rel="preload" as="script" href="app.js">
+<!-- Estilo guardado y cielo de Miami antes del primer dibujo (9.4, 2026-11-20). Va después de
+     estilos.css y de los preload para no atrasar esas bajadas. -->
+<script src="inicio.js"></script>
 <link rel="icon" href="icono.svg" type="image/svg+xml"><!-- icono original: sol, palmera y mar (hecho para este proyecto) -->
 <!-- Vista previa al compartir el enlace (WhatsApp, Discord, X...). Las redes piden la imagen con dirección completa. -->
 <meta name="description" content="Recuerdo del lanzamiento de GTA 6 (19 de noviembre de 2026): Twitch, Kick, YouTube, Google Trends y titulares, antes, durante y después del día.">
