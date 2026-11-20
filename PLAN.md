@@ -72,7 +72,7 @@ las reglas, en `CLAUDE.md`.
       guardado y día/atardecer/noche antes del primer dibujo (la fórmula del sol se mudó ahí;
       app.js la usa; respaldo si no llega). Abogado del diablo (2.ª vuelta): fórmula idéntica
       (105.120 horas comparadas). Medido junto a `main`: página armada ~5,3 → ~3,7 s; primer
-      dibujo +0,1 a 0,15 s. **Listo para unir a `main` cuando Bruno lo pruebe.**
+      dibujo +0,1 a 0,15 s. **Unida a `main` el 20 nov** (Bruno la probó en su PC).
       **Fallo que ya existía, sin arreglar:** la recarga automática no vuelve a la misma altura
       (Titulares queda 1.700 a 4.600 px más arriba; `app.js` ~L1330 compite con el navegador).
       Descartado: `defer` (rompe `filtro-videos.js:116`), partir mediciones, mover fotos y
