@@ -579,6 +579,27 @@
       if (opciones.tope) paso = tope / 4;
       else { paso = pasoRedondo(tope); tope = Math.max(1, Math.ceil(tope / paso)) * paso; }
       var X = function (ts) { return mi + (ts - t0) / (t1 - t0 || 1) * (ancho - mi - md); };
+      /* Marcas del lanzamiento: medianoche del 19 nov en Nueva Zelanda, Chile y Miami (pedido de
+         Bruno, 2026-11-20: el gran pico llegó poco después de la hora cero de Nueva Zelanda).
+         Si los nombres caben en una fila: Nueva Zelanda y Chile a la izquierda de su raya, Miami a
+         la derecha (Chile y Miami van a solo 2 h). Si no caben (pantalla angosta), en escalera:
+         cada nombre a la izquierda de su raya, Miami arriba, Chile al medio y Nueva Zelanda abajo,
+         y cada raya sube solo hasta su nombre, así ningún nombre cruza otra raya. */
+      var anchoLetra = 8.6;                        // ancho aproximado de una letra de .salida-texto
+      var horaCero = [["nz", "Nueva Zelanda"], ["cl", "Chile"], ["mia", "Miami"]]
+        .filter(function (h) { return LUGARES[h[0]].ts > t0 && LUGARES[h[0]].ts < t1; })
+        .map(function (h) { return { id: h[0], x: X(LUGARES[h[0]].ts), texto: h[1], nombre: LUGARES[h[0]].nombre, lado: h[0] === "mia" ? "start" : "end" }; });
+      var enFila = horaCero.every(function (h, i) {   // ¿choca algún nombre con el de la raya anterior?
+        var izq = h.lado === "end" ? h.x - 5 - h.texto.length * anchoLetra : h.x + 5;
+        var antes = horaCero[i - 1];
+        if (h.lado === "start" && h.x + 5 + h.texto.length * anchoLetra > ancho) return false;   // se sale por la derecha
+        return !antes || izq - 8 > (antes.lado === "end" ? antes.x - 5 : antes.x + 5 + antes.texto.length * anchoLetra);
+      });
+      horaCero.forEach(function (h, i) {
+        if (enFila) h.y = ma;
+        else { h.lado = "end"; h.y = ma + 15 * (horaCero.length - 1 - i); }   // la última raya, arriba
+      });
+      if (!enFila) ma += 15 * (horaCero.length - 1);   // más margen arriba para la escalera
       var Y = function (v) { return ma + (1 - v / tope) * (alto - ma - mb); };
       var s = '<svg viewBox="0 0 ' + ancho + " " + alto + '" role="img" aria-label="' + opciones.nombre + '" style="--color:var(' + opciones.color + ')">';
 
@@ -607,11 +628,10 @@
         var texto = medianoche ? dia(marca) : horaCorta(marca);
         s += '<g class="eje"><text x="' + x + '" y="' + (alto - 12) + '" text-anchor="middle">' + texto + "</text></g>";
       });
-      if (SALIDA > t0 && SALIDA < t1) {            // marca del lanzamiento
-        var xs = X(SALIDA);
-        s += '<line class="salida" x1="' + xs + '" x2="' + xs + '" y1="' + (ma - 8) + '" y2="' + (alto - mb) + '"/>';
-        s += '<text class="salida-texto" x="' + (xs + 6) + '" y="' + (ma - 10) + '">19 nov · medianoche</text>';
-      }
+      horaCero.forEach(function (h) {             // marcas del lanzamiento (preparadas arriba)
+        s += '<line class="salida" x1="' + h.x + '" x2="' + h.x + '" y1="' + (h.y - 8) + '" y2="' + (alto - mb) + '"><title>Medianoche del 19 nov en ' + h.nombre + "</title></line>";
+        s += '<text class="salida-texto" x="' + (h.lado === "end" ? h.x - 5 : h.x + 5) + '" y="' + (h.y - 10) + '" text-anchor="' + h.lado + '">' + h.texto + "</text>";
+      });
       var tramos = [], actual = [];                // la línea se corta donde falta un dato
       puntos.forEach(function (p, i) {
         if (p.v == null) {

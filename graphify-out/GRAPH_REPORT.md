@@ -1,9 +1,9 @@
-# Graph Report - Documentación Gta 6  (2026-11-18)
+# Graph Report - Documentación Gta 6  (2026-11-20)
 
 ## Corpus Check
-- 71 files · ~159,833 words
+- 71 files · ~160,373 words
 - Verdict: corpus is large enough that graph structure adds value.
-- Unclassified: 15 file(s) not represented in the graph (top: .jsonl 7, (none) 3, .bat 3)
+- Unclassified: 17 file(s) not represented in the graph (top: .jsonl 9, (none) 3, .bat 3)
 
 ## Summary
 - 1037 nodes · 1833 edges · 71 communities (54 shown, 17 thin omitted)
@@ -11,7 +11,7 @@
 - Token cost: 183,861 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `4de031df`
+- Built from commit: `551af249`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -89,23 +89,23 @@
 3. `Hoteles` - 23 edges
 4. `pedir()` - 19 edges
 5. `exigir()` - 18 edges
-6. `Dibujo` - 17 edges
-7. `dia()` - 17 edges
+6. `dia()` - 17 edges
+7. `Dibujo` - 17 edges
 8. `convertir()` - 16 edges
-9. `pedir_json()` - 14 edges
-10. `limpio()` - 14 edges
+9. `limpio()` - 14 edges
+10. `pedir_json()` - 14 edges
 
 ## Surprising Connections (you probably didn't know these)
-- `Lo ya hecho (detalle en `historial/PLAN_2026-11-18-2.md`, los anteriores y `git log`)` --references--> `kick_ranking()`  [INFERRED]
-  historial/PLAN_2026-11-18-3.md → recolector/fuentes.py
-- `Fase 6 — Ideas nuevas de Bruno: más estadísticas, logros y comparaciones (lo que queda)` --references--> `kick()`  [INFERRED]
-  historial/PLAN_DE_TRABAJO_2026-11-16.md → recolector/fuentes.py
-- `Lo ya hecho (detalle en `historial/PLAN_2026-11-18.md`, los anteriores y `git log`)` --references--> `kick_ranking()`  [INFERRED]
-  historial/PLAN_2026-11-18-2.md → recolector/fuentes.py
 - `Pendiente` --references--> `partes()`  [INFERRED]
   historial/ESTADO_2026-11-17.md → web/app.js
 - `Fase 1 — Recolector funcionando (lo más importante)` --references--> `compacto()`  [INFERRED]
   historial/PLAN_DE_TRABAJO_2026-11-13.md → web/app.js
+- `Fase 6 — Ideas nuevas de Bruno: más estadísticas, logros y comparaciones (lo que queda)` --references--> `kick()`  [INFERRED]
+  historial/PLAN_DE_TRABAJO_2026-11-16.md → recolector/fuentes.py
+- `Lo ya hecho (detalle en `historial/PLAN_2026-11-18.md`, los anteriores y `git log`)` --references--> `kick_ranking()`  [INFERRED]
+  historial/PLAN_2026-11-18-2.md → recolector/fuentes.py
+- `Lo ya hecho (detalle en `historial/PLAN_2026-11-18-2.md`, los anteriores y `git log`)` --references--> `kick_ranking()`  [INFERRED]
+  historial/PLAN_2026-11-18-3.md → recolector/fuentes.py
 
 ## Import Cycles
 - None detected.
@@ -344,13 +344,13 @@ Nodes (6): Antes o justo después del lanzamiento, Después del lanzamiento, Fas
 _Questions this graph is uniquely positioned to answer:_
 
 - **Why does `Diseño de la página` connect `json` to `Plan del proyecto: recuerdo del lanzamiento de GTA 6`, `limpio`?**
-  _High betweenness centrality (0.158) - this node is a cross-community bridge._
+  _High betweenness centrality (0.155) - this node is a cross-community bridge._
 - **What connects `Estilos visuales Miami 1986 y Miami 2026`, `Enlaces y miniaturas guardados (tareas 2.1 y 2.2)`, `Series continuas de YouTube (25 más vistos + re-medición)` to the rest of the system?**
   _31 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Despertador y plan de trabajo` be split into smaller, more focused modules?**
   _Cohesion score 0.08817204301075268 - nodes in this community are weakly interconnected._
 - **Why does `limpio()` connect `limpio` to `app.js`, `json`, `num`, `pintar`?**
-  _High betweenness centrality (0.138) - this node is a cross-community bridge._
+  _High betweenness centrality (0.148) - this node is a cross-community bridge._
 - **Should `json` be split into smaller, more focused modules?**
   _Cohesion score 0.054647599591419814 - nodes in this community are weakly interconnected._
 - **Should `Worker de Cloudflare despertador-recolector (horario 7,37 * * * *)` be split into smaller, more focused modules?**

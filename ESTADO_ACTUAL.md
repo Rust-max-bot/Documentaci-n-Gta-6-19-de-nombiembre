@@ -65,6 +65,7 @@ lanzamiento (revisión completa y menos alarmas por Google). Antes: 9.12 y más 
 ## Últimos cambios
 
 - 2026-11-17: estado anterior archivado en historial/ESTADO_2026-11-17.md
+- 2026-11-20: gráficos de Twitch/Kick y de Trends con tres rayas de lanzamiento (medianoche del 19 nov en Nueva Zelanda, Chile y Miami; antes solo Chile), pedido de Bruno: el gran pico llegó tras la hora cero de Nueva Zelanda. En pantallas angostas los nombres van en escalera. `probar_pagina.py`: todo bien.
 - 2026-11-18: Fase 10 unida a `main` (pedido de Bruno). Antes de subir, con `main` al día: `probar_marcas.py`, `probar_selector.py`, `probar_pagina.py` y `probar_panel.py`, todo bien.
 - 2026-11-18: 10.4 (rama `panel-videos-10-4`): selector de videos del visitante en la página ("Botón con panel", Bruno): configuración y motivos, recordados en el navegador; `web/videos-extra.js` solo se carga si hace falta (`datos.js` no crece). Pruebas: `probar_selector.py`, `probar_pagina.py` (Edge y Firefox), `probar_marcas.py`, `probar_panel.py`: todo bien.
 - 2026-11-18: 10.3 (rama `panel-videos-10-3`): el panel muestra los descartados para rescatarlos (la página los deja pasar) y guarda configuraciones propias (nombre, modo, palabras; "Restablecer" = las del filtro automático, decisión de Bruno). Pruebas: `probar_marcas.py`, `probar_panel.py` y `probar_pagina.py`, todo bien. Revisada con `/code-review` y un agente revisor (Sonnet); arreglos hechos.
