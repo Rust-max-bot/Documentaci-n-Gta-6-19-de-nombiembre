@@ -291,7 +291,9 @@
   function pintarLugares() {
     document.querySelectorAll("[data-lugar]").forEach(function (b) {
       var L = LUGARES[b.dataset.lugar], ya = ahora() >= L.ts;
-      b.setAttribute("aria-pressed", b.dataset.lugar === lugar ? "true" : "false");
+      var marcado = b.dataset.lugar === lugar ? "true" : "false";
+      // Solo si cambia (9.4): corre cada segundo y reescribirlo hacía que la gota volviera a medir.
+      if (b.getAttribute("aria-pressed") !== marcado) b.setAttribute("aria-pressed", marcado);
       b.classList.toggle("ya", ya);
       b.title = (ya ? "Ya salió en " : "Medianoche en ") + L.nombre + ": " + dia(L.ts) + ", " + hora(L.ts) + (en12 ? "" : " (" + momento(L.ts) + ")") + " hora de Chile";
     });
@@ -2074,4 +2076,6 @@
     }, { threshold: 0.12 });
     bloques.forEach(function (b) { ojo.observe(b); });
   })();
+  // Marca para pruebas/medir_carga.py (9.4): aquí la página ya quedó armada.
+  try { performance.mark("app-listo"); } catch (e) { /* navegador sin marcas */ }
 })();

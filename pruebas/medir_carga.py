@@ -6,10 +6,13 @@ miran los números. No cambia nada de web/ ni de datos/: copia web/ a pruebas/ca
 
 Cómo se mide (celular lento, el mismo de la medición del 16 nov en PLAN.md): 384 px de ancho,
 CPU 4 veces más lenta, red de 1,6 Mbps con 150 ms de demora. Se abre la página 3 veces (sin
-nada guardado en el navegador) y se da la mediana de:
+nada guardado en el navegador) y se da la mediana (entre paréntesis, la más rápida y la más
+lenta) de:
   - datos.js: lo que pesa sin comprimir y lo que viaja comprimido;
   - primer dibujo: cuándo se ve algo en la pantalla;
-  - carga completa: cuándo terminó de bajar y armar la página (evento "load");
+  - página armada: cuándo terminó app.js (marca "app-listo"): lo que de verdad espera quien
+    visita; antes de eso la portada se ve sin rellenar;
+  - carga completa: cuándo terminó de bajar todo (evento "load", incluye letras de Google);
   - bloqueo: suma de lo que las tareas largas del navegador pasan de 50 ms hasta 3 s después
     de la carga (la página no responde mientras tanto).
 
@@ -21,6 +24,7 @@ cuando haya más datos (~1.000 mediciones el 19 dic). Ese datos.js va marcado co
 Uso (antes, python recolector/generar_web.py):
   python pruebas/medir_carga.py                 # con los datos de hoy
   python pruebas/medir_carga.py --simular 1000  # como el 19 dic
+  python pruebas/medir_carga.py --web <carpeta> # otra versión de la página, para comparar
 """
 import argparse
 import gzip
@@ -38,7 +42,7 @@ from navegador import CAPTURAS, RAIZ, abrir, preparar_salida
 
 COPIA = CAPTURAS / "medir" / "web"
 COMPRIMIR = (".js", ".css", ".html", ".json", ".svg")
-VECES = 3
+VECES = 5
 LENTO = {"offline": False, "latency": 150, "downloadThroughput": 1.6e6 / 8, "uploadThroughput": 0.75e6 / 8}
 
 # Se pega antes de que cargue la página: junta las tareas largas y el primer dibujo.
@@ -87,10 +91,10 @@ class _Cuerpo:
         pass
 
 
-def copiar_web(simular):
+def copiar_web(simular, origen=None):
     if COPIA.exists():
         shutil.rmtree(COPIA)
-    shutil.copytree(RAIZ / "web", COPIA)
+    shutil.copytree(origen or RAIZ / "web", COPIA)
     if not simular:
         return
     ruta = COPIA / "datos.js"
@@ -128,7 +132,8 @@ def medir_una(navegador, url):
       const pinta = performance.getEntriesByName("first-contentful-paint")[0];
       const datos = performance.getEntriesByType("resource").find(e => /\\/datos\\.js/.test(e.name));
       const bloqueo = (window.__largas || []).reduce((s, x) => s + Math.max(0, x[1] - 50), 0);
-      return { carga: nav.loadEventEnd, pinta: pinta ? pinta.startTime : null, bloqueo: bloqueo,
+      const listo = performance.getEntriesByName("app-listo")[0];
+      return { carga: nav.loadEventEnd, listo: listo ? listo.startTime : null, pinta: pinta ? pinta.startTime : null, bloqueo: bloqueo,
                largas: (window.__largas || []).length,
                viaja: datos ? datos.transferSize : null, pesa: datos ? datos.decodedBodySize : null };
     }""")
@@ -141,11 +146,12 @@ def medir_una(navegador, url):
 def main():
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     ap.add_argument("--simular", type=int, default=0, help="rehacer datos.js con N mediciones")
+    ap.add_argument("--web", help="otra carpeta con la página (p. ej. la versión de antes) en vez de web/")
     a = ap.parse_args()
     preparar_salida()
     if not (RAIZ / "web" / "datos.js").exists():
         raise SystemExit("Falta web/datos.js: correr antes python recolector/generar_web.py")
-    copiar_web(a.simular)
+    copiar_web(a.simular, a.web)
     srv = http.server.ThreadingHTTPServer(("127.0.0.1", 0), partial(Servidor, directory=str(COPIA)))
     threading.Thread(target=srv.serve_forever, daemon=True).start()
     url = f"http://127.0.0.1:{srv.server_address[1]}/index.html"
@@ -154,13 +160,20 @@ def main():
         vueltas = [medir_una(nav, url) for _ in range(VECES)]
         nav.close()
     srv.shutdown()
-    med = lambda k: statistics.median(v[k] for v in vueltas if v[k] is not None)
+    def med(k):
+        return statistics.median(v[k] for v in vueltas if v[k] is not None)
+
+    def rango(k, div=1000, dec=2):
+        xs = [v[k] for v in vueltas if v[k] is not None]
+        return f"({min(xs) / div:.{dec}f}-{max(xs) / div:.{dec}f})" if xs else ""
     print(f"Celular lento (384 px, CPU 4x, 1,6 Mbps, 150 ms), mediana de {VECES} cargas"
           + (f", {a.simular} mediciones simuladas" if a.simular else ", datos de hoy") + ":")
     print(f"  datos.js:      {med('pesa') / 1024:.0f} KB ({med('viaja') / 1024:.0f} KB comprimido)")
-    print(f"  primer dibujo: {med('pinta') / 1000:.2f} s")
-    print(f"  carga completa: {med('carga') / 1000:.2f} s")
-    print(f"  bloqueo:       {med('bloqueo'):.0f} ms en {med('largas'):.0f} tareas largas")
+    print(f"  primer dibujo:  {med('pinta') / 1000:.2f} s {rango('pinta')}")
+    if any(v["listo"] is not None for v in vueltas):
+        print(f"  página armada:  {med('listo') / 1000:.2f} s {rango('listo')}")
+    print(f"  carga completa: {med('carga') / 1000:.2f} s {rango('carga')}")
+    print(f"  bloqueo:        {med('bloqueo'):.0f} ms {rango('bloqueo', 1, 0)} en {med('largas'):.0f} tareas largas")
 
 
 if __name__ == "__main__":

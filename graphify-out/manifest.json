@@ -18,9 +18,9 @@
     "semantic_hash": ""
   },
   "web/app.js": {
-    "mtime": 1795193887.9800189,
-    "seen": 1795194183.6316283,
-    "ast_hash": "4c343a997edc907a28b824d335e126f7",
+    "mtime": 1795198837.101827,
+    "seen": 1795199283.1950843,
+    "ast_hash": "830a88a6cd9292ce007a4df6715089bc",
     "semantic_hash": ""
   },
   "web/datos-ejemplo.js": {
@@ -48,9 +48,9 @@
     "semantic_hash": ""
   },
   "ESTADO_ACTUAL.md": {
-    "mtime": 1795195687.7816634,
-    "seen": 1795198045.9866712,
-    "ast_hash": "dd10917224dccbff5c61c47b78c193f3",
+    "mtime": 1795199266.8334272,
+    "seen": 1795199283.1950977,
+    "ast_hash": "390ea6cd72cb2866d535bc0f5775bcaa",
     "semantic_hash": ""
   },
   "GUIA_CLAVES.md": {
@@ -60,9 +60,9 @@
     "semantic_hash": ""
   },
   "PLAN.md": {
-    "mtime": 1795039528.9560566,
-    "seen": 1795194183.6316805,
-    "ast_hash": "7d916015d856636561cce85c6d3fa2d4",
+    "mtime": 1795199280.340003,
+    "seen": 1795199283.1951027,
+    "ast_hash": "248c741f45914bada7e32845e2ba83f9",
     "semantic_hash": ""
   },
   "README.md": {
@@ -72,9 +72,9 @@
     "semantic_hash": ""
   },
   "web/index.html": {
-    "mtime": 1795193688.2233627,
-    "seen": 1795194183.6317568,
-    "ast_hash": "e7dcf982facc844784c8bb3889b79310",
+    "mtime": 1795199009.2521572,
+    "seen": 1795199283.1951308,
+    "ast_hash": "5703f856079928fe31b4c26db0558cd1",
     "semantic_hash": ""
   },
   ".github/workflows/probar-fuentes.yml": {
@@ -192,9 +192,9 @@
     "semantic_hash": ""
   },
   "pruebas/LEEME.md": {
-    "mtime": 1795198043.513788,
-    "seen": 1795198045.9867132,
-    "ast_hash": "91bb5e153be17a1acc5414112c4ce637",
+    "mtime": 1795198500.9360778,
+    "seen": 1795199283.1951256,
+    "ast_hash": "45ca6693d381b55d8946f90fd5a9983c",
     "semantic_hash": ""
   },
   "pruebas/requisitos.txt": {
@@ -456,9 +456,15 @@
     "semantic_hash": ""
   },
   "pruebas/medir_carga.py": {
-    "mtime": 1795197677.2396686,
-    "seen": 1795198045.9865975,
-    "ast_hash": "ef2d199b285ef5282a11d9132e39bb8b",
+    "mtime": 1795198709.2733183,
+    "seen": 1795199283.195049,
+    "ast_hash": "eff60109bc9d032a5073bdd2ab36645b",
+    "semantic_hash": ""
+  },
+  "historial/PLAN_2026-11-20.md": {
+    "mtime": 1795198501.1136086,
+    "seen": 1795199283.1951177,
+    "ast_hash": "a74273008b1d1ff20ea9106c758d85ea",
     "semantic_hash": ""
   }
 }
