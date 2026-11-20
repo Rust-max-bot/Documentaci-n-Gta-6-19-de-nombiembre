@@ -48,9 +48,9 @@
     "semantic_hash": ""
   },
   "ESTADO_ACTUAL.md": {
-    "mtime": 1795194180.106615,
-    "seen": 1795194183.6316657,
-    "ast_hash": "643328b5b9e03f0e94243b7969f7b61f",
+    "mtime": 1795195687.7816634,
+    "seen": 1795198045.9866712,
+    "ast_hash": "dd10917224dccbff5c61c47b78c193f3",
     "semantic_hash": ""
   },
   "GUIA_CLAVES.md": {
@@ -66,9 +66,9 @@
     "semantic_hash": ""
   },
   "README.md": {
-    "mtime": 1794950978.0886557,
-    "seen": 1794951380.1556132,
-    "ast_hash": "dbe12a80e8428dcbd99236da86dfc5a5",
+    "mtime": 1795195678.3441815,
+    "seen": 1795198045.9866822,
+    "ast_hash": "4d83b90ef05320634a99b477ebc23e27",
     "semantic_hash": ""
   },
   "web/index.html": {
@@ -192,9 +192,9 @@
     "semantic_hash": ""
   },
   "pruebas/LEEME.md": {
-    "mtime": 1795039528.912648,
-    "seen": 1795194183.6317413,
-    "ast_hash": "e56ff0fbdb6d3ae5478d10d8dda856c4",
+    "mtime": 1795198043.513788,
+    "seen": 1795198045.9867132,
+    "ast_hash": "91bb5e153be17a1acc5414112c4ce637",
     "semantic_hash": ""
   },
   "pruebas/requisitos.txt": {
@@ -453,6 +453,12 @@
     "mtime": 1795039528.8395689,
     "seen": 1795194183.631717,
     "ast_hash": "42adb92d234ce3b5f6a3db5df08f71ee",
+    "semantic_hash": ""
+  },
+  "pruebas/medir_carga.py": {
+    "mtime": 1795197677.2396686,
+    "seen": 1795198045.9865975,
+    "ast_hash": "ef2d199b285ef5282a11d9132e39bb8b",
     "semantic_hash": ""
   }
 }
