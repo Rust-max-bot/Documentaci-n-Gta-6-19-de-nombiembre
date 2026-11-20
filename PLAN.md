@@ -68,6 +68,15 @@ con línea de tiempo, tablas y gráficos de Twitch, Kick, YouTube, Google Trends
       22:** (a) `datos.js` pasará de 182 KB a ~1,6 MB (~320 KB comprimido; carga en el celular
       lento de 3,7 a 5,5 s): partirlo o aligerarlo. (b) ~750 ms fijos al cargar leyendo medidas
       de la página (`gota`, `estado` de los Shorts): moverlo después del primer dibujo.
+      **Preparado el 20 nov en la rama `optimizar-9-4`** (Bruno, con abogado del diablo):
+      `pruebas/medir_carga.py`. Hoy carga en 4,7 s y con 1.000 mediciones en 4,9 s (datos.js casi
+      no influye). Lo lento es que los 8 `<script>` bajan uno tras otro (también en GitHub Pages)
+      y ~1,7 s de CPU al arrancar. Plan corregido, **espera la decisión de Bruno:** (1) `preload`
+      de los scripts en el `<head>` (`defer` no: rompe el `document.write` de
+      `filtro-videos.js:116`); (2) quitar lecturas de medidas repetidas solo si una traza lo
+      justifica; (3) aplicar el estilo y el lugar guardados en el `<head>`, para que no se vea
+      Miami 1986 unos segundos (cambio visible: con permiso); (4) no partir las mediciones ni
+      mover las fotos de Twitch (casi sin ganancia).
 - [ ] **9.3 Menos alarmas por Google** (Bruno, 2026-11-16). **Hecho el 17 nov** (Bruno pidió
       "menos fallos" para el lanzamiento): Noticias reintenta una vez a los 20 s si Google da 429/503,
       y un 429/503 suelto de Noticias o Trends deja aviso amarillo con la ejecución en verde (rojo si
