@@ -63,14 +63,20 @@ las reglas, en `CLAUDE.md`.
       `pruebas/medir_carga.py` (celular lento: 384 px, CPU 4×, 1,6 Mbps, 150 ms). Hoy carga en
       4,7 s y con 1.000 mediciones simuladas en 4,9 s (datos.js casi no influye). Lo lento: los 8
       `<script>` bajan uno tras otro (también en GitHub Pages) y ~1,7 s de CPU al arrancar
-      (`gota`/`actualizar` y `estado` de los Shorts fuerzan el diseño). Plan corregido, **espera
-      la decisión de Bruno:** (1) `preload` de los scripts en el `<head>` (`defer` no: rompe el
-      `document.write` de `filtro-videos.js:116`); (2) quitar lecturas de medidas repetidas solo si
-      una traza lo justifica; (3) aplicar el estilo y el lugar guardados en el `<head>`, para que
-      no se vea Miami 1986 unos segundos (cambio visible: con permiso); (4) no partir las
-      mediciones ni mover las fotos de Twitch (casi sin ganancia). Verificar con
-      `probar_pagina.py` **y** `probar_selector.py`. Otro detalle visto: `cuenta()` reescribe
-      `aria-pressed` cada segundo y fuerza el diseño (gasta batería).
+      (`gota`/`actualizar` y `estado` de los Shorts fuerzan el diseño). Revisado por el abogado del diablo.
+      **Hecho en la rama (20 nov, Bruno pidió A, B y C), falta unir a
+      `main`:** (A) `preload` de 7 scripts en el `<head>` (sin datos.js: atrasaba el primer
+      dibujo 0,3 s); página armada 4,34 → ~3,1 s. (B) quitar las lecturas de `gota`/Shorts **no
+      sirvió** (la traza mostró que el costo solo pasó a otras funciones): revertido; sí `aria-pressed`
+      solo si cambia. (C) + cielo (Bruno, 20 nov): `web/inicio.js` en el `<head>` pone el estilo
+      guardado y día/atardecer/noche antes del primer dibujo (la fórmula del sol se mudó ahí;
+      app.js la usa; respaldo si no llega). Abogado del diablo (2.ª vuelta): fórmula idéntica
+      (105.120 horas comparadas). Medido junto a `main`: página armada ~5,3 → ~3,7 s; primer
+      dibujo +0,1 a 0,15 s. **Listo para unir a `main` cuando Bruno lo pruebe.**
+      **Fallo que ya existía, sin arreglar:** la recarga automática no vuelve a la misma altura
+      (Titulares queda 1.700 a 4.600 px más arriba; `app.js` ~L1330 compite con el navegador).
+      Descartado: `defer` (rompe `filtro-videos.js:116`), partir mediciones, mover fotos y
+      `content-visibility` (~7 % de CPU; rompía los enlaces #sección en Edge y copiar todo en Firefox).
 - [ ] **9.3 Menos alarmas por Google** (Bruno, 2026-11-16). **Hecho el 17 nov** (Bruno pidió
       "menos fallos" para el lanzamiento): Noticias reintenta una vez a los 20 s si Google da 429/503,
       y un 429/503 suelto de Noticias o Trends deja aviso amarillo con la ejecución en verde (rojo si

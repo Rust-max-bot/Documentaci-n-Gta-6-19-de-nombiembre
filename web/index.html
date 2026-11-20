@@ -13,6 +13,23 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Limelight&family=Monoton&family=Outfit:wght@400;500;600;700&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="estilos.css">
+<!-- Los programas de la página se piden todos juntos desde aquí (9.4, paso A, 2026-11-20). Sin
+     esto bajaban uno tras otro, porque cada <script> del final detiene la lectura de la página.
+     No se usa "defer": filtro-videos.js usa document.write para el selector de videos (10.4).
+     Los <script> del final siguen igual y en el mismo orden; estas líneas solo adelantan la bajada.
+     datos.js no va aquí a propósito: es el grande y, pedido junto con estilos.css, atrasaba el
+     primer dibujo 0,3 s (medido con pruebas/medir_carga.py); sin él, 0,1 s y la misma ganancia. -->
+<link rel="preload" as="script" href="datos-ejemplo.js">
+<link rel="preload" as="script" href="eventos.js">
+<link rel="preload" as="script" href="capsula.js">
+<link rel="preload" as="script" href="lanzamientos.js">
+<link rel="preload" as="script" href="animaciones.js">
+<link rel="preload" as="script" href="filtro-videos.js">
+<link rel="preload" as="script" href="app.js">
+<!-- Estilo guardado y cielo de Miami antes del primer dibujo (9.4, 2026-11-20). Va después de
+     estilos.css y de los preload para no atrasar esas bajadas. Las letras de Google van antes: moverlas detrás atrasaba
+     el primer dibujo 0,5 s (probado el 20 nov). -->
+<script src="inicio.js"></script>
 <link rel="icon" href="icono.svg" type="image/svg+xml"><!-- icono original: sol, palmera y mar (hecho para este proyecto) -->
 <!-- Vista previa al compartir el enlace (WhatsApp, Discord, X...). Las redes piden la imagen con dirección completa. -->
 <meta name="description" content="Recuerdo del lanzamiento de GTA 6 (19 de noviembre de 2026): Twitch, Kick, YouTube, Google Trends y titulares, antes, durante y después del día.">

@@ -17,6 +17,8 @@ Windows).
 | `probar_panel.py` | Fase 10: el panel de videos con un GitHub falso (nunca el real): seguridad del servidor (clave, Host, Origin, JSON), "Publicar" (solo sube el archivo de marcas, se junta con mediciones nuevas, se niega fuera de `main` o con otros cambios sin subir, conserva el borrador si falla) y el panel en Edge a 1280 y 384 px. |
 | `probar_selector.py` | Fase 10: el selector de videos del visitante en la página (antes, `generar_web.py`): con la elección de siempre no descarga `videos-extra.js`; "Desde cero" sin ocultar nada trae el video marcado; "Volver a lo de siempre"; elecciones rotas; series de visitas; 1280 y 384 px en los dos estilos. |
 | `probar_despertador.py` | Prueba `despertador/worker.js` con horas simuladas y un GitHub falso (no llama a nadie): minuto 7 siempre, minuto 37 solo del 17 al 21 nov. |
+| `medir_carga.py` | 9.4: mide cuánto tarda en cargar la página en un celular lento (384 px, CPU 4×, 1,6 Mbps, 150 ms), mediana de 3 cargas: peso de `datos.js`, primer dibujo, carga completa y bloqueo. Sirve una copia de `web/` con gzip en `capturas/medir/`. Con `--simular 1000` usa mediciones inventadas (marcadas) para ver cómo cargará el 19 dic. |
+| `probar_saltos.py` | 9.4: revisa que la página no salte: el menú "☰ Secciones" deja cada sección arriba y quieta, un enlace con `#seccion-noticias` la deja arriba y al subir de a poco nada se corre de golpe. 1280 y 384 px, los dos estilos. `--web` para probar otra carpeta. |
 | `medir_parpadeo.py` | Mide si una parte animada parpadea (40 capturas seguidas). Por defecto, el suelo de Miami 1986. Sirve para comparar antes y después de un cambio. |
 
 Antes de `probar_pagina.py`, generar los datos reales con `python recolector/generar_web.py`
