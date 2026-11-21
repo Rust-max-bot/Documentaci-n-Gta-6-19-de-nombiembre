@@ -642,6 +642,9 @@
       horaCero.forEach(function (h, i) {
         if (enFila) h.y = ma;
         else { h.lado = "end"; h.y = ma + 15 * (horaCero.length - 1 - i); }   // la última raya, arriba
+        // Si el nombre no cabe a la izquierda de su raya (al rebobinar, Nueva Zelanda queda casi en
+        // el borde), va abreviado: "NZ".
+        if (h.lado === "end" && h.x - 5 - h.texto.length * anchoLetra < 0 && h.id === "nz") h.texto = "NZ";
       });
       if (!enFila) ma += 15 * (horaCero.length - 1);   // más margen arriba para la escalera
       var Y = function (v) { return ma + (1 - v / tope) * (alto - ma - mb); };
