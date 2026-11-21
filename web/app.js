@@ -541,6 +541,7 @@
       }, { rootMargin: "100px 0px" });
       document.querySelectorAll("main > section").forEach(function (s) { io.observe(s); });
     }
+    function seVeSec(sec) { return !sec || !aLaVista || aLaVista.has(sec); }   // la barra del rebobinado (fuera de main) siempre se ve
     function contar(caja) {
       mirarSecciones();
       // Se pregunta cada vez (no QUIETO): Firefox tarda en avisar si el visitante lo cambia con la página abierta.
@@ -557,7 +558,7 @@
         var inicio = antes && ultimas[clave] ? antes.visto : b.dataset.desde && !primera ? +b.dataset.desde : antes ? antes.visto : fin;
         ahora[clave] = 1;
         var v = vistos[clave] = { visto: inicio, cuadro: 0 }, desde = v.visto;
-        var seVe = !sec || !aLaVista || aLaVista.has(sec);   // la barra del rebobinado (fuera de main) siempre se ve
+        var seVe = seVeSec(sec);
         if (desde === fin || CONTEO.quieto || quieto || !seVe) { v.visto = fin; return; }   // el HTML ya trae el valor final
         // Se cambia el texto que ya está (no textContent): así no se avisa a los observadores de
         // las gotas de los filtros, que medirían la página en cada cuadro.
@@ -574,7 +575,8 @@
       ultimas = ahora;
     }
     function parar() { Object.keys(vistos).forEach(function (c) { cancelAnimationFrame(vistos[c].cuadro); }); vistos = {}; ultimas = {}; yaConto = false; }
-    return { quieto: false, contar: contar, parar: parar };
+    // seVe: lo usan también los gráficos, que se animan solos (ver grafico).
+    return { quieto: false, contar: contar, parar: parar, seVe: function (el) { mirarSecciones(); return seVeSec(el.closest("main > section")); } };
   })();
   pintarFichas(HOY);
   function contarFichas() {
@@ -710,13 +712,13 @@
      opciones.rango ([desde, hasta]) el marco queda fijo aunque la línea llegue solo hasta una
      parte (la línea "crece" con el rebobinado), y con opciones.topeFijo el alto también. */
   function grafico(caja, campo, opciones) {
-    var Mv = M, svgVivo = null, salirVivo = function () {};
-    function dibujar(anchoSabido) {
+    var Mv = M, svgVivo = null, salirVivo = function () {}, previo = null, animo = 0;   // previo: las líneas que se ven (al rebobinar)
+    function dibujar(anchoSabido, animar) {
       var puntos = opciones.serie || Mv.map(function (m) { return { ts: m.ts, v: m[campo] }; });   // serie propia (Trends, por hora)
       var extra = opciones.extra, puntos2 = extra ? Mv.map(function (m) { return { ts: m.ts, v: m[extra.campo] }; }) : null;
       var ancho = Math.max(300, anchoSabido || caja.clientWidth), alto = Math.round(Math.max(230, Math.min(380, ancho * 0.36)));
       var mi = 54, md = 14, ma = 26, mb = 34;
-      if (!puntos.length) { caja.innerHTML = '<p class="nota">Todavía no hay datos.</p>'; svgVivo = null; return; }
+      if (!puntos.length) { cancelAnimationFrame(animo); previo = null; caja.innerHTML = '<p class="nota">Todavía no hay datos.</p>'; svgVivo = null; return; }
       var t0 = opciones.rango ? opciones.rango[0] : puntos[0].ts, t1 = opciones.rango ? opciones.rango[1] : puntos[puntos.length - 1].ts;
       var tope = opciones.tope || opciones.topeFijo || 0, paso;
       puntos.concat(puntos2 || []).forEach(function (p) { if (p.v > tope) tope = p.v; });
@@ -779,39 +781,89 @@
         s += '<line class="salida" x1="' + h.x + '" x2="' + h.x + '" y1="' + (h.y - 8) + '" y2="' + (alto - mb) + '"><title>Medianoche del 19 nov en ' + h.nombre + "</title></line>";
         s += '<text class="salida-texto" x="' + (h.lado === "end" ? h.x - 5 : h.x + 5) + '" y="' + (h.y - 10) + '" text-anchor="' + h.lado + '">' + h.texto + "</text>";
       });
-      var tramos = [], actual = [];                // la línea se corta donde falta un dato
-      puntos.forEach(function (p, i) {
-        if (p.v == null) {
-          if (actual.length) { tramos.push(actual); actual = []; }
-          var xa = X(i ? puntos[i - 1].ts : p.ts), xb = X(i < puntos.length - 1 ? puntos[i + 1].ts : p.ts);
-          s += '<rect class="hueco" x="' + xa + '" y="' + ma + '" width="' + Math.max(2, xb - xa) + '" height="' + (alto - ma - mb) + '"/>';
-        } else actual.push(p);
+      puntos.forEach(function (p, i) {             // huecos: la línea se corta donde falta un dato
+        if (p.v != null) return;
+        var xa = X(i ? puntos[i - 1].ts : p.ts), xb = X(i < puntos.length - 1 ? puntos[i + 1].ts : p.ts);
+        s += '<rect class="hueco" x="' + xa + '" y="' + ma + '" width="' + Math.max(2, xb - xa) + '" height="' + (alto - ma - mb) + '"/>';
       });
-      if (actual.length) tramos.push(actual);
-      tramos.forEach(function (tr) {
-        var linea = tr.map(function (p, i) { return (i ? "L" : "M") + X(p.ts).toFixed(1) + " " + Y(p.v).toFixed(1); }).join("");
-        s += '<path class="relleno" d="' + linea + "L" + X(tr[tr.length - 1].ts).toFixed(1) + " " + Y(0) + "L" + X(tr[0].ts).toFixed(1) + " " + Y(0) + 'Z"/>';
-        s += '<path class="trazo" pathLength="1" d="' + linea + '"/>';
-      });
-      if (puntos2) {                               // segunda línea (Kick), sin relleno ni huecos
-        var t2 = [], a2 = [];
-        puntos2.forEach(function (p) { if (p.v == null) { if (a2.length) { t2.push(a2); a2 = []; } } else a2.push(p); });
-        if (a2.length) t2.push(a2);
-        t2.forEach(function (tr) {
-          s += '<path class="trazo trazo-extra" pathLength="1" style="--color:var(' + extra.color + ')" d="' + tr.map(function (p, i) { return (i ? "L" : "M") + X(p.ts).toFixed(1) + " " + Y(p.v).toFixed(1); }).join("") + '"/>';
+      /* Las líneas van en un grupo aparte (.lineas), con sus puntos ya en píxeles ({ts, y}; y null
+         donde falta el dato). Al rebobinar, lineas() las dibuja hasta "fin" (una hora), con el último
+         trozo a medio camino del punto siguiente: así la línea puede avanzar de a poco (ver animar). */
+      var y0 = Y(0), enPx = function (lista) { return (lista || []).map(function (p) { return { ts: p.ts, y: p.v == null ? null : Y(p.v) }; }); };
+      var meta = { a: enPx(puntos), b: puntos2 ? enPx(puntos2) : null };
+      function tramosHasta(lista, fin) {
+        var tramos = [], act = [];
+        for (var i = 0; i < lista.length; i++) {
+          var p = lista[i];
+          if (p.ts > fin) {
+            var a = lista[i - 1];
+            if (act.length && a && a.y != null && p.y != null) act.push({ x: X(fin), y: a.y + (p.y - a.y) * (fin - a.ts) / (p.ts - a.ts) });
+            break;
+          }
+          if (p.y == null) { if (act.length) tramos.push(act); act = []; } else act.push({ x: X(p.ts), y: p.y });
+        }
+        if (act.length) tramos.push(act);
+        return tramos;
+      }
+      function trazo(tr) { return tr.map(function (p, i) { return (i ? "L" : "M") + p.x.toFixed(1) + " " + p.y.toFixed(1); }).join(""); }
+      function lineas(a, b, finA, finB) {
+        var out = "", ta = tramosHasta(a, finA), tb = b ? tramosHasta(b, finB) : [];
+        ta.forEach(function (tr) {
+          var l = trazo(tr);
+          out += '<path class="relleno" d="' + l + "L" + tr[tr.length - 1].x.toFixed(1) + " " + y0 + "L" + tr[0].x.toFixed(1) + " " + y0 + 'Z"/><path class="trazo" pathLength="1" d="' + l + '"/>';
         });
+        // Segunda línea (Kick), sin relleno ni huecos.
+        tb.forEach(function (tr) { out += '<path class="trazo trazo-extra" pathLength="1" style="--color:var(' + extra.color + ')" d="' + trazo(tr) + '"/>'; });
+        if (opciones.rango) {   // rebobinado: un punto al final de cada línea (si el último dato falló, en el último bueno)
+          var u = ta[ta.length - 1], u2 = tb[tb.length - 1];
+          if (u) s2(u[u.length - 1], "");
+          if (u2) s2(u2[u2.length - 1], ' style="--color:var(' + extra.color + ')"');
+        }
+        function s2(q, estilo) { out += '<circle class="rb-fin" r="5"' + estilo + ' cx="' + q.x.toFixed(1) + '" cy="' + q.y.toFixed(1) + '"/>'; }
+        return out;
       }
-      if (opciones.rango) {   // rebobinado: un punto al final de cada línea, donde va el momento elegido
-        var ultimoDe = function (lista) { for (var j = (lista || []).length - 1; j >= 0; j--) if (lista[j].v != null) return lista[j]; return null; };
-        var fin1 = ultimoDe(puntos), fin2 = ultimoDe(puntos2);   // si el último dato falló, el último bueno
-        if (fin1) s += '<circle class="rb-fin" r="5" cx="' + X(fin1.ts).toFixed(1) + '" cy="' + Y(fin1.v).toFixed(1) + '"/>';
-        if (fin2) s += '<circle class="rb-fin" r="5" style="--color:var(' + extra.color + ')" cx="' + X(fin2.ts).toFixed(1) + '" cy="' + Y(fin2.v).toFixed(1) + '"/>';
-      }
+      s += '<g class="lineas">' + lineas(meta.a, meta.b, Infinity, Infinity) + "</g>";
       s += '<line class="cursor" y1="' + ma + '" y2="' + (alto - mb) + '" visibility="hidden"/><circle class="punto" r="6" visibility="hidden"/>';
       s += '<rect class="zona" x="' + mi + '" y="' + ma + '" width="' + (ancho - mi - md) + '" height="' + (alto - ma - mb) + '" fill="transparent"/></svg>';
       caja.innerHTML = s;
 
       var svg = caja.firstChild, cursor = svg.querySelector(".cursor"), punto = svg.querySelector(".punto");
+
+      /* Al rebobinar, las líneas no cambian de golpe (7.1 a, opción A "La línea avanza", elegida por
+         Bruno el 2026-11-21): en 250 ms, el final de cada línea va de la hora de antes a la nueva
+         (avanza o retrocede) y cada punto pasa de su altura de antes a la nueva (en Trends la escala
+         cambia en cada medición: la línea se transforma en vez de saltar). Si llega otra parada a
+         mitad de camino, sigue desde lo que se ve. Al instante: al arrastrar la barra, con "reducir
+         movimiento", al cambiar el ancho de la ventana y si el gráfico no está a la vista. */
+      cancelAnimationFrame(animo);
+      var finDe = function (lista) { for (var j = (lista || []).length - 1; j >= 0; j--) if (lista[j].y != null) return lista[j].ts; return null; };
+      var antes = previo, hacia = opciones.rango ? { a: meta.a, b: meta.b, finA: finDe(meta.a), finB: finDe(meta.b) } : null;
+      previo = hacia;
+      if (animar && antes && hacia && !antes.b === !hacia.b && !CONTEO.quieto && CONTEO.seVe(caja) &&
+          !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        var g = svg.querySelector(".lineas"), tAnim = null;   // (t0 ya es el comienzo del eje)
+        var entre = function (x, y, e) { return x == null || y == null ? y : x + (y - x) * e; };
+        var mezclar = function (viejo, nuevo, e) {
+          var mapa = {}, hay = {};
+          (viejo || []).forEach(function (p) { mapa[p.ts] = p.y; });
+          var out = (nuevo || []).map(function (p) { hay[p.ts] = 1; return { ts: p.ts, y: p.y == null ? null : entre(mapa[p.ts], p.y, e) }; });
+          (viejo || []).forEach(function (p) { if (!hay[p.ts]) out.push(p); });   // al retroceder: lo que se va
+          return out.sort(function (x, y) { return x.ts - y.ts; });
+        };
+        var cuadro = function (e) {
+          var ahora = { a: mezclar(antes.a, hacia.a, e), b: hacia.b ? mezclar(antes.b, hacia.b, e) : null,
+            finA: entre(antes.finA, hacia.finA, e), finB: entre(antes.finB, hacia.finB, e) };
+          g.innerHTML = lineas(ahora.a, ahora.b, ahora.finA == null ? -Infinity : ahora.finA, ahora.finB == null ? -Infinity : ahora.finB);
+          return ahora;
+        };
+        previo = cuadro(0);   // sin un cuadro con el final ya puesto
+        animo = requestAnimationFrame(function paso(t) {
+          if (tAnim == null) tAnim = t;
+          var p = Math.min(1, (t - tAnim) / 250), e = 1 - Math.pow(1 - p, 3);   // la misma curva que los números
+          if (p < 1) { previo = cuadro(e); animo = requestAnimationFrame(paso); }
+          else { previo = hacia; g.innerHTML = lineas(meta.a, meta.b, Infinity, Infinity); }
+        });
+      }
       function mover(e) {
         var r = svg.getBoundingClientRect(), px = (e.clientX - r.left) / r.width * ancho, cerca = null, dist = Infinity;
         puntos.forEach(function (p) { var d = Math.abs(X(p.ts) - px); if (d < dist) { dist = d; cerca = p; } });
@@ -848,7 +900,7 @@
       espera = setTimeout(function () { if (caja.clientWidth !== anchoAnterior) { anchoAnterior = caja.clientWidth; dibujar(); } }, 150);
     });
     // Al rebobinar se redibuja en cada parada: con el ancho ya medido (cambia solo con "resize").
-    return { poner: function (nuevas, Mnuevo) { opciones = nuevas; Mv = Mnuevo; dibujar(anchoAnterior); } };
+    return { poner: function (nuevas, Mnuevo) { opciones = nuevas; Mv = Mnuevo; dibujar(anchoAnterior, true); } };
   }
   /* ---------- Twitch y Kick en el mismo gráfico (tarea 6.6, opción B de Bruno, 2026-11-16) ----------
      Una línea por plataforma, con su leyenda. Kick se mide desde el 16 nov: antes no tiene línea. */

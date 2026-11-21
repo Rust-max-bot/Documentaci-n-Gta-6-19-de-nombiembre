@@ -185,6 +185,25 @@ with sync_playwright() as p:
                 })""", sel)
                 comprobar(c[0] > 0 and c[1] == 0, f"{sel}: los números cuentan y terminan exactos ({c[0]} contando de {c[2]}, {c[1]} mal al final)")
                 pg.evaluate("window.__rebobinar.ir(+document.getElementById('rb-rango').value - 3)")
+            # Gráficos (opción A de Bruno, "La línea avanza"): a mitad de camino las líneas no son
+            # todavía las finales; al terminar, iguales a las del gráfico dibujado de nuevo.
+            for sel in ("#g-twitch", "#g-trends"):
+                pg.evaluate("s => document.querySelector(s).scrollIntoView({ block: 'center', behavior: 'instant' })", sel)
+                pg.wait_for_timeout(150)
+                lineas = f"[...document.querySelectorAll('{sel} .lineas path, {sel} .lineas circle')].map(e => e.getAttribute('d') || e.getAttribute('cx') + ',' + e.getAttribute('cy')).join('|')"
+                c = pg.evaluate("""d => new Promise(listo => {
+                  const k = +document.getElementById('rb-rango').value, lin = () => eval(d);
+                  window.__rebobinar.ir(k + 1);
+                  setTimeout(() => { const medio = lin(); setTimeout(() => listo([medio, lin()]), 400); }, 80);
+                })""", lineas)
+                # Sin animación ("reducir movimiento"), el mismo momento dibujado de una vez.
+                pg.emulate_media(reduced_motion="reduce")
+                pg.evaluate("window.__rebobinar.ir(+document.getElementById('rb-rango').value)")
+                quieta = pg.evaluate(lineas)
+                pg.emulate_media(reduced_motion="no-preference")
+                comprobar(c[0] != c[1] and c[1] == quieta and quieta,
+                          f"{sel}: la línea avanza al cambiar de momento y termina igual que dibujada sin animación")
+                pg.evaluate("window.__rebobinar.ir(+document.getElementById('rb-rango').value - 1)")
             pg.evaluate(f"window.__rebobinar.ir({NZ})")
             pg.evaluate("window.scrollTo(0, 0)")
             pg.wait_for_timeout(400)

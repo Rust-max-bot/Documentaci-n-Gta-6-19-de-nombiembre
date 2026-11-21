@@ -19,8 +19,19 @@
 **Para seguir:** trabajar en la rama **`rebobinar-7-1`** (`git checkout rebobinar-7-1`; no está
 unida a `main`). Animaciones al rebobinar (7.1 (a)): **hecha la 1, números que cuentan** (en
 todas las secciones que viajan), la única que pidió Bruno de las 4 propuestas (las otras 3, solo si él las pide; ver `PLAN.md`).
-**Pendiente (21 nov, pedido de Bruno):** gráficos animados al rebobinar; se le preguntó qué
-forma quiere. Después, Bruno prueba la rama y decide unirla a `main`.
+**A medias (21 nov, ~00:45 de Chile; Bruno apagó el PC y pidió dejarlo listo para seguir en otro
+chat):** gráficos animados al rebobinar, **opción A "La línea avanza"** (elegida por Bruno): el
+final de la línea va de la hora de antes a la nueva y cada punto pasa de su altura vieja a la
+nueva en 250 ms (Trends cambia de escala). Código hecho en `grafico()` de `web/app.js` (bloque
+"La línea avanza", `lineas()`, `tramosHasta()`, `previo`), en el commit "a medias" de la rama.
+Capturas con reloj falso de Playwright: avanza, retrocede y Trends se transforma bien.
+**Sin verificar:** `pruebas/probar_rebobinar.py` se **cuelga** en la comprobación nueva de los
+gráficos (después de "#rb-barra: los números cuentan…"; la página o el `evaluate` no responde, sin
+error). La versión anterior de esa comprobación pasaba, pero con un fallo ya arreglado (la
+variable `t0` de la animación pisaba el comienzo del eje). Siguiente paso: averiguar el cuelgue
+(¿bucle sin fin en la página o la prueba?), arreglarlo, correr todas las pruebas (Edge y Firefox)
+y medir la velocidad con la CPU 4x; recién entonces 7.1 (a) queda hecha. Después, Bruno prueba la
+rama y decide unirla a `main`.
 
 **La página está lista para el lanzamiento y publicada** en
 <https://rust-max-bot.github.io/Documentaci-n-Gta-6-19-de-nombiembre/> (la publica
