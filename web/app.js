@@ -511,31 +511,56 @@
         : x[1] == null ? "<b>—</b>" : '<b data-rb="f:' + x[0] + '" data-v="' + x[1] + '">' + num(x[1]) + "</b>";
       return '<div class="ficha"><small>' + x[0] + "</small>" + b + "<span>" + x[2] + "</span></div>";
     }).join("");
-    if (V.corte == null) contarFichas(); else CONTEO.contar($("fichas"));
+    if (V.corte == null) contarFichas();
   }
-  /* Números que cuentan al rebobinar (7.1 a, opción 1 elegida por Bruno, 2026-11-20): al cambiar
-     de momento, cada número con data-rb (su nombre) y data-v (su valor) cuenta en 250 ms desde lo
-     que mostraba hasta el valor nuevo, en vez de saltar; así cabe de sobra en una parada a 4x
-     (500 ms). Si llega otra parada a mitad de la cuenta, sigue desde lo que se ve. Sin cuenta: al
-     arrastrar la barra (CONTEO.quieto), con "reducir movimiento" y en la primera parada (no hay
-     número anterior). CONTEO.parar() olvida los números al abrir y al salir del rebobinado. */
+  /* Números que cuentan al rebobinar (7.1 a, opción 1 elegida por Bruno, 2026-11-20; después, a
+     pedido suyo, en todas las secciones que viajan): al cambiar de momento, cada número con
+     data-rb (su nombre) y data-v (su valor) cuenta en 250 ms desde lo que mostraba hasta el valor
+     nuevo, en vez de saltar; así cabe de sobra en una parada a 4x (500 ms). Si llega otra parada a
+     mitad de la cuenta, sigue desde lo que se ve. Los números se marcan con cifra() y los cuenta
+     ir(), en el rebobinado, de una vez para toda la página. Sin cuenta: al arrastrar la barra
+     (CONTEO.quieto), con "reducir movimiento", en la primera parada (no hay número anterior), los
+     que aparecen por primera vez y los que están fuera de la pantalla (no se ven; así no se gasta
+     en ellos). CONTEO.parar() olvida los números al abrir y al salir del rebobinado. */
+  function cifra(clave, v, fmt) {
+    var f = fmt || num;
+    return '<span data-rb="' + limpio(clave) + '" data-v="' + v + '"' + (f === compacto ? ' data-f="c"' : "") + ">" + f(v) + "</span>";
+  }
   var CONTEO = (function () {
-    var vistos = {};
+    var vistos = {}, aLaVista = null;
+    /* Qué secciones se ven: lo avisa IntersectionObserver por su cuenta. Medir cada número en cada
+       parada (getBoundingClientRect) obligaba a calcular la página dos veces y la hacía el doble de
+       lenta en un celular (medido con la CPU 4 veces más lenta). */
+    function mirarSecciones() {
+      if (aLaVista || !("IntersectionObserver" in window)) return;
+      aLaVista = new Set();
+      var io = new IntersectionObserver(function (entradas) {
+        entradas.forEach(function (e) { if (e.isIntersecting) aLaVista.add(e.target); else aLaVista.delete(e.target); });
+      }, { rootMargin: "100px 0px" });
+      document.querySelectorAll("main > section").forEach(function (s) { io.observe(s); });
+    }
     function contar(caja) {
+      mirarSecciones();
       // Se pregunta cada vez (no QUIETO): Firefox tarda en avisar si el visitante lo cambia con la página abierta.
-      var quieto = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      var quieto = window.matchMedia("(prefers-reduced-motion: reduce)").matches, usadas = {};
       caja.querySelectorAll("[data-rb]").forEach(function (b) {
-        var clave = b.dataset.rb, fin = +b.dataset.v, fmt = b.dataset.f === "c" ? compacto : num, antes = vistos[clave];
+        var clave = b.dataset.rb, n = usadas[clave] || 0, sec = b.closest("main > section");
+        usadas[clave] = n + 1;
+        if (n) clave += "~" + n;   // el mismo video en Global y en español: el mismo número, dos lugares
+        var fin = +b.dataset.v, fmt = b.dataset.f === "c" ? compacto : num, antes = vistos[clave];
         if (antes) cancelAnimationFrame(antes.cuadro);
         var v = vistos[clave] = { visto: antes ? antes.visto : fin, cuadro: 0 }, desde = v.visto;
-        if (desde === fin || CONTEO.quieto || quieto) { v.visto = fin; return; }   // el HTML ya trae el valor final
-        b.textContent = fmt(desde);
-        var t0 = null;
+        var seVe = !sec || !aLaVista || aLaVista.has(sec);   // la barra del rebobinado (fuera de main) siempre se ve
+        if (desde === fin || CONTEO.quieto || quieto || !seVe) { v.visto = fin; return; }   // el HTML ya trae el valor final
+        // Se cambia el texto que ya está (no textContent): así no se avisa a los observadores de
+        // las gotas de los filtros, que medirían la página en cada cuadro.
+        var texto = b.firstChild, t0 = null;
+        texto.data = fmt(desde);
         v.cuadro = requestAnimationFrame(function paso(t) {
           if (t0 == null) t0 = t;
           var p = Math.min(1, (t - t0) / 250), e = 1 - Math.pow(1 - p, 3);   // frena al final, como las fichas al abrir
           v.visto = p < 1 ? desde + (fin - desde) * e : fin;
-          b.textContent = fmt(v.visto);
+          texto.data = fmt(v.visto);
           if (p < 1) v.cuadro = requestAnimationFrame(paso);
         });
       });
@@ -576,8 +601,9 @@
       if (t >= LUGARES[x[0]].ts) ev.push({ ts: LUGARES[x[0]].ts, texto: x[1], auto: true, tipo: "lanzamiento" });
     });
     var pT = V.picoTwitch, pR = V.picoTrends;
-    if (pT) ev.push({ ts: pT.ts, texto: "Máximo de espectadores en Twitch: " + num(pT.espectadores), auto: true, tipo: "envivo" });
-    if (pR) ev.push({ ts: pR.ts, texto: "Máximo de búsquedas en Google Trends (" + pR.interes + " de 100)", auto: true, tipo: "tendencia" });
+    // n y tras: el número va aparte, para que cuente al rebobinar (cifra).
+    if (pT) ev.push({ ts: pT.ts, texto: "Máximo de espectadores en Twitch: ", n: pT.espectadores, tras: "", auto: true, tipo: "envivo" });
+    if (pR) ev.push({ ts: pR.ts, texto: "Máximo de búsquedas en Google Trends (", n: pR.interes, tras: " de 100)", auto: true, tipo: "tendencia" });
     SERVICIOS.forEach(function (s) {
       var antes = "ok";
       V.M.forEach(function (m) {
@@ -631,7 +657,7 @@
       var hay = FILTROS.filter(function (f) { return ev.some(function (e) { return pasa(e, f[0]); }); });
       barra.innerHTML = hay.map(function (f) {
         var n = ev.filter(function (e) { return pasa(e, f[0]); }).length;
-        return '<button type="button" data-f="' + f[0] + '" aria-pressed="' + (f[0] === filtro) + '">' + f[1] + " <small>" + n + "</small></button>";
+        return '<button type="button" data-f="' + f[0] + '" aria-pressed="' + (f[0] === filtro) + '">' + f[1] + " <small>" + cifra("lf:" + f[0], n) + "</small></button>";
       }).join("");
       var lista = ev.filter(function (e) { return pasa(e, filtro); }), vista = abierta ? lista : lista.slice(0, CORTE);
       var html = "", diaAntes = "";
@@ -641,7 +667,7 @@
         var t = TIPOS[e.tipo] || TIPOS.mano;
         html += '<li class="l-ev ' + (e.auto ? "auto" : "mano") + '">' +
           '<span class="l-nodo" title="' + t[1] + '">' + ico(t[0]) + "</span>" +
-          '<div class="l-cuerpo"><time>' + hora(e.ts) + "</time>" + '<span class="que">' + limpio(e.texto) + "</span>" +
+          '<div class="l-cuerpo"><time>' + hora(e.ts) + "</time>" + '<span class="que">' + limpio(e.texto) + (e.n != null ? cifra("lm:" + e.tipo, e.n) + limpio(e.tras) : "") + "</span>" +
           '<span class="l-pie"><span class="etiqueta">' + (e.auto ? "automático" : "a mano") + "</span>" +
           (t[2] ? '<a href="#' + t[2] + '">' + t[3] + " →</a>" : "") + "</span></div></li>";
       });
@@ -988,8 +1014,8 @@
       var e = pl.esp(m);
       if (e == null) return '<tr class="sin-dato">' + horaTd + plTd + '<td colspan="3">Sin dato' + (pl.error(m) ? " (" + limpio(pl.error(m)) + ")" : "") + "</td></tr>";
       var c = pl.canal(m);
-      return "<tr>" + horaTd + plTd + '<td class="n">' + num(e) + '</td><td class="barra-celda ' + pl.clase + '"><i style="--w:' + (e / tope * 100).toFixed(1) + '%"></i></td><td>' +
-        (c ? '<span class="canal">' + c.foto + "<span>" + enlace(c.url, limpio(c.nombre)) + " (" + compacto(c.espectadores) + ")</span></span>" : "—") + "</td></tr>";
+      return "<tr>" + horaTd + plTd + '<td class="n">' + cifra("tb:" + m.ts + pl.nombre, e) + '</td><td class="barra-celda ' + pl.clase + '"><i style="--w:' + (e / tope * 100).toFixed(1) + '%"></i></td><td>' +
+        (c ? '<span class="canal">' + c.foto + "<span>" + enlace(c.url, limpio(c.nombre)) + " (" + cifra("tbc:" + m.ts + pl.nombre, c.espectadores, compacto) + ")</span></span>" : "—") + "</td></tr>";
     }
     function pintar() {
       $("filtros-dia").innerHTML = dias.map(function (d) { return '<button type="button" class="' + (d === elegido ? "activo" : "") + '" data-dia="' + d + '">' + d + "</button>"; }).join("");
@@ -1034,7 +1060,7 @@
     function grafico(f) {
       return '<div class="g-vis"><div class="g-caja"><svg class="mini" viewBox="0 0 120 30" preserveAspectRatio="none" aria-hidden="true">' +
         '<path class="area" d="' + f.area + '"/><path d="' + f.camino + '"/></svg><i class="g-punto" style="top:' + f.fin.toFixed(1) + '%"></i></div>' +
-        '<p class="g-ejes"><span><i class="g-d">' + dia(f.desde) + " · </i>" + compacto(f.a) + '</span><span><i class="g-d">' + etiquetaFin + " · </i><b>" + compacto(f.b) + "</b></span></p></div>";
+        '<p class="g-ejes"><span><i class="g-d">' + dia(f.desde) + " · </i>" + compacto(f.a) + '</span><span><i class="g-d">' + etiquetaFin + " · </i><b>" + cifra("vf:" + f.v.id, f.b, compacto) + "</b></span></p></div>";
     }
     function tarjetas(fs, vacio) {
       return fs.map(function (f) {
@@ -1045,8 +1071,8 @@
             '<img src="' + limpio(f.v.miniatura) + '" alt="" loading="lazy" width="320" height="180">' + (url ? "</a>" : "</div>")
           : "";
         return '<li title="' + limpio(f.v.titulo) + '">' + foto + '<div class="v-texto">' + enlace(url, "<span>" + limpio(f.v.titulo) + "</span>") +
-          '<small title="Al inicio: ' + num(f.a) + " · Al final: " + num(f.b) + '">' + limpio(f.v.canal) + " · " + compacto(f.b) +
-          ' visitas · <span class="crece">+' + compacto(f.b - f.a) + "</span></small>" +
+          '<small title="Al inicio: ' + num(f.a) + " · Al final: " + num(f.b) + '">' + limpio(f.v.canal) + " · " + cifra("vb:" + f.v.id, f.b, compacto) +
+          ' visitas · <span class="crece">+' + cifra("vc:" + f.v.id, f.b - f.a, compacto) + "</span></small>" +
           grafico(f) + "</div></li>";
       }).join("") || '<li class="vacio">' + vacio + "</li>";
     }
@@ -1080,7 +1106,7 @@
       var normales = todas.filter(function (f) { return f.v.short !== true; }).slice(0, VIDEOS_VISIBLES);
       var shorts = todas.filter(function (f) { return f.v.short === true; });
       return '<h3 class="sub v-sub">' + ico("video") + 'Videos</h3><ul class="videos">' + tarjetas(normales, "Todavía no hay videos.") + "</ul>" +
-        (shorts.length ? '<h3 class="sub v-sub">' + ico("short") + 'Shorts <small>' + shorts.length + " · desliza para ver más</small>" +
+        (shorts.length ? '<h3 class="sub v-sub">' + ico("short") + 'Shorts <small>' + cifra("vs:" + lista, shorts.length) + " · desliza para ver más</small>" +
           '<span class="flechas-shorts">' + flechaHTML("izq", "Ver Shorts anteriores") + flechaHTML("der", "Ver más Shorts") + "</span></h3>" +
           '<ul class="videos shorts" aria-label="Shorts: desliza hacia el lado para ver más">' + tarjetas(shorts, "") + "</ul>" : "");
     }
@@ -1144,7 +1170,7 @@
       caja.innerHTML = diasN.length < 2 ? "" : '<div class="nt-barras" role="group" aria-label="Titulares por día: toca un día para verlos">' +
         diasN.slice().reverse().map(function (k) {
           return '<button type="button" data-dia="' + k + '" class="' + (k === filtro ? "activo" : "") + '" aria-pressed="' + (k === filtro) + '" title="' + nombreDia(k) + ": " + porDia[k] + ' titulares">' +
-            '<span class="nt-num">' + porDia[k] + '</span><i style="height:' + Math.max(6, porDia[k] / max * 100).toFixed(1) + '%"></i><span class="nt-dia">' + nombreDia(k).replace(" ", "<br>") + "</span></button>";
+            '<span class="nt-num">' + cifra("ntd:" + k, porDia[k]) + '</span><i style="height:' + Math.max(6, porDia[k] / max * 100).toFixed(1) + '%"></i><span class="nt-dia">' + nombreDia(k).replace(" ", "<br>") + "</span></button>";
         }).join("") + "</div>" +
         (filtro ? '<button type="button" class="nt-todos" data-dia="">Ver todos los días</button>' : "");
     }
@@ -1179,12 +1205,12 @@
         medios = Object.keys(cuenta).map(function (m) { return [m, cuenta[m]]; }).sort(function (a, b) { return b[1] - a[1]; }).slice(0, 8);
         nMedios = Object.keys(cuenta).length; ultimas = lista.slice(0, 6);
       }
-      $("noticias-resumen").textContent = lista.length
-        ? lista.length + (V.corte == null ? " titulares guardados de " : " titulares hasta ese momento, de ") + nMedios + " medios. Quiénes hablan más de GTA 6, y lo último."
+      $("noticias-resumen").innerHTML = lista.length
+        ? cifra("nt:total", lista.length) + (V.corte == null ? " titulares guardados de " : " titulares hasta ese momento, de ") + cifra("nt:medios", nMedios) + " medios. Quiénes hablan más de GTA 6, y lo último."
         : "Todavía no hay titulares.";
       var mx = medios.length ? medios[0][1] : 1;
       $("noticias-medios").innerHTML = medios.map(function (m) {
-        return "<div><span>" + limpio(m[0]) + '</span><i style="width:' + (m[1] / mx * 100).toFixed(1) + '%"></i><b>' + num(m[1]) + "</b></div>";
+        return "<div><span>" + limpio(m[0]) + '</span><i style="width:' + (m[1] / mx * 100).toFixed(1) + '%"></i><b>' + cifra("ntm:" + m[0], m[1]) + "</b></div>";
       }).join("");
       $("noticias-ultimas").innerHTML = ultimas.map(function (n) { return tarjeta(n, true); }).join("");
       boton.hidden = !lista.length;
@@ -1796,7 +1822,7 @@
       var e = r.h[r.h.length - 1], nuevo = r.h.length > 1 && ultima - e.ts < NUEVO;
       var prev = r.h.slice(0, -1).reverse().slice(0, 5);
       return '<li class="' + (nuevo ? "nuevo" : "") + '"><small>' + r.nombre + "</small>" + (nuevo ? '<span class="rc-nuevo">¡Nuevo récord!</span>' : "") +
-        "<b>" + r.fmt(e.valor) + '</b><span class="rc-uni">' + r.uni + "</span>" +
+        "<b>" + cifra("rc:" + r.nombre, e.valor, r.fmt) + '</b><span class="rc-uni">' + r.uni + "</span>" +
         (quien(r, e) ? '<p class="rc-que">' + quien(r, e) + "</p>" : "") + '<p class="rc-cuando">' + cuando(r, e) + "</p>" +
         (r.ahora ? '<p class="rb-ahora">En ese momento: <b data-rb="r:' + r.nombre + '" data-v="' + r.ahora.valor + '" data-f="' + (r.fmt === compacto ? "c" : "n") + '">' + r.fmt(r.ahora.valor) + "</b>" + (r.ahora.que && !r.solo ? " · " + enlace(r.ahora.url, limpio(r.ahora.que)) : "") +
           (V.corte - r.ahora.ts > 20 * 60000 ? " (dato de las " + hora(r.ahora.ts) + ")" : "") + "</p>" : "") +
@@ -1806,15 +1832,14 @@
         }).join("") + "</ul></details>" : "") + "</li>";
     }).join("");
     caja.innerHTML = html || '<li class="vacio">Sin datos todavía.</li>';
-    if (V.corte != null) CONTEO.contar(caja);   // "En ese momento" cuenta en vez de saltar (7.1 a)
 
     // Para la línea de tiempo: hitos redondos de espectadores en Twitch y cada vez que cambia el video más visto.
     var tr = V.D.trailers || [];
     if (primera) hitosLinea(esp, filas, lideres, lideresShort, tr);
     $("records-trailers").innerHTML = tr.length ? tr.map(function (t) {
       var s = t.serie, u = s[s.length - 1], sube = s.length > 1 ? u.visitas - s[0].visitas : null;
-      return "<li>" + enlace(urlVideo(t.id), limpio(t.titulo.replace(/^Grand Theft Auto VI[:\s]*/, "") || t.titulo)) + "<b>" + compacto(u.visitas) + "</b><small>visitas</small>" +
-        (sube != null ? '<span class="rc-sube">+' + num(sube) + " desde el " + dia(Date.parse(s[0].t)) + "</span>" : "") + "</li>";
+      return "<li>" + enlace(urlVideo(t.id), limpio(t.titulo.replace(/^Grand Theft Auto VI[:\s]*/, "") || t.titulo)) + "<b>" + cifra("tr:" + t.id, u.visitas, compacto) + "</b><small>visitas</small>" +
+        (sube != null ? '<span class="rc-sube">+' + cifra("trs:" + t.id, sube) + " desde el " + dia(Date.parse(s[0].t)) + "</span>" : "") + "</li>";
     }).join("") : '<li class="vacio">Todavía sin mediciones.</li>';
   }
   function hitosLinea(esp, filas, lideres, lideresShort, tr) {
@@ -2159,21 +2184,22 @@
       }
       var primero = hist.length ? hist[0] : null, mejor = null;
       hist.forEach(function (h) { if (!h.fuera && (!mejor || h.p < mejor.p)) mejor = h; });
-      var puesto = function (p) { return p ? "#" + p : "Fuera del top " + (tw ? tw.leidas : 100); };
+      // Con clave, el puesto cuenta al rebobinar (cifra): #12 → #8 pasa por #11, #10 y #9.
+      var puesto = function (p, clave) { return p ? "#" + (clave ? cifra(clave, p) : p) : "Fuera del top " + (tw ? tw.leidas : 100); };
       var out = '<div class="cp-foco' + (kk ? " con-kick" : "") + '"><div class="cp-foco-tit"><small>En el centro</small><b>GTA VI</b><span>frente a todo lo demás; GTA V, de referencia</span></div>';
-      if (tw) out += '<div class="cp-dato"><small>Twitch · puesto</small><b>' + puesto(tw.gta6) + "</b><span>GTA V: " + puesto(tw.gta5) + "</span>" +
+      if (tw) out += '<div class="cp-dato"><small>Twitch · puesto</small><b>' + puesto(tw.gta6, "cp:tw6") + "</b><span>GTA V: " + puesto(tw.gta5, "cp:tw5") + "</span>" +
         linea(function (h) { return h.p; }, true, 101) +
         '<em>' + (primero ? "Desde el " + dia(primero.ts) + ": " + (primero.fuera ? "fuera del top" : "#" + primero.p) + " → " + puesto(tw.gta6) + (mejor ? " · mejor: #" + mejor.p : "") : "") + "</em></div>";
       if (kk) {
-        var pK = function (p) { return p ? "#" + p : "Sin directos"; }, k0 = histK[0], mejorK = null;
+        var pK = function (p, clave) { return p ? "#" + (clave ? cifra(clave, p) : p) : "Sin directos"; }, k0 = histK[0], mejorK = null;
         histK.forEach(function (h) { if (!mejorK || h.p < mejorK.p) mejorK = h; });
-        out += '<div class="cp-dato"><small>Kick · puesto</small><b>' + pK(kk.gta6) + "</b><span>GTA V: " + pK(kk.gta5) + "</span>" +
+        out += '<div class="cp-dato"><small>Kick · puesto</small><b>' + pK(kk.gta6, "cp:k6") + "</b><span>GTA V: " + pK(kk.gta5, "cp:k5") + "</span>" +
           linea(function (h) { return h.p; }, true, Math.max.apply(null, histK.map(function (h) { return h.p; }).concat(10)), histK) +
           "<em>" + (k0 ? "Desde el " + dia(k0.ts) + ": #" + k0.p + " → " + pK(kk.gta6) + (mejorK ? " · mejor: #" + mejorK.p : "") : "Entre " + kk.categorias + " categorías con directos") + "</em></div>";
       }
       regiones.forEach(function (r) {
         var d = yt.regiones[r];
-        out += '<div class="cp-dato"><small>YouTube ' + (nombres[r] || r) + " · en tendencia</small><b>" + cuenta(r, "VI") + ' <i>de ' + d.en_lista + "</i></b><span>videos de GTA VI · GTA V: " + cuenta(r, "V") + "</span>" +
+        out += '<div class="cp-dato"><small>YouTube ' + (nombres[r] || r) + " · en tendencia</small><b>" + cifra("cp:y6" + r, cuenta(r, "VI")) + ' <i>de ' + d.en_lista + "</i></b><span>videos de GTA VI · GTA V: " + cifra("cp:y5" + r, cuenta(r, "V")) + "</span>" +
           linea(function (h) { return h.tend[r] || 0; }, false, Math.max.apply(null, hist.map(function (h) { return h.tend[r] || 0; }).concat(1)) * 1.15) + "<em>Videos de GTA en tendencia, medición a medición</em></div>";
       });
       out += "</div>";
@@ -2181,8 +2207,8 @@
       if (tw) {
         var tope = Math.max.apply(null, tw.comparadas.map(function (c) { return c.espectadores_top100; })) || 1;
         out += '<div class="cp-col"><h3 class="sub">Twitch · categorías más vistas</h3><ul class="cp-barras">' + tw.comparadas.map(function (c) {
-          return '<li class="' + (c.id === "32982" ? "gta cinco" : GTA[c.id] ? "gta" : "") + '"><span class="cp-nom">' + limpio(GTA[c.id] || c.nombre) + (c.puesto ? " <i>#" + c.puesto + "</i>" : "") + "</span>" +
-            '<span class="cp-b"><i style="width:' + Math.max(1, c.espectadores_top100 / tope * 100).toFixed(1) + '%"></i></span><span class="cp-num">' + compacto(c.espectadores_top100) + "</span></li>";
+          return '<li class="' + (c.id === "32982" ? "gta cinco" : GTA[c.id] ? "gta" : "") + '"><span class="cp-nom">' + limpio(GTA[c.id] || c.nombre) + (c.puesto ? " <i>#" + cifra("cpp:" + c.id, c.puesto) + "</i>" : "") + "</span>" +
+            '<span class="cp-b"><i style="width:' + Math.max(1, c.espectadores_top100 / tope * 100).toFixed(1) + '%"></i></span><span class="cp-num">' + cifra("cpt:" + c.id, c.espectadores_top100, compacto) + "</span></li>";
         }).join("") + "</ul>" +
           '<p class="cp-nota">Twitch da el orden de las categorías, no el total de espectadores. Cada barra suma el público de las 100 transmisiones más vistas de esa categoría; por eso una barra puede ser más larga que la de un puesto anterior.</p>' +
           barrasKick() + "</div>";
@@ -2192,8 +2218,8 @@
         if (!kk) return "";
         var topeK = Math.max.apply(null, kk.comparadas.map(function (c) { return c.espectadores; })) || 1;
         return '<h3 class="sub cp-sub-kick">Kick · categorías más vistas</h3><ul class="cp-barras">' + kk.comparadas.map(function (c) {
-          return '<li class="' + (c.id === 8 ? "gta cinco" : GTA_KICK[c.id] ? "gta" : "") + '"><span class="cp-nom">' + limpio(GTA_KICK[c.id] || c.nombre) + " <i>#" + c.puesto + "</i></span>" +
-            '<span class="cp-b"><i style="width:' + Math.max(1, c.espectadores / topeK * 100).toFixed(1) + '%"></i></span><span class="cp-num">' + compacto(c.espectadores) + "</span></li>";
+          return '<li class="' + (c.id === 8 ? "gta cinco" : GTA_KICK[c.id] ? "gta" : "") + '"><span class="cp-nom">' + limpio(GTA_KICK[c.id] || c.nombre) + " <i>#" + cifra("ckp:" + c.id, c.puesto) + "</i></span>" +
+            '<span class="cp-b"><i style="width:' + Math.max(1, c.espectadores / topeK * 100).toFixed(1) + '%"></i></span><span class="cp-num">' + cifra("ckt:" + c.id, c.espectadores, compacto) + "</span></li>";
         }).join("") + "</ul>" +
           '<p class="cp-nota">Kick no publica un ranking: se suma el público de todos sus directos en vivo, categoría por categoría' +
           (kk.completo ? "" : " (esta vez no se alcanzaron a leer todos)") + ".</p>";
@@ -2203,15 +2229,15 @@
           var d = yt.regiones[r];
           var lis = d.gta.map(function (x) {
             var j = juego(x.titulo);
-            return '<li class="' + (j.indexOf("VI") === 0 ? "es-seis" : "") + '"><b>#' + x.puesto + (j ? '<em class="cp-chip">' + j + "</em>" : "") + "</b><span>" + enlace(urlVideo(x.id), limpio(x.titulo)) + "<small>" + limpio(x.canal) + "</small></span></li>";
+            return '<li class="' + (j.indexOf("VI") === 0 ? "es-seis" : "") + '"><b>#' + cifra("cpv:" + r + x.id, x.puesto) + (j ? '<em class="cp-chip">' + j + "</em>" : "") + "</b><span>" + enlace(urlVideo(x.id), limpio(x.titulo)) + "<small>" + limpio(x.canal) + "</small></span></li>";
           });
           var resto = lis.length - VISIBLES;
-          return '<div><p class="cp-tit">' + (nombres[r] || r) + " <b>" + d.gta.length + " de " + d.en_lista + "</b></p>" +
+          return '<div><p class="cp-tit">' + (nombres[r] || r) + " <b>" + cifra("cpn:" + r, d.gta.length) + " de " + d.en_lista + "</b></p>" +
             '<ol class="cp-videos' + (abiertasCmp[r] ? " abierta" : "") + '">' + (lis.join("") || '<li class="vacio">Ningún video de GTA en la lista.</li>') + "</ol>" +
             (resto > 0 ? '<button type="button" class="cp-mas" aria-expanded="' + !!abiertasCmp[r] + '" data-region="' + limpio(r) + '" data-texto="Ver ' + resto + ' más">' + (abiertasCmp[r] ? "Ver menos" : "Ver " + resto + " más") + "</button>" : "") + "</div>";
         }).join("") + "</div></div>";
       }
-      out += '</div><p class="cp-pie">' + (yt && yt.rockstar && yt.rockstar.suscriptores ? 'Canal de Rockstar en YouTube: <b>' + compacto(yt.rockstar.suscriptores) + "</b> suscriptores (YouTube redondea esta cifra). " : "") + "VI o V, según lo que dice el título del video.</p>";
+      out += '</div><p class="cp-pie">' + (yt && yt.rockstar && yt.rockstar.suscriptores ? 'Canal de Rockstar en YouTube: <b>' + cifra("cp:rs", yt.rockstar.suscriptores, compacto) + "</b> suscriptores (YouTube redondea esta cifra). " : "") + "VI o V, según lo que dice el título del video.</p>";
       return out;
     }
   })();
@@ -2530,7 +2556,7 @@
       var xk = X(k), v = pulso[k], derecha = xk > W - 70;
       out += '<line class="cabeza" x1="' + xk.toFixed(1) + '" x2="' + xk.toFixed(1) + '" y1="15" y2="' + H + '"/>';
       if (v != null) out += '<circle class="punto" r="5" cx="' + xk.toFixed(1) + '" cy="' + Y(v).toFixed(1) + '"/><text class="valor" x="' + (derecha ? xk - 8 : xk + 8).toFixed(1) +
-        '" y="' + Math.max(28, Y(v) - 6).toFixed(1) + '" text-anchor="' + (derecha ? "end" : "start") + '">' + compacto(v) + "</text>";
+        '" y="' + Math.max(28, Y(v) - 6).toFixed(1) + '" text-anchor="' + (derecha ? "end" : "start") + '"><tspan data-rb="pulso" data-v="' + v + '" data-f="c">' + compacto(v) + "</tspan></text>";
       svg.setAttribute("viewBox", "0 0 " + W + " " + H);
       svg.innerHTML = out;
     }
@@ -2547,6 +2573,7 @@
       k = i;
       pintarVista(vista(k));
       pintarBarra();
+      CONTEO.contar(document.body);   // los números de toda la página cuentan hasta los de ese momento (7.1 a)
       ponerDireccion();
       // ¿Pasó por una hora cero hacia adelante? Fiesta del último lugar por el que pasó.
       var ahoraT = momentos[k].ts, cruzado = null;

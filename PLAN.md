@@ -95,9 +95,9 @@ las reglas, en `CLAUDE.md`.
 
 - [ ] **7.1 Rebobinar el lanzamiento.** Hecho y probado en la rama `rebobinar-7-1` (20 nov;
       `/code-review`, abogado del diablo, `pruebas/probar_rebobinar.py`). Diseño "Pulso" (Bruno).
-      (a) **Animaciones:** de 4 propuestas (`find-animation-opportunities`), Bruno eligió solo la
-      1, **hecha**: números de fichas y "En ese momento" de récords cuentan 250 ms (al instante al
-      arrastrar y con "reducir movimiento"). Las otras, solo si Bruno las pide: videos que se
+      (a) **Animaciones:** de 4 propuestas (`find-animation-opportunities`), Bruno eligió la 1,
+      **hecha**: los números de todas las secciones que viajan cuentan 250 ms (`cifra()`; al
+      instante al arrastrar y con "reducir movimiento"). Las otras, si Bruno las pide: videos que se
       deslizan al cambiar de puesto (280 ms), entrada suave de lo nuevo arriba (línea de tiempo,
       tabla, "Lo último"; 200 ms) y destello de "¡Nuevo récord!" (450 ms). Descartados: animar la
       barra Pulso, los gráficos, las barras de la tabla, los avisos de fallo y la cuenta de la

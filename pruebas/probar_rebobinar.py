@@ -159,6 +159,8 @@ with sync_playwright() as p:
               setTimeout(() => { const medio = b().textContent;
                 setTimeout(() => listo([medio, b().textContent, b().dataset.v]), 400); }, 80);
             })"""
+            pg.evaluate("document.getElementById('fichas').scrollIntoView({ block: 'center', behavior: 'instant' })")
+            pg.wait_for_timeout(150)   # solo cuentan los que están a la vista (IntersectionObserver)
             c = pg.evaluate(contar)
             comprobar(c[0] != c[1] and c[1] == num(int(float(c[2]))), f"los números cuentan al cambiar de momento y terminan exactos ({c})")
             pg.click('#rb-barra [data-paso="-1"]')
@@ -167,6 +169,24 @@ with sync_playwright() as p:
             comprobar(c[0] == c[1] == num(int(float(c[2]))), f"con 'reducir movimiento' los números cambian al instante ({c})")
             pg.emulate_media(reduced_motion="no-preference")
             pg.click('#rb-barra [data-paso="-1"]')
+            pg.wait_for_timeout(400)
+            # También cuentan los números de las demás secciones que viajan (pedido de Bruno): las
+            # que están a la vista. Al final, cada uno igual al de la página dibujada de nuevo.
+            for sel in ("#records-vitrina", "#seccion-videos", "#comparacion-cols", "#rb-barra"):
+                pg.evaluate("s => document.querySelector(s).scrollIntoView({ block: 'center', behavior: 'instant' })", sel)
+                pg.wait_for_timeout(150)   # IntersectionObserver avisa qué secciones se ven
+                c = pg.evaluate("""s => new Promise(listo => {
+                  const k = +document.getElementById('rb-rango').value, els = () => [...document.querySelector(s).querySelectorAll('[data-rb]')];
+                  window.__rebobinar.ir(k + 3);
+                  setTimeout(() => { const medio = els().map(e => e.textContent);
+                    setTimeout(() => { const fin = els().map(e => e.textContent); window.__rebobinar.ir(k + 3);
+                      const otra = els().map(e => e.textContent);
+                      listo([medio.filter((t, i) => t !== fin[i]).length, fin.filter((t, i) => t !== otra[i]).length, els().length]); }, 400); }, 80);
+                })""", sel)
+                comprobar(c[0] > 0 and c[1] == 0, f"{sel}: los números cuentan y terminan exactos ({c[0]} contando de {c[2]}, {c[1]} mal al final)")
+                pg.evaluate("window.__rebobinar.ir(+document.getElementById('rb-rango').value - 3)")
+            pg.evaluate(f"window.__rebobinar.ir({NZ})")
+            pg.evaluate("window.scrollTo(0, 0)")
             pg.wait_for_timeout(400)
 
             if FALLO_TRENDS is not None:
@@ -230,6 +250,7 @@ with sync_playwright() as p:
     pg.click("#rb-abrir")
     pg.wait_for_selector("#rb-barra:not([hidden])", timeout=15000)
     pg.click('#rb-barra .rb-ceros [data-salto="nz"]')
+    pg.wait_for_timeout(400)   # los números terminan de contar (7.1 a)
     nota = pg.evaluate("(document.querySelector('#seccion-videos .rb-filtro') || {}).textContent || ''")
     comprobar("El de Rust" in nota, f"la sección de videos avisa que se usa el filtro de Rust ({nota[:50]!r})")
     rec = pg.evaluate("document.getElementById('records-vitrina').textContent")
