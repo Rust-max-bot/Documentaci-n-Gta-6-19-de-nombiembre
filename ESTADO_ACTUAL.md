@@ -19,10 +19,7 @@
 **Para seguir:** se trabaja en `main`. **7.1 Rebobinar, unida a `main` el 21 nov** (pedido de
 Bruno), con los números que cuentan y los gráficos "La línea avanza". La rama `rebobinar-7-1` ya
 no hace falta (Bruno puede borrarla en GitHub). Siguiente tarea: la que elija Bruno (ver
-"Pendiente"). **Fallo sin arreglar:** `pruebas/probar_marcas.py` falla en "Global sigue con la
-misma cantidad (entra el siguiente)" con los datos del 21 nov; también en el `main` de antes de
-unir la 7.1 (no lo causó ella). Parece depender de los datos (¿no queda un video de reserva?):
-por mirar.
+"Pendiente").
 
 **La página está lista para el lanzamiento y publicada** en
 <https://rust-max-bot.github.io/Documentaci-n-Gta-6-19-de-nombiembre/> (la publica
@@ -86,6 +83,7 @@ lanzamiento (revisión completa y menos alarmas por Google). Antes: 9.12 y más 
 ## Últimos cambios
 
 - 2026-11-17: estado anterior archivado en historial/ESTADO_2026-11-17.md
+- 2026-11-21: arreglado el fallo de `probar_marcas.py` (pedido de Bruno, con `/code-review` y un abogado del diablo): la página estaba bien; la prueba suponía que siempre hay un video de reserva, y la última medición traía 19 Shorts que pasan el filtro (tope 20). Ahora comprueba que al marcar solo se va ese video, y que entra el siguiente con un tope más chico y con datos inventados (no depende del día). Un error inventado (marcas después del tope) lo detectan las dos comprobaciones nuevas. `probar_marcas.py`: todo bien.
 - 2026-11-21: 7.1 unida a `main` (pedido de Bruno). Antes de subir, con `main` al día y los datos del 21 nov: `generar_web.py`, `probar_rebobinar.py`, `probar_pagina.py` y `probar_selector.py`, todo bien; `probar_marcas.py` falla en una comprobación que también falla en el `main` de antes (ver "Dónde quedamos").
 - 2026-11-21: 7.1 (a), gráficos animados al rebobinar, opción A "La línea avanza" (elegida por Bruno): en 250 ms el final de la línea va de la hora de antes a la nueva y cada punto pasa de su altura vieja a la nueva (Trends cambia de escala); al instante al arrastrar, con "reducir movimiento", al cambiar el ancho y fuera de la vista. Arreglado: la variable de la animación pisaba `t0` del eje. El cuelgue de la prueba era de la prueba: usaba `eval`, que la CSP de la página prohíbe. Con la CPU 4x y los gráficos a la vista: ~117 ms por parada y la animación a 60 cuadros por segundo. `probar_rebobinar.py` y `probar_pagina.py` (Edge y Firefox) y `probar_selector.py`: todo bien. 6.1 comprobada: guardada el 21 nov.
 - 2026-11-21: 7.1 (a), pedido de Bruno: en "Twitch y Kick, medición por medición", la fila que llega cuenta desde el número de la medición anterior (`cifra(…, desde)`). `probar_rebobinar.py` (Edge y Firefox), `probar_pagina.py` y `probar_selector.py`: todo bien.

@@ -108,6 +108,7 @@ comprobar(con_marcas(None, marcas.leer) == {}, "si no hay archivo, no hay marcas
 
 print("2. Datos reales de datos/")
 medidas = generar_web.leer_mediciones(generar_web.DATOS)
+marcado = None   # el video marcado tal como sale en Global sin marcas (ver abajo)
 if not medidas:
     comprobar(False, "hay mediciones en datos/ (en la nube, hacer git pull)")
 else:
@@ -119,7 +120,39 @@ else:
     comprobar(MARCADO not in ids(con["youtube"]), "con la marca, no sale en Global")
     comprobar(MARCADO not in shorts(con) + ids(con["records_youtube"]["video"]), "con la marca, no sale en los récords")
     comprobar(MARCADO not in ids(con["youtube_es"]), "con la marca, no sale en Español")
-    comprobar(len(con["youtube"]) == len(sin["youtube"]), "Global sigue con la misma cantidad (entra el siguiente)")
+    # Global muestra hasta generar_web.VIDEOS de cada tipo (videos y Shorts): al marcar uno, entra
+    # el siguiente de su tipo solo si la última medición (la búsqueda de esa hora más los videos que
+    # se siguen midiendo) trae uno de reserva que pase el filtro. Antes se comprobaba
+    # "la misma cantidad" con el tope real, y fallaba (21 nov) cuando la búsqueda trajo menos
+    # Shorts que el tope: no había reserva, y eso es lo correcto, no un fallo.
+    def de_tipo(lista, es_short):
+        return [v for v in ids(lista) if (next(x for x in lista if x["id"] == v).get("short") is True) == es_short]
+    # Si el marcado ya no sale en Global (se mide cada hora), lo avisa "sin marcas, sale en Global"
+    # de arriba; lo que sigue se salta en vez de caerse (así la parte 3 corre igual).
+    marcado = next((v for v in sin["youtube"] if v["id"] == MARCADO), None)
+if marcado:
+    es_short = marcado.get("short") is True
+    tipo_sin, tipo_con = de_tipo(sin["youtube"], es_short), de_tipo(con["youtube"], es_short)
+    quitado = [v for v in tipo_sin if v != MARCADO]
+    comprobar(tipo_con[:len(quitado)] == quitado and len(tipo_con) - len(quitado) in (0, 1)
+              and de_tipo(con["youtube"], not es_short) == de_tipo(sin["youtube"], not es_short),
+              "con la marca, Global solo pierde ese video (y, si había, entra uno de su tipo al final)")
+    # Con un tope más chico hay reserva segura (el que quedaba fuera): ahí debe entrar el siguiente.
+    tope = tipo_sin.index(MARCADO) + 1
+    if tope < len(tipo_sin):
+        original = generar_web.VIDEOS
+        generar_web.VIDEOS = tope
+        try:
+            sin2 = con_marcas(SIN_MARCAS, lambda: generar_web.convertir(medidas))
+            con2 = con_marcas(SOLO_MARCADO, lambda: generar_web.convertir(medidas))
+        finally:
+            generar_web.VIDEOS = original
+        t2 = de_tipo(con2["youtube"], es_short)
+        comprobar(len(t2) == len(de_tipo(sin2["youtube"], es_short)) == tope and t2[-1] == tipo_sin[tope]
+                  and t2[:-1] == [x for x in tipo_sin[:tope] if x != MARCADO],
+                  f"con reserva, Global sigue con la misma cantidad: entra el siguiente (tope de prueba {tope})")
+    else:   # no es un fallo, pero tampoco "bien": la parte 3 lo prueba igual con datos inventados
+        print("  AVISO con estos datos el marcado es el último de su tipo: no se prueba aquí que entre el siguiente")
 
 print("3. Mediciones inventadas solo para esta prueba")
 def video(i, titulo):
@@ -151,6 +184,21 @@ comprobar(aborta(lambda: con_archivo((generar_web, "FILTRO"), viejo, lambda: gen
 otro = {"videos": {"NOESTAxxxxx": {"motivos": ["dudoso"], "fecha": "2026-11-18"}}}
 comprobar(not aborta(lambda: con_marcas(otro, lambda: generar_web.convertir([falsa]))),
           "un código que no está en los datos solo avisa: no frena la publicación de cada hora")
+# "Entra el siguiente", sin depender de los datos del día (abogado del diablo, 21 nov): tres Shorts,
+# tope 2; al marcar el segundo, entra el tercero y el primero no se mueve.
+def short(i, visitas):
+    return {"id": i, "titulo": "GTA 6 short " + i, "canal": "x", "visitas": visitas, "short": True, "temas": ["Video_game_culture"]}
+tres = {"v": 1, "t": "2026-11-18T12:07:00Z", "twitch": {"error": "prueba"},
+        "youtube": {"videos": [short("PRIMEROshor", 300), short(MARCADO, 200), short("TERCEROshor", 100)]}}
+original = generar_web.VIDEOS
+generar_web.VIDEOS = 2
+try:
+    sin3 = con_marcas(SIN_MARCAS, lambda: generar_web.convertir([tres]))
+    con3 = con_marcas(SOLO_MARCADO, lambda: generar_web.convertir([tres]))
+finally:
+    generar_web.VIDEOS = original
+comprobar(ids(sin3["youtube"]) == ["PRIMEROshor", MARCADO] and ids(con3["youtube"]) == ["PRIMEROshor", "TERCEROshor"],
+          "con tope 2 y un Short de reserva: al marcar uno, entra el siguiente y el resto no se mueve")
 
 print("4. Rescatar y configuraciones (10.3)")
 rechaza({"videos": {MARCADO: bien}, "rescatados": {MARCADO: "2026-11-18"}}, "un video marcado y rescatado a la vez")
