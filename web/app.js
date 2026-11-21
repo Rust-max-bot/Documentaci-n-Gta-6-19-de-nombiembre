@@ -277,19 +277,36 @@
     }
     return { y: window.scrollY, id: elegida ? elegida.id : "", dentro: elegida ? elegida.dentro : 0 };
   }
-  if (recargaSola) (function () {
-    var lugar = null;
-    try { lugar = JSON.parse(sessionStorage.getItem("gta6-lugar-recarga") || "null"); sessionStorage.removeItem("gta6-lugar-recarga"); } catch (e) { /* nada */ }
-    function auto() { try { history.scrollRestoration = "auto"; } catch (e) { /* nada */ } }
-    if (!lugar || typeof lugar.y !== "number") { auto(); return; }
-    lugarPendiente = lugar;
+  /* Lo mismo sirve para abrir un enlace a una sección (index.html#seccion-noticias, 9.4, 21 nov):
+     el navegador baja hasta ella con la animación suave del CSS, pero lo de arriba todavía cambia
+     de alto mientras baja (a 384 px en Miami 1986 se pasaba 1.200 px o no llegaba). Aquí se deja
+     la sección arriba y se sigue corrigiendo igual que tras una recarga. */
+  (function () {
+    var lugar = null, porRecarga = recargaSola;
+    // Ojo: devolver "auto" antes de que termine la carga hace que el navegador, al terminar,
+    // ponga él la altura vieja y tire a la persona de vuelta: se espera al evento "load".
+    function auto() {
+      if (document.readyState !== "complete") { window.addEventListener("load", auto, { once: true }); return; }
+      try { history.scrollRestoration = "auto"; } catch (e) { /* nada */ }
+    }
+    if (porRecarga) {
+      try { lugar = JSON.parse(sessionStorage.getItem("gta6-lugar-recarga") || "null"); sessionStorage.removeItem("gta6-lugar-recarga"); } catch (e) { /* nada */ }
+      if (!lugar || typeof lugar.y !== "number") { auto(); return; }
+      lugarPendiente = lugar;
+    } else {
+      var id = "";
+      try { id = decodeURIComponent(location.hash.slice(1)); } catch (e) { /* # mal escrito */ }
+      var el0 = id && document.getElementById(id);
+      if (!el0) return;
+      lugar = { y: 0, id: id, dentro: -(parseFloat(getComputedStyle(el0).scrollMarginTop) || 0) };
+    }
     // Si la persona recarga ella misma antes de terminar (F5, el botón del navegador, tirar
     // para recargar en el celular), "manual" quedaría pegado en esa entrada del historial y sus
     // recargas ya no volverían a su altura: al irse, se devuelve "auto" (abogado del diablo,
     // 21 nov). Salvo que sea otra recarga sola, que necesita "manual".
     function alSalir() { if (!recargandoSola) auto(); }
-    window.addEventListener("pagehide", alSalir);
-    var hasta = 0, quieto = true;
+    if (porRecarga) window.addEventListener("pagehide", alSalir);
+    var hasta = 0, quieto = true, yPuesto = null;
     function soltar() { quieto = false; }
     var toques = ["wheel", "touchstart", "keydown", "pointerdown", "mousedown"];
     function destino() {
@@ -297,21 +314,35 @@
       if (el && !el.hidden && el.getBoundingClientRect().height > 0) return el.getBoundingClientRect().top + window.scrollY + lugar.dentro;
       return lugar.y;
     }
+    /* Arrastrar la barra de desplazamiento, tocar su riel o "buscar en la página" no dan
+       ninguno de esos eventos: se nota porque la página saltó más de 40 px de una vez sin que
+       la moviera este código Y la sección quedó corrida. Con menos, son ajustes del propio
+       diseño mientras se arma (se vieron de ~19 px), que hay que seguir corrigiendo. Y solo con
+       la página ya cargada: mientras carga, el propio navegador da saltos de miles de px. Solo
+       tras una recarga: al abrir un enlace, el navegador también mueve la página mientras baja. */
+    function alMover() {
+      if (document.readyState !== "complete") return;
+      if (yPuesto === null || Math.abs(window.scrollY - yPuesto) <= 40) return;
+      if (Math.abs(destino() - window.scrollY) > 40) quieto = false;
+    }
     function ir() {
       if (quieto) {
         var d = destino() - window.scrollY;
         if (Math.abs(d) > 1) window.scrollTo({ top: window.scrollY + d, behavior: "instant" });
+        yPuesto = window.scrollY;
       }
       if (quieto && performance.now() < hasta) requestAnimationFrame(ir);
       else {
         toques.forEach(function (t) { window.removeEventListener(t, soltar, { passive: true, capture: true }); });
+        window.removeEventListener("scroll", alMover);
         lugarPendiente = null;   // desde aquí, el lugar es donde esté la persona
         window.removeEventListener("pagehide", alSalir);
-        auto();   // las recargas que haga la persona (F5) las vuelve a restaurar el navegador
+        if (porRecarga) auto();   // las recargas que haga la persona (F5) las vuelve a restaurar el navegador
       }
     }
     function empezar() {
       toques.forEach(function (t) { window.addEventListener(t, soltar, { passive: true, capture: true }); });
+      if (porRecarga) window.addEventListener("scroll", alMover, { passive: true });
       hasta = performance.now() + 5000;
       ir();
     }

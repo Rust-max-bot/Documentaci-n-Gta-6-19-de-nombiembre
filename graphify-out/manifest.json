@@ -18,9 +18,9 @@
     "semantic_hash": ""
   },
   "web/app.js": {
-    "mtime": 1795300997.0192375,
-    "seen": 1795301016.3661005,
-    "ast_hash": "4dd226f63ab73eeed14b18417fd3966f",
+    "mtime": 1795302101.2070005,
+    "seen": 1795302694.584865,
+    "ast_hash": "565ca509fe1ffe7594647e7bf62730c1",
     "semantic_hash": ""
   },
   "web/datos-ejemplo.js": {
@@ -48,9 +48,9 @@
     "semantic_hash": ""
   },
   "ESTADO_ACTUAL.md": {
-    "mtime": 1795301013.062386,
-    "seen": 1795301016.3661149,
-    "ast_hash": "d2f679cef312e477a23bf9d69f4e8ee4",
+    "mtime": 1795302675.9842787,
+    "seen": 1795302694.5848818,
+    "ast_hash": "c748c28880f030e1bf8dbf04bb4df7f4",
     "semantic_hash": ""
   },
   "GUIA_CLAVES.md": {
@@ -60,9 +60,9 @@
     "semantic_hash": ""
   },
   "PLAN.md": {
-    "mtime": 1795301013.0613813,
-    "seen": 1795301016.36612,
-    "ast_hash": "875cb9bf8acbf6b0c1b07a8088cda7f6",
+    "mtime": 1795302675.944419,
+    "seen": 1795302694.5848877,
+    "ast_hash": "7f73af872b7fdb5bb32da1d79b3735ce",
     "semantic_hash": ""
   },
   "README.md": {
@@ -192,9 +192,9 @@
     "semantic_hash": ""
   },
   "pruebas/LEEME.md": {
-    "mtime": 1795299981.6056492,
-    "seen": 1795301016.3661425,
-    "ast_hash": "b61419b72c8c96d576c9d5345371e9fd",
+    "mtime": 1795302675.9456139,
+    "seen": 1795302694.5849154,
+    "ast_hash": "4336348dbdfba87221ef5b516c27e380",
     "semantic_hash": ""
   },
   "pruebas/requisitos.txt": {
@@ -492,9 +492,15 @@
     "semantic_hash": ""
   },
   "pruebas/probar_recarga.py": {
-    "mtime": 1795300899.800106,
-    "seen": 1795301016.3660734,
-    "ast_hash": "9263f5a09f0abd4fd63890a8dcfeac96",
+    "mtime": 1795301277.791774,
+    "seen": 1795302694.5848336,
+    "ast_hash": "902e66de85beceda0010a90e84fc1d7a",
+    "semantic_hash": ""
+  },
+  "historial/PLAN_2026-11-21.md": {
+    "mtime": 1795301018.9729996,
+    "seen": 1795302694.584907,
+    "ast_hash": "875cb9bf8acbf6b0c1b07a8088cda7f6",
     "semantic_hash": ""
   }
 }

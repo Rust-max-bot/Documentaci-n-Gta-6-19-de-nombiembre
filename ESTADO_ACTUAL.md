@@ -22,16 +22,14 @@ avanza"), **6.1 comprobada** (guardada a las 15:41 UTC) y **6.8 publicada** (sec
 grande es GTA 6?", `#trends61`), y arreglada la prueba `probar_marcas.py`. Siguiente tarea: la
 que elija Bruno. **Hecho el 21 nov:** la 9.3 y el fallo de la recarga automática de la 9.4
 (subidos), con el abogado del diablo corto hecho. Siguiente tarea: la que elija Bruno (en pasos
-cortos). Quedan en la 9.4 un detalle menor (la barra de desplazamiento no detiene la corrección)
-y un fallo que ya existía (enlace `#seccion` a 384
-px en Miami 1986; ver `PLAN.md`). Para después del 22 nov: revisar el peso de `datos/` y la 9.11 (b).
+cortos). La 9.4 quedó terminada el 21 nov (también los enlaces `#sección` en Miami 1986 y la barra de desplazamiento). Para después del 22 nov: revisar el peso de `datos/` y la 9.11 (b).
 La rama `rebobinar-7-1` ya no hace falta (Bruno puede borrarla en GitHub).
 
 **La página está lista para el lanzamiento y publicada** en
 <https://rust-max-bot.github.io/Documentaci-n-Gta-6-19-de-nombiembre/> (la publica
 `publicar-pagina.yml` tras cada medición). Hechas las fases 0, 1, 3, casi toda la 2 (falta la
 2.5, TikTok), la 4.1 y 4.2, la 6 (menos 6.6 Instagram; de la 6.1 queda una idea), la 7 (menos 7.4 y 7.13)
-y la 9 de la 9.1 a la 9.12, salvo 9.4 y 9.11 (b). Qué tiene la página, sección por
+y la 9 de la 9.1 a la 9.12, salvo la 9.11 (b). Qué tiene la página, sección por
 sección: `historial/ESTADO_2026-11-17.md` y `README.md`.
 
 **El recolector funciona solo.** Lo lanza el despertador de Cloudflare (Worker
@@ -89,6 +87,7 @@ lanzamiento (revisión completa y menos alarmas por Google). Antes: 9.12 y más 
 ## Últimos cambios
 
 - 2026-11-17: estado anterior archivado en historial/ESTADO_2026-11-17.md
+- 2026-11-21: 9.4 terminada (pedido de Bruno). (1) Enlace a una sección (`index.html#seccion-noticias`): a 384 px en Miami 1986 el navegador bajaba con la animación suave mientras lo de arriba cambiaba de alto y se pasaba 1.200 px o no llegaba (ya pasaba antes); ahora usa la misma corrección que la recarga. (2) Barra de desplazamiento o "buscar en la página" durante la corrección: si la página salta más de 40 px sin que la mueva el código y con la página ya cargada, se suelta. (3) "auto" se devuelve recién tras el evento load (antes, el navegador podía tirar a la persona de vuelta). `probar_recarga.py` (8 casos, con "barra" nuevo: falla con lo de antes), `probar_saltos.py` y `probar_pagina.py`: todo bien.
 - 2026-11-21: 9.4, abogado del diablo corto (pedido de Bruno) sobre el arreglo de la recarga: si la persona recargaba ella misma durante los 5 s de corrección, `history.scrollRestoration` quedaba en "manual" y sus F5 siguientes no volvían a su altura. Arreglado (al irse, vuelve "auto", salvo otra recarga sola). Caso nuevo "recarga a mano" en `probar_recarga.py`: falla sin el arreglo y pasa con él. Queda, menor: la barra de desplazamiento no detiene la corrección.
 - 2026-11-21: 9.4, arreglado el fallo de la recarga automática (pedido de Bruno): volvía 1.700 a 4.600 px más arriba porque `app.js` hacía un `scrollTo` suave cuando la página aún no tenía su alto. Ahora `recargar()` guarda la sección de arriba y cuánto se bajó dentro, con `history.scrollRestoration = "manual"`; al volver se corrige sin animación 5 s (para si la persona mueve la página) y con la pestaña oculta espera a que vuelva a la vista (lo vio un revisor de `/code-review`: ahí no corre `requestAnimationFrame` y una 2.ª recarga oculta guardaba el lugar sin corregir). Prueba nueva `pruebas/probar_recarga.py` (6 casos; falla con el código de antes): todo bien. `probar_pagina.py` (Edge y Firefox), `probar_selector.py` y `probar_rebobinar.py`, con el primer arreglo (el último cambio solo toca la pestaña oculta): todo bien; `probar_saltos.py` falla en un caso que ya fallaba antes (ver `PLAN.md`).
 - 2026-11-21: 9.3 terminada (pedido de Bruno): `recolector/revisar.py` muestra, de cada fuente con huecos, por código (en Trends, también el paso), por día (huecos/mediciones), por hora de Santiago y la racha más larga seguida, y cuántas mediciones tuvieron algún hueco cada día. Cada fuente cuenta solo entre su primera y su última medición (Reddit: "ya no se mide"). Probado con los datos reales y con datos inventados; `/code-review` (4 revisores): sin problemas.
@@ -96,7 +95,6 @@ lanzamiento (revisión completa y menos alarmas por Google). Antes: 9.12 y más 
 - 2026-11-21: arreglado el fallo de `probar_marcas.py` (pedido de Bruno, con `/code-review` y un abogado del diablo): la página estaba bien; la prueba suponía que siempre hay un video de reserva, y la última medición traía 19 Shorts que pasan el filtro (tope 20). Ahora comprueba que al marcar solo se va ese video, y que entra el siguiente con un tope más chico y con datos inventados (no depende del día). Un error inventado (marcas después del tope) lo detectan las dos comprobaciones nuevas. `probar_marcas.py`: todo bien.
 - 2026-11-21: 7.1 unida a `main` (pedido de Bruno). Antes de subir, con `main` al día y los datos del 21 nov: `generar_web.py`, `probar_rebobinar.py`, `probar_pagina.py` y `probar_selector.py`, todo bien; `probar_marcas.py` falla en una comprobación que también falla en el `main` de antes (ver "Dónde quedamos").
 - 2026-11-21: 7.1 (a), gráficos animados al rebobinar, opción A "La línea avanza" (elegida por Bruno): en 250 ms el final de la línea va de la hora de antes a la nueva y cada punto pasa de su altura vieja a la nueva (Trends cambia de escala); al instante al arrastrar, con "reducir movimiento", al cambiar el ancho y fuera de la vista. Arreglado: la variable de la animación pisaba `t0` del eje. El cuelgue de la prueba era de la prueba: usaba `eval`, que la CSP de la página prohíbe. Con la CPU 4x y los gráficos a la vista: ~117 ms por parada y la animación a 60 cuadros por segundo. `probar_rebobinar.py` y `probar_pagina.py` (Edge y Firefox) y `probar_selector.py`: todo bien. 6.1 comprobada: guardada el 21 nov.
-- 2026-11-21: 7.1 (a), pedido de Bruno: en "Twitch y Kick, medición por medición", la fila que llega cuenta desde el número de la medición anterior (`cifra(…, desde)`). `probar_rebobinar.py` (Edge y Firefox), `probar_pagina.py` y `probar_selector.py`: todo bien.
 
 ## Pendiente
 
@@ -105,8 +103,7 @@ La lista completa y su orden están en `PLAN.md`. Resumen (2026-11-17):
 - **(2026-11-17):** 9.11 (b) administrar qué se anima en toda la página (lo demás, después del
   22). **Reddit:** quitado (6.9): solo
   volvería con la clave oficial.
-0. **(2026-11-16, orden de Bruno):** 9.4 optimizar la página (eje y `partes()` hechos; lo
-   grande, después del 22; la recarga, arreglada el 21 nov; falta el enlace `#seccion` en Miami 1986). 9.3: hecha. Descartados
+0. **(2026-11-16, orden de Bruno):** 9.3 y 9.4 hechas (21 nov). Descartados
    (Bruno): la 9.2 "¿Cuánta gente faltó?", Cloudflare Radar, redes de descarga de las consolas y
    "qué tan popular es GTA 6 en YouTube". Detalle en `PLAN.md`.
 1. **7.4:** "Lo que espero" ya está en la página. Después del lanzamiento, Bruno escribe "Lo que

@@ -45,17 +45,6 @@ las reglas, en `CLAUDE.md`.
       elementos animan y cuáles no en TODA la página: hoy `web/animaciones.js` (`ACTIVAS`) cubre
       solo lo de la 9.8 y la 9.9. Siguiente paso: inventario con `find-animation-opportunities` y,
       con lo que elija Bruno, sumar el resto a esa tabla. Se puede enlazar con el "Panel de control".
-- [ ] **9.4 Optimizar la página** (Bruno, 2026-11-16). **Hecho:** ejes sin textos encimados y
-      `partes()` con memoria (16 nov); `preload` de los scripts y `web/inicio.js` (estilo y cielo
-      antes del primer dibujo), página armada ~5,3 → ~3,7 s en celular lento (`pruebas/medir_carga.py`,
-      unido a `main` el 20 nov); **recarga automática arreglada** el 21 nov (vuelve a la sección y
-      se corrige 5 s; con la pestaña oculta espera a que vuelva; prueba `pruebas/probar_recarga.py`).
-      **Queda, menor:** arrastrar la barra de desplazamiento o "buscar en la página" no detiene esa
-      corrección (dura 5 s). **Fallo aparte, ya existía:** a 384 px en Miami 1986, abrir
-      `index.html#seccion-noticias` no deja la sección arriba (`probar_saltos.py`, 2 de 2 veces
-      también con el código de antes; en Miami 2026, bien). Descartado: `defer` (rompe
-      `filtro-videos.js:116`), partir mediciones, mover fotos, quitar lecturas de `gota`/Shorts y
-      `content-visibility` (rompía los enlaces #sección en Edge y copiar todo en Firefox).
 - [ ] **6.6 Instagram** (Kick ya está hecho; ver "Lo ya hecho"). Parece difícil: la API de Meta
       solo funciona con una cuenta de empresa o creador propia unida a una página de Facebook, y
       la búsqueda por hashtag da pocas publicaciones, no el total, con límite semanal. Si no
@@ -152,7 +141,7 @@ No se empieza hasta que Bruno avise con una confirmación oficial de la versión
 - **Fases 0, 1 y 3:** hechas. **Fase 2:** 2.1 a 2.4 y 2.6 a 2.15 (falta 2.5). **Fase 4:** 4.1 y
   4.2 (falta 4.3). **Fase 6:** 6.2 a 6.5, 6.6 Kick, 6.7 Doomsday, 6.8 sección de la 6.1 (guardada el 21 nov), 6.9 quitar Reddit.
 - **Fase 7:** 7.1 a 7.3 y 7.5 a 7.12 (7.1 unida a `main` el 21 nov; animaciones sin hacer, solo
-  si Bruno las pide: videos que se deslizan, entrada de lo nuevo, destello de récord). **Fase 9:** 9.1, 9.3 (menos alarmas por Google y resumen de huecos en `revisar.py`, 21 nov), 9.5 a 9.10 y 9.12. **Fase 10:** hecha.
+  si Bruno las pide: videos que se deslizan, entrada de lo nuevo, destello de récord). **Fase 9:** 9.1, 9.3 (menos alarmas por Google y resumen de huecos en `revisar.py`, 21 nov), 9.4 (optimizar: carga ~5,3 → ~3,7 s en celular lento; recarga automática y enlaces `#sección` que vuelven al lugar, 21 nov; detalle en `historial/PLAN_2026-11-21.md`), 9.5 a 9.10 y 9.12. **Fase 10:** hecha.
 - **20 nov:** tres rayas de lanzamiento (Nueva Zelanda, Chile y Miami) en los gráficos de Twitch
   y Trends; README al día.
 - Descartado por Bruno: app en el celular; Cloudflare Radar; redes de descarga de PlayStation y

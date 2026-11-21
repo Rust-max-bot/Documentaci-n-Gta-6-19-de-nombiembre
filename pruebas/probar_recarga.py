@@ -20,6 +20,8 @@ queda todo. A 1280 y 384 px, en los dos estilos:
      sigue oculta y recién después la persona vuelve a la pestaña: Titulares, donde estaba.
   7. recarga a mano: si la persona recarga ella misma durante los 5 s de corrección, la página
      siguiente vuelve a tener history.scrollRestoration = "auto" (no queda pegado "manual").
+  8. barra: si la página se mueve sin rueda, dedo ni teclado (arrastrar la barra de
+     desplazamiento, "buscar en la página"), tampoco la devuelve a la fuerza.
 Además: sin errores en la consola y el navegador vuelve a restaurar él las recargas normales
 (history.scrollRestoration = "auto").
 
@@ -140,6 +142,9 @@ def caso(nav, url, ancho, estilo, nombre):
             pg.wait_for_timeout(1200)
             pg.evaluate("""() => { const d = document.createElement('div'); d.style.height = '1200px';
               const m = document.querySelector('main') || document.body; m.insertBefore(d, m.firstChild); }""")
+        if nombre == "barra":
+            pg.wait_for_timeout(400)
+            pg.evaluate("window.scrollBy({top: -900, behavior: 'instant'})")   # como la barra: sin eventos de entrada
         if nombre == "la persona mueve":
             pg.wait_for_timeout(400)
             pg.mouse.move(ancho / 2, 400)
@@ -147,7 +152,7 @@ def caso(nav, url, ancho, estilo, nombre):
         pg.wait_for_timeout(6500)
         despues = pg.evaluate(medir)
         modo = pg.evaluate("history.scrollRestoration")
-        if nombre == "la persona mueve":
+        if nombre in ("la persona mueve", "barra"):
             if abs(despues - antes) < 300:
                 fallos.append(f"{nombre}: la página volvió a la fuerza (#{sec} a {antes} px y luego a {despues} px)")
         elif abs(despues - antes) > TOLERANCIA:
@@ -177,7 +182,7 @@ def main():
         for ancho in ANCHOS:
             for estilo, nombre_estilo in ESTILOS:
                 fallos = []
-                for nombre in ("titulares", "dentro", "se arma tarde", "arriba crece", "la persona mueve", "oculta", "recarga a mano"):
+                for nombre in ("titulares", "dentro", "se arma tarde", "arriba crece", "la persona mueve", "oculta", "recarga a mano", "barra"):
                     fallos += caso(nav, url, ancho, estilo, nombre)
                 print(("OK   " if not fallos else "FALLO") + f" {ancho}px {nombre_estilo}" + "".join("\n      " + f for f in fallos))
                 todos += fallos
