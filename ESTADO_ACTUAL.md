@@ -14,7 +14,13 @@
 
 ## Dónde quedamos
 
-*(2026-11-17, noche, hora de Chile.)*
+*(2026-11-20, noche, hora de Chile. Se sigue en otro chat.)*
+
+**Para seguir (próximo chat):** trabajar en la rama **`rebobinar-7-1`** (`git checkout
+rebobinar-7-1`; no está unida a `main`). Tarea siguiente, pedida por Bruno: **animaciones al
+rebobinar** (7.1 (a) en `PLAN.md`): que los números y lo demás no cambien de golpe entre un
+momento y otro. Es un cambio visual: presentarle opciones antes (skill `prototype`). Después,
+Bruno prueba la rama y decide unirla a `main`.
 
 **La página está lista para el lanzamiento y publicada** en
 <https://rust-max-bot.github.io/Documentaci-n-Gta-6-19-de-nombiembre/> (la publica
@@ -49,8 +55,11 @@ unir a `main`.** Barra para revivir la página media hora por media hora del 18 
 12:00 UTC. Revisada con `/code-review` y un abogado del diablo; `pruebas/probar_rebobinar.py`,
 `probar_pagina.py` y `probar_selector.py`: todo bien (Edge y Firefox). Diseño **"Pulso"**
 (elegido por Bruno entre 3 prototipos): la pista es la curva de espectadores de Twitch. Portada y
-línea de tiempo también viajan; titulares por hora de publicación (Bruno). Espera de Bruno: probarla
-y unirla a `main`.
+línea de tiempo también viajan; titulares por hora de publicación (Bruno). Cómo funciona por
+dentro: bloque "Rebobinar el lanzamiento" al final de `web/app.js` (las secciones que viajan se
+dibujan con una "vista": `HOY` o un momento; para sumar otra, llamarla en `pintarVista()`) y
+`rebobinado()` en `recolector/generar_web.py` (arma `web/rebobinar.js`, que no va a git).
+Falta: animaciones (siguiente chat) y que Bruno la pruebe y la una a `main`.
 
 **Avisos vigentes:**
 - **El 21 nov:** comprobar que la 6.1 se guardó (se lanza sola del 21 al 24 nov).
@@ -105,7 +114,7 @@ La lista completa y su orden están en `PLAN.md`. Resumen (2026-11-17):
 3. **Fase 6:** 6.1 más Google Trends, **una sola vez entre el 20 y el 25 nov**, fuera del
    recolector de cada hora (programa listo y probado, con las palabras de Bruno; se lanza sola
    del 21 al 24 nov; falta mostrarlo: 6.8). 6.6 Instagram (parece difícil; ver `PLAN.md`).
-4. **Fase 7:** 7.1 rebobinar (hecha en la rama `rebobinar-7-1`: diseño Pulso elegido; falta que Bruno la pruebe y la una a `main`); 7.13 sección de memes (requiere
+4. **Fase 7:** 7.1 rebobinar (hecha en la rama `rebobinar-7-1`: diseño Pulso elegido; falta animaciones al rebobinar (siguiente chat) y que Bruno la pruebe y la una a `main`); 7.13 sección de memes (requiere
    investigación). Cuando Take-Two publique las ventas, escribirlas en `gta6` de
    `web/lanzamientos.js`. **Fase 8 (GTA 6 en PC):** dormida hasta que Bruno avise con
    confirmación oficial.

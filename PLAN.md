@@ -93,11 +93,13 @@ las reglas, en `CLAUDE.md`.
 
 ### Después del lanzamiento
 
-- [ ] **7.1 Rebobinar el lanzamiento.** **Hecho y probado en la rama `rebobinar-7-1`** (20 nov,
-      entrevista con Bruno; revisado con `/code-review` y un abogado del diablo; prueba
-      `pruebas/probar_rebobinar.py`). Diseño **"Pulso"** elegido por Bruno (20 nov, entre 3 prototipos):
-      la pista es la curva de espectadores de Twitch del tramo. Portada y línea de tiempo también viajan
-      (20 nov, pedido de Bruno). **Falta:** que Bruno la pruebe y la una a `main`.
+- [ ] **7.1 Rebobinar el lanzamiento.** Hecho y probado en la rama `rebobinar-7-1` (20 nov;
+      `/code-review`, abogado del diablo, `pruebas/probar_rebobinar.py`). Diseño "Pulso" (Bruno).
+      **Falta:** (a) **animaciones** (pedido de Bruno, 20 nov, siguiente chat): que al cambiar de
+      momento los números (fichas, récords, tabla) y lo demás no cambien de golpe; con las skills
+      `find-animation-opportunities`/`animate`, opciones a Bruno antes, que aguante reproducir a 4x
+      (500 ms por parada) y sin movimiento con `prefers-reduced-motion`; (b) que Bruno la pruebe y
+      la una a `main`.
 - [ ] **4.3 Análisis de datos (A3).** Datos interesantes: popularidad, visitas, cuánto dura el
       interés, antes y después. Necesita varios días de datos reales. **Sin IA** (Bruno, 2026-11-18): un
       programa normal, como `generar_web.py`, que corre solo con cada medición. En unos días.
