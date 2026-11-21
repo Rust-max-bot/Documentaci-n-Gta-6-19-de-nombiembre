@@ -48,9 +48,9 @@
     "semantic_hash": ""
   },
   "ESTADO_ACTUAL.md": {
-    "mtime": 1795232880.710755,
-    "seen": 1795232885.3685706,
-    "ast_hash": "fcccf62b13e4671e445ea5c2256ced01",
+    "mtime": 1795281684.458369,
+    "seen": 1795281701.181666,
+    "ast_hash": "b7223590f295804c3fb2ea49a70300ad",
     "semantic_hash": ""
   },
   "GUIA_CLAVES.md": {
@@ -60,9 +60,9 @@
     "semantic_hash": ""
   },
   "PLAN.md": {
-    "mtime": 1795230553.666842,
-    "seen": 1795230566.1168919,
-    "ast_hash": "8e9da7924b28048895032de15533e8b5",
+    "mtime": 1795281669.965125,
+    "seen": 1795281701.181674,
+    "ast_hash": "e8987e764a4d3f332946adc6ba5ce1d1",
     "semantic_hash": ""
   },
   "README.md": {
@@ -480,9 +480,9 @@
     "semantic_hash": ""
   },
   "pruebas/probar_rebobinar.py": {
-    "mtime": 1795231623.6473436,
-    "seen": 1795232885.3685308,
-    "ast_hash": "6a03f06e8440472e7ecab4d6f57f7ccc",
+    "mtime": 1795281225.4225197,
+    "seen": 1795281701.1816008,
+    "ast_hash": "097d4b153f495c42e951226e0c678e3f",
     "semantic_hash": ""
   }
 }
