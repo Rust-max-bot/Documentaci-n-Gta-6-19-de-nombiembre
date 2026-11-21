@@ -207,7 +207,7 @@ El porqué y las opciones descartadas, en `historial/PLAN_2026-11-18-3.md` y `hi
   gráficos de viejo a nuevo.
 - **Opciones elegidas por Bruno:** portada 7.12 A; Twitch y Kick 6.6 B; videos 6.4 A y 6.5 B;
   récords 6.2 A; titulares B; GTA frente a lo más visto 9.7 A; cápsula 7.4 C; copias 7.10 B;
-  Próximamente 7.11 C; menú flotante 2.12 B; "¿Qué tan grande es GTA 6?" 6.8 A (apta para celular).
+  Próximamente 7.11 C; menú flotante 2.12 B; "¿Qué tan grande es GTA 6?" 6.8 A (apta para celular; las búsquedas de Google van tal cual, sin filtrar: Bruno, 21 nov).
 - **Rebobinar (7.1, Bruno, 2026-11-20):** del 18 nov 08:00 al 20 nov 12:00 UTC, una parada por
   medición (cada media hora); viajan portada, fichas, récords, línea de tiempo, gráficos, tabla,
   videos, comparación y titulares (por hora de publicación; las demás, tenues); controles: arrastrar, saltar a las 3 horas cero, reproducir
