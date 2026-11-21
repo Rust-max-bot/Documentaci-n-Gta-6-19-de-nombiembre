@@ -16,15 +16,18 @@
 
 *(2026-11-21, tarde, hora de Chile.)*
 
-**Para seguir:** trabajar en la rama **`rebobinar-7-1`** (`git checkout rebobinar-7-1`; no está
-unida a `main`). Animaciones al rebobinar (7.1 (a)): **hechas** los números que cuentan (en todas
-las secciones que viajan) y los gráficos con la opción A "La línea avanza" (Bruno). Bruno dijo
-que con esto la 7.1 estaría lista: **falta que la pruebe y decida unirla a `main`**.
+**Para seguir:** se trabaja en `main`. **7.1 Rebobinar, unida a `main` el 21 nov** (pedido de
+Bruno), con los números que cuentan y los gráficos "La línea avanza". La rama `rebobinar-7-1` ya
+no hace falta (Bruno puede borrarla en GitHub). Siguiente tarea: la que elija Bruno (ver
+"Pendiente"). **Fallo sin arreglar:** `pruebas/probar_marcas.py` falla en "Global sigue con la
+misma cantidad (entra el siguiente)" con los datos del 21 nov; también en el `main` de antes de
+unir la 7.1 (no lo causó ella). Parece depender de los datos (¿no queda un video de reserva?):
+por mirar.
 
 **La página está lista para el lanzamiento y publicada** en
 <https://rust-max-bot.github.io/Documentaci-n-Gta-6-19-de-nombiembre/> (la publica
 `publicar-pagina.yml` tras cada medición). Hechas las fases 0, 1, 3, casi toda la 2 (falta la
-2.5, TikTok), la 4.1 y 4.2, la 6 (menos 6.1, 6.6 Instagram y 6.8), la 7 (menos 7.1, 7.4 y 7.13)
+2.5, TikTok), la 4.1 y 4.2, la 6 (menos 6.1, 6.6 Instagram y 6.8), la 7 (menos 7.4 y 7.13)
 y la 9 de la 9.1 a la 9.12, salvo 9.3, 9.4 y 9.11 (b). Qué tiene la página, sección por
 sección: `historial/ESTADO_2026-11-17.md` y `README.md`.
 
@@ -49,8 +52,7 @@ visitante) están en la página publicada. Para marcar videos: doble clic en `pa
 (solo en el PC, con `main`). Detalle en `PANEL_VIDEOS.md`. Las ramas `panel-videos-10-1` a
 `-10-4` ya no hacen falta (Bruno puede borrarlas en GitHub).
 
-**7.1 Rebobinar el lanzamiento: hecha en la rama `rebobinar-7-1` (20 nov, pedido de Bruno), sin
-unir a `main`.** Barra para revivir la página media hora por media hora del 18 nov 08:00 al 20 nov
+**7.1 Rebobinar el lanzamiento: hecha (20 y 21 nov, pedido de Bruno) y unida a `main` el 21 nov.** Barra para revivir la página media hora por media hora del 18 nov 08:00 al 20 nov
 12:00 UTC. Revisada con `/code-review` y un abogado del diablo; `pruebas/probar_rebobinar.py`,
 `probar_pagina.py` y `probar_selector.py`: todo bien (Edge y Firefox). Diseño **"Pulso"**
 (elegido por Bruno entre 3 prototipos): la pista es la curva de espectadores de Twitch. Portada y
@@ -61,7 +63,6 @@ dibujan con una "vista": `HOY` o un momento; para sumar otra, llamarla en `pinta
 Números que cuentan al cambiar de momento: `CONTEO` y `cifra()`, junto a `pintarFichas` en
 `web/app.js` (para que otro número cuente, escribirlo con `cifra(clave, valor)`). Gráficos que
 avanzan: bloque "La línea avanza" en `grafico()` (`lineas()`, `tramosHasta()`, `previo`).
-Falta que Bruno la pruebe y la una a `main`.
 
 **Avisos vigentes:**
 - **6.1 guardada** el 21 nov a las 15:41 UTC (`datos/trends_extra/2026-11-21T1541Z.json`, las 5
@@ -85,6 +86,7 @@ lanzamiento (revisión completa y menos alarmas por Google). Antes: 9.12 y más 
 ## Últimos cambios
 
 - 2026-11-17: estado anterior archivado en historial/ESTADO_2026-11-17.md
+- 2026-11-21: 7.1 unida a `main` (pedido de Bruno). Antes de subir, con `main` al día y los datos del 21 nov: `generar_web.py`, `probar_rebobinar.py`, `probar_pagina.py` y `probar_selector.py`, todo bien; `probar_marcas.py` falla en una comprobación que también falla en el `main` de antes (ver "Dónde quedamos").
 - 2026-11-21: 7.1 (a), gráficos animados al rebobinar, opción A "La línea avanza" (elegida por Bruno): en 250 ms el final de la línea va de la hora de antes a la nueva y cada punto pasa de su altura vieja a la nueva (Trends cambia de escala); al instante al arrastrar, con "reducir movimiento", al cambiar el ancho y fuera de la vista. Arreglado: la variable de la animación pisaba `t0` del eje. El cuelgue de la prueba era de la prueba: usaba `eval`, que la CSP de la página prohíbe. Con la CPU 4x y los gráficos a la vista: ~117 ms por parada y la animación a 60 cuadros por segundo. `probar_rebobinar.py` y `probar_pagina.py` (Edge y Firefox) y `probar_selector.py`: todo bien. 6.1 comprobada: guardada el 21 nov.
 - 2026-11-21: 7.1 (a), pedido de Bruno: en "Twitch y Kick, medición por medición", la fila que llega cuenta desde el número de la medición anterior (`cifra(…, desde)`). `probar_rebobinar.py` (Edge y Firefox), `probar_pagina.py` y `probar_selector.py`: todo bien.
 - 2026-11-21: 7.1 (a), pedido de Bruno: cuentan también los números de récords (el récord y los tráilers), línea de tiempo (máximos y filtros), videos (visitas y "+"), GTA frente a lo más visto (puestos, barras, tendencias), titulares (resumen, medios, días) y el valor de Twitch en la barra Pulso. Solo los de las secciones a la vista (IntersectionObserver); medir cada número hacía la parada el doble de lenta. Con la CPU 4x, una parada tarda como antes; los cuadros mientras cuenta, ~27 ms (antes ~13). `probar_rebobinar.py` (Edge y Firefox), `probar_pagina.py` (Edge y Firefox), `probar_selector.py` y `probar_marcas.py`: todo bien.
@@ -117,7 +119,7 @@ La lista completa y su orden están en `PLAN.md`. Resumen (2026-11-17):
 3. **Fase 6:** 6.1 más Google Trends, **una sola vez entre el 20 y el 25 nov**, fuera del
    recolector de cada hora (programa listo y probado, con las palabras de Bruno; se lanza sola
    del 21 al 24 nov; falta mostrarlo: 6.8). 6.6 Instagram (parece difícil; ver `PLAN.md`).
-4. **Fase 7:** 7.1 rebobinar (hecha en la rama `rebobinar-7-1`: diseño Pulso y números que cuentan; falta que Bruno la pruebe y la una a `main`); 7.13 sección de memes (requiere
+4. **Fase 7:** 7.13 sección de memes (requiere
    investigación). Cuando Take-Two publique las ventas, escribirlas en `gta6` de
    `web/lanzamientos.js`. **Fase 8 (GTA 6 en PC):** dormida hasta que Bruno avise con
    confirmación oficial.

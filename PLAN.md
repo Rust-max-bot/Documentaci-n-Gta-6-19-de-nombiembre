@@ -93,15 +93,6 @@ las reglas, en `CLAUDE.md`.
 
 ### Después del lanzamiento
 
-- [ ] **7.1 Rebobinar el lanzamiento.** Hecho y probado en la rama `rebobinar-7-1` (20 nov;
-      `/code-review`, abogado del diablo, `pruebas/probar_rebobinar.py`). Diseño "Pulso" (Bruno).
-      (a) **Animaciones:** de 4 propuestas (`find-animation-opportunities`), Bruno eligió la 1,
-      **hecha** (números de todas las secciones, 250 ms) y gráficos "La línea avanza" (opción A,
-      hecha). Las otras, si Bruno las pide: videos que se
-      deslizan al cambiar de puesto (280 ms), entrada suave de lo nuevo arriba (línea de tiempo,
-      tabla, "Lo último"; 200 ms) y destello de "¡Nuevo récord!" (450 ms). Descartados: animar la
-      barra Pulso, los gráficos, las barras de la tabla, los avisos de fallo y la cuenta de la
-      portada. **Falta:** (b) que Bruno la pruebe y la una a `main`.
 - [ ] **4.3 Análisis de datos (A3).** Datos interesantes: popularidad, visitas, cuánto dura el
       interés, antes y después. Necesita varios días de datos reales. **Sin IA** (Bruno, 2026-11-18): un
       programa normal, como `generar_web.py`, que corre solo con cada medición. En unos días.
@@ -187,7 +178,8 @@ No se empieza hasta que Bruno avise con una confirmación oficial de la versión
 
 - **Fases 0, 1 y 3:** hechas. **Fase 2:** 2.1 a 2.4 y 2.6 a 2.15 (falta 2.5). **Fase 4:** 4.1 y
   4.2 (falta 4.3). **Fase 6:** 6.2 a 6.5, 6.6 Kick, 6.7 Doomsday, 6.9 quitar Reddit.
-- **Fase 7:** 7.2, 7.3 y 7.5 a 7.12. **Fase 9:** 9.1, 9.5 a 9.10 y 9.12. **Fase 10:** hecha.
+- **Fase 7:** 7.1 a 7.3 y 7.5 a 7.12 (7.1 unida a `main` el 21 nov; animaciones sin hacer, solo
+  si Bruno las pide: videos que se deslizan, entrada de lo nuevo, destello de récord). **Fase 9:** 9.1, 9.5 a 9.10 y 9.12. **Fase 10:** hecha.
 - **20 nov:** tres rayas de lanzamiento (Nueva Zelanda, Chile y Miami) en los gráficos de Twitch
   y Trends; README al día.
 - Descartado por Bruno: app en el celular; Cloudflare Radar; redes de descarga de PlayStation y
@@ -225,6 +217,8 @@ El porqué y las opciones descartadas, en `historial/PLAN_2026-11-18-3.md` y `hi
   1x/2x/4x, ±30 min, copiar enlace, volver a hoy; hora del visitante + "desde la salida" en NZ,
   Chile o Miami; fichas y récords: valor del momento y récord hasta ahí; marco fijo; fuente caída
   = último dato bueno con aviso; fiesta al pasar una hora cero. Datos en `web/rebobinar.js`.
+  Barra "Pulso"; números que cuentan y gráficos "La línea avanza" (250 ms; al instante al
+  arrastrar y con "reducir movimiento").
   Diseño "Pulso" (descartados "Reproductor" y "Videograbadora").
 - **Muchas visitas:** `datos.js` lleva lo necesario al abrir; titulares por día en `web/dias/`.
   Plan B solo si GitHub avisa: Cloudflare Pages.
