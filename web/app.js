@@ -2029,7 +2029,10 @@
     // Al rebobinar (7.1): lo que había en ese momento (la última medición buena de cada fuente).
     function poner(V) {
       Dv = V.D; C = Dv.comparacion || {}; tw = C.twitch; yt = C.youtube; kk = C.kick;
-      if (!tw && !yt && !kk) { caja.innerHTML = '<p class="vacio">Sin datos todavía.</p>'; return; }
+      if (!tw && !yt && !kk) {
+        $("comparacion-nota").textContent = "Cómo le va a GTA comparado con todo lo demás en Twitch, Kick y YouTube.";
+        caja.innerHTML = '<p class="vacio">Sin datos todavía.</p>'; return;
+      }
       var t = Math.max(tw ? Date.parse(tw.t) : 0, yt ? Date.parse(yt.t) : 0, kk ? Date.parse(kk.t) : 0);
       $("comparacion-nota").textContent = "Cómo le va a GTA comparado con todo lo demás en Twitch, Kick y YouTube. " +
         (V.corte == null ? "Última medición: " : "Medición de ") + dia(t) + ", " + hora(t).replace(/\.$/, "") + ".";
@@ -2199,7 +2202,24 @@
       ["seccion-videos", ["youtube", "youtube_es"]], ["comparacion", ["ranking", "ranking_kick", "tendencias"]], ["seccion-noticias", ["noticias"]]];
     var DE_HOY = ["seccion-linea", "resumen", "seccion-servidores", "doomsday", "lanzamientos", "album", "capsula", "proximamente"];
     var ref = "nz";
-    try { var r0 = localStorage.getItem("gta6-rb-desde"); if (LUGARES[r0]) ref = r0; } catch (e) { /* sin almacenamiento */ }
+    try { var r0 = localStorage.getItem("gta6-rb-desde"); if (ORDEN.indexOf(r0) >= 0) ref = r0; } catch (e) { /* sin almacenamiento */ }
+    /* Los videos de cada momento (rebobinar.js) se calcularon con el filtro de siempre, "El de
+       Rust". Si el visitante eligió otro (10.4), filtro-videos.js ya cambió los récords y el conteo
+       de tendencias de datos.js: aquí se toman los de "El de Rust" para que todo cuadre, y la
+       sección de videos lo avisa. Su elección vuelve al salir del rebobinado. */
+    var FV = window.FILTRO_VIDEOS, EX = window.VIDEOS_EXTRA, RUST = { otro: false, records: null, tendencias: {} };
+    if (FV && FV.aplicado && FV.eleccion && FV.porDefecto && EX && EX.records && EX.records.rust &&
+        (FV.eleccion.conf !== FV.porDefecto.conf || FV.eleccion.ocultos.join(",") !== FV.porDefecto.ocultos.join(","))) {
+      var ocultosV = {};
+      FV.eleccion.ocultos.forEach(function (m) { ocultosV[m] = 1; });
+      RUST.otro = true;
+      RUST.records = EX.records.rust[FV.porDefecto.ocultos.join(",")] || null;
+      ((EX.tendencias && EX.tendencias.historial) || []).forEach(function (h) {   // lo que filtro-videos.js sumó
+        var dev = {};
+        Object.keys(h[1]).forEach(function (r) { dev[r] = h[1][r].filter(function (ms) { return !ms.some(function (x) { return ocultosV[x]; }); }).length; });
+        RUST.tendencias[h[0]] = dev;
+      });
+    }
 
     /* Hora del visitante (decisión de Bruno, 2026-11-20). El resto de la página va en hora de
        Chile: si el visitante está en otra zona, al lado va también la de Chile. */
@@ -2287,17 +2307,30 @@
       var mo = momentos[i], T = mo.ts, fallos = mo.fallos || {};
       var antesDe = function (t) { return Date.parse(t) <= T; };
       var Mv = M.filter(function (m) { return m.ts <= T; });
-      var d = Object.assign({}, D), RY = D.records_youtube || {};
-      d.mediciones = (D.mediciones || []).filter(function (m) { return antesDe(m.t); });
+      var d = Object.assign({}, D), RY = RUST.records || D.records_youtube || {};
+      d.mediciones = (D.mediciones || []).filter(function (m) { return antesDe(m.t); }).map(function (m, j) {
+        var dev = RUST.tendencias[j];   // conteo de tendencias de "El de Rust" (ver RUST)
+        if (!dev || !m.tendencias || m.tendencias.error) return m;
+        var t = Object.assign({}, m.tendencias);
+        Object.keys(dev).forEach(function (r) { if (typeof t[r] === "number") t[r] -= dev[r]; });
+        return Object.assign({}, m, { tendencias: t });
+      });
       d.youtube = mo.g.map(function (id) { return videoEn(R.videos_g, id, T); });
       d.youtube_es = mo.e.map(function (id) { return videoEn(R.videos_e, id, T); });
       d.trailers = (D.trailers || []).map(function (t) { return Object.assign({}, t, { serie: t.serie.filter(function (p) { return antesDe(p.t); }) }); })
         .filter(function (t) { return t.serie.length; });
-      d.records_youtube = { video: (RY.video || []).filter(function (r) { return antesDe(r.t); }), short: (RY.short || []).filter(function (r) { return antesDe(r.t); }) };
+      // El líder de cada récord, con las visitas que tenía en ese momento (datos.js guarda las del
+      // final de su racha, que pueden ser de después).
+      d.records_youtube = {};
+      ["video", "short"].forEach(function (tipo) {
+        var h = (RY[tipo] || []).filter(function (r) { return antesDe(r.t); }), rv = (mo.rv || {})[tipo], u = h[h.length - 1];
+        if (u && rv && u.id === rv[0]) h[h.length - 1] = Object.assign({}, u, { visitas: rv[1] });
+        d.records_youtube[tipo] = h;
+      });
       d.noticias = (D.noticias || []).filter(function (n) { return antesDe(n.t); });
       d.medios_top = mo.nt.medios; d.medios_n = mo.nt.medios_n;
       d.noticias_ultimas = mo.nt.ultimas.map(function (j) { return D.noticias[j]; }).filter(function (n) { return n && n.titulo; })
-        .map(function (n) { return { t: Math.floor(Date.parse(n.t) / 1000), titulo: n.titulo, medio: n.medio, url: n.url }; });
+        .map(function (n) { return { t: n.t, titulo: n.titulo, medio: n.medio, url: n.url }; });
       d.comparacion = null;
       if (mo.cmp) {
         d.comparacion = Object.assign({}, mo.cmp);
@@ -2338,6 +2371,12 @@
         if (!p) { p = document.createElement("p"); p.className = "rb-fallo"; sec.querySelector("h2").insertAdjacentElement("afterend", p); }
         p.textContent = textos.join(" ");
       });
+      var sv = $("seccion-videos"), nf = sv && sv.querySelector(".rb-filtro");
+      if (V.corte != null && RUST.otro && sv && !nf) {
+        nf = document.createElement("p"); nf.className = "rb-fallo rb-filtro";
+        nf.textContent = "Al rebobinar se ven los videos con el filtro «El de Rust». Tu elección vuelve al salir del rebobinado.";
+        sv.querySelector("h2").insertAdjacentElement("afterend", nf);
+      } else if (V.corte == null && nf) nf.remove();
     }
 
     function pintarBarra() {
@@ -2389,6 +2428,7 @@
       clearInterval(reloj); reloj = null;
       play.setAttribute("aria-pressed", String(si));
       play.textContent = si ? "❚❚ Pausa" : "▶ Reproducir";
+      $("rb-momento").setAttribute("aria-live", si ? "off" : "polite");   // sin un anuncio cada medio segundo
       if (!si) return;
       if (k >= momentos.length - 1) ir(0, false);   // desde el final, vuelve a empezar
       reloj = setInterval(function () {
@@ -2457,10 +2497,10 @@
       }
     });
     // Enlace a un momento: ?momento=2026-11-18T11:07Z (la medición de ese minuto o la más cercana).
-    var pedido = /[?&]momento=([\dT:Z-]+)/.exec(location.search), pedRef = /[?&]desde=(nz|cl|mia)\b/.exec(location.search);
-    if (pedRef) ref = pedRef[1];
-    if (pedido && !isNaN(Date.parse(pedido[1]))) {
-      var quiero = Date.parse(pedido[1]);
+    var params = new URLSearchParams(location.search), pedido = params.get("momento") || "", pedRef = params.get("desde");
+    if (ORDEN.indexOf(pedRef) >= 0) ref = pedRef;
+    if (/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}(:\d{2})?Z$/.test(pedido) && !isNaN(Date.parse(pedido))) {
+      var quiero = Date.parse(pedido);
       abrir(function () {
         var mejor = 0;
         momentos.forEach(function (mo, i) { if (Math.abs(mo.ts - quiero) < Math.abs(momentos[mejor].ts - quiero)) mejor = i; });

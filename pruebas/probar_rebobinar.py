@@ -98,7 +98,8 @@ with sync_playwright() as p:
               ultimas: document.querySelectorAll('#noticias-ultimas li').length,
               resumen: document.getElementById('noticias-resumen').innerText,
               videos: document.getElementById('videos').innerText,
-              records: document.getElementById('records-vitrina').innerText,
+              records: document.getElementById('records-vitrina').textContent,
+              fechas: [...document.querySelectorAll('#noticias-ultimas li small')].map(x => x.textContent),
               url: location.search
             })""")
             comprobar(est["idx"] == str(NZ), f"'Saltar a Nueva Zelanda' va a la primera medición después de su hora cero ({est['idx']})")
@@ -113,6 +114,10 @@ with sync_playwright() as p:
             comprobar(est["ultimas"] == min(6, MOM[NZ]["nt"]["n"]) and "hasta ese momento" in est["resumen"], f"titulares hasta ese momento ({est['ultimas']} últimos)")
             comprobar("a las 8:07" in est["videos"], "los videos muestran sus visitas a esa hora")
             comprobar("En ese momento" in est["records"], "los récords muestran el valor de ese momento")
+            rv = MOM[NZ]["rv"]["video"][1]
+            comp = f"{rv / 1e6:.1f}".replace(".", ",").replace(",0", "") + " M"
+            comprobar(comp in est["records"].split("Video más visto")[1][:40], f"el récord 'Video más visto' trae las visitas de ese momento ({comp}), no las de después")
+            comprobar(est["fechas"] and all("nov" in f for f in est["fechas"]), f"'Lo último' muestra la fecha de cada titular ({est['fechas'][:1]})")
             comprobar("momento=2026-11-18T11:07Z" in est["url"], f"la dirección guarda el momento ({est['url']})")
             pg.screenshot(path=str(CAPTURAS / f"{pre}rebobinar_{tema}_{ancho}_nz.png"))
             pg.locator("#seccion-twitch").scroll_into_view_if_needed()
@@ -158,10 +163,10 @@ with sync_playwright() as p:
             enlace = pg.evaluate("location.href")
             pg2 = ctx.new_page()
             pg2.on("pageerror", lambda e: errores.append(str(e)))
-            pg2.goto(enlace)
+            pg2.goto(enlace.replace(":07Z", "%3A07Z"))   # como lo deja una app de mensajes
             pg2.wait_for_selector("#rb-barra:not([hidden])", timeout=15000)
             comprobar(pg2.evaluate("document.getElementById('rb-rango').value") == str(NZ) and num(tw) in pg2.locator("#fichas").inner_text(),
-                      "el enlace abre la página ya rebobinada en ese momento")
+                      "el enlace (con los dos puntos codificados) abre la página ya rebobinada en ese momento")
             pg2.close()
 
             pg.click("#rb-barra .rb-volver")
@@ -171,6 +176,30 @@ with sync_playwright() as p:
             comprobar(hoy[0] and hoy[1] == 0 and "Máximo en Twitch" in hoy[2] and hoy[4] == str(pico) and "momento=" not in hoy[3], "'Volver a hoy' deja la página como siempre (máximo de Twitch de hoy)")
             comprobar(not errores, "sin errores en la consola" + (": " + " | ".join(errores[:3]) if errores else ""))
             ctx.close()
+    # Visitante con otro filtro de videos (10.4): el rebobinado usa "El de Rust" y lo avisa.
+    print("1280px con el filtro 'Desde cero' del visitante")
+    ctx = b.new_context(viewport={"width": 1280, "height": 860}, timezone_id="America/Santiago")
+    pg = ctx.new_page()
+    errores = []
+    pg.on("pageerror", lambda e: errores.append(str(e)))
+    pg.goto(URL)
+    pg.evaluate("localStorage.setItem('filtro-videos', JSON.stringify({conf: 'desde-cero', ocultos: []}))")
+    pg.reload()
+    pg.wait_for_selector("#rebobinar:not([hidden])", timeout=15000)
+    comprobar(pg.evaluate("!!window.VIDEOS_EXTRA && window.FILTRO_VIDEOS.aplicado"), "el filtro del visitante está puesto")
+    pg.click("#rb-abrir")
+    pg.wait_for_selector("#rb-barra:not([hidden])", timeout=15000)
+    pg.click('#rb-barra [data-salto="nz"]')
+    nota = pg.evaluate("(document.querySelector('#seccion-videos .rb-filtro') || {}).textContent || ''")
+    comprobar("El de Rust" in nota, f"la sección de videos avisa que se usa el filtro de Rust ({nota[:50]!r})")
+    rec = pg.evaluate("document.getElementById('records-vitrina').textContent")
+    rv = MOM[NZ]["rv"]["video"][1]
+    comp = f"{rv / 1e6:.1f}".replace(".", ",").replace(",0", "") + " M"
+    comprobar(comp in rec.split("Video más visto")[1][:40], f"y los récords son los de Rust en ese momento ({comp})")
+    pg.click("#rb-barra .rb-volver")
+    comprobar(pg.locator("#seccion-videos .rb-filtro").count() == 0, "al volver a hoy se quita el aviso")
+    comprobar(not errores, "sin errores en la consola" + (": " + " | ".join(errores[:3]) if errores else ""))
+    ctx.close()
     b.close()
 
 print("RESULTADO: " + ("todo bien" if not fallos else f"{len(fallos)} fallos"))

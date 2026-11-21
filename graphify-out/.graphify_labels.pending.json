@@ -38,7 +38,7 @@
   "49": "probar_fuentes.py",
   "50": "pintarRecords",
   "51": "Plan del proyecto: recuerdo del lanzamiento de GTA 6",
-  "52": "videos_extra",
+  "52": "Panel de control de videos (Fase 10)",
   "53": "servidor.py",
   "54": "panel.js",
   "55": "Tareas que faltan",
@@ -57,7 +57,7 @@
   "68": "probar_marcas.py",
   "69": "json",
   "70": "probar_panel.py",
-  "71": "rebobinado",
+  "71": "re",
   "72": "trends_extra.py",
   "73": "youtube_tendencias",
   "74": "probar_saltos.py",
@@ -69,5 +69,6 @@
   "80": "inicio.js",
   "81": "Tareas que faltan",
   "82": "Tareas que faltan",
-  "83": "_serie_trends"
+  "83": "_serie_trends",
+  "84": "videos_extra"
 }
