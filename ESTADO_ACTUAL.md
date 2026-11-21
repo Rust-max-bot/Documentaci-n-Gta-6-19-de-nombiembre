@@ -14,12 +14,15 @@
 
 ## Dónde quedamos
 
-*(2026-11-21, tarde, hora de Chile.)*
+*(2026-11-21, ~15:30 de Chile. Bruno sigue en otro chat.)*
 
-**Para seguir:** se trabaja en `main`. **7.1 Rebobinar, unida a `main` el 21 nov** (pedido de
-Bruno), con los números que cuentan y los gráficos "La línea avanza". La rama `rebobinar-7-1` ya
-no hace falta (Bruno puede borrarla en GitHub). Siguiente tarea: la que elija Bruno (ver
-"Pendiente").
+**Para seguir:** se trabaja en `main`, todo guardado y subido; la página publicada está al día.
+Hecho el 21 nov: **7.1 Rebobinar unida a `main`** (con números que cuentan y gráficos "La línea
+avanza"), **6.1 comprobada** (guardada a las 15:41 UTC) y **6.8 publicada** (sección "¿Qué tan
+grande es GTA 6?", `#trends61`), y arreglada la prueba `probar_marcas.py`. Siguiente tarea: la
+que elija Bruno. Lo que se dejó **para después del 22 nov**: el resto de la 9.4 (fallo de la
+recarga automática), el resumen de huecos de la 9.3, revisar el peso de `datos/` y la 9.11 (b).
+La rama `rebobinar-7-1` ya no hace falta (Bruno puede borrarla en GitHub).
 
 **La página está lista para el lanzamiento y publicada** en
 <https://rust-max-bot.github.io/Documentaci-n-Gta-6-19-de-nombiembre/> (la publica
