@@ -408,23 +408,7 @@ def convertir(medidas, marcados=None, rescatados=None, extra=False):
     ult_rk = next((m for m in reversed(medidas) if "error" not in m.get("twitch_ranking", {"error": 1})), None)
     ult_yt = next((m for m in reversed(medidas) if "error" not in m.get("youtube_tendencias", {"error": 1})), None)
     ult_kr = next((m for m in reversed(medidas) if "error" not in m.get("kick_ranking", {"error": 1})), None)
-    comparacion = None
-    if ult_rk or ult_yt or ult_kr:
-        comparacion = {}
-        if ult_kr:
-            kr = ult_kr["kick_ranking"]
-            comparacion["kick"] = {"t": ult_kr["t"], "comparadas": kr["comparadas"], "gta6": kr["puesto_gta6"],
-                                   "gta5": kr["puesto_gta5"], "categorias": kr["categorias"], "completo": kr["completo"]}
-        if ult_rk:
-            rk = ult_rk["twitch_ranking"]
-            comparacion["twitch"] = {"t": ult_rk["t"], "top": rk["top"], "comparadas": rk["comparadas"],
-                                     "gta6": rk["puesto_gta6"], "gta5": rk["puesto_gta5"], "leidas": rk["leidas"]}
-        if ult_yt:
-            yt = ult_yt["youtube_tendencias"]
-            # Sin los videos que Bruno marcó (Fase 10). "primero" (el n.º 1 de la lista, sea del juego
-            # que sea) no se toca: la página no lo muestra hoy. Si un día lo muestra, filtrarlo también.
-            regiones = {r: {**d, "gta": gta_visibles(d, filtro)} for r, d in yt["regiones"].items()}
-            comparacion["youtube"] = {"t": ult_yt["t"], "regiones": regiones, "rockstar": yt["rockstar"]}
+    comparacion = armar_comparacion(ult_rk, ult_yt, ult_kr, filtro)
 
     ultima_es = next((m["youtube_es"]["videos"] for m in reversed(medidas) if m.get("youtube_es", {}).get("videos")), [])
     youtube_es = [{
@@ -458,9 +442,172 @@ def convertir(medidas, marcados=None, rescatados=None, extra=False):
             if str(c.get("foto") or "").startswith("https://files.kick.com/"):
                 fotos_kick[c["canal"]] = c["foto"]
     return {"mediciones": mediciones, "fotos_kick": fotos_kick, "trends_horas": trends_horas, "youtube": youtube, "youtube_es": youtube_es, "noticias": noticias,
-            "records_youtube": records_youtube, **({"_extra": resultado_extra} if extra else {}),
+            "records_youtube": records_youtube, **({"_extra": resultado_extra, "_filtro": filtro} if extra else {}),
             "comparacion": comparacion,
             "trailers": sorted(trailers.values(), key=lambda v: v.get("publicado") or "")}   # todos: la página los muestra por páginas (Bruno, 2026-11-13)
+
+
+def armar_comparacion(ult_rk, ult_yt, ult_kr, filtro):
+    """"GTA frente a lo más visto" (6.3) con las mediciones dadas (la más nueva sin hueco de cada
+    fuente). La usan la página de hoy y cada momento del rebobinado (7.1)."""
+    if not (ult_rk or ult_yt or ult_kr):
+        return None
+    comparacion = {}
+    if ult_kr:
+        kr = ult_kr["kick_ranking"]
+        comparacion["kick"] = {"t": ult_kr["t"], "comparadas": kr["comparadas"], "gta6": kr["puesto_gta6"],
+                               "gta5": kr["puesto_gta5"], "categorias": kr["categorias"], "completo": kr["completo"]}
+    if ult_rk:
+        rk = ult_rk["twitch_ranking"]
+        comparacion["twitch"] = {"t": ult_rk["t"], "top": rk["top"], "comparadas": rk["comparadas"],
+                                 "gta6": rk["puesto_gta6"], "gta5": rk["puesto_gta5"], "leidas": rk["leidas"]}
+    if ult_yt:
+        yt = ult_yt["youtube_tendencias"]
+        # Sin los videos que Bruno marcó (Fase 10). "primero" (el n.º 1 de la lista, sea del juego
+        # que sea) no se toca: la página no lo muestra hoy. Si un día lo muestra, filtrarlo también.
+        regiones = {r: {**d, "gta": gta_visibles(d, filtro)} for r, d in yt["regiones"].items()}
+        comparacion["youtube"] = {"t": ult_yt["t"], "regiones": regiones, "rockstar": yt["rockstar"]}
+    return comparacion
+
+
+# Rebobinar el lanzamiento (tarea 7.1; entrevista con Bruno, 2026-11-20). Del 18 nov 08:00 UTC
+# (3 h antes de la hora cero de Nueva Zelanda, donde empezó el boom) al 20 nov 12:00 UTC (cuando
+# el 19 nov ya terminó en todo el mundo: UTC-12). Una parada por cada medición de ese tramo
+# (cada media hora).
+REBOBINAR_DESDE = "2026-11-18T08:00:00Z"
+REBOBINAR_HASTA = "2026-11-20T12:00:00Z"
+REBOBINAR = RAIZ / "web" / "rebobinar.js"
+# Fuentes de cada momento que pueden fallar: nombre en la página -> claves de la medición.
+FUENTES_REB = {"twitch": ("twitch",), "kick": ("kick",), "trends": ("trends",), "noticias": ("noticias",),
+               "youtube": ("youtube", "youtube_largos"), "youtube_es": ("youtube_es",),
+               "ranking": ("twitch_ranking",), "ranking_kick": ("kick_ranking",), "tendencias": ("youtube_tendencias",)}
+
+
+def fallo_fuente(m, claves):
+    """Falló si alguna clave trae error. Una clave que no está es una fuente que todavía no se
+    medía (por ejemplo, el ranking de Kick antes del 18 nov): eso no es un fallo."""
+    return any(c in m and (not isinstance(m[c], dict) or "error" in m[c]) for c in claves)
+
+
+def rebobinado(medidas, d, filtro):
+    """Lo que la página necesita para mostrar cada momento del tramo del rebobinado y que no está
+    en datos.js: qué videos estaban arriba, "GTA frente a lo más visto", el resumen de titulares y
+    qué fuentes fallaron (la página muestra entonces el último dato bueno, con un aviso). Lo demás
+    (Twitch, Kick, Trends, récords, tráilers) la página lo saca de datos.js cortando en ese momento.
+    d: lo que devolvió convertir(), con los titulares todavía completos. None si no hay tramo."""
+    ventana = [m for m in medidas if REBOBINAR_DESDE <= m["t"] <= REBOBINAR_HASTA]
+    if len(ventana) < 2:
+        return None
+    noticias = d["noticias"]   # ya ordenados por hora: la posición es el número "i" de la página
+    t_noticias = [segundos(n["t"]) for n in noticias]
+    # El registro más nuevo de cada video, como en convertir() (títulos y filtro iguales a los de hoy).
+    reg_g, reg_e = {}, {}
+    for m in medidas:
+        for v in m.get("youtube", {}).get("videos", []) + m.get("youtube_largos", {}).get("videos", []):
+            if isinstance(v.get("visitas"), int):
+                reg_g[v["id"]] = v
+        for v in m.get("youtube_es", {}).get("videos", []):
+            if isinstance(v.get("visitas"), int):
+                reg_e[v["id"]] = v
+    estado = {"yt": [], "lg": [], "es": [], "rk": None, "kr": None, "tend": None}
+    bueno = {f: None for f in FUENTES_REB}   # hora de la última medición buena de cada fuente
+    series_g, series_e = {}, {}
+    medios = Counter()
+    k_not = 0
+    momentos, vistos_g, vistos_e, videos_t = [], set(), set(), {}
+    for m in medidas:
+        if m["t"] > REBOBINAR_HASTA:
+            break
+        if m.get("youtube", {}).get("videos"):
+            estado["yt"] = m["youtube"]["videos"]
+        if m.get("youtube_largos", {}).get("videos"):
+            estado["lg"] = m["youtube_largos"]["videos"]
+        if m.get("youtube_es", {}).get("videos"):
+            estado["es"] = m["youtube_es"]["videos"]
+        for clave, k in (("twitch_ranking", "rk"), ("kick_ranking", "kr"), ("youtube_tendencias", "tend")):
+            if isinstance(m.get(clave), dict) and "error" not in m[clave]:
+                estado[k] = m
+        for v in m.get("youtube", {}).get("videos", []) + m.get("youtube_largos", {}).get("videos", []):
+            if isinstance(v.get("visitas"), int):
+                s = series_g.setdefault(v["id"], [])
+                if not s or s[-1][0] != segundos(m["t"]):
+                    s.append([segundos(m["t"]), v["visitas"]])
+        for v in m.get("youtube_es", {}).get("videos", []):
+            if isinstance(v.get("visitas"), int):
+                series_e.setdefault(v["id"], []).append([segundos(m["t"]), v["visitas"]])
+        fallos = {}
+        for f, claves in FUENTES_REB.items():
+            if fallo_fuente(m, claves):
+                fallos[f] = bueno[f]   # None: no hubo ningún dato bueno antes
+            else:
+                bueno[f] = m["t"]
+        if m["t"] < REBOBINAR_DESDE:
+            continue
+        # Videos de ese momento: los de la última búsqueda que respondió, de más a menos visto.
+        vistos = {v["id"] for v in estado["yt"]}
+        lista = sorted(estado["yt"] + [v for v in estado["lg"] if v["id"] not in vistos], key=lambda v: v.get("visitas") or 0, reverse=True)
+        g = [v["id"] for v in elegir_videos(lista, reg_g, series_g, filtro)]
+        lista_es = [v for v in estado["es"] if re.match(r"es\b", reg_e.get(v["id"], {}).get("idioma") or "", re.I)]
+        e = [v["id"] for v in elegir_videos(lista_es, reg_e, series_e, filtro)]
+        vistos_g.update(g)
+        vistos_e.update(e)
+        # Titulares publicados hasta ese momento: los 6 últimos y los medios que más publicaron.
+        hasta = segundos(m["t"])
+        while k_not < len(noticias) and t_noticias[k_not] <= hasta:
+            if noticias[k_not]["medio"]:
+                medios[noticias[k_not]["medio"]] += 1
+            k_not += 1
+        cmp = armar_comparacion(estado["rk"], estado["tend"], estado["kr"], filtro)
+        # Más liviano (la página no usa "top" ni "primero"): cada video en tendencia va como
+        # [puesto, código] y su título y canal, una sola vez en "videos_t".
+        if cmp and "twitch" in cmp:
+            cmp["twitch"] = {k: x for k, x in cmp["twitch"].items() if k != "top"}
+        if cmp and "youtube" in cmp:
+            for r, dr in cmp["youtube"]["regiones"].items():
+                for v in dr["gta"]:
+                    videos_t[v["id"]] = {"titulo": v["titulo"], "canal": v["canal"]}
+                cmp["youtube"]["regiones"][r] = {"en_lista": dr["en_lista"], "gta": [[v["puesto"], v["id"]] for v in dr["gta"]]}
+        momentos.append({
+            "t": m["t"], "g": g, "e": e, "cmp": cmp,
+            "nt": {"n": k_not, "ultimas": list(range(k_not - 1, max(-1, k_not - 1 - NOTICIAS_ULTIMAS), -1)),
+                   "medios": [[x, c] for x, c in medios.most_common(MEDIOS_TOP)], "medios_n": len(medios)},
+            **({"fallos": fallos} if fallos else {}),
+        })
+
+    def meta(v, es):
+        return {"titulo": v["titulo"], "canal": v["canal"], "miniatura": v.get("miniatura", ""), **marca_short(v),
+                **({"idioma": v.get("idioma")} if es else {})}
+    return {
+        "desde": REBOBINAR_DESDE, "hasta": REBOBINAR_HASTA, "momentos": momentos,
+        "videos_g": {i: dict(meta(reg_g[i], False), serie=series_g[i]) for i in sorted(vistos_g)},
+        "videos_e": {i: dict(meta(reg_e[i], True), serie=series_e[i]) for i in sorted(vistos_e)},
+        "videos_t": videos_t,   # los titulares no van: la página los toma de web/dias/ (pesan mucho)
+    }
+
+
+def comprobar_rebobinado(r, medidas, n_titulares):
+    """Si algo no cuadra, mejor no publicar el rebobinado."""
+    en_tramo = [m["t"] for m in medidas if REBOBINAR_DESDE <= m["t"] <= REBOBINAR_HASTA]
+    tiempos = [mo["t"] for mo in r["momentos"]]
+    if tiempos != en_tramo:
+        abortar("rebobinar.js: los momentos no son las mediciones del tramo, en orden")
+    for mo in r["momentos"]:
+        for clave, tabla in (("g", r["videos_g"]), ("e", r["videos_e"])):
+            if any(i not in tabla or not tabla[i]["serie"] for i in mo[clave]):
+                abortar(f"rebobinar.js: en {mo['t']} falta un video o su serie de visitas")
+        yt = (mo["cmp"] or {}).get("youtube")
+        if yt and any(v[1] not in r["videos_t"] for dr in yt["regiones"].values() for v in dr["gta"]):
+            abortar(f"rebobinar.js: en {mo['t']} falta un video en tendencia")
+        if any(not (0 <= i < n_titulares) for i in mo["nt"]["ultimas"]):
+            abortar(f"rebobinar.js: en {mo['t']} hay un titular que no existe")
+        if len(mo["nt"]["ultimas"]) > NOTICIAS_ULTIMAS or any(a <= b for a, b in zip(mo["nt"]["ultimas"], mo["nt"]["ultimas"][1:])):
+            abortar(f"rebobinar.js: en {mo['t']} los últimos titulares no van del más nuevo al más viejo")
+    if any(a["nt"]["n"] > b["nt"]["n"] for a, b in zip(r["momentos"], r["momentos"][1:])):
+        abortar("rebobinar.js: la cuenta de titulares baja con el tiempo")
+    for tabla in (r["videos_g"], r["videos_e"]):
+        for i, v in tabla.items():
+            if [p[0] for p in v["serie"]] != sorted({p[0] for p in v["serie"]}):
+                abortar(f"rebobinar.js: la serie del video {i} está desordenada o repetida")
 
 
 def segundos(iso):
@@ -633,8 +780,19 @@ def main():
     # el resto va en web/videos-extra.js, que solo se carga si el visitante cambia la elección.
     d["filtro_videos"] = {"confs": {k: {"nombre": c["nombre"], "desc": c["desc"]} for k, c in extra["confs"].items()},
                           "motivos": extra["motivos"]}
+    filtro = d.pop("_filtro")
     comprobar(d, medidas)
     comprobar_extra(extra, d)
+    # Rebobinar (7.1): antes de separar los titulares por días (necesita los titulares completos).
+    reb = rebobinado(medidas, d, filtro)
+    texto_reb = None
+    if reb:
+        comprobar_rebobinado(reb, medidas, len(d["noticias"]))
+        texto_reb = ("/* DATOS REALES para rebobinar el lanzamiento (tarea 7.1), generados por recolector/generar_web.py.\n"
+                     "   La página solo lo carga si el visitante abre el rebobinado. No editar a mano ni subir a git. */\n"
+                     "window.REBOBINAR = " + json.dumps(reb, ensure_ascii=False, separators=(",", ":")) + ";\n")
+        d["rebobinar"] = {"desde": reb["momentos"][0]["t"], "hasta": reb["momentos"][-1]["t"], "n": len(reb["momentos"]),
+                          "huella": hashlib.sha256(texto_reb.encode("utf-8")).hexdigest()[:10]}
     archivos = separar_por_dias(d)
     d["album"] = leer_album()
     d["trends_extra"] = leer_trends_extra(carpeta)
@@ -656,6 +814,10 @@ def main():
                    "   No editar a mano ni subir a git. */\n"
                    "window.VIDEOS_EXTRA = " + json.dumps(extra, ensure_ascii=False, separators=(",", ":")) + ";\n")
     escribir(EXTRA, texto_extra)
+    if texto_reb:
+        escribir(REBOBINAR, texto_reb)
+    elif REBOBINAR.exists():   # otra carpeta de datos sin el tramo: que no quede uno viejo
+        REBOBINAR.unlink()
     escribir(SALIDA, texto)
     escribir(VERSION, json.dumps({"generado": d["generado"]}) + "\n")
     peso_dias = sum(len(t.encode("utf-8")) for t in archivos.values())
@@ -663,7 +825,9 @@ def main():
           f"{len(d['youtube'])} videos, {len(d['noticias_t'])} titulares, "
           f"{len(texto.encode('utf-8')) // 1024} KB; "
           f"{len(archivos)} días en web/dias/ ({peso_dias // 1024} KB, se cargan solo si hacen falta); "
-          f"web/videos-extra.js {len(texto_extra.encode('utf-8')) // 1024} KB (solo si el visitante cambia el filtro).")
+          f"web/videos-extra.js {len(texto_extra.encode('utf-8')) // 1024} KB (solo si el visitante cambia el filtro); "
+          + (f"web/rebobinar.js {len(texto_reb.encode('utf-8')) // 1024} KB, {len(reb['momentos'])} momentos (solo al rebobinar)."
+             if texto_reb else "sin tramo para rebobinar."))
 
 
 if __name__ == "__main__":

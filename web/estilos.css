@@ -1313,3 +1313,63 @@ h2 .ico, .v-sub .ico { color: var(--a2); stroke-width: 2.2; }
 .fv-volver { cursor: pointer; background: none; border: 0; padding: 10px 2px; min-height: 40px; color: var(--tenue); text-decoration: underline; font: 600 13px var(--f-texto); }
 .fv-aplicar:active, .fv-boton:active { transform: scale(.97); }
 @media (max-width: 640px) { .fv-panel { grid-template-columns: 1fr; padding: 14px; } }
+
+/* ---------- Rebobinar el lanzamiento (tarea 7.1). Diseño provisional y sobrio, con los colores
+   de cada estilo: Bruno elige después entre opciones de diseño. Lo arma app.js. ---------- */
+.rb-entrada { display: flex; align-items: center; justify-content: space-between; gap: 18px 28px; flex-wrap: wrap; }
+.rb-entrada h2 { margin-bottom: 6px; }
+.rb-entrada .nota { margin-bottom: 0; }
+.rb-entrada.abierto .rb-abrir { visibility: hidden; }
+.rb-abrir { cursor: pointer; flex: none; padding: 12px 22px; border: 0; border-radius: 999px; background: var(--a1); color: #fff; font: 800 15px var(--f-texto); letter-spacing: .06em; text-transform: uppercase; box-shadow: var(--sombra); }
+:root[data-tema="ochenta"] .rb-abrir { box-shadow: 0 0 18px var(--a1); }
+.rb-abrir:disabled { opacity: .7; cursor: progress; }
+.rb-abrir:focus-visible, .rb-barra button:focus-visible, .rb-barra input:focus-visible { outline: 2px solid var(--a2); outline-offset: 2px; }
+.rb-error { margin: 10px 0 0; color: var(--mal); font-weight: 700; }
+.rb-barra { position: fixed; left: 50%; bottom: 10px; z-index: 42; width: min(1160px, calc(100% - 20px)); transform: translateX(-50%);
+  padding: 10px 16px 12px; border-radius: var(--radio); background: var(--panel); box-shadow: var(--sombra), 0 -6px 30px rgba(0,0,0,.18); }
+.rb-barra[hidden] { display: none; }
+.rb-fila { display: flex; align-items: center; justify-content: space-between; gap: 8px 16px; flex-wrap: wrap; }
+.rb-momento { margin: 0; display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 12px; font-variant-numeric: tabular-nums; }
+.rb-momento b { font: 800 clamp(18px, 2.4vw, 24px)/1.2 var(--f-texto); }
+.rb-momento .rb-cl { color: var(--tenue); font-size: 14px; font-weight: 600; }
+.rb-momento .rb-cl:empty { display: none; }
+.rb-momento .rb-desde { color: var(--a1); font-weight: 700; font-size: 15px; }
+:root[data-tema="ochenta"] .rb-momento .rb-desde { color: var(--a2); }
+.rb-barra small { color: var(--tenue); font: 700 11px var(--f-texto); letter-spacing: .12em; text-transform: uppercase; margin-right: 4px; }
+.rb-ref, .rb-saltos, .rb-vel, .rb-mando, .rb-otros { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+.rb-barra button { cursor: pointer; padding: 6px 12px; border-radius: 999px; border: 1px solid color-mix(in srgb, var(--tenue) 55%, transparent); background: none;
+  color: var(--texto); font: 700 13px var(--f-texto); letter-spacing: .03em; min-height: 34px; }
+.rb-barra button:disabled { opacity: .4; cursor: default; }
+.rb-barra button[aria-pressed="true"] { background: var(--a1); border-color: var(--a1); color: #fff; }
+.rb-barra .rb-play { background: var(--a1); border-color: var(--a1); color: #fff; min-width: 124px; }
+.rb-barra .rb-volver { border-color: var(--a1); }
+.rb-pista { position: relative; margin: 8px 0 6px; }
+.rb-pista input { width: 100%; margin: 0; accent-color: var(--a1); cursor: pointer; }
+.rb-marcas { position: relative; height: 8px; }
+.rb-marcas i { position: absolute; top: 0; width: 2px; height: 8px; border-radius: 1px; background: var(--a3); left: calc(var(--p) * (100% - 16px) + 7px); }
+.rb-aviso { margin: 8px 0 0; padding: 8px 12px; border-radius: 12px; background: color-mix(in srgb, var(--a3) 22%, transparent); font-weight: 600; }
+.rb-aviso[hidden] { display: none; }
+.rb-enlace { width: 100%; margin-top: 6px; padding: 6px 8px; border-radius: 8px; border: 1px solid var(--tenue); background: var(--fondo); color: var(--texto); font: 500 13px var(--f-texto); }
+.rb-fiesta { position: fixed; inset: 0; z-index: 41; pointer-events: none; }
+body.rebobinando main { padding-bottom: calc(var(--rb-alto, 160px) + 30px); }
+body.rebobinando .menu { bottom: calc(var(--rb-alto, 160px) + 22px); }
+.rb-hoy > :not(.rb-nota-hoy) { opacity: .42; filter: saturate(.4); transition: opacity .3s, filter .3s; }
+.rb-nota-hoy { display: inline-block; margin: 0 0 12px; padding: 4px 12px; border-radius: 999px; background: color-mix(in srgb, var(--tenue) 22%, transparent); color: var(--texto); font: 700 13px var(--f-texto); }
+.rb-fallo { margin: -6px 0 14px; padding: 6px 12px; border-left: 3px solid var(--a3); background: color-mix(in srgb, var(--a3) 14%, transparent); font: 600 14px var(--f-texto); border-radius: 0 10px 10px 0; }
+.ficha .rb-record { display: block; margin-top: 4px; font-style: normal; font-size: 13px; color: var(--tenue); }
+.ficha .rb-record b { display: inline; font: inherit; font-weight: 800; color: var(--texto); }
+.rb-nw { white-space: nowrap; }
+.rb-ahora { margin: 6px 0 0; font-size: 14px; font-weight: 600; color: var(--tenue); }
+.rb-ahora b { color: var(--texto); }
+.grafico .rb-fin { fill: var(--color); stroke: var(--panel); stroke-width: 2; }
+/* Al rebobinar, el gráfico se redibuja en cada parada: la línea ya está, no vuelve a trazarse desde cero. */
+.rebobinando .grafico .trazo { animation: none; stroke-dashoffset: 0; }
+.rebobinando .grafico .relleno { animation: none; opacity: .16; }
+@media (max-width: 640px) {
+  .rb-barra { padding: 8px 10px 10px; bottom: 6px; width: calc(100% - 12px); }
+  .rb-barra small { font-size: 10px; letter-spacing: .06em; margin-right: 0; }
+  .rb-barra button { padding: 4px 9px; font-size: 12px; min-height: 30px; }
+  .rb-barra .rb-play { min-width: 104px; }
+  .rb-controles { gap: 6px; }
+  .rb-entrada .rb-abrir { width: 100%; }
+}
