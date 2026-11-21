@@ -1,9 +1,8 @@
 # Plan del proyecto: recuerdo del lanzamiento de GTA 6
 
-> **Plan anterior archivado** el 2026-11-20 en `historial/PLAN_2026-11-20.md` (pasó de 20.000
-> bytes; tiene el detalle de la Fase 10, la estructura de carpetas y las medidas viejas de la
-> 9.4). Antes: `historial/PLAN_2026-11-18-3.md` y los anteriores. Un solo plan desde el
-> 2026-11-16 (pedido de Bruno).
+> **Plan anterior archivado** el 2026-11-21 en `historial/PLAN_2026-11-21.md` (pasó de 20.000
+> bytes; tiene el detalle de la 6.1, de la 9.4 —medidas de carga, A/B/C— y de la 9.3). Antes:
+> `historial/PLAN_2026-11-20.md` y los anteriores. Un solo plan desde el 2026-11-16 (pedido de Bruno).
 
 Un recuerdo del 19 de noviembre de 2026, día en que salió GTA 6, por diversión: una página web
 con línea de tiempo, tablas y gráficos de Twitch, Kick, YouTube, Google Trends y titulares
@@ -32,21 +31,13 @@ las reglas, en `CLAUDE.md`.
 - [ ] **7.4 Cápsula del tiempo.** "Lo que espero" ya está (texto de Bruno, 2026-11-15; diseño
       de cintas de casete, opción C). **Falta "Lo que me pareció"**, después del lanzamiento, en
       `web/capsula.js`. Lo escribe Bruno: Claude no inventa ese contenido.
-- [ ] **6.1 Más Google Trends.** Una sola vez, **entre el 20 y el 25 nov** (antes del 26: Trends
-      solo da el detalle por hora de 7 días), fuera del recolector de cada hora para no arriesgar
-      un bloqueo (429) el día 19. Programa listo y probado sin guardar (13 y 14 nov):
-      `recolector/trends_extra.py`, workflow "Trends extra (6.1)", que se lanza a mano y guarda en
-      `datos/trends_extra/`. Cinco preguntas: interés por país; búsquedas relacionadas y en
-      aumento; hora por hora GTA 6, GTA 5, Minecraft, Fortnite y Marvel Rivals; mes a mes desde
-      2013 GTA 6, GTA 5, Ocarina of Time (remake, 5 nov 2026) y Avengers Doomsday; y GTA 6 frente
-      a Doomsday día por día (en la página, solo esa comparación). **Se lanza sola** (Bruno, 2026-11-16, tras un
-      debate entre dos agentes): el despertador de Cloudflare el 21, 22, 23 y 24 nov a las 15:41 UTC
-      y, de respaldo, un `schedule` de GitHub a las 18:41, 20:41 y 22:41 UTC (GitHub se salta horarios: 18 nov). Guarda solo la primera vez (paso
-      "decidir": si ya hay archivo o es fuera del 20-25 nov 2026, termina en verde), sin ejecuciones
-      dobles y con 25 min de tiempo. **Guardada** el 21 nov 15:41 UTC (5 preguntas bien) y
-      **mostrada** (6.8, hecha el 21 nov: sección `#trends61`, opción A "Tablero"; si se repite la
-      consulta, la sección se oculta sola). **Falta:** solo una idea sin decidir: repetir lo de
-      Doomsday en enero, después de su estreno (18 dic); si se hace, que `#trends61` siga usando la del 21 nov.
+- [ ] **6.1 Más Google Trends.** **Guardada** el 21 nov 15:41 UTC
+      (`datos/trends_extra/2026-11-21T1541Z.json`, las 5 preguntas bien; programa
+      `recolector/trends_extra.py`, workflow "Trends extra (6.1)") y **mostrada** (6.8, sección
+      `#trends61`; si se repite la consulta, la sección se oculta sola). El despertador la vuelve a
+      lanzar el 22, 23 y 24 nov a las 15:41 UTC (y el `schedule` de respaldo), pero ve que ya existe
+      y termina sin guardar. **Falta:** solo una idea sin decidir: repetir lo de Doomsday en enero,
+      después de su estreno (18 dic); si se hace, que `#trends61` siga usando la del 21 nov.
 - [ ] **9.11 Skill de animación y forma de administrarlas** (Bruno, 2026-11-17). (a) **Hecho
       (2026-11-17):** instaladas seis skills de `emilkowalski/skills` (MIT): `prototype`,
       `find-animation-opportunities`, `animate`, `choreograph`, `review-animations` y
@@ -54,38 +45,17 @@ las reglas, en `CLAUDE.md`.
       elementos animan y cuáles no en TODA la página: hoy `web/animaciones.js` (`ACTIVAS`) cubre
       solo lo de la 9.8 y la 9.9. Siguiente paso: inventario con `find-animation-opportunities` y,
       con lo que elija Bruno, sumar el resto a esa tabla. Se puede enlazar con el "Panel de control".
-- [ ] **9.4 Optimizar la página** (Bruno, 2026-11-16). **Hecho (16 nov):** eje de los gráficos sin
-      textos encimados (opción C), `partes()` con memoria, `probar_pagina.py` revisa los ejes.
-      **Preparado el 20 nov en la rama `optimizar-9-4`** (Bruno, con abogado del diablo):
-      `pruebas/medir_carga.py` (celular lento: 384 px, CPU 4×, 1,6 Mbps, 150 ms). Hoy carga en
-      4,7 s y con 1.000 mediciones simuladas en 4,9 s (datos.js casi no influye). Lo lento: los 8
-      `<script>` bajan uno tras otro (también en GitHub Pages) y ~1,7 s de CPU al arrancar
-      (`gota`/`actualizar` y `estado` de los Shorts fuerzan el diseño). Revisado por el abogado del diablo.
-      **Hecho en la rama (20 nov, Bruno pidió A, B y C), falta unir a
-      `main`:** (A) `preload` de 7 scripts en el `<head>` (sin datos.js: atrasaba el primer
-      dibujo 0,3 s); página armada 4,34 → ~3,1 s. (B) quitar las lecturas de `gota`/Shorts **no
-      sirvió** (la traza mostró que el costo solo pasó a otras funciones): revertido; sí `aria-pressed`
-      solo si cambia. (C) + cielo (Bruno, 20 nov): `web/inicio.js` en el `<head>` pone el estilo
-      guardado y día/atardecer/noche antes del primer dibujo (la fórmula del sol se mudó ahí;
-      app.js la usa; respaldo si no llega). Abogado del diablo (2.ª vuelta): fórmula idéntica
-      (105.120 horas comparadas). Medido junto a `main`: página armada ~5,3 → ~3,7 s; primer
-      dibujo +0,1 a 0,15 s. **Unida a `main` el 20 nov** (Bruno la probó en su PC).
-      **Recarga automática: arreglada el 21 nov** (volvía 1.700 a 4.600 px más arriba: un
-      `scrollTo` suave antes de que la página tuviera su alto). Ahora vuelve a la sección y se
-      corrige 5 s; con la pestaña oculta espera a que vuelva. Prueba: `pruebas/probar_recarga.py`.
-      Abogado del diablo (21 nov): arreglado que "manual" quedaba pegado si la persona recargaba
-      durante la corrección. **Queda, menor:** arrastrar la barra de desplazamiento o "buscar en la
-      página" no detiene la corrección (solo dura 5 s). **Fallo aparte, ya existía:** a 384
-      px en Miami 1986, abrir `index.html#seccion-noticias` no deja la sección arriba
-      (`probar_saltos.py`, 2 de 2 veces también con el código de antes; en Miami 2026, bien).
-      Descartado: `defer` (rompe `filtro-videos.js:116`), partir mediciones, mover fotos y
-      `content-visibility` (~7 % de CPU; rompía los enlaces #sección en Edge y copiar todo en Firefox).
-- [x] **9.3 Menos alarmas por Google** (Bruno, 2026-11-16). **Hecho el 17 nov** (Bruno pidió
-      "menos fallos" para el lanzamiento): Noticias reintenta una vez a los 20 s si Google da 429/503,
-      y un 429/503 suelto de Noticias o Trends deja aviso amarillo con la ejecución en verde (rojo si
-      se repite en la medición siguiente o si falla otra cosa). Del 17 nov: 10 de 30 ejecuciones en
-      rojo, todas por Google o Reddit, sin perder datos. Probado en GitHub sin guardar. **Hecho el
-      21 nov:** resumen de huecos en `recolector/revisar.py` (por código, día, hora y racha).
+- [ ] **9.4 Optimizar la página** (Bruno, 2026-11-16). **Hecho:** ejes sin textos encimados y
+      `partes()` con memoria (16 nov); `preload` de los scripts y `web/inicio.js` (estilo y cielo
+      antes del primer dibujo), página armada ~5,3 → ~3,7 s en celular lento (`pruebas/medir_carga.py`,
+      unido a `main` el 20 nov); **recarga automática arreglada** el 21 nov (vuelve a la sección y
+      se corrige 5 s; con la pestaña oculta espera a que vuelva; prueba `pruebas/probar_recarga.py`).
+      **Queda, menor:** arrastrar la barra de desplazamiento o "buscar en la página" no detiene esa
+      corrección (dura 5 s). **Fallo aparte, ya existía:** a 384 px en Miami 1986, abrir
+      `index.html#seccion-noticias` no deja la sección arriba (`probar_saltos.py`, 2 de 2 veces
+      también con el código de antes; en Miami 2026, bien). Descartado: `defer` (rompe
+      `filtro-videos.js:116`), partir mediciones, mover fotos, quitar lecturas de `gota`/Shorts y
+      `content-visibility` (rompía los enlaces #sección en Edge y copiar todo en Firefox).
 - [ ] **6.6 Instagram** (Kick ya está hecho; ver "Lo ya hecho"). Parece difícil: la API de Meta
       solo funciona con una cuenta de empresa o creador propia unida a una página de Facebook, y
       la búsqueda por hashtag da pocas publicaciones, no el total, con límite semanal. Si no
@@ -180,9 +150,9 @@ No se empieza hasta que Bruno avise con una confirmación oficial de la versión
 ## Lo ya hecho (detalle en `historial/` y `git log`)
 
 - **Fases 0, 1 y 3:** hechas. **Fase 2:** 2.1 a 2.4 y 2.6 a 2.15 (falta 2.5). **Fase 4:** 4.1 y
-  4.2 (falta 4.3). **Fase 6:** 6.2 a 6.5, 6.6 Kick, 6.7 Doomsday, 6.8 sección de la 6.1, 6.9 quitar Reddit.
+  4.2 (falta 4.3). **Fase 6:** 6.2 a 6.5, 6.6 Kick, 6.7 Doomsday, 6.8 sección de la 6.1 (guardada el 21 nov), 6.9 quitar Reddit.
 - **Fase 7:** 7.1 a 7.3 y 7.5 a 7.12 (7.1 unida a `main` el 21 nov; animaciones sin hacer, solo
-  si Bruno las pide: videos que se deslizan, entrada de lo nuevo, destello de récord). **Fase 9:** 9.1, 9.5 a 9.10 y 9.12. **Fase 10:** hecha.
+  si Bruno las pide: videos que se deslizan, entrada de lo nuevo, destello de récord). **Fase 9:** 9.1, 9.3 (menos alarmas por Google y resumen de huecos en `revisar.py`, 21 nov), 9.5 a 9.10 y 9.12. **Fase 10:** hecha.
 - **20 nov:** tres rayas de lanzamiento (Nueva Zelanda, Chile y Miami) en los gráficos de Twitch
   y Trends; README al día.
 - Descartado por Bruno: app en el celular; Cloudflare Radar; redes de descarga de PlayStation y
@@ -190,7 +160,7 @@ No se empieza hasta que Bruno avise con una confirmación oficial de la versión
 
 ## Decisiones vigentes
 
-El porqué y las opciones descartadas, en `historial/PLAN_2026-11-18-3.md` y `historial/PLAN_2026-11-16.md`.
+El porqué y las opciones descartadas, en `historial/PLAN_2026-11-21.md`, `historial/PLAN_2026-11-18-3.md` y `historial/PLAN_2026-11-16.md`.
 
 - **Fuentes:** Twitch, YouTube y Google Trends (imprescindibles); además Kick, Google Noticias,
   PlayStation y Xbox, ranking de Twitch y Kick, tendencias de YouTube y los 7 videos oficiales de
@@ -215,14 +185,7 @@ El porqué y las opciones descartadas, en `historial/PLAN_2026-11-18-3.md` y `hi
   récords 6.2 A; titulares B; GTA frente a lo más visto 9.7 A; cápsula 7.4 C; copias 7.10 B;
   Próximamente 7.11 C; menú flotante 2.12 B; "¿Qué tan grande es GTA 6?" 6.8 A (apta para celular; las búsquedas de Google van tal cual, sin filtrar: Bruno, 21 nov).
 - **Rebobinar (7.1, Bruno, 2026-11-20):** del 18 nov 08:00 al 20 nov 12:00 UTC, una parada por
-  medición (cada media hora); viajan portada, fichas, récords, línea de tiempo, gráficos, tabla,
-  videos, comparación y titulares (por hora de publicación; las demás, tenues); controles: arrastrar, saltar a las 3 horas cero, reproducir
-  1x/2x/4x, ±30 min, copiar enlace, volver a hoy; hora del visitante + "desde la salida" en NZ,
-  Chile o Miami; fichas y récords: valor del momento y récord hasta ahí; marco fijo; fuente caída
-  = último dato bueno con aviso; fiesta al pasar una hora cero. Datos en `web/rebobinar.js`.
-  Barra "Pulso"; números que cuentan y gráficos "La línea avanza" (250 ms; al instante al
-  arrastrar y con "reducir movimiento").
-  Diseño "Pulso" (descartados "Reproductor" y "Videograbadora").
+  medición; diseño "Pulso", números que cuentan y gráficos "La línea avanza". Detalle en `historial/PLAN_2026-11-21.md`.
 - **Muchas visitas:** `datos.js` lleva lo necesario al abrir; titulares por día en `web/dias/`.
   Plan B solo si GitHub avisa: Cloudflare Pages.
 - **Sincronización del PC** (`sincronizar_interruptor.bat`): **apagada por Bruno el 2026-11-16**.
