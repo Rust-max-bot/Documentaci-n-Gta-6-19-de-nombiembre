@@ -95,11 +95,13 @@ las reglas, en `CLAUDE.md`.
 
 - [ ] **7.1 Rebobinar el lanzamiento.** Hecho y probado en la rama `rebobinar-7-1` (20 nov;
       `/code-review`, abogado del diablo, `pruebas/probar_rebobinar.py`). Diseño "Pulso" (Bruno).
-      **Falta:** (a) **animaciones** (pedido de Bruno, 20 nov, siguiente chat): que al cambiar de
-      momento los números (fichas, récords, tabla) y lo demás no cambien de golpe; con las skills
-      `find-animation-opportunities`/`animate`, opciones a Bruno antes, que aguante reproducir a 4x
-      (500 ms por parada) y sin movimiento con `prefers-reduced-motion`; (b) que Bruno la pruebe y
-      la una a `main`.
+      (a) **Animaciones:** de 4 propuestas (`find-animation-opportunities`), Bruno eligió solo la
+      1, **hecha**: números de fichas y "En ese momento" de récords cuentan 250 ms (al instante al
+      arrastrar y con "reducir movimiento"). Las otras, solo si Bruno las pide: videos que se
+      deslizan al cambiar de puesto (280 ms), entrada suave de lo nuevo arriba (línea de tiempo,
+      tabla, "Lo último"; 200 ms) y destello de "¡Nuevo récord!" (450 ms). Descartados: animar la
+      barra Pulso, los gráficos, las barras de la tabla, los avisos de fallo y la cuenta de la
+      portada. **Falta:** (b) que Bruno la pruebe y la una a `main`.
 - [ ] **4.3 Análisis de datos (A3).** Datos interesantes: popularidad, visitas, cuánto dura el
       interés, antes y después. Necesita varios días de datos reales. **Sin IA** (Bruno, 2026-11-18): un
       programa normal, como `generar_web.py`, que corre solo con cada medición. En unos días.

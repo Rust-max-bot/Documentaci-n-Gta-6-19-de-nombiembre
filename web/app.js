@@ -507,11 +507,42 @@
       ];
     }
     $("fichas").innerHTML = f.map(function (x) {
-      var b = V.corte == null ? '<b data-hasta="' + (x[1] == null ? "" : x[1]) + '">' + (x[1] == null ? "—" : "0") + "</b>" : "<b>" + (x[1] == null ? "—" : num(x[1])) + "</b>";
+      var b = V.corte == null ? '<b data-hasta="' + (x[1] == null ? "" : x[1]) + '">' + (x[1] == null ? "—" : "0") + "</b>"
+        : x[1] == null ? "<b>—</b>" : '<b data-rb="f:' + x[0] + '" data-v="' + x[1] + '">' + num(x[1]) + "</b>";
       return '<div class="ficha"><small>' + x[0] + "</small>" + b + "<span>" + x[2] + "</span></div>";
     }).join("");
-    if (V.corte == null) contarFichas();
+    if (V.corte == null) contarFichas(); else CONTEO.contar($("fichas"));
   }
+  /* Números que cuentan al rebobinar (7.1 a, opción 1 elegida por Bruno, 2026-11-20): al cambiar
+     de momento, cada número con data-rb (su nombre) y data-v (su valor) cuenta en 250 ms desde lo
+     que mostraba hasta el valor nuevo, en vez de saltar; así cabe de sobra en una parada a 4x
+     (500 ms). Si llega otra parada a mitad de la cuenta, sigue desde lo que se ve. Sin cuenta: al
+     arrastrar la barra (CONTEO.quieto), con "reducir movimiento" y en la primera parada (no hay
+     número anterior). CONTEO.parar() olvida los números al abrir y al salir del rebobinado. */
+  var CONTEO = (function () {
+    var vistos = {};
+    function contar(caja) {
+      // Se pregunta cada vez (no QUIETO): Firefox tarda en avisar si el visitante lo cambia con la página abierta.
+      var quieto = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      caja.querySelectorAll("[data-rb]").forEach(function (b) {
+        var clave = b.dataset.rb, fin = +b.dataset.v, fmt = b.dataset.f === "c" ? compacto : num, antes = vistos[clave];
+        if (antes) cancelAnimationFrame(antes.cuadro);
+        var v = vistos[clave] = { visto: antes ? antes.visto : fin, cuadro: 0 }, desde = v.visto;
+        if (desde === fin || CONTEO.quieto || quieto) { v.visto = fin; return; }   // el HTML ya trae el valor final
+        b.textContent = fmt(desde);
+        var t0 = null;
+        v.cuadro = requestAnimationFrame(function paso(t) {
+          if (t0 == null) t0 = t;
+          var p = Math.min(1, (t - t0) / 250), e = 1 - Math.pow(1 - p, 3);   // frena al final, como las fichas al abrir
+          v.visto = p < 1 ? desde + (fin - desde) * e : fin;
+          b.textContent = fmt(v.visto);
+          if (p < 1) v.cuadro = requestAnimationFrame(paso);
+        });
+      });
+    }
+    function parar() { Object.keys(vistos).forEach(function (c) { cancelAnimationFrame(vistos[c].cuadro); }); vistos = {}; }
+    return { quieto: false, contar: contar, parar: parar };
+  })();
   pintarFichas(HOY);
   function contarFichas() {
     var quieto = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -1767,7 +1798,7 @@
       return '<li class="' + (nuevo ? "nuevo" : "") + '"><small>' + r.nombre + "</small>" + (nuevo ? '<span class="rc-nuevo">¡Nuevo récord!</span>' : "") +
         "<b>" + r.fmt(e.valor) + '</b><span class="rc-uni">' + r.uni + "</span>" +
         (quien(r, e) ? '<p class="rc-que">' + quien(r, e) + "</p>" : "") + '<p class="rc-cuando">' + cuando(r, e) + "</p>" +
-        (r.ahora ? '<p class="rb-ahora">En ese momento: <b>' + r.fmt(r.ahora.valor) + "</b>" + (r.ahora.que && !r.solo ? " · " + enlace(r.ahora.url, limpio(r.ahora.que)) : "") +
+        (r.ahora ? '<p class="rb-ahora">En ese momento: <b data-rb="r:' + r.nombre + '" data-v="' + r.ahora.valor + '" data-f="' + (r.fmt === compacto ? "c" : "n") + '">' + r.fmt(r.ahora.valor) + "</b>" + (r.ahora.que && !r.solo ? " · " + enlace(r.ahora.url, limpio(r.ahora.que)) : "") +
           (V.corte - r.ahora.ts > 20 * 60000 ? " (dato de las " + hora(r.ahora.ts) + ")" : "") + "</p>" : "") +
         (r.aviso ? '<p class="rc-aviso">Puede que no trate de GTA 6: el filtro quita los que solo usan el hashtag, pero no es perfecto.</p>' : "") +
         (prev.length ? '<details class="rc-prev"' + (abiertos[r.nombre] ? " open" : "") + "><summary>" + (r.prev || "Récords anteriores") + " (" + (r.h.length - 1) + ")</summary><ul>" + prev.map(function (p) {
@@ -1775,6 +1806,7 @@
         }).join("") + "</ul></details>" : "") + "</li>";
     }).join("");
     caja.innerHTML = html || '<li class="vacio">Sin datos todavía.</li>';
+    if (V.corte != null) CONTEO.contar(caja);   // "En ese momento" cuenta en vez de saltar (7.1 a)
 
     // Para la línea de tiempo: hitos redondos de espectadores en Twitch y cada vez que cambia el video más visto.
     var tr = V.D.trailers || [];
@@ -2563,12 +2595,13 @@
         if (!s.querySelector(".rb-nota-hoy")) { var p = document.createElement("p"); p.className = "rb-nota-hoy"; p.textContent = "Esta sección muestra los datos de hoy."; s.insertBefore(p, s.firstChild); }
       });
       barra.hidden = false; entrada.classList.add("abierto");
+      CONTEO.parar();   // la primera parada no cuenta: no hay número anterior
       medirBarra();
       ir(i, false);
       rangoIn.focus({ preventScroll: true });   // el botón se esconde: el foco va a la barra
     }
     function salir() {
-      reproducir(false); clearTimeout(relojDir);
+      reproducir(false); clearTimeout(relojDir); CONTEO.parar();
       rebobinando = false; k = -1;
       document.body.classList.remove("rebobinando");
       DE_HOY.map($).filter(Boolean).forEach(function (s) { s.classList.remove("rb-hoy"); var p = s.querySelector(".rb-nota-hoy"); if (p) p.remove(); });
@@ -2602,6 +2635,9 @@
     var pendiente = null;   // el momento de un enlace que no alcanzó a cargar: se usa al reintentar
     $("rb-abrir").addEventListener("click", function () { if (!rebobinando) { var p = pendiente; pendiente = null; abrir(p || 0); } });
     rangoIn.addEventListener("input", function () { reproducir(false); ir(+rangoIn.value); });
+    // Arrastrando la barra los números cambian al instante (contarían sin parar); con las flechas, sí cuentan.
+    rangoIn.addEventListener("pointerdown", function () { CONTEO.quieto = true; });
+    ["pointerup", "pointercancel"].forEach(function (ev) { window.addEventListener(ev, function () { CONTEO.quieto = false; }); });
     barra.addEventListener("click", function (e) {
       var b = e.target.closest("button"); if (!b || b.disabled) return;
       if (b.dataset.paso) { reproducir(false); ir(k + +b.dataset.paso); }

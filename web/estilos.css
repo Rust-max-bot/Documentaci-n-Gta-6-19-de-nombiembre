@@ -1389,7 +1389,7 @@ body.rebobinando .menu { bottom: calc(var(--rb-alto, 160px) + 22px); }
 .ficha .rb-record b { display: inline; font: inherit; font-weight: 800; color: var(--texto); }
 .rb-nw { white-space: nowrap; }
 .rb-ahora { margin: 6px 0 0; font-size: 14px; font-weight: 600; color: var(--tenue); }
-.rb-ahora b { color: var(--texto); }
+.rb-ahora b { color: var(--texto); font-variant-numeric: tabular-nums; }   /* cifras de ancho fijo: no tiembla al contar (7.1 a) */
 .grafico .rb-fin { fill: var(--color); stroke: var(--panel); stroke-width: 2; }
 /* Al rebobinar, el gráfico se redibuja en cada parada: la línea ya está, no vuelve a trazarse desde cero. */
 .rebobinando .grafico .trazo { animation: none; stroke-dashoffset: 0; }

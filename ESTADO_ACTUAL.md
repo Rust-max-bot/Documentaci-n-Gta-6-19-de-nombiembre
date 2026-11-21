@@ -16,11 +16,10 @@
 
 *(2026-11-20, noche, hora de Chile. Se sigue en otro chat.)*
 
-**Para seguir (próximo chat):** trabajar en la rama **`rebobinar-7-1`** (`git checkout
-rebobinar-7-1`; no está unida a `main`). Tarea siguiente, pedida por Bruno: **animaciones al
-rebobinar** (7.1 (a) en `PLAN.md`): que los números y lo demás no cambien de golpe entre un
-momento y otro. Es un cambio visual: presentarle opciones antes (skill `prototype`). Después,
-Bruno prueba la rama y decide unirla a `main`.
+**Para seguir:** trabajar en la rama **`rebobinar-7-1`** (`git checkout rebobinar-7-1`; no está
+unida a `main`). Animaciones al rebobinar (7.1 (a)): **hecha la 1, números que cuentan**, la única
+que pidió Bruno de las 4 propuestas (las otras 3, solo si él las pide; ver `PLAN.md`). Falta que
+Bruno pruebe la rama y decida unirla a `main`.
 
 **La página está lista para el lanzamiento y publicada** en
 <https://rust-max-bot.github.io/Documentaci-n-Gta-6-19-de-nombiembre/> (la publica
@@ -59,7 +58,8 @@ línea de tiempo también viajan; titulares por hora de publicación (Bruno). C�
 dentro: bloque "Rebobinar el lanzamiento" al final de `web/app.js` (las secciones que viajan se
 dibujan con una "vista": `HOY` o un momento; para sumar otra, llamarla en `pintarVista()`) y
 `rebobinado()` en `recolector/generar_web.py` (arma `web/rebobinar.js`, que no va a git).
-Falta: animaciones (siguiente chat) y que Bruno la pruebe y la una a `main`.
+Números que cuentan al cambiar de momento: `CONTEO`, junto a `pintarFichas` en `web/app.js`.
+Falta que Bruno la pruebe y la una a `main`.
 
 **Avisos vigentes:**
 - **El 21 nov:** comprobar que la 6.1 se guardó (se lanza sola del 21 al 24 nov).
@@ -82,6 +82,7 @@ lanzamiento (revisión completa y menos alarmas por Google). Antes: 9.12 y más 
 ## Últimos cambios
 
 - 2026-11-17: estado anterior archivado en historial/ESTADO_2026-11-17.md
+- 2026-11-20: 7.1 (a), opción 1 elegida por Bruno (de 4 propuestas con `find-animation-opportunities`): al rebobinar, los números de las fichas y el "En ese momento" de los récords cuentan en 250 ms desde el valor anterior en vez de saltar. Al instante al arrastrar la barra, con "reducir movimiento" y en la primera parada. `probar_rebobinar.py` lo comprueba (Edge y Firefox), `probar_pagina.py` y `probar_selector.py`: todo bien.
 - 2026-11-20: 7.1, pedido de Bruno: al rebobinar también viajan la portada (cuenta, lugares con ✓, lema, aviso "¡GTA 6 ya salió en…!" y su fiesta con fuegos y reflectores al pasar por una hora cero) y la línea de tiempo (crece al avanzar y se achica al retroceder, conservando su filtro). Titulares: siguen por hora de publicación (decisión de Bruno). Pruebas: todo bien.
 - 2026-11-20: 7.1, diseño "Pulso" en la barra del rebobinado (Bruno lo eligió entre 3 prototipos hechos con la skill `prototype`; descartados "Reproductor" y "Videograbadora"): la pista es la curva de Twitch con las horas cero; "contar desde", saltar, velocidad y copiar enlace en "⋯". ~170 px en el celular (antes ~310). ~78 ms por parada con CPU 4x. Prototipo borrado. Pruebas: todo bien.
 - 2026-11-20: 7.1 Rebobinar el lanzamiento en la rama `rebobinar-7-1` (entrevista con Bruno): tramo 18 nov 08:00 → 20 nov 12:00 UTC, 104 paradas; viajan fichas, récords, gráficos de Twitch/Kick y Trends, tabla, videos, comparación y titulares; las demás quedan tenues. `web/rebobinar.js` (~690 KB, solo al abrir; no va a git). Arreglos de `/code-review` (récords de YouTube sin visitas del futuro, filtro del visitante, un fallo del rebobinado no frena la publicación) y del abogado del diablo (Trends con la escala de ese momento, fuegos que seguían, récord "creció en una hora" que bajaba, lo abierto se mantiene, foco). Más rápido: ~130 ms por parada en celular lento simulado (antes ~260). Pruebas: todo bien.
@@ -92,7 +93,6 @@ lanzamiento (revisión completa y menos alarmas por Google). Antes: 9.12 y más 
 - 2026-11-18: 10.4 (rama `panel-videos-10-4`): selector de videos del visitante en la página ("Botón con panel", Bruno): configuración y motivos, recordados en el navegador; `web/videos-extra.js` solo se carga si hace falta (`datos.js` no crece). Pruebas: `probar_selector.py`, `probar_pagina.py` (Edge y Firefox), `probar_marcas.py`, `probar_panel.py`: todo bien.
 - 2026-11-18: 10.3 (rama `panel-videos-10-3`): el panel muestra los descartados para rescatarlos (la página los deja pasar) y guarda configuraciones propias (nombre, modo, palabras; "Restablecer" = las del filtro automático, decisión de Bruno). Pruebas: `probar_marcas.py`, `probar_panel.py` y `probar_pagina.py`, todo bien. Revisada con `/code-review` y un agente revisor (Sonnet); arreglos hechos.
 - 2026-11-18: 10.2 (rama `panel-videos-10-2`): panel de videos local (`panel_videos.bat`, forma "Tabla" elegida por Bruno): marcar con motivos, "Está bien" (clave `revisados`), deshacer, borrador en el PC y "Publicar" (solo el archivo de marcas, solo desde `main`). `probar_panel.py` y `probar_marcas.py`: todo bien. Revisada con `/security-review`, `/code-review` y un agente revisor (Sonnet); sus arreglos, hechos.
-- 2026-11-18: 10.1 (rama `panel-videos-10-1`): marcas de videos en `recolector/marcas_videos.json`, validadas por `recolector/marcas.py`; `generar_web.py` saca los marcados de Global, Español, récords y Tendencias; `ocultar` quitada. Prueba nueva `pruebas/probar_marcas.py` (todo bien) y `probar_pagina.py` a 1280 y 384 px en los dos estilos (todo bien). Revisada con `/code-review` y un agente revisor (Sonnet); sus arreglos, hechos.
 - 2026-11-18: Kick en "GTA frente a lo más visto" (pedido de Bruno, sin opciones de diseño): puesto de GTA VI en el recuadro y barras de categorías bajo las de Twitch. Fuente nueva `kick_ranking`: Kick no tiene ranking, así que lee todos sus directos (~12.500, 13 páginas) y suma el público por categoría. Probada en GitHub sin guardar en una rama de prueba (ya borrada); el recolector no se detuvo. Se ve desde la primera medición con el cambio. Si falla, `git revert` de su commit.
 - 2026-11-18: directos de YouTube descartados por ahora (Bruno: datos poco limpios; motivos en `PLAN.md`). La página lo explica en la nota de "Espectadores en Twitch y Kick". Probado a 1280 y 384 px en los dos estilos: todo bien.
 - 2026-11-18: la previa de Trends de las 11:15 UTC no corrió (GitHub no lanzó el horario: no hay ninguna ejecución "schedule"; GitHub no garantiza sus horarios). Un lanzamiento a mano a las 12:53 sin la casilla "previa" terminó en verde sin hacer nada ("fuera del 20-25 nov"). Lanzada a mano con "previa" a las 12:57 UTC: guardada en `datos/trends_previa/2026-11-18T1257Z.json`, con las 5 preguntas. Reparado: lanzado a mano fuera del 20-25 nov sin "previa" ahora sale en rojo con el aviso de marcarla; el respaldo de la 6.1 pasa a tres horas (18:41, 20:41 y 22:41 UTC); quitado el horario de la previa del 18.
@@ -114,7 +114,7 @@ La lista completa y su orden están en `PLAN.md`. Resumen (2026-11-17):
 3. **Fase 6:** 6.1 más Google Trends, **una sola vez entre el 20 y el 25 nov**, fuera del
    recolector de cada hora (programa listo y probado, con las palabras de Bruno; se lanza sola
    del 21 al 24 nov; falta mostrarlo: 6.8). 6.6 Instagram (parece difícil; ver `PLAN.md`).
-4. **Fase 7:** 7.1 rebobinar (hecha en la rama `rebobinar-7-1`: diseño Pulso elegido; falta animaciones al rebobinar (siguiente chat) y que Bruno la pruebe y la una a `main`); 7.13 sección de memes (requiere
+4. **Fase 7:** 7.1 rebobinar (hecha en la rama `rebobinar-7-1`: diseño Pulso y números que cuentan; falta que Bruno la pruebe y la una a `main`); 7.13 sección de memes (requiere
    investigación). Cuando Take-Two publique las ventas, escribirlas en `gta6` de
    `web/lanzamientos.js`. **Fase 8 (GTA 6 en PC):** dormida hasta que Bruno avise con
    confirmación oficial.

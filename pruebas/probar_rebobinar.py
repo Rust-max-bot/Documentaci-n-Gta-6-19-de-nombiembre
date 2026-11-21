@@ -8,7 +8,8 @@ hasta tocar el botón; que la barra abre al inicio del tramo; que al saltar a la
 Nueva Zelanda cambian las fichas, los récords, el gráfico, la tabla, los videos, la comparación y
 los titulares (con los números reales de esa medición), que vuelve la fiesta y que la cuenta
 "desde la salida" cambia al elegir otro lugar; los avisos de una medición que falló; media hora
-antes/después; reproducir a 4x; el enlace a un momento (abre la página ya rebobinada); "Volver a
+antes/después; que los números cuentan al cambiar de momento (y al instante con "reducir
+movimiento"); reproducir a 4x; el enlace a un momento (abre la página ya rebobinada); "Volver a
 hoy"; sin errores en la consola ni desborde horizontal. Capturas en pruebas/capturas/rebobinar_*.png.
 Termina con código 1 si algo falla.
 """
@@ -149,6 +150,24 @@ with sync_playwright() as p:
             comprobar(pg.evaluate("document.getElementById('rb-rango').value") == str(NZ + 1), "+30 min avanza una medición")
             pg.click('#rb-barra [data-paso="-1"]')
             comprobar(pg.evaluate("document.getElementById('rb-rango').value") == str(NZ), "−30 min retrocede una medición")
+
+            # 7.1 a (opción 1 de Bruno): al cambiar de momento, los números cuentan en 250 ms en vez
+            # de saltar y terminan en el valor exacto; con "reducir movimiento", cambian al instante.
+            contar = """() => new Promise(listo => {
+              document.querySelector('#rb-barra [data-paso="1"]').click();
+              const b = () => document.querySelector('#fichas [data-rb]');
+              setTimeout(() => { const medio = b().textContent;
+                setTimeout(() => listo([medio, b().textContent, b().dataset.v]), 400); }, 80);
+            })"""
+            c = pg.evaluate(contar)
+            comprobar(c[0] != c[1] and c[1] == num(int(float(c[2]))), f"los números cuentan al cambiar de momento y terminan exactos ({c})")
+            pg.click('#rb-barra [data-paso="-1"]')
+            pg.emulate_media(reduced_motion="reduce")
+            c = pg.evaluate(contar)
+            comprobar(c[0] == c[1] == num(int(float(c[2]))), f"con 'reducir movimiento' los números cambian al instante ({c})")
+            pg.emulate_media(reduced_motion="no-preference")
+            pg.click('#rb-barra [data-paso="-1"]')
+            pg.wait_for_timeout(400)
 
             if FALLO_TRENDS is not None:
                 pg.evaluate(f"window.__rebobinar.ir({FALLO_TRENDS})")
