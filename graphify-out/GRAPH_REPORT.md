@@ -1,17 +1,17 @@
 # Graph Report - Documentación Gta 6  (2026-11-21)
 
 ## Corpus Check
-- 76 files · ~176,965 words
+- 76 files · ~177,126 words
 - Verdict: corpus is large enough that graph structure adds value.
 - Unclassified: 18 file(s) not represented in the graph (top: .jsonl 10, (none) 3, .bat 3)
 
 ## Summary
-- 1136 nodes · 2083 edges · 80 communities (63 shown, 17 thin omitted)
-- Extraction: 93% EXTRACTED · 7% INFERRED · 0% AMBIGUOUS · INFERRED: 153 edges (avg confidence: 0.88)
+- 1136 nodes · 2084 edges · 81 communities (64 shown, 17 thin omitted)
+- Extraction: 93% EXTRACTED · 7% INFERRED · 0% AMBIGUOUS · INFERRED: 154 edges (avg confidence: 0.88)
 - Token cost: 183,861 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `0177837a`
+- Built from commit: `f1e8b334`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -57,10 +57,11 @@
 - medir_carga.py
 - Hoteles
 - dibujar
+- contenido
 - Diseño Miami con dos estilos (Miami 2026 y Miami años 80)
 - Estructura de carpetas (web/, recolector/, datos/, .github/workflows/, despertador/)
 - Guardar claves en GitHub Secrets (TWITCH_CLIENT_ID, TWITCH_CLIENT_SECRET, YOUTUBE_API_KEY)
-- pintarRecords
+- num
 - Plan del proyecto: recuerdo del lanzamiento de GTA 6
 - Panel de control de videos (Fase 10)
 - servidor.py
@@ -126,7 +127,7 @@
 - **Garantías de no inventar datos al guardar mediciones** — recolector_leeme_hueco, recolector_leeme_comprobaciones, recolector_leeme_formato_linea_jsonl, recolector_leeme_interruptor [INFERRED 0.85]
 - **Implementación de los dos estilos de Miami** — plan_diseno_miami_dos_estilos, web_index_escena_80, web_index_escena_26, web_index_boton_cambio_estilo, web_index_simbolo_edificios, web_index_simbolo_palmera [INFERRED 0.95]
 
-## Communities (80 total, 17 thin omitted)
+## Communities (81 total, 17 thin omitted)
 
 ### Community 0 - "Despertador y plan de trabajo"
 Cohesion: 0.09
@@ -161,8 +162,8 @@ Cohesion: 0.07
 Nodes (32): KICK_CLIENT_ID, KICK_CLIENT_SECRET, TWITCH_CLIENT_ID, TWITCH_CLIENT_SECRET, YOUTUBE_API_KEY, solo_trends_extra, jobs, probar (+24 more)
 
 ### Community 8 - "app.js"
-Cohesion: 0.08
-Nodes (40): abrir(), abrirMenu(), activar(), ahora(), cargar(), cargarScript(), clase(), desdeSalida() (+32 more)
+Cohesion: 0.09
+Nodes (28): abrir(), activar(), cargar(), cargarScript(), desdeSalida(), diaUTC(), duracion(), enlaceMomento() (+20 more)
 
 ### Community 9 - "trends_extra.py"
 Cohesion: 0.12
@@ -225,12 +226,12 @@ Cohesion: 0.12
 Nodes (15): Antes o justo después del lanzamiento, Cómo se usa este archivo, Datos y recolección, Decisiones vigentes, Después del lanzamiento, Estructura de carpetas, Fase 8 — Segundo lanzamiento: GTA 6 en PC (dormida), Fechas que mandan (+7 more)
 
 ### Community 37 - "pintar"
-Cohesion: 0.15
-Nodes (24): aplicar(), claveDia(), deSantiago(), dia(), estado(), estadoRev(), filaRockstar(), mover() (+16 more)
+Cohesion: 0.14
+Nodes (24): aplicar(), clase(), claveDia(), deSantiago(), dia(), estado(), estadoRev(), filaRockstar() (+16 more)
 
 ### Community 38 - "limpio"
 Cohesion: 0.15
-Nodes (25): armar(), barrasKick(), cuenta(), juego(), cifra(), cinta(), compacto(), contenido() (+17 more)
+Nodes (24): armar(), barrasKick(), cuenta(), juego(), cifra(), cinta(), compacto(), enlace() (+16 more)
 
 ### Community 39 - "Plan del proyecto (PLAN.md)"
 Cohesion: 0.16
@@ -252,6 +253,10 @@ Nodes (17): antena(), bezier(), bloque(), caseta(), Dibujo, Hoteles, junta(), ma
 Cohesion: 0.24
 Nodes (11): aPantalla(), conLetras(), cuadro(), cuadrosImagen(), dibujar(), el(), historica(), recortar() (+3 more)
 
+### Community 45 - "contenido"
+Cohesion: 0.33
+Nodes (7): contenido(), filas(), flechaHTML(), ico(), lineaNueva(), pasa(), pintar()
+
 ### Community 46 - "Diseño Miami con dos estilos (Miami 2026 y Miami años 80)"
 Cohesion: 0.24
 Nodes (8): Diseño Miami con dos estilos (Miami 2026 y Miami años 80), Tipografías Google Fonts: Monoton, Rajdhani, Limelight y Outfit, Botón de cambio de estilo (data-poner), Escena Miami actual, Escena Miami años 80, web/index.html (página del recuerdo), Símbolo SVG edificios art déco, Símbolo SVG palmera
@@ -264,9 +269,9 @@ Nodes (5): recolector/interruptor.json (apagar, encender o alargar; hasta 19 dic
 Cohesion: 0.43
 Nodes (5): Secretos de GitHub TWITCH_CLIENT_ID, TWITCH_CLIENT_SECRET, YOUTUBE_API_KEY guardados, Clave de Twitch (Client ID y Client Secret, dev.twitch.tv), Clave de API de YouTube Data API v3 (Google Cloud), Guardar claves en GitHub Secrets (TWITCH_CLIENT_ID, TWITCH_CLIENT_SECRET, YOUTUBE_API_KEY), Guía para crear las claves de Twitch y YouTube
 
-### Community 50 - "pintarRecords"
-Cohesion: 0.16
-Nodes (13): contar(), contarFichas(), paso(), hitosLinea(), mirarSecciones(), num(), pintarRecords(), lideresDe() (+5 more)
+### Community 50 - "num"
+Cohesion: 0.28
+Nodes (9): contar(), contarFichas(), paso(), hitosLinea(), mirarSecciones(), num(), pintarFichas(), textoBoton() (+1 more)
 
 ### Community 51 - "Plan del proyecto: recuerdo del lanzamiento de GTA 6"
 Cohesion: 0.12
@@ -345,8 +350,8 @@ Cohesion: 0.25
 Nodes (5): elegir_videos(), fallo_fuente(), hora_de_medicion(), pasa_filtro(), rebobinado()
 
 ### Community 73 - "cuenta"
-Cohesion: 0.26
-Nodes (12): cuenta(), fuegos(), estallar(), leerEstilo(), medir(), horaCero(), pararFiesta(), pintarLugares() (+4 more)
+Cohesion: 0.13
+Nodes (22): abrirMenu(), ahora(), cuenta(), fiesta(), fuegos(), estallar(), leerEstilo(), medir() (+14 more)
 
 ### Community 74 - "probar_saltos.py"
 Cohesion: 0.43
@@ -389,13 +394,13 @@ Nodes (6): Antes o justo después del lanzamiento, Después del lanzamiento, Fas
 _Questions this graph is uniquely positioned to answer:_
 
 - **Why does `Diseño de la página` connect `json` to `Plan del proyecto: recuerdo del lanzamiento de GTA 6`, `limpio`?**
-  _High betweenness centrality (0.197) - this node is a cross-community bridge._
+  _High betweenness centrality (0.191) - this node is a cross-community bridge._
 - **What connects `Estilos visuales Miami 1986 y Miami 2026`, `Enlaces y miniaturas guardados (tareas 2.1 y 2.2)`, `Series continuas de YouTube (25 más vistos + re-medición)` to the rest of the system?**
   _31 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Despertador y plan de trabajo` be split into smaller, more focused modules?**
   _Cohesion score 0.08817204301075268 - nodes in this community are weakly interconnected._
-- **Why does `limpio()` connect `limpio` to `app.js`, `pintarRecords`, `json`, `pintar`?**
-  _High betweenness centrality (0.191) - this node is a cross-community bridge._
+- **Why does `limpio()` connect `limpio` to `app.js`, `pintar`, `json`, `contenido`?**
+  _High betweenness centrality (0.180) - this node is a cross-community bridge._
 - **Should `Worker de Cloudflare despertador-recolector (horario 7,37 * * * *)` be split into smaller, more focused modules?**
   _Cohesion score 0.1286549707602339 - nodes in this community are weakly interconnected._
 - **Should `steps` be split into smaller, more focused modules?**

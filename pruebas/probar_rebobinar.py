@@ -172,7 +172,7 @@ with sync_playwright() as p:
             pg.wait_for_timeout(400)
             # También cuentan los números de las demás secciones que viajan (pedido de Bruno): las
             # que están a la vista. Al final, cada uno igual al de la página dibujada de nuevo.
-            for sel in ("#records-vitrina", "#seccion-videos", "#comparacion-cols", "#rb-barra"):
+            for sel in ("#records-vitrina", "#t-twitch", "#seccion-videos", "#comparacion-cols", "#rb-barra"):
                 pg.evaluate("s => document.querySelector(s).scrollIntoView({ block: 'center', behavior: 'instant' })", sel)
                 pg.wait_for_timeout(150)   # IntersectionObserver avisa qué secciones se ven
                 c = pg.evaluate("""s => new Promise(listo => {

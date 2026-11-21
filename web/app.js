@@ -522,12 +522,14 @@
      (CONTEO.quieto), con "reducir movimiento", en la primera parada (no hay número anterior), los
      que aparecen por primera vez y los que están fuera de la pantalla (no se ven; así no se gasta
      en ellos). CONTEO.parar() olvida los números al abrir y al salir del rebobinado. */
-  function cifra(clave, v, fmt) {
+  // desde (opcional): de dónde cuenta un número que aparece por primera vez (si no, aparece quieto).
+  function cifra(clave, v, fmt, desde) {
     var f = fmt || num;
-    return '<span data-rb="' + limpio(clave) + '" data-v="' + v + '"' + (f === compacto ? ' data-f="c"' : "") + ">" + f(v) + "</span>";
+    return '<span data-rb="' + limpio(clave) + '" data-v="' + v + '"' + (f === compacto ? ' data-f="c"' : "") +
+      (typeof desde === "number" ? ' data-desde="' + desde + '"' : "") + ">" + f(v) + "</span>";
   }
   var CONTEO = (function () {
-    var vistos = {}, aLaVista = null;
+    var vistos = {}, ultimas = {}, aLaVista = null, yaConto = false;   // ultimas: los números de la parada anterior
     /* Qué secciones se ven: lo avisa IntersectionObserver por su cuenta. Medir cada número en cada
        parada (getBoundingClientRect) obligaba a calcular la página dos veces y la hacía el doble de
        lenta en un celular (medido con la CPU 4 veces más lenta). */
@@ -543,13 +545,18 @@
       mirarSecciones();
       // Se pregunta cada vez (no QUIETO): Firefox tarda en avisar si el visitante lo cambia con la página abierta.
       var quieto = window.matchMedia("(prefers-reduced-motion: reduce)").matches, usadas = {};
+      var primera = !yaConto, ahora = {}; yaConto = true;   // en la primera parada nada cuenta, tampoco con data-desde
       caja.querySelectorAll("[data-rb]").forEach(function (b) {
         var clave = b.dataset.rb, n = usadas[clave] || 0, sec = b.closest("main > section");
         usadas[clave] = n + 1;
         if (n) clave += "~" + n;   // el mismo video en Global y en español: el mismo número, dos lugares
         var fin = +b.dataset.v, fmt = b.dataset.f === "c" ? compacto : num, antes = vistos[clave];
         if (antes) cancelAnimationFrame(antes.cuadro);
-        var v = vistos[clave] = { visto: antes ? antes.visto : fin, cuadro: 0 }, desde = v.visto;
+        // Un número que no estaba en la parada anterior cuenta desde data-desde (si lo trae); si no,
+        // desde lo último que mostró (o aparece quieto, si nunca se vio).
+        var inicio = antes && ultimas[clave] ? antes.visto : b.dataset.desde && !primera ? +b.dataset.desde : antes ? antes.visto : fin;
+        ahora[clave] = 1;
+        var v = vistos[clave] = { visto: inicio, cuadro: 0 }, desde = v.visto;
         var seVe = !sec || !aLaVista || aLaVista.has(sec);   // la barra del rebobinado (fuera de main) siempre se ve
         if (desde === fin || CONTEO.quieto || quieto || !seVe) { v.visto = fin; return; }   // el HTML ya trae el valor final
         // Se cambia el texto que ya está (no textContent): así no se avisa a los observadores de
@@ -564,8 +571,9 @@
           if (p < 1) v.cuadro = requestAnimationFrame(paso);
         });
       });
+      ultimas = ahora;
     }
-    function parar() { Object.keys(vistos).forEach(function (c) { cancelAnimationFrame(vistos[c].cuadro); }); vistos = {}; }
+    function parar() { Object.keys(vistos).forEach(function (c) { cancelAnimationFrame(vistos[c].cuadro); }); vistos = {}; ultimas = {}; yaConto = false; }
     return { quieto: false, contar: contar, parar: parar };
   })();
   pintarFichas(HOY);
@@ -1014,7 +1022,9 @@
       var e = pl.esp(m);
       if (e == null) return '<tr class="sin-dato">' + horaTd + plTd + '<td colspan="3">Sin dato' + (pl.error(m) ? " (" + limpio(pl.error(m)) + ")" : "") + "</td></tr>";
       var c = pl.canal(m);
-      return "<tr>" + horaTd + plTd + '<td class="n">' + cifra("tb:" + m.ts + pl.nombre, e) + '</td><td class="barra-celda ' + pl.clase + '"><i style="--w:' + (e / tope * 100).toFixed(1) + '%"></i></td><td>' +
+      // La fila más nueva (al rebobinar, la que acaba de llegar) cuenta desde la medición anterior (pedido de Bruno).
+      var previa = m === nuevas[0] && nuevas[1] ? pl.esp(nuevas[1]) : null;
+      return "<tr>" + horaTd + plTd + '<td class="n">' + cifra("tb:" + m.ts + pl.nombre, e, num, previa) +'</td><td class="barra-celda ' + pl.clase + '"><i style="--w:' + (e / tope * 100).toFixed(1) + '%"></i></td><td>' +
         (c ? '<span class="canal">' + c.foto + "<span>" + enlace(c.url, limpio(c.nombre)) + " (" + cifra("tbc:" + m.ts + pl.nombre, c.espectadores, compacto) + ")</span></span>" : "—") + "</td></tr>";
     }
     function pintar() {

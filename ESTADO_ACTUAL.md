@@ -18,8 +18,9 @@
 
 **Para seguir:** trabajar en la rama **`rebobinar-7-1`** (`git checkout rebobinar-7-1`; no está
 unida a `main`). Animaciones al rebobinar (7.1 (a)): **hecha la 1, números que cuentan** (en
-todas las secciones que viajan), la única que pidió Bruno de las 4 propuestas (las otras 3, solo si él las pide; ver `PLAN.md`). Falta que
-Bruno pruebe la rama y decida unirla a `main`.
+todas las secciones que viajan), la única que pidió Bruno de las 4 propuestas (las otras 3, solo si él las pide; ver `PLAN.md`).
+**Pendiente (21 nov, pedido de Bruno):** gráficos animados al rebobinar; se le preguntó qué
+forma quiere. Después, Bruno prueba la rama y decide unirla a `main`.
 
 **La página está lista para el lanzamiento y publicada** en
 <https://rust-max-bot.github.io/Documentaci-n-Gta-6-19-de-nombiembre/> (la publica
@@ -83,6 +84,7 @@ lanzamiento (revisión completa y menos alarmas por Google). Antes: 9.12 y más 
 ## Últimos cambios
 
 - 2026-11-17: estado anterior archivado en historial/ESTADO_2026-11-17.md
+- 2026-11-21: 7.1 (a), pedido de Bruno: en "Twitch y Kick, medición por medición", la fila que llega cuenta desde el número de la medición anterior (`cifra(…, desde)`). `probar_rebobinar.py` (Edge y Firefox), `probar_pagina.py` y `probar_selector.py`: todo bien.
 - 2026-11-21: 7.1 (a), pedido de Bruno: cuentan también los números de récords (el récord y los tráilers), línea de tiempo (máximos y filtros), videos (visitas y "+"), GTA frente a lo más visto (puestos, barras, tendencias), titulares (resumen, medios, días) y el valor de Twitch en la barra Pulso. Solo los de las secciones a la vista (IntersectionObserver); medir cada número hacía la parada el doble de lenta. Con la CPU 4x, una parada tarda como antes; los cuadros mientras cuenta, ~27 ms (antes ~13). `probar_rebobinar.py` (Edge y Firefox), `probar_pagina.py` (Edge y Firefox), `probar_selector.py` y `probar_marcas.py`: todo bien.
 - 2026-11-20: 7.1 (a), opción 1 elegida por Bruno (de 4 propuestas con `find-animation-opportunities`): al rebobinar, los números de las fichas y el "En ese momento" de los récords cuentan en 250 ms desde el valor anterior en vez de saltar. Al instante al arrastrar la barra, con "reducir movimiento" y en la primera parada. `probar_rebobinar.py` lo comprueba (Edge y Firefox), `probar_pagina.py` y `probar_selector.py`: todo bien.
 - 2026-11-20: 7.1, pedido de Bruno: al rebobinar también viajan la portada (cuenta, lugares con ✓, lema, aviso "¡GTA 6 ya salió en…!" y su fiesta con fuegos y reflectores al pasar por una hora cero) y la línea de tiempo (crece al avanzar y se achica al retroceder, conservando su filtro). Titulares: siguen por hora de publicación (decisión de Bruno). Pruebas: todo bien.
@@ -93,7 +95,6 @@ lanzamiento (revisión completa y menos alarmas por Google). Antes: 9.12 y más 
 - 2026-11-20: gráficos de Twitch/Kick y de Trends con tres rayas de lanzamiento (medianoche del 19 nov en Nueva Zelanda, Chile y Miami; antes solo Chile), pedido de Bruno: el gran pico llegó tras la hora cero de Nueva Zelanda. En pantallas angostas los nombres van en escalera. `probar_pagina.py`: todo bien.
 - 2026-11-18: Fase 10 unida a `main` (pedido de Bruno). Antes de subir, con `main` al día: `probar_marcas.py`, `probar_selector.py`, `probar_pagina.py` y `probar_panel.py`, todo bien.
 - 2026-11-18: 10.4 (rama `panel-videos-10-4`): selector de videos del visitante en la página ("Botón con panel", Bruno): configuración y motivos, recordados en el navegador; `web/videos-extra.js` solo se carga si hace falta (`datos.js` no crece). Pruebas: `probar_selector.py`, `probar_pagina.py` (Edge y Firefox), `probar_marcas.py`, `probar_panel.py`: todo bien.
-- 2026-11-18: 10.3 (rama `panel-videos-10-3`): el panel muestra los descartados para rescatarlos (la página los deja pasar) y guarda configuraciones propias (nombre, modo, palabras; "Restablecer" = las del filtro automático, decisión de Bruno). Pruebas: `probar_marcas.py`, `probar_panel.py` y `probar_pagina.py`, todo bien. Revisada con `/code-review` y un agente revisor (Sonnet); arreglos hechos.
 - 2026-11-18: Kick en "GTA frente a lo más visto" (pedido de Bruno, sin opciones de diseño): puesto de GTA VI en el recuadro y barras de categorías bajo las de Twitch. Fuente nueva `kick_ranking`: Kick no tiene ranking, así que lee todos sus directos (~12.500, 13 páginas) y suma el público por categoría. Probada en GitHub sin guardar en una rama de prueba (ya borrada); el recolector no se detuvo. Se ve desde la primera medición con el cambio. Si falla, `git revert` de su commit.
 - 2026-11-18: directos de YouTube descartados por ahora (Bruno: datos poco limpios; motivos en `PLAN.md`). La página lo explica en la nota de "Espectadores en Twitch y Kick". Probado a 1280 y 384 px en los dos estilos: todo bien.
 - 2026-11-18: la previa de Trends de las 11:15 UTC no corrió (GitHub no lanzó el horario: no hay ninguna ejecución "schedule"; GitHub no garantiza sus horarios). Un lanzamiento a mano a las 12:53 sin la casilla "previa" terminó en verde sin hacer nada ("fuera del 20-25 nov"). Lanzada a mano con "previa" a las 12:57 UTC: guardada en `datos/trends_previa/2026-11-18T1257Z.json`, con las 5 preguntas. Reparado: lanzado a mano fuera del 20-25 nov sin "previa" ahora sale en rojo con el aviso de marcarla; el respaldo de la 6.1 pasa a tres horas (18:41, 20:41 y 22:41 UTC); quitado el horario de la previa del 18.
