@@ -96,8 +96,8 @@ las reglas, en `CLAUDE.md`.
 - [ ] **7.1 Rebobinar el lanzamiento.** **Hecho y probado en la rama `rebobinar-7-1`** (20 nov,
       entrevista con Bruno; revisado con `/code-review` y un abogado del diablo; prueba
       `pruebas/probar_rebobinar.py`). Diseño **"Pulso"** elegido por Bruno (20 nov, entre 3 prototipos):
-      la pista es la curva de espectadores de Twitch del tramo. **Falta:** que Bruno decida si los
-      titulares se cortan por hora de publicación (hoy) o por cuándo los encontró el recolector, y unirla a `main`.
+      la pista es la curva de espectadores de Twitch del tramo. Portada y línea de tiempo también viajan
+      (20 nov, pedido de Bruno). **Falta:** que Bruno la pruebe y la una a `main`.
 - [ ] **4.3 Análisis de datos (A3).** Datos interesantes: popularidad, visitas, cuánto dura el
       interés, antes y después. Necesita varios días de datos reales. **Sin IA** (Bruno, 2026-11-18): un
       programa normal, como `generar_web.py`, que corre solo con cada medición. En unos días.
@@ -216,8 +216,8 @@ El porqué y las opciones descartadas, en `historial/PLAN_2026-11-18-3.md` y `hi
   récords 6.2 A; titulares B; GTA frente a lo más visto 9.7 A; cápsula 7.4 C; copias 7.10 B;
   Próximamente 7.11 C; menú flotante 2.12 B.
 - **Rebobinar (7.1, Bruno, 2026-11-20):** del 18 nov 08:00 al 20 nov 12:00 UTC, una parada por
-  medición (cada media hora); viajan fichas, récords, gráficos, tabla, videos, comparación y
-  titulares (las demás, tenues); controles: arrastrar, saltar a las 3 horas cero, reproducir
+  medición (cada media hora); viajan portada, fichas, récords, línea de tiempo, gráficos, tabla,
+  videos, comparación y titulares (por hora de publicación; las demás, tenues); controles: arrastrar, saltar a las 3 horas cero, reproducir
   1x/2x/4x, ±30 min, copiar enlace, volver a hoy; hora del visitante + "desde la salida" en NZ,
   Chile o Miami; fichas y récords: valor del momento y récord hasta ahí; marco fijo; fuente caída
   = último dato bueno con aviso; fiesta al pasar una hora cero. Datos en `web/rebobinar.js`.

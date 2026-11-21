@@ -300,7 +300,7 @@
   // Botones de lugar: el elegido queda marcado; los lugares donde ya salió llevan un ✓.
   function pintarLugares() {
     document.querySelectorAll("[data-lugar]").forEach(function (b) {
-      var L = LUGARES[b.dataset.lugar], ya = ahora() >= L.ts;
+      var L = LUGARES[b.dataset.lugar], ya = relojPortada() >= L.ts;
       var marcado = b.dataset.lugar === lugar ? "true" : "false";
       // Solo si cambia (9.4): corre cada segundo y reescribirlo hacía que la gota volviera a medir.
       if (b.getAttribute("aria-pressed") !== marcado) b.setAttribute("aria-pressed", marcado);
@@ -321,21 +321,43 @@
      último lugar donde ya salió, si fue hace menos de un día. */
   var ORDEN = ["nz", "cl", "mia"];
   var celebradoEn = null;   // último lugar ya celebrado en esta visita
+  /* Al rebobinar (7.1, pedido de Bruno), la portada también viaja: cuenta regresiva, lugares con ✓,
+     lema y aviso de ese momento, y al pasar por una hora cero, su fiesta (ver portadaEn). */
+  var horaRebobinada = null;
+  function relojPortada() { return horaRebobinada != null ? horaRebobinada : ahora(); }
   function ultimoLugar(t) { var u = null; ORDEN.forEach(function (k) { if (t >= LUGARES[k].ts) u = k; }); return u; }
   function cuenta() {
-    var t = ahora(), caja = $("cuenta"), falta = LUGARES[lugar].ts - t, u = ultimoLugar(t);
-    if (u && u !== celebradoEn) { celebradoEn = u; horaCero(u, t - LUGARES[u].ts < FIESTA); }
+    var t = relojPortada(), caja = $("cuenta"), falta = LUGARES[lugar].ts - t, u = ultimoLugar(t);
+    if (horaRebobinada == null && u && u !== celebradoEn) { celebradoEn = u; horaCero(u, t - LUGARES[u].ts < FIESTA); }
     if (falta <= 0) pintar(caja, Math.floor(-falta / 1000), "desde");
     else pintar(caja, Math.floor(falta / 1000), "falta");
     pintarLugares();
     pintarAviso(t);
   }
-  function horaCero(k, conFiesta) {
+  /* Portada en un momento del rebobinado (T) o de hoy (null). "fiestaDe": el lugar por cuya hora
+     cero se acaba de pasar hacia adelante, para repetir su fiesta. */
+  function portadaEn(T, fiestaDe) {
+    horaRebobinada = T;
+    var u = ultimoLugar(relojPortada());
+    if (T == null) pararFiesta();
+    if (u !== celebradoEn) {
+      celebradoEn = u;
+      if (u) horaCero(u, !!fiestaDe, true);
+      else { var lema = document.querySelector(".lema"); lema.textContent = "El día que salió GTA 6"; lema.classList.remove("ya-salio"); }
+    } else if (fiestaDe) horaCero(fiestaDe, true, true);
+    cuenta();
+  }
+  function pararFiesta() {
+    var portada = document.querySelector(".portada");
+    portada.querySelectorAll(".fuegos, .reflectores").forEach(function (n) { n.remove(); });
+    portada.classList.remove("fiesta"); clearTimeout(finFiesta);
+  }
+  function horaCero(k, conFiesta, rebobinado) {
     var lema = document.querySelector(".lema"), portada = document.querySelector(".portada");
     // Hasta que salga en Chile, el lema aclara que es en Nueva Zelanda.
     lema.textContent = k === "nz" ? "¡Ya salió GTA 6 en Nueva Zelanda!" : "¡Ya salió GTA 6!";
     lema.classList.remove("ya-salio"); void lema.offsetWidth; lema.classList.add("ya-salio");   // la entrada vuelve a empezar
-    if (!conFiesta || window.matchMedia("(prefers-reduced-motion: reduce)").matches || recargaSola) return;   // tras una recarga automática, sin repetir la fiesta
+    if (!conFiesta || window.matchMedia("(prefers-reduced-motion: reduce)").matches || (recargaSola && !rebobinado)) return;   // tras una recarga automática, sin repetir la fiesta
     // Si todavía dura la fiesta anterior (por ejemplo, se abrió la página un minuto antes de la
     // hora cero de Chile y se estaba celebrando la de Nueva Zelanda), empieza una nueva desde cero.
     portada.querySelectorAll(".fuegos, .reflectores").forEach(function (n) { n.remove(); });
@@ -511,18 +533,23 @@
   /* ---------- Línea de tiempo ----------
      Se dibuja al final (lineaDeTiempo), porque también usa los récords de "Logros y récords". */
   var eventosExtra = [];   // los llena la sección de récords: hitos de Twitch, video más visto, tráilers
-  function lineaDeTiempo() {
-    var ev = eventosExtra.slice();
+  /* Al rebobinar (7.1, pedido de Bruno): solo los eventos hasta ese momento, así la línea crece al
+     avanzar y se achica al retroceder; los máximos son los que había hasta entonces. */
+  function lineaDeTiempo(V) {
+    V = V || HOY;
+    var hasta = V.corte == null ? Infinity : V.corte, t = V.corte == null ? ahora() : V.corte;
+    var ev = eventosExtra.filter(function (e) { return e.ts <= hasta; });
     // Hora cero de cada lugar (tarea 7.6), solo cuando ya pasó.
     [["nz", "Medianoche en Nueva Zelanda: GTA 6 ya se puede jugar allí"], ["cl", "Hora cero en Chile: sale GTA 6"],
      ["mia", "Medianoche en Miami: GTA 6 ya se puede jugar allí"]].forEach(function (x) {
-      if (ahora() >= LUGARES[x[0]].ts) ev.push({ ts: LUGARES[x[0]].ts, texto: x[1], auto: true, tipo: "lanzamiento" });
+      if (t >= LUGARES[x[0]].ts) ev.push({ ts: LUGARES[x[0]].ts, texto: x[1], auto: true, tipo: "lanzamiento" });
     });
-    if (picoTwitch) ev.push({ ts: picoTwitch.ts, texto: "Máximo de espectadores en Twitch: " + num(picoTwitch.espectadores), auto: true, tipo: "envivo" });
-    if (picoTrends) ev.push({ ts: picoTrends.ts, texto: "Máximo de búsquedas en Google Trends (" + picoTrends.interes + " de 100)", auto: true, tipo: "tendencia" });
+    var pT = V.picoTwitch, pR = V.picoTrends;
+    if (pT) ev.push({ ts: pT.ts, texto: "Máximo de espectadores en Twitch: " + num(pT.espectadores), auto: true, tipo: "envivo" });
+    if (pR) ev.push({ ts: pR.ts, texto: "Máximo de búsquedas en Google Trends (" + pR.interes + " de 100)", auto: true, tipo: "tendencia" });
     SERVICIOS.forEach(function (s) {
       var antes = "ok";
-      M.forEach(function (m) {
+      V.M.forEach(function (m) {
         var e = m.servidores[s[0]]; if (e == null) return;
         if (e !== "ok" && antes === "ok") ev.push({ ts: m.ts, texto: s[1] + " empieza a tener problemas", auto: true, tipo: "servidor" });
         if (e === "ok" && antes !== "ok") ev.push({ ts: m.ts, texto: s[1] + " vuelve a funcionar", auto: true, tipo: "servidor" });
@@ -531,7 +558,7 @@
     });
     (D.eventos || []).concat(window.EVENTOS || []).forEach(function (e) {
       var ts = deSantiago(e.hora);
-      if (!isNaN(ts) && e.texto) ev.push({ ts: ts, texto: e.texto, auto: false, tipo: /^\s*Rockstar\s*:/i.test(e.texto) ? "servidor" : "mano" });
+      if (!isNaN(ts) && ts <= hasta && e.texto) ev.push({ ts: ts, texto: e.texto, auto: false, tipo: /^\s*Rockstar\s*:/i.test(e.texto) ? "servidor" : "mano" });
     });
     ev.sort(function (a, b) { return b.ts - a.ts; });   // lo más nuevo arriba (pedido de Bruno)
     lineaNueva(ev);
@@ -542,7 +569,9 @@
      y los puntos no quedaban alineados. Ahora: un rótulo por día, la hora arriba del texto, el
      ícono del tipo en el punto, filtros por tipo, "Ver los N eventos" (se ven los 8 más nuevos)
      y un enlace a la sección de la página de cada evento. */
+  var lineaPoner = null;
   function lineaNueva(ev) {
+    if (lineaPoner) return lineaPoner(ev);
     var TIPOS = {
       envivo: ["envivo", "Twitch y Kick", "seccion-twitch", "Ver espectadores"],
       video: ["video", "YouTube", "seccion-videos", "Ver videos"],
@@ -601,6 +630,12 @@
       ANIM.boton(mas, abrir ? "Ver menos" : "Ver los " + (mas.dataset.n || "") + " eventos");
       ANIM.alturaLinea(caja, function () { abierta = abrir; pintar(); }, abrir);
     });
+    // Al rebobinar llega otra lista: se repinta conservando el filtro (si todavía tiene eventos) y "Ver más".
+    lineaPoner = function (nuevo) {
+      ev = nuevo;
+      if (filtro !== "todo" && !ev.some(function (e) { return pasa(e, filtro); })) filtro = "todo";
+      pintar();
+    };
     pintar();
   }
 
@@ -2218,7 +2253,7 @@
       youtube_es: "YouTube (en español)", ranking: "el ranking de Twitch", ranking_kick: "el ranking de Kick", tendencias: "las tendencias de YouTube" };
     var SECCIONES = [["seccion-twitch", ["twitch", "kick"]], ["seccion-trends", ["trends"]], ["seccion-tabla", ["twitch", "kick"]],
       ["seccion-videos", ["youtube", "youtube_es"]], ["comparacion", ["ranking", "ranking_kick", "tendencias"]], ["seccion-noticias", ["noticias"]]];
-    var DE_HOY = ["seccion-linea", "resumen", "seccion-servidores", "doomsday", "lanzamientos", "album", "capsula", "proximamente"];
+    var DE_HOY = ["resumen", "seccion-servidores", "doomsday", "lanzamientos", "album", "capsula", "proximamente"];
     var ref = "nz";
     try { var r0 = localStorage.getItem("gta6-rb-desde"); if (ORDEN.indexOf(r0) >= 0) ref = r0; } catch (e) { /* sin almacenamiento */ }
     /* Los videos de cada momento (rebobinar.js) se calcularon con el filtro de siempre, "El de
@@ -2399,6 +2434,7 @@
     function pintarVista(V) {
       pintarFichas(V);
       pintarRecords(V, false);
+      lineaDeTiempo(V);
       gTwitch.poner(opcionesTwitch(V), V.corte == null ? V.M : V.Mtramo);
       gTrends.poner(opcionesTrends(V), V.M);
       tabla.poner(V);
@@ -2483,6 +2519,7 @@
       // ¿Pasó por una hora cero hacia adelante? Fiesta del último lugar por el que pasó.
       var ahoraT = momentos[k].ts, cruzado = null;
       if (conFiesta !== false && antes != null && ahoraT > antes) ORDEN.forEach(function (x) { if (LUGARES[x].ts > antes && LUGARES[x].ts <= ahoraT) cruzado = x; });
+      portadaEn(ahoraT, cruzado);
       if (cruzado) fiesta(cruzado);
     }
     var relojDir = null;
@@ -2497,8 +2534,10 @@
       if (ms) finAviso = setTimeout(function () { aviso.hidden = true; }, ms);
     }
     function fiesta(x) {
-      avisar("<b>¡Ya salió GTA 6 en " + LUGARES[x].nombre + "!</b> Medianoche del 19 nov allí.", 6000);
-      if (QUIETO.matches) return;   // sin movimiento: solo el aviso
+      // El aviso lo da la portada (su píldora "¡GTA 6 ya salió en…!", que flota arriba al bajar).
+      if (QUIETO.matches) return;
+      // La portada ya celebra (portadaEn). Si no está a la vista, los fuegos van sobre la pantalla.
+      if (document.querySelector(".portada").getBoundingClientRect().bottom > 80) return;
       var capa = $("rb-fiesta");
       capa.querySelectorAll(".fuegos").forEach(function (n) { n.remove(); });
       fuegos(capa);
@@ -2536,6 +2575,7 @@
       barra.hidden = true; aviso.hidden = true; abrirMenu(false); entrada.classList.remove("abierto");
       $("rb-fiesta").textContent = "";   // sin fuegos sobre la página de hoy
       pintarVista(HOY);
+      portadaEn(null);   // la portada vuelve a hoy (sin fiesta)
       $("rb-abrir").focus({ preventScroll: true });
       try { var u = new URL(location.href); u.searchParams.delete("momento"); u.searchParams.delete("desde"); history.replaceState(null, "", u.toString()); } catch (e) { /* nada */ }
     }

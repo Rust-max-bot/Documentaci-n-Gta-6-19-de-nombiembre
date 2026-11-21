@@ -84,7 +84,9 @@ with sync_playwright() as p:
             tr0 = R["tr_med"].get(str(int(datetime.strptime(MOM[0]["t"], "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=timezone.utc).timestamp())))
             f_tr = pg.evaluate("document.querySelectorAll('#fichas .ficha')[2].textContent")
             comprobar(tr0 is not None and f_tr.startswith("Google Trends" + str(tr0)), f"Trends con la escala de ese momento ({tr0} de 100; ficha: {f_tr[:40]!r})")
-            comprobar(pg.locator("#seccion-linea.rb-hoy .rb-nota-hoy").count() == 1 and pg.locator("#records.rb-hoy").count() == 0,
+            ini2 = pg.evaluate("[document.querySelector('.lema').textContent, document.getElementById('linea').textContent, document.getElementById('cuenta').textContent]")
+            comprobar(ini2[0] == "El día que salió GTA 6" and "Medianoche en Nueva Zelanda" not in ini2[1], f"portada y línea de tiempo de antes de la hora cero ({ini2[0]!r})")
+            comprobar(pg.locator("#resumen.rb-hoy .rb-nota-hoy").count() == 1 and pg.locator("#records.rb-hoy, #seccion-linea.rb-hoy").count() == 0,
                       "las secciones que no viajan en el tiempo quedan tenues con su nota; las que viajan, no")
 
             pg.click('#rb-barra .rb-ceros [data-salto="nz"]')
@@ -93,8 +95,10 @@ with sync_playwright() as p:
               idx: document.getElementById('rb-rango').value,
               momento: document.querySelector('.rb-momento').innerText,
               fichas: document.getElementById('fichas').innerText,
-              aviso: document.querySelector('.rb-aviso').hidden ? '' : document.querySelector('.rb-aviso').innerText,
-              fuegos: document.querySelectorAll('#rb-fiesta canvas').length,
+              aviso: document.getElementById('aviso-lanz').hidden ? '' : document.getElementById('aviso-lanz').textContent,
+              fuegos: document.querySelectorAll('#rb-fiesta canvas, .portada canvas.fuegos').length,
+              lema: document.querySelector('.lema').textContent,
+              linea: document.getElementById('linea').textContent,
               finales: document.querySelectorAll('#g-twitch .rb-fin').length,
               tabla: (document.querySelector('#t-twitch tbody tr td') || {}).innerText,
               comp: document.getElementById('comparacion-nota').innerText,
@@ -109,8 +113,10 @@ with sync_playwright() as p:
             comprobar("8:07" in est["momento"] and "+7 min desde la salida en Nueva Zelanda" in est["momento"], f"hora y cuenta en la hora cero de Nueva Zelanda ({est['momento']!r})")
             tw = med_nz["twitch"]["espectadores"]
             comprobar(num(tw) in est["fichas"] and "Récord hasta ahí" in est["fichas"], f"la ficha de Twitch muestra el dato real de esa medición ({num(tw)}) y el récord hasta ahí")
-            comprobar("Ya salió GTA 6 en Nueva Zelanda" in est["aviso"], f"al pasar por la hora cero vuelve el aviso ({est['aviso']!r})")
-            comprobar(est["fuegos"] == 1, "y los fuegos artificiales")
+            comprobar("GTA 6 ya salió en Nueva Zelanda" in est["aviso"] and "en Chile faltan" in est["aviso"], f"al pasar por la hora cero vuelve el aviso de la portada ({est['aviso'][:60]!r})")
+            comprobar(est["fuegos"] >= 1, f"y los fuegos artificiales (en la portada y, si no está a la vista, sobre la pantalla) ({est['fuegos']})")
+            comprobar(est["lema"] == "¡Ya salió GTA 6 en Nueva Zelanda!", f"la portada cambia su lema como en la hora cero ({est['lema']!r})")
+            comprobar("Medianoche en Nueva Zelanda" in est["linea"], "la línea de tiempo suma la hora cero de Nueva Zelanda")
             comprobar(est["finales"] == 2, "el gráfico de Twitch y Kick marca el momento al final de cada línea")
             comprobar(est["tabla"] and "8:07" in est["tabla"], f"la tabla empieza en la medición de ese momento ({est['tabla']!r})")
             comprobar("Medición de 18 nov" in est["comp"], f"la comparación es la de ese momento ({est['comp']!r})")
@@ -186,7 +192,8 @@ with sync_playwright() as p:
             pg.wait_for_timeout(300)
             hoy = pg.evaluate("[document.getElementById('rb-barra').hidden, document.querySelectorAll('.rb-hoy, .rb-fallo').length, document.getElementById('fichas').textContent, location.search, (document.querySelector('#fichas b[data-hasta]') || {dataset: {}}).dataset.hasta]")
             pico = max(m["twitch"]["espectadores"] for m in D["mediciones"] if "espectadores" in m["twitch"])
-            comprobar(pg.evaluate("document.getElementById('rb-fiesta').children.length") == 0, "al volver a hoy no quedan fuegos")
+            comprobar(pg.evaluate("document.querySelectorAll('#rb-fiesta canvas, .portada canvas.fuegos, .portada .reflectores').length") == 0, "al volver a hoy no quedan fuegos")
+            comprobar(pg.evaluate("document.querySelector('.lema').textContent") == "¡Ya salió GTA 6!", "y la portada vuelve a la de hoy")
             comprobar(hoy[0] and hoy[1] == 0 and "Máximo en Twitch" in hoy[2] and hoy[4] == str(pico) and "momento=" not in hoy[3], "'Volver a hoy' deja la página como siempre (máximo de Twitch de hoy)")
             comprobar(not errores, "sin errores en la consola" + (": " + " | ".join(errores[:3]) if errores else ""))
             ctx.close()
