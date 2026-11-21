@@ -35,7 +35,9 @@ las reglas, en `CLAUDE.md`.
 - [ ] **6.8 Diseño de la sección nueva con lo de la 6.1** (pedido de Bruno, 2026-11-17). Desde el
       20 nov, con los datos ya guardados, diseñar cómo se ve la sección (países, búsquedas en
       aumento, GTA 6 frente a otros juegos, mes a mes desde 2013, Doomsday): opciones con
-      capturas para Bruno antes de hacerla. Va junto con el punto (2) de la 6.1.
+      capturas para Bruno antes de hacerla. Va junto con el punto (2) de la 6.1. **21 nov, Bruno:**
+      las 4 partes (países, GTA 6 frente a otros juegos, mes a mes desde 2013, en aumento);
+      `datos.js` ya las trae (`trends_extra`, de `leer_trends_extra`). Falta: opciones (`/prototype`).
 - [ ] **6.1 Más Google Trends.** Una sola vez, **entre el 20 y el 25 nov** (antes del 26: Trends
       solo da el detalle por hora de 7 días), fuera del recolector de cada hora para no arriesgar
       un bloqueo (429) el día 19. Programa listo y probado sin guardar (13 y 14 nov):
