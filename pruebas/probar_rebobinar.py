@@ -190,12 +190,15 @@ with sync_playwright() as p:
             for sel in ("#g-twitch", "#g-trends"):
                 pg.evaluate("s => document.querySelector(s).scrollIntoView({ block: 'center', behavior: 'instant' })", sel)
                 pg.wait_for_timeout(150)
+                # (Sin eval: la página lo prohíbe con su CSP; dentro de un setTimeout, el error dejaba
+                # la promesa sin terminar y la prueba colgada.)
                 lineas = f"[...document.querySelectorAll('{sel} .lineas path, {sel} .lineas circle')].map(e => e.getAttribute('d') || e.getAttribute('cx') + ',' + e.getAttribute('cy')).join('|')"
-                c = pg.evaluate("""d => new Promise(listo => {
-                  const k = +document.getElementById('rb-rango').value, lin = () => eval(d);
+                c = pg.evaluate("""s => new Promise(listo => {
+                  const k = +document.getElementById('rb-rango').value;
+                  const lin = () => [...document.querySelectorAll(s + ' .lineas path, ' + s + ' .lineas circle')].map(e => e.getAttribute('d') || e.getAttribute('cx') + ',' + e.getAttribute('cy')).join('|');
                   window.__rebobinar.ir(k + 1);
                   setTimeout(() => { const medio = lin(); setTimeout(() => listo([medio, lin()]), 400); }, 80);
-                })""", lineas)
+                })""", sel)
                 # Sin animación ("reducir movimiento"), el mismo momento dibujado de una vez.
                 pg.emulate_media(reduced_motion="reduce")
                 pg.evaluate("window.__rebobinar.ir(+document.getElementById('rb-rango').value)")

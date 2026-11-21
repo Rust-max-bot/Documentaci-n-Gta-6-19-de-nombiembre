@@ -47,8 +47,8 @@ las reglas, en `CLAUDE.md`.
       debate entre dos agentes): el despertador de Cloudflare el 21, 22, 23 y 24 nov a las 15:41 UTC
       y, de respaldo, un `schedule` de GitHub a las 18:41, 20:41 y 22:41 UTC (GitHub se salta horarios: 18 nov). Guarda solo la primera vez (paso
       "decidir": si ya hay archivo o es fuera del 20-25 nov 2026, termina en verde), sin ejecuciones
-      dobles y con 25 min de tiempo. Recordatorios en el Google Calendar de Bruno el 21 y el 24 nov
-      (16:30 de Santiago). **Falta:** (1) comprobar el 21 que se guardó; (2) mostrarlo en la página, con opciones y capturas; (3) idea sin
+      dobles y con 25 min de tiempo. **Guardada** el 21 nov 15:41 UTC (5 preguntas bien).
+      **Falta:** (2) mostrarlo en la página, con opciones y capturas; (3) idea sin
       decidir: repetir lo de Doomsday en enero, después de su estreno (18 dic).
 - [ ] **9.11 Skill de animación y forma de administrarlas** (Bruno, 2026-11-17). (a) **Hecho
       (2026-11-17):** instaladas seis skills de `emilkowalski/skills` (MIT): `prototype`,
@@ -96,8 +96,8 @@ las reglas, en `CLAUDE.md`.
 - [ ] **7.1 Rebobinar el lanzamiento.** Hecho y probado en la rama `rebobinar-7-1` (20 nov;
       `/code-review`, abogado del diablo, `pruebas/probar_rebobinar.py`). Diseño "Pulso" (Bruno).
       (a) **Animaciones:** de 4 propuestas (`find-animation-opportunities`), Bruno eligió la 1,
-      **hecha**: los números de todas las secciones que viajan cuentan 250 ms (`cifra()`; al
-      instante al arrastrar y con "reducir movimiento"). Las otras, si Bruno las pide: videos que se
+      **hecha** (números de todas las secciones, 250 ms) y gráficos "La línea avanza" (opción A,
+      hecha). Las otras, si Bruno las pide: videos que se
       deslizan al cambiar de puesto (280 ms), entrada suave de lo nuevo arriba (línea de tiempo,
       tabla, "Lo último"; 200 ms) y destello de "¡Nuevo récord!" (450 ms). Descartados: animar la
       barra Pulso, los gráficos, las barras de la tabla, los avisos de fallo y la cuenta de la
