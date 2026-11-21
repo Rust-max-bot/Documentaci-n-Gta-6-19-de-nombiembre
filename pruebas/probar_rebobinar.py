@@ -87,7 +87,7 @@ with sync_playwright() as p:
             comprobar(pg.locator("#seccion-linea.rb-hoy .rb-nota-hoy").count() == 1 and pg.locator("#records.rb-hoy").count() == 0,
                       "las secciones que no viajan en el tiempo quedan tenues con su nota; las que viajan, no")
 
-            pg.click('#rb-barra [data-salto="nz"]')
+            pg.click('#rb-barra .rb-ceros [data-salto="nz"]')
             pg.wait_for_timeout(500)   # la dirección se actualiza a los 400 ms
             est = pg.evaluate("""() => ({
               idx: document.getElementById('rb-rango').value,
@@ -122,15 +122,20 @@ with sync_playwright() as p:
             comprobar(comp in est["records"].split("Video más visto")[1][:40], f"el récord 'Video más visto' trae las visitas de ese momento ({comp}), no las de después")
             comprobar(est["fechas"] and all("nov" in f for f in est["fechas"]), f"'Lo último' muestra la fecha de cada titular ({est['fechas'][:1]})")
             comprobar("momento=2026-11-18T11:07Z" in est["url"], f"la dirección guarda el momento ({est['url']})")
+            pista = pg.evaluate("[document.querySelectorAll('.rb-pulso .linea-antes').length, document.querySelectorAll('.rb-pulso .linea-despues').length, document.querySelectorAll('.rb-pulso .cero').length, (document.querySelector('.rb-pulso .valor') || {}).textContent]")
+            comprobar(pista[0] == 1 and pista[1] == 1 and pista[2] == 3 and pista[3] == "2 M", f"la pista dibuja lo vivido, lo que viene, las 3 horas cero y el valor del momento ({pista})")
             pg.screenshot(path=str(CAPTURAS / f"{pre}rebobinar_{tema}_{ancho}_nz.png"))
             pg.locator("#seccion-twitch").scroll_into_view_if_needed()
             pg.wait_for_timeout(300)
             pg.locator("#seccion-twitch").screenshot(path=str(CAPTURAS / f"{pre}rebobinar_{tema}_{ancho}_twitch.png"))
 
-            pg.click('#rb-barra [data-ref="mia"]')
+            pg.click("#rb-barra .rb-mas")
+            pg.click('#rb-barra .rb-menu [data-ref="mia"]')
             m = pg.locator(".rb-momento").inner_text()
             comprobar("faltan 17 h 53 min para la salida en Miami" in m, f"al elegir Miami, la cuenta es hasta Miami ({m!r})")
-            pg.click('#rb-barra [data-ref="nz"]')
+            pg.click('#rb-barra .rb-menu [data-ref="nz"]')
+            pg.keyboard.press("Escape")
+            comprobar(pg.locator("#rb-menu").is_hidden(), "Escape cierra el menú ⋯")
 
             pg.evaluate("document.querySelector('#records-vitrina details') && (document.querySelector('#records-vitrina details').open = true)")
             pg.click('#rb-barra [data-paso="1"]')
@@ -145,10 +150,11 @@ with sync_playwright() as p:
                 comprobar("Google Trends falló" in f and "Dato de hace" in f, f"medición con Trends caído: último dato bueno con aviso ({f!r})")
                 comprobar(pg.locator("#seccion-twitch .rb-fallo").count() == 0, "y sin aviso en las secciones que sí tienen dato")
 
-            pg.click('#rb-barra [data-vel="4"]')
-            pg.click(".rb-play")
+            pg.click("#rb-barra .rb-mas")
+            pg.click('#rb-barra .rb-menu [data-vel="4"]')
+            pg.click("#rb-barra .rb-play")
             pg.wait_for_timeout(1700)
-            pg.click(".rb-play")
+            pg.click("#rb-barra .rb-play")
             avanzo = int(pg.evaluate("document.getElementById('rb-rango').value")) - (FALLO_TRENDS if FALLO_TRENDS is not None else NZ)
             comprobar(2 <= avanzo <= 5, f"reproducir a 4x avanza media hora cada medio segundo ({avanzo} en 1,7 s)")
 
@@ -159,7 +165,8 @@ with sync_playwright() as p:
             comprobar(desborde <= 0, f"sin desborde horizontal con la barra abierta ({desborde}px)")
             pg.screenshot(path=str(CAPTURAS / f"{pre}rebobinar_{tema}_{ancho}_fin.png"))
 
-            pg.click(".rb-copiar")
+            pg.click("#rb-barra .rb-mas")
+            pg.click("#rb-barra .rb-copiar")
             pg.wait_for_timeout(200)
             av = pg.locator(".rb-aviso").inner_text()
             comprobar("Enlace copiado" in av or "Copia este enlace" in av, f"'Copiar enlace' avisa ({av[:40]!r})")
@@ -196,7 +203,7 @@ with sync_playwright() as p:
     comprobar(pg.evaluate("!!window.VIDEOS_EXTRA && window.FILTRO_VIDEOS.aplicado"), "el filtro del visitante está puesto")
     pg.click("#rb-abrir")
     pg.wait_for_selector("#rb-barra:not([hidden])", timeout=15000)
-    pg.click('#rb-barra [data-salto="nz"]')
+    pg.click('#rb-barra .rb-ceros [data-salto="nz"]')
     nota = pg.evaluate("(document.querySelector('#seccion-videos .rb-filtro') || {}).textContent || ''")
     comprobar("El de Rust" in nota, f"la sección de videos avisa que se usa el filtro de Rust ({nota[:50]!r})")
     rec = pg.evaluate("document.getElementById('records-vitrina').textContent")

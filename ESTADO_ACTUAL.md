@@ -47,9 +47,9 @@ visitante) están en la página publicada. Para marcar videos: doble clic en `pa
 **7.1 Rebobinar el lanzamiento: hecha en la rama `rebobinar-7-1` (20 nov, pedido de Bruno), sin
 unir a `main`.** Barra para revivir la página media hora por media hora del 18 nov 08:00 al 20 nov
 12:00 UTC. Revisada con `/code-review` y un abogado del diablo; `pruebas/probar_rebobinar.py`,
-`probar_pagina.py` y `probar_selector.py`: todo bien (Edge y Firefox). Espera de Bruno: elegir
-uno de 3 diseños, decidir el corte de los titulares (hora de publicación o cuándo se
-encontraron) y unirla.
+`probar_pagina.py` y `probar_selector.py`: todo bien (Edge y Firefox). Diseño **"Pulso"**
+(elegido por Bruno entre 3 prototipos): la pista es la curva de espectadores de Twitch. Espera de
+Bruno: decidir el corte de los titulares (hora de publicación o cuándo se encontraron) y unirla.
 
 **Avisos vigentes:**
 - **El 21 nov:** comprobar que la 6.1 se guardó (se lanza sola del 21 al 24 nov).
@@ -72,6 +72,7 @@ lanzamiento (revisión completa y menos alarmas por Google). Antes: 9.12 y más 
 ## Últimos cambios
 
 - 2026-11-17: estado anterior archivado en historial/ESTADO_2026-11-17.md
+- 2026-11-20: 7.1, diseño "Pulso" en la barra del rebobinado (Bruno lo eligió entre 3 prototipos hechos con la skill `prototype`; descartados "Reproductor" y "Videograbadora"): la pista es la curva de Twitch con las horas cero; "contar desde", saltar, velocidad y copiar enlace en "⋯". ~170 px en el celular (antes ~310). ~78 ms por parada con CPU 4x. Prototipo borrado. Pruebas: todo bien.
 - 2026-11-20: 7.1 Rebobinar el lanzamiento en la rama `rebobinar-7-1` (entrevista con Bruno): tramo 18 nov 08:00 → 20 nov 12:00 UTC, 104 paradas; viajan fichas, récords, gráficos de Twitch/Kick y Trends, tabla, videos, comparación y titulares; las demás quedan tenues. `web/rebobinar.js` (~690 KB, solo al abrir; no va a git). Arreglos de `/code-review` (récords de YouTube sin visitas del futuro, filtro del visitante, un fallo del rebobinado no frena la publicación) y del abogado del diablo (Trends con la escala de ese momento, fuegos que seguían, récord "creció en una hora" que bajaba, lo abierto se mantiene, foco). Más rápido: ~130 ms por parada en celular lento simulado (antes ~260). Pruebas: todo bien.
 - 2026-11-20: PLAN.md archivado en historial/PLAN_2026-11-20.md (pasó de 20.000 bytes). 9.4 preparada en la rama `optimizar-9-4` (`pruebas/medir_carga.py` y plan corregido por un abogado del diablo): Hechos en la rama: preload, estilo y cielo antes del primer dibujo (`web/inicio.js`); B y `content-visibility` descartados. Página armada ~5,3 → ~3,7 s. Revisada dos veces por un abogado del diablo; pruebas bien. **Unida a `main` el 20 nov** (Bruno la probó); la rama ya no hace falta. Pendiente de la 9.4: el fallo de la recarga automática (ver `PLAN.md`).
 - 2026-11-20: README al día (pedido de Bruno): sección "Estado" con los máximos reales (Twitch 3.189.635 y Kick 1.433.865, 18 nov) y lo que falta; Kick, 7 tráilers, Shorts, selector de videos, Doomsday, Próximamente, tres rayas de lanzamiento, panel de videos, Trends extra automática, Reddit quitado y documentos nuevos.
@@ -102,7 +103,7 @@ La lista completa y su orden están en `PLAN.md`. Resumen (2026-11-17):
 3. **Fase 6:** 6.1 más Google Trends, **una sola vez entre el 20 y el 25 nov**, fuera del
    recolector de cada hora (programa listo y probado, con las palabras de Bruno; se lanza sola
    del 21 al 24 nov; falta mostrarlo: 6.8). 6.6 Instagram (parece difícil; ver `PLAN.md`).
-4. **Fase 7:** 7.1 rebobinar (hecha en la rama `rebobinar-7-1`: falta que Bruno elija el diseño, el corte de los titulares y unirla); 7.13 sección de memes (requiere
+4. **Fase 7:** 7.1 rebobinar (hecha en la rama `rebobinar-7-1`: diseño Pulso elegido; falta que Bruno decida el corte de los titulares y unirla); 7.13 sección de memes (requiere
    investigación). Cuando Take-Two publique las ventas, escribirlas en `gta6` de
    `web/lanzamientos.js`. **Fase 8 (GTA 6 en PC):** dormida hasta que Bruno avise con
    confirmación oficial.

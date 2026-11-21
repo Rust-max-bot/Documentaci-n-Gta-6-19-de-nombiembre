@@ -2212,7 +2212,7 @@
     var info = D.rebobinar, entrada = $("rebobinar"), barra = $("rb-barra");
     if (!info || !entrada || !barra || D.ejemplo || !(info.n > 1)) return;
     entrada.hidden = false;
-    var R = null, momentos = [], k = -1, rango, topeTwitch, reloj = null, vel = 1;
+    var R = null, momentos = [], k = -1, rango, topeTwitch, reloj = null, vel = 1, pulso = [], anchoPulso = 0, altoPulso = 0;
     var VEL = { 1: 2000, 2: 1000, 4: 500 };   // milisegundos por media hora
     var NOMBRES_FUENTE = { twitch: "Twitch", kick: "Kick", trends: "Google Trends", noticias: "Google Noticias", youtube: "YouTube (Global)",
       youtube_es: "YouTube (en español)", ranking: "el ranking de Twitch", ranking_kick: "el ranking de Kick", tendencias: "las tendencias de YouTube" };
@@ -2256,20 +2256,29 @@
       return d > 0 ? "+" + duracion(d) + " desde" + en : "faltan " + duracion(d) + " para" + en;
     }
 
+    /* Diseño "Pulso" (elegido por Bruno, 2026-11-20): arriba la hora y los botones; lo que se usa
+       menos ("contar desde", saltar a una hora cero, velocidad y copiar el enlace) en "⋯"; abajo la
+       pista, que es la curva de espectadores de Twitch del tramo (ver pintarPulso). */
+    var chips = function (attr, lista) { return lista.map(function (x) { return '<button type="button" class="rb-chip" ' + attr + '="' + x[0] + '">' + x[1] + "</button>"; }).join(""); };
+    var lugaresChips = ORDEN.map(function (x) { return [x, LUGARES[x].nombre]; });
     barra.innerHTML =
-      '<div class="rb-fila rb-arriba"><p class="rb-momento" id="rb-momento" aria-live="polite"><b></b><span class="rb-cl"></span><span class="rb-desde"></span></p>' +
-      '<div class="rb-ref" role="group" aria-label="Contar el tiempo desde la salida en"><small>Contar desde</small>' +
-      ORDEN.map(function (x) { return '<button type="button" data-ref="' + x + '">' + LUGARES[x].nombre + "</button>"; }).join("") + "</div></div>" +
-      '<div class="rb-pista"><input type="range" id="rb-rango" min="0" max="0" step="1" value="0" aria-label="Momento del lanzamiento"><div class="rb-marcas" aria-hidden="true"></div></div>' +
-      '<div class="rb-fila rb-controles">' +
-      '<div class="rb-saltos" role="group" aria-label="Saltar a una hora cero"><small>Saltar a</small>' +
-      ORDEN.map(function (x) { return '<button type="button" data-salto="' + x + '">' + LUGARES[x].nombre + "</button>"; }).join("") + "</div>" +
-      '<div class="rb-mando"><button type="button" class="rb-paso" data-paso="-1" aria-label="Media hora antes" title="Media hora antes">−30 min</button>' +
-      '<button type="button" class="rb-play" aria-pressed="false">▶ Reproducir</button>' +
-      '<button type="button" class="rb-paso" data-paso="1" aria-label="Media hora después" title="Media hora después">+30 min</button>' +
-      '<div class="rb-vel" role="group" aria-label="Velocidad">' + [1, 2, 4].map(function (v) { return '<button type="button" data-vel="' + v + '">' + v + "x</button>"; }).join("") + "</div></div>" +
-      '<div class="rb-otros"><button type="button" class="rb-copiar">Copiar enlace</button><button type="button" class="rb-volver">Volver a hoy</button></div></div>' +
-      '<p class="rb-aviso" role="status" hidden></p>';
+      '<p class="rb-aviso" role="status" hidden></p>' +
+      '<div class="rb-arriba"><p class="rb-momento" id="rb-momento" aria-live="polite"><b></b><span class="rb-desde"></span><em class="rb-cl"></em></p>' +
+      '<div class="rb-mando">' +
+      '<button type="button" class="rb-b" data-paso="-1" aria-label="Media hora antes" title="Media hora antes">‹</button>' +
+      '<button type="button" class="rb-b rb-play" aria-pressed="false" aria-label="Reproducir">▶</button>' +
+      '<button type="button" class="rb-b" data-paso="1" aria-label="Media hora después" title="Media hora después">›</button>' +
+      '<button type="button" class="rb-b rb-ciclo" title="Velocidad"></button>' +
+      '<button type="button" class="rb-b rb-mas" aria-expanded="false" aria-controls="rb-menu" aria-label="Más opciones" title="Más opciones">⋯</button>' +
+      '<button type="button" class="rb-b rb-volver">Volver a hoy</button>' +
+      '<div class="rb-menu" id="rb-menu" hidden>' +
+      '<small>Contar desde la salida en</small><div class="rb-grupo" role="group" aria-label="Contar desde la salida en">' + chips("data-ref", lugaresChips) + "</div>" +
+      '<small>Saltar a la medianoche en</small><div class="rb-grupo">' + chips("data-salto", lugaresChips) + "</div>" +
+      '<small>Velocidad</small><div class="rb-grupo" role="group" aria-label="Velocidad">' + chips("data-vel", [[1, "1x"], [2, "2x"], [4, "4x"]]) + "</div>" +
+      '<button type="button" class="rb-chip rb-ancho rb-copiar">Copiar enlace de este momento</button></div></div></div>' +
+      '<div class="rb-pulso"><svg aria-hidden="true"></svg><div class="rb-ceros"></div>' +
+      '<input type="range" id="rb-rango" min="0" max="0" step="1" value="0" aria-label="Momento del lanzamiento"></div>' +
+      '<div class="rb-pie"><span>Espectadores en Twitch · arrastra sobre la curva</span><span class="rb-pie-fechas"></span></div>';
     var rangoIn = $("rb-rango"), play = barra.querySelector(".rb-play"), aviso = barra.querySelector(".rb-aviso");
 
     function cargarScript(src) {
@@ -2295,10 +2304,16 @@
           Object.keys(tabla).forEach(function (id) { tabla[id].serie = tabla[id].serie.map(function (p) { return { ts: p[0] * 1000, t: isoDe(p[0]), visitas: p[1] }; }); });
         });
         rangoIn.max = String(momentos.length - 1);
-        barra.querySelector(".rb-marcas").innerHTML = ORDEN.map(function (x) {
+        // La pista "Pulso": espectadores de Twitch de cada parada y los nombres de las horas cero.
+        var porTs = {};
+        M.forEach(function (m) { porTs[m.ts] = m.espectadores; });
+        pulso = momentos.map(function (mo) { return porTs[mo.ts] == null ? null : porTs[mo.ts]; });
+        barra.querySelector(".rb-ceros").innerHTML = ORDEN.map(function (x, j) {
           var i = primeroDesde(LUGARES[x].ts);
-          return i < 0 ? "" : '<i style="--p:' + (i / (momentos.length - 1)).toFixed(4) + '" title="Medianoche en ' + LUGARES[x].nombre + '"></i>';
+          return i < 0 ? "" : '<button type="button" data-salto="' + x + '" class="' + (j === 1 ? "izq" : "") + '" style="--p:' + (i / (momentos.length - 1)).toFixed(4) +
+            '" title="Saltar a la medianoche en ' + LUGARES[x].nombre + '">' + ({ nz: "NZ", cl: "CL", mia: "MIA" })[x] + "</button>";
         }).join("");
+        barra.querySelector(".rb-pie-fechas").textContent = dia(rango[0]) + " → " + dia(rango[1]);
         // Los titulares de "Lo último" de cada momento están en web/dias/: se piden ahora, todos juntos.
         var dias = {};
         momentos.forEach(function (mo) { ultimosHasta(mo.ts).forEach(function (n) { if (!n.titulo) dias[diaUTC(Date.parse(n.t) / 1000)] = 1; }); });
@@ -2418,11 +2433,38 @@
       barra.querySelector(".rb-desde").textContent = desdeSalida(mo.ts);
       rangoIn.value = String(k);
       rangoIn.setAttribute("aria-valuetext", horaLocal(mo.ts) + ", " + desdeSalida(mo.ts));
-      barra.style.setProperty("--avance", (k / (momentos.length - 1) * 100).toFixed(2) + "%");
       barra.querySelector('[data-paso="-1"]').disabled = k <= 0;
       barra.querySelector('[data-paso="1"]').disabled = k >= momentos.length - 1;
       barra.querySelectorAll("[data-ref]").forEach(function (b) { b.setAttribute("aria-pressed", String(b.dataset.ref === ref)); });
       barra.querySelectorAll("[data-vel]").forEach(function (b) { b.setAttribute("aria-pressed", String(+b.dataset.vel === vel)); });
+      var ciclo = barra.querySelector(".rb-ciclo"); ciclo.textContent = vel + "x"; ciclo.setAttribute("aria-label", "Velocidad: " + vel + "x (tocar para cambiar)");
+      pintarPulso();
+    }
+    /* La pista: lo ya vivido en color, lo que viene en gris punteado, las rayas de las horas cero y
+       una raya con el valor en el momento elegido. Las x coinciden con las del deslizador invisible. */
+    function pintarPulso() {
+      var svg = barra.querySelector(".rb-pulso svg"), caja = svg.parentNode;
+      var W = anchoPulso || caja.clientWidth || 600, H = altoPulso || caja.clientHeight || 76, arriba = 18, abajo = 3, n = momentos.length;
+      var max = 1; pulso.forEach(function (v) { if (v > max) max = v; });
+      var X = function (i) { return 8 + i / (n - 1) * (W - 16); }, Y = function (v) { return arriba + (1 - v / max) * (H - arriba - abajo); };
+      function camino(desde, hasta) {
+        var d = "", primero = null, ult = null;
+        for (var i = desde; i <= hasta; i++) { if (pulso[i] == null) continue; d += (d ? "L" : "M") + X(i).toFixed(1) + " " + Y(pulso[i]).toFixed(1); if (primero == null) primero = i; ult = i; }
+        return d ? d + "|" + primero + "|" + ult : "";
+      }
+      function trazo(c, area, linea) {
+        if (!c) return "";
+        var p = c.split("|");
+        return '<path class="' + area + '" d="' + p[0] + "L" + X(+p[2]).toFixed(1) + " " + H + "L" + X(+p[1]).toFixed(1) + " " + H + 'Z"/><path class="' + linea + '" d="' + p[0] + '"/>';
+      }
+      var out = trazo(camino(k, n - 1), "area-despues", "linea-despues") + trazo(camino(0, k), "area-antes", "linea-antes");
+      ORDEN.forEach(function (x) { var i = primeroDesde(LUGARES[x].ts); if (i >= 0) out += '<line class="cero" x1="' + X(i).toFixed(1) + '" x2="' + X(i).toFixed(1) + '" y1="15" y2="' + H + '"/>'; });
+      var xk = X(k), v = pulso[k], derecha = xk > W - 70;
+      out += '<line class="cabeza" x1="' + xk.toFixed(1) + '" x2="' + xk.toFixed(1) + '" y1="15" y2="' + H + '"/>';
+      if (v != null) out += '<circle class="punto" r="5" cx="' + xk.toFixed(1) + '" cy="' + Y(v).toFixed(1) + '"/><text class="valor" x="' + (derecha ? xk - 8 : xk + 8).toFixed(1) +
+        '" y="' + Math.max(28, Y(v) - 6).toFixed(1) + '" text-anchor="' + (derecha ? "end" : "start") + '">' + compacto(v) + "</text>";
+      svg.setAttribute("viewBox", "0 0 " + W + " " + H);
+      svg.innerHTML = out;
     }
     function enlaceMomento() {
       var u = new URL(location.href);
@@ -2464,7 +2506,7 @@
     function reproducir(si) {
       clearInterval(reloj); reloj = null;
       play.setAttribute("aria-pressed", String(si));
-      play.textContent = si ? "❚❚ Pausa" : "▶ Reproducir";
+      play.textContent = si ? "❚❚" : "▶"; play.setAttribute("aria-label", si ? "Pausa" : "Reproducir");
       $("rb-momento").setAttribute("aria-live", si ? "off" : "polite");   // sin un anuncio cada medio segundo
       if (!si) return;
       if (k >= momentos.length - 1) ir(0, false);   // desde el final, vuelve a empezar
@@ -2491,13 +2533,17 @@
       rebobinando = false; k = -1;
       document.body.classList.remove("rebobinando");
       DE_HOY.map($).filter(Boolean).forEach(function (s) { s.classList.remove("rb-hoy"); var p = s.querySelector(".rb-nota-hoy"); if (p) p.remove(); });
-      barra.hidden = true; aviso.hidden = true; entrada.classList.remove("abierto");
+      barra.hidden = true; aviso.hidden = true; abrirMenu(false); entrada.classList.remove("abierto");
       $("rb-fiesta").textContent = "";   // sin fuegos sobre la página de hoy
       pintarVista(HOY);
       $("rb-abrir").focus({ preventScroll: true });
       try { var u = new URL(location.href); u.searchParams.delete("momento"); u.searchParams.delete("desde"); history.replaceState(null, "", u.toString()); } catch (e) { /* nada */ }
     }
-    function medirBarra() { document.documentElement.style.setProperty("--rb-alto", barra.offsetHeight + "px"); }
+    function medirBarra() {
+      document.documentElement.style.setProperty("--rb-alto", barra.offsetHeight + "px");
+      var caja = barra.querySelector(".rb-pulso"), w = caja.clientWidth, h = caja.clientHeight;   // se guardan: medir en cada parada obligaría a recalcular la página
+      if (w && (w !== anchoPulso || h !== altoPulso)) { anchoPulso = w; altoPulso = h; if (k >= 0) pintarPulso(); }
+    }
     if ("ResizeObserver" in window) new ResizeObserver(function () { if (!barra.hidden) medirBarra(); }).observe(barra);
 
     function abrir(i) {
@@ -2526,9 +2572,12 @@
         pintarBarra(); ponerDireccion();
       }
       else if (b.dataset.vel) { vel = +b.dataset.vel; pintarBarra(); if (reloj) reproducir(true); }
+      else if (b.classList.contains("rb-ciclo")) { vel = vel === 1 ? 2 : vel === 2 ? 4 : 1; pintarBarra(); if (reloj) reproducir(true); }
+      else if (b.classList.contains("rb-mas")) abrirMenu(menu.hidden);
       else if (b === play) reproducir(!reloj);
       else if (b.classList.contains("rb-volver")) salir();
       else if (b.classList.contains("rb-copiar")) {
+        abrirMenu(false);
         var url = enlaceMomento();
         var listo = function () { avisar("Enlace copiado: quien lo abra verá la página en este momento.", 4000); };
         var aMano = function () {
@@ -2538,6 +2587,13 @@
         if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(url).then(listo, aMano); else aMano();
       }
     });
+    // Menú "⋯": se cierra al tocar fuera, con Escape o al copiar el enlace.
+    var menu = $("rb-menu"), botonMas = barra.querySelector(".rb-mas");
+    function abrirMenu(si) { menu.hidden = !si; botonMas.setAttribute("aria-expanded", String(si)); }
+    document.addEventListener("click", function (e) {
+      if (!menu.hidden && e.target.isConnected && !e.target.closest(".rb-menu, .rb-mas")) abrirMenu(false);
+    });
+    document.addEventListener("keydown", function (e) { if (e.key === "Escape" && !menu.hidden) { abrirMenu(false); botonMas.focus(); } });
     // Enlace a un momento: ?momento=2026-11-18T11:07Z (la medición de ese minuto o la más cercana).
     var params = new URLSearchParams(location.search), pedido = params.get("momento") || "", pedRef = params.get("desde");
     if (ORDEN.indexOf(pedRef) >= 0) ref = pedRef;

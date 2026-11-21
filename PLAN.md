@@ -95,9 +95,9 @@ las reglas, en `CLAUDE.md`.
 
 - [ ] **7.1 Rebobinar el lanzamiento.** **Hecho y probado en la rama `rebobinar-7-1`** (20 nov,
       entrevista con Bruno; revisado con `/code-review` y un abogado del diablo; prueba
-      `pruebas/probar_rebobinar.py`). **Falta:** que Bruno elija el diseño (3 opciones; hoy es uno
-      provisional y en el celular la barra ocupa ~40 % de la pantalla), decida si los titulares se
-      cortan por hora de publicación (hoy) o por cuándo los encontró el recolector, y unirla a `main`.
+      `pruebas/probar_rebobinar.py`). Diseño **"Pulso"** elegido por Bruno (20 nov, entre 3 prototipos):
+      la pista es la curva de espectadores de Twitch del tramo. **Falta:** que Bruno decida si los
+      titulares se cortan por hora de publicación (hoy) o por cuándo los encontró el recolector, y unirla a `main`.
 - [ ] **4.3 Análisis de datos (A3).** Datos interesantes: popularidad, visitas, cuánto dura el
       interés, antes y después. Necesita varios días de datos reales. **Sin IA** (Bruno, 2026-11-18): un
       programa normal, como `generar_web.py`, que corre solo con cada medición. En unos días.
@@ -221,6 +221,7 @@ El porqué y las opciones descartadas, en `historial/PLAN_2026-11-18-3.md` y `hi
   1x/2x/4x, ±30 min, copiar enlace, volver a hoy; hora del visitante + "desde la salida" en NZ,
   Chile o Miami; fichas y récords: valor del momento y récord hasta ahí; marco fijo; fuente caída
   = último dato bueno con aviso; fiesta al pasar una hora cero. Datos en `web/rebobinar.js`.
+  Diseño "Pulso" (descartados "Reproductor" y "Videograbadora").
 - **Muchas visitas:** `datos.js` lleva lo necesario al abrir; titulares por día en `web/dias/`.
   Plan B solo si GitHub avisa: Cloudflare Pages.
 - **Sincronización del PC** (`sincronizar_interruptor.bat`): **apagada por Bruno el 2026-11-16**.
