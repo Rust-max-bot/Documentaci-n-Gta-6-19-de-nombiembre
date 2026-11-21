@@ -81,11 +81,14 @@ with sync_playwright() as p:
             ini = pg.evaluate("[document.getElementById('rb-rango').value, document.getElementById('rb-rango').max, document.querySelector('.rb-momento').innerText]")
             comprobar(ini[0] == "0" and ini[1] == str(len(MOM) - 1), f"la barra abre al inicio del tramo, con {len(MOM)} paradas ({ini[0]} de {ini[1]})")
             comprobar("18 nov" in ini[2] and "5:07" in ini[2] and "faltan 2 h 53 min para la salida en Nueva Zelanda" in ini[2], f"hora del inicio y cuenta hasta Nueva Zelanda ({ini[2]!r})")
+            tr0 = R["tr_med"].get(str(int(datetime.strptime(MOM[0]["t"], "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=timezone.utc).timestamp())))
+            f_tr = pg.evaluate("document.querySelectorAll('#fichas .ficha')[2].textContent")
+            comprobar(tr0 is not None and f_tr.startswith("Google Trends" + str(tr0)), f"Trends con la escala de ese momento ({tr0} de 100; ficha: {f_tr[:40]!r})")
             comprobar(pg.locator("#seccion-linea.rb-hoy .rb-nota-hoy").count() == 1 and pg.locator("#records.rb-hoy").count() == 0,
                       "las secciones que no viajan en el tiempo quedan tenues con su nota; las que viajan, no")
 
             pg.click('#rb-barra [data-salto="nz"]')
-            pg.wait_for_timeout(300)
+            pg.wait_for_timeout(500)   # la dirección se actualiza a los 400 ms
             est = pg.evaluate("""() => ({
               idx: document.getElementById('rb-rango').value,
               momento: document.querySelector('.rb-momento').innerText,
@@ -129,7 +132,9 @@ with sync_playwright() as p:
             comprobar("faltan 17 h 53 min para la salida en Miami" in m, f"al elegir Miami, la cuenta es hasta Miami ({m!r})")
             pg.click('#rb-barra [data-ref="nz"]')
 
+            pg.evaluate("document.querySelector('#records-vitrina details') && (document.querySelector('#records-vitrina details').open = true)")
             pg.click('#rb-barra [data-paso="1"]')
+            comprobar(pg.evaluate("!document.querySelector('#records-vitrina details') || document.querySelector('#records-vitrina details').open"), "'Récords anteriores' abierto sigue abierto al avanzar")
             comprobar(pg.evaluate("document.getElementById('rb-rango').value") == str(NZ + 1), "+30 min avanza una medición")
             pg.click('#rb-barra [data-paso="-1"]')
             comprobar(pg.evaluate("document.getElementById('rb-rango').value") == str(NZ), "−30 min retrocede una medición")
@@ -160,6 +165,7 @@ with sync_playwright() as p:
             comprobar("Enlace copiado" in av or "Copia este enlace" in av, f"'Copiar enlace' avisa ({av[:40]!r})")
 
             pg.evaluate(f"window.__rebobinar.ir({NZ})")
+            pg.wait_for_timeout(500)
             enlace = pg.evaluate("location.href")
             pg2 = ctx.new_page()
             pg2.on("pageerror", lambda e: errores.append(str(e)))
@@ -173,6 +179,7 @@ with sync_playwright() as p:
             pg.wait_for_timeout(300)
             hoy = pg.evaluate("[document.getElementById('rb-barra').hidden, document.querySelectorAll('.rb-hoy, .rb-fallo').length, document.getElementById('fichas').textContent, location.search, (document.querySelector('#fichas b[data-hasta]') || {dataset: {}}).dataset.hasta]")
             pico = max(m["twitch"]["espectadores"] for m in D["mediciones"] if "espectadores" in m["twitch"])
+            comprobar(pg.evaluate("document.getElementById('rb-fiesta').children.length") == 0, "al volver a hoy no quedan fuegos")
             comprobar(hoy[0] and hoy[1] == 0 and "Máximo en Twitch" in hoy[2] and hoy[4] == str(pico) and "momento=" not in hoy[3], "'Volver a hoy' deja la página como siempre (máximo de Twitch de hoy)")
             comprobar(not errores, "sin errores en la consola" + (": " + " | ".join(errores[:3]) if errores else ""))
             ctx.close()

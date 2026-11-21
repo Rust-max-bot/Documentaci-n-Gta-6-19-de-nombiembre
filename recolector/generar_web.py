@@ -20,6 +20,10 @@ Reddit (tarea 6.9, decisión de Bruno, 2026-11-17): ya no se muestra. Las medici
 siguen guardando en datos/ (no se borra nada), pero aquí se ignora. La página carga un día solo cuando hace falta mostrarlo.
 - web/version.json solo dice cuándo se generaron los datos: la página lo mira cada 2 minutos para
   saber si hay datos nuevos, en vez de bajar datos.js entero.
+- web/rebobinar.js (tarea 7.1): lo que el rebobinado necesita de cada momento y no está en datos.js
+  (videos de entonces, comparación, resumen de titulares, Trends con la escala de entonces y
+  fuentes que fallaron). La página lo carga solo al abrir el rebobinado. Si algo no cuadra, se
+  publica sin él (con un AVISO), sin frenar lo demás.
 """
 import hashlib
 import itertools
@@ -505,10 +509,10 @@ def rebobinado(medidas, d, filtro):
     # El registro más nuevo de cada video, como en convertir() (títulos y filtro iguales a los de hoy).
     reg_g, reg_e = {}, {}
     for m in medidas:
-        for v in m.get("youtube", {}).get("videos", []) + m.get("youtube_largos", {}).get("videos", []):
+        for v in (m.get("youtube") or {}).get("videos", []) + (m.get("youtube_largos") or {}).get("videos", []):
             if isinstance(v.get("visitas"), int):
                 reg_g[v["id"]] = v
-        for v in m.get("youtube_es", {}).get("videos", []):
+        for v in (m.get("youtube_es") or {}).get("videos", []):
             if isinstance(v.get("visitas"), int):
                 reg_e[v["id"]] = v
     estado = {"yt": [], "lg": [], "es": [], "rk": None, "kr": None, "tend": None}
@@ -517,6 +521,11 @@ def rebobinado(medidas, d, filtro):
     # Récords "Video/Short más visto" (como records_videos): en cada momento, las visitas que tenía
     # entonces el líder. datos.js guarda las del final de su racha, que pueden ser del futuro.
     rec = {"video": [], "short": []}
+    # Google Trends como se midió entonces (escala de esa medición: 100 = su máximo de 7 días). La
+    # de datos.js es la de la medición más nueva, y cambia de escala: usarla mostraría el futuro.
+    tr_med = {}                  # segundos de cada medición -> interés de su última hora completa
+    tr_series, tr_ult = [], None # horas del tramo según cada medición buena; índice de la última
+    desde_h = (datetime.strptime(REBOBINAR_DESDE, "%Y-%m-%dT%H:%M:%SZ") - timedelta(hours=1)).strftime("%Y-%m-%dT%H:%M:%SZ")
     series_g, series_e = {}, {}
     medios = Counter()
     k_not = 0
@@ -524,24 +533,24 @@ def rebobinado(medidas, d, filtro):
     for m in medidas:
         if m["t"] > REBOBINAR_HASTA:
             break
-        if m.get("youtube", {}).get("videos"):
+        if (m.get("youtube") or {}).get("videos"):
             estado["yt"] = m["youtube"]["videos"]
-        if m.get("youtube_largos", {}).get("videos"):
+        if (m.get("youtube_largos") or {}).get("videos"):
             estado["lg"] = m["youtube_largos"]["videos"]
-        if m.get("youtube_es", {}).get("videos"):
+        if (m.get("youtube_es") or {}).get("videos"):
             estado["es"] = m["youtube_es"]["videos"]
         for clave, k in (("twitch_ranking", "rk"), ("kick_ranking", "kr"), ("youtube_tendencias", "tend")):
             if isinstance(m.get(clave), dict) and "error" not in m[clave]:
                 estado[k] = m
-        for v in m.get("youtube", {}).get("videos", []) + m.get("youtube_largos", {}).get("videos", []):
+        for v in (m.get("youtube") or {}).get("videos", []) + (m.get("youtube_largos") or {}).get("videos", []):
             if isinstance(v.get("visitas"), int):
                 s = series_g.setdefault(v["id"], [])
                 if not s or s[-1][0] != segundos(m["t"]):
                     s.append([segundos(m["t"]), v["visitas"]])
-        for v in m.get("youtube_es", {}).get("videos", []):
+        for v in (m.get("youtube_es") or {}).get("videos", []):
             if isinstance(v.get("visitas"), int):
                 series_e.setdefault(v["id"], []).append([segundos(m["t"]), v["visitas"]])
-        for v in m.get("youtube", {}).get("videos", []) + m.get("youtube_largos", {}).get("videos", []):
+        for v in (m.get("youtube") or {}).get("videos", []) + (m.get("youtube_largos") or {}).get("videos", []):
             u = reg_g.get(v["id"], {})
             if not isinstance(v.get("visitas"), int) or not isinstance(u.get("short"), bool) or not pasa_filtro(u, filtro):
                 continue
@@ -552,6 +561,16 @@ def rebobinado(medidas, d, filtro):
                 h[-1][1] = v["visitas"]
             else:
                 h.append([v["id"], v["visitas"]])
+        tr = m.get("trends")
+        if isinstance(tr, dict) and "error" not in tr:
+            puntos = [p for p in tr.get("puntos", []) if not p.get("parcial")]
+            hora = hora_de_medicion(m["t"])
+            propio = next((p["interes"] for p in puntos if p["t"] == hora), None)
+            if propio is not None:
+                tr_med[segundos(m["t"])] = propio
+            if m["t"] >= desde_h:   # (antes del tramo no hace falta la serie)
+                tr_series.append([[segundos(p["t"]), p["interes"]] for p in puntos if desde_h <= p["t"] <= m["t"]])
+                tr_ult = len(tr_series) - 1
         fallos = {}
         for f, claves in FUENTES_REB.items():
             estado_f = fallo_fuente(m, claves)
@@ -590,8 +609,10 @@ def rebobinado(medidas, d, filtro):
         momentos.append({
             "t": m["t"], "g": g, "e": e, "cmp": cmp,
             "rv": {tipo: list(h[-1]) for tipo, h in rec.items() if h},
-            "nt": {"n": k_not, "ultimas": list(range(k_not - 1, max(-1, k_not - 1 - NOTICIAS_ULTIMAS), -1)),
-                   "medios": [[x, c] for x, c in medios.most_common(MEDIOS_TOP)], "medios_n": len(medios)},
+            **({"tr": tr_ult} if tr_ult is not None else {}),
+            # Los 6 últimos titulares los saca la página de datos.js (por hora, no por posición: un
+            # datos.js de otra publicación puede tener titulares nuevos y correr las posiciones).
+            "nt": {"n": k_not, "medios": [[x, c] for x, c in medios.most_common(MEDIOS_TOP)], "medios_n": len(medios)},
             **({"fallos": fallos} if fallos else {}),
         })
 
@@ -603,6 +624,7 @@ def rebobinado(medidas, d, filtro):
         "videos_g": {i: dict(meta(reg_g[i], False), serie=series_g[i]) for i in sorted(vistos_g)},
         "videos_e": {i: dict(meta(reg_e[i], True), serie=series_e[i]) for i in sorted(vistos_e)},
         "videos_t": videos_t,   # los titulares no van: la página los toma de web/dias/ (pesan mucho)
+        "tr_med": tr_med, "tr_series": tr_series,
     }
 
 
@@ -620,10 +642,10 @@ def comprobar_rebobinado(r, medidas, n_titulares, records):
         yt = (mo["cmp"] or {}).get("youtube")
         if yt and any(v[1] not in r["videos_t"] for dr in yt["regiones"].values() for v in dr["gta"]):
             return f"rebobinar.js: en {mo['t']} falta un video en tendencia"
-        if any(not (0 <= i < n_titulares) for i in mo["nt"]["ultimas"]):
-            return f"rebobinar.js: en {mo['t']} hay un titular que no existe"
-        if len(mo["nt"]["ultimas"]) > NOTICIAS_ULTIMAS or any(a <= b for a, b in zip(mo["nt"]["ultimas"], mo["nt"]["ultimas"][1:])):
-            return f"rebobinar.js: en {mo['t']} los últimos titulares no van del más nuevo al más viejo"
+        if not (0 <= mo["nt"]["n"] <= n_titulares):
+            return f"rebobinar.js: en {mo['t']} la cuenta de titulares no cuadra"
+        if "tr" in mo and not (0 <= mo["tr"] < len(r["tr_series"])):
+            return f"rebobinar.js: en {mo['t']} falta la serie de Trends"
     for mo in r["momentos"]:   # el líder de cada momento es el último récord de datos.js hasta esa hora
         for tipo, (vid, visitas) in mo.get("rv", {}).items():
             antes = [x for x in records.get(tipo, []) if x["t"] <= mo["t"]]
@@ -631,6 +653,8 @@ def comprobar_rebobinado(r, medidas, n_titulares, records):
                 return f"rebobinar.js: en {mo['t']} el récord de {tipo} no cuadra con datos.js"
     if any(a["nt"]["n"] > b["nt"]["n"] for a, b in zip(r["momentos"], r["momentos"][1:])):
         return "rebobinar.js: la cuenta de titulares baja con el tiempo"
+    if any(not (0 <= v <= 100) for v in r["tr_med"].values()) or any(not (0 <= x[1] <= 100) for se in r["tr_series"] for x in se):
+        return "rebobinar.js: Trends fuera de 0-100"
     for tabla in (r["videos_g"], r["videos_e"]):
         for i, v in tabla.items():
             if [p[0] for p in v["serie"]] != sorted({p[0] for p in v["serie"]}):

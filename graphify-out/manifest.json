@@ -18,9 +18,9 @@
     "semantic_hash": ""
   },
   "web/app.js": {
-    "mtime": 1795222700.456917,
-    "seen": 1795222883.8737583,
-    "ast_hash": "4b9ab1cf7542f0cd7ba90ac9d317afb0",
+    "mtime": 1795223372.1710956,
+    "seen": 1795224146.152501,
+    "ast_hash": "ef9c25334768658c654ddb9548a9794d",
     "semantic_hash": ""
   },
   "web/datos-ejemplo.js": {
@@ -48,9 +48,9 @@
     "semantic_hash": ""
   },
   "ESTADO_ACTUAL.md": {
-    "mtime": 1795212567.4008396,
-    "seen": 1795221947.9256122,
-    "ast_hash": "b18a2308dd9e059b85604e5f37604cc4",
+    "mtime": 1795224136.453031,
+    "seen": 1795224146.152517,
+    "ast_hash": "8927131bc8a7bf4418c14ca7b80d7fb0",
     "semantic_hash": ""
   },
   "GUIA_CLAVES.md": {
@@ -60,9 +60,9 @@
     "semantic_hash": ""
   },
   "PLAN.md": {
-    "mtime": 1795212567.4023244,
-    "seen": 1795221947.9256203,
-    "ast_hash": "39ae2de5aacedde8df194c25adf3d2c9",
+    "mtime": 1795224079.3152623,
+    "seen": 1795224146.1525233,
+    "ast_hash": "dfd7191bf5aa12b77124ddd7586e0a1c",
     "semantic_hash": ""
   },
   "README.md": {
@@ -138,9 +138,9 @@
     "semantic_hash": ""
   },
   "recolector/generar_web.py": {
-    "mtime": 1795222399.6155035,
-    "seen": 1795222568.0384715,
-    "ast_hash": "4a8751c2a501028ecb099e4410e3998c",
+    "mtime": 1795224100.2475457,
+    "seen": 1795224146.1524777,
+    "ast_hash": "ca2dc0bcc5868597a02ccb0b6c8ed42c",
     "semantic_hash": ""
   },
   "despertador/worker.js": {
@@ -480,9 +480,9 @@
     "semantic_hash": ""
   },
   "pruebas/probar_rebobinar.py": {
-    "mtime": 1795222530.971811,
-    "seen": 1795222568.0384603,
-    "ast_hash": "9c3cb7c9dd96becc702126051f58a00f",
+    "mtime": 1795223404.2613268,
+    "seen": 1795224146.1524634,
+    "ast_hash": "23dc99b83d8903fcc93d7e079568730d",
     "semantic_hash": ""
   }
 }

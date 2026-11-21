@@ -427,6 +427,7 @@
     }
     var proxima = 0;
     (function cuadro(t) {
+      if (!lienzo.isConnected) return;   // otra fiesta lo reemplazó o se salió del rebobinado
       var pasado = t - inicio;
       if (pasado < 16000 && t > proxima) { estallar(); proxima = t + 350 + Math.random() * 700; }
       cx.globalCompositeOperation = "destination-out"; cx.fillStyle = "rgba(0,0,0,.22)"; cx.fillRect(0, 0, w, h);
@@ -759,11 +760,12 @@
   var gTwitch = grafico($("g-twitch"), "espectadores", opcionesTwitch(HOY));
   /* Trends por hora ("Trends sin huecos", 2026-11-16): cada punto es una hora, dibujado en su hora
      (antes, en la hora de la medición: ~1 h tarde), con el valor de la medición más nueva que la trae.
-     Al rebobinar, solo las horas ya completas en ese momento y dentro del tramo. */
+     Al rebobinar, las horas del tramo según la última medición buena de ese momento, con su escala
+     (Trends cambia de escala en cada medición: la de hoy traería el futuro). */
   function opcionesTrends(V) {
     var desde = V.corte == null ? 0 : Math.floor(V.rango[0] / 3600000) * 3600000 - 3600000;   // la hora completa de la primera medición
-    var serie = (V.D.trends_horas || []).map(function (h) { return { ts: Date.parse(h[0]), v: typeof h[1] === "number" ? h[1] : null }; })
-      .filter(function (p) { return !isNaN(p.ts) && (V.corte == null || (p.ts >= desde && p.ts + 3600000 <= V.corte)); });
+    var serie = V.corte != null ? V.serieTrends : (V.D.trends_horas || []).map(function (h) { return { ts: Date.parse(h[0]), v: typeof h[1] === "number" ? h[1] : null }; })
+      .filter(function (p) { return !isNaN(p.ts); });
     var o = { color: "--a2", unidad: "de 100", tope: 100, nombre: "Interés de búsqueda en Google Trends a lo largo del tiempo", serie: serie.length ? serie : null };
     if (V.corte != null) { o.rango = [desde, V.rango[1]]; if (!serie.length) o.serie = [{ ts: desde, v: null }]; }
     return o;
@@ -892,13 +894,14 @@
   var tabla = (function () {
     // Lo más nuevo primero (pedido de Bruno): días y filas de la más reciente a la más vieja.
     // Al rebobinar: lo medido hasta ese momento, abierta en el día de ese momento.
-    var nuevas, dias, elegido, tope, Dv = D;
+    var nuevas, dias, elegido, tope, Dv = D, preferidoAntes = null;
     function poner(V) {
       Dv = V.D;
       nuevas = V.M.slice().reverse();
       dias = []; nuevas.forEach(function (m) { var d = dia(m.ts); if (dias.indexOf(d) < 0) dias.push(d); });
       var preferido = V.corte == null ? dia(SALIDA) : dia(V.corte);
-      elegido = dias.indexOf(preferido) >= 0 ? preferido : (dias[0] || "");
+      if (preferido !== preferidoAntes || dias.indexOf(elegido) < 0) elegido = dias.indexOf(preferido) >= 0 ? preferido : (dias[0] || "");
+      preferidoAntes = preferido;
       tope = Math.max(1, V.picoTwitch ? V.picoTwitch.espectadores : 0, V.picoKick ? V.picoKick.kickEsp : 0);
       pintar();
     }
@@ -1201,7 +1204,8 @@
     // La primera página de la lista completa se pinta al tocar "Ver los N titulares" (ver arriba).
     var diasAntes = "";
     function poner(V) {
-      preparar(V); aplicar(); pintarFiltro(); resumenArriba(V); textoBoton();
+      var pagina = actual;
+      preparar(V); aplicar(); actual = Math.min(pagina, total); pintarFiltro(); resumenArriba(V); textoBoton();
       if (diasN.join() !== diasAntes) {   // solo si cambiaron los días (leer el ancho obliga a recalcular la página)
         diasAntes = diasN.join();
         requestAnimationFrame(function () { var barras = $("noticias-filtro").querySelector(".nt-barras"); if (barras) barras.scrollLeft = barras.scrollWidth; });
@@ -1675,7 +1679,7 @@
     }
     var lideres = lideresDe(RY.video), lideresShort = lideresDe(RY.short);
     var crece = [];
-    (V.D.youtube || []).forEach(function (v) {
+    (V.D.youtube_crece || V.D.youtube || []).forEach(function (v) {
       v.serie.forEach(function (p, i) {
         var ts = Date.parse(p.t);
         if (i) {
@@ -1715,6 +1719,8 @@
       { nombre: "Video que más creció en una hora", h: historia(crece), fmt: num, uni: "visitas en una hora" },
       { nombre: "Día con más titulares", h: historiaConteo(V.D.noticias || [], fClave, dia), fmt: num, uni: "titulares", solo: "dia" }
     ];
+    var abiertos = {};   // "Récords anteriores" que el visitante abrió: siguen abiertos al redibujar (7.1)
+    caja.querySelectorAll("details[open]").forEach(function (dt) { var sm = dt.closest("li").querySelector("small"); if (sm) abiertos[sm.textContent] = 1; });
     function cuando(r, e) { return r.solo ? e.que : dia(e.ts) + " · " + hora(e.ts); }
     function quien(r, e) { return r.solo || !e.que ? "" : enlace(e.url, limpio(e.que)); }
     var html = R.filter(function (r) { return r.h.length; }).map(function (r) {
@@ -1726,7 +1732,7 @@
         (r.ahora ? '<p class="rb-ahora">En ese momento: <b>' + r.fmt(r.ahora.valor) + "</b>" + (r.ahora.que && !r.solo ? " · " + enlace(r.ahora.url, limpio(r.ahora.que)) : "") +
           (V.corte - r.ahora.ts > 20 * 60000 ? " (dato de las " + hora(r.ahora.ts) + ")" : "") + "</p>" : "") +
         (r.aviso ? '<p class="rc-aviso">Puede que no trate de GTA 6: el filtro quita los que solo usan el hashtag, pero no es perfecto.</p>' : "") +
-        (prev.length ? '<details class="rc-prev"><summary>' + (r.prev || "Récords anteriores") + " (" + (r.h.length - 1) + ")</summary><ul>" + prev.map(function (p) {
+        (prev.length ? '<details class="rc-prev"' + (abiertos[r.nombre] ? " open" : "") + "><summary>" + (r.prev || "Récords anteriores") + " (" + (r.h.length - 1) + ")</summary><ul>" + prev.map(function (p) {
           return "<li><b>" + r.fmt(p.valor) + "</b> " + (quien(r, p) ? quien(r, p) + " · " : "") + cuando(r, p) + "</li>";
         }).join("") + "</ul></details>" : "") + "</li>";
     }).join("");
@@ -2032,7 +2038,7 @@
   var comparacionSec = (function () {
     var caja = $("comparacion-cols");
     if (!caja) return { poner: function () {} };
-    var C, tw, yt, kk, Dv = D;
+    var C, tw, yt, kk, Dv = D, abiertasCmp = {};   // países con "Ver N más" abierto (siguen así al redibujar)
     var GTA = { "1867279146": "GTA VI", "32982": "GTA V" }, GTA_KICK = { 13155: "GTA VI", 8: "GTA V" };
     // Al rebobinar (7.1): lo que había en ese momento (la última medición buena de cada fuente).
     function poner(V) {
@@ -2051,6 +2057,7 @@
     caja.addEventListener("click", function (e) {
       var b = e.target.closest(".cp-mas"); if (!b) return;
       var ol = b.previousElementSibling, abierta = ol.classList.toggle("abierta");
+      abiertasCmp[b.dataset.region] = abierta;
       b.textContent = abierta ? "Ver menos" : b.dataset.texto;
       b.setAttribute("aria-expanded", abierta);
     });
@@ -2130,8 +2137,8 @@
           });
           var resto = lis.length - VISIBLES;
           return '<div><p class="cp-tit">' + (nombres[r] || r) + " <b>" + d.gta.length + " de " + d.en_lista + "</b></p>" +
-            '<ol class="cp-videos">' + (lis.join("") || '<li class="vacio">Ningún video de GTA en la lista.</li>') + "</ol>" +
-            (resto > 0 ? '<button type="button" class="cp-mas" aria-expanded="false" data-texto="Ver ' + resto + ' más">Ver ' + resto + " más</button>" : "") + "</div>";
+            '<ol class="cp-videos' + (abiertasCmp[r] ? " abierta" : "") + '">' + (lis.join("") || '<li class="vacio">Ningún video de GTA en la lista.</li>') + "</ol>" +
+            (resto > 0 ? '<button type="button" class="cp-mas" aria-expanded="' + !!abiertasCmp[r] + '" data-region="' + limpio(r) + '" data-texto="Ver ' + resto + ' más">' + (abiertasCmp[r] ? "Ver menos" : "Ver " + resto + " más") + "</button>" : "") + "</div>";
         }).join("") + "</div></div>";
       }
       out += '</div><p class="cp-pie">' + (yt && yt.rockstar && yt.rockstar.suscriptores ? 'Canal de Rockstar en YouTube: <b>' + compacto(yt.rockstar.suscriptores) + "</b> suscriptores (YouTube redondea esta cifra). " : "") + "VI o V, según lo que dice el título del video.</p>";
@@ -2237,11 +2244,11 @@
     function enChile(ts) { return zonaLocal === ZONA || new Date(ts).getTimezoneOffset() * -60000 === desfase(ts); }
     function horaLocal(ts) { return fDiaLocal.format(new Date(ts)).replace(".", "") + ", " + fHoraLocal.format(new Date(ts)); }
     function duracion(ms) {
-      var m = Math.round(Math.abs(ms) / 60000), h = Math.floor(m / 60);
+      var m = Math.floor(Math.abs(ms) / 60000), h = Math.floor(m / 60);
       return h ? h + " h" + (m % 60 ? " " + (m % 60) + " min" : "") : (m % 60) + " min";
     }
     function desdeSalida(ts) {
-      var L = LUGARES[ref], d = ts - L.ts, en = " la salida en " + L.nombre;
+      var L = LUGARES[ref], d = Math.floor(ts / 60000) * 60000 - L.ts, en = " la salida en " + L.nombre;
       if (Math.abs(d) < 60000) return "justo en" + en;
       return d > 0 ? "+" + duracion(d) + " desde" + en : "faltan " + duracion(d) + " para" + en;
     }
@@ -2291,13 +2298,19 @@
         }).join("");
         // Los titulares de "Lo último" de cada momento están en web/dias/: se piden ahora, todos juntos.
         var dias = {};
-        momentos.forEach(function (mo) { mo.nt.ultimas.forEach(function (i) { var n = D.noticias[i]; if (n && !n.titulo) dias[diaUTC(Date.parse(n.t) / 1000)] = 1; }); });
+        momentos.forEach(function (mo) { ultimosHasta(mo.ts).forEach(function (n) { if (!n.titulo) dias[diaUTC(Date.parse(n.t) / 1000)] = 1; }); });
         return DIAS.cargar(Object.keys(dias)).then(function (contenidos) {
           contenidos.forEach(function (c) { (c.noticias || []).forEach(function (x) { var n = D.noticias[x.i]; if (n && !n.titulo) { n.titulo = x.titulo; n.medio = x.medio; n.url = x.url; } }); });
         }).catch(function () { /* sin titulares: "Lo último" queda corto, el resto sigue */ });
       });
       cargando.catch(function () { cargando = null; });
       return cargando;
+    }
+    // Los 6 últimos titulares publicados hasta esa hora (D.noticias va de la más vieja a la más nueva).
+    function ultimosHasta(T) {
+      var lista = D.noticias || [], j = lista.length;
+      while (j > 0 && Date.parse(lista[j - 1].t) > T) j--;
+      return lista.slice(Math.max(0, j - 6), j).reverse();
     }
     function primeroDesde(ts) { for (var i = 0; i < momentos.length; i++) if (momentos[i].ts >= ts) return i; return -1; }
 
@@ -2314,7 +2327,12 @@
     function vista(i) {
       var mo = momentos[i], T = mo.ts, fallos = mo.fallos || {};
       var antesDe = function (t) { return Date.parse(t) <= T; };
-      var Mv = M.filter(function (m) { return m.ts <= T; });
+      // Google Trends con la escala de cada medición (la de datos.js es la de hoy: traería el futuro).
+      // Sin dato propio (falló), queda vacío: la ficha muestra entonces el último bueno, con su hora.
+      var Mv = M.filter(function (m) { return m.ts <= T; }).map(function (m) {
+        var v = R.tr_med[Math.round(m.ts / 1000)];
+        return Object.assign({}, m, { interes: typeof v === "number" ? v : null });
+      });
       var d = Object.assign({}, D), RY = RUST.records || D.records_youtube || {};
       d.mediciones = (D.mediciones || []).filter(function (m) { return antesDe(m.t); }).map(function (m, j) {
         var dev = RUST.tendencias[j];   // conteo de tendencias de "El de Rust" (ver RUST)
@@ -2337,7 +2355,7 @@
       });
       d.noticias = (D.noticias || []).filter(function (n) { return antesDe(n.t); });
       d.medios_top = mo.nt.medios; d.medios_n = mo.nt.medios_n;
-      d.noticias_ultimas = mo.nt.ultimas.map(function (j) { return D.noticias[j]; }).filter(function (n) { return n && n.titulo; })
+      d.noticias_ultimas = ultimosHasta(T).filter(function (n) { return n.titulo; })
         .map(function (n) { return { t: n.t, titulo: n.titulo, medio: n.medio, url: n.url }; });
       d.comparacion = null;
       if (mo.cmp) {
@@ -2351,9 +2369,12 @@
           d.comparacion.youtube = Object.assign({}, mo.cmp.youtube, { regiones: regiones });
         }
       }
-      // Trends: si falló en esta medición, la línea llega hasta lo que se sabía en la última buena.
-      var corteTrends = fallos.trends ? Date.parse(fallos.trends) : T;
-      return { D: d, M: Mv, Mtramo: Mv.filter(function (m) { return m.ts >= rango[0]; }), corte: T, corteTrends: corteTrends, rango: rango, topeTwitch: topeTwitch,
+      // Trends: las horas del tramo según la última medición buena hasta ese momento (su escala).
+      var serieTrends = (mo.tr != null ? R.tr_series[mo.tr] : []).map(function (x) { return { ts: x[0] * 1000, v: x[1] }; });
+      // "Video que más creció en una hora": con las series de los videos de hoy (como la página de
+      // hoy), cortadas en ese momento; así el récord nunca baja al avanzar.
+      d.youtube_crece = (D.youtube || []).map(function (v) { return { id: v.id, titulo: v.titulo, serie: v.serie.filter(function (p) { return antesDe(p.t); }) }; });
+      return { D: d, M: Mv, Mtramo: Mv.filter(function (m) { return m.ts >= rango[0]; }), corte: T, serieTrends: serieTrends, rango: rango, topeTwitch: topeTwitch,
         picoTwitch: maximoEn(Mv, "espectadores"), picoKick: maximoEn(Mv, "kickEsp"), picoTrends: maximoEn(Mv, "interes"), fallos: fallos };
     }
 
@@ -2361,7 +2382,7 @@
       pintarFichas(V);
       pintarRecords(V, false);
       gTwitch.poner(opcionesTwitch(V), V.corte == null ? V.M : V.Mtramo);
-      gTrends.poner(opcionesTrends(V.corte == null ? V : Object.assign({}, V, { corte: V.corteTrends })), V.M);
+      gTrends.poner(opcionesTrends(V), V.M);
       tabla.poner(V);
       videosSec.poner(V);
       comparacionSec.poner(V);
@@ -2413,11 +2434,16 @@
       k = i;
       pintarVista(vista(k));
       pintarBarra();
-      try { history.replaceState(null, "", enlaceMomento()); } catch (e) { /* abierta como archivo: sin enlace */ }
+      ponerDireccion();
       // ¿Pasó por una hora cero hacia adelante? Fiesta del último lugar por el que pasó.
       var ahoraT = momentos[k].ts, cruzado = null;
       if (conFiesta !== false && antes != null && ahoraT > antes) ORDEN.forEach(function (x) { if (LUGARES[x].ts > antes && LUGARES[x].ts <= ahoraT) cruzado = x; });
       if (cruzado) fiesta(cruzado);
+    }
+    var relojDir = null;
+    function ponerDireccion() {   // la dirección guarda el momento; como mucho cada 400 ms (Safari limita replaceState)
+      clearTimeout(relojDir);
+      relojDir = setTimeout(function () { if (k >= 0) try { history.replaceState(null, "", enlaceMomento()); } catch (e) { /* abierta como archivo */ } }, 400);
     }
     var finAviso = null;
     function avisar(html, ms) {
@@ -2455,14 +2481,17 @@
       barra.hidden = false; entrada.classList.add("abierto");
       medirBarra();
       ir(i, false);
+      rangoIn.focus({ preventScroll: true });   // el botón se esconde: el foco va a la barra
     }
     function salir() {
-      reproducir(false);
+      reproducir(false); clearTimeout(relojDir);
       rebobinando = false; k = -1;
       document.body.classList.remove("rebobinando");
       DE_HOY.map($).filter(Boolean).forEach(function (s) { s.classList.remove("rb-hoy"); var p = s.querySelector(".rb-nota-hoy"); if (p) p.remove(); });
       barra.hidden = true; aviso.hidden = true; entrada.classList.remove("abierto");
+      $("rb-fiesta").textContent = "";   // sin fuegos sobre la página de hoy
       pintarVista(HOY);
+      $("rb-abrir").focus({ preventScroll: true });
       try { var u = new URL(location.href); u.searchParams.delete("momento"); u.searchParams.delete("desde"); history.replaceState(null, "", u.toString()); } catch (e) { /* nada */ }
     }
     function medirBarra() { document.documentElement.style.setProperty("--rb-alto", barra.offsetHeight + "px"); }
@@ -2478,9 +2507,11 @@
       }, function () {
         boton.disabled = false; boton.textContent = texto;
         $("rb-error").hidden = false;
+        if (typeof i === "function") { pendiente = i; entrada.scrollIntoView({ block: "center" }); }   // llegó por un enlace
       });
     }
-    $("rb-abrir").addEventListener("click", function () { if (!rebobinando) abrir(0); });
+    var pendiente = null;   // el momento de un enlace que no alcanzó a cargar: se usa al reintentar
+    $("rb-abrir").addEventListener("click", function () { if (!rebobinando) { var p = pendiente; pendiente = null; abrir(p || 0); } });
     rangoIn.addEventListener("input", function () { reproducir(false); ir(+rangoIn.value); });
     barra.addEventListener("click", function (e) {
       var b = e.target.closest("button"); if (!b || b.disabled) return;
@@ -2489,7 +2520,7 @@
       else if (b.dataset.ref) {
         ref = b.dataset.ref;
         try { localStorage.setItem("gta6-rb-desde", ref); } catch (err) { /* vale hasta recargar */ }
-        pintarBarra(); try { history.replaceState(null, "", enlaceMomento()); } catch (err) { /* nada */ }
+        pintarBarra(); ponerDireccion();
       }
       else if (b.dataset.vel) { vel = +b.dataset.vel; pintarBarra(); if (reloj) reproducir(true); }
       else if (b === play) reproducir(!reloj);
