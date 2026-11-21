@@ -267,7 +267,7 @@
      no corre requestAnimationFrame, así que se espera a que vuelva a estar a la vista para
      empezar los 5 s. Mientras tanto, si llega otra recarga sola, se guarda el lugar pendiente
      (lugarPendiente), no la altura de ese momento, que todavía no está corregida. */
-  var lugarPendiente = null;
+  var lugarPendiente = null, recargandoSola = false;
   function lugarActual() {
     if (lugarPendiente) return lugarPendiente;
     var secs = document.querySelectorAll("section[id]"), elegida = null;
@@ -283,6 +283,12 @@
     function auto() { try { history.scrollRestoration = "auto"; } catch (e) { /* nada */ } }
     if (!lugar || typeof lugar.y !== "number") { auto(); return; }
     lugarPendiente = lugar;
+    // Si la persona recarga ella misma antes de terminar (F5, el botón del navegador, tirar
+    // para recargar en el celular), "manual" quedaría pegado en esa entrada del historial y sus
+    // recargas ya no volverían a su altura: al irse, se devuelve "auto" (abogado del diablo,
+    // 21 nov). Salvo que sea otra recarga sola, que necesita "manual".
+    function alSalir() { if (!recargandoSola) auto(); }
+    window.addEventListener("pagehide", alSalir);
     var hasta = 0, quieto = true;
     function soltar() { quieto = false; }
     var toques = ["wheel", "touchstart", "keydown", "pointerdown", "mousedown"];
@@ -300,6 +306,7 @@
       else {
         toques.forEach(function (t) { window.removeEventListener(t, soltar, { passive: true, capture: true }); });
         lugarPendiente = null;   // desde aquí, el lugar es donde esté la persona
+        window.removeEventListener("pagehide", alSalir);
         auto();   // las recargas que haga la persona (F5) las vuelve a restaurar el navegador
       }
     }
@@ -1757,6 +1764,7 @@
       try {
         sessionStorage.setItem("gta6-lugar-recarga", JSON.stringify(lugarActual()));
         sessionStorage.setItem("gta6-recarga", "1");
+        recargandoSola = true;
         history.scrollRestoration = "manual";   // vuelve "auto" al terminar de volver al lugar
       } catch (e) { /* sin almacenamiento */ }
       // GitHub Pages deja guardar datos.js hasta 10 minutos: se pide de nuevo a la red (eso

@@ -18,6 +18,8 @@ queda todo. A 1280 y 384 px, en los dos estilos:
   6. oculta: lo normal de verdad. La página recargada sigue en segundo plano (el navegador no
      corre requestAnimationFrame ahí), se arma tarde, llega una SEGUNDA recarga sola mientras
      sigue oculta y recién después la persona vuelve a la pestaña: Titulares, donde estaba.
+  7. recarga a mano: si la persona recarga ella misma durante los 5 s de corrección, la página
+     siguiente vuelve a tener history.scrollRestoration = "auto" (no queda pegado "manual").
 Además: sin errores en la consola y el navegador vuelve a restaurar él las recargas normales
 (history.scrollRestoration = "auto").
 
@@ -126,6 +128,14 @@ def caso(nav, url, ancho, estilo, nombre):
             pg.wait_for_timeout(3000)
             pg.evaluate("window.__mostrar()")   # la persona vuelve a la pestaña
         ctx.unroute("**/version.json")
+        if nombre == "recarga a mano":
+            pg.wait_for_timeout(500)
+            with pg.expect_navigation(wait_until="domcontentloaded", timeout=90000):
+                pg.evaluate("location.reload()")
+            pg.wait_for_timeout(1500)
+            modo = pg.evaluate("history.scrollRestoration")
+            ctx.close()
+            return [f"{nombre}: history.scrollRestoration quedó en '{modo}'"] * (modo != "auto") +                 [f"{nombre}: error en la consola: {e[:160]}" for e in errores]
         if nombre == "arriba crece":
             pg.wait_for_timeout(1200)
             pg.evaluate("""() => { const d = document.createElement('div'); d.style.height = '1200px';
@@ -167,7 +177,7 @@ def main():
         for ancho in ANCHOS:
             for estilo, nombre_estilo in ESTILOS:
                 fallos = []
-                for nombre in ("titulares", "dentro", "se arma tarde", "arriba crece", "la persona mueve", "oculta"):
+                for nombre in ("titulares", "dentro", "se arma tarde", "arriba crece", "la persona mueve", "oculta", "recarga a mano"):
                     fallos += caso(nav, url, ancho, estilo, nombre)
                 print(("OK   " if not fallos else "FALLO") + f" {ancho}px {nombre_estilo}" + "".join("\n      " + f for f in fallos))
                 todos += fallos

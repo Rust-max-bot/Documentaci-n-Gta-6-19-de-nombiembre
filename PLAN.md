@@ -73,7 +73,9 @@ las reglas, en `CLAUDE.md`.
       **Recarga automática: arreglada el 21 nov** (volvía 1.700 a 4.600 px más arriba: un
       `scrollTo` suave antes de que la página tuviera su alto). Ahora vuelve a la sección y se
       corrige 5 s; con la pestaña oculta espera a que vuelva. Prueba: `pruebas/probar_recarga.py`.
-      **Falta:** abogado del diablo corto sobre ese arreglo. **Fallo aparte, ya existía:** a 384
+      Abogado del diablo (21 nov): arreglado que "manual" quedaba pegado si la persona recargaba
+      durante la corrección. **Queda, menor:** arrastrar la barra de desplazamiento o "buscar en la
+      página" no detiene la corrección (solo dura 5 s). **Fallo aparte, ya existía:** a 384
       px en Miami 1986, abrir `index.html#seccion-noticias` no deja la sección arriba
       (`probar_saltos.py`, 2 de 2 veces también con el código de antes; en Miami 2026, bien).
       Descartado: `defer` (rompe `filtro-videos.js:116`), partir mediciones, mover fotos y
