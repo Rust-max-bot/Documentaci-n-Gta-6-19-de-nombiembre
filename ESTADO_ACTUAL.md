@@ -20,15 +20,17 @@
 Hecho el 21 nov: **7.1 Rebobinar unida a `main`** (con números que cuentan y gráficos "La línea
 avanza"), **6.1 comprobada** (guardada a las 15:41 UTC) y **6.8 publicada** (sección "¿Qué tan
 grande es GTA 6?", `#trends61`), y arreglada la prueba `probar_marcas.py`. Siguiente tarea: la
-que elija Bruno. Lo que se dejó **para después del 22 nov**: el resto de la 9.4 (fallo de la
-recarga automática), el resumen de huecos de la 9.3, revisar el peso de `datos/` y la 9.11 (b).
+que elija Bruno. **En curso (21 nov, en el PC de Bruno, sin subir):** 9.4, arreglo del fallo de
+la recarga automática y prueba nueva `pruebas/probar_recarga.py`; plan en pasos cortos (falta
+guardarla y un abogado del diablo corto). La 9.3 ya está hecha. Para después del 22 nov: revisar
+el peso de `datos/` y la 9.11 (b).
 La rama `rebobinar-7-1` ya no hace falta (Bruno puede borrarla en GitHub).
 
 **La página está lista para el lanzamiento y publicada** en
 <https://rust-max-bot.github.io/Documentaci-n-Gta-6-19-de-nombiembre/> (la publica
 `publicar-pagina.yml` tras cada medición). Hechas las fases 0, 1, 3, casi toda la 2 (falta la
 2.5, TikTok), la 4.1 y 4.2, la 6 (menos 6.6 Instagram; de la 6.1 queda una idea), la 7 (menos 7.4 y 7.13)
-y la 9 de la 9.1 a la 9.12, salvo 9.3, 9.4 y 9.11 (b). Qué tiene la página, sección por
+y la 9 de la 9.1 a la 9.12, salvo 9.4 y 9.11 (b). Qué tiene la página, sección por
 sección: `historial/ESTADO_2026-11-17.md` y `README.md`.
 
 **El recolector funciona solo.** Lo lanza el despertador de Cloudflare (Worker
@@ -86,6 +88,7 @@ lanzamiento (revisión completa y menos alarmas por Google). Antes: 9.12 y más 
 ## Últimos cambios
 
 - 2026-11-17: estado anterior archivado en historial/ESTADO_2026-11-17.md
+- 2026-11-21: 9.3 terminada (pedido de Bruno): `recolector/revisar.py` muestra, de cada fuente con huecos, por código (en Trends, también el paso), por día (huecos/mediciones), por hora de Santiago y la racha más larga seguida, y cuántas mediciones tuvieron algún hueco cada día. Cada fuente cuenta solo entre su primera y su última medición (Reddit: "ya no se mide"). Probado con los datos reales y con datos inventados; `/code-review` (4 revisores): sin problemas.
 - 2026-11-21: 6.8 hecha (pedido de Bruno, opción A "Tablero" de 3 prototipos, apta para celular): sección "¿Qué tan grande es GTA 6?" (`#trends61`, tras "Interés en Google Trends") con la 6.1: cifras (5,9× Minecraft, el que más se acercó en la semana; 1,6× el mejor mes de GTA 5; 66 países, Chile 22.º), los 5 juegos hora por hora en la misma escala, totales y hora más alta, países, mes a mes desde 2013 y búsquedas. Revisada con `/code-review` (4 revisores) y un abogado del diablo; arreglados: barras que casi desaparecían entre 760 y 980 px, "66 países con búsquedas" (son los que lista Google), la cifra 1,6× poco clara, contraste en "Miami 2026", "aumento puntual" visible, se oculta si la consulta no es la del lanzamiento, menú sin secciones ocultas. `probar_pagina.py` (Edge y Firefox; la captura de sección ya no se corta en 1400 px), `probar_rebobinar.py`, `probar_selector.py`, `probar_marcas.py`: todo bien.
 - 2026-11-21: arreglado el fallo de `probar_marcas.py` (pedido de Bruno, con `/code-review` y un abogado del diablo): la página estaba bien; la prueba suponía que siempre hay un video de reserva, y la última medición traía 19 Shorts que pasan el filtro (tope 20). Ahora comprueba que al marcar solo se va ese video, y que entra el siguiente con un tope más chico y con datos inventados (no depende del día). Un error inventado (marcas después del tope) lo detectan las dos comprobaciones nuevas. `probar_marcas.py`: todo bien.
 - 2026-11-21: 7.1 unida a `main` (pedido de Bruno). Antes de subir, con `main` al día y los datos del 21 nov: `generar_web.py`, `probar_rebobinar.py`, `probar_pagina.py` y `probar_selector.py`, todo bien; `probar_marcas.py` falla en una comprobación que también falla en el `main` de antes (ver "Dónde quedamos").
@@ -93,16 +96,6 @@ lanzamiento (revisión completa y menos alarmas por Google). Antes: 9.12 y más 
 - 2026-11-21: 7.1 (a), pedido de Bruno: en "Twitch y Kick, medición por medición", la fila que llega cuenta desde el número de la medición anterior (`cifra(…, desde)`). `probar_rebobinar.py` (Edge y Firefox), `probar_pagina.py` y `probar_selector.py`: todo bien.
 - 2026-11-21: 7.1 (a), pedido de Bruno: cuentan también los números de récords (el récord y los tráilers), línea de tiempo (máximos y filtros), videos (visitas y "+"), GTA frente a lo más visto (puestos, barras, tendencias), titulares (resumen, medios, días) y el valor de Twitch en la barra Pulso. Solo los de las secciones a la vista (IntersectionObserver); medir cada número hacía la parada el doble de lenta. Con la CPU 4x, una parada tarda como antes; los cuadros mientras cuenta, ~27 ms (antes ~13). `probar_rebobinar.py` (Edge y Firefox), `probar_pagina.py` (Edge y Firefox), `probar_selector.py` y `probar_marcas.py`: todo bien.
 - 2026-11-20: 7.1 (a), opción 1 elegida por Bruno (de 4 propuestas con `find-animation-opportunities`): al rebobinar, los números de las fichas y el "En ese momento" de los récords cuentan en 250 ms desde el valor anterior en vez de saltar. Al instante al arrastrar la barra, con "reducir movimiento" y en la primera parada. `probar_rebobinar.py` lo comprueba (Edge y Firefox), `probar_pagina.py` y `probar_selector.py`: todo bien.
-- 2026-11-20: 7.1, pedido de Bruno: al rebobinar también viajan la portada (cuenta, lugares con ✓, lema, aviso "¡GTA 6 ya salió en…!" y su fiesta con fuegos y reflectores al pasar por una hora cero) y la línea de tiempo (crece al avanzar y se achica al retroceder, conservando su filtro). Titulares: siguen por hora de publicación (decisión de Bruno). Pruebas: todo bien.
-- 2026-11-20: 7.1, diseño "Pulso" en la barra del rebobinado (Bruno lo eligió entre 3 prototipos hechos con la skill `prototype`; descartados "Reproductor" y "Videograbadora"): la pista es la curva de Twitch con las horas cero; "contar desde", saltar, velocidad y copiar enlace en "⋯". ~170 px en el celular (antes ~310). ~78 ms por parada con CPU 4x. Prototipo borrado. Pruebas: todo bien.
-- 2026-11-20: 7.1 Rebobinar el lanzamiento en la rama `rebobinar-7-1` (entrevista con Bruno): tramo 18 nov 08:00 → 20 nov 12:00 UTC, 104 paradas; viajan fichas, récords, gráficos de Twitch/Kick y Trends, tabla, videos, comparación y titulares; las demás quedan tenues. `web/rebobinar.js` (~690 KB, solo al abrir; no va a git). Arreglos de `/code-review` (récords de YouTube sin visitas del futuro, filtro del visitante, un fallo del rebobinado no frena la publicación) y del abogado del diablo (Trends con la escala de ese momento, fuegos que seguían, récord "creció en una hora" que bajaba, lo abierto se mantiene, foco). Más rápido: ~130 ms por parada en celular lento simulado (antes ~260). Pruebas: todo bien.
-- 2026-11-20: PLAN.md archivado en historial/PLAN_2026-11-20.md (pasó de 20.000 bytes). 9.4 preparada en la rama `optimizar-9-4` (`pruebas/medir_carga.py` y plan corregido por un abogado del diablo): Hechos en la rama: preload, estilo y cielo antes del primer dibujo (`web/inicio.js`); B y `content-visibility` descartados. Página armada ~5,3 → ~3,7 s. Revisada dos veces por un abogado del diablo; pruebas bien. **Unida a `main` el 20 nov** (Bruno la probó); la rama ya no hace falta. Pendiente de la 9.4: el fallo de la recarga automática (ver `PLAN.md`).
-- 2026-11-20: README al día (pedido de Bruno): sección "Estado" con los máximos reales (Twitch 3.189.635 y Kick 1.433.865, 18 nov) y lo que falta; Kick, 7 tráilers, Shorts, selector de videos, Doomsday, Próximamente, tres rayas de lanzamiento, panel de videos, Trends extra automática, Reddit quitado y documentos nuevos.
-- 2026-11-20: gráficos de Twitch/Kick y de Trends con tres rayas de lanzamiento (medianoche del 19 nov en Nueva Zelanda, Chile y Miami; antes solo Chile), pedido de Bruno: el gran pico llegó tras la hora cero de Nueva Zelanda. En pantallas angostas los nombres van en escalera. `probar_pagina.py`: todo bien.
-- 2026-11-18: Fase 10 unida a `main` (pedido de Bruno). Antes de subir, con `main` al día: `probar_marcas.py`, `probar_selector.py`, `probar_pagina.py` y `probar_panel.py`, todo bien.
-- 2026-11-18: Kick en "GTA frente a lo más visto" (pedido de Bruno, sin opciones de diseño): puesto de GTA VI en el recuadro y barras de categorías bajo las de Twitch. Fuente nueva `kick_ranking`: Kick no tiene ranking, así que lee todos sus directos (~12.500, 13 páginas) y suma el público por categoría. Probada en GitHub sin guardar en una rama de prueba (ya borrada); el recolector no se detuvo. Se ve desde la primera medición con el cambio. Si falla, `git revert` de su commit.
-- 2026-11-18: directos de YouTube descartados por ahora (Bruno: datos poco limpios; motivos en `PLAN.md`). La página lo explica en la nota de "Espectadores en Twitch y Kick". Probado a 1280 y 384 px en los dos estilos: todo bien.
-- 2026-11-18: la previa de Trends de las 11:15 UTC no corrió (GitHub no lanzó el horario: no hay ninguna ejecución "schedule"; GitHub no garantiza sus horarios). Un lanzamiento a mano a las 12:53 sin la casilla "previa" terminó en verde sin hacer nada ("fuera del 20-25 nov"). Lanzada a mano con "previa" a las 12:57 UTC: guardada en `datos/trends_previa/2026-11-18T1257Z.json`, con las 5 preguntas. Reparado: lanzado a mano fuera del 20-25 nov sin "previa" ahora sale en rojo con el aviso de marcarla; el respaldo de la 6.1 pasa a tres horas (18:41, 20:41 y 22:41 UTC); quitado el horario de la previa del 18.
 
 ## Pendiente
 
@@ -112,7 +105,7 @@ La lista completa y su orden están en `PLAN.md`. Resumen (2026-11-17):
   22). **Reddit:** quitado (6.9): solo
   volvería con la clave oficial.
 0. **(2026-11-16, orden de Bruno):** 9.4 optimizar la página (eje y `partes()` hechos; lo
-   grande, después del 22) y lo que falta de la 9.3 (resumen de huecos en `revisar.py`, después del 22). Descartados
+   grande, después del 22; el fallo de la recarga, en curso el 21 nov). 9.3: hecha. Descartados
    (Bruno): la 9.2 "¿Cuánta gente faltó?", Cloudflare Radar, redes de descarga de las consolas y
    "qué tan popular es GTA 6 en YouTube". Detalle en `PLAN.md`.
 1. **7.4:** "Lo que espero" ya está en la página. Después del lanzamiento, Bruno escribe "Lo que

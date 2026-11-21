@@ -4,13 +4,14 @@ Uso:  python recolector/revisar.py            (todo lo guardado)
       python recolector/revisar.py --horas 24 (solo las últimas 24 horas)
 
 Muestra: mediciones, turnos del horario que faltan o se midieron dos veces, fallos por
-fuente, unidades de YouTube por día (el cupo se reinicia a medianoche de California) y el
-peso de los datos.
+fuente, resumen de huecos (por código, día, hora y rachas seguidas; tarea 9.3), unidades de
+YouTube por día (el cupo se reinicia a medianoche de California) y el peso de los datos.
 
 Horario (el del despertador, despertador/worker.js): minuto 7 de cada hora, y además minuto
 37 la semana del lanzamiento (17 al 21 nov, UTC). Si se cambia allí, cambiarlo aquí también.
 """
 import json
+import re
 import statistics
 import sys
 from collections import Counter, defaultdict
@@ -42,6 +43,66 @@ def turnos(desde, hasta):
                 lista.append(t)
         hora += timedelta(hours=1)
     return lista
+
+
+def hueco(m, fuente):
+    """El error de esa fuente en esa medición, o None si respondió. Si la fuente no vino en la
+    medición (entre su primera y su última), cuenta como hueco "falta"."""
+    v = m.get(fuente, {"error": "falta"})
+    return v["error"] if "error" in v else None
+
+
+def codigo(error):
+    """Código del error para agrupar: "429", "429 (paso explore)", "no vino"... Los mensajes del
+    recolector dicen "código NNN"; en Trends se suma el paso, porque cada uno falla distinto."""
+    if error == "falta":
+        return "no vino en la medición"
+    c = re.search(r"código (\d{3})", error)
+    if not c:
+        return "otro: " + error[:60]
+    paso = re.search(r"\(paso (\w+)\)", error)
+    return c.group(1) + (f" (paso {paso.group(1)})" if paso else "")
+
+
+def resumen_huecos(medidas, fuentes, local):
+    """Tarea 9.3: de cada fuente con huecos, qué código, qué días, a qué horas (Santiago) y la
+    racha más larga de mediciones seguidas con hueco. En "por día", N/M = huecos / mediciones de
+    ese día (M solo cuenta las mediciones mientras la fuente existía)."""
+    dia = lambda t: t.astimezone(SANTIAGO).strftime("%d-%m")
+    por_fecha = lambda pares: sorted(pares, key=lambda x: x[0][3:] + x[0][:2])   # mes y luego día
+    por_dia = Counter(dia(fecha(m["t"])) for m, _ in medidas)
+    con_hueco = set()
+    print("\nHuecos (hora de Santiago):")
+    for fuente, (i0, i1) in fuentes.items():
+        rango = [m for m, _ in medidas[i0:i1 + 1]]
+        huecos = [(fecha(m["t"]), e) for m in rango if (e := hueco(m, fuente)) is not None]
+        if not huecos:
+            continue
+        racha = mejor = 0
+        inicio = mejor_inicio = None
+        for m in rango:
+            if hueco(m, fuente) is None:
+                racha, inicio = 0, None
+                continue
+            racha += 1
+            inicio = inicio or fecha(m["t"])
+            if racha > mejor:
+                mejor, mejor_inicio = racha, inicio
+        dias = Counter(dia(t) for t, _ in huecos)
+        medidas_dia = Counter(dia(fecha(m["t"])) for m in rango)   # solo mientras la fuente existía
+        horas = Counter(t.astimezone(SANTIAGO).hour for t, _ in huecos)
+        print(f"  {fuente}: {len(huecos)} de {len(rango)} mediciones ({100 * len(huecos) / len(rango):.1f} %)")
+        print("    por código: " + ", ".join(f"{c} ×{n}" for c, n in Counter(codigo(e) for _, e in huecos).most_common()))
+        print("    por día:    " + ", ".join(f"{d} {n}/{medidas_dia[d]}" for d, n in por_fecha(dias.items())))
+        print("    por hora:   " + ", ".join(f"{h:02d} h ×{n}" for h, n in sorted(horas.items())))
+        print(f"    racha más larga: {mejor} seguida{'s' if mejor > 1 else ''} (desde {local(mejor_inicio)})"
+              + ("  ← se repitió en la medición siguiente" if mejor > 1 else ""))
+        con_hueco.update(t for t, _ in huecos)
+    if not con_hueco:
+        print("  ninguno")
+        return
+    print("  mediciones con algún hueco, por día: "
+          + ", ".join(f"{d} {n}/{por_dia[d]}" for d, n in por_fecha(Counter(dia(t) for t in con_hueco).items())))
 
 
 def revisar_turnos(ts, desde, hasta, local):
@@ -103,14 +164,20 @@ def main():
     # Ojo: en el PC, hacer antes "git pull", o los turnos recientes saldrán como faltantes.
     revisar_turnos(ts, desde if horas else ts[0] - ANTES, ahora - DESPUES, local)
 
+    # Cada fuente cuenta solo entre su primera y su última medición: una añadida después (Kick,
+    # 15 nov) no tiene huecos antes, y una quitada (Reddit, 6.9, 17 nov) no los tiene después.
+    fuentes = {}
+    for i, (m, _) in enumerate(medidas):
+        for k, v in m.items():
+            if isinstance(v, dict):
+                fuentes[k] = (fuentes[k][0] if k in fuentes else i, i)
     print("\nFuentes (respondió / hueco):")
-    for fuente in [k for k in medidas[-1][0] if isinstance(medidas[-1][0][k], dict)]:
-        # Una fuente añadida después (Reddit, 2026-11-13) solo cuenta desde su primera medición.
-        primera = next(i for i, (m, _) in enumerate(medidas) if fuente in m)
-        desde_ella = medidas[primera:]
-        errores = [m[fuente]["error"] for m, _ in desde_ella if "error" in m.get(fuente, {"error": "falta"})]
-        print(f"  {fuente:12} {len(desde_ella) - len(errores):4} / {len(errores):<4}"
-              + (f"  último error: {errores[-1]}" if errores else ""))
+    for fuente, (i0, i1) in fuentes.items():
+        errores = [e for m, _ in medidas[i0:i1 + 1] if (e := hueco(m, fuente)) is not None]
+        print(f"  {fuente:18} {i1 - i0 + 1 - len(errores):4} / {len(errores):<4}"
+              + (f"  último error: {errores[-1]}" if errores else "")
+              + (f"  (ya no se mide; última vez: {local(ts[i1])})" if i1 < len(medidas) - 1 else ""))
+    resumen_huecos(medidas, fuentes, local)
 
     unidades = defaultdict(int)
     for m, _ in medidas:

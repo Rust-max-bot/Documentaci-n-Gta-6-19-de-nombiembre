@@ -14,7 +14,7 @@ de texto por día en vez de una base de datos SQL (motivos en `PLAN.md`).
 | `red.py` | Piezas comunes para pedir datos a internet |
 | `interruptor.json` | **Encender, apagar o alargar** la recolección |
 | `filtro_videos.json` | Qué videos de YouTube muestra la página (filtro "¿es de GTA 6?"; se puede apagar) |
-| `revisar.py` | Resumen de cómo va: mediciones, huecos, fallos, cupo de YouTube y peso |
+| `revisar.py` | Resumen de cómo va: mediciones, turnos que faltan, fallos y huecos de cada fuente (por código, día, hora y rachas seguidas), cupo de YouTube y peso |
 | `generar_web.py` | Convierte `datos/` en `web/datos.js`, `web/dias/` y `web/version.json` para la página (lo usa `ver_pagina.bat`) |
 | `probar_fuentes.py` | Prueba suelta de las fuentes (workflow "Probar fuentes"); no guarda nada |
 | `trends_extra.py` | Tarea 6.1: 5 preguntas extra a Google Trends, **una sola vez** (ver abajo) |

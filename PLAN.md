@@ -74,12 +74,12 @@ las reglas, en `CLAUDE.md`.
       (Titulares queda 1.700 a 4.600 px más arriba; `app.js` ~L1330 compite con el navegador).
       Descartado: `defer` (rompe `filtro-videos.js:116`), partir mediciones, mover fotos y
       `content-visibility` (~7 % de CPU; rompía los enlaces #sección en Edge y copiar todo en Firefox).
-- [ ] **9.3 Menos alarmas por Google** (Bruno, 2026-11-16). **Hecho el 17 nov** (Bruno pidió
+- [x] **9.3 Menos alarmas por Google** (Bruno, 2026-11-16). **Hecho el 17 nov** (Bruno pidió
       "menos fallos" para el lanzamiento): Noticias reintenta una vez a los 20 s si Google da 429/503,
       y un 429/503 suelto de Noticias o Trends deja aviso amarillo con la ejecución en verde (rojo si
       se repite en la medición siguiente o si falla otra cosa). Del 17 nov: 10 de 30 ejecuciones en
-      rojo, todas por Google o Reddit, sin perder datos. Probado en GitHub sin guardar. **Falta
-      (después del 22):** resumen de huecos por fuente, hora, día y código en `recolector/revisar.py`.
+      rojo, todas por Google o Reddit, sin perder datos. Probado en GitHub sin guardar. **Hecho el
+      21 nov:** resumen de huecos en `recolector/revisar.py` (por código, día, hora y racha).
 - [ ] **6.6 Instagram** (Kick ya está hecho; ver "Lo ya hecho"). Parece difícil: la API de Meta
       solo funciona con una cuenta de empresa o creador propia unida a una página de Facebook, y
       la búsqueda por hashtag da pocas publicaciones, no el total, con límite semanal. Si no
