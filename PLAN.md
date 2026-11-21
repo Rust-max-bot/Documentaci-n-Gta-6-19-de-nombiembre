@@ -47,8 +47,8 @@ las reglas, en `CLAUDE.md`.
       debate entre dos agentes): el despertador de Cloudflare el 21, 22, 23 y 24 nov a las 15:41 UTC
       y, de respaldo, un `schedule` de GitHub a las 18:41, 20:41 y 22:41 UTC (GitHub se salta horarios: 18 nov). Guarda solo la primera vez (paso
       "decidir": si ya hay archivo o es fuera del 20-25 nov 2026, termina en verde), sin ejecuciones
-      dobles y con 25 min de tiempo. Recordatorios en el Google Calendar de Bruno el 21 y el 24 nov
-      (16:30 de Santiago). **Falta:** (1) comprobar el 21 que se guardó; (2) mostrarlo en la página, con opciones y capturas; (3) idea sin
+      dobles y con 25 min de tiempo. **Guardada** el 21 nov 15:41 UTC (5 preguntas bien).
+      **Falta:** (2) mostrarlo en la página, con opciones y capturas; (3) idea sin
       decidir: repetir lo de Doomsday en enero, después de su estreno (18 dic).
 - [ ] **9.11 Skill de animación y forma de administrarlas** (Bruno, 2026-11-17). (a) **Hecho
       (2026-11-17):** instaladas seis skills de `emilkowalski/skills` (MIT): `prototype`,
@@ -93,8 +93,15 @@ las reglas, en `CLAUDE.md`.
 
 ### Después del lanzamiento
 
-- [ ] **7.1 Rebobinar el lanzamiento.** Una barra para mover la página hora por hora y revivir
-      el 19 nov: números, gráfico y titulares de esa hora. Los datos ya quedan guardados.
+- [ ] **7.1 Rebobinar el lanzamiento.** Hecho y probado en la rama `rebobinar-7-1` (20 nov;
+      `/code-review`, abogado del diablo, `pruebas/probar_rebobinar.py`). Diseño "Pulso" (Bruno).
+      (a) **Animaciones:** de 4 propuestas (`find-animation-opportunities`), Bruno eligió la 1,
+      **hecha** (números de todas las secciones, 250 ms) y gráficos "La línea avanza" (opción A,
+      hecha). Las otras, si Bruno las pide: videos que se
+      deslizan al cambiar de puesto (280 ms), entrada suave de lo nuevo arriba (línea de tiempo,
+      tabla, "Lo último"; 200 ms) y destello de "¡Nuevo récord!" (450 ms). Descartados: animar la
+      barra Pulso, los gráficos, las barras de la tabla, los avisos de fallo y la cuenta de la
+      portada. **Falta:** (b) que Bruno la pruebe y la una a `main`.
 - [ ] **4.3 Análisis de datos (A3).** Datos interesantes: popularidad, visitas, cuánto dura el
       interés, antes y después. Necesita varios días de datos reales. **Sin IA** (Bruno, 2026-11-18): un
       programa normal, como `generar_web.py`, que corre solo con cada medición. En unos días.
@@ -212,6 +219,13 @@ El porqué y las opciones descartadas, en `historial/PLAN_2026-11-18-3.md` y `hi
 - **Opciones elegidas por Bruno:** portada 7.12 A; Twitch y Kick 6.6 B; videos 6.4 A y 6.5 B;
   récords 6.2 A; titulares B; GTA frente a lo más visto 9.7 A; cápsula 7.4 C; copias 7.10 B;
   Próximamente 7.11 C; menú flotante 2.12 B.
+- **Rebobinar (7.1, Bruno, 2026-11-20):** del 18 nov 08:00 al 20 nov 12:00 UTC, una parada por
+  medición (cada media hora); viajan portada, fichas, récords, línea de tiempo, gráficos, tabla,
+  videos, comparación y titulares (por hora de publicación; las demás, tenues); controles: arrastrar, saltar a las 3 horas cero, reproducir
+  1x/2x/4x, ±30 min, copiar enlace, volver a hoy; hora del visitante + "desde la salida" en NZ,
+  Chile o Miami; fichas y récords: valor del momento y récord hasta ahí; marco fijo; fuente caída
+  = último dato bueno con aviso; fiesta al pasar una hora cero. Datos en `web/rebobinar.js`.
+  Diseño "Pulso" (descartados "Reproductor" y "Videograbadora").
 - **Muchas visitas:** `datos.js` lleva lo necesario al abrir; titulares por día en `web/dias/`.
   Plan B solo si GitHub avisa: Cloudflare Pages.
 - **Sincronización del PC** (`sincronizar_interruptor.bat`): **apagada por Bruno el 2026-11-16**.

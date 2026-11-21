@@ -31,6 +31,7 @@ pruebas/capturas/
 graphify-out/.graphify_build_state.json
 web/version.json
 web/videos-extra.js
+web/rebobinar.js
 web/dias/
 
 # Panel de videos (Fase 10): el borrador de marcas sin publicar se queda en el PC

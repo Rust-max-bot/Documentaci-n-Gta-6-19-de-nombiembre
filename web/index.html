@@ -164,6 +164,17 @@
   <p class="en-vivo" id="en-vivo" hidden></p>
   <section class="fichas" id="fichas"></section>
 
+  <!-- Rebobinar el lanzamiento (tarea 7.1). La barra la arma app.js; los datos de cada momento
+       llegan de rebobinar.js, que solo se carga al tocar el botón. -->
+  <section class="bloque rb-entrada" id="rebobinar" hidden>
+    <div>
+      <h2>Rebobinar el lanzamiento</h2>
+      <p class="nota">Mueve la página media hora por media hora y revive cómo fue: desde 3 horas antes de que saliera en Nueva Zelanda hasta que el 19 de noviembre terminó en todo el mundo. Cambian los números, los gráficos, los videos y los titulares de cada momento.</p>
+      <p class="rb-error" id="rb-error" role="alert" hidden>No se pudo cargar el rebobinado. Revisa la conexión y vuelve a intentarlo.</p>
+    </div>
+    <button type="button" class="rb-abrir" id="rb-abrir">⏪ Rebobinar</button>
+  </section>
+
   <!-- Logros y récords (tarea 6.2, opción A "vitrina" de Bruno) -->
   <section class="bloque observar" id="records">
     <h2>Logros y récords</h2>
@@ -297,6 +308,9 @@
 
 <nav class="menu" id="menu" aria-label="Secciones de la página"></nav>
 <div class="globo" id="globo" hidden></div>
+<!-- Rebobinar (7.1): la barra fija de abajo y la capa de los fuegos al pasar por una hora cero -->
+<div class="rb-barra" id="rb-barra" role="region" aria-label="Rebobinar el lanzamiento" hidden></div>
+<div class="rb-fiesta" id="rb-fiesta" aria-hidden="true"></div>
 
 <script src="datos-ejemplo.js"></script>
 <script src="datos.js"></script>
