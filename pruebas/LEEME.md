@@ -20,6 +20,7 @@ Windows).
 | `probar_despertador.py` | Prueba `despertador/worker.js` con horas simuladas y un GitHub falso (no llama a nadie): minuto 7 siempre, minuto 37 solo del 17 al 21 nov. |
 | `medir_carga.py` | 9.4: mide cuánto tarda en cargar la página en un celular lento (384 px, CPU 4×, 1,6 Mbps, 150 ms), mediana de 3 cargas: peso de `datos.js`, primer dibujo, carga completa y bloqueo. Sirve una copia de `web/` con gzip en `capturas/medir/`. Con `--simular 1000` usa mediciones inventadas (marcadas) para ver cómo cargará el 19 dic. |
 | `probar_saltos.py` | 9.4: revisa que la página no salte: el menú "☰ Secciones" deja cada sección arriba y quieta, un enlace con `#seccion-noticias` la deja arriba y al subir de a poco nada se corre de golpe. 1280 y 384 px, los dos estilos. `--web` para probar otra carpeta. |
+| `probar_recarga.py` | 9.4: la recarga automática (datos nuevos con la pestaña en segundo plano) deja la página donde estaba: con Titulares arriba, a media sección, si lo de arriba se arma tarde (el fallo de antes), si crece después y, si la persona gira la rueda, no la devuelve a la fuerza. Sirve `web/` por http. 1280 y 384 px, los dos estilos; `--firefox` en Firefox. |
 | `medir_parpadeo.py` | Mide si una parte animada parpadea (40 capturas seguidas). Por defecto, el suelo de Miami 1986. Sirve para comparar antes y después de un cambio. |
 
 Antes de `probar_pagina.py`, generar los datos reales con `python recolector/generar_web.py`

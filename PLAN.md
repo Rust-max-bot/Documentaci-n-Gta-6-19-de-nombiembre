@@ -70,8 +70,12 @@ las reglas, en `CLAUDE.md`.
       app.js la usa; respaldo si no llega). Abogado del diablo (2.ª vuelta): fórmula idéntica
       (105.120 horas comparadas). Medido junto a `main`: página armada ~5,3 → ~3,7 s; primer
       dibujo +0,1 a 0,15 s. **Unida a `main` el 20 nov** (Bruno la probó en su PC).
-      **Fallo que ya existía, sin arreglar:** la recarga automática no vuelve a la misma altura
-      (Titulares queda 1.700 a 4.600 px más arriba; `app.js` ~L1330 compite con el navegador).
+      **Recarga automática: arreglada el 21 nov** (volvía 1.700 a 4.600 px más arriba: un
+      `scrollTo` suave antes de que la página tuviera su alto). Ahora vuelve a la sección y se
+      corrige 5 s; con la pestaña oculta espera a que vuelva. Prueba: `pruebas/probar_recarga.py`.
+      **Falta:** abogado del diablo corto sobre ese arreglo. **Fallo aparte, ya existía:** a 384
+      px en Miami 1986, abrir `index.html#seccion-noticias` no deja la sección arriba
+      (`probar_saltos.py`, 2 de 2 veces también con el código de antes; en Miami 2026, bien).
       Descartado: `defer` (rompe `filtro-videos.js:116`), partir mediciones, mover fotos y
       `content-visibility` (~7 % de CPU; rompía los enlaces #sección en Edge y copiar todo en Firefox).
 - [x] **9.3 Menos alarmas por Google** (Bruno, 2026-11-16). **Hecho el 17 nov** (Bruno pidió

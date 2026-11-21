@@ -255,6 +255,67 @@
   var recargaSola = false;
   try { recargaSola = sessionStorage.getItem("gta6-recarga") === "1"; sessionStorage.removeItem("gta6-recarga"); } catch (e) { /* sin almacenamiento */ }
 
+  /* Volver al mismo lugar tras la recarga automática (9.4, 2026-11-21). Antes se hacía un solo
+     scrollTo al arrancar, cuando la página aún no tenía todo su alto: el navegador lo recortaba y,
+     con el desplazamiento suave del CSS, la vista se iba ~2.000 px más arriba (Titulares quedaba
+     1.700 a 4.600 px corrido). Ahora recargar() guarda la sección que estaba arriba de la
+     pantalla y cuánto se había bajado dentro de ella, y le pide al navegador que no restaure él
+     (history.scrollRestoration = "manual"); aquí se vuelve a esa sección, sin animación, y se
+     sigue corrigiendo unos segundos mientras termina de armarse lo de arriba (titulares de otros
+     días, gráficos). Si la persona mueve la página, se deja de corregir.
+     Pestaña en segundo plano (lo normal: la recarga sola salta al ocultarla): ahí el navegador
+     no corre requestAnimationFrame, así que se espera a que vuelva a estar a la vista para
+     empezar los 5 s. Mientras tanto, si llega otra recarga sola, se guarda el lugar pendiente
+     (lugarPendiente), no la altura de ese momento, que todavía no está corregida. */
+  var lugarPendiente = null;
+  function lugarActual() {
+    if (lugarPendiente) return lugarPendiente;
+    var secs = document.querySelectorAll("section[id]"), elegida = null;
+    for (var i = 0; i < secs.length; i++) {
+      var r = secs[i].getBoundingClientRect();
+      if (r.height > 0 && r.top <= 1) elegida = { id: secs[i].id, dentro: -r.top };
+    }
+    return { y: window.scrollY, id: elegida ? elegida.id : "", dentro: elegida ? elegida.dentro : 0 };
+  }
+  if (recargaSola) (function () {
+    var lugar = null;
+    try { lugar = JSON.parse(sessionStorage.getItem("gta6-lugar-recarga") || "null"); sessionStorage.removeItem("gta6-lugar-recarga"); } catch (e) { /* nada */ }
+    function auto() { try { history.scrollRestoration = "auto"; } catch (e) { /* nada */ } }
+    if (!lugar || typeof lugar.y !== "number") { auto(); return; }
+    lugarPendiente = lugar;
+    var hasta = 0, quieto = true;
+    function soltar() { quieto = false; }
+    var toques = ["wheel", "touchstart", "keydown", "pointerdown", "mousedown"];
+    function destino() {
+      var el = lugar.id && document.getElementById(lugar.id);
+      if (el && !el.hidden && el.getBoundingClientRect().height > 0) return el.getBoundingClientRect().top + window.scrollY + lugar.dentro;
+      return lugar.y;
+    }
+    function ir() {
+      if (quieto) {
+        var d = destino() - window.scrollY;
+        if (Math.abs(d) > 1) window.scrollTo({ top: window.scrollY + d, behavior: "instant" });
+      }
+      if (quieto && performance.now() < hasta) requestAnimationFrame(ir);
+      else {
+        toques.forEach(function (t) { window.removeEventListener(t, soltar, { passive: true, capture: true }); });
+        lugarPendiente = null;   // desde aquí, el lugar es donde esté la persona
+        auto();   // las recargas que haga la persona (F5) las vuelve a restaurar el navegador
+      }
+    }
+    function empezar() {
+      toques.forEach(function (t) { window.addEventListener(t, soltar, { passive: true, capture: true }); });
+      hasta = performance.now() + 5000;
+      ir();
+    }
+    if (!document.hidden) empezar();
+    else document.addEventListener("visibilitychange", function alVolver() {
+      if (document.hidden) return;
+      document.removeEventListener("visibilitychange", alVolver);
+      empezar();
+    });
+  })();
+
   /* ---------- Aviso de datos de ejemplo ---------- */
   if (D.ejemplo) $("aviso-ejemplo").hidden = false;
 
@@ -1692,7 +1753,12 @@
         : '<span><i aria-hidden="true"></i>Última medición ' + hace() + " · " + hora(fin) + "</span>";
     }
     function recargar() {
-      try { sessionStorage.setItem("gta6-recarga", "1"); sessionStorage.setItem("gta6-scroll", String(window.scrollY)); } catch (e) { /* sin almacenamiento */ }
+      // Sin almacenamiento no se toca nada: el navegador restaura la altura él solo, como antes.
+      try {
+        sessionStorage.setItem("gta6-lugar-recarga", JSON.stringify(lugarActual()));
+        sessionStorage.setItem("gta6-recarga", "1");
+        history.scrollRestoration = "manual";   // vuelve "auto" al terminar de volver al lugar
+      } catch (e) { /* sin almacenamiento */ }
       // GitHub Pages deja guardar datos.js hasta 10 minutos: se pide de nuevo a la red (eso
       // también renueva la copia guardada) y recién entonces se recarga, para no volver a
       // mostrar los datos viejos.
@@ -1711,8 +1777,7 @@
         if (!rebobinando && (document.hidden || Date.now() - ultimoToque > 90000)) recargar(); else pintar();
       }).catch(function () { /* sin conexión: se vuelve a intentar en 2 minutos */ });
     }
-    // Al volver de una recarga automática, a la misma altura de la página.
-    if (recargaSola) { try { var y = +sessionStorage.getItem("gta6-scroll"); if (y) window.scrollTo(0, y); } catch (e) { /* nada */ } }
+    // Al volver de una recarga automática, a la misma altura: ver "Volver al mismo lugar", arriba.
     pintar(); setInterval(function () { if (!hayNuevos) pintar(); }, 30000);
     if (/^https?:$/.test(location.protocol)) {
       setInterval(revisar, 120000);

@@ -8,8 +8,7 @@ A 1280 y 384 px, en los dos estilos:
   1. Menú "☰ Secciones": va a cada sección y mira que quede arriba de la pantalla (entre -5 y
      90 px) y que siga ahí un segundo después (que no salte).
   2. Enlace a una sección: abre index.html#seccion-noticias y mira que quede arriba.
-     (La recarga automática no se prueba aquí: el navegador vuelve solo a la altura donde
-     estaba y tapa lo que hace la página. Ese fallo está anotado en PLAN.md, 9.4.)
+     (La recarga automática se prueba aparte, en probar_recarga.py.)
   3. Subir de a poco desde el final: mira que lo que está en pantalla no se corra más de 40 px de
      golpe al aparecer las secciones de arriba.
 
