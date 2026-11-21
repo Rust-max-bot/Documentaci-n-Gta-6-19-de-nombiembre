@@ -730,9 +730,14 @@ def leer_trends_extra(carpeta):
         if not puntos or any(not (0 <= v <= 100) for x in puntos for v in x[1:]):
             abortar(f"{sub}: la serie {nombre} está vacía o tiene valores fuera de 0-100")
         sal[nombre] = {"palabras": palabras, "rango": s["rango"], "puntos": puntos}
-    sal["paises"] = [[p["pais"], p["interes"]] for p in r["paises"]["lista"][:15]]
+    # Países: todos (66 el 21 nov, ~2 KB), en orden, para que la sección de la 6.1 (6.8) diga el
+    # puesto de Chile aunque no esté entre los primeros.
+    paises = r["paises"]["lista"]
+    if not paises or any(not isinstance(p.get("interes"), (int, float)) or not (0 <= p["interes"] <= 100) or not p.get("pais") for p in paises):
+        abortar(f"{sub}: la lista de países está vacía o tiene valores fuera de 0-100")
+    sal["paises"] = [[p["pais"], p["interes"], p.get("codigo", "")] for p in paises]
     rel = r["relacionadas"]
-    sal["en_aumento"] = [[k["busqueda"], k["valor"]] for k in rel["en_aumento"][:10]]
+    sal["en_aumento"] = [[k["busqueda"], k["valor"]] for k in rel["en_aumento"][:12]]
     sal["mas_buscadas"] = [k["busqueda"] for k in rel["mas_buscadas"][:10]]
     return sal
 

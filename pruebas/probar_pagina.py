@@ -108,7 +108,7 @@ def main():
                     nombre = "".join(c for c in seccion if c.isalnum()) or "seccion"
                     b, y0 = el.bounding_box(), pg.evaluate("window.scrollY")
                     pg.screenshot(path=str(CAPTURAS / f"{pre}{nombre}_{ancho}_{tema}.png"), full_page=True,
-                                  clip={"x": b["x"], "y": b["y"] + y0, "width": b["width"], "height": min(b["height"], 1400)})
+                                  clip={"x": b["x"], "y": b["y"] + y0, "width": b["width"], "height": min(b["height"], 3200)})   # 3200: en el celular, "¿Qué tan grande es GTA 6?" mide ~2900 px (antes se cortaba en 1400)
                     extra = f" + {pre}{nombre}_{ancho}_{tema}.png"
                 print(f"{'OK   ' if ok else 'FALLO'} {ancho}px {boton}: estilo={r['tema']} desborde={r['desborde']}px "
                       f"errores={errores or 'ninguno'} "

@@ -18,9 +18,9 @@
     "semantic_hash": ""
   },
   "web/app.js": {
-    "mtime": 1795282463.6051369,
-    "seen": 1795282993.2525837,
-    "ast_hash": "5ec102b3aaa61f12ebed1f481f7a93e7",
+    "mtime": 1795285186.903304,
+    "seen": 1795285495.9805372,
+    "ast_hash": "27e58f58ab49b519c6b86c001461b64a",
     "semantic_hash": ""
   },
   "web/datos-ejemplo.js": {
@@ -48,9 +48,9 @@
     "semantic_hash": ""
   },
   "ESTADO_ACTUAL.md": {
-    "mtime": 1795282988.4611745,
-    "seen": 1795282993.2525992,
-    "ast_hash": "037890628ce80477a09d37c810345fb9",
+    "mtime": 1795285474.5930543,
+    "seen": 1795285495.9805515,
+    "ast_hash": "63ed56ea51db5371f8babf65f8259231",
     "semantic_hash": ""
   },
   "GUIA_CLAVES.md": {
@@ -60,9 +60,9 @@
     "semantic_hash": ""
   },
   "PLAN.md": {
-    "mtime": 1795282463.6515844,
-    "seen": 1795282993.2526057,
-    "ast_hash": "87745fbda3dbf9e3d934dfe11e569dbe",
+    "mtime": 1795285474.4190645,
+    "seen": 1795285495.980557,
+    "ast_hash": "7b96bb621f1243e66545fc4cb08fa849",
     "semantic_hash": ""
   },
   "README.md": {
@@ -72,9 +72,9 @@
     "semantic_hash": ""
   },
   "web/index.html": {
-    "mtime": 1795282463.6071424,
-    "seen": 1795282993.252636,
-    "ast_hash": "11d75c9e586089bcdce950b80e33ac87",
+    "mtime": 1795283795.18155,
+    "seen": 1795285495.9805849,
+    "ast_hash": "f72a7a65caa5d83a4ea0dc13a5a9aa00",
     "semantic_hash": ""
   },
   ".github/workflows/probar-fuentes.yml": {
@@ -138,9 +138,9 @@
     "semantic_hash": ""
   },
   "recolector/generar_web.py": {
-    "mtime": 1795282463.6036556,
-    "seen": 1795282993.252563,
-    "ast_hash": "e5c83b1cb26deafdf1bdfe082bb8e3c0",
+    "mtime": 1795284947.7026165,
+    "seen": 1795285495.9805174,
+    "ast_hash": "164511725195bf4a0cbee5e90df20eb3",
     "semantic_hash": ""
   },
   "despertador/worker.js": {
@@ -180,9 +180,9 @@
     "semantic_hash": ""
   },
   "pruebas/probar_pagina.py": {
-    "mtime": 1794882384.8528924,
-    "seen": 1794951380.1555812,
-    "ast_hash": "72ebe60583092893c4257d316bb7f2ad",
+    "mtime": 1795284954.6176326,
+    "seen": 1795285495.9805062,
+    "ast_hash": "ef7ae2476cecde0c5a6a7fe841cf05c6",
     "semantic_hash": ""
   },
   "NUBE.md": {
@@ -372,8 +372,8 @@
     "semantic_hash": ""
   },
   "pruebas/probar_marcas.py": {
-    "mtime": 1795282955.0277686,
-    "seen": 1795282993.2525501,
+    "mtime": 1795282995.5066159,
+    "seen": 1795285495.9805038,
     "ast_hash": "1ca72533dfb062863bfd4af61c8de856",
     "semantic_hash": ""
   },

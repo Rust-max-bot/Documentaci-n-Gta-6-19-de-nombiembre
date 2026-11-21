@@ -14,6 +14,7 @@
   --a1: #ff2e97;
   --a2: #22e6ff;
   --a3: #ffd319;
+  --j-verde: #3ddc84; --j-morado: #b18cff; --j-naranja: #ff8a3d;   /* Minecraft, Fortnite y Marvel Rivals en "¿Qué tan grande es GTA 6?" (6.8) */
   --ok: #3dffb0;
   --mal: #ff4d6d;
   --nd: #43305f;
@@ -37,6 +38,7 @@
   --a1: #ff2e63;
   --a2: #0aa5c9;
   --a3: #ff6a00;
+  --j-verde: #1f9d55; --j-morado: #7c4dff; --j-naranja: #c2410c;
   --ok: #0f9d6b;
   --mal: #e11d48;
   --nd: #d5cee3;
@@ -979,6 +981,56 @@ section[id], .bloque { scroll-margin-top: 16px; }
 .dd-svg .d { stroke: var(--a2); stroke-width: 2; }
 .dd-svg .et-g { fill: var(--a1); font-weight: 700; font-size: 13px; }
 .dd-svg .et-d { fill: var(--a2); font-weight: 700; font-size: 13px; }
+
+/* ---------- ¿Qué tan grande es GTA 6? (6.8, opción A "Tablero" de Bruno, 2026-11-21) ----------
+   En el celular, todo en una columna, con gráficos a todo el ancho y nombres que no se cortan
+   (Bruno: que se lea bien en el celular, como la opción B). */
+.t61-cifras { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin: 0 0 24px; }
+.t61-cifra { padding: 14px 16px; border-radius: calc(var(--radio) / 1.4); border: 1px solid color-mix(in srgb, var(--tenue) 35%, transparent); }
+.t61-cifra b { display: block; font: 700 clamp(28px, 3.4vw, 40px)/1.1 var(--f-texto); color: var(--a1); font-variant-numeric: tabular-nums; }
+.t61-cifra span { display: block; margin-top: 4px; font-size: 14.5px; line-height: 1.35; color: var(--tenue); font-weight: 600; }
+:root[data-tema="ochenta"] .t61-cifra b { text-shadow: 0 0 14px color-mix(in srgb, var(--a1) 60%, transparent); }
+.t61-grid { display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr); gap: 22px 32px; margin-bottom: 24px; }
+.t61-grid.t61-par { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+.t61-grid h3.sub:not(:first-child) { margin-top: 20px; }
+.t61-leyenda { display: flex; flex-wrap: wrap; gap: 4px 14px; margin: 0 0 6px; font-size: 13.5px; font-weight: 700; }
+.t61-leyenda i { display: inline-block; width: 14px; height: 4px; border-radius: 2px; margin-right: 6px; vertical-align: middle; }
+.t61-g svg { display: block; width: 100%; height: auto; overflow: visible; }
+.t61-g .eje text { fill: var(--tenue); font: 600 11.5px var(--f-texto); font-variant-numeric: tabular-nums; }
+.t61-g .guia { stroke: var(--tenue); stroke-opacity: .22; }
+.t61-g .salida { stroke: var(--a3); stroke-width: 1.6; stroke-dasharray: 5 4; }
+.t61-g .salida-texto { fill: var(--a3); font: 700 11.5px var(--f-texto); letter-spacing: .06em; text-transform: uppercase; }
+.t61-l { fill: none; stroke-width: 2; stroke-linejoin: round; stroke-linecap: round; }
+.t61-l.gta { stroke-width: 3; }
+.t61-l.tenue { opacity: .45; }
+:root[data-tema="ochenta"] .t61-l.gta { filter: drop-shadow(0 0 5px var(--a1)); }
+.t61-barras { display: grid; gap: 7px; }
+.t61-barras div { display: grid; grid-template-columns: 9.5em minmax(0, 1fr) 5.6em; align-items: center; gap: 10px; font-size: 14px; font-weight: 600; }
+.t61-barras i { height: 12px; border-radius: 6px; background: color-mix(in srgb, var(--tenue) 45%, transparent); }
+.t61-barras .gta i { background: var(--a1); }
+:root[data-tema="ochenta"] .t61-barras .gta i { box-shadow: 0 0 10px color-mix(in srgb, var(--a1) 55%, transparent); }
+.t61-barras .cl { color: var(--a2); }
+.t61-barras .cl i { background: var(--a2); }
+.t61-barras b { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.t61-pie { font-size: 13px; color: var(--tenue); margin: 8px 0 0; }
+.t61-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 18px; }
+.t61-chips span { padding: 6px 12px; border-radius: 999px; border: 1px solid color-mix(in srgb, var(--tenue) 45%, transparent); font-size: 14px; font-weight: 600; overflow-wrap: anywhere; }
+.t61-pie-chips { margin: -8px 0 18px; }
+.t61-chips em { font-style: normal; color: var(--a1); margin-left: 6px; font-weight: 800; }
+/* En "Miami 2026" (fondo claro), versiones más oscuras para que el texto se lea (contraste 4,5:1 o más). */
+:root[data-tema="actual"] .t61-barras .cl { color: #06708a; }
+:root[data-tema="actual"] .t61-chips em { color: #c8103f; }
+:root[data-tema="actual"] .t61-g .salida { stroke: #b34700; }
+:root[data-tema="actual"] .t61-g .salida-texto { fill: #b34700; }
+/* Entre ~760 y ~980 px, a la derecha del gráfico no cabían las barras: una columna. */
+@media (max-width: 980px) { .t61-grid:not(.t61-par) { grid-template-columns: minmax(0, 1fr); } }
+@media (max-width: 760px) {
+  .t61-cifras { grid-template-columns: minmax(0, 1fr); gap: 10px; }
+  .t61-cifra { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 0 14px; align-items: center; padding: 12px 14px; }
+  .t61-cifra span { margin-top: 0; font-size: 14px; }
+  .t61-grid, .t61-grid.t61-par { grid-template-columns: minmax(0, 1fr); }
+  .t61-barras div { grid-template-columns: 8.2em minmax(0, 1fr) 6.4em; gap: 8px; font-size: 13.5px; }
+}
 :root[data-tema="ochenta"] .dd-frase b, :root[data-tema="ochenta"] .dd-barra b { text-shadow: 0 0 12px currentColor; }
 @media (max-width: 640px) { .dd-duelo { grid-template-columns: 1fr; } .dd-barras { height: 180px; } }
 

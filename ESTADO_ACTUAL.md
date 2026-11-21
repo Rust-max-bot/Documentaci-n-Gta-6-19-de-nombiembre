@@ -24,7 +24,7 @@ no hace falta (Bruno puede borrarla en GitHub). Siguiente tarea: la que elija Br
 **La página está lista para el lanzamiento y publicada** en
 <https://rust-max-bot.github.io/Documentaci-n-Gta-6-19-de-nombiembre/> (la publica
 `publicar-pagina.yml` tras cada medición). Hechas las fases 0, 1, 3, casi toda la 2 (falta la
-2.5, TikTok), la 4.1 y 4.2, la 6 (menos 6.1, 6.6 Instagram y 6.8), la 7 (menos 7.4 y 7.13)
+2.5, TikTok), la 4.1 y 4.2, la 6 (menos 6.6 Instagram; de la 6.1 queda una idea), la 7 (menos 7.4 y 7.13)
 y la 9 de la 9.1 a la 9.12, salvo 9.3, 9.4 y 9.11 (b). Qué tiene la página, sección por
 sección: `historial/ESTADO_2026-11-17.md` y `README.md`.
 
@@ -83,6 +83,7 @@ lanzamiento (revisión completa y menos alarmas por Google). Antes: 9.12 y más 
 ## Últimos cambios
 
 - 2026-11-17: estado anterior archivado en historial/ESTADO_2026-11-17.md
+- 2026-11-21: 6.8 hecha (pedido de Bruno, opción A "Tablero" de 3 prototipos, apta para celular): sección "¿Qué tan grande es GTA 6?" (`#trends61`, tras "Interés en Google Trends") con la 6.1: cifras (5,9× Minecraft, el que más se acercó en la semana; 1,6× el mejor mes de GTA 5; 66 países, Chile 22.º), los 5 juegos hora por hora en la misma escala, totales y hora más alta, países, mes a mes desde 2013 y búsquedas. Revisada con `/code-review` (4 revisores) y un abogado del diablo; arreglados: barras que casi desaparecían entre 760 y 980 px, "66 países con búsquedas" (son los que lista Google), la cifra 1,6× poco clara, contraste en "Miami 2026", "aumento puntual" visible, se oculta si la consulta no es la del lanzamiento, menú sin secciones ocultas. `probar_pagina.py` (Edge y Firefox; la captura de sección ya no se corta en 1400 px), `probar_rebobinar.py`, `probar_selector.py`, `probar_marcas.py`: todo bien.
 - 2026-11-21: arreglado el fallo de `probar_marcas.py` (pedido de Bruno, con `/code-review` y un abogado del diablo): la página estaba bien; la prueba suponía que siempre hay un video de reserva, y la última medición traía 19 Shorts que pasan el filtro (tope 20). Ahora comprueba que al marcar solo se va ese video, y que entra el siguiente con un tope más chico y con datos inventados (no depende del día). Un error inventado (marcas después del tope) lo detectan las dos comprobaciones nuevas. `probar_marcas.py`: todo bien.
 - 2026-11-21: 7.1 unida a `main` (pedido de Bruno). Antes de subir, con `main` al día y los datos del 21 nov: `generar_web.py`, `probar_rebobinar.py`, `probar_pagina.py` y `probar_selector.py`, todo bien; `probar_marcas.py` falla en una comprobación que también falla en el `main` de antes (ver "Dónde quedamos").
 - 2026-11-21: 7.1 (a), gráficos animados al rebobinar, opción A "La línea avanza" (elegida por Bruno): en 250 ms el final de la línea va de la hora de antes a la nueva y cada punto pasa de su altura vieja a la nueva (Trends cambia de escala); al instante al arrastrar, con "reducir movimiento", al cambiar el ancho y fuera de la vista. Arreglado: la variable de la animación pisaba `t0` del eje. El cuelgue de la prueba era de la prueba: usaba `eval`, que la CSP de la página prohíbe. Con la CPU 4x y los gráficos a la vista: ~117 ms por parada y la animación a 60 cuadros por segundo. `probar_rebobinar.py` y `probar_pagina.py` (Edge y Firefox) y `probar_selector.py`: todo bien. 6.1 comprobada: guardada el 21 nov.
@@ -105,7 +106,7 @@ lanzamiento (revisión completa y menos alarmas por Google). Antes: 9.12 y más 
 La lista completa y su orden están en `PLAN.md`. Resumen (2026-11-17):
 
 - **(2026-11-17):** 9.11 (b) administrar qué se anima en toda la página (lo demás, después del
-  22). 6.8 diseñar la sección de la 6.1 desde el 20 nov. **Reddit:** quitado (6.9): solo
+  22). **Reddit:** quitado (6.9): solo
   volvería con la clave oficial.
 0. **(2026-11-16, orden de Bruno):** 9.4 optimizar la página (eje y `partes()` hechos; lo
    grande, después del 22) y lo que falta de la 9.3 (resumen de huecos en `revisar.py`, después del 22). Descartados
@@ -114,9 +115,8 @@ La lista completa y su orden están en `PLAN.md`. Resumen (2026-11-17):
 1. **7.4:** "Lo que espero" ya está en la página. Después del lanzamiento, Bruno escribe "Lo que
    me pareció" en `web/capsula.js`.
 2. **Fase 4:** 4.3 análisis de datos (necesita varios días de datos).
-3. **Fase 6:** 6.1 más Google Trends, **una sola vez entre el 20 y el 25 nov**, fuera del
-   recolector de cada hora (programa listo y probado, con las palabras de Bruno; se lanza sola
-   del 21 al 24 nov; falta mostrarlo: 6.8). 6.6 Instagram (parece difícil; ver `PLAN.md`).
+3. **Fase 6:** 6.1 guardada y mostrada (6.8); solo queda la idea de repetir lo de Doomsday en
+   enero. 6.6 Instagram (parece difícil; ver `PLAN.md`).
 4. **Fase 7:** 7.13 sección de memes (requiere
    investigación). Cuando Take-Two publique las ventas, escribirlas en `gta6` de
    `web/lanzamientos.js`. **Fase 8 (GTA 6 en PC):** dormida hasta que Bruno avise con

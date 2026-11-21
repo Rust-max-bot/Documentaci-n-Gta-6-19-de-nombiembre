@@ -1433,6 +1433,130 @@
     window.addEventListener("resize", function () { clearTimeout(dibujar.t); dibujar.t = setTimeout(dibujar, 150); });
   })();
 
+  /* ---------- ¿Qué tan grande es GTA 6? (6.8; opción A "Tablero" de Bruno, 2026-11-21) ----------
+     La consulta extra a Google Trends de la 6.1 (una sola vez, el 21 nov): tres cifras; GTA 6
+     frente a los juegos más grandes hora por hora, todos en la misma escala para poder
+     compararlos (pedido de Bruno); cuánto se buscó cada uno en toda la semana y su hora más alta;
+     los países; mes a mes desde 2013, y lo que más se buscó. En Trends cada consulta va de 0 a 100
+     por su cuenta: los juegos se comparan dentro de un gráfico, no un gráfico con otro. La cifra
+     de la semana se compara con el juego que más se acercó (no con el que más conviene). */
+  (function () {
+    var sec = $("trends61"), caja = $("trends61-caja"), X = D.trends_extra;
+    if (!sec || !caja || !X || X.tarea !== "6.1" || !X.comparacion || !X.historica || !X.paises || !X.paises.length) return;
+    var C = X.comparacion, H = X.historica, J = C.palabras, JH = H.palabras;
+    var g6 = J.indexOf("GTA 6"), g6h = JH.indexOf("GTA 6"), g5h = JH.indexOf("GTA 5");
+    if (g6 < 0 || g6h < 0 || C.puntos.length < 2 || H.puntos.length < 2) return;
+    // Solo con la consulta de la semana del lanzamiento: si un día se repite la consulta (idea:
+    // enero, por Doomsday), los textos de esta sección ya no serían ciertos (abogado del diablo).
+    var nz = C.puntos.findIndex(function (p) { return p[0] * 1000 >= LUGARES.nz.ts; });
+    if (nz <= 0) return;
+    sec.hidden = false;
+    var COLOR = { "GTA 6": "--a1", "GTA 5": "--a2", "Minecraft": "--j-verde", "Fortnite": "--j-morado", "Marvel Rivals": "--j-naranja",
+      "Ocarina of Time": "--j-verde", "Avengers Doomsday": "--j-morado" };
+    var color = function (n) { return "var(" + (COLOR[n] || "--tenue") + ")"; };
+    var MESES = ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"];
+    var mes = function (s) { var d = new Date(s * 1000); return MESES[d.getUTCMonth()] + " de " + d.getUTCFullYear(); };
+    // La semana: todas las horas sumadas (lo que se buscó en total) y la hora más alta de cada juego.
+    var suma = J.map(function (n, j) { return C.puntos.reduce(function (s, p) { return s + p[j + 1]; }, 0); });
+    var pico = J.map(function (n, j) { return Math.max.apply(null, C.puntos.map(function (p) { return p[j + 1]; })); });
+    var rival = -1;   // el que más se acercó a GTA 6
+    J.forEach(function (n, j) { if (j !== g6 && (rival < 0 || suma[j] > suma[rival])) rival = j; });
+    var veces = function (j) { return suma[j] ? suma[g6] / suma[j] : null; };
+    // Mes a mes: el último mes de GTA 6 (todavía sin terminar) frente al mejor mes de GTA 5.
+    var ultH = H.puntos[H.puntos.length - 1], mejor5 = null;
+    if (g5h >= 0) H.puntos.forEach(function (p) { if (!mejor5 || p[g5h + 1] > mejor5[g5h + 1]) mejor5 = p; });
+    var P = X.paises, chile = -1;
+    P.forEach(function (p, i) { if (p[2] === "CL") chile = i; });
+
+    var cifras = [];
+    if (rival >= 0 && veces(rival) > 1) cifras.push([fDec1.format(veces(rival)) + "×", "más búsquedas que " + limpio(J[rival]) + " en la semana del lanzamiento, el juego que más se le acercó"]);
+    if (mejor5 && mejor5[g5h + 1]) cifras.push([fDec1.format(ultH[g6h + 1] / mejor5[g5h + 1]) + "×",
+      "el interés de GTA 6 en " + mes(ultH[0]) + " (mes todavía sin terminar) frente al de GTA 5 en su mejor mes, " + mes(mejor5[0])]);
+    cifras.push([String(P.length), "países en la lista de Google · 1.º " + limpio(P[0][0]) + (chile > 0 ? ", Chile " + (chile + 1) + ".º" : "")]);
+
+    function barras(filas) {   // filas: [nombre, ancho 0-100, valor, clase, color (opcional)]
+      return '<div class="t61-barras">' + filas.map(function (f) {
+        return '<div class="' + (f[3] || "") + '"><span>' + f[0] + '</span><i style="width:' + Math.max(0.5, f[1]).toFixed(1) + "%" + (f[4] ? ";background:" + f[4] : "") + '"></i><b>' + f[2] + "</b></div>";
+      }).join("") + "</div>";
+    }
+    var semana = barras(J.map(function (n, j) {
+      var v = veces(j), t = j === g6 ? "—" : !v ? "casi 0" : v >= 1 ? fDec1.format(v) + "× menos" : fDec1.format(1 / v) + "× más";   // (por si un día otro supera a GTA 6)
+      return [limpio(n), Math.min(100, suma[j] / (suma[g6] || 1) * 100), t, j === g6 ? "gta" : "", color(n)];   // cada barra, del color de su línea
+    }));
+    var picos = barras(J.map(function (n, j) { return [limpio(n), pico[j], String(pico[j]), j === g6 ? "gta" : "", color(n)]; }));
+    var top = P.slice(0, 10).map(function (p, i) { return [p, i]; });
+    if (chile >= 10) top.push([P[chile], chile]);
+    var paises = barras(top.map(function (x) { return [(x[1] + 1) + ". " + limpio(x[0][0]), x[0][1], String(x[0][1]), x[0][2] === "CL" ? "cl" : ""]; }));
+    var aumento = (X.en_aumento || []).map(function (x) {
+      var subida = /^\+/.test(x[1]);
+      return "<span>" + limpio(x[0]) + "<em>" + (subida ? limpio(x[1]) : limpio(String(x[1]).toLowerCase())) + "</em></span>";   // "aumento puntual", visible (en el celular no hay title)
+    }).join("");
+    var buscadas = (X.mas_buscadas || []).map(function (x) { return "<span>" + limpio(x) + "</span>"; }).join("");
+    var leyenda = function (nombres) { return '<p class="t61-leyenda">' + nombres.map(function (n) { return '<span><i style="background:' + color(n) + '"></i>' + limpio(n) + "</span>"; }).join("") + "</p>"; };
+
+    $("trends61-nota").textContent = "Google Trends, todo el mundo, consulta del " + dia(Date.parse(X.t)) + ". Dentro de cada gráfico, los juegos están en la misma escala " +
+      "(100 = el momento con más búsquedas de esa consulta), así que se pueden comparar entre sí; un gráfico con otro, no. Trends no dice cuántas búsquedas fueron.";
+    caja.innerHTML = '<div class="t61-cifras">' + cifras.map(function (c) { return '<div class="t61-cifra"><b>' + c[0] + "</b><span>" + c[1] + "</span></div>"; }).join("") + "</div>" +
+      '<div class="t61-grid"><div><h3 class="sub">GTA 6 frente a otros juegos grandes · hora por hora</h3>' + leyenda(J) + '<div class="t61-g" data-g="semana"></div></div>' +
+      '<div><h3 class="sub">Cuánto se buscó en toda la semana</h3>' + semana + '<p class="t61-pie">Todas las horas sumadas, comparadas con las de GTA 6.</p>' +
+      '<h3 class="sub">Su hora más alta</h3>' + picos + "</div></div>" +
+      '<div class="t61-grid t61-par"><div><h3 class="sub">Dónde pesa más GTA 6</h3>' + paises + '<p class="t61-pie">100 = el país donde GTA 6 pesa más entre todo lo que se busca (no donde más se busca en cantidad). Google solo lista países con suficientes búsquedas.</p></div>' +
+      '<div><h3 class="sub">Mes a mes desde 2013</h3>' + leyenda(JH) + '<div class="t61-g" data-g="historia"></div>' +
+      '<p class="t61-pie">Cada línea es la parte de todas las búsquedas de Google que fue para esas palabras, escritas tal cual ("GTA 5", no "GTA V"). El último mes todavía no termina.</p></div></div>' +
+      (aumento ? '<h3 class="sub">Lo que más subió</h3><div class="t61-chips">' + aumento + "</div>" +
+        '<p class="t61-pie t61-pie-chips">«Aumento puntual»: así marca Google una búsqueda que subió más de un 5.000 %.</p>' : "") +
+      (buscadas ? '<h3 class="sub">Lo más buscado junto a GTA 6</h3><div class="t61-chips">' + buscadas + "</div>" : "");
+
+    /* Un gráfico de líneas (todas de 0 a 100): una línea por juego, GTA 6 encima y más gruesa.
+       marcas: [[índice, texto]] en el eje; raya: [índice, texto] punteada (la salida). Los textos
+       del eje van en <g class="eje">, que revisa probar_pagina.py para que no se encimen. */
+    function lineas(W, nombres, puntos, marcas, raya, tenues, etiqueta) {
+      var alto = Math.round(Math.max(210, Math.min(250, W * 0.6))), mi = 34, md = 10, ma = 14, mb = 26, n = puntos.length;
+      var x = function (i) { return mi + i / (n - 1) * (W - mi - md); }, y = function (v) { return ma + (1 - v / 100) * (alto - ma - mb); };
+      var s = '<svg viewBox="0 0 ' + W + " " + alto + '" role="img" aria-label="' + limpio(etiqueta) + '">';
+      [0, 25, 50, 75, 100].forEach(function (v) {
+        s += '<line class="guia" x1="' + mi + '" x2="' + (W - md) + '" y1="' + y(v) + '" y2="' + y(v) + '"/><g class="eje"><text x="' + (mi - 6) + '" y="' + (y(v) + 4) + '" text-anchor="end">' + v + "</text></g>";
+      });
+      marcas.forEach(function (m) { s += '<g class="eje"><text x="' + x(m[0]).toFixed(1) + '" y="' + (alto - 7) + '" text-anchor="middle">' + m[1] + "</text></g>"; });
+      if (raya) {
+        var xr = x(raya[0]), izq = xr > W / 2;   // el texto, del lado con más espacio
+        s += '<line class="salida" x1="' + xr.toFixed(1) + '" x2="' + xr.toFixed(1) + '" y1="' + ma + '" y2="' + (alto - mb) + '"/>' +
+          '<text class="salida-texto" x="' + (izq ? xr - 5 : xr + 5).toFixed(1) + '" y="' + (ma + 10) + '" text-anchor="' + (izq ? "end" : "start") + '">' + raya[1] + "</text>";
+      }
+      nombres.slice().reverse().forEach(function (nom) {
+        var j = nombres.indexOf(nom), d = puntos.map(function (p, i) { return (i ? "L" : "M") + x(i).toFixed(1) + " " + y(p[j + 1]).toFixed(1); }).join("");
+        s += '<path d="' + d + '" class="t61-l' + (nom === "GTA 6" ? " gta" : "") + (tenues.indexOf(nom) >= 0 ? " tenue" : "") + '" style="stroke:' + color(nom) + '"/>';
+      });
+      return s + "</svg>";
+    }
+    function dibujarSemana(W) {
+      var dias = [];
+      C.puntos.forEach(function (p, i) { if (partes(p[0] * 1000).hour === 0) dias.push([i, dia(p[0] * 1000)]); });   // medianoche de Chile
+      var cada = Math.max(1, Math.ceil(46 / ((W - 44) / Math.max(1, C.puntos.length) * 24)));   // si no caben, un día sí y otro no
+      var nz = C.puntos.findIndex(function (p) { return p[0] * 1000 >= LUGARES.nz.ts; });
+      return lineas(W, J, C.puntos, dias.filter(function (m, k) { return k % cada === 0; }), nz > 0 ? [nz, "Sale en NZ"] : null, [],
+        "Google Trends hora por hora, " + J.join(", ") + ": GTA 6 llegó a " + pico[g6] + " de 100");
+    }
+    function dibujarHistoria(W) {
+      var anios = [], porAnio = (W - 44) / Math.max(1, H.puntos.length) * 12, cada = [1, 2, 3, 4, 5].find(function (k) { return k * porAnio >= 40; }) || 6;
+      H.puntos.forEach(function (p, i) { var d = new Date(p[0] * 1000); if (d.getUTCMonth() === 0 && d.getUTCFullYear() % cada === 2013 % cada) anios.push([i, d.getUTCFullYear()]); });
+      var i5 = mejor5 ? H.puntos.indexOf(mejor5) : -1;
+      return lineas(W, JH, H.puntos, anios, i5 >= 0 ? [i5, "Sale GTA 5"] : null, ["Ocarina of Time", "Avengers Doomsday"],
+        "Google Trends mes a mes desde 2013: " + JH.join(", "));
+    }
+    var anchos = {};
+    function dibujar() {
+      caja.querySelectorAll("[data-g]").forEach(function (g) {
+        var W = Math.round(Math.max(300, g.clientWidth || 600));
+        if (anchos[g.dataset.g] === W) return;
+        anchos[g.dataset.g] = W;
+        g.innerHTML = g.dataset.g === "semana" ? dibujarSemana(W) : dibujarHistoria(W);
+      });
+    }
+    dibujar();
+    window.addEventListener("resize", function () { clearTimeout(dibujar.t); dibujar.t = setTimeout(dibujar, 150); });
+  })();
+
   /* ---------- GTA 6 frente a otros lanzamientos (tarea 7.9, idea 7) ----------
      Los datos de otros juegos están en lanzamientos.js, cada uno con su fuente; el de GTA VI es
      el máximo de Twitch que midió este proyecto. Diseño A de Bruno (2026-11-14): una barra por juego. */
@@ -1528,8 +1652,8 @@
     var P = [
       { titulo: "Ventas oficiales de GTA 6", cuando: "Cuando Take-Two publique la cifra", listo: !!L.gta6, ir: "lanzamientos",
         que: "Cuántas copias vendió en sus primeros días, al lado de los otros juegos grandes." },
-      { titulo: "Más de Google Trends", cuando: "Una vez, entre el 20 y el 25 de noviembre", listo: !!(D.trends_extra && D.trends_extra.tarea === "6.1"),
-        que: "En qué países se busca más GTA 6, qué más busca la gente y GTA 6 frente a Avengers: Doomsday, día por día." },
+      { titulo: "Más de Google Trends", cuando: "Una vez, entre el 20 y el 25 de noviembre", listo: !!(D.trends_extra && D.trends_extra.tarea === "6.1"), ir: "trends61",
+        que: "En qué países se busca más GTA 6, qué más busca la gente y GTA 6 frente a los juegos más grandes y a GTA 5 desde 2013." },
       { titulo: "Rebobinar el lanzamiento", cuando: "Después del 19 de noviembre", listo: !!D.rebobinar, ir: "rebobinar",
         que: "Una barra para mover la página media hora por media hora y revivir el día del lanzamiento." },
       { titulo: "Análisis del primer mes", cuando: "Cuando haya varias semanas de datos", listo: false,
@@ -1600,8 +1724,8 @@
   (function () {
     var caja = $("menu"); if (!caja) return;
     var S = [["records", "Récords"], ["seccion-linea", "Línea de tiempo"], ["resumen", "Resumen"], ["seccion-twitch", "Twitch y Kick"],
-      ["seccion-trends", "Trends"], ["seccion-servidores", "Servidores"], ["seccion-videos", "Videos"], ["comparacion", "Comparación"], ["doomsday", "Doomsday"], ["lanzamientos", "Otros lanzamientos"],
-      ["seccion-noticias", "Titulares"], ["album", "Álbum"], ["capsula", "Cápsula"], ["proximamente", "Próximamente"]].filter(function (x) { return $(x[0]); });
+      ["seccion-trends", "Trends"], ["trends61", "¿Qué tan grande?"], ["seccion-servidores", "Servidores"], ["seccion-videos", "Videos"], ["comparacion", "Comparación"], ["doomsday", "Doomsday"], ["lanzamientos", "Otros lanzamientos"],
+      ["seccion-noticias", "Titulares"], ["album", "Álbum"], ["capsula", "Cápsula"], ["proximamente", "Próximamente"]].filter(function (x) { return $(x[0]) && !$(x[0]).hidden; });   // sin las que quedaron ocultas (sin datos)
     caja.innerHTML = '<button type="button" class="menu-boton" aria-expanded="false" aria-controls="menu-lista"><span aria-hidden="true">☰</span> Secciones</button>' +
       '<div class="menu-lista" id="menu-lista" hidden>' +
       S.map(function (x) { return '<a href="#' + x[0] + '" data-ir="' + x[0] + '">' + x[1] + "</a>"; }).join("") +
@@ -2373,7 +2497,7 @@
       youtube_es: "YouTube (en español)", ranking: "el ranking de Twitch", ranking_kick: "el ranking de Kick", tendencias: "las tendencias de YouTube" };
     var SECCIONES = [["seccion-twitch", ["twitch", "kick"]], ["seccion-trends", ["trends"]], ["seccion-tabla", ["twitch", "kick"]],
       ["seccion-videos", ["youtube", "youtube_es"]], ["comparacion", ["ranking", "ranking_kick", "tendencias"]], ["seccion-noticias", ["noticias"]]];
-    var DE_HOY = ["resumen", "seccion-servidores", "doomsday", "lanzamientos", "album", "capsula", "proximamente"];
+    var DE_HOY = ["resumen", "seccion-servidores", "trends61", "doomsday", "lanzamientos", "album", "capsula", "proximamente"];
     var ref = "nz";
     try { var r0 = localStorage.getItem("gta6-rb-desde"); if (ORDEN.indexOf(r0) >= 0) ref = r0; } catch (e) { /* sin almacenamiento */ }
     /* Los videos de cada momento (rebobinar.js) se calcularon con el filtro de siempre, "El de

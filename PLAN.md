@@ -32,12 +32,6 @@ las reglas, en `CLAUDE.md`.
 - [ ] **7.4 Cápsula del tiempo.** "Lo que espero" ya está (texto de Bruno, 2026-11-15; diseño
       de cintas de casete, opción C). **Falta "Lo que me pareció"**, después del lanzamiento, en
       `web/capsula.js`. Lo escribe Bruno: Claude no inventa ese contenido.
-- [ ] **6.8 Diseño de la sección nueva con lo de la 6.1** (pedido de Bruno, 2026-11-17). Desde el
-      20 nov, con los datos ya guardados, diseñar cómo se ve la sección (países, búsquedas en
-      aumento, GTA 6 frente a otros juegos, mes a mes desde 2013, Doomsday): opciones con
-      capturas para Bruno antes de hacerla. Va junto con el punto (2) de la 6.1. **21 nov, Bruno:**
-      las 4 partes (países, GTA 6 frente a otros juegos, mes a mes desde 2013, en aumento);
-      `datos.js` ya las trae (`trends_extra`, de `leer_trends_extra`). Falta: opciones (`/prototype`).
 - [ ] **6.1 Más Google Trends.** Una sola vez, **entre el 20 y el 25 nov** (antes del 26: Trends
       solo da el detalle por hora de 7 días), fuera del recolector de cada hora para no arriesgar
       un bloqueo (429) el día 19. Programa listo y probado sin guardar (13 y 14 nov):
@@ -49,9 +43,10 @@ las reglas, en `CLAUDE.md`.
       debate entre dos agentes): el despertador de Cloudflare el 21, 22, 23 y 24 nov a las 15:41 UTC
       y, de respaldo, un `schedule` de GitHub a las 18:41, 20:41 y 22:41 UTC (GitHub se salta horarios: 18 nov). Guarda solo la primera vez (paso
       "decidir": si ya hay archivo o es fuera del 20-25 nov 2026, termina en verde), sin ejecuciones
-      dobles y con 25 min de tiempo. **Guardada** el 21 nov 15:41 UTC (5 preguntas bien).
-      **Falta:** (2) mostrarlo en la página, con opciones y capturas; (3) idea sin
-      decidir: repetir lo de Doomsday en enero, después de su estreno (18 dic).
+      dobles y con 25 min de tiempo. **Guardada** el 21 nov 15:41 UTC (5 preguntas bien) y
+      **mostrada** (6.8, hecha el 21 nov: sección `#trends61`, opción A "Tablero"; si se repite la
+      consulta, la sección se oculta sola). **Falta:** solo una idea sin decidir: repetir lo de
+      Doomsday en enero, después de su estreno (18 dic); si se hace, que `#trends61` siga usando la del 21 nov.
 - [ ] **9.11 Skill de animación y forma de administrarlas** (Bruno, 2026-11-17). (a) **Hecho
       (2026-11-17):** instaladas seis skills de `emilkowalski/skills` (MIT): `prototype`,
       `find-animation-opportunities`, `animate`, `choreograph`, `review-animations` y
@@ -179,7 +174,7 @@ No se empieza hasta que Bruno avise con una confirmación oficial de la versión
 ## Lo ya hecho (detalle en `historial/` y `git log`)
 
 - **Fases 0, 1 y 3:** hechas. **Fase 2:** 2.1 a 2.4 y 2.6 a 2.15 (falta 2.5). **Fase 4:** 4.1 y
-  4.2 (falta 4.3). **Fase 6:** 6.2 a 6.5, 6.6 Kick, 6.7 Doomsday, 6.9 quitar Reddit.
+  4.2 (falta 4.3). **Fase 6:** 6.2 a 6.5, 6.6 Kick, 6.7 Doomsday, 6.8 sección de la 6.1, 6.9 quitar Reddit.
 - **Fase 7:** 7.1 a 7.3 y 7.5 a 7.12 (7.1 unida a `main` el 21 nov; animaciones sin hacer, solo
   si Bruno las pide: videos que se deslizan, entrada de lo nuevo, destello de récord). **Fase 9:** 9.1, 9.5 a 9.10 y 9.12. **Fase 10:** hecha.
 - **20 nov:** tres rayas de lanzamiento (Nueva Zelanda, Chile y Miami) en los gráficos de Twitch
@@ -212,7 +207,7 @@ El porqué y las opciones descartadas, en `historial/PLAN_2026-11-18-3.md` y `hi
   gráficos de viejo a nuevo.
 - **Opciones elegidas por Bruno:** portada 7.12 A; Twitch y Kick 6.6 B; videos 6.4 A y 6.5 B;
   récords 6.2 A; titulares B; GTA frente a lo más visto 9.7 A; cápsula 7.4 C; copias 7.10 B;
-  Próximamente 7.11 C; menú flotante 2.12 B.
+  Próximamente 7.11 C; menú flotante 2.12 B; "¿Qué tan grande es GTA 6?" 6.8 A (apta para celular).
 - **Rebobinar (7.1, Bruno, 2026-11-20):** del 18 nov 08:00 al 20 nov 12:00 UTC, una parada por
   medición (cada media hora); viajan portada, fichas, récords, línea de tiempo, gráficos, tabla,
   videos, comparación y titulares (por hora de publicación; las demás, tenues); controles: arrastrar, saltar a las 3 horas cero, reproducir
