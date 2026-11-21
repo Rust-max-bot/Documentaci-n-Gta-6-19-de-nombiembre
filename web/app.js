@@ -179,12 +179,15 @@
     var g = Date.UTC(+m[1], +m[2] - 1, +m[3], +m[4], +m[5]);
     return g - desfase(g);
   }
-  function num(n) { return Math.round(n).toLocaleString("es-CL"); }
+  /* Formatos de número guardados (7.1): toLocaleString con opciones arma un formato nuevo en cada
+     llamada y, al rebobinar, se llama miles de veces por parada. Mismo resultado, mucho más rápido. */
+  var fNum = new Intl.NumberFormat("es-CL"), fDec1 = new Intl.NumberFormat("es-CL", { maximumFractionDigits: 1 }), fDec0 = new Intl.NumberFormat("es-CL", { maximumFractionDigits: 0 });
+  function num(n) { return fNum.format(Math.round(n)); }
   /* 2.500 -> "2,5 mil"; 12.500 -> "12,5 mil"; 245.600 -> "246 mil": un decimal bajo los
      100 mil, para no redondear a miles enteros (antes 2.500 salía "3 mil"). */
   function compacto(n) {
-    if (n >= 1e6) return (n / 1e6).toLocaleString("es-CL", { maximumFractionDigits: 1 }) + " M";
-    if (n >= 1e3) return (n / 1e3).toLocaleString("es-CL", { maximumFractionDigits: n < 1e5 ? 1 : 0 }) + " mil";
+    if (n >= 1e6) return fDec1.format(n / 1e6) + " M";
+    if (n >= 1e3) return (n < 1e5 ? fDec1 : fDec0).format(n / 1e3) + " mil";
     return String(Math.round(n));
   }
   /* Separación "redonda" entre las líneas del eje (1, 2, 2,5 o 5 por una potencia de 10),
@@ -607,10 +610,10 @@
      parte (la línea "crece" con el rebobinado), y con opciones.topeFijo el alto también. */
   function grafico(caja, campo, opciones) {
     var Mv = M, svgVivo = null, salirVivo = function () {};
-    function dibujar() {
+    function dibujar(anchoSabido) {
       var puntos = opciones.serie || Mv.map(function (m) { return { ts: m.ts, v: m[campo] }; });   // serie propia (Trends, por hora)
       var extra = opciones.extra, puntos2 = extra ? Mv.map(function (m) { return { ts: m.ts, v: m[extra.campo] }; }) : null;
-      var ancho = Math.max(300, caja.clientWidth), alto = Math.round(Math.max(230, Math.min(380, ancho * 0.36)));
+      var ancho = Math.max(300, anchoSabido || caja.clientWidth), alto = Math.round(Math.max(230, Math.min(380, ancho * 0.36)));
       var mi = 54, md = 14, ma = 26, mb = 34;
       if (!puntos.length) { caja.innerHTML = '<p class="nota">Todavía no hay datos.</p>'; svgVivo = null; return; }
       var t0 = opciones.rango ? opciones.rango[0] : puntos[0].ts, t1 = opciones.rango ? opciones.rango[1] : puntos[puntos.length - 1].ts;
@@ -740,7 +743,8 @@
       clearTimeout(espera);
       espera = setTimeout(function () { if (caja.clientWidth !== anchoAnterior) { anchoAnterior = caja.clientWidth; dibujar(); } }, 150);
     });
-    return { poner: function (nuevas, Mnuevo) { opciones = nuevas; Mv = Mnuevo; dibujar(); } };
+    // Al rebobinar se redibuja en cada parada: con el ancho ya medido (cambia solo con "resize").
+    return { poner: function (nuevas, Mnuevo) { opciones = nuevas; Mv = Mnuevo; dibujar(anchoAnterior); } };
   }
   /* ---------- Twitch y Kick en el mismo gráfico (tarea 6.6, opción B de Bruno, 2026-11-16) ----------
      Una línea por plataforma, con su leyenda. Kick se mide desde el 16 nov: antes no tiene línea. */
@@ -1030,7 +1034,7 @@
       function estado() { a.disabled = tira.scrollLeft <= 2; b.disabled = tira.scrollLeft + tira.clientWidth >= tira.scrollWidth - 2; }
       function mover(s) { tira.scrollBy({ left: s * Math.max(160, tira.clientWidth - 160), behavior: QUIETO.matches ? "auto" : "smooth" }); }
       a.addEventListener("click", function () { mover(-1); }); b.addEventListener("click", function () { mover(1); });
-      tira.addEventListener("scroll", estado, { passive: true }); estado();
+      tira.addEventListener("scroll", estado, { passive: true }); requestAnimationFrame(estado);
     }
     tabs.addEventListener("click", function (e) { var l = e.target.dataset.lista; if (l && l !== elegida) { elegida = l; pintar(true); } });
     poner(HOY);
@@ -1195,9 +1199,13 @@
       actual = p; fundir = true; pintar();
     });
     // La primera página de la lista completa se pinta al tocar "Ver los N titulares" (ver arriba).
+    var diasAntes = "";
     function poner(V) {
       preparar(V); aplicar(); pintarFiltro(); resumenArriba(V); textoBoton();
-      var barras = $("noticias-filtro").querySelector(".nt-barras"); if (barras) barras.scrollLeft = barras.scrollWidth;
+      if (diasN.join() !== diasAntes) {   // solo si cambiaron los días (leer el ancho obliga a recalcular la página)
+        diasAntes = diasN.join();
+        requestAnimationFrame(function () { var barras = $("noticias-filtro").querySelector(".nt-barras"); if (barras) barras.scrollLeft = barras.scrollWidth; });
+      }
       if (abierta) pintar();
     }
     return { poner: poner };

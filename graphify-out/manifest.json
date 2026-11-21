@@ -18,9 +18,9 @@
     "semantic_hash": ""
   },
   "web/app.js": {
-    "mtime": 1795222487.6114352,
-    "seen": 1795222568.0384974,
-    "ast_hash": "3e2df33301c1a16bd8f4c00bce37f0e5",
+    "mtime": 1795222700.456917,
+    "seen": 1795222883.8737583,
+    "ast_hash": "4b9ab1cf7542f0cd7ba90ac9d317afb0",
     "semantic_hash": ""
   },
   "web/datos-ejemplo.js": {
@@ -192,9 +192,9 @@
     "semantic_hash": ""
   },
   "pruebas/LEEME.md": {
-    "mtime": 1795212567.2836602,
-    "seen": 1795221947.9256568,
-    "ast_hash": "833e0d517b448578d79cc0c272043e43",
+    "mtime": 1795222617.1132023,
+    "seen": 1795222883.873801,
+    "ast_hash": "d6bf0441b447c9da901b3c8c4fdd24bd",
     "semantic_hash": ""
   },
   "pruebas/requisitos.txt": {

@@ -1,7 +1,7 @@
 # Graph Report - Documentación Gta 6  (2026-11-20)
 
 ## Corpus Check
-- 76 files · ~173,168 words
+- 76 files · ~173,352 words
 - Verdict: corpus is large enough that graph structure adds value.
 - Unclassified: 18 file(s) not represented in the graph (top: .jsonl 10, (none) 3, .bat 3)
 
@@ -11,7 +11,7 @@
 - Token cost: 183,861 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `52bc242b`
+- Built from commit: `33e05449`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -105,9 +105,9 @@
 5. `pintarRecords()` - 20 edges
 6. `pedir()` - 19 edges
 7. `exigir()` - 18 edges
-8. `convertir()` - 17 edges
-9. `hora()` - 17 edges
-10. `limpio()` - 17 edges
+8. `hora()` - 17 edges
+9. `limpio()` - 17 edges
+10. `Dibujo` - 17 edges
 
 ## Surprising Connections (you probably didn't know these)
 - `Pendiente` --references--> `partes()`  [INFERRED]
@@ -410,16 +410,16 @@ Nodes (3): configuraciones_visitante(), records_videos(), videos_extra()
 _Questions this graph is uniquely positioned to answer:_
 
 - **Why does `Diseño de la página` connect `youtube_es` to `Plan del proyecto: recuerdo del lanzamiento de GTA 6`, `limpio`?**
-  _High betweenness centrality (0.183) - this node is a cross-community bridge._
+  _High betweenness centrality (0.181) - this node is a cross-community bridge._
 - **What connects `Estilos visuales Miami 1986 y Miami 2026`, `Enlaces y miniaturas guardados (tareas 2.1 y 2.2)`, `Series continuas de YouTube (25 más vistos + re-medición)` to the rest of the system?**
   _31 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Despertador y plan de trabajo` be split into smaller, more focused modules?**
   _Cohesion score 0.08817204301075268 - nodes in this community are weakly interconnected._
 - **Why does `limpio()` connect `limpio` to `pintar`, `app.js`, `poner`, `pintarRecords`, `youtube_es`?**
-  _High betweenness centrality (0.168) - this node is a cross-community bridge._
+  _High betweenness centrality (0.164) - this node is a cross-community bridge._
 - **Should `Worker de Cloudflare despertador-recolector (horario 7,37 * * * *)` be split into smaller, more focused modules?**
   _Cohesion score 0.1286549707602339 - nodes in this community are weakly interconnected._
 - **Why does `youtube_es()` connect `youtube_es` to `fuentes.py`, `json`, `trends_extra.py`, `youtube_tendencias`, `probar_fuentes.py`?**
-  _High betweenness centrality (0.065) - this node is a cross-community bridge._
+  _High betweenness centrality (0.054) - this node is a cross-community bridge._
 - **Should `steps` be split into smaller, more focused modules?**
   _Cohesion score 0.07142857142857142 - nodes in this community are weakly interconnected._
