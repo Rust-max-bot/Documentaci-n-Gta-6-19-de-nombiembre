@@ -1147,13 +1147,15 @@
      por plataforma en cada medición (Kick, solo desde el 16 nov). */
   var tabla = (function () {
     // Lo más nuevo primero (pedido de Bruno): días y filas de la más reciente a la más vieja.
-    // Al rebobinar: lo medido hasta ese momento, abierta en el día de ese momento.
+    // Al rebobinar: lo medido hasta ese momento, abierta en el día de ese momento. Sin rebobinar
+    // (al abrir la página y con "Volver a hoy"), en el día más nuevo (pedido de Bruno, 2026-11-22:
+    // antes se abría siempre en el 19 nov, el día del lanzamiento).
     var nuevas, dias, elegido, tope, Dv = D, preferidoAntes = null;
     function poner(V) {
       Dv = V.D;
       nuevas = V.M.slice().reverse();
       dias = []; nuevas.forEach(function (m) { var d = dia(m.ts); if (dias.indexOf(d) < 0) dias.push(d); });
-      var preferido = V.corte == null ? dia(SALIDA) : dia(V.corte);
+      var preferido = V.corte == null ? (dias[0] || "") : dia(V.corte);
       if (preferido !== preferidoAntes || dias.indexOf(elegido) < 0) elegido = dias.indexOf(preferido) >= 0 ? preferido : (dias[0] || "");
       preferidoAntes = preferido;
       tope = Math.max(1, V.picoTwitch ? V.picoTwitch.espectadores : 0, V.picoKick ? V.picoKick.kickEsp : 0);
@@ -2175,7 +2177,7 @@
     M.forEach(function (m) { var k = clave(m.ts); if (dias.indexOf(k) < 0) dias.push(k); });
     dias.reverse();   // lo más nuevo primero (pedido de Bruno)
     if (!dias.length) { caja.innerHTML = '<p class="vacio">Todavía no hay mediciones.</p>'; return; }
-    var elegido = dias.indexOf(clave(SALIDA)) >= 0 ? clave(SALIDA) : dias[0];
+    var elegido = dias[0];   // el día más nuevo (pedido de Bruno, 2026-11-22; antes, el 19 nov)
     var ultimoDia = dias[0];
 
     function resumen(k) {

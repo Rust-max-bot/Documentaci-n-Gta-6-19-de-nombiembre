@@ -1,9 +1,9 @@
-# Graph Report - Documentación Gta 6  (2026-11-21)
+# Graph Report - Documentación Gta 6  (2026-11-22)
 
 ## Corpus Check
-- 79 files · ~195,244 words
+- 79 files · ~195,324 words
 - Verdict: corpus is large enough that graph structure adds value.
-- Unclassified: 18 file(s) not represented in the graph (top: .jsonl 10, (none) 3, .bat 3)
+- Unclassified: 19 file(s) not represented in the graph (top: .jsonl 11, (none) 3, .bat 3)
 
 ## Summary
 - 1183 nodes · 2182 edges · 82 communities (64 shown, 18 thin omitted)
@@ -11,7 +11,7 @@
 - Token cost: 183,861 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `8c499e5a`
+- Built from commit: `60d8e757`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -395,16 +395,16 @@ Nodes (8): noticias(), _serie_trends(), trends(), _Trends429, xbox(), main(), Fa
 _Questions this graph is uniquely positioned to answer:_
 
 - **Why does `Diseño de la página` connect `fuentes.py` to `Plan del proyecto: recuerdo del lanzamiento de GTA 6`, `limpio`?**
-  _High betweenness centrality (0.175) - this node is a cross-community bridge._
+  _High betweenness centrality (0.176) - this node is a cross-community bridge._
 - **What connects `Estilos visuales Miami 1986 y Miami 2026`, `Enlaces y miniaturas guardados (tareas 2.1 y 2.2)`, `Series continuas de YouTube (25 más vistos + re-medición)` to the rest of the system?**
   _31 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Despertador y plan de trabajo` be split into smaller, more focused modules?**
   _Cohesion score 0.08817204301075268 - nodes in this community are weakly interconnected._
 - **Why does `limpio()` connect `limpio` to `app.js`, `poner`, `fuentes.py`, `dibujar`?**
-  _High betweenness centrality (0.169) - this node is a cross-community bridge._
+  _High betweenness centrality (0.166) - this node is a cross-community bridge._
 - **Should `Worker de Cloudflare despertador-recolector (horario 7,37 * * * *)` be split into smaller, more focused modules?**
   _Cohesion score 0.1286549707602339 - nodes in this community are weakly interconnected._
-- **Why does `partes()` connect `dibujar` to `poner`, `Plan del proyecto: recuerdo del lanzamiento de GTA 6`, `dia`, `limpio`, `gota`, `app.js`, `Tareas que faltan`, `Estado actual del proyecto`, `Plan del proyecto: recuerdo del lanzamiento de GTA 6`, `Plan del proyecto: recuerdo del lanzamiento de GTA 6`, `Plan del proyecto: recuerdo del lanzamiento de GTA 6`?**
-  _High betweenness centrality (0.056) - this node is a cross-community bridge._
+- **Why does `youtube_es()` connect `fuentes.py` to `youtube_tendencias`, `Falla`, `fuentes.py`, `trends_extra.py`, `json`?**
+  _High betweenness centrality (0.050) - this node is a cross-community bridge._
 - **Should `steps` be split into smaller, more focused modules?**
   _Cohesion score 0.07142857142857142 - nodes in this community are weakly interconnected._

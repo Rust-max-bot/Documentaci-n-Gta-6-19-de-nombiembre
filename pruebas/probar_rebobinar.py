@@ -55,6 +55,14 @@ med_nz = next(m for m in D["mediciones"] if m["t"] == MOM[NZ]["t"])
 FALLO_TRENDS = next((i for i, m in enumerate(MOM) if "trends" in m.get("fallos", {})), None)
 
 
+# La tabla de Twitch y Kick y el resumen del día abren en el día más nuevo, el primer botón
+# (antes, siempre en el 19 nov; arreglado el 2026-11-22).
+DIA_NUEVO = """() => ['filtros-dia', 'resumen-dias'].every(id => {
+  const b = document.querySelectorAll('#' + id + ' button');
+  return b.length > 0 && b[0].classList.contains('activo');
+})"""
+
+
 def num(n):
     return f"{n:,}".replace(",", ".")
 
@@ -76,6 +84,7 @@ with sync_playwright() as p:
             pg.reload()
             pg.wait_for_selector("#rebobinar:not([hidden])", timeout=15000)
             comprobar(not any("rebobinar.js" in u for u in pedidos) and pg.evaluate("!window.REBOBINAR"), "rebobinar.js no se baja hasta tocar el botón")
+            comprobar(pg.evaluate(DIA_NUEVO), "al abrir, la tabla de Twitch y Kick y el resumen del día están en el día más nuevo")
 
             pg.click("#rb-abrir")
             pg.wait_for_selector("#rb-barra:not([hidden])", timeout=15000)
@@ -256,6 +265,7 @@ with sync_playwright() as p:
             comprobar(pg.evaluate("document.querySelectorAll('#rb-fiesta canvas, .portada canvas.fuegos, .portada .reflectores').length") == 0, "al volver a hoy no quedan fuegos")
             comprobar(pg.evaluate("document.querySelector('.lema').textContent") == "¡Ya salió GTA 6!", "y la portada vuelve a la de hoy")
             comprobar(hoy[0] and hoy[1] == 0 and "Máximo en Twitch" in hoy[2] and hoy[4] == str(pico) and "momento=" not in hoy[3], "'Volver a hoy' deja la página como siempre (máximo de Twitch de hoy)")
+            comprobar(pg.evaluate(DIA_NUEVO), "'Volver a hoy' deja la tabla de Twitch y Kick en el día más nuevo")
             comprobar(not errores, "sin errores en la consola" + (": " + " | ".join(errores[:3]) if errores else ""))
             ctx.close()
     # Visitante con otro filtro de videos (10.4): el rebobinado usa "El de Rust" y lo avisa.
