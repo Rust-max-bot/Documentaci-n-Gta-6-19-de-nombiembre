@@ -77,11 +77,23 @@ las reglas, en `CLAUDE.md`.
       con twitch.tv en el mismo minuto, y después `probar_pagina.py` y `probar_rebobinar.py`.
       Probado a medias el 23 nov y deshecho (pedido de Bruno): el punto 4 funcionaba.
 - [ ] **9.14 Corregir con matemáticas datos que pueden ser imprecisos** (idea de Bruno,
-      2026-11-23, para después de la 9.13; investigar antes de hacer nada). Ejemplo: estimar
-      cuánto le faltó a Twitch en las mediciones cortadas (desde el 18 nov) a partir de cómo
-      baja el público de los canales más chicos (una curva ajustada a los datos), o con la
-      proporción medida contra twitch.tv. Resultado: opciones con cuánto se equivocan, y lo
-      estimado marcado como estimación en la página, nunca como medido.
+      2026-11-23, para después de la 9.13; investigar antes de hacer nada). **Método elegido por
+      Bruno: ajustar una curva** (2026-11-23). Ordenados de más a menos público, los canales de
+      Twitch bajan siguiendo una curva bastante regular: ajustarla con las ~5.200 transmisiones
+      medidas y calcular lo que sumarían las que faltaron, para estimar las cifras de Twitch
+      desde el 18 nov 11:07 UTC (todas cortadas). Ojo: hoy `datos/` guarda solo los 20 canales
+      con más público, no la lista completa; ver primero si alcanza o si hay que guardar más
+      desde ahora (cambia lo que se guarda: pedir permiso). Para saber cuánto se equivoca,
+      comparar con twitch.tv en el mismo minuto a varias horas (el 23 nov 13:07 UTC: 389.965
+      medidos, 415.031 en twitch.tv). Resultado: la estimación con su margen de error, marcada
+      en la página como estimación (por ejemplo, línea punteada y "estimado"), nunca como medida.
+- [ ] **9.15 Horas vistas en total** (idea de Bruno, 2026-11-23; "área bajo la curva"). Público
+      de cada medición × el tiempo que cubre (media hora hasta el 22 nov 00:07 UTC, una hora
+      después), sumado: "la gente pasó X millones de horas viendo GTA 6 en Twitch y Kick". Por
+      día y en total, Twitch y Kick por separado. Se puede calcular con lo ya guardado, pero
+      conviene hacerlo después de la 9.13 (Kick completo) y, para Twitch, decir que la cifra es
+      un mínimo o usar la estimación de la 9.14. Los huecos (mediciones que fallaron) se dicen,
+      no se rellenan en silencio. Encaja en la 4.3; diseño en la página con capturas.
 
 - [ ] **4.3 Análisis de datos (A3).** Datos interesantes: popularidad, visitas, cuánto dura el
       interés, antes y después. Necesita varios días de datos reales. **Sin IA** (Bruno, 2026-11-18): un

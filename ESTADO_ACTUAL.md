@@ -87,7 +87,7 @@ lanzamiento (revisión completa y menos alarmas por Google). Antes: 9.12 y más 
 ## Últimos cambios
 
 - 2026-11-17: estado anterior archivado en historial/ESTADO_2026-11-17.md
-- 2026-11-23: anotadas en `PLAN.md` la 9.13 (Kick se cortaba en 5.000 directos: faltaba hasta un 29 % en las horas fuertes; Twitch, un 6 %) y la 9.14 (corregir con matemáticas datos imprecisos). Bruno aprobó el arreglo de la 9.13 y pidió dejarlo para después: no se tocó el recolector.
+- 2026-11-23: anotadas en `PLAN.md` la 9.13 (Kick se cortaba en 5.000 directos: faltaba hasta un 29 % en las horas fuertes; Twitch, un 6 %) y la 9.14 (corregir con matemáticas datos imprecisos; Bruno eligió ajustar una curva). Después, la 9.15 (horas vistas en total). Bruno aprobó el arreglo de la 9.13 y pidió dejarlo para después: no se tocó el recolector.
 - 2026-11-22: arreglado (pedido de Bruno): la tabla "Twitch y Kick, medición por medición" y "Resumen del día" se abrían siempre en el 19 nov (regla de la primera versión), también tras "Volver a hoy" del rebobinado. Ahora abren en el día más nuevo; al rebobinar, la tabla sigue en el día del momento elegido. `probar_rebobinar.py` comprueba el día al abrir y tras "Volver a hoy" (falla con lo de antes); `probar_rebobinar.py` y `probar_pagina.py`: todo bien.
 - 2026-11-21: 9.4 terminada (pedido de Bruno). (1) Enlace a una sección (`index.html#seccion-noticias`): a 384 px en Miami 1986 el navegador bajaba con la animación suave mientras lo de arriba cambiaba de alto y se pasaba 1.200 px o no llegaba (ya pasaba antes); ahora usa la misma corrección que la recarga. (2) Barra de desplazamiento o "buscar en la página" durante la corrección: si la página salta más de 40 px sin que la mueva el código y con la página ya cargada, se suelta. (3) "auto" se devuelve recién tras el evento load (antes, el navegador podía tirar a la persona de vuelta). `probar_recarga.py` (8 casos, con "barra" nuevo: falla con lo de antes), `probar_saltos.py` y `probar_pagina.py`: todo bien.
 - 2026-11-21: 9.4, abogado del diablo corto (pedido de Bruno) sobre el arreglo de la recarga: si la persona recargaba ella misma durante los 5 s de corrección, `history.scrollRestoration` quedaba en "manual" y sus F5 siguientes no volvían a su altura. Arreglado (al irse, vuelve "auto", salvo otra recarga sola). Caso nuevo "recarga a mano" en `probar_recarga.py`: falla sin el arreglo y pasa con él. Queda, menor: la barra de desplazamiento no detiene la corrección.
@@ -102,7 +102,7 @@ lanzamiento (revisión completa y menos alarmas por Google). Antes: 9.12 y más 
 La lista completa y su orden están en `PLAN.md`. Resumen (2026-11-17):
 
 - **(2026-11-23):** 9.13 arreglar el conteo de Twitch y Kick (aprobado, para después) y 9.14
-  corregir datos imprecisos con matemáticas (investigar). Ver `PLAN.md`.
+  corregir datos imprecisos ajustando una curva (investigar); 9.15 horas vistas en total. Ver `PLAN.md`.
 - **(2026-11-17):** 9.11 (b) administrar qué se anima en toda la página (lo demás, después del
   22). **Reddit:** quitado (6.9): solo
   volvería con la clave oficial.
