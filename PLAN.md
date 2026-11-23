@@ -55,6 +55,34 @@ las reglas, en `CLAUDE.md`.
 
 ### Después del lanzamiento
 
+- [ ] **9.13 Espectadores de Twitch y Kick que se quedan cortos** (visto el 23 nov; Bruno aprobó
+      el arreglo y pidió dejarlo para después). Bruno veía en las webs más gente de la que dice la
+      página. Causa, comprobada con datos reales:
+      - **Kick (fallo grande):** `KICK_PAGINAS_MAX = 5` (5.000 directos) en `recolector/fuentes.py`.
+        En las horas fuertes había más y, como Kick no los entrega ordenados por público, se
+        pierden también directos grandes: faltaba hasta un 29 % (19 nov 22:07 UTC: 1.134.624 en
+        la página contra 1.573.550 en `kick_ranking`, que lee todos los directos). Con menos de
+        5.000 directos coinciden. 121 de 298 mediciones de Kick quedaron cortadas
+        (`completo: false`).
+      - **Twitch (fallo chico):** `TWITCH_PAGINAS_MAX = 60`; Twitch repite ~800 transmisiones entre
+        páginas y se leen ~5.200. El 23 nov a las 13:07 UTC: 389.965 medidos contra 415.031 en
+        twitch.tv (un 6 % menos). Todas las mediciones desde el 18 nov 11:07 UTC están cortadas.
+      Arreglo aprobado: (1) Kick a 30 páginas; (2) Twitch a ~200 páginas (hoy la medición
+      tarda ~20 s; el tope del workflow es 8 min); (3) que el resumen del registro diga "CORTADO"
+      si faltaron páginas; (4) en `generar_web.py`, si una medición de Kick quedó cortada y su
+      `kick_ranking` está completo, mostrar la cifra del ranking (solo en la página, `datos/` no
+      se toca; el máximo de Kick pasaría a 1.573.550, 19 nov 22:07 UTC; los canales con más público
+      siguen saliendo de la lista cortada); (5) Twitch hacia atrás no se puede corregir: nota
+      corta en la página; (6) probar en una rama con "Probar fuentes" (no guarda nada) comparando
+      con twitch.tv en el mismo minuto, y después `probar_pagina.py` y `probar_rebobinar.py`.
+      Probado a medias el 23 nov y deshecho (pedido de Bruno): el punto 4 funcionaba.
+- [ ] **9.14 Corregir con matemáticas datos que pueden ser imprecisos** (idea de Bruno,
+      2026-11-23, para después de la 9.13; investigar antes de hacer nada). Ejemplo: estimar
+      cuánto le faltó a Twitch en las mediciones cortadas (desde el 18 nov) a partir de cómo
+      baja el público de los canales más chicos (una curva ajustada a los datos), o con la
+      proporción medida contra twitch.tv. Resultado: opciones con cuánto se equivocan, y lo
+      estimado marcado como estimación en la página, nunca como medido.
+
 - [ ] **4.3 Análisis de datos (A3).** Datos interesantes: popularidad, visitas, cuánto dura el
       interés, antes y después. Necesita varios días de datos reales. **Sin IA** (Bruno, 2026-11-18): un
       programa normal, como `generar_web.py`, que corre solo con cada medición. En unos días.
