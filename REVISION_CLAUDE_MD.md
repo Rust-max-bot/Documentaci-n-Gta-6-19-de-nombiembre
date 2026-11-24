@@ -13,7 +13,7 @@ Todavía no se cambió nada (2026-11-24). Los números de línea son los del `CL
 
 ## A. Forma de trabajo: más rápida, pero con resultados a la vista
 
-- [ ] Aplicar A
+- [x] Aplicar A
 
 **Por qué:** hoy hay dos reglas que se contradicen. `CLAUDE.md` dice "encadena toda la tanda sin
 parar" y la memoria "pasos cortos" dice "un paso por respuesta". Además, Claude te pregunta casi
@@ -79,7 +79,7 @@ paso se enreda, para y te cuenta, en vez de seguir media hora.
 
 ## B. `prototype` y `review-animations` no se activan solas
 
-- [ ] Aplicar B
+- [x] Aplicar B
 
 **Por qué:** `CLAUDE.md` dice que Claude use `prototype`, pero esa skill (igual que
 `review-animations`) solo funciona si **tú** escribes `/prototype`. Claude no puede lanzarla, así
@@ -104,7 +104,7 @@ vez de intentar algo que no puede hacer.
 
 ## C. Graphify: decir cuándo sirve, no "siempre"
 
-- [ ] Aplicar C
+- [x] Aplicar C
 
 **Por qué:** "siempre que se pueda" hace que Claude consulte el grafo también cuando no ayuda. Por
 ejemplo, para leer un archivo que ya conoce, lo que gasta tiempo. Los avisos automáticos ya le
@@ -126,7 +126,7 @@ El resto de la regla (línea 69: "No hace falta si la tarea ya dice qué archivo
 
 ## D. Quitar frases de historia
 
-- [ ] Aplicar D
+- [x] Aplicar D
 
 **Por qué:** una sesión nueva lee "antes era así" y puede creer que lo viejo sigue valiendo. La
 historia ya está en `git log`.
@@ -135,7 +135,7 @@ historia ya está en `git log`.
 |---|---|---|
 | 30-31 | "(un solo plan desde el 2026-11-16, pedido de Bruno: antes eran `PLAN.md` y `PLAN_DE_TRABAJO.md`)" | "(los `PLAN_DE_TRABAJO_*.md` de `historial/` son planes viejos)" |
 | 45 | "*(Reglas traídas del proyecto "Ayuda para el inglés" y adaptadas, decisión de Bruno, 2026-11-12.)*" | *(se quita)* |
-| 146 | "(pedido de Bruno, 2026-11-13; ya pasó dos veces y GitHub lo avisa en cada ejecución)" | "(pedido de Bruno; GitHub lo avisa en cada ejecución)" |
+| 146 | "(pedido de Bruno, 2026-11-13; ya pasó dos veces y GitHub lo avisa en cada ejecución)" | "(pedido de Bruno, para que GitHub no muestre avisos de obsolescencia: Claude tiende a escribir versiones viejas)" |
 | 174 | "(instaladas el 2026-11-17, decisión de Bruno, tarea 9.11)" | "(decisión de Bruno)" |
 
 **No se tocan:** "Nunca `--force`" (línea 82) ni "pedir permiso para forzar el grafo" (línea 168),
@@ -145,10 +145,16 @@ con sus fechas, porque protegen cosas que no se deshacen.
 
 ## E. Lista de acciones de GitHub incompleta
 
-- [ ] Aplicar E
+- [x] Aplicar E
 
 **Por qué:** la lista no menciona dos acciones que el proyecto sí usa. No hay ningún fallo: todas
 usan Node.js 24. Solo falta que la lista esté completa.
+
+**La regla en sí no cambia** (aclaración de Bruno, 2026-11-24): nació porque, al crear los
+primeros workflows, Claude escribía por defecto versiones de las acciones que usaban Node.js 20,
+y GitHub avisaba que eso ya está retirado. Sigue igual que hoy: usar siempre versiones con
+Node.js 24 o más nuevo, comprobarlo en el `action.yml` de cada acción antes de usarla y revisar
+los avisos ("Annotations") de cada ejecución.
 
 **Hoy (línea 148-149):**
 
@@ -163,7 +169,7 @@ usan Node.js 24. Solo falta que la lista esté completa.
 
 ## F. Instalar la skill `improve-animations`
 
-- [ ] Aplicar F
+- [x] Aplicar F
 
 **Por qué:** las skills `animate` y `find-animation-opportunities` mandan a `improve-animations`,
 que no se instaló con las demás. Así, cuando Claude intenta seguir esa referencia, no encuentra
