@@ -183,14 +183,116 @@ sumarla a la lista de la línea 177 de `CLAUDE.md`. No cambia la página.
 
 ## Para más adelante (no hay que marcar nada ahora)
 
-- **Paso 3 del instructivo:** `CLAUDE.md` tiene 251 líneas y el instructivo dice que bajo 200 está
-  bien. Hay bloques que solo sirven a veces y que en el paso 3 se pueden mover a archivos que se
-  cargan solos cuando hacen falta:
-  - acciones de GitHub (146-152), solo al tocar `.github/workflows/`;
-  - qué hacer si Graphify falla (165-173);
-  - cómo actualizar las skills (174-184);
-  - Python y `gh` en el PC (186-194).
+- **Paso 3 del instructivo:** ver la sección "Paso 3" al final de este archivo.
 - **Repeticiones** (prioridad baja): 200-203, 220-221 y 227-237 repiten reglas que ya están más
   arriba. No causan errores; se pueden juntar al rehacer el archivo.
 - **Fuera del proyecto** (`~/.claude/`, se pregunta aparte): la copia vieja de Impeccable y la
   memoria "pasos cortos".
+
+---
+
+# Paso 3: dónde va cada regla (2026-11-24)
+
+**Idea general:** en `CLAUDE.md` queda lo que vale en cualquier sesión. Lo que solo importa al
+tocar ciertos archivos pasa a una **regla por carpeta** (`.claude/rules/<tema>.md`), que Claude
+Code carga sola cuando se abre un archivo de esa carpeta. Lo que es un procedimiento largo pasa a
+una **skill**.
+
+Una regla que hace falta *antes* de abrir un archivo (por ejemplo, al revisar una ejecución de
+GitHub con `gh`) no puede ir en `rules/`: queda en `CLAUDE.md`. Todavía no se movió nada: esto es
+el plan para el borrador del paso 4.
+
+## Qué se queda en `CLAUDE.md`
+
+Son las reglas de todas las sesiones, con los cambios A a F ya puestos:
+
+- saludo "Bruno,";
+- qué es el proyecto;
+- al iniciar (con A);
+- fuentes de verdad;
+- cómo comunicarse;
+- forma de trabajo (A);
+- diseño con permiso;
+- no inventar contenido;
+- verificar de verdad (con A: solo las pruebas de lo cambiado, la completa al final);
+- seguir `PLAN.md` en orden;
+- Graphify (C);
+- guardado;
+- privacidad y "Rust";
+- claves;
+- "Nunca `--force`";
+- "No borrar ni reescribir `datos/`";
+- máquina;
+- nube;
+- avisos automáticos;
+- la sección `## graphify` en inglés, que la escribe el instalador.
+
+**Se acorta, sin perder reglas:**
+
+- **Graphify** (hoy 153-173): quedan "si cambia código, `graphify update .` y subir
+  `graphify-out/` en el mismo commit"; "volver a leer documentos gasta tokens: avisar antes";
+  "si falla o no quiere achicar el grafo: no `--force`, decirlo y pedir permiso"; y "si
+  `graphify-out/` choca al unir: tomar `main` y regenerar". La versión del paquete y cómo
+  instalarlo pasan a "Máquina y herramientas".
+- **Repeticiones:** "Relevo entre sesiones" (223-239) y el inicio de "Trabajar en la nube y en el
+  PC" (198-205) se juntan con "Al iniciar" y "Guardado". Lo que solo dicen ellas se mantiene: el
+  entorno `recuerdo-gta6` y que en la nube se pierde lo que no se sube.
+
+## Qué sale de `CLAUDE.md`
+
+| # | Regla o bloque (líneas de hoy) | Adónde va | Cuándo se carga |
+|---|---|---|---|
+| 3.1 | Datos: "Datos por programa, no a mano", con validaciones y copia antes de un cambio masivo (70-72); horas en UTC (142-143); verificar cada fuente con una consulta real (141) | `.claude/rules/datos.md`, con `paths: datos/**, recolector/**` | Al abrir algo de `datos/` o `recolector/` |
+| 3.2 | GitHub: Node.js 24, con la lista completa (E) y el motivo (146-151); las ejecuciones programadas solo corren desde `main` (145) | `.claude/rules/github.md`, con `paths: .github/workflows/**` | Al abrir un workflow |
+| 3.3 | La página: sin librerías ni compilación (231); diseño original, sin copiar logotipos ni arte (234); antes de revisar, correr `generar_web.py` (235-237) | `.claude/rules/pagina.md`, con `paths: web/**, pruebas/**` | Al abrir algo de `web/` o `pruebas/` |
+| 3.4 | Cómo actualizar las skills de Emil Kowalski e Impeccable, con su origen (174-184) | `.claude/skills/LEEME.md` (Claude Code no lo carga solo) | Solo cuando se va a actualizar una skill |
+| 3.5 | Archivar `ESTADO_ACTUAL.md` y `PLAN.md` (90-117) | Skill `.claude/skills/archivar/` **que Claude puede lanzar sola** (sin `disable-model-invocation`), porque tiene que hacerlo cuando salta el aviso, sin que nadie se lo pida | Cuando el aviso dice que un archivo pasó de 20.000 bytes |
+
+**Qué se queda de lo que sale:**
+
+- De 3.2: "al revisar una ejecución, mirar también sus avisos (Annotations)". Eso se hace con
+  `gh`, sin abrir archivos.
+- De 3.4: en la lista de skills, que `prototype` y `review-animations` solo las lanza Bruno (B),
+  que `improve-animations` se suma a la lista (F) y dónde está el `LEEME.md`.
+- De 3.5: una línea: "Si `ESTADO_ACTUAL.md` o `PLAN.md` pasa de 20.000 bytes, se archiva con la
+  skill `archivar`".
+
+**Hay que tocar también el aviso automático** (`.claude/hooks/revisar-guardado.sh`): hoy dice
+"Archivalo segun CLAUDE.md, seccion 'Archivar…'". Pasaría a "con la skill `archivar`".
+
+## Bloqueos de verdad (`permissions.deny` en `.claude/settings.json`)
+
+Estos hacen que la acción no se pueda hacer aunque Claude se olvide de la regla. La regla escrita
+se queda igual.
+
+| # | Qué se bloquea | Por qué |
+|---|---|---|
+| 3.6 | `git push --force` y `-f`, en Bash y en PowerShell (8 patrones, como en el proyecto de inglés) | Reescribe `main`, que es público, y no se deshace |
+| 3.7 | Editar o escribir a mano en `datos/` (`Edit(datos/**)`, que cubre también `Write`) | Es el recuerdo y no se puede volver a obtener |
+
+Sobre 3.7: los programas del recolector siguen escribiendo en `datos/`, porque corren con
+`python`, no con `Edit`. Solo se bloquea que Claude edite esos archivos a mano.
+
+Si algún día Bruno autoriza otra vez un `--force`, lo corre él, o se quita el bloqueo por esa vez.
+
+## Cómo quedaría
+
+`CLAUDE.md` pasaría de 251 a unas **160-170 líneas**, sin perder ninguna regla. El paso 5 lo
+comprueba con un programa. Nuevos:
+
+- 3 reglas por carpeta;
+- 1 skill (`archivar`);
+- 1 `LEEME.md` en `.claude/skills/`;
+- 2 bloqueos.
+
+## Para elegir
+
+Marca lo que quieras. Lo que no marques se queda como hoy en `CLAUDE.md`.
+
+- [ ] 3.1 Reglas de datos
+- [ ] 3.2 Reglas de GitHub
+- [ ] 3.3 Reglas de la página
+- [ ] 3.4 `LEEME.md` de las skills
+- [ ] 3.5 Skill `archivar` (y cambiar el aviso automático)
+- [ ] 3.6 Bloquear `--force`
+- [ ] 3.7 Bloquear editar `datos/` a mano
