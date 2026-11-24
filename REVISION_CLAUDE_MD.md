@@ -275,6 +275,23 @@ Sobre 3.7: los programas del recolector siguen escribiendo en `datos/`, porque c
 
 Si algún día Bruno autoriza otra vez un `--force`, lo corre él, o se quita el bloqueo por esa vez.
 
+## G. Tope para archivar: 30.000 bytes en vez de 20.000
+
+- [x] Aplicar G (pedido de Bruno, 2026-11-24)
+
+**Por qué:** trabajar con un poco más de margen antes de archivar. **No es permiso para llenar los
+archivos:** se siguen manteniendo cortos, borrando lo viejo, que ya está en `git log`. Por ejemplo,
+"Últimos cambios" conserva unas 8 entradas. Solo se archiva más tarde.
+
+**Dónde se cambia** (en los pasos 4 y 6):
+
+- el número del aviso automático, `LIMITE=20000` en `.claude/hooks/revisar-guardado.sh`;
+- la regla de archivar: `CLAUDE.md:92` y `:125`, que con 3.5 pasan a la skill `archivar` y a una
+  línea de `CLAUDE.md`;
+- las notas de `ESTADO_ACTUAL.md:12` y `PLAN.md:17`.
+
+La línea 3 de `PLAN.md` ("pasó de 20.000") es historia de un archivo ya archivado: queda igual.
+
 ## Cómo quedaría
 
 `CLAUDE.md` pasaría de 251 a unas **160-170 líneas**, sin perder ninguna regla. El paso 5 lo
@@ -289,10 +306,10 @@ comprueba con un programa. Nuevos:
 
 Marca lo que quieras. Lo que no marques se queda como hoy en `CLAUDE.md`.
 
-- [ ] 3.1 Reglas de datos
-- [ ] 3.2 Reglas de GitHub
-- [ ] 3.3 Reglas de la página
-- [ ] 3.4 `LEEME.md` de las skills
-- [ ] 3.5 Skill `archivar` (y cambiar el aviso automático)
-- [ ] 3.6 Bloquear `--force`
-- [ ] 3.7 Bloquear editar `datos/` a mano
+- [x] 3.1 Reglas de datos
+- [x] 3.2 Reglas de GitHub
+- [x] 3.3 Reglas de la página
+- [x] 3.4 `LEEME.md` de las skills
+- [x] 3.5 Skill `archivar` (y cambiar el aviso automático)
+- [x] 3.6 Bloquear `--force`
+- [x] 3.7 Bloquear editar `datos/` a mano

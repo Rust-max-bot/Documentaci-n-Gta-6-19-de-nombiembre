@@ -191,6 +191,9 @@ No se empieza hasta que Bruno avise con una confirmación oficial de la versión
 
 El porqué y las opciones descartadas, en `historial/PLAN_2026-11-21.md`, `historial/PLAN_2026-11-18-3.md` y `historial/PLAN_2026-11-16.md`.
 
+- **Tope de `ESTADO_ACTUAL.md` y `PLAN.md`: 30.000 bytes** (Bruno, 2026-11-24; antes 20.000), para
+  trabajar con algo más de margen. Siguen cortos: lo viejo se borra igual (está en `git log`). Se
+  aplica con la mejora de la configuración (`REVISION_CLAUDE_MD.md`, cambio G).
 - **Fuentes:** Twitch, YouTube y Google Trends (imprescindibles); además Kick, Google Noticias,
   PlayStation y Xbox, ranking de Twitch y Kick, tendencias de YouTube y los 7 videos oficiales de
   GTA VI. Las caídas de Rockstar se anotan a mano en `web/eventos.js`.
