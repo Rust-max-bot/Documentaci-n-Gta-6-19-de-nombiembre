@@ -12,9 +12,9 @@
     "semantic_hash": ""
   },
   ".claude/settings.json": {
-    "mtime": 1795554977.883464,
-    "seen": 1795555008.679118,
-    "ast_hash": "733a54ca6c97c8b8d3cb7f8876c23d31",
+    "mtime": 1795555252.1961777,
+    "seen": 1795555305.0170162,
+    "ast_hash": "9f1e0ba36d1c4419774996abe0a92093",
     "semantic_hash": ""
   },
   "web/app.js": {
@@ -48,9 +48,9 @@
     "semantic_hash": ""
   },
   "ESTADO_ACTUAL.md": {
-    "mtime": 1795555004.0512824,
-    "seen": 1795555008.6792727,
-    "ast_hash": "f608d639166f49523ce976270995a790",
+    "mtime": 1795555284.5323684,
+    "seen": 1795555305.0171,
+    "ast_hash": "fa9494cddc76e390d6a3916101899301",
     "semantic_hash": ""
   },
   "GUIA_CLAVES.md": {
@@ -531,72 +531,6 @@
     "mtime": 1795554419.0226092,
     "seen": 1795555008.6792862,
     "ast_hash": "b0cdb6e3887a6cf0e72dbdefebe18914",
-    "semantic_hash": ""
-  },
-  "borrador-claude/CLAUDE.nuevo.md": {
-    "mtime": 1795554725.4482386,
-    "seen": 1795555008.6792886,
-    "ast_hash": "958d592c836f88bca73522d9175a0089",
-    "semantic_hash": ""
-  },
-  "borrador-claude/LEEME.md": {
-    "mtime": 1795554860.1591,
-    "seen": 1795555008.6792905,
-    "ast_hash": "193ed7c79b543acb1a7ee27e08354093",
-    "semantic_hash": ""
-  },
-  "borrador-claude/rules/datos.md": {
-    "mtime": 1795554725.4502983,
-    "seen": 1795555008.6792924,
-    "ast_hash": "98f7d8d41ec78c4c264410034409003a",
-    "semantic_hash": ""
-  },
-  "borrador-claude/rules/github.md": {
-    "mtime": 1795554725.4502983,
-    "seen": 1795555008.6792948,
-    "ast_hash": "e2a8c5add2f370ec71fdd9c1e223a87c",
-    "semantic_hash": ""
-  },
-  "borrador-claude/rules/pagina.md": {
-    "mtime": 1795554725.4512997,
-    "seen": 1795555008.6792965,
-    "ast_hash": "dd2bddea9715f83c86d0b45f3f81b713",
-    "semantic_hash": ""
-  },
-  "borrador-claude/skills/LEEME-skills.md": {
-    "mtime": 1795554725.4523053,
-    "seen": 1795555008.6792989,
-    "ast_hash": "8ef779042d216d78330b4b2ac89b3720",
-    "semantic_hash": ""
-  },
-  "borrador-claude/skills/archivar/SKILL.md": {
-    "mtime": 1795554725.4526174,
-    "seen": 1795555008.679301,
-    "ast_hash": "acde8ec2696df8668cb0774c252243ad",
-    "semantic_hash": ""
-  },
-  "borrador-claude/skills/improve-animations/AUDIT.md": {
-    "mtime": 1795554725.4536233,
-    "seen": 1795555008.6793034,
-    "ast_hash": "c3f81813ab6f2ec248024c94e48d85ba",
-    "semantic_hash": ""
-  },
-  "borrador-claude/skills/improve-animations/ORIGEN.txt": {
-    "mtime": 1795554725.4546282,
-    "seen": 1795555008.6793053,
-    "ast_hash": "fe6c04af69854627c01f5bfa2f06e659",
-    "semantic_hash": ""
-  },
-  "borrador-claude/skills/improve-animations/PLAN-TEMPLATE.md": {
-    "mtime": 1795554725.4559,
-    "seen": 1795555008.679307,
-    "ast_hash": "25c21e90d977bce2491492201803fe45",
-    "semantic_hash": ""
-  },
-  "borrador-claude/skills/improve-animations/SKILL.md": {
-    "mtime": 1795554725.4569075,
-    "seen": 1795555008.679309,
-    "ast_hash": "076f890b181ca771384cefdb8e65a87f",
     "semantic_hash": ""
   }
 }
