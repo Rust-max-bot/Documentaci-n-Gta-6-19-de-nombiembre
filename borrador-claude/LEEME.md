@@ -164,3 +164,24 @@ Solo una frase se juntó con otra: "cada extra, cuando Bruno lo pide" quedó den
 que Claude pregunta si algo sale de lo pedido.
 
 **Resultado:** no se pierde ninguna regla.
+
+## Paso 7: pruebas (2026-11-24, en la misma sesión que aplicó los cambios)
+
+| Prueba | Resultado |
+|---|---|
+| `git push --force --dry-run origin main` en Bash | Bloqueado ("denied") ✓ |
+| Lo mismo en PowerShell | Bloqueado ("denied") ✓ |
+| `Edit` en `datos/2026-11-12.jsonl` con un texto que no existe | Bloqueado ("directory that is denied"), no "string not found" ✓ |
+| Abrir un archivo de `datos/`, de `web/` y un workflow | Se cargó la regla de cada carpeta (`datos.md`, `pagina.md`, `github.md`) ✓ |
+| Skills nuevas | Claude Code anunció `archivar` e `improve-animations` apenas se copiaron ✓ |
+| `git -C <carpeta> push -f --dry-run origin main` | **No se bloqueó** (no cambió nada: era de prueba y dijo "Everything up-to-date") ✗ |
+
+**Hueco encontrado:** los bloqueos miran cómo empieza el comando. Por eso, si delante de `push` va
+otra opción (`git -C <carpeta> push -f`), o si se fuerza con `+` (`git push origin +main`), no lo
+detectan. La regla escrita "Nunca `--force`" sigue valiendo para esos casos.
+
+**Falta, en una sesión nueva** (lo hace Bruno):
+
+- escribir `/` y ver que aparecen `archivar`, `improve-animations`, `prototype` y
+  `review-animations`;
+- correr `/doctor prompt-audit` otra vez.
