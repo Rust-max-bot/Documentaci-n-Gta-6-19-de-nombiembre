@@ -124,3 +124,43 @@ ya tiene (hooks y línea de estado):
 - forzar el grafo con su fecha;
 - máquina;
 - la sección `## graphify` en inglés, que la escribe el instalador.
+
+## Paso 5: comprobación de que no se pierde nada (2026-11-24)
+
+**Primera comprobación, la del instructivo:** se listaron los 103 nombres entre comillas
+invertidas del `CLAUDE.md` de hoy y se buscó cada uno en el borrador (`CLAUDE.nuevo.md`, las 3
+reglas y las skills). Faltan 9, y todos están explicados:
+
+| Falta | Por qué |
+|---|---|
+| `.claude/skills/impeccable/`, `ORIGEN.txt`, `emilkowalski/skills`, `npx impeccable update`, `pbakaus/impeccable`, `scripts/VERSION` | Es cómo actualizar las skills: está en `skills/LEEME-skills.md` (3.4). `scripts/VERSION` aparece como `impeccable/scripts/VERSION` |
+| `.claude/skills/<nombre>/` | Escrito distinto: "en `.claude/skills/`" |
+| `PLAN_DE_TRABAJO.md` | Cambio D: ahora dice `PLAN_DE_TRABAJO_*.md` de `historial/` |
+| `git commit` | Escrito distinto: "commit y push (ver Guardado…)" |
+
+Contando también `skills/LEEME-skills.md`, solo faltan los 4 de "escrito distinto".
+
+**Segunda comprobación, extra:** lo mismo con las 35 frases en negrita, que son los nombres de las
+reglas. Faltan 5, todas cambiadas a propósito:
+
+- **20.000 bytes:** ahora dice 30.000 (G).
+- **Acciones de GitHub sin Node.js 20:** ahora es "Acciones sin Node.js 20", en `rules/github.md`.
+- **Paso a paso con permiso explícito: ACTIVA, por tandas:** ahora es "Por tandas, con entregas
+  cortas" (A).
+- **Skills de animación de Emil Kowalski:** ahora es "De animación (de Emil Kowalski…)", en la
+  lista de skills.
+- **Usar Graphify siempre que se pueda:** ahora es "Graphify para ahorrar tokens y tiempo" (C).
+
+**Revisión a mano:** este `CLAUDE.md` no tiene reglas numeradas, así que se revisaron las reglas
+escritas sin negrita ni comillas. Siguen todas, por ejemplo:
+
+- "las ejecuciones programadas solo corren desde `main`";
+- "verificar cada fuente con una consulta real";
+- "si falta Chromium, nada visual se da por verificado";
+- "para deshacer, `git revert`";
+- "fuera de lo pedido, nada por iniciativa propia".
+
+Solo una frase se juntó con otra: "cada extra, cuando Bruno lo pide" quedó dentro de A, que dice
+que Claude pregunta si algo sale de lo pedido.
+
+**Resultado:** no se pierde ninguna regla.
