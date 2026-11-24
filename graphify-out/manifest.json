@@ -6,15 +6,15 @@
     "semantic_hash": "0b4ed6d365bae67e01c6fb78dfc942c2"
   },
   ".claude/hooks/revisar-guardado.sh": {
-    "mtime": 1794847517.9236035,
-    "seen": 1794951380.1555562,
-    "ast_hash": "f27881908a36ebd32d585612adba6de2",
+    "mtime": 1795554979.8162925,
+    "seen": 1795555008.6791139,
+    "ast_hash": "179eecf890c60bb31dfc39d8d3a5deae",
     "semantic_hash": ""
   },
   ".claude/settings.json": {
-    "mtime": 1794589091.0609193,
-    "seen": 1794951380.155558,
-    "ast_hash": "17e2309d344530ab0dbe873cce237b02",
+    "mtime": 1795554977.883464,
+    "seen": 1795555008.679118,
+    "ast_hash": "733a54ca6c97c8b8d3cb7f8876c23d31",
     "semantic_hash": ""
   },
   "web/app.js": {
@@ -42,15 +42,15 @@
     "semantic_hash": "9b31786b637be3c13978bec4c2330752"
   },
   "CLAUDE.md": {
-    "mtime": 1794957205.5249758,
-    "seen": 1794957771.0522902,
-    "ast_hash": "06a9a2795e2467cec48553afe8f73d02",
+    "mtime": 1795554979.453905,
+    "seen": 1795555008.6792681,
+    "ast_hash": "958d592c836f88bca73522d9175a0089",
     "semantic_hash": ""
   },
   "ESTADO_ACTUAL.md": {
-    "mtime": 1795364529.203893,
-    "seen": 1795364534.5214329,
-    "ast_hash": "1c5c75220714ef0748c8349f3dc075e5",
+    "mtime": 1795555004.0512824,
+    "seen": 1795555008.6792727,
+    "ast_hash": "f608d639166f49523ce976270995a790",
     "semantic_hash": ""
   },
   "GUIA_CLAVES.md": {
@@ -60,9 +60,9 @@
     "semantic_hash": ""
   },
   "PLAN.md": {
-    "mtime": 1795302699.0121095,
-    "seen": 1795364534.5214384,
-    "ast_hash": "62cb08b847291653fa3a8eee3d1fa39a",
+    "mtime": 1795554993.0991774,
+    "seen": 1795555008.679282,
+    "ast_hash": "518a857858c5f864b5adb3e37b6cd750",
     "semantic_hash": ""
   },
   "README.md": {
@@ -96,8 +96,8 @@
     "semantic_hash": ""
   },
   "recolector/fuentes.py": {
-    "mtime": 1795010957.4710157,
-    "seen": 1795032230.598063,
+    "mtime": 1795439559.1068757,
+    "seen": 1795555008.6791975,
     "ast_hash": "faf37832dafecc63611a8b06dd405f9a",
     "semantic_hash": ""
   },
@@ -108,8 +108,8 @@
     "semantic_hash": "b8c4851586f3fbbdd7b1ac30238e6af6"
   },
   "recolector/recolectar.py": {
-    "mtime": 1795010957.4720147,
-    "seen": 1795032230.598076,
+    "mtime": 1795439559.1220233,
+    "seen": 1795555008.6792164,
     "ast_hash": "1cb2f87a9ea042e124c0d7f754f4c74d",
     "semantic_hash": ""
   },
@@ -138,8 +138,8 @@
     "semantic_hash": ""
   },
   "recolector/generar_web.py": {
-    "mtime": 1795285498.3572235,
-    "seen": 1795296619.4726636,
+    "mtime": 1795439559.1220233,
+    "seen": 1795555008.6792014,
     "ast_hash": "164511725195bf4a0cbee5e90df20eb3",
     "semantic_hash": ""
   },
@@ -501,6 +501,102 @@
     "mtime": 1795301018.9729996,
     "seen": 1795302694.584907,
     "ast_hash": "875cb9bf8acbf6b0c1b07a8088cda7f6",
+    "semantic_hash": ""
+  },
+  ".claude/rules/datos.md": {
+    "mtime": 1795554979.5091577,
+    "seen": 1795555008.679256,
+    "ast_hash": "98f7d8d41ec78c4c264410034409003a",
+    "semantic_hash": ""
+  },
+  ".claude/rules/github.md": {
+    "mtime": 1795554979.5108109,
+    "seen": 1795555008.679258,
+    "ast_hash": "e2a8c5add2f370ec71fdd9c1e223a87c",
+    "semantic_hash": ""
+  },
+  ".claude/rules/pagina.md": {
+    "mtime": 1795554979.5128155,
+    "seen": 1795555008.6792636,
+    "ast_hash": "dd2bddea9715f83c86d0b45f3f81b713",
+    "semantic_hash": ""
+  },
+  "AUDITORIA_PROMPTS.md": {
+    "mtime": 1795553306.357695,
+    "seen": 1795555008.6792657,
+    "ast_hash": "14a5ec9fe8ca05b792977bd708662afa",
+    "semantic_hash": ""
+  },
+  "REVISION_CLAUDE_MD.md": {
+    "mtime": 1795554419.0226092,
+    "seen": 1795555008.6792862,
+    "ast_hash": "b0cdb6e3887a6cf0e72dbdefebe18914",
+    "semantic_hash": ""
+  },
+  "borrador-claude/CLAUDE.nuevo.md": {
+    "mtime": 1795554725.4482386,
+    "seen": 1795555008.6792886,
+    "ast_hash": "958d592c836f88bca73522d9175a0089",
+    "semantic_hash": ""
+  },
+  "borrador-claude/LEEME.md": {
+    "mtime": 1795554860.1591,
+    "seen": 1795555008.6792905,
+    "ast_hash": "193ed7c79b543acb1a7ee27e08354093",
+    "semantic_hash": ""
+  },
+  "borrador-claude/rules/datos.md": {
+    "mtime": 1795554725.4502983,
+    "seen": 1795555008.6792924,
+    "ast_hash": "98f7d8d41ec78c4c264410034409003a",
+    "semantic_hash": ""
+  },
+  "borrador-claude/rules/github.md": {
+    "mtime": 1795554725.4502983,
+    "seen": 1795555008.6792948,
+    "ast_hash": "e2a8c5add2f370ec71fdd9c1e223a87c",
+    "semantic_hash": ""
+  },
+  "borrador-claude/rules/pagina.md": {
+    "mtime": 1795554725.4512997,
+    "seen": 1795555008.6792965,
+    "ast_hash": "dd2bddea9715f83c86d0b45f3f81b713",
+    "semantic_hash": ""
+  },
+  "borrador-claude/skills/LEEME-skills.md": {
+    "mtime": 1795554725.4523053,
+    "seen": 1795555008.6792989,
+    "ast_hash": "8ef779042d216d78330b4b2ac89b3720",
+    "semantic_hash": ""
+  },
+  "borrador-claude/skills/archivar/SKILL.md": {
+    "mtime": 1795554725.4526174,
+    "seen": 1795555008.679301,
+    "ast_hash": "acde8ec2696df8668cb0774c252243ad",
+    "semantic_hash": ""
+  },
+  "borrador-claude/skills/improve-animations/AUDIT.md": {
+    "mtime": 1795554725.4536233,
+    "seen": 1795555008.6793034,
+    "ast_hash": "c3f81813ab6f2ec248024c94e48d85ba",
+    "semantic_hash": ""
+  },
+  "borrador-claude/skills/improve-animations/ORIGEN.txt": {
+    "mtime": 1795554725.4546282,
+    "seen": 1795555008.6793053,
+    "ast_hash": "fe6c04af69854627c01f5bfa2f06e659",
+    "semantic_hash": ""
+  },
+  "borrador-claude/skills/improve-animations/PLAN-TEMPLATE.md": {
+    "mtime": 1795554725.4559,
+    "seen": 1795555008.679307,
+    "ast_hash": "25c21e90d977bce2491492201803fe45",
+    "semantic_hash": ""
+  },
+  "borrador-claude/skills/improve-animations/SKILL.md": {
+    "mtime": 1795554725.4569075,
+    "seen": 1795555008.679309,
+    "ast_hash": "076f890b181ca771384cefdb8e65a87f",
     "semantic_hash": ""
   }
 }

@@ -14,7 +14,7 @@ las reglas, en `CLAUDE.md`.
 - Aquí van **las tareas que faltan, las decisiones vigentes y los riesgos**, en corto. El
   detalle va en el commit. Una tarea se marca `[x]` solo hecha **y verificada**; si queda a
   medias, sigue en `[ ]` con el fallo anotado. Códigos `A1`…`A8` y `D1`…`D6`: listas de Bruno.
-- Si pasa de 20.000 bytes, se archiva en `historial/` (ver `CLAUDE.md`).
+- Si pasa de 30.000 bytes, se archiva en `historial/` (skill `archivar`).
 
 ## Fechas que mandan
 

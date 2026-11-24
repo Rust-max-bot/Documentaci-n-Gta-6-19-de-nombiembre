@@ -1,4 +1,13 @@
 {
+  "permissions": {
+    "deny": [
+      "Bash(git push --force*)", "Bash(git push -f*)",
+      "Bash(git push * --force*)", "Bash(git push * -f*)",
+      "PowerShell(git push --force*)", "PowerShell(git push -f*)",
+      "PowerShell(git push * --force*)", "PowerShell(git push * -f*)",
+      "Edit(**/datos/**)"
+    ]
+  },
   "statusLine": {
     "type": "command",
     "command": "bash \"${CLAUDE_PROJECT_DIR:-.}/.claude/hooks/estado-git.sh\""

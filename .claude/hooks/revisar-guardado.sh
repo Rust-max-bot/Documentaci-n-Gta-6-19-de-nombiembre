@@ -11,7 +11,7 @@ if echo "$entrada" | grep -q '"stop_hook_active" *: *true'; then
 fi
 cd "$(dirname "$0")/../.." 2>/dev/null || exit 0
 
-LIMITE=20000
+LIMITE=30000
 sucios=$(git status --porcelain 2>/dev/null | wc -l | tr -d ' ')
 sin_subir=$(git rev-list --count '@{u}..HEAD' 2>/dev/null || echo 0)
 
@@ -20,7 +20,7 @@ for archivo in ESTADO_ACTUAL.md PLAN.md; do
     tam=$(wc -c < "$archivo" 2>/dev/null | tr -d ' ')
     tam=${tam:-0}
     if [ "$tam" -gt "$LIMITE" ]; then
-        aviso_tamano="${aviso_tamano}$archivo mide $tam bytes y el limite es $LIMITE. Archivalo segun CLAUDE.md, seccion 'Archivar ESTADO_ACTUAL.md y PLAN.md': muevelo a historial/ y crea uno nuevo con lo esencial. "
+        aviso_tamano="${aviso_tamano}$archivo mide $tam bytes y el limite es $LIMITE. Archivalo con la skill archivar (.claude/skills/archivar/SKILL.md): muevelo a historial/ y crea uno nuevo con lo esencial. "
     fi
 done
 
