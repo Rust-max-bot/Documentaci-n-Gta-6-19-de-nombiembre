@@ -89,6 +89,9 @@ Si un chat viejo contradice a estos archivos, ganan los archivos.
   - Si se toca el despertador, `python pruebas/probar_despertador.py`. Detalle en
     `pruebas/LEEME.md`.
   - Los fallos se reportan tal cual.
+- **Revisiones cortas:** una revisión (`/code-review`, abogado del diablo) se hace solo cuando
+  Bruno la pide, con un alcance acotado (un archivo o una pregunta) y sin pruebas largas. No se
+  encadenan revisiones (revisar la revisión) ni se lanzan agentes que tarden más de unos minutos.
 - **Seguir las tareas de `PLAN.md` en orden.** Una tarea se marca `[x]` solo cuando está hecha y
   verificada sin errores; si queda a medias, sigue en `[ ]` con el fallo anotado al lado.
 - **Graphify para ahorrar tokens y tiempo** (pedido de Bruno): para saber dónde está algo o cómo
